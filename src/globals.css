@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 30% 98%;
+    --foreground: 140 15% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 140 15% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 15% 20%;
+    --primary: 130 20% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 35 25% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 140 10% 40%;
+    --accent: 130 25% 85%;
+    --accent-foreground: 130 20% 25%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 130 20% 35%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 140 15% 10%;
+    --foreground: 45 30% 98%;
+    --card: 140 15% 12%;
+    --card-foreground: 45 30% 98%;
+    --popover: 140 15% 12%;
+    --popover-foreground: 45 30% 98%;
+    --primary: 130 30% 60%;
+    --primary-foreground: 140 15% 10%;
+    --secondary: 35 25% 55%;
+    --secondary-foreground: 140 15% 10%;
+    --muted: 140 15% 18%;
+    --muted-foreground: 45 20% 70%;
+    --accent: 130 20% 25%;
+    --accent-foreground: 45 30% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 140 15% 20%;
+    --input: 140 15% 20%;
+    --ring: 130 30% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom scrollbar for visible scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Smooth transitions for interactive elements */
+button, a, input, textarea, select {
+  transition: all 0.2s ease;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}

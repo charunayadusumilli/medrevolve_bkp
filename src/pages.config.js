@@ -51,6 +51,10 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import HowItWorks from './pages/HowItWorks';
+import Contact from './pages/Contact';
+import ForCreators from './pages/ForCreators';
+import ForBusiness from './pages/ForBusiness';
+import Questionnaire from './pages/Questionnaire';
 import __Layout from './Layout.jsx';
 
 
@@ -59,6 +63,10 @@ export const PAGES = {
     "Products": Products,
     "ProductDetail": ProductDetail,
     "HowItWorks": HowItWorks,
+    "Contact": Contact,
+    "ForCreators": ForCreators,
+    "ForBusiness": ForBusiness,
+    "Questionnaire": Questionnaire,
 }
 
 export const pagesConfig = {
