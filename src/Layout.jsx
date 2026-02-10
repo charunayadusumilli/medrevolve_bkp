@@ -1,0 +1,295 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { 
+  Menu, X, ShoppingCart, User, ChevronDown, Leaf,
+  Scale, Heart, Sparkles, Phone, Mail, MapPin,
+  Instagram, Twitter, Facebook, Youtube
+} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const navItems = [
+  { 
+    name: 'Products', 
+    href: 'Products',
+    dropdown: [
+      { name: 'Weight Loss', href: 'Products?category=weight' },
+      { name: 'Longevity', href: 'Products?category=longevity' },
+      { name: 'Hormone', href: 'Products?category=hormone' }
+    ]
+  },
+  { name: 'For Creators', href: 'ForCreators' },
+  { name: 'For Business', href: 'ForBusiness' },
+  { name: 'How It Works', href: 'HowItWorks' },
+  { name: 'Contact', href: 'Contact' }
+];
+
+export default function Layout({ children }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#FDFBF7]">
+      {/* Header */}
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled 
+            ? 'bg-white/95 backdrop-blur-lg shadow-sm' 
+            : 'bg-transparent'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center">
+                <Leaf className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-semibold text-[#2D3A2D]">
+                MedRevolve
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8">
+              {navItems.map((item) => (
+                item.dropdown ? (
+                  <DropdownMenu key={item.name}>
+                    <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors">
+                      {item.name}
+                      <ChevronDown className="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-white rounded-xl border-none shadow-xl">
+                      {item.dropdown.map((subItem) => (
+                        <DropdownMenuItem key={subItem.name} asChild>
+                          <Link 
+                            to={createPageUrl(subItem.href)}
+                            className="cursor-pointer"
+                          >
+                            {subItem.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={createPageUrl(item.href)}
+                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center gap-4">
+              <Link to={createPageUrl('Login')} className="hidden sm:block">
+                <Button 
+                  variant="ghost" 
+                  className="text-[#5A6B5A] hover:text-[#4A6741] hover:bg-[#4A6741]/5"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to={createPageUrl('Products')} className="hidden sm:block">
+                <Button 
+                  className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-6"
+                >
+                  Sign Up
+                </Button>
+              </Link>
+              <Link to={createPageUrl('Cart')}>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="relative text-[#5A6B5A] hover:text-[#4A6741] hover:bg-[#4A6741]/5"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                </Button>
+              </Link>
+
+              {/* Mobile Menu */}
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button variant="ghost" size="icon">
+                    <Menu className="w-5 h-5 text-[#2D3A2D]" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-full max-w-sm bg-white p-0">
+                  <div className="flex flex-col h-full">
+                    <div className="flex items-center justify-between p-6 border-b border-[#E8E0D5]">
+                      <Link to={createPageUrl('Home')} className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center">
+                          <Leaf className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="text-lg font-semibold text-[#2D3A2D]">MedRevolve</span>
+                      </Link>
+                    </div>
+                    
+                    <nav className="flex-1 p-6 space-y-2">
+                      {navItems.map((item) => (
+                        <div key={item.name}>
+                          {item.dropdown ? (
+                            <div className="space-y-2">
+                              <p className="text-sm font-medium text-[#2D3A2D] py-3">{item.name}</p>
+                              {item.dropdown.map((subItem) => (
+                                <Link
+                                  key={subItem.name}
+                                  to={createPageUrl(subItem.href)}
+                                  className="block py-2 pl-4 text-sm text-[#5A6B5A] hover:text-[#4A6741]"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {subItem.name}
+                                </Link>
+                              ))}
+                            </div>
+                          ) : (
+                            <Link
+                              to={createPageUrl(item.href)}
+                              className="block py-3 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741]"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          )}
+                        </div>
+                      ))}
+                    </nav>
+
+                    <div className="p-6 border-t border-[#E8E0D5] space-y-3">
+                      <Link to={createPageUrl('Login')} onClick={() => setMobileMenuOpen(false)}>
+                        <Button variant="outline" className="w-full rounded-full border-[#4A6741] text-[#4A6741]">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link to={createPageUrl('Products')} onClick={() => setMobileMenuOpen(false)}>
+                        <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full">
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Main Content */}
+      <main className="pt-20">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#2D3A2D] text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            {/* Brand */}
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                  <Leaf className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-semibold">MedRevolve</span>
+              </div>
+              <p className="text-white/60 text-sm leading-relaxed mb-6">
+                Your path to better health, curated. Wellness doesn't have to feel clinical—it should feel like connection.
+              </p>
+              <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                  <Youtube className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h4 className="font-medium mb-6">Products</h4>
+              <ul className="space-y-3">
+                <li><Link to={createPageUrl('Products?category=weight')} className="text-white/60 hover:text-white text-sm transition-colors">Weight Loss</Link></li>
+                <li><Link to={createPageUrl('Products?category=longevity')} className="text-white/60 hover:text-white text-sm transition-colors">Longevity</Link></li>
+                <li><Link to={createPageUrl('Products?category=hormone')} className="text-white/60 hover:text-white text-sm transition-colors">Hormone</Link></li>
+                <li><span className="text-white/40 text-sm">Hair (Coming Soon)</span></li>
+                <li><span className="text-white/40 text-sm">Skin (Coming Soon)</span></li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="font-medium mb-6">Company</h4>
+              <ul className="space-y-3">
+                <li><Link to={createPageUrl('About')} className="text-white/60 hover:text-white text-sm transition-colors">About Us</Link></li>
+                <li><Link to={createPageUrl('HowItWorks')} className="text-white/60 hover:text-white text-sm transition-colors">How It Works</Link></li>
+                <li><Link to={createPageUrl('ForCreators')} className="text-white/60 hover:text-white text-sm transition-colors">For Creators</Link></li>
+                <li><Link to={createPageUrl('ForBusiness')} className="text-white/60 hover:text-white text-sm transition-colors">For Business</Link></li>
+                <li><Link to={createPageUrl('Contact')} className="text-white/60 hover:text-white text-sm transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="font-medium mb-6">Get in Touch</h4>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-white/40" />
+                  <span className="text-white/60 text-sm">support@medrevolve.com</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-white/40" />
+                  <span className="text-white/60 text-sm">1-800-MED-REVO</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-white/40 flex-shrink-0" />
+                  <span className="text-white/60 text-sm">Los Angeles, CA<br />United States</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/40 text-sm">
+              © 2024 MedRevolve. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <Link to={createPageUrl('Privacy')} className="text-white/40 hover:text-white text-sm transition-colors">Privacy Policy</Link>
+              <Link to={createPageUrl('Terms')} className="text-white/40 hover:text-white text-sm transition-colors">Terms of Service</Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
