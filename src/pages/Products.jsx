@@ -66,153 +66,156 @@ const allProducts = [
     name: 'Semaglutide',
     category: 'weight',
     subtitle: 'Weight Loss Injection',
-    description: 'The most effective FDA-approved treatment for sustainable weight management. Feel lighter, move freely.',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80',
+    promise: 'Lose up to 15% body weight',
     lifestyle: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80',
     tag: 'Most Popular',
     tagColor: 'bg-amber-500',
     price: 299,
-    benefits: ['Up to 15% weight loss', 'Weekly injection', 'Reduces cravings']
+    customers: '12,400+',
+    benefits: ['Clinically proven results', 'Once weekly dose', 'Curbs cravings naturally']
   },
   {
     id: 2,
     name: 'Tirzepatide',
     category: 'weight',
-    subtitle: 'Dual-Action Weight Loss',
-    description: 'Advanced dual-hormone therapy for enhanced results. The newest breakthrough in weight management.',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80',
+    subtitle: 'Dual-Action Formula',
+    promise: 'Up to 22% weight loss in studies',
     lifestyle: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80',
-    tag: 'Advanced',
+    tag: 'Strongest Results',
     tagColor: 'bg-violet-500',
     price: 399,
-    benefits: ['Up to 22% weight loss', 'Weekly injection', 'Better glucose control']
+    customers: '8,200+',
+    benefits: ['Maximum effectiveness', 'Better blood sugar', 'Sustained energy']
   },
   {
     id: 3,
-    name: 'Semaglutide Oral Drops',
+    name: 'Semaglutide Drops',
     category: 'weight',
-    subtitle: 'No Needles Required',
-    description: 'All the benefits without injections. Simple daily drops for those who prefer needle-free treatment.',
-    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&q=80',
+    subtitle: 'No Needles Needed',
+    promise: 'Same results, zero injections',
     lifestyle: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&q=80',
     tag: 'Needle-Free',
     tagColor: 'bg-teal-500',
     price: 249,
-    benefits: ['Easy daily drops', 'No injections', 'Gradual results']
+    customers: '6,800+',
+    benefits: ['Simple daily drops', 'Travel friendly', 'Gentle on stomach']
   },
   {
     id: 4,
     name: 'Microdose Semaglutide',
     category: 'weight',
-    subtitle: 'Gentle Introduction',
-    description: 'Perfect for first-timers or those wanting a gentler approach to weight management.',
-    image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&q=80',
+    subtitle: 'Start Gentle',
+    promise: 'Perfect for beginners',
     lifestyle: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&q=80',
-    tag: null,
+    tag: 'Beginner Friendly',
+    tagColor: 'bg-emerald-500',
     price: 199,
-    benefits: ['Lower dosage', 'Fewer side effects', 'Great for beginners']
+    customers: '4,100+',
+    benefits: ['Minimal side effects', 'Easy adjustment', 'Build tolerance slowly']
   },
   {
     id: 5,
     name: 'Sermorelin',
     category: 'longevity',
     subtitle: 'Growth Hormone Support',
-    description: 'Naturally stimulate your body\'s growth hormone production. Wake up refreshed, recover faster.',
-    image: 'https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?w=500&q=80',
+    promise: 'Wake up feeling 10 years younger',
     lifestyle: 'https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?w=500&q=80',
     tag: 'Anti-Aging',
     tagColor: 'bg-rose-500',
     price: 199,
-    benefits: ['Better sleep', 'Faster recovery', 'Increased energy']
+    customers: '7,300+',
+    benefits: ['Deep restful sleep', 'Faster recovery', 'Natural energy boost']
   },
   {
     id: 6,
-    name: 'Glutathione Injection',
+    name: 'Glutathione',
     category: 'longevity',
     subtitle: 'Master Antioxidant',
-    description: 'The body\'s most powerful antioxidant. Detoxify, protect, and glow from the inside out.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80',
+    promise: 'Glow from the inside out',
     lifestyle: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80',
-    tag: 'Glow',
+    tag: 'Skin Glow',
     tagColor: 'bg-pink-500',
     price: 149,
-    benefits: ['Skin radiance', 'Detoxification', 'Immune support']
+    customers: '9,600+',
+    benefits: ['Radiant skin', 'Liver detox', 'Immune boost']
   },
   {
     id: 7,
-    name: 'NAD+ Nasal Spray',
+    name: 'NAD+ Spray',
     category: 'longevity',
-    subtitle: 'Cellular Energy Boost',
-    description: 'Recharge your cells at the molecular level. More energy, sharper focus, better aging.',
-    image: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=500&q=80',
+    subtitle: 'Cellular Energy',
+    promise: 'All-day mental clarity',
     lifestyle: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=500&q=80',
-    tag: 'Energy',
+    tag: 'Brain Boost',
     tagColor: 'bg-orange-500',
     price: 179,
-    benefits: ['Mental clarity', 'Cellular repair', 'Sustained energy']
+    customers: '5,400+',
+    benefits: ['Sharper focus', 'More stamina', 'Better aging']
   },
   {
     id: 8,
     name: 'B12 Injection',
     category: 'longevity',
-    subtitle: 'Essential Vitality',
-    description: 'Combat fatigue and boost your natural energy. Feel the difference within days.',
-    image: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&q=80',
+    subtitle: 'Energy Essential',
+    promise: 'Feel energized in days',
     lifestyle: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&q=80',
-    tag: null,
+    tag: 'Best Value',
+    tagColor: 'bg-green-500',
     price: 79,
-    benefits: ['Energy boost', 'Mood support', 'Nervous system health']
+    customers: '15,200+',
+    benefits: ['Instant energy', 'Better mood', 'Supports metabolism']
   },
   {
     id: 9,
-    name: 'Synapsin Nasal Spray',
+    name: 'Synapsin Spray',
     category: 'longevity',
-    subtitle: 'Brain Health',
-    description: 'Protect and enhance your cognitive function. Stay sharp, stay focused, stay you.',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&q=80',
+    subtitle: 'Cognitive Support',
+    promise: 'Stay sharp at any age',
     lifestyle: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&q=80',
-    tag: 'Focus',
+    tag: 'Memory',
     tagColor: 'bg-blue-500',
     price: 159,
-    benefits: ['Memory support', 'Mental clarity', 'Neuroprotection']
+    customers: '3,800+',
+    benefits: ['Memory support', 'Focus clarity', 'Brain protection']
   },
   {
     id: 10,
     name: 'Testosterone Therapy',
     category: 'hormone',
-    subtitle: 'Restore Your Drive',
-    description: 'Reclaim your energy, strength, and confidence. Optimized levels for your best self.',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
+    subtitle: 'Men\'s Vitality',
+    promise: 'Reclaim your drive & strength',
     lifestyle: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
-    tag: 'Men\'s Health',
+    tag: 'For Men',
     tagColor: 'bg-indigo-500',
     price: 199,
-    benefits: ['Increased energy', 'Muscle support', 'Better mood']
+    customers: '11,100+',
+    benefits: ['More energy', 'Lean muscle', 'Improved mood']
   },
   {
     id: 11,
     name: 'Estrogen Therapy',
     category: 'hormone',
-    subtitle: 'Hormonal Harmony',
-    description: 'Navigate hormonal changes with grace. Relief from symptoms, restoration of balance.',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&q=80',
+    subtitle: 'Women\'s Balance',
+    promise: 'Navigate change with ease',
     lifestyle: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&q=80',
-    tag: 'Women\'s Health',
+    tag: 'For Women',
     tagColor: 'bg-fuchsia-500',
     price: 179,
-    benefits: ['Hot flash relief', 'Better sleep', 'Mood stability']
+    customers: '8,900+',
+    benefits: ['Hot flash relief', 'Restful nights', 'Mood balance']
   },
   {
     id: 12,
     name: 'Thyroid Support',
     category: 'hormone',
     subtitle: 'Metabolic Balance',
-    description: 'Optimize your thyroid for energy, metabolism, and overall wellbeing.',
-    image: 'https://images.unsplash.com/photo-1499557354967-2b2d8910bcca?w=500&q=80',
+    promise: 'Optimize your metabolism',
     lifestyle: 'https://images.unsplash.com/photo-1499557354967-2b2d8910bcca?w=500&q=80',
-    tag: null,
+    tag: 'Metabolism',
+    tagColor: 'bg-cyan-500',
     price: 149,
-    benefits: ['Energy balance', 'Weight management', 'Temperature regulation']
+    customers: '6,200+',
+    benefits: ['Steady energy', 'Weight support', 'Feel balanced']
   }
 ];
 
@@ -465,61 +468,103 @@ function ProductCard({ product }) {
   return (
     <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
       <motion.div 
-        className="bg-[#FDFBF7] rounded-3xl overflow-hidden group h-full flex flex-col"
-        whileHover={{ y: -8 }}
+        className="bg-white rounded-3xl overflow-hidden group h-full flex flex-col shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#E8E0D5]/50"
+        whileHover={{ y: -6 }}
         transition={{ duration: 0.3 }}
       >
-        {/* Image Section */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+        {/* Hero Image with Lifestyle Focus */}
+        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#F5F0E8] to-[#E8E0D5]">
           <img 
             src={product.lifestyle}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
           />
           
-          {/* Tag */}
+          {/* Gradient overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          
+          {/* Trust Badge - Top Left */}
           {product.tag && (
-            <Badge className={`absolute top-4 left-4 ${product.tagColor} text-white border-none font-medium`}>
-              {product.tag}
-            </Badge>
+            <div className="absolute top-4 left-4">
+              <Badge className={`${product.tagColor} text-white border-none font-medium px-3 py-1 text-xs shadow-lg`}>
+                ★ {product.tag}
+              </Badge>
+            </div>
           )}
 
-          {/* Hover overlay with quick benefits */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-            <div className="space-y-1">
-              {product.benefits.map((benefit, i) => (
-                <div key={i} className="flex items-center gap-2 text-white text-sm">
-                  <Sparkles className="w-3 h-3" />
-                  {benefit}
-                </div>
-              ))}
-            </div>
+          {/* Quick Result Promise - Bottom of Image */}
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <p className="text-white font-medium text-lg leading-tight drop-shadow-lg">
+              {product.promise || product.benefits[0]}
+            </p>
           </div>
         </div>
 
-        {/* Content */}
+        {/* Content Section - Marketing Optimized */}
         <div className="p-6 flex-1 flex flex-col">
-          <div className="flex-1">
-            <p className="text-xs font-medium text-[#4A6741] uppercase tracking-wider mb-1">
+          {/* Category & Name */}
+          <div className="mb-3">
+            <p className="text-xs font-semibold text-[#4A6741] uppercase tracking-wider mb-1">
               {product.subtitle}
             </p>
-            <h3 className="text-xl font-medium text-[#2D3A2D] group-hover:text-[#4A6741] transition-colors">
+            <h3 className="text-xl font-semibold text-[#2D3A2D] group-hover:text-[#4A6741] transition-colors leading-tight">
               {product.name}
             </h3>
-            <p className="text-[#5A6B5A] text-sm mt-2 line-clamp-2">
-              {product.description}
-            </p>
           </div>
 
-          {/* Price & CTA */}
-          <div className="mt-5 pt-5 border-t border-[#E8E0D5] flex items-center justify-between">
-            <div>
-              <span className="text-2xl font-light text-[#2D3A2D]">${product.price}</span>
-              <span className="text-sm text-[#5A6B5A]">/mo</span>
+          {/* Benefit Pills - Scannable */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {product.benefits.slice(0, 3).map((benefit, i) => (
+              <span 
+                key={i} 
+                className="inline-flex items-center gap-1 text-xs bg-[#D4E5D7]/50 text-[#4A6741] px-2.5 py-1 rounded-full"
+              >
+                <span className="w-1 h-1 bg-[#4A6741] rounded-full"></span>
+                {benefit}
+              </span>
+            ))}
+          </div>
+
+          {/* Social Proof */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex -space-x-2">
+              {[1,2,3].map(i => (
+                <div key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-[#D4E5D7] to-[#4A6741]/20 border-2 border-white flex items-center justify-center">
+                  <span className="text-[8px] text-[#4A6741]">✓</span>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-2 text-[#4A6741] font-medium text-sm group-hover:gap-3 transition-all">
-              Get Started
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span className="text-xs text-[#5A6B5A]">
+              {product.customers || '5,000+'} customers this month
+            </span>
+          </div>
+
+          {/* Spacer */}
+          <div className="flex-1"></div>
+
+          {/* Price & CTA - High Contrast */}
+          <div className="pt-4 border-t border-[#E8E0D5]">
+            {/* Value Proposition */}
+            <p className="text-xs text-[#5A6B5A] mb-3">
+              Includes medical consultation & free shipping
+            </p>
+            
+            <div className="flex items-end justify-between">
+              <div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-semibold text-[#2D3A2D]">${product.price}</span>
+                  <span className="text-sm text-[#5A6B5A]">/mo</span>
+                </div>
+                <p className="text-xs text-[#4A6741] font-medium">Cancel anytime</p>
+              </div>
+              
+              <Button 
+                size="sm"
+                className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-5 group-hover:px-6 transition-all shadow-lg shadow-[#4A6741]/20"
+              >
+                Start Now
+                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
+              </Button>
             </div>
           </div>
         </div>
