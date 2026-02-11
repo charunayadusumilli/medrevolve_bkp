@@ -17,7 +17,7 @@ const categories = [
     name: 'Longevity',
     icon: Heart,
     description: 'Age gracefully with science-backed treatments',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80',
     available: true,
     color: '#6B8F5E'
   },
@@ -25,7 +25,7 @@ const categories = [
     name: 'Hormone',
     icon: Sparkles,
     description: 'Balance your hormones naturally',
-    image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
     available: true,
     color: '#8B7355'
   },
@@ -33,7 +33,7 @@ const categories = [
     name: 'Hair',
     icon: Scissors,
     description: 'Restore and revitalize your hair',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80',
     available: false,
     color: '#A68B6A'
   },
@@ -41,15 +41,15 @@ const categories = [
     name: 'Skin',
     icon: Droplets,
     description: 'Rejuvenate your skin from within',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=80',
     available: false,
     color: '#C4A77D'
   },
   {
-    name: 'Sexual Health',
+    name: 'Sex',
     icon: HeartPulse,
     description: 'Enhance your intimate wellness',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&q=80',
     available: false,
     color: '#8B6B61'
   }
