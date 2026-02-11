@@ -86,20 +86,24 @@ export default function ForCreators() {
                 Partner with MedRevolve to share trusted wellness products with your audience. Earn competitive commissions while helping others on their health journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg"
-                  className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8 py-6 group"
-                >
-                  Apply Now
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="lg"
-                  className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full px-8 py-6"
-                >
-                  Learn More
-                </Button>
+                <Link to={createPageUrl('CreatorApplication')}>
+                  <Button 
+                    size="lg"
+                    className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8 py-6 group"
+                  >
+                    Apply Now
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to={createPageUrl('Contact')}>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full px-8 py-6"
+                  >
+                    Learn More
+                  </Button>
+                </Link>
               </div>
             </motion.div>
 
@@ -287,13 +291,15 @@ export default function ForCreators() {
             <p className="text-lg text-[#5A6B5A] mb-8">
               Apply today and start earning while making a real difference in people's lives.
             </p>
-            <Button 
-              size="lg"
-              className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-10 py-6 text-base font-medium group"
-            >
-              Apply Now
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link to={createPageUrl('CreatorApplication')}>
+              <Button 
+                size="lg"
+                className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-10 py-6 text-base font-medium group"
+              >
+                Apply Now
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

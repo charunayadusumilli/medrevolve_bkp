@@ -40,7 +40,7 @@ export default function BookAppointment() {
   const createAppointment = useMutation({
     mutationFn: async (data) => {
       const appointmentDateTime = new Date(`${data.appointment_date}T${data.appointment_time}`);
-      return base44.entities.Appointment.create({
+      const appointment = await base44.entities.Appointment.create({
         provider_id: data.provider_id,
         patient_email: user.email,
         appointment_date: appointmentDateTime.toISOString(),
@@ -51,6 +51,47 @@ export default function BookAppointment() {
         status: 'scheduled',
         video_room_id: `room_${Date.now()}`
       });
+
+      // Send notification to consultations@medrevolve.com
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Consultations',
+        to: 'consultations@medrevolve.com',
+        subject: `New Consultation Booked - ${user.email}`,
+        body: `
+New consultation appointment booked:
+
+Patient: ${user.email}
+Type: ${data.type}
+Date: ${appointmentDateTime.toLocaleString()}
+Provider ID: ${data.provider_id}
+Reason: ${data.reason}
+
+Appointment ID: ${appointment.id}
+        `
+      });
+
+      // Send confirmation to patient
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Consultations',
+        to: user.email,
+        subject: 'Consultation Confirmed - MedRevolve',
+        body: `
+Your consultation has been scheduled!
+
+Date: ${appointmentDateTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+Time: ${appointmentDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+Type: ${data.type.replace('_', ' ')}
+
+We'll send you a reminder 24 hours before your appointment.
+
+You can manage your appointment at medrevolve.com
+
+Best regards,
+MedRevolve Team
+        `
+      });
+
+      return appointment;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['upcomingAppointments']);

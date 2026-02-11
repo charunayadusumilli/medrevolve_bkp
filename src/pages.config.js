@@ -60,6 +60,8 @@ import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
 import Messages from './pages/Messages';
 import VideoCall from './pages/VideoCall';
+import CreatorApplication from './pages/CreatorApplication';
+import BusinessInquiry from './pages/BusinessInquiry';
 import __Layout from './Layout.jsx';
 
 
@@ -77,6 +79,8 @@ export const PAGES = {
     "MyAppointments": MyAppointments,
     "Messages": Messages,
     "VideoCall": VideoCall,
+    "CreatorApplication": CreatorApplication,
+    "BusinessInquiry": BusinessInquiry,
 }
 
 export const pagesConfig = {

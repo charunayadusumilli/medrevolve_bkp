@@ -66,20 +66,24 @@ export default function ForBusiness() {
                 Partner with MedRevolve to offer premium wellness products to your clients. White-label solutions, wholesale pricing, and comprehensive support for businesses of all sizes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg"
-                  className="bg-[#8B7355] hover:bg-[#6B5A45] text-white rounded-full px-8 py-6 group"
-                >
-                  Schedule a Call
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="lg"
-                  className="border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355]/5 rounded-full px-8 py-6"
-                >
-                  Download Info Pack
-                </Button>
+                <Link to={createPageUrl('BusinessInquiry')}>
+                  <Button 
+                    size="lg"
+                    className="bg-[#8B7355] hover:bg-[#6B5A45] text-white rounded-full px-8 py-6 group"
+                  >
+                    Schedule a Call
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to={createPageUrl('Contact')}>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355]/5 rounded-full px-8 py-6"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
               </div>
             </motion.div>
 
@@ -239,20 +243,24 @@ export default function ForBusiness() {
               Schedule a consultation with our business development team to discuss how we can help grow your wellness business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg"
-                className="bg-white text-[#8B7355] hover:bg-white/90 rounded-full px-8 py-6 group"
-              >
-                Schedule a Call
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                variant="outline"
-                size="lg"
-                className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6"
-              >
-                Contact Sales
-              </Button>
+              <Link to={createPageUrl('BusinessInquiry')}>
+                <Button 
+                  size="lg"
+                  className="bg-white text-[#8B7355] hover:bg-white/90 rounded-full px-8 py-6 group"
+                >
+                  Schedule a Call
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to={createPageUrl('Contact')}>
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6"
+                >
+                  Contact Sales
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
