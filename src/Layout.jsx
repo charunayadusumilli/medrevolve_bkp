@@ -18,20 +18,16 @@ import {
 
 const navItems = [
   { 
-    name: 'Products', 
+    name: 'For Shoppers', 
     href: 'Products',
     dropdown: [
-      { name: 'Weight Loss', href: 'Products?category=weight' },
-      { name: 'Longevity', href: 'Products?category=longevity' },
-      { name: 'Hormone', href: 'Products?category=hormone' }
+      { name: 'Shop Products', href: 'Products' },
+      { name: 'Consultations', href: 'Consultations' },
+      { name: 'Patient Portal', href: 'PatientPortal' }
     ]
   },
-  { name: 'Consultations', href: 'Consultations' },
-  { name: 'Patient Portal', href: 'PatientPortal' },
   { name: 'For Creators', href: 'ForCreators' },
-  { name: 'For Business', href: 'ForBusiness' },
-  { name: 'How It Works', href: 'HowItWorks' },
-  { name: 'Contact', href: 'Contact' }
+  { name: 'For Businesses', href: 'ForBusiness' }
 ];
 
 export default function Layout({ children }) {
@@ -253,11 +249,11 @@ export default function Layout({ children }) {
             <div>
               <h4 className="font-medium mb-6">Company</h4>
               <ul className="space-y-3">
-                <li><Link to={createPageUrl('About')} className="text-white/60 hover:text-white text-sm transition-colors">About Us</Link></li>
-                <li><Link to={createPageUrl('HowItWorks')} className="text-white/60 hover:text-white text-sm transition-colors">How It Works</Link></li>
+                <li><Link to={createPageUrl('Consultations')} className="text-white/60 hover:text-white text-sm transition-colors">Consultations</Link></li>
+                <li><Link to={createPageUrl('PatientPortal')} className="text-white/60 hover:text-white text-sm transition-colors">Patient Portal</Link></li>
                 <li><Link to={createPageUrl('ForCreators')} className="text-white/60 hover:text-white text-sm transition-colors">For Creators</Link></li>
-                <li><Link to={createPageUrl('ForBusiness')} className="text-white/60 hover:text-white text-sm transition-colors">For Business</Link></li>
-                <li><Link to={createPageUrl('Contact')} className="text-white/60 hover:text-white text-sm transition-colors">Contact</Link></li>
+                <li><Link to={createPageUrl('ForBusiness')} className="text-white/60 hover:text-white text-sm transition-colors">For Businesses</Link></li>
+                <li><Link to={createPageUrl('Contact')} className="text-white/60 hover:text-white text-sm transition-colors">Contact Us</Link></li>
               </ul>
             </div>
 
