@@ -47,42 +47,44 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import BookAppointment from './pages/BookAppointment';
+import BusinessInquiry from './pages/BusinessInquiry';
+import Consultations from './pages/Consultations';
 import Contact from './pages/Contact';
+import CreatorApplication from './pages/CreatorApplication';
 import ForBusiness from './pages/ForBusiness';
 import ForCreators from './pages/ForCreators';
 import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
+import Messages from './pages/Messages';
+import MyAppointments from './pages/MyAppointments';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
-import Questionnaire from './pages/Questionnaire';
-import Consultations from './pages/Consultations';
-import BookAppointment from './pages/BookAppointment';
-import MyAppointments from './pages/MyAppointments';
-import Messages from './pages/Messages';
-import VideoCall from './pages/VideoCall';
-import CreatorApplication from './pages/CreatorApplication';
-import BusinessInquiry from './pages/BusinessInquiry';
 import ProviderProfile from './pages/ProviderProfile';
+import Questionnaire from './pages/Questionnaire';
+import VideoCall from './pages/VideoCall';
+import PatientPortal from './pages/PatientPortal';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "BookAppointment": BookAppointment,
+    "BusinessInquiry": BusinessInquiry,
+    "Consultations": Consultations,
     "Contact": Contact,
+    "CreatorApplication": CreatorApplication,
     "ForBusiness": ForBusiness,
     "ForCreators": ForCreators,
     "Home": Home,
     "HowItWorks": HowItWorks,
+    "Messages": Messages,
+    "MyAppointments": MyAppointments,
     "ProductDetail": ProductDetail,
     "Products": Products,
-    "Questionnaire": Questionnaire,
-    "Consultations": Consultations,
-    "BookAppointment": BookAppointment,
-    "MyAppointments": MyAppointments,
-    "Messages": Messages,
-    "VideoCall": VideoCall,
-    "CreatorApplication": CreatorApplication,
-    "BusinessInquiry": BusinessInquiry,
     "ProviderProfile": ProviderProfile,
+    "Questionnaire": Questionnaire,
+    "VideoCall": VideoCall,
+    "PatientPortal": PatientPortal,
 }
 
 export const pagesConfig = {

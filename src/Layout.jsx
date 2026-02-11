@@ -27,6 +27,7 @@ const navItems = [
     ]
   },
   { name: 'Consultations', href: 'Consultations' },
+  { name: 'Patient Portal', href: 'PatientPortal' },
   { name: 'For Creators', href: 'ForCreators' },
   { name: 'For Business', href: 'ForBusiness' },
   { name: 'How It Works', href: 'HowItWorks' },
