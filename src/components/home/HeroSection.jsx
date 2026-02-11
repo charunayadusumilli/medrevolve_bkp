@@ -74,10 +74,10 @@ export default function HeroSection() {
           >
             <div className="relative aspect-square max-w-lg mx-auto">
               <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-[#D4E5D7] to-[#E5D4C8] transform rotate-6" />
-              <div className="absolute inset-0 rounded-[3rem] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-[3rem] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
                 <img 
-                  src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80"
-                  alt="Hand holding wellness vial"
+                  src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80"
+                  alt="Woman smiling outdoors"
                   className="w-full h-full object-cover"
                 />
               </div>
