@@ -44,12 +44,12 @@ export default function HeroSection() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2D3A2D] leading-[1.1] mb-6">
               Your Path To
               <span className="block font-medium bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] bg-clip-text text-transparent">
-                Better Health
+                Better Health, Curated
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-[#5A6B5A] leading-relaxed mb-8 max-w-lg">
-              Wellness should feel like connection, not clinical. Discover personalized treatments curated for your journey to optimal health.
+              Wellness doesn't have to feel clinical. It should feel like connection. Shop the recommendations of your most trusted creators.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -58,17 +58,8 @@ export default function HeroSection() {
                   size="lg" 
                   className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8 py-6 text-base font-medium group"
                 >
-                  Start Your Journey
+                  Start Now
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link to={createPageUrl('HowItWorks')}>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-[#4A6741]/30 text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full px-8 py-6 text-base font-medium"
-                >
-                  Learn More
                 </Button>
               </Link>
             </div>
@@ -83,31 +74,15 @@ export default function HeroSection() {
           >
             <div className="relative aspect-square max-w-lg mx-auto">
               <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-[#D4E5D7] to-[#E5D4C8] transform rotate-6" />
-              <div className="absolute inset-0 rounded-[3rem] overflow-hidden">
+              <div className="absolute inset-0 rounded-[3rem] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                 <img 
-                  src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80"
-                  alt="Wellness"
+                  src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80"
+                  alt="Hand holding wellness vial"
                   className="w-full h-full object-cover"
                 />
               </div>
               
-              {/* Floating card */}
-              <motion.div 
-                className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl shadow-[#4A6741]/10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#D4E5D7] flex items-center justify-center">
-                    <Leaf className="w-6 h-6 text-[#4A6741]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-[#2D3A2D]">100% Natural</p>
-                    <p className="text-xs text-[#5A6B5A]">Quality Ingredients</p>
-                  </div>
-                </div>
-              </motion.div>
+
             </div>
           </motion.div>
         </div>
