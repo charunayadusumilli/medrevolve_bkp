@@ -11,7 +11,7 @@ const steps = [
     title: 'Complete Health Questionnaire',
     description: 'Create your profile and complete a short health questionnaire. Share your wellness goals and medical history.',
     icon: ClipboardCheck,
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80',
     details: [
       'Create a profile with your contact information',
       'Complete a comprehensive health questionnaire',
@@ -23,7 +23,7 @@ const steps = [
     title: 'Medical Review',
     description: 'A licensed medical provider reviews your health history to prescribe the best possible solution for you.',
     icon: Stethoscope,
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
     details: [
       'Board-certified physician review',
       'Personalized treatment recommendation',
@@ -35,7 +35,7 @@ const steps = [
     title: 'Pharmacy Fulfillment',
     description: 'Receive your medication directly and discreetly to your home within 3-5 business days.',
     icon: Package,
-    image: 'https://images.unsplash.com/photo-1580281657702-257584239a55?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&q=80',
     details: [
       'Discreet packaging',
       'Fast nationwide shipping',
