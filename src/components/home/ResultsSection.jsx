@@ -39,11 +39,11 @@ const testimonials = [
 ];
 
 const transformations = [
+  'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80',
   'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
-  'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80',
-  'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80',
-  'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&q=80',
-  'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80'
+  'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
+  'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80'
 ];
 
 export default function ResultsSection() {
