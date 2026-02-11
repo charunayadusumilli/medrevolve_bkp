@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Calendar, Clock, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, CheckCircle, Repeat } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function BookAppointment() {
@@ -24,7 +26,10 @@ export default function BookAppointment() {
     appointment_time: '',
     type: 'initial_consultation',
     reason: '',
-    notes: ''
+    notes: '',
+    is_recurring: false,
+    recurring_frequency: '',
+    recurring_end_date: ''
   });
 
   const { data: user } = useQuery({
@@ -35,6 +40,19 @@ export default function BookAppointment() {
   const { data: providers = [] } = useQuery({
     queryKey: ['activeProviders'],
     queryFn: () => base44.entities.Provider.filter({ is_active: true }, '-rating')
+  });
+
+  const { data: availableSlots } = useQuery({
+    queryKey: ['availableSlots', formData.provider_id, formData.appointment_date],
+    queryFn: async () => {
+      if (!formData.provider_id || !formData.appointment_date) return null;
+      const response = await base44.functions.invoke('getProviderAvailability', {
+        provider_id: formData.provider_id,
+        date: new Date(formData.appointment_date).toISOString()
+      });
+      return response.data;
+    },
+    enabled: !!formData.provider_id && !!formData.appointment_date
   });
 
   const createAppointment = useMutation({
@@ -235,21 +253,94 @@ export default function BookAppointment() {
                     <Clock className="inline w-4 h-4 mr-2" />
                     Select Time *
                   </Label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() => setFormData({...formData, appointment_time: time})}
-                        className={`py-2 px-3 rounded-lg text-sm font-medium transition-all ${
-                          formData.appointment_time === time
-                            ? 'bg-[#4A6741] text-white'
-                            : 'bg-[#F5F0E8] text-[#5A6B5A] hover:bg-[#E8E0D5]'
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
+                  {availableSlots?.available_slots?.length > 0 ? (
+                    <div className="grid grid-cols-4 gap-2">
+                      {availableSlots.available_slots.map((slot) => (
+                        <button
+                          key={slot.start_time}
+                          type="button"
+                          onClick={() => setFormData({...formData, appointment_time: slot.display_time})}
+                          className={`py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+                            formData.appointment_time === slot.display_time
+                              ? 'bg-[#4A6741] text-white'
+                              : 'bg-[#F5F0E8] text-[#5A6B5A] hover:bg-[#E8E0D5]'
+                          }`}
+                        >
+                          {slot.display_time}
+                        </button>
+                      ))}
+                    </div>
+                  ) : formData.appointment_date ? (
+                    <div className="text-center py-8 text-[#5A6B5A] bg-[#F5F0E8] rounded-xl">
+                      No available slots for this date. Please select a different date.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-4 gap-2">
+                      {timeSlots.map((time) => (
+                        <button
+                          key={time}
+                          type="button"
+                          onClick={() => setFormData({...formData, appointment_time: time})}
+                          className={`py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+                            formData.appointment_time === time
+                              ? 'bg-[#4A6741] text-white'
+                              : 'bg-[#F5F0E8] text-[#5A6B5A] hover:bg-[#E8E0D5]'
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Recurring Appointments */}
+                <div className="border-t border-[#E8E0D5] pt-4">
+                  <div className="flex items-start gap-3">
+                    <Checkbox 
+                      checked={formData.is_recurring}
+                      onCheckedChange={(checked) => setFormData({...formData, is_recurring: checked})}
+                    />
+                    <div className="flex-1">
+                      <Label className="cursor-pointer font-medium text-[#2D3A2D] flex items-center gap-2">
+                        <Repeat className="w-4 h-4" />
+                        Make this a recurring appointment
+                      </Label>
+                      <p className="text-sm text-[#5A6B5A] mt-1">
+                        Schedule regular follow-ups automatically
+                      </p>
+
+                      {formData.is_recurring && (
+                        <div className="mt-4 space-y-3">
+                          <div>
+                            <Label className="text-sm text-[#5A6B5A] mb-2 block">Frequency</Label>
+                            <Select 
+                              value={formData.recurring_frequency}
+                              onValueChange={(value) => setFormData({...formData, recurring_frequency: value})}
+                            >
+                              <SelectTrigger className="rounded-xl">
+                                <SelectValue placeholder="Select frequency" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="weekly">Weekly</SelectItem>
+                                <SelectItem value="biweekly">Every 2 Weeks</SelectItem>
+                                <SelectItem value="monthly">Monthly</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div>
+                            <Label className="text-sm text-[#5A6B5A] mb-2 block">End Date (Optional)</Label>
+                            <Input
+                              type="date"
+                              value={formData.recurring_end_date}
+                              onChange={(e) => setFormData({...formData, recurring_end_date: e.target.value})}
+                              min={formData.appointment_date}
+                              className="rounded-xl"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
