@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
+import { base44 } from '@/api/base44Client';
 import { 
   ArrowRight, ArrowLeft, Check, User, Heart, Scale, 
   Pill, FileText, Leaf
@@ -88,10 +89,32 @@ export default function Questionnaire() {
   const currentQuestion = questions[currentStep];
   const progress = ((currentStep + 1) / questions.length) * 100;
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
+      // Submit questionnaire
+      try {
+        await base44.integrations.Core.SendEmail({
+          from_name: 'MedRevolve Health Questionnaire',
+          to: 'support@medrevolve.com',
+          subject: 'New Health Questionnaire Submitted',
+          body: `
+New health questionnaire completed:
+
+Goal: ${answers.goal || 'Not answered'}
+Gender: ${answers.gender || 'Not answered'}
+Age: ${answers.age || 'Not answered'}
+Conditions: ${answers.conditions?.join(', ') || 'None'}
+Medications: ${answers.medications || 'Not answered'}
+Experience: ${answers.experience || 'Not answered'}
+
+Submitted: ${new Date().toLocaleString()}
+          `
+        });
+      } catch (error) {
+        console.error('Failed to send notification:', error);
+      }
       setIsComplete(true);
     }
   };
