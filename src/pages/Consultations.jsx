@@ -289,14 +289,25 @@ function ProviderCard({ provider }) {
             </span>
           </div>
         )}
-        <Link to={createPageUrl(`BookAppointment?provider=${provider.id}`)}>
-          <Button 
-            size="sm"
-            className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
-          >
-            Book with {provider.name.split(' ')[1] || provider.name}
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link to={createPageUrl(`ProviderProfile?id=${provider.id}`)} className="flex-1">
+            <Button 
+              size="sm"
+              variant="outline"
+              className="w-full border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full"
+            >
+              Profile
+            </Button>
+          </Link>
+          <Link to={createPageUrl(`BookAppointment?provider=${provider.id}`)} className="flex-1">
+            <Button 
+              size="sm"
+              className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
+            >
+              Book
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
