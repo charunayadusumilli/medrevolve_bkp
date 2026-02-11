@@ -7,6 +7,8 @@ import {
   ArrowRight, Users, DollarSign, BarChart3, Megaphone,
   Gift, Heart, Zap, CheckCircle, Star
 } from 'lucide-react';
+import CommissionTiers from '@/components/creator/CommissionTiers';
+import AnalyticsDashboard from '@/components/creator/AnalyticsDashboard';
 
 const benefits = [
   {
@@ -140,6 +142,12 @@ export default function ForCreators() {
           </div>
         </div>
       </section>
+
+      {/* Commission Tiers */}
+      <CommissionTiers />
+
+      {/* Analytics Dashboard */}
+      <AnalyticsDashboard />
 
       {/* Benefits */}
       <section className="py-20 px-6 lg:px-8 bg-white">
