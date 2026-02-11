@@ -62,6 +62,7 @@ import Messages from './pages/Messages';
 import VideoCall from './pages/VideoCall';
 import CreatorApplication from './pages/CreatorApplication';
 import BusinessInquiry from './pages/BusinessInquiry';
+import ProviderProfile from './pages/ProviderProfile';
 import __Layout from './Layout.jsx';
 
 
@@ -81,6 +82,7 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "CreatorApplication": CreatorApplication,
     "BusinessInquiry": BusinessInquiry,
+    "ProviderProfile": ProviderProfile,
 }
 
 export const pagesConfig = {
