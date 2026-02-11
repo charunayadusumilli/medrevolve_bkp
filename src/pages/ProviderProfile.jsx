@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
@@ -8,17 +8,36 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { 
   ArrowLeft, Star, Calendar, MapPin, Award, 
-  CheckCircle, GraduationCap, Stethoscope, Shield
+  CheckCircle, GraduationCap, Stethoscope, Shield, Clock
 } from 'lucide-react';
 
 export default function ProviderProfile() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const providerId = urlParams.get('id');
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const { data: provider, isLoading } = useQuery({
     queryKey: ['provider', providerId],
     queryFn: () => base44.entities.Provider.get(providerId),
+    enabled: !!providerId
+  });
+
+  const { data: schedules = [] } = useQuery({
+    queryKey: ['providerSchedule', providerId],
+    queryFn: () => base44.entities.ProviderSchedule.filter({ provider_id: providerId, is_available: true }),
+    enabled: !!providerId
+  });
+
+  const { data: availabilityData } = useQuery({
+    queryKey: ['providerAvailability', providerId, selectedDate.toISOString()],
+    queryFn: async () => {
+      const response = await base44.functions.invoke('getProviderAvailability', {
+        provider_id: providerId,
+        date: selectedDate.toISOString()
+      });
+      return response.data;
+    },
     enabled: !!providerId
   });
 
@@ -278,6 +297,54 @@ export default function ProviderProfile() {
                 </div>
               </motion.div>
             )}
+
+            {/* Availability */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl p-6 shadow-sm"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Clock className="w-5 h-5 text-[#4A6741]" />
+                <h3 className="font-medium text-[#2D3A2D]">Availability</h3>
+              </div>
+
+              {schedules.length > 0 ? (
+                <div className="space-y-2">
+                  {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => {
+                    const daySchedule = schedules.filter(s => s.day_of_week === index);
+                    return (
+                      <div key={day} className="flex justify-between text-sm">
+                        <span className="text-[#5A6B5A]">{day}</span>
+                        <span className="text-[#2D3A2D] font-medium">
+                          {daySchedule.length > 0 
+                            ? daySchedule.map(s => `${s.start_time} - ${s.end_time}`).join(', ')
+                            : 'Unavailable'}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-sm text-[#5A6B5A]">Schedule information not available</p>
+              )}
+
+              {availabilityData && availabilityData.available_slots?.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-[#E8E0D5]">
+                  <p className="text-xs text-[#5A6B5A] mb-2">
+                    Next available slots for {selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {availabilityData.available_slots.slice(0, 4).map((slot, index) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {slot.display_time}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
 
             {/* CTA */}
             <motion.div
