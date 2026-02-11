@@ -26,6 +26,7 @@ const navItems = [
       { name: 'Hormone', href: 'Products?category=hormone' }
     ]
   },
+  { name: 'Consultations', href: 'Consultations' },
   { name: 'For Creators', href: 'ForCreators' },
   { name: 'For Business', href: 'ForBusiness' },
   { name: 'How It Works', href: 'HowItWorks' },

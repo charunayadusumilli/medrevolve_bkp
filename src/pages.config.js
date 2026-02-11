@@ -55,6 +55,11 @@ import HowItWorks from './pages/HowItWorks';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Questionnaire from './pages/Questionnaire';
+import Consultations from './pages/Consultations';
+import BookAppointment from './pages/BookAppointment';
+import MyAppointments from './pages/MyAppointments';
+import Messages from './pages/Messages';
+import VideoCall from './pages/VideoCall';
 import __Layout from './Layout.jsx';
 
 
@@ -67,6 +72,11 @@ export const PAGES = {
     "ProductDetail": ProductDetail,
     "Products": Products,
     "Questionnaire": Questionnaire,
+    "Consultations": Consultations,
+    "BookAppointment": BookAppointment,
+    "MyAppointments": MyAppointments,
+    "Messages": Messages,
+    "VideoCall": VideoCall,
 }
 
 export const pagesConfig = {
