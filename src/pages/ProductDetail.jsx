@@ -15,11 +15,11 @@ const products = {
     name: 'Semaglutide',
     category: 'Weight Loss',
     description: 'FDA-approved GLP-1 receptor agonist for sustainable weight management. Semaglutide helps reduce appetite and promote long-term weight loss by mimicking the hormone GLP-1.',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
     images: [
-      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80',
-      'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80',
-      'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80'
+      'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
+      'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
+      'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80'
     ],
     tag: 'Best Seller',
     price: 299,
@@ -38,10 +38,11 @@ const products = {
     name: 'Tirzepatide',
     category: 'Weight Loss',
     description: 'Advanced dual-action GIP and GLP-1 receptor agonist for enhanced weight management results.',
-    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
     images: [
-      'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80',
-      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80'
+      'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
+      'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
+      'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=800&q=80'
     ],
     tag: 'Popular',
     price: 399,
