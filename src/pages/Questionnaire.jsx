@@ -95,25 +95,9 @@ export default function Questionnaire() {
     } else {
       // Submit questionnaire
       try {
-        await base44.integrations.Core.SendEmail({
-          from_name: 'MedRevolve Health Questionnaire',
-          to: 'support@medrevolve.com',
-          subject: 'New Health Questionnaire Submitted',
-          body: `
-New health questionnaire completed:
-
-Goal: ${answers.goal || 'Not answered'}
-Gender: ${answers.gender || 'Not answered'}
-Age: ${answers.age || 'Not answered'}
-Conditions: ${answers.conditions?.join(', ') || 'None'}
-Medications: ${answers.medications || 'Not answered'}
-Experience: ${answers.experience || 'Not answered'}
-
-Submitted: ${new Date().toLocaleString()}
-          `
-        });
+        await base44.functions.invoke('submitQuestionnaire', { answers });
       } catch (error) {
-        console.error('Failed to send notification:', error);
+        console.error('Failed to submit questionnaire:', error);
       }
       setIsComplete(true);
     }

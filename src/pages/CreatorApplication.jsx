@@ -27,52 +27,8 @@ export default function CreatorApplication() {
 
   const submitApplication = useMutation({
     mutationFn: async (data) => {
-      const application = await base44.entities.CreatorApplication.create(data);
-      
-      // Send notification to creators@medrevolve.com
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Creator Program',
-        to: 'creators@medrevolve.com',
-        subject: `New Creator Application - ${data.full_name}`,
-        body: `
-New creator application received:
-
-Name: ${data.full_name}
-Email: ${data.email}
-Phone: ${data.phone}
-Platform: ${data.platform}
-Handle: ${data.platform_handle}
-Followers: ${data.followers_count}
-Niche: ${data.audience_niche}
-
-Why Partner:
-${data.why_partner}
-
-Application ID: ${application.id}
-Submitted: ${new Date().toLocaleString()}
-        `
-      });
-
-      // Send confirmation to applicant
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Creator Program',
-        to: data.email,
-        subject: 'Application Received - MedRevolve Creator Program',
-        body: `
-Hi ${data.full_name},
-
-Thank you for applying to the MedRevolve Creator Program! We're excited to review your application.
-
-Our team will review your submission within 24-48 hours and reach out with next steps.
-
-In the meantime, feel free to explore our products and learn more about what we offer at medrevolve.com
-
-Best regards,
-MedRevolve Creator Team
-        `
-      });
-
-      return application;
+      const response = await base44.functions.invoke('submitCreatorApplication', data);
+      return response.data;
     },
     onSuccess: () => {
       setSubmitted(true);

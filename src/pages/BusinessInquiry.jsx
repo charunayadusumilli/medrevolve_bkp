@@ -27,50 +27,8 @@ export default function BusinessInquiry() {
 
   const submitInquiry = useMutation({
     mutationFn: async (data) => {
-      const inquiry = await base44.entities.BusinessInquiry.create(data);
-      
-      // Send notification to business@medrevolve.com
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Business Development',
-        to: 'business@medrevolve.com',
-        subject: `New Business Inquiry - ${data.company_name}`,
-        body: `
-New business inquiry received:
-
-Company: ${data.company_name}
-Contact: ${data.contact_name}
-Email: ${data.email}
-Phone: ${data.phone}
-Industry: ${data.industry}
-Interest: ${data.interest_type}
-Company Size: ${data.company_size}
-
-Message:
-${data.message}
-
-Inquiry ID: ${inquiry.id}
-Submitted: ${new Date().toLocaleString()}
-        `
-      });
-
-      // Send confirmation to business
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Business Development',
-        to: data.email,
-        subject: 'Thank You for Your Interest - MedRevolve',
-        body: `
-Hi ${data.contact_name},
-
-Thank you for your interest in partnering with MedRevolve! We're excited to explore how we can support ${data.company_name}.
-
-Our business development team will review your inquiry and reach out within 1-2 business days to discuss next steps.
-
-Best regards,
-MedRevolve Business Team
-        `
-      });
-
-      return inquiry;
+      const response = await base44.functions.invoke('submitBusinessInquiry', data);
+      return response.data;
     },
     onSuccess: () => {
       setSubmitted(true);
