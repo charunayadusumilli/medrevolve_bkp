@@ -1,6 +1,6 @@
 Deno.serve(async (req) => {
   try {
-    const webhookUrl = 'https://hooks.zapier.com/hooks/catch/26459574/uevpiil/';
+    const webhookUrl = 'https://hooks.zapier.com/hooks/catch/26459574/uevvvwi/';
     
     const payload = {
       form_type: "TestPing",
