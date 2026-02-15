@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 import { 
   CheckCircle2, AlertCircle, Settings, Mail, MessageSquare, 
-  Calendar, Database, Zap, CreditCard, Send, Phone
+  Calendar, Database, Zap, CreditCard, Send, Phone, CheckCircle,
+  ExternalLink, Copy
 } from 'lucide-react';
 
 function ZohoOAuthFlow() {
@@ -17,7 +19,7 @@ function ZohoOAuthFlow() {
   const [loading, setLoading] = useState(false);
   const [refreshToken, setRefreshToken] = useState('');
 
-  const clientId = '1000.YOUR_CLIENT_ID'; // User needs to replace this
+  const clientId = '1000.YF3VPAE61CFXB5WQLRKZAFXU9RMCCO'; // From your Zoho Client ID
 
   const authUrl = `https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.settings.ALL&client_id=${clientId}&response_type=code&access_type=offline&redirect_uri=https://www.zoho.com`;
 
@@ -460,20 +462,23 @@ export default function IntegrationsDashboard() {
 
                           {integration.testable && integration.name === 'Zoho CRM' && (
                             <div className="mt-4 pt-4 border-t border-[#E8E0D5]">
-                              <Button
-                                onClick={handleTestZoho}
-                                disabled={testZohoMutation.isPending}
-                                size="sm"
-                                className="w-full"
-                              >
-                                {testZohoMutation.isPending ? 'Testing...' : 'Test Zoho Sync'}
-                              </Button>
-                              {testZohoMutation.isSuccess && (
-                                <p className="text-xs text-green-600 mt-2">✓ Lead created in Zoho!</p>
-                              )}
-                              {testZohoMutation.isError && (
-                                <p className="text-xs text-red-600 mt-2">✗ {testZohoMutation.error?.message}</p>
-                              )}
+                              <ZohoOAuthFlow />
+                              <div className="mt-3">
+                                <Button
+                                  onClick={handleTestZoho}
+                                  disabled={testZohoMutation.isPending}
+                                  size="sm"
+                                  className="w-full"
+                                >
+                                  {testZohoMutation.isPending ? 'Testing...' : 'Test Zoho Sync'}
+                                </Button>
+                                {testZohoMutation.isSuccess && (
+                                  <p className="text-xs text-green-600 mt-2">✓ Lead created in Zoho!</p>
+                                )}
+                                {testZohoMutation.isError && (
+                                  <p className="text-xs text-red-600 mt-2">✗ {testZohoMutation.error?.message}</p>
+                                )}
+                              </div>
                             </div>
                           )}
                         </div>
