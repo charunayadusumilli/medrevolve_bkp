@@ -71,17 +71,26 @@ export default function ForBusiness() {
                     size="lg"
                     className="bg-[#8B7355] hover:bg-[#6B5A45] text-white rounded-full px-8 py-6 group"
                   >
-                    Schedule a Call
+                    Business Inquiry
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
-                <Link to={createPageUrl('Contact')}>
+                <Link to={createPageUrl('ProviderIntake')}>
                   <Button 
                     variant="outline"
                     size="lg"
                     className="border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355]/5 rounded-full px-8 py-6"
                   >
-                    Contact Us
+                    Provider Application
+                  </Button>
+                </Link>
+                <Link to={createPageUrl('PharmacyIntake')}>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355]/5 rounded-full px-8 py-6"
+                  >
+                    Pharmacy Partnership
                   </Button>
                 </Link>
               </div>
@@ -248,17 +257,26 @@ export default function ForBusiness() {
                   size="lg"
                   className="bg-white text-[#8B7355] hover:bg-white/90 rounded-full px-8 py-6 group"
                 >
-                  Schedule a Call
+                  Business Inquiry
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to={createPageUrl('Contact')}>
+              <Link to={createPageUrl('ProviderIntake')}>
                 <Button 
                   variant="outline"
                   size="lg"
                   className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6"
                 >
-                  Contact Sales
+                  Join as Provider
+                </Button>
+              </Link>
+              <Link to={createPageUrl('PharmacyIntake')}>
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6"
+                >
+                  Pharmacy Partnership
                 </Button>
               </Link>
             </div>

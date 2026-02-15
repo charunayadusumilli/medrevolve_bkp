@@ -52,6 +52,8 @@ import BusinessInquiry from './pages/BusinessInquiry';
 import Consultations from './pages/Consultations';
 import Contact from './pages/Contact';
 import CreatorApplication from './pages/CreatorApplication';
+import CustomerIntake from './pages/CustomerIntake';
+import EmailAudit from './pages/EmailAudit';
 import ForBusiness from './pages/ForBusiness';
 import ForCreators from './pages/ForCreators';
 import Home from './pages/Home';
@@ -59,16 +61,14 @@ import HowItWorks from './pages/HowItWorks';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import PatientPortal from './pages/PatientPortal';
+import PharmacyIntake from './pages/PharmacyIntake';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+import ProviderDashboard from './pages/ProviderDashboard';
+import ProviderIntake from './pages/ProviderIntake';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
-import ProviderDashboard from './pages/ProviderDashboard';
-import EmailAudit from './pages/EmailAudit';
-import ProviderIntake from './pages/ProviderIntake';
-import PharmacyIntake from './pages/PharmacyIntake';
-import CustomerIntake from './pages/CustomerIntake';
 import __Layout from './Layout.jsx';
 
 
@@ -78,6 +78,8 @@ export const PAGES = {
     "Consultations": Consultations,
     "Contact": Contact,
     "CreatorApplication": CreatorApplication,
+    "CustomerIntake": CustomerIntake,
+    "EmailAudit": EmailAudit,
     "ForBusiness": ForBusiness,
     "ForCreators": ForCreators,
     "Home": Home,
@@ -85,16 +87,14 @@ export const PAGES = {
     "Messages": Messages,
     "MyAppointments": MyAppointments,
     "PatientPortal": PatientPortal,
+    "PharmacyIntake": PharmacyIntake,
     "ProductDetail": ProductDetail,
     "Products": Products,
+    "ProviderDashboard": ProviderDashboard,
+    "ProviderIntake": ProviderIntake,
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
-    "ProviderDashboard": ProviderDashboard,
-    "EmailAudit": EmailAudit,
-    "ProviderIntake": ProviderIntake,
-    "PharmacyIntake": PharmacyIntake,
-    "CustomerIntake": CustomerIntake,
 }
 
 export const pagesConfig = {

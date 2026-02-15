@@ -358,10 +358,21 @@ export default function Products() {
             <h2 className="text-2xl md:text-3xl font-light text-[#2D3A2D] mb-4">
               Choose Your Wellness Journey
             </h2>
-            <p className="text-[#5A6B5A] mb-8">
+            <p className="text-[#5A6B5A] mb-6">
               Select a category above to explore treatments designed for your specific goals. 
               Every journey is unique—let's find yours.
             </p>
+            <div className="mb-8">
+              <Link to={createPageUrl('CustomerIntake')}>
+                <Button 
+                  size="lg"
+                  className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8"
+                >
+                  Get Started - Complete Your Intake
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            </div>
             <div className="flex flex-wrap justify-center gap-3">
               {categories.filter(c => c.available).map(category => (
                 <Button
