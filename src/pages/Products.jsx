@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 // Lifestyle-focused categories with real people imagery (30-65 age group)
 const categories = [
@@ -476,6 +477,42 @@ function CategoryCard({ category, isActive, onClick }) {
 }
 
 function ProductCard({ product }) {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setLoading(true);
+    try {
+      const priceMap = {
+        'Semaglutide': 'price_1T1ETDAuWpKZkJ8tlrK09kNp',
+        'NAD+ Spray': 'price_1T1ETDAuWpKZkJ8tdUByobRk',
+        'Testosterone Therapy': 'price_1T1ETDAuWpKZkJ8tZlbegXkW'
+      };
+      
+      const priceId = priceMap[product.name];
+      if (!priceId) {
+        alert('This product is not available for purchase yet');
+        return;
+      }
+
+      const { data } = await base44.functions.invoke('createCheckout', {
+        priceId,
+        successUrl: `${window.location.origin}/Products?success=true`,
+        cancelUrl: `${window.location.origin}/Products?canceled=true`
+      });
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      alert(error.message || 'Failed to start checkout');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
       <motion.div 
@@ -571,9 +608,11 @@ function ProductCard({ product }) {
               
               <Button 
                 size="sm"
+                onClick={handleSubscribe}
+                disabled={loading}
                 className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-5 group-hover:px-6 transition-all shadow-lg shadow-[#4A6741]/20"
               >
-                Start Now
+                {loading ? 'Loading...' : 'Start Now'}
                 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </div>

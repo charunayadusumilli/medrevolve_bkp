@@ -49,6 +49,7 @@
  */
 import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
+import Cart from './pages/Cart';
 import Consultations from './pages/Consultations';
 import Contact from './pages/Contact';
 import CreatorApplication from './pages/CreatorApplication';
@@ -63,22 +64,22 @@ import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import PatientPortal from './pages/PatientPortal';
 import PharmacyIntake from './pages/PharmacyIntake';
+import Privacy from './pages/Privacy';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
-import VideoCall from './pages/VideoCall';
-import Cart from './pages/Cart';
-import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import VideoCall from './pages/VideoCall';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "BookAppointment": BookAppointment,
     "BusinessInquiry": BusinessInquiry,
+    "Cart": Cart,
     "Consultations": Consultations,
     "Contact": Contact,
     "CreatorApplication": CreatorApplication,
@@ -93,16 +94,15 @@ export const PAGES = {
     "MyAppointments": MyAppointments,
     "PatientPortal": PatientPortal,
     "PharmacyIntake": PharmacyIntake,
+    "Privacy": Privacy,
     "ProductDetail": ProductDetail,
     "Products": Products,
     "ProviderDashboard": ProviderDashboard,
     "ProviderIntake": ProviderIntake,
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
-    "VideoCall": VideoCall,
-    "Cart": Cart,
-    "Privacy": Privacy,
     "Terms": Terms,
+    "VideoCall": VideoCall,
 }
 
 export const pagesConfig = {
