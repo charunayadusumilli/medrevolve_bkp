@@ -70,6 +70,9 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
 import IntegrationsDashboard from './pages/IntegrationsDashboard';
+import Cart from './pages/Cart';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import __Layout from './Layout.jsx';
 
 
@@ -97,6 +100,9 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
     "IntegrationsDashboard": IntegrationsDashboard,
+    "Cart": Cart,
+    "Privacy": Privacy,
+    "Terms": Terms,
 }
 
 export const pagesConfig = {
