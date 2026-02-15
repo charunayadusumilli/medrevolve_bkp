@@ -66,6 +66,9 @@ import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
 import ProviderDashboard from './pages/ProviderDashboard';
 import EmailAudit from './pages/EmailAudit';
+import ProviderIntake from './pages/ProviderIntake';
+import PharmacyIntake from './pages/PharmacyIntake';
+import CustomerIntake from './pages/CustomerIntake';
 import __Layout from './Layout.jsx';
 
 
@@ -89,6 +92,9 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "ProviderDashboard": ProviderDashboard,
     "EmailAudit": EmailAudit,
+    "ProviderIntake": ProviderIntake,
+    "PharmacyIntake": PharmacyIntake,
+    "CustomerIntake": CustomerIntake,
 }
 
 export const pagesConfig = {
