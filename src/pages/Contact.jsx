@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { base44 } from '@/api/base44Client';
 import { 
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
   HelpCircle, Package, ArrowRight
@@ -51,10 +52,16 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setSubmitted(true);
+    
+    try {
+      await base44.functions.invoke('submitContactRequest', formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      alert('Failed to submit. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

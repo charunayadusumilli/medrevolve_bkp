@@ -58,12 +58,12 @@ import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
+import PatientPortal from './pages/PatientPortal';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
-import PatientPortal from './pages/PatientPortal';
 import __Layout from './Layout.jsx';
 
 
@@ -79,12 +79,12 @@ export const PAGES = {
     "HowItWorks": HowItWorks,
     "Messages": Messages,
     "MyAppointments": MyAppointments,
+    "PatientPortal": PatientPortal,
     "ProductDetail": ProductDetail,
     "Products": Products,
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
-    "PatientPortal": PatientPortal,
 }
 
 export const pagesConfig = {

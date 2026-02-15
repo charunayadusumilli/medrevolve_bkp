@@ -19,6 +19,25 @@ Deno.serve(async (req) => {
     // Format conditions array for display
     const conditions = answers.conditions?.join(', ') || 'None';
 
+    // Save to PatientIntake entity
+    const intakeRecord = await base44.asServiceRole.entities.PatientIntake.create({
+      email: userEmail,
+      age: answers.age || null,
+      weight: answers.weight || null,
+      height: answers.height || null,
+      goal_weight: answers.goalWeight || null,
+      medical_conditions: answers.conditions || [],
+      medications: answers.medications || null,
+      allergies: answers.allergies || null,
+      previous_treatments: answers.previousTreatments || [],
+      lifestyle_diet: answers.diet || null,
+      lifestyle_exercise: answers.exercise || null,
+      primary_goal: answers.goal || null,
+      answers_json: JSON.stringify(answers)
+    });
+
+    console.log('✅ PatientIntake record created:', intakeRecord.id);
+
     // Send detailed notification to support@medrevolve.com
     await base44.asServiceRole.integrations.Core.SendEmail({
       from_name: 'MedRevolve Health Questionnaire',
@@ -89,6 +108,7 @@ Have questions? Reply to this email anytime or call 1-800-MED-REVO
 
     return Response.json({
       success: true,
+      intake_id: intakeRecord.id,
       message: 'Questionnaire submitted successfully',
       next_steps: 'A medical provider will review within 24-48 hours'
     });
