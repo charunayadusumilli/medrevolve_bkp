@@ -83,6 +83,28 @@ Questions? Reply to this email anytime.
       `
     });
 
+    // Send to Zapier webhook
+    try {
+      await fetch('https://hooks.zapier.com/hooks/catch/26459574/uevpiil/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.full_name,
+          email: data.email,
+          phone: data.phone || '',
+          company_name: '',
+          platform: data.platform,
+          followers_count: data.followers_count,
+          audience_niche: data.audience_niche || '',
+          message: data.why_partner || '',
+          form_type: 'creator_application'
+        })
+      });
+    } catch (webhookError) {
+      console.error('Zapier webhook error:', webhookError);
+      // Don't fail the entire request if webhook fails
+    }
+
     return Response.json({
       success: true,
       application_id: application.id,

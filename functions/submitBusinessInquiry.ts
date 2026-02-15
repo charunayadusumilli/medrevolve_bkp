@@ -86,6 +86,28 @@ Need immediate assistance? Call us at 1-800-MED-REVO
       `
     });
 
+    // Send to Zapier webhook
+    try {
+      await fetch('https://hooks.zapier.com/hooks/catch/26459574/uevpiil/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.contact_name,
+          email: data.email,
+          phone: data.phone || '',
+          company_name: data.company_name,
+          platform: '',
+          followers_count: '',
+          audience_niche: data.industry || '',
+          message: data.message || '',
+          form_type: 'business_inquiry'
+        })
+      });
+    } catch (webhookError) {
+      console.error('Zapier webhook error:', webhookError);
+      // Don't fail the entire request if webhook fails
+    }
+
     return Response.json({
       success: true,
       inquiry_id: inquiry.id,
