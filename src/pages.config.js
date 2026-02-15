@@ -69,6 +69,7 @@ import ProviderIntake from './pages/ProviderIntake';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
+import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -95,6 +96,7 @@ export const PAGES = {
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
+    "IntegrationsDashboard": IntegrationsDashboard,
 }
 
 export const pagesConfig = {
