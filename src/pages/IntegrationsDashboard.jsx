@@ -18,8 +18,19 @@ function ZohoOAuthFlow() {
   const [authCode, setAuthCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [refreshToken, setRefreshToken] = useState('');
+  const [clientId, setClientId] = useState('');
 
-  const clientId = '1000.YF3VPAE61CFXB5WQLRKZAFXU9RMCCO'; // From your Zoho Client ID
+  React.useEffect(() => {
+    const fetchClientId = async () => {
+      try {
+        const { data } = await base44.functions.invoke('getZohoClientId');
+        setClientId(data.client_id);
+      } catch (error) {
+        toast.error('Failed to load Zoho Client ID');
+      }
+    };
+    fetchClientId();
+  }, []);
 
   const authUrl = `https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.settings.ALL&client_id=${clientId}&response_type=code&access_type=offline&redirect_uri=https://www.zoho.com`;
 
@@ -67,8 +78,11 @@ function ZohoOAuthFlow() {
         </p>
         <div className="ml-11">
           <a href={authUrl} target="_blank" rel="noopener noreferrer">
-            <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white">
-              Authorize Zoho CRM
+            <Button 
+              className="bg-[#4A6741] hover:bg-[#3D5636] text-white"
+              disabled={!clientId}
+            >
+              {clientId ? 'Authorize Zoho CRM' : 'Loading...'}
               <ExternalLink className="ml-2 w-4 h-4" />
             </Button>
           </a>
