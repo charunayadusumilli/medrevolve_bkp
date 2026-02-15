@@ -64,6 +64,7 @@ import Products from './pages/Products';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
+import ProviderDashboard from './pages/ProviderDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -85,6 +86,7 @@ export const PAGES = {
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
+    "ProviderDashboard": ProviderDashboard,
 }
 
 export const pagesConfig = {
