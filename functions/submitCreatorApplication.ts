@@ -84,31 +84,65 @@ Questions? Reply to this email anytime.
     });
 
     // Send to Zapier webhook
+    const webhookUrl = 'https://hooks.zapier.com/hooks/catch/26459574/uevpiil/';
+    const webhookPayload = {
+      name: data.full_name,
+      email: data.email,
+      phone: data.phone || '',
+      company_name: '',
+      platform: data.platform,
+      followers_count: data.followers_count,
+      audience_niche: data.audience_niche || '',
+      message: data.why_partner || '',
+      form_type: 'creator_application'
+    };
+
+    console.log('📤 Sending to Zapier webhook:', webhookUrl);
+    console.log('📦 Payload:', JSON.stringify(webhookPayload, null, 2));
+
+    let zapierStatus = 'pending';
+    let zapierError = null;
+    const zapierSentAt = new Date().toISOString();
+
     try {
-      await fetch('https://hooks.zapier.com/hooks/catch/26459574/uevpiil/', {
+      const webhookResponse = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.full_name,
-          email: data.email,
-          phone: data.phone || '',
-          company_name: '',
-          platform: data.platform,
-          followers_count: data.followers_count,
-          audience_niche: data.audience_niche || '',
-          message: data.why_partner || '',
-          form_type: 'creator_application'
-        })
+        body: JSON.stringify(webhookPayload)
       });
+
+      const responseBody = await webhookResponse.text();
+      
+      console.log('✅ Zapier response status:', webhookResponse.status);
+      console.log('✅ Zapier response body:', responseBody);
+
+      if (webhookResponse.ok) {
+        zapierStatus = 'success';
+      } else {
+        zapierStatus = 'failed';
+        zapierError = `HTTP ${webhookResponse.status}: ${responseBody}`;
+        console.error('❌ Zapier webhook failed:', zapierError);
+      }
     } catch (webhookError) {
-      console.error('Zapier webhook error:', webhookError);
-      // Don't fail the entire request if webhook fails
+      zapierStatus = 'failed';
+      zapierError = webhookError.message;
+      console.error('❌ Zapier webhook error:', webhookError);
     }
+
+    // Update application record with webhook status
+    await base44.asServiceRole.entities.CreatorApplication.update(application.id, {
+      zapier_status: zapierStatus,
+      zapier_error: zapierError,
+      zapier_sent_at: zapierSentAt
+    });
+
+    console.log('📊 Webhook tracking updated:', { zapierStatus, zapierError, zapierSentAt });
 
     return Response.json({
       success: true,
       application_id: application.id,
-      message: 'Application submitted successfully'
+      message: 'Application submitted successfully',
+      zapier_status: zapierStatus
     });
 
   } catch (error) {
