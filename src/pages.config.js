@@ -58,6 +58,7 @@ import ForBusiness from './pages/ForBusiness';
 import ForCreators from './pages/ForCreators';
 import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
+import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import PatientPortal from './pages/PatientPortal';
@@ -69,7 +70,6 @@ import ProviderIntake from './pages/ProviderIntake';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import VideoCall from './pages/VideoCall';
-import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import Cart from './pages/Cart';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -88,6 +88,7 @@ export const PAGES = {
     "ForCreators": ForCreators,
     "Home": Home,
     "HowItWorks": HowItWorks,
+    "IntegrationsDashboard": IntegrationsDashboard,
     "Messages": Messages,
     "MyAppointments": MyAppointments,
     "PatientPortal": PatientPortal,
@@ -99,7 +100,6 @@ export const PAGES = {
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "VideoCall": VideoCall,
-    "IntegrationsDashboard": IntegrationsDashboard,
     "Cart": Cart,
     "Privacy": Privacy,
     "Terms": Terms,

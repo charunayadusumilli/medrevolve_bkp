@@ -11,6 +11,151 @@ import {
   Calendar, Database, Zap, CreditCard, Send, Phone
 } from 'lucide-react';
 
+function ZohoOAuthFlow() {
+  const [step, setStep] = useState(1);
+  const [authCode, setAuthCode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [refreshToken, setRefreshToken] = useState('');
+
+  const clientId = '1000.YOUR_CLIENT_ID'; // User needs to replace this
+
+  const authUrl = `https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.settings.ALL&client_id=${clientId}&response_type=code&access_type=offline&redirect_uri=https://www.zoho.com`;
+
+  const handleGetRefreshToken = async () => {
+    if (!authCode.trim()) {
+      toast.error('Please enter the authorization code');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data } = await base44.functions.invoke('zohoGetRefreshToken', { code: authCode.trim() });
+      
+      if (data.refresh_token) {
+        setRefreshToken(data.refresh_token);
+        setStep(3);
+        toast.success('Refresh token obtained! Copy it and set as secret.');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Failed to get refresh token');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    toast.success('Copied to clipboard!');
+  };
+
+  return (
+    <div className="bg-white rounded-xl p-6 border border-[#E8E0D5] space-y-6">
+      <h4 className="font-medium text-[#2D3A2D]">Get Zoho Refresh Token</h4>
+
+      {/* Step 1: Authorize */}
+      <div className={`p-4 rounded-xl ${step === 1 ? 'bg-[#D4E5D7]' : 'bg-[#F5F0E8]'}`}>
+        <div className="flex items-center gap-3 mb-3">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step > 1 ? 'bg-green-500 text-white' : 'bg-[#4A6741] text-white'}`}>
+            {step > 1 ? <CheckCircle className="w-5 h-5" /> : '1'}
+          </div>
+          <h5 className="font-medium text-[#2D3A2D]">Authorize with Zoho</h5>
+        </div>
+        <p className="text-sm text-[#5A6B5A] mb-3 ml-11">
+          Click below to authorize MedRevolve with your Zoho CRM account
+        </p>
+        <div className="ml-11">
+          <a href={authUrl} target="_blank" rel="noopener noreferrer">
+            <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white">
+              Authorize Zoho CRM
+              <ExternalLink className="ml-2 w-4 h-4" />
+            </Button>
+          </a>
+        </div>
+      </div>
+
+      {/* Step 2: Enter Code */}
+      <div className={`p-4 rounded-xl ${step === 2 ? 'bg-[#D4E5D7]' : 'bg-[#F5F0E8]'}`}>
+        <div className="flex items-center gap-3 mb-3">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step > 2 ? 'bg-green-500 text-white' : step === 2 ? 'bg-[#4A6741] text-white' : 'bg-gray-300 text-gray-600'}`}>
+            {step > 2 ? <CheckCircle className="w-5 h-5" /> : '2'}
+          </div>
+          <h5 className="font-medium text-[#2D3A2D]">Paste Authorization Code</h5>
+        </div>
+        <p className="text-sm text-[#5A6B5A] mb-3 ml-11">
+          After authorizing, copy the <code className="bg-white px-1 rounded">code</code> parameter from the redirect URL
+        </p>
+        {step >= 2 && (
+          <div className="ml-11 space-y-3">
+            <div>
+              <Label htmlFor="authCode" className="text-sm text-[#5A6B5A]">Authorization Code</Label>
+              <Input
+                id="authCode"
+                value={authCode}
+                onChange={(e) => setAuthCode(e.target.value)}
+                placeholder="Paste code here..."
+                className="mt-1"
+              />
+            </div>
+            <Button 
+              onClick={handleGetRefreshToken}
+              disabled={loading || !authCode.trim()}
+              className="bg-[#4A6741] hover:bg-[#3D5636] text-white"
+            >
+              {loading ? 'Getting Token...' : 'Get Refresh Token'}
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Step 3: Copy Token */}
+      {step === 3 && (
+        <div className="p-4 rounded-xl bg-green-50 border border-green-200">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center">
+              <CheckCircle className="w-5 h-5" />
+            </div>
+            <h5 className="font-medium text-green-900">Success! Copy Your Refresh Token</h5>
+          </div>
+          <p className="text-sm text-green-700 mb-3 ml-11">
+            Copy this token and set it as <code className="bg-white px-1 rounded">ZOHO_REFRESH_TOKEN</code> in Dashboard → Settings → Secrets
+          </p>
+          <div className="ml-11 space-y-3">
+            <div className="flex gap-2">
+              <Input
+                value={refreshToken}
+                readOnly
+                className="font-mono text-xs"
+              />
+              <Button
+                onClick={() => copyToClipboard(refreshToken)}
+                variant="outline"
+                size="icon"
+              >
+                <Copy className="w-4 h-4" />
+              </Button>
+            </div>
+            <p className="text-xs text-green-600">
+              ✓ After setting the secret, refresh this page to verify the connection
+            </p>
+          </div>
+        </div>
+      )}
+
+      {step < 2 && (
+        <div className="flex justify-center">
+          <Button
+            onClick={() => setStep(2)}
+            variant="outline"
+            className="text-[#4A6741] border-[#4A6741]"
+          >
+            I've Authorized, Enter Code
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function IntegrationsDashboard() {
   const [testPhone, setTestPhone] = useState('');
   const [testMessage, setTestMessage] = useState('Test SMS from MedRevolve');
