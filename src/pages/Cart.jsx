@@ -7,20 +7,29 @@ import { Card } from '@/components/ui/card';
 import { ShoppingCart, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   const updateQuantity = (id, delta) => {
-    setCartItems(items => 
-      items.map(item => 
+    setCartItems(items => {
+      const updated = items.map(item => 
         item.id === id 
           ? { ...item, quantity: Math.max(1, item.quantity + delta) }
           : item
-      )
-    );
+      );
+      localStorage.setItem('cart', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const removeItem = (id) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+    setCartItems(items => {
+      const updated = items.filter(item => item.id !== id);
+      localStorage.setItem('cart', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -118,10 +127,12 @@ export default function Cart() {
                       </div>
                     </div>
                   </div>
-                  <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full h-12">
-                    Proceed to Checkout
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
+                  <Link to={createPageUrl('Checkout')} className="block">
+                    <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full h-12">
+                      Proceed to Checkout
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
                   <Link to={createPageUrl('Products')}>
                     <Button variant="ghost" className="w-full mt-3 text-[#5A6B5A]">
                       Continue Shopping
