@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
@@ -9,6 +9,8 @@ import {
   ArrowLeft, ArrowRight, Check, Shield, Truck, Clock, 
   Star, ChevronRight, Leaf, Heart
 } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import PersonalizedRecommendations from '@/components/recommendations/PersonalizedRecommendations';
 
 const products = {
   1: {
@@ -86,6 +88,26 @@ export default function ProductDetail() {
   const product = products[productId] || defaultProduct;
   
   const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    // Track product view for personalized recommendations
+    const trackView = async () => {
+      try {
+        const isAuthenticated = await base44.auth.isAuthenticated();
+        if (isAuthenticated) {
+          await base44.functions.invoke('trackProductView', {
+            productId: productId,
+            productName: product.name,
+            productCategory: product.category
+          });
+        }
+      } catch (error) {
+        console.error('Error tracking product view:', error);
+      }
+    };
+    
+    trackView();
+  }, [productId]);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
@@ -260,6 +282,12 @@ export default function ProductDetail() {
           </Tabs>
         </motion.div>
       </section>
+
+      {/* Personalized Recommendations */}
+      <PersonalizedRecommendations 
+        currentProductId={productId} 
+        title="You May Also Like" 
+      />
     </div>
   );
 }
