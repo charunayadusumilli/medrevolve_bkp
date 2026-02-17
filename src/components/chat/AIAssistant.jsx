@@ -17,7 +17,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hi! I\'m your MedRevolve AI assistant. I can help you with partnerships, analytics, product info, and more. What can I help you with today?'
+      content: 'Hi! I\'m your MedRevolve wellness concierge 🌿 I can help you explore treatments, understand how telehealth works, or find the right program for your goals. What can I help you with today?'
     }
   ]);
   const [input, setInput] = useState('');
