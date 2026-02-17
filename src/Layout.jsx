@@ -60,11 +60,26 @@ function TreatMegaMenu({ onClose }) {
 }
 
 export default function Layout({ children }) {
+  const cyclingWords = ['Feel Better', 'Look Better', 'Live Longer', 'Be Stronger', 'Start Today'];
+  const [cycleIndex, setCycleIndex] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [treatOpen, setTreatOpen] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFadeIn(false);
+      setTimeout(() => {
+        setCycleIndex(prev => (prev + 1) % cyclingWords.length);
+        setFadeIn(true);
+      }, 300);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
