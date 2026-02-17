@@ -332,6 +332,7 @@ export default function PartnerPortal() {
             </Card>
           </TabsContent>
         </Tabs>
+        </>)}
       </div>
     </div>
     </RequireAuth>
