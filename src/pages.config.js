@@ -50,6 +50,7 @@
 import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import Consultations from './pages/Consultations';
 import Contact from './pages/Contact';
 import CreatorApplication from './pages/CreatorApplication';
@@ -62,6 +63,7 @@ import HowItWorks from './pages/HowItWorks';
 import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
+import OrderSuccess from './pages/OrderSuccess';
 import PatientPortal from './pages/PatientPortal';
 import PharmacyIntake from './pages/PharmacyIntake';
 import Privacy from './pages/Privacy';
@@ -73,8 +75,8 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
-import Checkout from './pages/Checkout';
-import OrderSuccess from './pages/OrderSuccess';
+import PartnerSignup from './pages/PartnerSignup';
+import PartnerPortal from './pages/PartnerPortal';
 import __Layout from './Layout.jsx';
 
 
@@ -82,6 +84,7 @@ export const PAGES = {
     "BookAppointment": BookAppointment,
     "BusinessInquiry": BusinessInquiry,
     "Cart": Cart,
+    "Checkout": Checkout,
     "Consultations": Consultations,
     "Contact": Contact,
     "CreatorApplication": CreatorApplication,
@@ -94,6 +97,7 @@ export const PAGES = {
     "IntegrationsDashboard": IntegrationsDashboard,
     "Messages": Messages,
     "MyAppointments": MyAppointments,
+    "OrderSuccess": OrderSuccess,
     "PatientPortal": PatientPortal,
     "PharmacyIntake": PharmacyIntake,
     "Privacy": Privacy,
@@ -105,8 +109,8 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
-    "Checkout": Checkout,
-    "OrderSuccess": OrderSuccess,
+    "PartnerSignup": PartnerSignup,
+    "PartnerPortal": PartnerPortal,
 }
 
 export const pagesConfig = {

@@ -27,7 +27,8 @@ const navItems = [
     ]
   },
   { name: 'For Creators', href: 'ForCreators' },
-  { name: 'For Businesses', href: 'ForBusiness' }
+  { name: 'For Businesses', href: 'ForBusiness' },
+  { name: 'For Partners', href: 'PartnerSignup' }
 ];
 
 export default function Layout({ children }) {
