@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { createPageUrl } from '@/utils';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
-import WelcomeStep from '@/components/onboarding/WelcomeStep';
-import ProfileStep from '@/components/onboarding/ProfileStep';
-import DocumentUploadStep from '@/components/onboarding/DocumentUploadStep';
-import TutorialStep from '@/components/onboarding/TutorialStep';
-import CompletionStep from '@/components/onboarding/CompletionStep';
+import WelcomeStep from '@/components/onboarding/WelcomeStep.jsx';
+import ProfileStep from '@/components/onboarding/ProfileStep.jsx';
+import DocumentUploadStep from '@/components/onboarding/DocumentUploadStep.jsx';
+import TutorialStep from '@/components/onboarding/TutorialStep.jsx';
+import CompletionStep from '@/components/onboarding/CompletionStep.jsx';
 
 export default function PatientOnboarding() {
   const [currentStep, setCurrentStep] = useState(0);
