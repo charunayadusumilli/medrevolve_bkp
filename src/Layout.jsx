@@ -22,7 +22,6 @@ import {
 const navItems = [
   { name: 'Shop', href: 'Products' },
   { name: 'Consultations', href: 'Consultations' },
-  { name: 'Patient Portal', href: 'PatientPortal' },
 ];
 
 export default function Layout({ children }) {
