@@ -83,24 +83,6 @@ export default function ProviderDashboard() {
     );
   }, [appointments]);
 
-  // Block time mutation
-  const blockTimeMutation = useMutation({
-    mutationFn: (data) => base44.entities.BlockedTime.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['blockedTimes'] });
-      setBlockTimeDialogOpen(false);
-    },
-  });
-
-  // Schedule mutation
-  const scheduleMutation = useMutation({
-    mutationFn: (data) => base44.entities.ProviderSchedule.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['schedules'] });
-      setScheduleDialogOpen(false);
-    },
-  });
-
   // Update appointment status
   const updateAppointmentMutation = useMutation({
     mutationFn: ({ id, status }) => base44.entities.Appointment.update(id, { status }),
