@@ -330,20 +330,83 @@ export default function ForBusiness() {
         </div>
       </section>
 
-      {/* Integrations */}
+      {/* Integrated Payments */}
       <section className="py-20 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-14">
+            <Badge className="mb-4 bg-[#4A6741]/10 text-[#4A6741] border-none text-sm px-4 py-1">
+              💳 Powered by Stripe
+            </Badge>
             <h2 className="text-4xl font-bold text-[#2D3A2D] mb-4">
-              Seamless Integrations
+              Integrated Payments, Out of the Box
             </h2>
-            <p className="text-lg text-[#5A6B5A]">
-              Works with tools you already use
+            <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
+              Every plan includes fully integrated Stripe payments — no merchant account setup, no PCI headaches. Just plug in and start earning.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {integrations.map((integration, idx) => (
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            {/* Payment Features */}
+            <div className="grid grid-cols-2 gap-4">
+              {paymentFeatures.map((feat, idx) => (
+                <motion.div
+                  key={feat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.07 }}
+                  className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E0D5] hover:shadow-md transition-shadow"
+                >
+                  <CheckCircle className="w-5 h-5 text-[#4A6741] mb-2" />
+                  <p className="font-semibold text-[#2D3A2D] text-sm mb-1">{feat.label}</p>
+                  <p className="text-xs text-[#5A6B5A]">{feat.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Visual */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-[#2D3A2D] to-[#1A2A1A] rounded-3xl p-8 text-white"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl">💳</div>
+                <div>
+                  <p className="font-semibold">Stripe Checkout</p>
+                  <p className="text-xs text-white/60">Embedded in your platform</p>
+                </div>
+                <Badge className="ml-auto bg-green-500/20 text-green-400 border-none text-xs">Live</Badge>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { label: 'Monthly Subscription', amount: '$299.00', status: 'paid' },
+                  { label: 'One-time Consultation', amount: '$89.00', status: 'paid' },
+                  { label: 'Prescription Refill', amount: '$149.00', status: 'pending' }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
+                    <div>
+                      <p className="text-sm font-medium">{item.label}</p>
+                      <p className="text-xs text-white/50">{item.status === 'paid' ? '✓ Collected' : '⏳ Processing'}</p>
+                    </div>
+                    <span className={`text-sm font-bold ${item.status === 'paid' ? 'text-green-400' : 'text-yellow-400'}`}>{item.amount}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center">
+                <p className="text-xs text-white/40">Auto-reconciled daily</p>
+                <p className="text-sm font-bold text-green-400">$537.00 collected</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Other Integrations */}
+          <div className="text-center mb-8">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#5A6B5A]">Also integrates with</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {integrations.filter(i => !i.featured).map((integration, idx) => (
               <motion.div
                 key={integration.name}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -352,8 +415,8 @@ export default function ForBusiness() {
                 transition={{ delay: idx * 0.05 }}
               >
                 <Card className="text-center hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="text-4xl mb-2">{integration.logo}</div>
+                  <CardContent className="pt-5 pb-4">
+                    <div className="text-3xl mb-2">{integration.logo}</div>
                     <p className="font-medium text-[#2D3A2D] text-sm">{integration.name}</p>
                     <p className="text-xs text-[#5A6B5A]">{integration.category}</p>
                   </CardContent>
