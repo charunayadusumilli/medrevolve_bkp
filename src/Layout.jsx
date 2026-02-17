@@ -71,6 +71,12 @@ export default function Layout({ children }) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
+              <Link
+                to={createPageUrl('AdminDashboard')}
+                className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+              >
+                Admin
+              </Link>
               {navItems.map((item) => (
                 item.dropdown ? (
                   <DropdownMenu key={item.name}>

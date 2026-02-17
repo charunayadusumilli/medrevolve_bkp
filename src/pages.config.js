@@ -79,6 +79,7 @@ import PartnerSignup from './pages/PartnerSignup';
 import PartnerPortal from './pages/PartnerPortal';
 import ProviderContracts from './pages/ProviderContracts';
 import PharmacyContracts from './pages/PharmacyContracts';
+import AdminDashboard from './pages/AdminDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -115,6 +116,7 @@ export const PAGES = {
     "PartnerPortal": PartnerPortal,
     "ProviderContracts": ProviderContracts,
     "PharmacyContracts": PharmacyContracts,
+    "AdminDashboard": AdminDashboard,
 }
 
 export const pagesConfig = {
