@@ -61,29 +61,9 @@ export default function PatientPortal() {
     enabled: !!user?.email
   });
 
-  if (userLoading) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
-        <div className="text-[#5A6B5A]">Loading portal...</div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-light text-[#2D3A2D] mb-4">Please Log In</h2>
-          <p className="text-[#5A6B5A] mb-6">You need to be logged in to access your patient portal.</p>
-          <Button onClick={() => base44.auth.redirectToLogin()}>
-            Log In
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
+    <RequireAuth portalName="Patient Portal">
+    <>
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#4A6741] to-[#3D5636] text-white py-12 px-6 lg:px-8">
