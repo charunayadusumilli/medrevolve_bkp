@@ -12,6 +12,8 @@ import {
   Calendar, FileText, Pill, MessageSquare, User, 
   Clock, CheckCircle, Video, Download, ArrowRight
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import VideoCallInitiator from '@/components/video/VideoCallInitiator';
 
 export default function PatientPortal() {
   const [activeTab, setActiveTab] = useState('appointments');
