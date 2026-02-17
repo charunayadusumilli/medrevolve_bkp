@@ -6,6 +6,16 @@ import { ArrowRight, Sparkles, Building2, Users } from 'lucide-react';
 
 const tracks = [
   {
+    label: 'Partner Program',
+    headline: 'Add Telehealth to Your Business',
+    description: 'Gyms, spas, salons & clinics earn on every qualified patient. White-label, no inventory, no medical liability.',
+    cta: 'View Partner Program',
+    href: 'PartnerProgram',
+    icon: Building2,
+    bg: 'bg-gradient-to-br from-[#2D3A2D] to-[#4A6741]',
+    tag: 'Businesses',
+  },
+  {
     id: 'creators',
     label: 'For Creators',
     headline: 'Turn your audience\ninto income',
