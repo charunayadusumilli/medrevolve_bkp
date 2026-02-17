@@ -9,6 +9,7 @@ import {
   Scale, Heart, Sparkles, Phone, Mail, MapPin,
   Instagram, Twitter, Facebook, Youtube
 } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +35,7 @@ const navItems = [
 export default function Layout({ children }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -43,6 +45,18 @@ export default function Layout({ children }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch {
+        setUser(null);
+      }
+    };
+    checkUser();
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
@@ -71,12 +85,14 @@ export default function Layout({ children }) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link
-                to={createPageUrl('AdminDashboard')}
-                className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
-              >
-                Admin
-              </Link>
+              {user?.role === 'admin' && (
+                <Link
+                  to={createPageUrl('AdminDashboard')}
+                  className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+                >
+                  Admin
+                </Link>
+              )}
               {navItems.map((item) => (
                 item.dropdown ? (
                   <DropdownMenu key={item.name}>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { createPageUrl } from '@/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -79,14 +80,46 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
+  if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Card className="max-w-md">
-          <CardContent className="pt-6">
-            <p className="text-center text-muted-foreground">
-              Admin access required to view this page.
+      <div className="flex flex-col items-center justify-center min-h-screen p-6">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="text-center">Access Denied</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-muted-foreground">
+              You must be logged in as an administrator to access this page.
             </p>
+            <Button 
+              onClick={() => window.location.href = createPageUrl('Home')}
+              className="w-full"
+            >
+              Return Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (user.role !== 'admin') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-6">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="text-center">Unauthorized Access</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-muted-foreground">
+              This page is restricted to administrators only.
+            </p>
+            <Button 
+              onClick={() => window.location.href = createPageUrl('Home')}
+              className="w-full"
+            >
+              Return Home
+            </Button>
           </CardContent>
         </Card>
       </div>

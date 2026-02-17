@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AdminDashboard from './pages/AdminDashboard';
 import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
 import Cart from './pages/Cart';
@@ -64,26 +65,26 @@ import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import OrderSuccess from './pages/OrderSuccess';
+import PartnerPortal from './pages/PartnerPortal';
+import PartnerSignup from './pages/PartnerSignup';
 import PatientPortal from './pages/PatientPortal';
+import PharmacyContracts from './pages/PharmacyContracts';
 import PharmacyIntake from './pages/PharmacyIntake';
 import Privacy from './pages/Privacy';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+import ProviderContracts from './pages/ProviderContracts';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
-import PartnerSignup from './pages/PartnerSignup';
-import PartnerPortal from './pages/PartnerPortal';
-import ProviderContracts from './pages/ProviderContracts';
-import PharmacyContracts from './pages/PharmacyContracts';
-import AdminDashboard from './pages/AdminDashboard';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AdminDashboard": AdminDashboard,
     "BookAppointment": BookAppointment,
     "BusinessInquiry": BusinessInquiry,
     "Cart": Cart,
@@ -101,22 +102,21 @@ export const PAGES = {
     "Messages": Messages,
     "MyAppointments": MyAppointments,
     "OrderSuccess": OrderSuccess,
+    "PartnerPortal": PartnerPortal,
+    "PartnerSignup": PartnerSignup,
     "PatientPortal": PatientPortal,
+    "PharmacyContracts": PharmacyContracts,
     "PharmacyIntake": PharmacyIntake,
     "Privacy": Privacy,
     "ProductDetail": ProductDetail,
     "Products": Products,
+    "ProviderContracts": ProviderContracts,
     "ProviderDashboard": ProviderDashboard,
     "ProviderIntake": ProviderIntake,
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
-    "PartnerSignup": PartnerSignup,
-    "PartnerPortal": PartnerPortal,
-    "ProviderContracts": ProviderContracts,
-    "PharmacyContracts": PharmacyContracts,
-    "AdminDashboard": AdminDashboard,
 }
 
 export const pagesConfig = {
