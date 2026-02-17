@@ -7,85 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   ArrowLeft, ArrowRight, Check, Shield, Truck, Clock, 
-  Star, ChevronRight, Leaf, Heart
+  Star, ChevronRight, Leaf, Heart, Loader2, ShoppingCart
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PersonalizedRecommendations from '@/components/recommendations/PersonalizedRecommendations';
 
-const products = {
-  1: {
-    name: 'Semaglutide',
-    category: 'Weight Loss',
-    description: 'FDA-approved GLP-1 receptor agonist for sustainable weight management. Semaglutide helps reduce appetite and promote long-term weight loss by mimicking the hormone GLP-1.',
-    image: 'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
-      'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
-      'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80'
-    ],
-    tag: 'Best Seller',
-    price: 299,
-    benefits: [
-      'Clinically proven to reduce body weight by up to 15%',
-      'Reduces appetite and food cravings',
-      'Improves blood sugar control',
-      'Once-weekly injection for convenience',
-      'Supports long-term weight maintenance'
-    ],
-    howItWorks: 'Semaglutide works by mimicking the hormone GLP-1, which targets areas of the brain that regulate appetite and food intake. It slows gastric emptying, helping you feel full longer and reducing overall calorie consumption.',
-    sideEffects: ['Nausea', 'Diarrhea', 'Vomiting', 'Constipation', 'Abdominal pain'],
-    dosage: 'Starting dose of 0.25mg weekly, gradually increasing to maintenance dose of 2.4mg weekly over 16-20 weeks.'
-  },
-  2: {
-    name: 'Tirzepatide',
-    category: 'Weight Loss',
-    description: 'Advanced dual-action GIP and GLP-1 receptor agonist for enhanced weight management results.',
-    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
-      'https://images.unsplash.com/photo-1620231080477-7c3a0a6eff41?w=800&q=80',
-      'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=800&q=80'
-    ],
-    tag: 'Popular',
-    price: 399,
-    benefits: [
-      'Dual-action mechanism for enhanced results',
-      'Up to 22% body weight reduction in clinical trials',
-      'Improves metabolic health markers',
-      'Once-weekly injection',
-      'May support cardiovascular health'
-    ],
-    howItWorks: 'Tirzepatide is a first-in-class dual GIP and GLP-1 receptor agonist. This dual action provides superior weight loss results by targeting multiple pathways that regulate appetite, food intake, and metabolism.',
-    sideEffects: ['Nausea', 'Diarrhea', 'Decreased appetite', 'Vomiting', 'Constipation'],
-    dosage: 'Starting dose of 2.5mg weekly, with gradual increases up to 15mg weekly based on tolerability.'
-  }
-};
-
-// Default product for unknown IDs
-const defaultProduct = {
-  name: 'Wellness Treatment',
-  category: 'Wellness',
-  description: 'Premium wellness treatment designed to support your health journey.',
-  image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80',
-  images: ['https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80'],
-  tag: null,
-  price: 199,
-  benefits: [
-    'Science-backed formulation',
-    'Premium quality ingredients',
-    'Personalized dosing',
-    'Medical provider oversight',
-    'Discreet delivery'
-  ],
-  howItWorks: 'This treatment works by supporting your body\'s natural processes to achieve optimal wellness results.',
-  sideEffects: ['Consult with your provider for complete information'],
-  dosage: 'Dosing will be personalized by your medical provider based on your health profile.'
-};
-
 export default function ProductDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id') || '1';
-  const product = products[productId] || defaultProduct;
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState(false);
   
   const [selectedImage, setSelectedImage] = useState(0);
 
