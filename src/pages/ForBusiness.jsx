@@ -259,7 +259,7 @@ export default function ForBusiness() {
                         <div>
                           <p className="text-lg text-[#5A6B5A] mb-6">{solution.description}</p>
                           <div className="bg-[#F5F0E8] rounded-xl p-6 mb-6">
-                            <p className="text-sm text-[#5A6B5A] mb-2">Starting at</p>
+                            <p className="text-sm text-[#5A6B5A] mb-2">Plans from</p>
                             <p className="text-4xl font-bold text-[#4A6741]">{solution.price}</p>
                           </div>
                           <div className="flex flex-wrap gap-2 mb-6">
