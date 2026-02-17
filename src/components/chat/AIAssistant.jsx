@@ -53,19 +53,18 @@ export default function AIAssistant() {
     try {
       // Use AI to generate response with context about the platform
       const response = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are an AI assistant for MedRevolve, a telehealth platform. 
-        
+        prompt: `You are a friendly wellness concierge for MedRevolve, a premium telehealth platform that offers personalized health protocols via licensed providers.
+
 User question: ${text}
 
-Provide a helpful, concise response. You can:
-- Answer questions about the platform, partnerships, products, and services
-- Provide guidance on using features
-- Share insights on telehealth industry trends
-- Help with partnership opportunities
-- Explain compliance and regulatory topics
+Help the user by:
+- Explaining our wellness treatments (weight loss, hormone health, longevity, hair, peptides)
+- Guiding them to book a consultation or start their journey
+- Answering questions about how telehealth works, pricing, or delivery
+- Being warm, encouraging, and non-medical (never diagnose)
 
-Keep responses under 150 words unless more detail is specifically requested.`,
-        add_context_from_internet: true
+Do NOT discuss internal admin data, partner analytics, or business operations. Keep responses under 150 words, friendly and conversational.`,
+        add_context_from_internet: false
       });
 
       setMessages(prev => [...prev, {
