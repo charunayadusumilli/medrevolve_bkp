@@ -142,8 +142,56 @@ export default function ForCreators() {
     window.location.href = createPageUrl(`CreatorApplication?email=${encodeURIComponent(email)}`);
   };
 
+  // If user is logged in and has creator metrics, show their dashboard at top
+  const showDashboard = user && metrics;
+
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+      {/* Creator Dashboard Banner — only for logged-in creators */}
+      {showDashboard && (
+        <div className="bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] text-white py-10 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <p className="text-white/60 text-sm mb-1">Creator Dashboard</p>
+                <h2 className="text-2xl font-bold">Welcome back, {user.full_name || user.email}</h2>
+              </div>
+              <div className="text-xs bg-white/10 px-3 py-1.5 rounded-full font-semibold uppercase tracking-widest">
+                {metrics.current_tier} Tier
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { label: 'Total Clicks', value: metrics.total_clicks?.toLocaleString() || '0' },
+                { label: 'Conversions', value: metrics.total_conversions?.toLocaleString() || '0' },
+                { label: 'Total Earned', value: `$${metrics.total_commission_earned?.toFixed(2) || '0.00'}` },
+                { label: 'This Month', value: `$${metrics.monthly_commission?.toFixed(2) || '0.00'}` },
+              ].map((stat, i) => (
+                <div key={i} className="bg-white/10 rounded-2xl p-5">
+                  <p className="text-white/60 text-xs mb-1">{stat.label}</p>
+                  <p className="text-2xl font-bold">{stat.value}</p>
+                </div>
+              ))}
+            </div>
+            {metrics.referral_code && (
+              <div className="mt-4 bg-white/10 rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <p className="text-white/60 text-xs mb-1">Your Referral Code</p>
+                  <p className="font-mono font-bold text-lg">{metrics.referral_code}</p>
+                </div>
+                <Button
+                  size="sm"
+                  className="bg-white text-[#4A6741] hover:bg-white/90"
+                  onClick={() => { navigator.clipboard.writeText(`${window.location.origin}?ref=${metrics.referral_code}`); }}
+                >
+                  Copy Link
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-32 px-6 lg:px-8">
         <div className="absolute inset-0 bg-gradient-to-br from-[#4A6741]/5 via-transparent to-[#6B8F5E]/5" />
