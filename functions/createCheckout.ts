@@ -8,42 +8,70 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const { items, shippingInfo, successUrl, cancelUrl } = await req.json();
 
-    const { priceId, successUrl, cancelUrl } = await req.json();
-
-    if (!priceId) {
-      return Response.json({ error: 'priceId is required' }, { status: 400 });
+    if (!items || items.length === 0) {
+      return Response.json({ error: 'Cart items are required' }, { status: 400 });
     }
 
-    // Check if running in iframe (block checkout)
-    const referer = req.headers.get('referer') || '';
+    // Calculate total
+    const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const tax = Math.round(subtotal * 0.08 * 100);
+    const total = Math.round((subtotal + subtotal * 0.08) * 100);
 
-    // Try to get user email optionally
-    let customerEmail;
-    try {
-      const user = await base44.auth.me();
-      customerEmail = user?.email;
-    } catch (_) { /* public app, no user required */ }
+    // Create line items for Stripe
+    const lineItems = items.map(item => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: item.name,
+          images: item.image ? [item.image] : []
+        },
+        unit_amount: Math.round(item.price * 100)
+      },
+      quantity: item.quantity
+    }));
+
+    // Add tax as a line item
+    if (tax > 0) {
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Sales Tax'
+          },
+          unit_amount: tax
+        },
+        quantity: 1
+      });
+    }
 
     const sessionParams = {
-      mode: 'subscription',
-      line_items: [{
-        price: priceId,
-        quantity: 1
-      }],
-      success_url: successUrl || `${new URL(req.url).origin}/Products?success=true`,
-      cancel_url: cancelUrl || `${new URL(req.url).origin}/Products?canceled=true`,
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: lineItems,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      billing_address_collection: 'auto',
       metadata: {
         base44_app_id: Deno.env.get('BASE44_APP_ID'),
+        shipping_name: shippingInfo?.fullName,
+        shipping_email: shippingInfo?.email,
+        shipping_phone: shippingInfo?.phone,
+        shipping_address: shippingInfo?.address,
+        shipping_city: shippingInfo?.city,
+        shipping_state: shippingInfo?.state,
+        shipping_zip: shippingInfo?.zipCode
       }
     };
 
-    if (customerEmail) {
-      sessionParams.customer_email = customerEmail;
-      sessionParams.metadata.user_email = customerEmail;
+    if (shippingInfo?.email) {
+      sessionParams.customer_email = shippingInfo.email;
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
+
+    console.log('Stripe session created:', session.id);
 
     return Response.json({ 
       sessionId: session.id,
