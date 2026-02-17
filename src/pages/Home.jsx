@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { motion } from 'framer-motion';
-import { ChevronDown, ArrowRight, Leaf, Shield, Users, Building2, Sparkles } from 'lucide-react';
+import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServiceCategories from '@/components/home/ServiceCategories';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
@@ -12,6 +8,7 @@ import ResultsSection from '@/components/home/ResultsSection';
 import FAQSection from '@/components/home/FAQSection';
 import CTASection from '@/components/home/CTASection';
 import PersonalizedRecommendations from '@/components/recommendations/PersonalizedRecommendations';
+import PartnerEcosystem from '@/components/home/PartnerEcosystem';
 
 export default function Home() {
   return (
@@ -23,6 +20,8 @@ export default function Home() {
       <HowItWorks />
       <DifferenceSection />
       <ResultsSection />
+      {/* Ecosystem section — replaces top-nav clutter for creators/business/partners */}
+      <PartnerEcosystem />
       <CTASection />
       <FAQSection />
     </div>

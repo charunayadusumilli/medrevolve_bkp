@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { 
-  Menu, X, ShoppingCart, User, ChevronDown, Leaf,
-  Scale, Heart, Sparkles, Phone, Mail, MapPin,
-  Instagram, Twitter, Facebook, Youtube
+  Menu, ChevronDown, Leaf,
+  Phone, Mail, MapPin,
+  Instagram, Twitter, Facebook, Youtube, ShoppingCart
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
