@@ -288,29 +288,33 @@ export default function ProductDetail() {
             <TabsContent value="how" className="pt-8">
               <div className="max-w-3xl">
                 <h3 className="text-2xl font-medium text-[#2D3A2D] mb-4">How {product.name} Works</h3>
-                <p className="text-[#5A6B5A] leading-relaxed">{product.howItWorks}</p>
+                <p className="text-[#5A6B5A] leading-relaxed">{product.how_it_works || 'Information coming soon'}</p>
               </div>
             </TabsContent>
             <TabsContent value="dosage" className="pt-8">
               <div className="max-w-3xl">
                 <h3 className="text-2xl font-medium text-[#2D3A2D] mb-4">Recommended Dosage</h3>
-                <p className="text-[#5A6B5A] leading-relaxed">{product.dosage}</p>
+                <p className="text-[#5A6B5A] leading-relaxed">{product.dosage_info || 'Dosing will be personalized by your provider.'}</p>
               </div>
             </TabsContent>
             <TabsContent value="side-effects" className="pt-8">
               <div className="max-w-3xl">
                 <h3 className="text-2xl font-medium text-[#2D3A2D] mb-4">Potential Side Effects</h3>
                 <p className="text-[#5A6B5A] mb-4">
-                  Most side effects are mild and tend to decrease over time. Common side effects include:
+                  Most side effects are mild and tend to decrease over time.
                 </p>
-                <ul className="grid grid-cols-2 gap-2">
-                  {product.sideEffects.map((effect, index) => (
-                    <li key={index} className="flex items-center gap-2 text-[#5A6B5A]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#4A6741]" />
-                      {effect}
-                    </li>
-                  ))}
-                </ul>
+                {product.side_effects && product.side_effects.length > 0 ? (
+                  <ul className="grid grid-cols-2 gap-2">
+                    {product.side_effects.map((effect, index) => (
+                      <li key={index} className="flex items-center gap-2 text-[#5A6B5A]">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#4A6741]" />
+                        {effect}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[#5A6B5A]">Consult with your provider for complete information.</p>
+                )}
               </div>
             </TabsContent>
           </Tabs>
