@@ -22,24 +22,82 @@ export default function ProductDetail() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
-    // Track product view for personalized recommendations
-    const trackView = async () => {
+    const fetchProduct = async () => {
       try {
-        const isAuthenticated = await base44.auth.isAuthenticated();
-        if (isAuthenticated) {
-          await base44.functions.invoke('trackProductView', {
-            productId: productId,
-            productName: product.name,
-            productCategory: product.category
+        setLoading(true);
+        const products = await base44.entities.Product.list();
+        const foundProduct = products.find(p => p.product_id === productId || p.id === productId);
+        
+        if (foundProduct) {
+          setProduct({
+            ...foundProduct,
+            images: foundProduct.image_url ? [foundProduct.image_url] : ['https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80'],
+          });
+        } else {
+          // Fallback if product not found
+          setProduct({
+            name: 'Product Not Found',
+            category: 'Wellness',
+            description: 'This product is no longer available.',
+            image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80',
+            images: ['https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80'],
+            price: 0,
+            benefits: [],
+            howItWorks: 'Product information unavailable.',
+            sideEffects: [],
+            dosage: 'Please contact support.'
           });
         }
       } catch (error) {
-        console.error('Error tracking product view:', error);
+        console.error('Error fetching product:', error);
+        setProduct({
+          name: 'Error Loading Product',
+          category: 'Wellness',
+          description: 'Unable to load product details.',
+          image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80',
+          images: ['https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=80'],
+          price: 0,
+          benefits: [],
+          howItWorks: '',
+          sideEffects: [],
+          dosage: ''
+        });
+      } finally {
+        setLoading(false);
       }
     };
-    
-    trackView();
+
+    fetchProduct();
   }, [productId]);
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+    
+    try {
+      setAddingToCart(true);
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      const existingItem = cart.find(item => item.id === product.id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.minimum_price || product.price || 0,
+          image: product.image_url || product.images?.[0] || '',
+          quantity: 1
+        });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = createPageUrl('Cart');
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    } finally {
+      setAddingToCart(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
