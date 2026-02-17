@@ -65,7 +65,7 @@ export default function PatientPortal() {
 
   return (
     <RequireAuth portalName="Patient Portal">
-    <div className="min-h-screen bg-[#FDFBF7]">
+      <div className="min-h-screen bg-[#FDFBF7]">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#4A6741] to-[#3D5636] text-white py-12 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
