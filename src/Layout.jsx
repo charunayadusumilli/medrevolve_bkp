@@ -369,7 +369,7 @@ export default function Layout({ children }) {
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); setMobileMenuOpen(false); }}>
                             Sign In
                           </Button>
-                          <Link to={createPageUrl('Questionnaire')} onClick={() => setMobileMenuOpen(false)}>
+                          <Link to={createPageUrl('PatientOnboarding')} onClick={() => setMobileMenuOpen(false)}>
                             <Button className="w-full bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full">
                               Get Started Free
                             </Button>
