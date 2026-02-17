@@ -207,7 +207,7 @@ export default function PatientPortal() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+      </div>
     </RequireAuth>
   );
 }
