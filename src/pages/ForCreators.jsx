@@ -18,6 +18,21 @@ import { trackEvent } from '@/components/analytics/AnalyticsTracker';
 export default function ForCreators() {
   const [email, setEmail] = useState('');
 
+  const { data: user } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: () => base44.auth.me(),
+    retry: false,
+  });
+
+  const { data: creatorMetrics } = useQuery({
+    queryKey: ['creatorMetrics', user?.email],
+    queryFn: () => base44.entities.CreatorMetrics.filter({ creator_email: user?.email }),
+    enabled: !!user?.email,
+    initialData: [],
+  });
+
+  const metrics = creatorMetrics?.[0];
+
   const tiers = [
     { name: 'Bronze', rate: '10%', revenue: '$0-$20K', color: 'from-amber-700 to-amber-500' },
     { name: 'Silver', rate: '15%', revenue: '$20K-$50K', color: 'from-gray-400 to-gray-200' },
