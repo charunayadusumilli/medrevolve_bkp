@@ -64,6 +64,9 @@ export default function Layout({ children }) {
       {/* Analytics Tracker */}
       <AnalyticsTracker />
       
+      {/* AI Assistant */}
+      <AIAssistant />
+      
       {/* Header */}
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -90,12 +93,20 @@ export default function Layout({ children }) {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {user?.role === 'admin' && (
-                <Link
-                  to={createPageUrl('AdminDashboard')}
-                  className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
-                >
-                  Admin
-                </Link>
+                <>
+                  <Link
+                    to={createPageUrl('AdminDashboard')}
+                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+                  >
+                    Admin
+                  </Link>
+                  <Link
+                    to={createPageUrl('PartnershipHub')}
+                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+                  >
+                    Partnerships
+                  </Link>
+                </>
               )}
               {navItems.map((item) => (
                 item.dropdown ? (
