@@ -99,6 +99,27 @@ export default function ProductDetail() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#4A6741] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#FDFBF7] flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold text-[#2D3A2D] mb-4">Product Not Found</h1>
+        <Link to={createPageUrl('Products')}>
+          <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white">
+            Back to Products
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Breadcrumb */}
