@@ -527,12 +527,12 @@ function ProductCard({ product }) {
   };
 
   return (
-    <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
-      <motion.div 
-        className="bg-white rounded-3xl overflow-hidden group h-full flex flex-col shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#E8E0D5]/50"
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.3 }}
-      >
+    <motion.div 
+      className="bg-white rounded-3xl overflow-hidden group h-full flex flex-col shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#E8E0D5]/50"
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
         {/* Hero Image with Lifestyle Focus */}
         <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#F5F0E8] to-[#E8E0D5]">
           <img 
