@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RequireAuth from '@/components/auth/RequireAuth';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';

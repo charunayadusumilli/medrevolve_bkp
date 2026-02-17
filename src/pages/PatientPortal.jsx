@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import RequireAuth from '@/components/auth/RequireAuth';
 import { 
   Calendar, FileText, Pill, MessageSquare, User, 
   Clock, CheckCircle, Video, Download, ArrowRight
