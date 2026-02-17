@@ -31,9 +31,6 @@ import { format, parseISO, isSameDay } from 'date-fns';
 import ProviderScheduleManager from '@/components/provider/ProviderScheduleManager';
 
 export default function ProviderDashboard() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [blockTimeDialogOpen, setBlockTimeDialogOpen] = useState(false);
-  const [scheduleDialogOpen, setScheduleDialogOpen] = useState(false);
   const queryClient = useQueryClient();
 
   // Get current provider (assumes logged-in user is a provider)
