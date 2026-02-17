@@ -93,7 +93,20 @@ export default function Layout({ children }) {
                   {item.name}
                 </Link>
               ))}
-              {/* Admin-only links — invisible to regular users */}
+              {/* Portals dropdown — visible to all, protected at page level */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors">
+                  Portals
+                  <ChevronDown className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white rounded-xl border-none shadow-xl">
+                  <DropdownMenuItem asChild><Link to={createPageUrl('PatientPortal')} className="cursor-pointer">Patient Portal</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link to={createPageUrl('ProviderDashboard')} className="cursor-pointer">Provider Portal</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link to={createPageUrl('PartnerPortal')} className="cursor-pointer">Partner Portal</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer">Creator Portal</Link></DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {/* Admin-only — invisible to regular users */}
               {user?.role === 'admin' && (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="flex items-center gap-1 text-xs font-semibold text-[#4A6741] bg-[#4A6741]/10 px-3 py-1.5 rounded-full hover:bg-[#4A6741]/20 transition-colors">
