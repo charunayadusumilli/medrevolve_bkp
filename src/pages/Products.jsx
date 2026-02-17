@@ -220,9 +220,22 @@ const allProducts = [
   }
 ];
 
+// Map URL param values to internal category IDs
+const categoryParamMap = {
+  'weight_loss': 'weight',
+  'weight': 'weight',
+  'longevity': 'longevity',
+  'hormone': 'hormone',
+  'mens_health': 'hormone',
+  'womens_health': 'hormone',
+  'hair_loss': 'hair',
+  'peptides': 'longevity',
+};
+
 export default function Products() {
   const urlParams = new URLSearchParams(window.location.search);
-  const initialCategory = urlParams.get('category') || null;
+  const rawCategory = urlParams.get('category') || null;
+  const initialCategory = rawCategory ? (categoryParamMap[rawCategory] || rawCategory) : null;
   
   const [activeCategory, setActiveCategory] = useState(initialCategory);
 
