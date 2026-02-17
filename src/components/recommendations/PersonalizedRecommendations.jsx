@@ -19,29 +19,38 @@ export default function PersonalizedRecommendations({ currentProductId, title = 
     const loadRecommendations = async () => {
         try {
             setLoading(true);
-            // Fetch all products from the database
-            const products = await base44.entities.Product.list();
-            
-            // Filter and map products (exclude current product if specified)
-            let filtered = products;
-            if (currentProductId) {
-                filtered = products.filter(p => p.product_id !== currentProductId && p.id !== currentProductId);
-            }
-            
-            // Take first 4 products
-            const recs = filtered.slice(0, 4).map(p => ({
-                id: p.product_id || p.id,
-                name: p.name,
-                category: p.category || 'wellness',
-                price: p.minimum_price || 199,
-                subtitle: p.subtitle || p.description || 'Premium wellness product'
-            }));
-            
-            setRecommendations(recs);
-            setIsPersonalized(false);
+            // Use AI to get personalized recommendations
+            const { data } = await base44.functions.invoke('getAIRecommendations', {
+                currentProductId: currentProductId || null,
+                limit: 4
+            });
+
+            setRecommendations(data.recommendations || []);
+            setIsPersonalized(data.personalized || false);
         } catch (error) {
             console.error('Error loading recommendations:', error);
-            setRecommendations([]);
+            
+            // Fallback to database products
+            try {
+                const products = await base44.entities.Product.list();
+                let filtered = products;
+                if (currentProductId) {
+                    filtered = products.filter(p => p.product_id !== currentProductId && p.id !== currentProductId);
+                }
+                
+                const recs = filtered.slice(0, 4).map(p => ({
+                    id: p.product_id || p.id,
+                    name: p.name,
+                    category: p.category || 'wellness',
+                    price: p.minimum_price || 199,
+                    subtitle: p.subtitle || p.description || 'Premium wellness product'
+                }));
+                
+                setRecommendations(recs);
+                setIsPersonalized(false);
+            } catch (_) {
+                setRecommendations([]);
+            }
         } finally {
             setLoading(false);
         }
