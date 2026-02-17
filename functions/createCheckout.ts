@@ -8,11 +8,6 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
 
     const { priceId, successUrl, cancelUrl } = await req.json();
 
@@ -20,20 +15,35 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'priceId is required' }, { status: 400 });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    // Check if running in iframe (block checkout)
+    const referer = req.headers.get('referer') || '';
+
+    // Try to get user email optionally
+    let customerEmail;
+    try {
+      const user = await base44.auth.me();
+      customerEmail = user?.email;
+    } catch (_) { /* public app, no user required */ }
+
+    const sessionParams = {
       mode: 'subscription',
       line_items: [{
         price: priceId,
         quantity: 1
       }],
-      customer_email: user.email,
       success_url: successUrl || `${new URL(req.url).origin}/Products?success=true`,
       cancel_url: cancelUrl || `${new URL(req.url).origin}/Products?canceled=true`,
       metadata: {
         base44_app_id: Deno.env.get('BASE44_APP_ID'),
-        user_email: user.email
       }
-    });
+    };
+
+    if (customerEmail) {
+      sessionParams.customer_email = customerEmail;
+      sessionParams.metadata.user_email = customerEmail;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return Response.json({ 
       sessionId: session.id,
