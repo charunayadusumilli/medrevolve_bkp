@@ -310,10 +310,13 @@ export default function ProviderDashboard() {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() => updateAppointmentMutation.mutate({ id: appointment.id, status: 'in_progress' })}
+                                  onClick={() => {
+                                    updateAppointmentMutation.mutate({ id: appointment.id, status: 'in_progress' });
+                                    window.location.href = createPageUrl(`VideoCall?id=${appointment.id}`);
+                                  }}
                                 >
                                   <Video className="w-4 h-4 mr-2" />
-                                  Start
+                                  Start Call
                                 </Button>
                                 <Button
                                   size="sm"
