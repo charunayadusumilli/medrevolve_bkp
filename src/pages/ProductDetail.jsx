@@ -186,35 +186,58 @@ export default function ProductDetail() {
             </p>
 
             <div className="flex items-baseline gap-2 mb-8">
-              <span className="text-3xl font-medium text-[#2D3A2D]">${product.price}</span>
+              <span className="text-3xl font-medium text-[#2D3A2D]">
+                ${product.minimum_price || product.price || 'Contact'}
+              </span>
               <span className="text-[#5A6B5A]">/month</span>
             </div>
 
             {/* Benefits */}
-            <div className="bg-white rounded-2xl p-6 mb-6">
-              <h3 className="font-medium text-[#2D3A2D] mb-4">Key Benefits</h3>
-              <ul className="space-y-3">
-                {product.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3 h-3 text-[#4A6741]" />
-                    </div>
-                    <span className="text-[#5A6B5A] text-sm">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {product.benefits && product.benefits.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 mb-6">
+                <h3 className="font-medium text-[#2D3A2D] mb-4">Key Benefits</h3>
+                <ul className="space-y-3">
+                  {product.benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 text-[#4A6741]" />
+                      </div>
+                      <span className="text-[#5A6B5A] text-sm">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-            {/* CTA */}
-            <Link to={createPageUrl('Questionnaire')}>
+            {/* CTAs */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
               <Button 
-                size="lg"
-                className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full py-6 text-base font-medium group mb-6"
+                onClick={handleAddToCart}
+                disabled={addingToCart}
+                className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full py-6 text-base font-medium"
               >
-                Start Your Treatment
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {addingToCart ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding...
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                  </>
+                )}
               </Button>
-            </Link>
+              <Link to={createPageUrl('Questionnaire')} className="w-full">
+                <Button 
+                  size="lg"
+                  className="w-full bg-white border-2 border-[#4A6741] text-[#4A6741] hover:bg-[#F5F0E8] rounded-full py-6 text-base font-medium"
+                >
+                  Book Consultation
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
 
             {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-4">
