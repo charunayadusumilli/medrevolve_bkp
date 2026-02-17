@@ -55,20 +55,6 @@ export default function ProviderDashboard() {
     enabled: !!currentProvider?.id,
   });
 
-  // Fetch blocked times
-  const { data: blockedTimes = [] } = useQuery({
-    queryKey: ['blockedTimes', currentProvider?.id],
-    queryFn: () => base44.entities.BlockedTime.filter({ provider_id: currentProvider?.id }),
-    enabled: !!currentProvider?.id,
-  });
-
-  // Fetch provider schedule
-  const { data: schedules = [] } = useQuery({
-    queryKey: ['schedules', currentProvider?.id],
-    queryFn: () => base44.entities.ProviderSchedule.filter({ provider_id: currentProvider?.id }),
-    enabled: !!currentProvider?.id,
-  });
-
   // Fetch consultation summaries
   const { data: consultations = [] } = useQuery({
     queryKey: ['consultations', currentProvider?.id],
