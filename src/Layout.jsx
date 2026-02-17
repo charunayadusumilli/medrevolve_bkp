@@ -20,18 +20,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const navItems = [
-  { 
-    name: 'For Shoppers', 
-    href: 'Products',
-    dropdown: [
-      { name: 'Shop Products', href: 'Products' },
-      { name: 'Consultations', href: 'Consultations' },
-      { name: 'Patient Portal', href: 'PatientPortal' }
-    ]
-  },
-  { name: 'For Creators', href: 'ForCreators' },
-  { name: 'For Businesses', href: 'ForBusiness' },
-  { name: 'For Partners', href: 'PartnerSignup' }
+  { name: 'Shop', href: 'Products' },
+  { name: 'Consultations', href: 'Consultations' },
+  { name: 'Patient Portal', href: 'PatientPortal' },
 ];
 
 export default function Layout({ children }) {
@@ -93,52 +84,31 @@ export default function Layout({ children }) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              {user?.role === 'admin' && (
-                <>
-                  <Link
-                    to={createPageUrl('AdminDashboard')}
-                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
-                  >
-                    Admin
-                  </Link>
-                  <Link
-                    to={createPageUrl('PartnershipHub')}
-                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
-                  >
-                    Partnerships
-                  </Link>
-                </>
-              )}
               {navItems.map((item) => (
-                item.dropdown ? (
-                  <DropdownMenu key={item.name}>
-                    <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors">
-                      {item.name}
-                      <ChevronDown className="w-4 h-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-white rounded-xl border-none shadow-xl">
-                      {item.dropdown.map((subItem) => (
-                        <DropdownMenuItem key={subItem.name} asChild>
-                          <Link 
-                            to={createPageUrl(subItem.href)}
-                            className="cursor-pointer"
-                          >
-                            {subItem.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={createPageUrl(item.href)}
-                    className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                )
+                <Link
+                  key={item.name}
+                  to={createPageUrl(item.href)}
+                  className="text-sm font-medium text-[#5A6B5A] hover:text-[#4A6741] transition-colors"
+                >
+                  {item.name}
+                </Link>
               ))}
+              {/* Admin-only links — invisible to regular users */}
+              {user?.role === 'admin' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-1 text-xs font-semibold text-[#4A6741] bg-[#4A6741]/10 px-3 py-1.5 rounded-full hover:bg-[#4A6741]/20 transition-colors">
+                    Admin
+                    <ChevronDown className="w-3 h-3" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white rounded-xl border-none shadow-xl">
+                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer">Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer">Partnerships</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer">Compliance</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer">Pharmacy Contracts</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ProviderContracts')} className="cursor-pointer">Provider Contracts</Link></DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </nav>
 
             {/* Right Actions */}
@@ -186,34 +156,31 @@ export default function Layout({ children }) {
                       </Link>
                     </div>
                     
-                    <nav className="flex-1 p-6 space-y-2">
+                    <nav className="flex-1 p-6 space-y-1">
                       {navItems.map((item) => (
-                        <div key={item.name}>
-                          {item.dropdown ? (
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-[#2D3A2D] py-3">{item.name}</p>
-                              {item.dropdown.map((subItem) => (
-                                <Link
-                                  key={subItem.name}
-                                  to={createPageUrl(subItem.href)}
-                                  className="block py-2 pl-4 text-sm text-[#5A6B5A] hover:text-[#4A6741]"
-                                  onClick={() => setMobileMenuOpen(false)}
-                                >
-                                  {subItem.name}
-                                </Link>
-                              ))}
-                            </div>
-                          ) : (
-                            <Link
-                              to={createPageUrl(item.href)}
-                              className="block py-3 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741]"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {item.name}
-                            </Link>
-                          )}
-                        </div>
+                        <Link
+                          key={item.name}
+                          to={createPageUrl(item.href)}
+                          className="block py-3 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741]"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
                       ))}
+                      <div className="pt-4 border-t border-[#E8E0D5] mt-4">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Ecosystem</p>
+                        <Link to={createPageUrl('ForCreators')} className="block py-2 text-sm text-[#5A6B5A] hover:text-[#4A6741]" onClick={() => setMobileMenuOpen(false)}>For Creators</Link>
+                        <Link to={createPageUrl('ForBusiness')} className="block py-2 text-sm text-[#5A6B5A] hover:text-[#4A6741]" onClick={() => setMobileMenuOpen(false)}>For Businesses</Link>
+                        <Link to={createPageUrl('PartnerSignup')} className="block py-2 text-sm text-[#5A6B5A] hover:text-[#4A6741]" onClick={() => setMobileMenuOpen(false)}>Become a Partner</Link>
+                      </div>
+                      {user?.role === 'admin' && (
+                        <div className="pt-4 border-t border-[#E8E0D5] mt-4">
+                          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Admin</p>
+                          <Link to={createPageUrl('AdminDashboard')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                          <Link to={createPageUrl('ComplianceDashboard')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Compliance</Link>
+                          <Link to={createPageUrl('PartnershipHub')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Partnerships</Link>
+                        </div>
+                      )}
                     </nav>
 
                     <div className="p-6 border-t border-[#E8E0D5] space-y-3">
