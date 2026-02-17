@@ -1,162 +1,215 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 const slides = [
   {
-    tag: 'GLP-1 Weight Loss',
-    headline: 'Lose Weight with\nFDA-Approved GLP-1s',
-    sub: 'Semaglutide & Tirzepatide from $99/mo. Real doctors, fast delivery.',
+    tag: 'Weight Loss',
+    headline: 'Your Best Body\nStarts Here',
+    sub: 'Clinically guided weight loss with personalized protocols — delivered to your door.',
     cta: 'See if you qualify',
     ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=90',
-    badge: 'Most Popular',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=95',
+    accent: '#A8C99B',
   },
   {
     tag: "Men's Health",
-    headline: "Better Performance,\nClinically Proven",
-    sub: 'ED treatments, hormone therapy, and hair loss — all online, discreet.',
-    cta: 'Get started',
+    headline: 'Peak Performance,\nUnlocked',
+    sub: 'Hormone therapy, vitality protocols, and hair restoration — designed for the modern man.',
+    cta: 'Explore treatments',
     ctaHref: 'Products?category=mens_health',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=90',
-    badge: 'Fast Delivery',
+    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&q=95',
+    accent: '#C9B99A',
   },
   {
-    tag: "Women's Health",
-    headline: 'Hormones in Balance,\nLife in Focus',
-    sub: 'HRT, fertility support, and wellness therapies tailored for you.',
-    cta: 'Explore treatments',
+    tag: "Women's Wellness",
+    headline: 'Feel Like\nYourself Again',
+    sub: 'Hormone balance, longevity therapies, and wellness programs — crafted for you.',
+    cta: 'Discover your plan',
     ctaHref: 'Products?category=womens_health',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=90',
-    badge: 'New Treatments',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&q=95',
+    accent: '#D4A8C9',
+  },
+  {
+    tag: 'Longevity',
+    headline: 'Live Longer,\nLive Sharper',
+    sub: 'Cutting-edge peptide and longevity protocols to help you perform at every age.',
+    cta: 'Start your journey',
+    ctaHref: 'Products?category=longevity',
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=95',
+    accent: '#A8BFC9',
   },
 ];
 
-const trustItems = [
-  'Trusted by 50,000+ patients',
-  'Real, licensed providers',
-  'FDA-approved medications',
-  'Get started 100% online',
+const categories = [
+  { name: 'Weight Loss', href: 'Products?category=weight_loss', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&q=80' },
+  { name: "Men's Health", href: 'Products?category=mens_health', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=80&q=80' },
+  { name: "Women's Health", href: 'Products?category=womens_health', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=80&q=80' },
+  { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=80&q=80' },
+  { name: 'Hair Loss', href: 'Products?category=hair_loss', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=80&q=80' },
+  { name: 'Peptides', href: 'Products?category=peptides', img: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=80&q=80' },
 ];
 
 export default function HeroSection() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [prevSlide, setPrevSlide] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setPrevSlide(activeSlide);
       setActiveSlide(prev => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [activeSlide]);
 
   const slide = slides[activeSlide];
 
   return (
-    <section className="relative bg-[#0F1A0F] overflow-hidden">
-      {/* Trust bar */}
-      <div className="relative z-10 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
-          <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
-            {trustItems.map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-white/70 text-xs">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#6B8F5E]" />
-                {item}
-              </div>
-            ))}
+    <section className="relative bg-[#080F08] overflow-hidden">
+      {/* Full-screen hero */}
+      <div className="relative min-h-screen flex flex-col">
+
+        {/* Background images with crossfade */}
+        {slides.map((s, i) => (
+          <motion.div
+            key={i}
+            className="absolute inset-0"
+            animate={{ opacity: i === activeSlide ? 1 : 0 }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+          >
+            <img src={s.image} alt={s.tag} className="w-full h-full object-cover object-center" />
+            {/* Rich multi-layer gradient for luxury depth */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+            {/* Subtle color tint per slide */}
+            <div className="absolute inset-0 opacity-10" style={{ background: `radial-gradient(ellipse at 80% 50%, ${s.accent}55, transparent 70%)` }} />
+          </motion.div>
+        ))}
+
+        {/* Top content */}
+        <div className="relative z-10 flex-1 flex items-center">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full pt-24 pb-32">
+            <div className="max-w-3xl">
+
+              {/* Slide tag pill */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`tag-${activeSlide}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.45 }}
+                  className="mb-6"
+                >
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/60 border border-white/20 rounded-full px-4 py-1.5 backdrop-blur-sm">
+                    <Sparkles className="w-3 h-3 text-white/40" />
+                    {slide.tag}
+                  </span>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Headline */}
+              <AnimatePresence mode="wait">
+                <motion.h1
+                  key={`h-${activeSlide}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.55, delay: 0.05 }}
+                  className="text-6xl lg:text-8xl font-black text-white leading-[1.02] tracking-tight mb-6"
+                  style={{ whiteSpace: 'pre-line', fontVariantNumeric: 'tabular-nums' }}
+                >
+                  {slide.headline}
+                </motion.h1>
+              </AnimatePresence>
+
+              {/* Subtext */}
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`sub-${activeSlide}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  className="text-xl text-white/60 mb-10 max-w-xl leading-relaxed font-light"
+                >
+                  {slide.sub}
+                </motion.p>
+              </AnimatePresence>
+
+              {/* CTAs */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`cta-${activeSlide}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, delay: 0.15 }}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <Link to={createPageUrl(slide.ctaHref)}>
+                    <Button size="lg"
+                      className="bg-white text-[#0F1A0F] hover:bg-white/90 font-bold rounded-full px-8 text-base h-14 shadow-2xl shadow-black/40">
+                      {slide.cta}
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                  <Link to={createPageUrl('Consultations')}>
+                    <Button size="lg" variant="ghost"
+                      className="text-white hover:bg-white/10 rounded-full px-8 text-base h-14 border border-white/25 backdrop-blur-sm">
+                      Book a consultation
+                    </Button>
+                  </Link>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom controls & stats bar */}
+        <div className="relative z-10 border-t border-white/10 backdrop-blur-md bg-black/30">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Stats */}
+            <div className="flex items-center gap-8">
+              {[
+                { value: '50K+', label: 'Patients Served' },
+                { value: '200+', label: 'Licensed Providers' },
+                { value: '4.9★', label: 'Patient Rating' },
+              ].map((stat) => (
+                <div key={stat.value} className="text-center">
+                  <p className="text-white font-bold text-lg leading-none">{stat.value}</p>
+                  <p className="text-white/40 text-xs mt-0.5">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Slide indicators */}
+            <div className="flex items-center gap-2">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setPrevSlide(activeSlide); setActiveSlide(i); }}
+                  className={`transition-all duration-500 rounded-full ${
+                    i === activeSlide ? 'bg-white w-8 h-1' : 'bg-white/25 w-2 h-1 hover:bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main hero */}
-      <div className="relative min-h-[85vh] flex items-center">
-        {/* Background Image */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSlide}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0"
-          >
-            <img
-              src={slide.image}
-              alt={slide.tag}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A0F]/90 via-[#0F1A0F]/60 to-transparent" />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full py-20">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSlide}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-2xl"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#4A6741] text-white text-xs font-semibold mb-5">
-                {slide.badge && <span className="bg-white text-[#4A6741] rounded-full px-2 py-0.5 text-[10px] font-bold">{slide.badge}</span>}
-                {slide.tag}
-              </div>
-
-              <h1 className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-5" style={{ whiteSpace: 'pre-line' }}>
-                {slide.headline}
-              </h1>
-
-              <p className="text-lg text-white/70 mb-8 max-w-lg leading-relaxed">{slide.sub}</p>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link to={createPageUrl(slide.ctaHref)}>
-                  <Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 font-bold rounded-full px-8 text-base">
-                    {slide.cta}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                <Link to={createPageUrl('Consultations')}>
-                  <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-full px-8 text-base border border-white/30">
-                    Book a consultation
-                  </Button>
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Slide indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveSlide(i)}
-              className={`h-1 rounded-full transition-all duration-300 ${i === activeSlide ? 'bg-white w-8' : 'bg-white/30 w-3'}`}
-            />
-          ))}
-        </div>
-      </div>
-
       {/* Quick category pills */}
-      <div className="relative z-10 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {[
-              { name: 'Weight Loss', href: 'Products?category=weight_loss', img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=80&q=80' },
-              { name: "Men's Health", href: 'Products?category=mens_health', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=80&q=80' },
-              { name: "Women's Health", href: 'Products?category=womens_health', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&q=80' },
-              { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&q=80' },
-              { name: 'Hair Loss', href: 'Products?category=hair_loss', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=80&q=80' },
-              { name: 'Peptides', href: 'Products?category=peptides', img: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=80&q=80' },
-            ].map((cat) => (
+      <div className="bg-[#0F1A0F] border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-5">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+            {categories.map((cat) => (
               <Link key={cat.name} to={createPageUrl(cat.href)}
-                className="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5F0E8] hover:bg-[#4A6741] hover:text-white text-[#2D3A2D] text-sm font-medium transition-all group">
-                <img src={cat.img} alt={cat.name} className="w-6 h-6 rounded-full object-cover" />
+                className="flex-shrink-0 flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-sm font-medium transition-all">
+                <img src={cat.img} alt={cat.name} className="w-5 h-5 rounded-full object-cover opacity-80" />
                 {cat.name}
               </Link>
             ))}
