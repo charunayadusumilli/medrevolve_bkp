@@ -296,7 +296,21 @@ export default function Layout({ children }) {
             </div>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Portal Access — bottom of footer */}
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <p className="text-white/30 text-xs uppercase tracking-widest mb-4">Portal Access (Login Required)</p>
+            <div className="flex flex-wrap gap-4">
+              <Link to={createPageUrl('PatientPortal')} className="text-white/50 hover:text-white text-sm transition-colors">Patient Portal</Link>
+              <Link to={createPageUrl('ProviderDashboard')} className="text-white/50 hover:text-white text-sm transition-colors">Provider Portal</Link>
+              <Link to={createPageUrl('PartnerPortal')} className="text-white/50 hover:text-white text-sm transition-colors">Partner Portal</Link>
+              <Link to={createPageUrl('ForCreators')} className="text-white/50 hover:text-white text-sm transition-colors">Creator Portal</Link>
+              {user?.role === 'admin' && (
+                <Link to={createPageUrl('AdminDashboard')} className="text-[#A8C99B] hover:text-white text-sm transition-colors">Command Center</Link>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/40 text-sm">
               © 2024 MedRevolve. All rights reserved.
             </p>
