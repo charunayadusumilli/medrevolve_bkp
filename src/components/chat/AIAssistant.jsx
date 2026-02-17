@@ -34,9 +34,9 @@ export default function AIAssistant() {
 
   const handleQuickAction = async (action) => {
     const prompts = {
-      analytics: 'Show me the latest analytics and performance metrics',
-      partners: 'What is the status of our current partnerships?',
-      products: 'Tell me about our top-performing products'
+      products: 'What treatments and wellness programs do you offer?',
+      how: 'How does MedRevolve work? Walk me through the process.',
+      pricing: 'What is the pricing for your programs?'
     };
 
     await handleSend(prompts[action]);
