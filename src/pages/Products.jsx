@@ -603,35 +603,32 @@ function ProductCard({ product }) {
           {/* Spacer */}
           <div className="flex-1"></div>
 
-          {/* Price & CTA - High Contrast */}
-          <div className="pt-4 border-t border-[#E8E0D5]">
-            {/* Value Proposition */}
-            <p className="text-xs text-[#5A6B5A] mb-3">
-              Includes medical consultation & free shipping
-            </p>
-            
-            <div className="flex items-end justify-between">
-              <div>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-semibold text-[#2D3A2D]">${product.price}</span>
-                  <span className="text-sm text-[#5A6B5A]">/mo</span>
-                </div>
-                <p className="text-xs text-[#4A6741] font-medium">Cancel anytime</p>
+        </Link>
+
+        {/* Price & CTA - outside Link so clicks register */}
+        <div className="px-6 pb-6 pt-4 border-t border-[#E8E0D5]">
+          <p className="text-xs text-[#5A6B5A] mb-3">
+            Includes medical consultation & free shipping
+          </p>
+          <div className="flex items-end justify-between">
+            <div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-semibold text-[#2D3A2D]">${product.price}</span>
+                <span className="text-sm text-[#5A6B5A]">/mo</span>
               </div>
-              
-              <Button 
-                size="sm"
-                onClick={handleSubscribe}
-                disabled={loading}
-                className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-5 group-hover:px-6 transition-all shadow-lg shadow-[#4A6741]/20"
-              >
-                {loading ? 'Loading...' : 'Start Now'}
-                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
-              </Button>
+              <p className="text-xs text-[#4A6741] font-medium">Cancel anytime</p>
             </div>
+            <Button 
+              size="sm"
+              onClick={handleSubscribe}
+              disabled={loading}
+              className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-5 transition-all shadow-lg shadow-[#4A6741]/20"
+            >
+              {loading ? 'Loading...' : 'Start Now'}
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
           </div>
         </div>
       </motion.div>
-    </Link>
   );
 }
