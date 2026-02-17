@@ -88,15 +88,19 @@ export default function Layout({ children }) {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     const checkUser = async () => {
       try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (!isAuth) { if (!cancelled) setUser(null); return; }
         const currentUser = await base44.auth.me();
-        setUser(currentUser);
+        if (!cancelled) setUser(currentUser);
       } catch {
-        setUser(null);
+        if (!cancelled) setUser(null);
       }
     };
     checkUser();
+    return () => { cancelled = true; };
   }, [location.pathname]);
 
   // Determine user's dashboard based on role
