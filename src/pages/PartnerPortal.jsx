@@ -325,5 +325,6 @@ export default function PartnerPortal() {
         </Tabs>
       </div>
     </div>
+    </RequireAuth>
   );
 }
