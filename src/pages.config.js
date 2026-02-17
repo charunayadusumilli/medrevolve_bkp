@@ -82,6 +82,7 @@ import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import ComplianceDashboard from './pages/ComplianceDashboard';
+import PartnerCompliance from './pages/PartnerCompliance';
 import __Layout from './Layout.jsx';
 
 
@@ -121,6 +122,7 @@ export const PAGES = {
     "Terms": Terms,
     "VideoCall": VideoCall,
     "ComplianceDashboard": ComplianceDashboard,
+    "PartnerCompliance": PartnerCompliance,
 }
 
 export const pagesConfig = {
