@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
+import AIAssistant from '@/components/chat/AIAssistant';
 import {
   DropdownMenu,
   DropdownMenuContent,
