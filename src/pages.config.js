@@ -84,6 +84,7 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
+import PatientOnboarding from './pages/PatientOnboarding';
 import __Layout from './Layout.jsx';
 
 
@@ -125,6 +126,7 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
+    "PatientOnboarding": PatientOnboarding,
 }
 
 export const pagesConfig = {
