@@ -85,29 +85,8 @@ export default function PartnerPortal() {
     }
   ];
 
-  if (!partner) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-[#2D3A2D] mb-4">
-              No Partner Account Found
-            </h2>
-            <p className="text-[#5A6B5A] mb-6">
-              Create a partner account to access the portal
-            </p>
-            <Link to={createPageUrl('PartnerSignup')}>
-              <Button className="bg-[#4A6741] hover:bg-[#3D5636]">
-                Become a Partner
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
+    <RequireAuth portalName="Partner Portal">
     <div className="min-h-screen bg-[#FDFBF7] py-8">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}

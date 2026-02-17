@@ -436,6 +436,7 @@ export default function ProviderDashboard() {
         </Tabs>
       </div>
     </div>
+    </RequireAuth>
   );
 }
 
