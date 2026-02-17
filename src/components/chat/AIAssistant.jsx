@@ -7,9 +7,9 @@ import { MessageCircle, X, Send, Sparkles, TrendingUp, Users, Package } from 'lu
 import { base44 } from '@/api/base44Client';
 
 const quickActions = [
-  { icon: TrendingUp, label: 'View Analytics', action: 'analytics' },
-  { icon: Users, label: 'Partner Status', action: 'partners' },
-  { icon: Package, label: 'Product Info', action: 'products' }
+  { icon: Package, label: 'Browse Treatments', action: 'products' },
+  { icon: Users, label: 'How It Works', action: 'how' },
+  { icon: TrendingUp, label: 'Pricing', action: 'pricing' }
 ];
 
 export default function AIAssistant() {
