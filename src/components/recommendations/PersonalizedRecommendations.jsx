@@ -24,10 +24,10 @@ export default function PersonalizedRecommendations({ currentProductId, title = 
             if (!isAuthenticated) {
                 // Show default recommendations for non-authenticated users
                 setRecommendations([
-                    { id: 'semaglutide', name: 'Semaglutide', category: 'weight', price: 299, subtitle: 'FDA-Approved Weight Loss' },
-                    { id: 'testosterone', name: 'Testosterone Therapy', category: 'hormone', price: 249, subtitle: 'Hormone Optimization' },
-                    { id: 'nad', name: 'NAD+ Therapy', category: 'longevity', price: 349, subtitle: 'Cellular Rejuvenation' },
-                    { id: 'metformin', name: 'Metformin', category: 'longevity', price: 89, subtitle: 'Longevity & Metabolic Health' }
+                    { id: '1', name: 'Semaglutide', category: 'weight', price: 299, subtitle: 'FDA-Approved Weight Loss' },
+                    { id: '10', name: 'Testosterone Therapy', category: 'hormone', price: 199, subtitle: 'Hormone Optimization' },
+                    { id: '7', name: 'NAD+ Spray', category: 'longevity', price: 179, subtitle: 'Cellular Rejuvenation' },
+                    { id: '5', name: 'Sermorelin', category: 'longevity', price: 199, subtitle: 'Growth Hormone Support' }
                 ]);
                 setIsPersonalized(false);
                 return;
