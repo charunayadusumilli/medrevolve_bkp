@@ -12,12 +12,7 @@ import {
   Clock,
   User,
   FileText,
-  Plus,
-  Edit,
   Video,
-  Mail,
-  Phone,
-  AlertCircle,
   CheckCircle2,
   Ban
 } from 'lucide-react';
