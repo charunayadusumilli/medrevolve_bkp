@@ -217,8 +217,7 @@ export default function ProviderDashboard() {
         <Tabs defaultValue="appointments" className="space-y-6">
           <TabsList className="bg-white">
             <TabsTrigger value="appointments">Appointments</TabsTrigger>
-            <TabsTrigger value="schedule">My Schedule</TabsTrigger>
-            <TabsTrigger value="blocked">Blocked Time</TabsTrigger>
+            <TabsTrigger value="schedule">Schedule & Availability</TabsTrigger>
           </TabsList>
 
           {/* Appointments Tab */}
