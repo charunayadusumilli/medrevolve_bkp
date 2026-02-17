@@ -61,6 +61,8 @@ export default function PatientPortal() {
     enabled: !!user?.email
   });
 
+  if (userLoading) return null;
+
   return (
     <RequireAuth portalName="Patient Portal">
     <>

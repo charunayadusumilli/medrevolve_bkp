@@ -144,7 +144,7 @@ export default function ProviderDashboard() {
 
   return (
     <RequireAuth portalName="Provider Portal">
-    <div className="min-h-screen bg-[#FDFBF7] py-8 px-6 lg:px-8">
+      <div className="min-h-screen bg-[#FDFBF7] py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -435,7 +435,7 @@ export default function ProviderDashboard() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+      </div>
     </RequireAuth>
   );
 }
