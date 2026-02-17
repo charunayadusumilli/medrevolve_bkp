@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+let stripePromise = null;
 
 const steps = [
   { id: 1, name: 'Shipping', icon: MapPin },
@@ -109,6 +109,23 @@ export default function Checkout() {
         setError('Checkout must be completed in a published app, not in preview mode. Please use the published app URL.');
         setLoading(false);
         return;
+      }
+
+      // Initialize Stripe if not already done
+      if (!stripePromise) {
+        try {
+          const { data: keyData } = await base44.functions.invoke('getStripePublishableKey');
+          if (keyData.error) {
+            setError('Stripe is not configured. Please set up Stripe in the dashboard.');
+            setLoading(false);
+            return;
+          }
+          stripePromise = loadStripe(keyData.publishableKey);
+        } catch (err) {
+          setError('Failed to initialize payment system.');
+          setLoading(false);
+          return;
+        }
       }
 
       const { data } = await base44.functions.invoke('createCheckout', {
