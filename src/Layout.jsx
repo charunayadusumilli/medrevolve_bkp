@@ -97,11 +97,11 @@ export default function Layout({ children }) {
               {user?.role === 'admin' && (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="flex items-center gap-1 text-xs font-semibold text-[#4A6741] bg-[#4A6741]/10 px-3 py-1.5 rounded-full hover:bg-[#4A6741]/20 transition-colors">
-                    Admin
+                    Command Center
                     <ChevronDown className="w-3 h-3" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-white rounded-xl border-none shadow-xl">
-                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer">Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer">Overview</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer">Partnerships</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer">Compliance</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer">Pharmacy Contracts</Link></DropdownMenuItem>
@@ -175,8 +175,8 @@ export default function Layout({ children }) {
                       </div>
                       {user?.role === 'admin' && (
                         <div className="pt-4 border-t border-[#E8E0D5] mt-4">
-                          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Admin</p>
-                          <Link to={createPageUrl('AdminDashboard')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Command Center</p>
+                          <Link to={createPageUrl('AdminDashboard')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Overview</Link>
                           <Link to={createPageUrl('ComplianceDashboard')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Compliance</Link>
                           <Link to={createPageUrl('PartnershipHub')} className="block py-2 text-sm text-[#4A6741] font-medium" onClick={() => setMobileMenuOpen(false)}>Partnerships</Link>
                         </div>

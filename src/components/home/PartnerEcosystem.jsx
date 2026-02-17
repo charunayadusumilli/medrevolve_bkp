@@ -33,16 +33,16 @@ const tracks = [
   },
   {
     id: 'partners',
-    label: 'For Partners',
-    headline: 'Grow with a\ntrusted network',
-    description: 'Pharmacies, clinics, and wellness providers — join our partner ecosystem and reach thousands of new patients.',
-    cta: 'Become a Partner',
-    href: 'PartnerSignup',
+    label: 'Pharmacy & Provider Partners',
+    headline: 'Add telehealth to\nyour practice',
+    description: 'Pharmacies, clinics, physicians, and wellness providers — offer 25+ prescription programs without inventory or medical liability.',
+    cta: 'View Partner Program',
+    href: 'PartnerProgram',
     icon: Users,
     accent: 'from-[#4A6741] to-[#6B8F5E]',
     bg: 'bg-[#4A6741]/5',
     border: 'border-[#4A6741]/10',
-    tag: 'Revenue sharing',
+    tag: 'Earn $1,200–$40,000/mo',
   },
 ];
 
