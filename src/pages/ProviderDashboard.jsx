@@ -443,7 +443,8 @@ export default function ProviderDashboard() {
             )}
           </TabsContent>
         </Tabs>
-        </>)}
+        </div>
+        )}
       </div>
       </div>
     </RequireAuth>
