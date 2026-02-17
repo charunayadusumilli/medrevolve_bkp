@@ -142,23 +142,8 @@ export default function ProviderDashboard() {
     return { consultations: patientConsultations, prescriptions: patientPrescriptions, appointments: patientAppointments };
   };
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
-        <p className="text-[#5A6B5A]">Please log in to access the provider dashboard.</p>
-      </div>
-    );
-  }
-
-  if (!currentProvider) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
-        <p className="text-[#5A6B5A]">No provider profile found for your account.</p>
-      </div>
-    );
-  }
-
   return (
+    <RequireAuth portalName="Provider Portal">
     <div className="min-h-screen bg-[#FDFBF7] py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
