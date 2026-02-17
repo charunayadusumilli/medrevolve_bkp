@@ -146,6 +146,14 @@ export default function ProviderDashboard() {
     <RequireAuth portalName="Provider Portal">
       <div className="min-h-screen bg-[#FDFBF7] py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {!currentProvider ? (
+          <div className="flex items-center justify-center py-32 text-center">
+            <div>
+              <h2 className="text-2xl font-bold text-[#2D3A2D] mb-2">No Provider Profile Found</h2>
+              <p className="text-[#5A6B5A]">Your account is not linked to a provider profile yet. Please contact an admin.</p>
+            </div>
+          </div>
+        ) : (<>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-light text-[#2D3A2D] mb-2">

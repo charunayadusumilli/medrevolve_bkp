@@ -68,6 +68,7 @@ import MyAppointments from './pages/MyAppointments';
 import OrderSuccess from './pages/OrderSuccess';
 import PartnerCompliance from './pages/PartnerCompliance';
 import PartnerPortal from './pages/PartnerPortal';
+import PartnerProgram from './pages/PartnerProgram';
 import PartnerSignup from './pages/PartnerSignup';
 import PartnershipHub from './pages/PartnershipHub';
 import PatientPortal from './pages/PatientPortal';
@@ -83,7 +84,6 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
-import PartnerProgram from './pages/PartnerProgram';
 import __Layout from './Layout.jsx';
 
 
@@ -109,6 +109,7 @@ export const PAGES = {
     "OrderSuccess": OrderSuccess,
     "PartnerCompliance": PartnerCompliance,
     "PartnerPortal": PartnerPortal,
+    "PartnerProgram": PartnerProgram,
     "PartnerSignup": PartnerSignup,
     "PartnershipHub": PartnershipHub,
     "PatientPortal": PatientPortal,
@@ -124,7 +125,6 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
-    "PartnerProgram": PartnerProgram,
 }
 
 export const pagesConfig = {
