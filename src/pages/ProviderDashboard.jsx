@@ -27,7 +27,8 @@ import {
   Ban
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
-import { format, parseISO, addDays, startOfWeek, isSameDay } from 'date-fns';
+import { format, parseISO, isSameDay } from 'date-fns';
+import ProviderScheduleManager from '@/components/provider/ProviderScheduleManager';
 
 export default function ProviderDashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
