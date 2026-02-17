@@ -19,36 +19,29 @@ export default function PersonalizedRecommendations({ currentProductId, title = 
     const loadRecommendations = async () => {
         try {
             setLoading(true);
-            const isAuthenticated = await base44.auth.isAuthenticated();
+            // Fetch all products from the database
+            const products = await base44.entities.Product.list();
             
-            if (!isAuthenticated) {
-                // Show default recommendations for non-authenticated users
-                setRecommendations([
-                    { id: '1', name: 'Semaglutide', category: 'weight', price: 299, subtitle: 'FDA-Approved Weight Loss' },
-                    { id: '10', name: 'Testosterone Therapy', category: 'hormone', price: 199, subtitle: 'Hormone Optimization' },
-                    { id: '7', name: 'NAD+ Spray', category: 'longevity', price: 179, subtitle: 'Cellular Rejuvenation' },
-                    { id: '5', name: 'Sermorelin', category: 'longevity', price: 199, subtitle: 'Growth Hormone Support' }
-                ]);
-                setIsPersonalized(false);
-                return;
+            // Filter and map products (exclude current product if specified)
+            let filtered = products;
+            if (currentProductId) {
+                filtered = products.filter(p => p.product_id !== currentProductId && p.id !== currentProductId);
             }
-
-            const user = await base44.auth.me();
-            const { data } = await base44.functions.invoke('getPersonalizedRecommendations', {
-                userEmail: user.email,
-                currentProductId: currentProductId || null,
-                limit: 4
-            });
-
-            setRecommendations(data.recommendations || []);
-            setIsPersonalized(data.personalized || false);
+            
+            // Take first 4 products
+            const recs = filtered.slice(0, 4).map(p => ({
+                id: p.product_id || p.id,
+                name: p.name,
+                category: p.category || 'wellness',
+                price: p.minimum_price || 199,
+                subtitle: p.subtitle || p.description || 'Premium wellness product'
+            }));
+            
+            setRecommendations(recs);
+            setIsPersonalized(false);
         } catch (error) {
             console.error('Error loading recommendations:', error);
-            // Fallback to default products
-            setRecommendations([
-                { id: 'semaglutide', name: 'Semaglutide', category: 'weight', price: 299, subtitle: 'FDA-Approved Weight Loss' },
-                { id: 'nad', name: 'NAD+ Therapy', category: 'longevity', price: 349, subtitle: 'Cellular Rejuvenation' }
-            ]);
+            setRecommendations([]);
         } finally {
             setLoading(false);
         }
