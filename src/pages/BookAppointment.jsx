@@ -379,6 +379,22 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <p className="text-xs text-[#9A8B7A] mt-1.5">We'll send you a reminder 24 hours before your appointment.</p>
       </div>
 
+      <div className="bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl p-4">
+        <div className="flex items-start gap-3">
+          <input
+            type="checkbox"
+            id="recordingConsent"
+            checked={formData.recording_consent || false}
+            onChange={(e) => setFormData({ ...formData, recording_consent: e.target.checked })}
+            className="w-4 h-4 rounded border-[#4A6741] accent-[#4A6741] mt-0.5"
+          />
+          <label htmlFor="recordingConsent" className="flex-1 text-sm text-[#2D3A2D]">
+            <span className="font-semibold">I consent to recording this consultation</span>
+            <p className="text-[#5A6B5A] text-xs mt-1">Recordings will be securely stored and available for your review only. This helps you reference your provider's recommendations later.</p>
+          </label>
+        </div>
+      </div>
+
       <div>
         <Label htmlFor="notes" className="text-sm font-semibold text-[#2D3A2D] mb-2 block">
           Additional notes <span className="text-[#9A8B7A] font-normal">(optional)</span>
