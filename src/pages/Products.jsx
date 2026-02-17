@@ -602,11 +602,11 @@ function ProductCard({ product }) {
 
           {/* Spacer */}
           <div className="flex-1"></div>
+        </div>
+      </Link>
 
-        </Link>
-
-        {/* Price & CTA - outside Link so clicks register */}
-        <div className="px-6 pb-6 pt-4 border-t border-[#E8E0D5]">
+      {/* Price & CTA - outside Link so clicks register */}
+      <div className="px-6 pb-6 pt-4 border-t border-[#E8E0D5]">
           <p className="text-xs text-[#5A6B5A] mb-3">
             Includes medical consultation & free shipping
           </p>
