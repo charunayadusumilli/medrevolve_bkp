@@ -153,7 +153,8 @@ export default function ProviderDashboard() {
               <p className="text-[#5A6B5A]">Your account is not linked to a provider profile yet. Please contact an admin.</p>
             </div>
           </div>
-        ) : (<>
+        ) : (
+        <div>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-light text-[#2D3A2D] mb-2">
