@@ -116,10 +116,10 @@ export default function Layout({ children }) {
 
       {/* Announcement Bar */}
       <div className="bg-[#2D3A2D] text-white text-center py-2.5 px-4 text-sm font-medium">
-        🌿 FDA-approved telehealth medications at transparent pricing.{' '}
-        <Link to={createPageUrl('Products')} className="underline underline-offset-2 hover:text-[#A8C99B] transition-colors">
-          See if you qualify →
-        </Link>
+        ✦ Personalized health protocols, licensed providers, delivered to your door.{' '}
+          <Link to={createPageUrl('Products')} className="underline underline-offset-2 hover:text-[#A8C99B] transition-colors">
+            Explore treatments →
+          </Link>
       </div>
 
       {/* Header */}
