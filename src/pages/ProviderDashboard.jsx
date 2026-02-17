@@ -340,111 +340,11 @@ export default function ProviderDashboard() {
           </TabsContent>
 
           {/* Schedule Tab */}
-          <TabsContent value="schedule" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-medium text-[#2D3A2D]">Weekly Schedule</h2>
-              <Dialog open={scheduleDialogOpen} onOpenChange={setScheduleDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-[#4A6741] hover:bg-[#3D5636]">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Schedule
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add Weekly Schedule</DialogTitle>
-                  </DialogHeader>
-                  <ScheduleForm 
-                    providerId={currentProvider.id} 
-                    onSubmit={(data) => scheduleMutation.mutate(data)}
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            <div className="grid gap-4">
-              {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => {
-                const daySchedules = schedules.filter(s => s.day_of_week === index);
-                return (
-                  <Card key={day}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-[#2D3A2D]">{day}</h3>
-                          {daySchedules.length === 0 ? (
-                            <p className="text-sm text-[#5A6B5A]">No schedule set</p>
-                          ) : (
-                            <div className="mt-2 space-y-1">
-                              {daySchedules.map(schedule => (
-                                <p key={schedule.id} className="text-sm text-[#5A6B5A]">
-                                  {schedule.start_time} - {schedule.end_time}
-                                  {!schedule.is_available && ' (Unavailable)'}
-                                </p>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </TabsContent>
-
-          {/* Blocked Time Tab */}
-          <TabsContent value="blocked" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-medium text-[#2D3A2D]">Blocked Time Slots</h2>
-              <Dialog open={blockTimeDialogOpen} onOpenChange={setBlockTimeDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-[#4A6741] hover:bg-[#3D5636]">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Block Time
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Block Time Slot</DialogTitle>
-                  </DialogHeader>
-                  <BlockTimeForm 
-                    providerId={currentProvider.id} 
-                    onSubmit={(data) => blockTimeMutation.mutate(data)}
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            {blockedTimes.length === 0 ? (
-              <Card>
-                <CardContent className="py-12 text-center">
-                  <Ban className="w-12 h-12 text-[#5A6B5A] mx-auto mb-4" />
-                  <p className="text-[#5A6B5A]">No blocked time slots</p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {blockedTimes.map((blocked) => (
-                  <Card key={blocked.id}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-[#2D3A2D]">{blocked.reason}</p>
-                          <div className="flex items-center gap-4 mt-2 text-sm text-[#5A6B5A]">
-                            <span>{format(parseISO(blocked.start_datetime), 'MMM dd, yyyy h:mm a')}</span>
-                            <span>→</span>
-                            <span>{format(parseISO(blocked.end_datetime), 'MMM dd, yyyy h:mm a')}</span>
-                          </div>
-                          {blocked.is_recurring && (
-                            <Badge className="mt-2">Recurring</Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+          <TabsContent value="schedule">
+            <ProviderScheduleManager
+              providerId={currentProvider.id}
+              appointments={appointments}
+            />
           </TabsContent>
         </Tabs>
         </div>
