@@ -100,12 +100,21 @@ export default function ForBusiness() {
   ];
 
   const integrations = [
-    { name: 'Stripe', logo: '💳', category: 'Payments' },
+    { name: 'Stripe', logo: '💳', category: 'Payments', featured: true },
     { name: 'Twilio', logo: '📞', category: 'Communications' },
     { name: 'Zoom', logo: '📹', category: 'Video Calls' },
     { name: 'Google Calendar', logo: '📅', category: 'Scheduling' },
     { name: 'Zapier', logo: '⚡', category: 'Automation' },
     { name: 'HubSpot', logo: '🎯', category: 'CRM' }
+  ];
+
+  const paymentFeatures = [
+    { label: 'Instant Checkout', desc: 'Frictionless payment flow for patients' },
+    { label: 'Subscriptions', desc: 'Recurring billing for ongoing programs' },
+    { label: 'Split Payouts', desc: 'Automatic revenue share to partners' },
+    { label: 'Refunds & Disputes', desc: 'Handled automatically via Stripe' },
+    { label: 'Multi-currency', desc: 'Accept payments in 135+ currencies' },
+    { label: 'PCI Compliant', desc: 'Bank-level security, no PCI burden on you' }
   ];
 
   const caseStudies = [
