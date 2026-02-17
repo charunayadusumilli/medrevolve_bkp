@@ -261,12 +261,12 @@ function AppointmentCard({ appointment }) {
       )}
 
       {isUpcoming && (
-        <a href={createPageUrl(`VideoCall?id=${appointment.id}`)}>
-          <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full" size="sm">
-            <Video className="mr-2 w-4 h-4" />
-            Join Call
-          </Button>
-        </a>
+        <div className="mt-4">
+          <VideoCallInitiator 
+            appointmentId={appointment.id}
+            appointmentTime={appointment.appointment_date}
+          />
+        </div>
       )}
     </motion.div>
   );
