@@ -26,6 +26,7 @@ import {
   CheckCircle2,
   Ban
 } from 'lucide-react';
+import { createPageUrl } from '@/utils';
 import { format, parseISO, addDays, startOfWeek, isSameDay } from 'date-fns';
 
 export default function ProviderDashboard() {
