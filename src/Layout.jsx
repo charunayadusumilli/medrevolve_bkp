@@ -10,6 +10,7 @@ import {
   Instagram, Twitter, Facebook, Youtube
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,6 +61,9 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+      {/* Analytics Tracker */}
+      <AnalyticsTracker />
+      
       {/* Header */}
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${

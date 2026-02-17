@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { trackEvent } from '@/components/analytics/AnalyticsTracker';
 import { 
   Video, Calendar, MessageSquare, Clock, Star, 
   ArrowRight, CheckCircle, Shield, Users
@@ -80,6 +81,7 @@ export default function Consultations() {
                   <Button 
                     size="lg"
                     className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8"
+                    onClick={() => trackEvent('Book Consultation', 'Consultations', { source: 'hero_cta' })}
                   >
                     Book Consultation
                     <Calendar className="ml-2 w-5 h-5" />

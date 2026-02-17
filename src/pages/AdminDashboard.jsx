@@ -8,9 +8,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   Users, Building2, Stethoscope, Pill, UserPlus, 
-  MessageSquare, DollarSign, TrendingUp, RefreshCw
+  MessageSquare, DollarSign, TrendingUp, RefreshCw, BarChart3
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -192,11 +193,15 @@ export default function AdminDashboard() {
         {/* Submissions Tabs */}
         <Card>
           <CardHeader>
-            <CardTitle>All Submissions</CardTitle>
+            <CardTitle>Dashboard</CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="customers" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+            <Tabs defaultValue="analytics" className="w-full">
+              <TabsList className="grid w-full grid-cols-5 lg:grid-cols-9">
+                <TabsTrigger value="analytics">
+                  <BarChart3 className="w-4 h-4 mr-1" />
+                  Analytics
+                </TabsTrigger>
                 <TabsTrigger value="customers">Customers</TabsTrigger>
                 <TabsTrigger value="providers">Providers</TabsTrigger>
                 <TabsTrigger value="pharmacies">Pharmacies</TabsTrigger>
@@ -206,6 +211,10 @@ export default function AdminDashboard() {
                 <TabsTrigger value="partners">Partners</TabsTrigger>
                 <TabsTrigger value="referrals">Referrals</TabsTrigger>
               </TabsList>
+
+              <TabsContent value="analytics">
+                <AnalyticsDashboard />
+              </TabsContent>
 
               <TabsContent value="customers" className="space-y-4">
                 {customers?.map(c => (
