@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PersonalizedRecommendations from '@/components/recommendations/PersonalizedRecommendations';
+import AIGeneratedFAQ from '@/components/product/AIGeneratedFAQ';
 
 export default function ProductDetail() {
   const urlParams = new URLSearchParams(window.location.search);
