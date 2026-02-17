@@ -77,6 +77,8 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import PartnerSignup from './pages/PartnerSignup';
 import PartnerPortal from './pages/PartnerPortal';
+import ProviderContracts from './pages/ProviderContracts';
+import PharmacyContracts from './pages/PharmacyContracts';
 import __Layout from './Layout.jsx';
 
 
@@ -111,6 +113,8 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "PartnerSignup": PartnerSignup,
     "PartnerPortal": PartnerPortal,
+    "ProviderContracts": ProviderContracts,
+    "PharmacyContracts": PharmacyContracts,
 }
 
 export const pagesConfig = {
