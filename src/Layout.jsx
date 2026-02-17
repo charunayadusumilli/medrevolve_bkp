@@ -286,13 +286,13 @@ export default function Layout({ children }) {
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}>
                     Sign In
                   </Button>
-                  <Link to={createPageUrl('Questionnaire')} className="hidden sm:block">
+                  <Link to={createPageUrl('PatientOnboarding')} className="hidden sm:block">
                     <Button className="bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full px-5 text-sm font-semibold">
                       Get Started
                     </Button>
                   </Link>
                 </>
-              )}
+                )}
 
               {/* Mobile Menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
