@@ -52,6 +52,7 @@ import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import ComplianceDashboard from './pages/ComplianceDashboard';
 import Consultations from './pages/Consultations';
 import Contact from './pages/Contact';
 import CreatorApplication from './pages/CreatorApplication';
@@ -65,6 +66,7 @@ import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import OrderSuccess from './pages/OrderSuccess';
+import PartnerCompliance from './pages/PartnerCompliance';
 import PartnerPortal from './pages/PartnerPortal';
 import PartnerSignup from './pages/PartnerSignup';
 import PartnershipHub from './pages/PartnershipHub';
@@ -81,8 +83,6 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
-import ComplianceDashboard from './pages/ComplianceDashboard';
-import PartnerCompliance from './pages/PartnerCompliance';
 import __Layout from './Layout.jsx';
 
 
@@ -92,6 +92,7 @@ export const PAGES = {
     "BusinessInquiry": BusinessInquiry,
     "Cart": Cart,
     "Checkout": Checkout,
+    "ComplianceDashboard": ComplianceDashboard,
     "Consultations": Consultations,
     "Contact": Contact,
     "CreatorApplication": CreatorApplication,
@@ -105,6 +106,7 @@ export const PAGES = {
     "Messages": Messages,
     "MyAppointments": MyAppointments,
     "OrderSuccess": OrderSuccess,
+    "PartnerCompliance": PartnerCompliance,
     "PartnerPortal": PartnerPortal,
     "PartnerSignup": PartnerSignup,
     "PartnershipHub": PartnershipHub,
@@ -121,8 +123,6 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
-    "ComplianceDashboard": ComplianceDashboard,
-    "PartnerCompliance": PartnerCompliance,
 }
 
 export const pagesConfig = {
