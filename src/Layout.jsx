@@ -146,7 +146,11 @@ export default function Layout({ children }) {
               {/* What We Treat Mega Menu */}
               <div className="relative" onMouseEnter={() => setTreatOpen(true)} onMouseLeave={() => setTreatOpen(false)}>
                 <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                  What We Treat
+                  <span
+                    style={{ transition: 'opacity 0.3s ease', opacity: fadeIn ? 1 : 0, minWidth: 90, display: 'inline-block', textAlign: 'left' }}
+                  >
+                    {cyclingWords[cycleIndex]}
+                  </span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${treatOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
