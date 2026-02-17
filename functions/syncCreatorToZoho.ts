@@ -25,7 +25,10 @@ async function getZohoAccessToken() {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { application_id } = await req.json();
+    const payload = await req.json();
+    
+    // Handle both direct calls and entity automation payloads
+    const application_id = payload.application_id || payload.event?.entity_id;
 
     if (!application_id) {
       return Response.json({ error: "application_id required" }, { status: 400 });
