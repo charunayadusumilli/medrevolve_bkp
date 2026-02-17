@@ -584,7 +584,8 @@ export default function BookAppointment() {
     type: '',
     reason: '',
     notes: '',
-    phone: ''
+    phone: '',
+    recording_consent: false
   });
 
   const queryClient = useQueryClient();
