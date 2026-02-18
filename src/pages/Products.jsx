@@ -436,7 +436,7 @@ export default function Products() {
               <p className="text-[#5A6B5A]">Medical Providers</p>
             </div>
             <div>
-              <div className="text-4xl font-light text-[#4A6741] mb-2">3-5 Days</div>
+              <div className="text-4xl font-light text-[#4A6741] mb-2">24-48 hrs</div>
               <p className="text-[#5A6B5A]">Discreet Delivery</p>
             </div>
           </div>
