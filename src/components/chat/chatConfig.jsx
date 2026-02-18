@@ -39,7 +39,8 @@ export const PERSONAS = {
   // ── Customer-facing ────────────────────────────────────────────────────────
   wellness_concierge: {
     name:     'Wellness Concierge',
-    photo:    'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=96&q=85&fit=crop&crop=face',
+    // Woman, warm smile — wellness advisor
+    photo:    'https://i.pravatar.cc/96?img=47',
     initials: 'WC',
     gradient: ['#4A6741', '#6B8F5E'],
     audience: AUDIENCES.CUSTOMER,
@@ -49,7 +50,8 @@ export const PERSONAS = {
 
   treatment_advisor: {
     name:     'Treatment Advisor',
-    photo:    'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=96&q=85&fit=crop&crop=face',
+    // Man, professional — treatment expert
+    photo:    'https://i.pravatar.cc/96?img=12',
     initials: 'TA',
     gradient: ['#3B6B5A', '#5A9E84'],
     audience: AUDIENCES.CUSTOMER,
@@ -59,7 +61,8 @@ export const PERSONAS = {
 
   consultation_coordinator: {
     name:     'Consultation Coordinator',
-    photo:    'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=96&q=85&fit=crop&crop=face',
+    // Woman, friendly — scheduling coordinator
+    photo:    'https://i.pravatar.cc/96?img=25',
     initials: 'CC',
     gradient: ['#2563EB', '#1D4ED8'],
     audience: AUDIENCES.CUSTOMER,
@@ -69,7 +72,8 @@ export const PERSONAS = {
 
   patient_support: {
     name:     'Patient Support Specialist',
-    photo:    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=96&q=85&fit=crop&crop=face',
+    // Woman, caring — patient navigator
+    photo:    'https://i.pravatar.cc/96?img=44',
     initials: 'PS',
     gradient: ['#0891B2', '#0E7490'],
     audience: AUDIENCES.CUSTOMER,
@@ -79,7 +83,8 @@ export const PERSONAS = {
 
   onboarding_guide: {
     name:     'Onboarding Guide',
-    photo:    'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=96&q=85&fit=crop&crop=face',
+    // Man, welcoming — new patient guide
+    photo:    'https://i.pravatar.cc/96?img=33',
     initials: 'OG',
     gradient: ['#059669', '#047857'],
     audience: AUDIENCES.CUSTOMER,
@@ -90,7 +95,8 @@ export const PERSONAS = {
   // ── Creator-facing ─────────────────────────────────────────────────────────
   creator_manager: {
     name:     'Creator Partnership Manager',
-    photo:    'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=96&q=85&fit=crop&crop=face',
+    // Woman, vibrant — creator program
+    photo:    'https://i.pravatar.cc/96?img=49',
     initials: 'CM',
     gradient: ['#7C3AED', '#6D28D9'],
     audience: AUDIENCES.CREATOR,
@@ -101,7 +107,8 @@ export const PERSONAS = {
   // ── Partner-facing ─────────────────────────────────────────────────────────
   partner_manager: {
     name:     'Partner Success Manager',
-    photo:    'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=96&q=85&fit=crop&crop=face',
+    // Man, business — partner growth
+    photo:    'https://i.pravatar.cc/96?img=15',
     initials: 'PM',
     gradient: ['#D97706', '#B45309'],
     audience: AUDIENCES.PARTNER,
@@ -111,7 +118,8 @@ export const PERSONAS = {
 
   enterprise_advisor: {
     name:     'Enterprise Solutions Advisor',
-    photo:    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&q=85&fit=crop&crop=face',
+    // Man, executive — B2B expert
+    photo:    'https://i.pravatar.cc/96?img=7',
     initials: 'EA',
     gradient: ['#92400E', '#78350F'],
     audience: AUDIENCES.PARTNER,
@@ -122,7 +130,8 @@ export const PERSONAS = {
   // ── Provider-facing ────────────────────────────────────────────────────────
   provider_onboarding: {
     name:     'Provider Onboarding Specialist',
-    photo:    'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=96&q=85&fit=crop&crop=face',
+    // Man, medical — provider recruiter
+    photo:    'https://i.pravatar.cc/96?img=11',
     initials: 'PO',
     gradient: ['#0F766E', '#0D9488'],
     audience: AUDIENCES.PROVIDER,
@@ -132,7 +141,8 @@ export const PERSONAS = {
 
   provider_support: {
     name:     'Provider Support Specialist',
-    photo:    'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=96&q=85&fit=crop&crop=face',
+    // Woman, medical — clinical support
+    photo:    'https://i.pravatar.cc/96?img=16',
     initials: 'DR',
     gradient: ['#0F766E', '#0D9488'],
     audience: AUDIENCES.PROVIDER,
@@ -143,7 +153,8 @@ export const PERSONAS = {
   // ── Pharmacy-facing ────────────────────────────────────────────────────────
   pharmacy_coordinator: {
     name:     'Pharmacy Partnership Coordinator',
-    photo:    'https://images.unsplash.com/photo-1559839914-17aae19cec71?w=96&q=85&fit=crop&crop=face',
+    // Woman, pharmacy uniform — Rx coordinator
+    photo:    'https://i.pravatar.cc/96?img=41',
     initials: 'RX',
     gradient: ['#4338CA', '#3730A3'],
     audience: AUDIENCES.PHARMACY,
@@ -154,7 +165,8 @@ export const PERSONAS = {
   // ── Admin-facing ───────────────────────────────────────────────────────────
   ops_advisor: {
     name:     'Platform Operations Advisor',
-    photo:    'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=96&q=85&fit=crop&crop=face',
+    // Man, ops director — platform strategy
+    photo:    'https://i.pravatar.cc/96?img=3',
     initials: 'OP',
     gradient: ['#374151', '#1F2937'],
     audience: AUDIENCES.ADMIN,
@@ -164,7 +176,8 @@ export const PERSONAS = {
 
   compliance_specialist: {
     name:     'Compliance Specialist',
-    photo:    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&q=85&fit=crop&crop=face',
+    // Woman, authoritative — compliance expert
+    photo:    'https://i.pravatar.cc/96?img=39',
     initials: 'CS',
     gradient: ['#B91C1C', '#991B1B'],
     audience: AUDIENCES.ADMIN,
