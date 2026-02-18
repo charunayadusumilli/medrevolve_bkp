@@ -152,14 +152,16 @@ export default function HeroSection() {
                 >
                   <Link to={createPageUrl(slide.ctaHref)}>
                     <Button size="lg"
-                      className="bg-white text-[#0F1A0F] hover:bg-white/90 font-bold rounded-full px-8 text-base h-14 shadow-2xl shadow-black/40">
+                      className="bg-white text-[#0F1A0F] hover:bg-white/90 font-bold rounded-full px-8 text-base h-14 shadow-2xl shadow-black/40"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                       {slide.cta}
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Button>
                   </Link>
                   <Link to={createPageUrl('Consultations')}>
                     <Button size="lg" variant="ghost"
-                      className="text-white hover:bg-white/10 rounded-full px-8 text-base h-14 border border-white/25 backdrop-blur-sm">
+                      className="text-white hover:bg-white/10 rounded-full px-8 text-base h-14 border border-white/25 backdrop-blur-sm"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                       Book a consultation
                     </Button>
                   </Link>
