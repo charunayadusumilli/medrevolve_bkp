@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { X, Send, Sparkles, ChevronDown, RotateCcw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
-import { getPageContext, PERSONAS, getPersonaVisuals, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
+import { getPageContext, PERSONAS, AUDIENCES, getPersonaVisuals, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
 import ReactMarkdown from 'react-markdown';
 
 // Derive page name from react-router pathname
