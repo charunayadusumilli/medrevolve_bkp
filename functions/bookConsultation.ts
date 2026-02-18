@@ -109,26 +109,34 @@ Deno.serve(async (req) => {
     const appointment = await base44.asServiceRole.entities.Appointment.create(appointmentData);
 
     // ── EMAIL to patient ────────────────────────────────────────────────
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      from_name: 'MedRevolve Care Team',
-      to: user.email,
-      subject: `✅ Appointment Confirmed — ${dateStr} at ${timeStr}`,
-      body: `Hi ${patientName},
+    const providerSection = data.provider_id 
+      ? `  Provider:   ${providerName}${providerTitle ? ', ' + providerTitle : ''}`
+      : `  Provider:   Will be assigned shortly`;
+    
+    try {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Care Team',
+        to: user.email,
+        subject: data.provider_id ? `✅ Appointment Confirmed — ${dateStr} at ${timeStr}` : `📋 Appointment Request Received — ${dateStr} at ${timeStr}`,
+        body: `Hi ${patientName},
 
-Your telehealth consultation has been confirmed! Here are your details:
+${data.provider_id ? 'Your telehealth consultation has been confirmed!' : 'Your appointment request has been received and we are assigning the best available provider.'} Here are your details:
 
 ━━━━━━━━━━━━━━━━━━━━━━
   APPOINTMENT DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━
   Type:       ${typeLabel}
-  Provider:   ${providerName}${providerTitle ? ', ' + providerTitle : ''}
+${providerSection}
   Date:       ${dateStr}
   Time:       ${timeStr}
   Duration:   ${duration} minutes
-  Reason:     ${data.reason || 'Not specified'}
+  Reason:     ${data.reason}
 ━━━━━━━━━━━━━━━━━━━━━━
 
-HOW TO JOIN
+${!data.provider_id ? `NEXT STEPS
+We will match you with the best available provider based on your needs and send you a follow-up email with their profile and a video call link. This typically happens within 2 hours.
+
+` : ''}HOW TO JOIN
 Log in to your patient portal at medrevolve.com and navigate to "My Appointments" to start your video call at the scheduled time. We recommend joining 5 minutes early to test your connection.
 
 WHAT TO PREPARE
@@ -145,7 +153,10 @@ Warm regards,
 MedRevolve Care Team
 support@medrevolve.com
 `
-    });
+      });
+    } catch (emailErr) {
+      console.error('Patient email send error:', emailErr);
+    }
 
     // ── EMAIL to admin ──────────────────────────────────────────────────
     const adminEmail = Deno.env.get('ADMIN_EMAIL');
