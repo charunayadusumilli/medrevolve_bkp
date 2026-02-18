@@ -89,7 +89,7 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Dual-Action Formula',
     promise: 'Up to 22% weight loss in studies',
-    lifestyle: 'https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=800&q=90',
     bg: 'bg-violet-50',
     tag: 'Strongest Results',
     tagColor: 'bg-violet-500',
