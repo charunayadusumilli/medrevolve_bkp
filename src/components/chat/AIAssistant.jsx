@@ -163,7 +163,7 @@ export default function AIAssistant() {
   useEffect(() => {
     if (prevPageRef.current !== pageName) {
       prevPageRef.current = pageName;
-      const newCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+      const newCtx = getPageContext(pageName);
       setMessages([{ role: 'assistant', content: newCtx.greeting, personaKey: newCtx.personaKey }]);
       setFaqOpen(true);
     }
