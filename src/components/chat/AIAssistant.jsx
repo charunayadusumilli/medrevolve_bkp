@@ -119,9 +119,7 @@ function ChatBubble({ msg }) {
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} gap-2`}
     >
       {!isUser && (
-        <div className="w-7 h-7 rounded-full bg-[#4A6741]/10 flex items-center justify-center text-base flex-shrink-0 mt-1">
-          {msg.avatar || '🌿'}
-        </div>
+        <PersonaAvatar personaKey={msg.personaKey} size="sm" />
       )}
       <div
         className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
