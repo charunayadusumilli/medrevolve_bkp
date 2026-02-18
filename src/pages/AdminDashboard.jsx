@@ -292,7 +292,11 @@ export default function AdminDashboard() {
                     <Card key={b.id} className={selectedBusiness?.id === b.id ? 'border-blue-500 border-2' : ''}>
                       <CardContent className="pt-6">
                         <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 cursor-pointer" onClick={() => setSelectedBusiness(selectedBusiness?.id === b.id ? null : b)}>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedBusiness(selectedBusiness?.id === b.id ? null : b)}
+                            className="flex-1 text-left cursor-pointer hover:opacity-80 transition"
+                          >
                             <h3 className="font-semibold text-lg">{b.company_name}</h3>
                             <p className="text-sm text-muted-foreground">{b.email}</p>
                             <div className="grid grid-cols-2 gap-2 mt-3">
