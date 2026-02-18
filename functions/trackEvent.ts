@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
         const userAgent = req.headers.get('user-agent') || 'unknown';
 
         // Create analytics record
-        await base44.asServiceRole.entities.Analytics.create({
+        const analyticsRecord = await base44.asServiceRole.entities.Analytics.create({
             event_type: eventType,
             page_name: pageName,
             action: action || null,
@@ -48,6 +48,23 @@ Deno.serve(async (req) => {
             user_agent: userAgent,
             metadata: metadata || {}
         });
+
+        // Send notifications for critical events
+        const criticalEvents = ['booking', 'order', 'signup'];
+        if (criticalEvents.includes(eventType)) {
+            try {
+                await base44.asServiceRole.functions.invoke('sendActivityNotification', {
+                    eventType,
+                    pageName,
+                    userEmail,
+                    action,
+                    metadata,
+                    severity: 'high'
+                });
+            } catch (notifyErr) {
+                console.error('Notification send error:', notifyErr);
+            }
+        }
 
         return Response.json({ 
             success: true,
