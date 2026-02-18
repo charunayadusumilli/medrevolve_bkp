@@ -154,7 +154,7 @@ export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: ctx.greeting, avatar: ctx.avatar }
+    { role: 'assistant', content: ctx.greeting, personaKey: ctx.personaKey }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
