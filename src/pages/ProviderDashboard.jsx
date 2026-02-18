@@ -26,11 +26,13 @@ import AppointmentDetailPanel from '@/components/provider/AppointmentDetailPanel
 import ProviderNotifications from '@/components/provider/ProviderNotifications';
 import PrescriptionHistory from '@/components/provider/PrescriptionHistory';
 import EPrescribeModal from '@/components/provider/EPrescribeModal';
+import ScheduleAppointmentModal from '@/components/provider/ScheduleAppointmentModal';
 
 export default function ProviderDashboard() {
   const queryClient = useQueryClient();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [quickPrescribeOpen, setQuickPrescribeOpen] = useState(false);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
 
   // Get current provider (assumes logged-in user is a provider)
   const { data: user } = useQuery({
@@ -182,17 +184,23 @@ export default function ProviderDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="calendar" className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <TabsList className="bg-white">
               <TabsTrigger value="calendar">Calendar</TabsTrigger>
               <TabsTrigger value="appointments">Appointments</TabsTrigger>
               <TabsTrigger value="prescriptions">Prescriptions</TabsTrigger>
               <TabsTrigger value="schedule">Availability</TabsTrigger>
             </TabsList>
-            <Button size="sm" className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
-              onClick={() => setQuickPrescribeOpen(true)}>
-              <Plus className="w-4 h-4 mr-1.5" /> New Rx
-            </Button>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" className="rounded-full border-[#4A6741] text-[#4A6741]"
+                onClick={() => setScheduleOpen(true)}>
+                <CalendarIcon className="w-4 h-4 mr-1.5" /> Schedule
+              </Button>
+              <Button size="sm" className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
+                onClick={() => setQuickPrescribeOpen(true)}>
+                <Plus className="w-4 h-4 mr-1.5" /> New Rx
+              </Button>
+            </div>
           </div>
 
           {/* Calendar Tab */}
@@ -256,6 +264,13 @@ export default function ProviderDashboard() {
             providerName={`${currentProvider.name} ${currentProvider.title || ''}`}
           />
         )}
+
+        <ScheduleAppointmentModal
+          open={scheduleOpen}
+          onClose={() => setScheduleOpen(false)}
+          providerId={currentProvider.id}
+          providerName={`${currentProvider.name}${currentProvider.title ? ', ' + currentProvider.title : ''}`}
+        />
 
         {/* Quick Prescribe (no appointment context) */}
         <EPrescribeModal
