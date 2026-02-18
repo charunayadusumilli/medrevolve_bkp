@@ -94,14 +94,14 @@ Deno.serve(async (req) => {
 
     // Create appointment (provider_id optional, will be assigned later if not provided)
     const appointmentData = {
-      patient_email: user.email,
-      appointment_date: appointmentDateTime.toISOString(),
-      duration_minutes: duration,
-      type: data.type,
-      reason: data.reason,
-      notes: data.notes || '',
-      status: data.provider_id ? 'scheduled' : 'pending',
-      video_room_id: `room_${Date.now()}`
+     patient_email: data.patient_email || user.email,
+     appointment_date: appointmentDateTime.toISOString(),
+     duration_minutes: duration,
+     type: data.type,
+     reason: data.reason,
+     notes: data.notes || '',
+     status: data.provider_id ? 'scheduled' : 'pending',
+     video_room_id: `room_${Date.now()}`
     };
     
     if (data.provider_id) {
