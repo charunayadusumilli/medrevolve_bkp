@@ -210,6 +210,7 @@ export default function HeroSection() {
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
             {categories.map((cat) => (
               <Link key={cat.name} to={createPageUrl(cat.href)}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="flex-shrink-0 flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-sm font-medium transition-all">
                 <img src={cat.img} alt={cat.name} className="w-5 h-5 rounded-full object-cover opacity-80" />
                 {cat.name}
