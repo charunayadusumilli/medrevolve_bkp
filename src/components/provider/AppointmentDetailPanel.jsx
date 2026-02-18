@@ -10,6 +10,7 @@ import {
   FileText, Pill, Calendar, Save, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
+import EPrescribeModal from '@/components/provider/EPrescribeModal';
 
 const STATUS_COLORS = {
   scheduled: 'bg-blue-100 text-blue-800',
@@ -19,11 +20,12 @@ const STATUS_COLORS = {
   cancelled: 'bg-red-100 text-red-800',
 };
 
-export default function AppointmentDetailPanel({ appointment, onClose }) {
+export default function AppointmentDetailPanel({ appointment, onClose, providerId, providerName }) {
   const queryClient = useQueryClient();
   const [notes, setNotes] = useState(appointment?.consultation_notes || '');
   const [notesSaved, setNotesSaved] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [prescribeOpen, setPrescribeOpen] = useState(false);
 
   const { data: patientHistory } = useQuery({
     queryKey: ['patientHistory', appointment?.patient_email],
@@ -171,6 +173,13 @@ export default function AppointmentDetailPanel({ appointment, onClose }) {
 
         {/* Actions Footer */}
         <div className="flex-shrink-0 p-5 border-t border-gray-100 space-y-2">
+          <Button
+            variant="outline"
+            className="w-full rounded-full border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741] hover:text-white"
+            onClick={() => setPrescribeOpen(true)}
+          >
+            <Pill className="w-4 h-4 mr-2" /> Write e-Prescription
+          </Button>
           {['scheduled', 'confirmed'].includes(appointment.status) && (
             <Button
               className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
@@ -193,6 +202,14 @@ export default function AppointmentDetailPanel({ appointment, onClose }) {
           )}
         </div>
       </motion.div>
+
+      <EPrescribeModal
+        open={prescribeOpen}
+        onClose={() => setPrescribeOpen(false)}
+        appointment={appointment}
+        providerId={providerId}
+        providerName={providerName}
+      />
     </AnimatePresence>
   );
 }
