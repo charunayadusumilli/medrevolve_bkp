@@ -16,6 +16,8 @@ import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const [businessStatus, setBusinessStatus] = useState({});
 
   // Fetch current user
   const { data: currentUser, isLoading: userLoading } = useQuery({
