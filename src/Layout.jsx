@@ -225,6 +225,7 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Compliance</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer rounded-xl px-3 py-2">Pharmacy Contracts</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ProviderContracts')} className="cursor-pointer rounded-xl px-3 py-2">Provider Contracts</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ProviderOutreach')} className="cursor-pointer rounded-xl px-3 py-2">Provider Recruitment</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Payments & Invoices</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
