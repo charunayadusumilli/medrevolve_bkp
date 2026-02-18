@@ -54,17 +54,19 @@ async function sendSMS(to, body) {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const data = await req.json();
 
     // Validate required fields (provider_id is now optional)
-    if (!data.appointment_date || !data.appointment_time || !data.type || !data.reason) {
-      return Response.json({ error: 'Missing required fields: appointment_date, appointment_time, type, reason' }, { status: 400 });
+    if (!data.appointment_date || !data.appointment_time || !data.type || !data.reason || !data.patient_email) {
+      return Response.json({ error: 'Missing required fields: appointment_date, appointment_time, type, reason, patient_email' }, { status: 400 });
+    }
+
+    let user = null;
+    try {
+      user = await base44.auth.me();
+    } catch (e) {
+      // User not authenticated - use patient_email from form
+      user = { email: data.patient_email, full_name: data.patient_name || null };
     }
 
     const appointmentDateTime = new Date(`${data.appointment_date}T${data.appointment_time}`);
