@@ -188,51 +188,59 @@ function StepProviderTime({ formData, setFormData, onNext, onBack }) {
       </div>
 
       {/* Provider selection */}
-      <div>
-        <Label className="text-sm font-semibold text-[#2D3A2D] mb-3 block">Select Provider</Label>
-        {loadingProviders ? (
-          <div className="flex items-center gap-2 text-[#5A6B5A] py-4">
-            <Loader2 className="w-4 h-4 animate-spin" /> Loading providers...
-          </div>
-        ) : (
-          <div className="grid gap-3">
-            {providers.map((provider) => {
-              const selected = formData.provider_id === provider.id;
-              return (
-                <button
-                  key={provider.id}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, provider_id: provider.id, appointment_time: '' })}
-                  className={`w-full text-left border-2 rounded-2xl p-4 transition-all duration-200 ${
-                    selected ? 'border-[#4A6741] bg-[#4A6741]/5' : 'border-[#E8E0D5] hover:border-[#4A6741]/40'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={provider.photo || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&q=80'}
-                      alt={provider.name}
-                      className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[#2D3A2D]">{provider.name}, {provider.title}</p>
-                      <p className="text-sm text-[#5A6B5A]">{provider.specialty}</p>
-                      {provider.rating && (
-                        <div className="flex items-center gap-1 mt-1">
-                          <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                          <span className="text-xs text-[#5A6B5A]">{provider.rating} · {provider.total_consultations || 0} consultations</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 ${selected ? 'border-[#4A6741] bg-[#4A6741]' : 'border-[#C8C0B5]'}`}>
-                      {selected && <div className="w-full h-full rounded-full flex items-center justify-center"><div className="w-2 h-2 bg-white rounded-full" /></div>}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
+       <div>
+         <Label className="text-sm font-semibold text-[#2D3A2D] mb-3 block">Select Provider (Optional)</Label>
+         {loadingProviders ? (
+           <div className="flex items-center gap-2 text-[#5A6B5A] py-4">
+             <Loader2 className="w-4 h-4 animate-spin" /> Loading providers...
+           </div>
+         ) : providers.length === 0 ? (
+           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+             <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+             <div className="flex-1">
+               <p className="font-medium text-amber-900">No providers available right now</p>
+               <p className="text-sm text-amber-800 mt-1">That's okay! You can still schedule a time and we'll arrange a suitable provider. We'll notify you by email once assigned.</p>
+             </div>
+           </div>
+         ) : (
+           <div className="grid gap-3">
+             {providers.map((provider) => {
+               const selected = formData.provider_id === provider.id;
+               return (
+                 <button
+                   key={provider.id}
+                   type="button"
+                   onClick={() => setFormData({ ...formData, provider_id: provider.id, appointment_time: '' })}
+                   className={`w-full text-left border-2 rounded-2xl p-4 transition-all duration-200 ${
+                     selected ? 'border-[#4A6741] bg-[#4A6741]/5' : 'border-[#E8E0D5] hover:border-[#4A6741]/40'
+                   }`}
+                 >
+                   <div className="flex items-center gap-3">
+                     <img
+                       src={provider.photo || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&q=80'}
+                       alt={provider.name}
+                       className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
+                     />
+                     <div className="flex-1 min-w-0">
+                       <p className="font-semibold text-[#2D3A2D]">{provider.name}, {provider.title}</p>
+                       <p className="text-sm text-[#5A6B5A]">{provider.specialty}</p>
+                       {provider.rating && (
+                         <div className="flex items-center gap-1 mt-1">
+                           <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                           <span className="text-xs text-[#5A6B5A]">{provider.rating} · {provider.total_consultations || 0} consultations</span>
+                         </div>
+                       )}
+                     </div>
+                     <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 ${selected ? 'border-[#4A6741] bg-[#4A6741]' : 'border-[#C8C0B5]'}`}>
+                       {selected && <div className="w-full h-full rounded-full flex items-center justify-center"><div className="w-2 h-2 bg-white rounded-full" /></div>}
+                     </div>
+                   </div>
+                 </button>
+               );
+             })}
+           </div>
+         )}
+       </div>
 
       {/* Date picker — weekly calendar strip */}
       {formData.provider_id && (
