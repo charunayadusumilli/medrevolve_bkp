@@ -410,7 +410,7 @@ export default function Layout({ children }) {
                 <span className="text-lg font-bold">MedRevolve</span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-xs">
-                Prescription telehealth at transparent prices. Real doctors, licensed pharmacies, delivered to your door.
+                Prescription telehealth at transparent prices. Real doctors, licensed pharmacies, delivered in 24-48 hours.
               </p>
               <div className="flex gap-3">
                 {[Instagram, Twitter, Facebook, Youtube].map((Icon, i) => (
