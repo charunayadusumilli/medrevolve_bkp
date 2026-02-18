@@ -219,13 +219,13 @@ ${activeCtx.persona}:`,
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: typeof response === 'string' ? response : JSON.stringify(response),
-        avatar: activeCtx.avatar,
+        personaKey: activeCtx.personaKey,
       }]);
     } catch {
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: 'Sorry, I had a hiccup! Please try again in a moment.',
-        avatar: activeCtx.avatar,
+        personaKey: activeCtx.personaKey,
       }]);
     } finally {
       setLoading(false);
