@@ -38,16 +38,16 @@ function TreatMegaMenu({ onClose }) {
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Browse by Category</p>
       <div className="grid grid-cols-3 gap-3">
         {treatCategories.map((cat) => (
-          <Link
-            key={cat.name}
-            to={createPageUrl(cat.href)}
-            onClick={onClose}
-            className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group"
-          >
-            <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" />
-            <span className="font-medium text-[#2D3A2D] text-sm group-hover:text-[#4A6741] transition-colors">{cat.name}</span>
-          </Link>
-        ))}
+            <Link
+              key={cat.name}
+              to={createPageUrl(cat.href)}
+              onClick={() => { onClose(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group"
+            >
+              <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" />
+              <span className="font-medium text-[#2D3A2D] text-sm group-hover:text-[#4A6741] transition-colors">{cat.name}</span>
+            </Link>
+          ))}
       </div>
       <div className="mt-4 pt-4 border-t border-gray-100">
         <Link to={createPageUrl('Products')} onClick={onClose}
