@@ -190,17 +190,24 @@ ${!data.provider_id ? 'ACTION REQUIRED: Please assign a provider and update the 
 
     // ── SMS to patient ──────────────────────────────────────────────────
     if (data.phone) {
-      await sendSMS(
-        data.phone,
-        `MedRevolve: Your ${typeLabel} with ${providerName} is confirmed for ${dateStr} at ${timeStr}. Log in at medrevolve.com to join. Reply HELP for support.`
-      );
+      try {
+        await sendSMS(
+          data.phone,
+          data.provider_id
+            ? `MedRevolve: Your ${typeLabel} with ${providerName} is confirmed for ${dateStr} at ${timeStr}. Log in at medrevolve.com to join. Reply HELP for support.`
+            : `MedRevolve: Your ${typeLabel} appointment request for ${dateStr} at ${timeStr} is received. We are assigning a provider and will send details via email within 2 hours.`
+        );
+      } catch (smsErr) {
+        console.error('SMS send error:', smsErr);
+      }
     }
 
     return Response.json({
       success: true,
       appointment_id: appointment.id,
       appointment_date: appointmentDateTime.toISOString(),
-      message: 'Appointment booked successfully'
+      provider_assigned: !!data.provider_id,
+      message: data.provider_id ? 'Appointment booked successfully' : 'Appointment request submitted. Provider will be assigned shortly.'
     });
 
   } catch (error) {
