@@ -13,7 +13,7 @@ const categories = [
     id: 'weight',
     name: 'Weight',
     description: 'Feel confident in your body',
-    image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
     bg: 'from-slate-100 to-slate-200',
     available: true
   },
@@ -21,7 +21,7 @@ const categories = [
     id: 'longevity',
     name: 'Longevity',
     description: 'Age gracefully, live fully',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80',
     bg: 'from-stone-100 to-stone-200',
     available: true
   },
@@ -29,7 +29,7 @@ const categories = [
     id: 'hormone',
     name: 'Hormone',
     description: 'Balance from within',
-    image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80',
     bg: 'from-zinc-100 to-zinc-200',
     available: true
   },
