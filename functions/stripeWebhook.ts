@@ -59,55 +59,62 @@ async function handleCheckoutComplete(base44, session) {
     console.log('Processing checkout completion:', session.id);
     
     try {
-        // Extract customer info
         const customerEmail = session.customer_email || session.customer_details?.email;
-        
-        // Get partner code from metadata or URL params
-        const partnerCode = session.metadata?.partner_code;
-        
-        // Process partner referral if applicable
-        if (partnerCode) {
-            await base44.asServiceRole.functions.invoke('processPartnerReferral', {
-                partnerCode: partnerCode,
-                customerEmail: customerEmail,
-                productId: session.metadata?.product_id || 'subscription',
-                orderValue: session.amount_total / 100
+        const bookingId = session.metadata?.booking_id;
+        const paymentId = session.metadata?.payment_id;
+        const invoiceNumber = session.metadata?.invoice_number;
+
+        // If this is a consultation payment, update payment record
+        if (paymentId) {
+            await base44.asServiceRole.entities.ConsultationPayment.update(paymentId, {
+                status: 'paid',
+                stripe_payment_intent: session.payment_intent,
+                paid_at: new Date().toISOString()
+            });
+            console.log('Consultation payment marked paid:', paymentId);
+        }
+
+        // Update booking status
+        if (bookingId) {
+            await base44.asServiceRole.entities.ConsultationBooking.update(bookingId, {
+                payment_status: 'paid',
+                booking_status: 'confirmed'
+            });
+
+            // Send confirmation email to patient
+            if (customerEmail) {
+                await base44.asServiceRole.integrations.Core.SendEmail({
+                    to: customerEmail,
+                    subject: `Consultation Confirmed – Invoice ${invoiceNumber || ''}`,
+                    body: `<h2>Your consultation is confirmed!</h2><p>Invoice: <strong>${invoiceNumber}</strong></p><p>Amount paid: $${(session.amount_total / 100).toFixed(2)}</p><p>Log in to your Patient Portal to view your appointment details and join the video call when it's time.</p>`
+                });
+            }
+        } else {
+            // Legacy product checkout
+            const partnerCode = session.metadata?.partner_code;
+            if (partnerCode) {
+                await base44.asServiceRole.functions.invoke('processPartnerReferral', {
+                    partnerCode,
+                    customerEmail,
+                    productId: session.metadata?.product_id || 'subscription',
+                    orderValue: session.amount_total / 100
+                });
+            }
+            await base44.asServiceRole.functions.invoke('assignToProvider', {
+                customerEmail,
+                productId: session.metadata?.product_id,
+                sessionId: session.id
+            });
+            await base44.asServiceRole.integrations.Core.SendEmail({
+                to: customerEmail,
+                subject: 'Welcome to MedRevolve - Next Steps',
+                body: `<h2>Welcome to MedRevolve!</h2><p>Your order is confirmed. A licensed provider will review your intake within 24 hours.</p>`
             });
         }
-        
-        // Assign to available provider
-        await base44.asServiceRole.functions.invoke('assignToProvider', {
-            customerEmail: customerEmail,
-            productId: session.metadata?.product_id,
-            sessionId: session.id
-        });
-        
-        // Send welcome email
-        await base44.asServiceRole.integrations.Core.SendEmail({
-            to: customerEmail,
-            subject: 'Welcome to MedRevolve - Next Steps',
-            body: `
-                <h2>Welcome to MedRevolve!</h2>
-                <p>Your subscription is confirmed. Here's what happens next:</p>
-                <ol>
-                    <li>A licensed provider will review your intake within 24 hours</li>
-                    <li>If approved, your prescription will be sent to our partner pharmacy</li>
-                    <li>Your medication ships within 3-5 business days</li>
-                </ol>
-                <p>Track your order in the Patient Portal.</p>
-            `
-        });
-        
+
         console.log('Checkout processing complete for:', customerEmail);
     } catch (error) {
         console.error('Error processing checkout:', error);
-        // Log to error tracking system
-        await base44.asServiceRole.functions.invoke('logError', {
-            source: 'stripeWebhook',
-            event: 'checkout.session.completed',
-            error: error.message,
-            sessionId: session.id
-        });
     }
 }
 
