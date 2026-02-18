@@ -487,13 +487,13 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
         )}
 
         {/* Date & Time */}
-        <div className="flex items-start gap-3 pb-4 border-b border-[#D8D0C5]">
-          <Calendar className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-semibold text-[#2D3A2D]">{dateDisplay}</p>
-            <p className="text-sm text-[#5A6B5A] flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {formData.appointment_time}</p>
-          </div>
-        </div>
+         <div className="flex items-start gap-3 py-4 border-b border-[#D8D0C5]">
+           <Calendar className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
+           <div>
+             <p className="font-semibold text-[#2D3A2D]">{dateDisplay}</p>
+             <p className="text-sm text-[#5A6B5A] flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {formData.appointment_time}</p>
+           </div>
+         </div>
 
         {/* Reason */}
         <div className="flex items-start gap-3">
