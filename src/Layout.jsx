@@ -174,49 +174,6 @@ export default function Layout({ children }) {
                 <Link to={createPageUrl('Consultations')} className="block">Consultations</Link>
               </button>
 
-              {/* Partners dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                    Partners
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2 min-w-[220px]">
-                  <DropdownMenuItem asChild onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-xl px-3 py-2.5 flex flex-col gap-0.5">
-                      <span className="font-semibold text-[#2D3A2D]">Partner Program</span>
-                      <span className="text-xs text-gray-400">Gyms, spas, wellness centers</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-xl px-3 py-2.5 flex flex-col gap-0.5">
-                      <span className="font-semibold text-[#2D3A2D]">Creator Program</span>
-                      <span className="text-xs text-gray-400">Influencers & content creators</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Link to={createPageUrl('ForBusiness')} className="cursor-pointer rounded-xl px-3 py-2.5 flex flex-col gap-0.5">
-                      <span className="font-semibold text-[#2D3A2D]">For Business</span>
-                      <span className="text-xs text-gray-400">White-label & enterprise</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Link to={createPageUrl('ProviderIntake')} className="cursor-pointer rounded-xl px-3 py-2.5 flex flex-col gap-0.5">
-                      <span className="font-semibold text-[#2D3A2D]">Join as Provider</span>
-                      <span className="text-xs text-gray-400">Physicians & NPs</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Link to={createPageUrl('PharmacyIntake')} className="cursor-pointer rounded-xl px-3 py-2.5 flex flex-col gap-0.5">
-                      <span className="font-semibold text-[#2D3A2D]">Join as Pharmacy</span>
-                      <span className="text-xs text-gray-400">Compounding pharmacies</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
               {/* Admin only */}
               {user?.role === 'admin' && (
                 <DropdownMenu>
