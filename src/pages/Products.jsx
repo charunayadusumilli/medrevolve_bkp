@@ -173,7 +173,7 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Energy Essential',
     promise: 'Feel energized in days',
-    lifestyle: 'https://images.unsplash.com/photo-1616671276441-2f2c277b8bf6?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=90',
     bg: 'bg-green-50',
     tag: 'Best Value',
     tagColor: 'bg-green-500',
