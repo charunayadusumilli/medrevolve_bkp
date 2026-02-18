@@ -103,7 +103,7 @@ const allProducts = [
     category: 'weight',
     subtitle: 'No Needles Needed',
     promise: 'Same results, zero injections',
-    lifestyle: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=90',
     bg: 'bg-teal-50',
     tag: 'Needle-Free',
     tagColor: 'bg-teal-500',
