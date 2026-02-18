@@ -507,11 +507,11 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
       </div>
 
       <div className="bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl px-4 py-3 flex items-start gap-2.5">
-        <CheckCircle2 className="w-4 h-4 text-[#4A6741] mt-0.5 flex-shrink-0" />
-        <p className="text-sm text-[#4A6741]">
-          A confirmation email{formData.phone ? ' and SMS' : ''} will be sent immediately. A reminder will follow 24 hours before your appointment.
-        </p>
-      </div>
+         <CheckCircle2 className="w-4 h-4 text-[#4A6741] mt-0.5 flex-shrink-0" />
+         <p className="text-sm text-[#4A6741]">
+           A confirmation email{formData.phone ? ' and SMS' : ''} will be sent immediately{!provider ? '. Once a provider is assigned, you'll receive an email with their details and your video call link. A reminder will follow 24 hours before your appointment.' : '. A reminder will follow 24 hours before your appointment.'}
+         </p>
+       </div>
 
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} disabled={isSubmitting} className="flex-1 rounded-full border-[#4A6741] text-[#4A6741]">
