@@ -20,23 +20,19 @@ function usePageContext() {
   return { pageName, pageProduct, ctx };
 }
 
-// Persona Avatar — photo with fallback to initials
+// Persona Avatar — derives visuals directly from PERSONAS definition
 function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
-  const vis = PERSONA_VISUALS[personaKey] || PERSONA_VISUALS['wellness_concierge'];
+  const vis = getPersonaVisuals(personaKey);
+  const persona = PERSONAS[personaKey] || PERSONAS.wellness_concierge;
   const [imgErr, setImgErr] = React.useState(false);
   const dims = size === 'sm' ? 'w-7 h-7 text-[11px]' : size === 'lg' ? 'w-14 h-14 text-lg' : 'w-9 h-9 text-sm';
   return (
     <div
       className={`${dims} rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center font-bold text-white ${ring ? 'ring-2 ring-white/40' : ''}`}
-      style={{ background: `linear-gradient(135deg, ${vis.bgFrom}, ${vis.bgTo})` }}
+      style={{ background: vis.fabBg }}
     >
       {!imgErr && vis.photo ? (
-        <img
-          src={vis.photo}
-          alt={vis.label}
-          className="w-full h-full object-cover"
-          onError={() => setImgErr(true)}
-        />
+        <img src={vis.photo} alt={persona.name} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
       ) : (
         <span>{vis.initials}</span>
       )}
