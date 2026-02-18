@@ -140,6 +140,21 @@ export default function Checkout() {
         return;
       }
 
+      // Create order record before redirecting to Stripe
+      try {
+        await base44.functions.invoke('createOrder', {
+          items: cartItems,
+          shippingInfo: shippingInfo,
+          subtotal: calculateSubtotal(),
+          tax: calculateTax(),
+          total: calculateTotal(),
+          stripeSessionId: data.sessionId
+        });
+      } catch (orderErr) {
+        console.error('Order creation error:', orderErr);
+        // Continue anyway - order will be created post-payment
+      }
+
       // Redirect to Stripe Checkout
       const stripe = await stripePromise;
       const { error: stripeError } = await stripe.redirectToCheckout({

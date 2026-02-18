@@ -82,12 +82,12 @@ import Products from './pages/Products';
 import ProviderContracts from './pages/ProviderContracts';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
+import ProviderOutreach from './pages/ProviderOutreach';
 import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import WaitingRoom from './pages/WaitingRoom';
-import ProviderOutreach from './pages/ProviderOutreach';
 import __Layout from './Layout.jsx';
 
 
@@ -127,12 +127,12 @@ export const PAGES = {
     "ProviderContracts": ProviderContracts,
     "ProviderDashboard": ProviderDashboard,
     "ProviderIntake": ProviderIntake,
+    "ProviderOutreach": ProviderOutreach,
     "ProviderProfile": ProviderProfile,
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
     "WaitingRoom": WaitingRoom,
-    "ProviderOutreach": ProviderOutreach,
 }
 
 export const pagesConfig = {
