@@ -21,6 +21,80 @@ function usePageContext() {
   return { pageName, pageProduct, ctx };
 }
 
+// Persona Avatar — photo with fallback to initials
+function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
+  const vis = PERSONA_VISUALS[personaKey] || PERSONA_VISUALS['wellness_concierge'];
+  const [imgErr, setImgErr] = React.useState(false);
+  const dims = size === 'sm' ? 'w-7 h-7 text-[11px]' : size === 'lg' ? 'w-14 h-14 text-lg' : 'w-9 h-9 text-sm';
+  return (
+    <div
+      className={`${dims} rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center font-bold text-white ${ring ? 'ring-2 ring-white/40' : ''}`}
+      style={{ background: `linear-gradient(135deg, ${vis.bgFrom}, ${vis.bgTo})` }}
+    >
+      {!imgErr && vis.photo ? (
+        <img
+          src={vis.photo}
+          alt={vis.label}
+          className="w-full h-full object-cover"
+          onError={() => setImgErr(true)}
+        />
+      ) : (
+        <span>{vis.initials}</span>
+      )}
+    </div>
+  );
+}
+
+// Floating persona badge shown on FAB when closed
+function PersonaFAB({ ctx, onClick }) {
+  const vis = PERSONA_VISUALS[ctx.personaKey] || PERSONA_VISUALS['wellness_concierge'];
+  const [imgErr, setImgErr] = React.useState(false);
+  return (
+    <motion.div
+      key="fab"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 0 }}
+      transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+      className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2"
+    >
+      {/* Persona label pill */}
+      <motion.div
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5, duration: 0.35 }}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg text-white"
+        style={{ background: vis.fabBg }}
+      >
+        <span>{ctx.persona}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
+      </motion.div>
+
+      {/* Main FAB with persona photo */}
+      <motion.button
+        onClick={onClick}
+        whileHover={{ scale: 1.07 }}
+        whileTap={{ scale: 0.93 }}
+        className="relative w-16 h-16 rounded-full shadow-2xl overflow-hidden flex items-center justify-center"
+        style={{ background: vis.fabBg }}
+      >
+        {!imgErr && vis.photo ? (
+          <img
+            src={vis.photo}
+            alt={ctx.persona}
+            className="w-full h-full object-cover"
+            onError={() => setImgErr(true)}
+          />
+        ) : (
+          <span className="font-bold text-white text-lg">{vis.initials}</span>
+        )}
+        {/* Online indicator */}
+        <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-white" />
+      </motion.button>
+    </motion.div>
+  );
+}
+
 function TypingDots() {
   return (
     <div className="flex gap-1 py-1">
