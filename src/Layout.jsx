@@ -339,23 +339,23 @@ export default function Layout({ children }) {
 
                       <div className="pt-4 border-t border-[#E8E0D5] mt-2">
                         <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Consultations & Services</p>
-                        <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Book Consultation</Link>
-                        <Link to={createPageUrl('HowItWorks')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</Link>
+                        <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Book Consultation</Link>
+                        <Link to={createPageUrl('HowItWorks')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>How It Works</Link>
                       </div>
 
                       <div className="pt-4 border-t border-[#E8E0D5]">
                         <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Programs</p>
-                        <Link to={createPageUrl('PartnerProgram')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Partner Program</Link>
-                        <Link to={createPageUrl('ForCreators')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Creator Program</Link>
-                        <Link to={createPageUrl('ForBusiness')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>For Business</Link>
+                        <Link to={createPageUrl('PartnerProgram')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Partner Program</Link>
+                        <Link to={createPageUrl('ForCreators')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Creator Program</Link>
+                        <Link to={createPageUrl('ForBusiness')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>For Business</Link>
                       </div>
 
                       {user && (
                         <div className="pt-4 border-t border-[#E8E0D5]">
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">My Account</p>
-                          <Link to={createPageUrl('PatientPortal')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>My Portal</Link>
+                          <Link to={createPageUrl('PatientPortal')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>My Portal</Link>
                           {user.role === 'admin' && (
-                            <Link to={createPageUrl('AdminDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Admin Dashboard</Link>
+                            <Link to={createPageUrl('AdminDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Admin Dashboard</Link>
                           )}
                         </div>
                       )}
@@ -363,8 +363,8 @@ export default function Layout({ children }) {
                       {user?.role === 'admin' && (
                         <div className="pt-4 border-t border-[#E8E0D5]">
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Command Center</p>
-                          <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Compliance</Link>
-                          <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => setMobileMenuOpen(false)}>Partnerships</Link>
+                          <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Compliance</Link>
+                          <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Partnerships</Link>
                         </div>
                       )}
                     </nav>
