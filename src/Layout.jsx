@@ -50,7 +50,7 @@ function TreatMegaMenu({ onClose }) {
           ))}
       </div>
       <div className="mt-4 pt-4 border-t border-gray-100">
-        <Link to={createPageUrl('Products')} onClick={onClose}
+        <Link to={createPageUrl('Products')} onClick={() => { onClose(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#4A6741]/5 hover:bg-[#4A6741]/10 transition-colors">
           <span className="font-semibold text-[#4A6741] text-sm">View All Products →</span>
         </Link>
