@@ -183,7 +183,9 @@ export default function AdminDashboard() {
                       <stat.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold">{stat.value}</p>
+                      <p className="text-2xl font-bold">
+                        {stat.loading ? <RefreshCw className="w-5 h-5 inline animate-spin" /> : stat.value}
+                      </p>
                       <p className="text-sm text-muted-foreground">{stat.label}</p>
                     </div>
                   </div>
