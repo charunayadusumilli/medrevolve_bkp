@@ -187,7 +187,7 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Cognitive Support',
     promise: 'Stay sharp at any age',
-    lifestyle: 'https://images.unsplash.com/photo-1632167764943-7a8c3e9ba9b2?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=90',
     bg: 'bg-blue-50',
     tag: 'Memory',
     tagColor: 'bg-blue-500',
