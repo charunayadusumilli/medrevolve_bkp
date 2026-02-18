@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                             <p className="text-xs text-muted-foreground mt-3">
                               Submitted: {new Date(b.created_date).toLocaleString()}
                             </p>
-                          </div>
+                          </button>
                           <div className="flex flex-col gap-2">
                             <Badge>{b.status || 'pending'}</Badge>
                             <select 
