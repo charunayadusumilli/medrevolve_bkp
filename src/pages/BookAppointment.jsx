@@ -243,8 +243,7 @@ function StepProviderTime({ formData, setFormData, onNext, onBack }) {
        </div>
 
       {/* Date picker — weekly calendar strip */}
-      {formData.provider_id && (
-        <div>
+      <div>
           <Label className="text-sm font-semibold text-[#2D3A2D] mb-3 block">Select Date</Label>
           <div className="bg-[#F5F0E8] rounded-2xl p-4">
             <div className="flex items-center justify-between mb-3">
@@ -293,11 +292,10 @@ function StepProviderTime({ formData, setFormData, onNext, onBack }) {
               })}
             </div>
           </div>
-        </div>
-      )}
+          </div>
 
-      {/* Time slots */}
-      {formData.appointment_date && (
+          {/* Time slots */}
+          {formData.appointment_date && (
         <div>
           <Label className="text-sm font-semibold text-[#2D3A2D] mb-3 block flex items-center gap-1.5">
             <Clock className="w-4 h-4" /> Available Times
