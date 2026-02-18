@@ -19,9 +19,13 @@ import {
 import { createPageUrl } from '@/utils';
 import { format, parseISO, isSameDay } from 'date-fns';
 import ProviderScheduleManager from '@/components/provider/ProviderScheduleManager';
+import AppointmentCalendar from '@/components/provider/AppointmentCalendar';
+import AppointmentDetailPanel from '@/components/provider/AppointmentDetailPanel';
+import ProviderNotifications from '@/components/provider/ProviderNotifications';
 
 export default function ProviderDashboard() {
   const queryClient = useQueryClient();
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   // Get current provider (assumes logged-in user is a provider)
   const { data: user } = useQuery({
@@ -113,11 +117,14 @@ export default function ProviderDashboard() {
         ) : (
         <div>
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-light text-[#2D3A2D] mb-2">
-            Welcome back, <span className="font-medium">{currentProvider.name}</span>
-          </h1>
-          <p className="text-[#5A6B5A]">{currentProvider.title} • {currentProvider.specialty}</p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-light text-[#2D3A2D] mb-2">
+              Welcome back, <span className="font-medium">{currentProvider.name}</span>
+            </h1>
+            <p className="text-[#5A6B5A]">{currentProvider.title} • {currentProvider.specialty}</p>
+          </div>
+          <ProviderNotifications providerId={currentProvider.id} />
         </div>
 
         {/* Stats */}
@@ -169,128 +176,48 @@ export default function ProviderDashboard() {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="appointments" className="space-y-6">
+        <Tabs defaultValue="calendar" className="space-y-6">
           <TabsList className="bg-white">
-            <TabsTrigger value="appointments">Appointments</TabsTrigger>
-            <TabsTrigger value="schedule">Schedule & Availability</TabsTrigger>
+            <TabsTrigger value="calendar">Calendar</TabsTrigger>
+            <TabsTrigger value="appointments">List View</TabsTrigger>
+            <TabsTrigger value="schedule">Availability</TabsTrigger>
           </TabsList>
 
-          {/* Appointments Tab */}
-          <TabsContent value="appointments" className="space-y-6">
+          {/* Calendar Tab */}
+          <TabsContent value="calendar">
+            <AppointmentCalendar
+              appointments={appointments}
+              onSelectAppointment={setSelectedAppointment}
+            />
+          </TabsContent>
+
+          {/* List View Tab */}
+          <TabsContent value="appointments" className="space-y-4">
             {appointmentsLoading ? (
               <p className="text-[#5A6B5A]">Loading appointments...</p>
             ) : upcomingAppointments.length === 0 ? (
-              <Card>
-                <CardContent className="py-12 text-center">
-                  <CalendarIcon className="w-12 h-12 text-[#5A6B5A] mx-auto mb-4" />
-                  <p className="text-[#5A6B5A]">No upcoming appointments</p>
-                </CardContent>
-              </Card>
+              <Card><CardContent className="py-12 text-center"><CalendarIcon className="w-12 h-12 text-[#5A6B5A] mx-auto mb-4" /><p className="text-[#5A6B5A]">No upcoming appointments</p></CardContent></Card>
             ) : (
-              <div className="space-y-4">
-                {upcomingAppointments.map((appointment) => {
-                  const history = getPatientHistory(appointment.patient_email);
-                  return (
-                    <Card key={appointment.id}>
-                      <CardContent className="p-6">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-3">
-                              <div className="w-10 h-10 rounded-full bg-[#4A6741]/10 flex items-center justify-center">
-                                <User className="w-5 h-5 text-[#4A6741]" />
-                              </div>
-                              <div>
-                                <p className="font-medium text-[#2D3A2D]">{appointment.patient_email}</p>
-                                <p className="text-sm text-[#5A6B5A]">{appointment.type.replace('_', ' ')}</p>
-                              </div>
-                              <Badge className={getStatusColor(appointment.status)}>
-                                {appointment.status}
-                              </Badge>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                              <div className="flex items-center gap-2 text-sm text-[#5A6B5A]">
-                                <CalendarIcon className="w-4 h-4" />
-                                {format(parseISO(appointment.appointment_date), 'MMM dd, yyyy')}
-                              </div>
-                              <div className="flex items-center gap-2 text-sm text-[#5A6B5A]">
-                                <Clock className="w-4 h-4" />
-                                {format(parseISO(appointment.appointment_date), 'h:mm a')}
-                              </div>
-                            </div>
-
-                            {appointment.reason && (
-                              <p className="text-sm text-[#5A6B5A] mb-3">
-                                <span className="font-medium">Reason:</span> {appointment.reason}
-                              </p>
-                            )}
-
-                            {appointment.notes && (
-                              <p className="text-sm text-[#5A6B5A] mb-3">
-                                <span className="font-medium">Patient Notes:</span> {appointment.notes}
-                              </p>
-                            )}
-
-                            {/* Patient History */}
-                            {history.appointments.length > 1 && (
-                              <div className="mt-4 p-3 bg-[#F5F3EF] rounded-lg">
-                                <p className="text-xs font-medium text-[#2D3A2D] mb-2">Patient History</p>
-                                <div className="grid grid-cols-3 gap-4 text-xs text-[#5A6B5A]">
-                                  <div>
-                                    <span className="font-medium">Previous Visits:</span> {history.appointments.length - 1}
-                                  </div>
-                                  <div>
-                                    <span className="font-medium">Consultations:</span> {history.consultations.length}
-                                  </div>
-                                  <div>
-                                    <span className="font-medium">Prescriptions:</span> {history.prescriptions.length}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex flex-col gap-2 ml-4">
-                            {appointment.status === 'scheduled' && (
-                              <Button
-                                size="sm"
-                                onClick={() => updateAppointmentMutation.mutate({ id: appointment.id, status: 'confirmed' })}
-                                className="bg-[#4A6741] hover:bg-[#3D5636]"
-                              >
-                                <CheckCircle2 className="w-4 h-4 mr-2" />
-                                Confirm
-                              </Button>
-                            )}
-                            {['scheduled', 'confirmed'].includes(appointment.status) && (
-                              <>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => {
-                                    updateAppointmentMutation.mutate({ id: appointment.id, status: 'in_progress' });
-                                    window.location.href = createPageUrl(`VideoCall?id=${appointment.id}`);
-                                  }}
-                                >
-                                  <Video className="w-4 h-4 mr-2" />
-                                  Start Call
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => updateAppointmentMutation.mutate({ id: appointment.id, status: 'cancelled' })}
-                                >
-                                  <Ban className="w-4 h-4 mr-2" />
-                                  Cancel
-                                </Button>
-                              </>
-                            )}
-                          </div>
+              upcomingAppointments.map((appointment) => (
+                <Card key={appointment.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelectedAppointment(appointment)}>
+                  <CardContent className="p-5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0">
+                          <User className="w-5 h-5 text-[#4A6741]" />
                         </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
+                        <div>
+                          <p className="font-medium text-[#2D3A2D]">{appointment.patient_email}</p>
+                          <p className="text-sm text-[#5A6B5A]">
+                            {format(parseISO(appointment.appointment_date), 'MMM d · h:mm a')} · {appointment.type?.replace('_',' ')}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge className={getStatusColor(appointment.status)}>{appointment.status}</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
             )}
           </TabsContent>
 
@@ -302,6 +229,14 @@ export default function ProviderDashboard() {
             />
           </TabsContent>
         </Tabs>
+
+        {/* Appointment Detail Slide-over */}
+        {selectedAppointment && (
+          <AppointmentDetailPanel
+            appointment={selectedAppointment}
+            onClose={() => setSelectedAppointment(null)}
+          />
+        )}
         </div>
         )}
       </div>
