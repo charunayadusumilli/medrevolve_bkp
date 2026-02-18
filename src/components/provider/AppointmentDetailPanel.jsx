@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import EPrescribeModal from '@/components/provider/EPrescribeModal';
+import AIClinicalAssistant from '@/components/provider/AIClinicalAssistant';
 
 const STATUS_COLORS = {
   scheduled: 'bg-blue-100 text-blue-800',
