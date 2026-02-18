@@ -328,14 +328,14 @@ export default function Layout({ children }) {
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                      {treatCategories.map(cat => (
-                        <Link key={cat.name} to={createPageUrl(cat.href)}
-                          className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
-                          onClick={() => setMobileMenuOpen(false)}>
-                          <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
-                          {cat.name}
-                        </Link>
-                      ))}
+                                      {treatCategories.map(cat => (
+                                        <Link key={cat.name} to={createPageUrl(cat.href)}
+                                          className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
+                                          onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                                          <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
+                                          {cat.name}
+                                        </Link>
+                                      ))}
 
                       <div className="pt-4 border-t border-[#E8E0D5] mt-2">
                         <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Consultations & Services</p>
