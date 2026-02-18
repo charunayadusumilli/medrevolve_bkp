@@ -234,7 +234,7 @@ ${activeCtx.persona}:`,
 
   const resetChat = () => {
     const newCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
-    setMessages([{ role: 'assistant', content: newCtx.greeting, avatar: newCtx.avatar }]);
+    setMessages([{ role: 'assistant', content: newCtx.greeting, personaKey: newCtx.personaKey }]);
     setFaqOpen(true);
     setInput('');
   };
