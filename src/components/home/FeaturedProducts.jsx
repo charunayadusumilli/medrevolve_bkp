@@ -11,7 +11,7 @@ const products = [
     name: 'Semaglutide',
     category: 'Weight Loss',
     description: 'FDA-approved treatment for sustainable weight management',
-    image: 'https://images.unsplash.com/photo-1587699411515-7d6971dcb56b?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80',
     tag: 'Best Seller'
   },
   {
@@ -19,7 +19,7 @@ const products = [
     name: 'Tirzepatide',
     category: 'Weight Loss',
     description: 'Advanced dual-action weight management solution',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=400&q=80',
     tag: 'Popular'
   },
   {
@@ -27,7 +27,7 @@ const products = [
     name: 'Sermorelin',
     category: 'Longevity',
     description: 'Natural growth hormone releasing peptide',
-    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80',
     tag: null
   },
   {
@@ -35,7 +35,7 @@ const products = [
     name: 'Glutathione Injection',
     category: 'Longevity',
     description: 'Powerful antioxidant for cellular health',
-    image: 'https://images.unsplash.com/photo-1584912202470-8b77f0f5f7d0?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=400&q=80',
     tag: 'New'
   },
   {
@@ -43,7 +43,7 @@ const products = [
     name: 'NAD+ Nasal Spray',
     category: 'Longevity',
     description: 'Boost cellular energy and metabolism',
-    image: 'https://images.unsplash.com/photo-1587699411515-7d6971dcb56b?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80',
     tag: null
   },
   {
@@ -51,7 +51,7 @@ const products = [
     name: 'B12 Injection',
     category: 'Longevity',
     description: 'Essential vitamin for energy and vitality',
-    image: 'https://images.unsplash.com/photo-1596318895694-bca1a00b4eef?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=400&q=80',
     tag: null
   },
   {
@@ -67,7 +67,7 @@ const products = [
     name: 'Synapsin Nasal Spray',
     category: 'Longevity',
     description: 'Support cognitive function and brain health',
-    image: 'https://images.unsplash.com/photo-1610880588674-39db3d0d6188?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&q=80',
     tag: null
   }
 ];
