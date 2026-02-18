@@ -75,7 +75,7 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Weight Loss Injection',
     promise: 'Lose up to 15% body weight',
-    lifestyle: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=90',
     bg: 'bg-slate-50',
     tag: 'Most Popular',
     tagColor: 'bg-amber-500',
