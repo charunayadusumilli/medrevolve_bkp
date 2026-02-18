@@ -227,9 +227,8 @@ export default function AdminDashboard() {
                         <div>
                           <h3 className="font-semibold">{c.full_name}</h3>
                           <p className="text-sm text-muted-foreground">{c.email}</p>
-                          <p className="text-sm mt-2"><strong>Interest:</strong> {c.primary_interest}</p>
-                          <p className="text-sm"><strong>Source:</strong> {c.heard_about_us}</p>
-                          {c.referral_code && <p className="text-sm"><strong>Referral:</strong> {c.referral_code}</p>}
+                          <p className="text-sm mt-2"><strong>Age:</strong> {c.age || 'N/A'}</p>
+                          <p className="text-sm"><strong>Health Goals:</strong> {c.health_goals?.join(', ') || 'N/A'}</p>
                         </div>
                         <Badge>{c.status}</Badge>
                       </div>
@@ -247,11 +246,11 @@ export default function AdminDashboard() {
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-semibold">{p.full_name} - {p.title}</h3>
+                          <h3 className="font-semibold">{p.full_name}</h3>
                           <p className="text-sm text-muted-foreground">{p.email}</p>
-                          <p className="text-sm mt-2"><strong>Specialty:</strong> {p.specialty}</p>
-                          <p className="text-sm"><strong>License:</strong> {p.license_number}</p>
-                          <p className="text-sm"><strong>Experience:</strong> {p.years_experience} years</p>
+                          <p className="text-sm mt-2"><strong>License:</strong> {p.license_number}</p>
+                          <p className="text-sm"><strong>Specialty:</strong> {p.specialty}</p>
+                          <p className="text-sm"><strong>States:</strong> {p.states_licensed?.join(', ') || 'N/A'}</p>
                         </div>
                         <Badge>{p.status}</Badge>
                       </div>
@@ -286,25 +285,55 @@ export default function AdminDashboard() {
               </TabsContent>
 
               <TabsContent value="businesses" className="space-y-4">
-                {businesses?.map(b => (
-                  <Card key={b.id}>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="font-semibold">{b.company_name}</h3>
-                          <p className="text-sm text-muted-foreground">{b.email}</p>
-                          <p className="text-sm mt-2"><strong>Contact:</strong> {b.contact_name}</p>
-                          <p className="text-sm"><strong>Industry:</strong> {b.industry}</p>
-                          <p className="text-sm"><strong>Interest:</strong> {b.interest_type}</p>
+                {businesses?.length === 0 ? (
+                  <p className="text-center text-muted-foreground py-8">No business inquiries yet</p>
+                ) : (
+                  businesses?.map(b => (
+                    <Card key={b.id} className={selectedBusiness?.id === b.id ? 'border-blue-500 border-2' : ''}>
+                      <CardContent className="pt-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1 cursor-pointer" onClick={() => setSelectedBusiness(selectedBusiness?.id === b.id ? null : b)}>
+                            <h3 className="font-semibold text-lg">{b.company_name}</h3>
+                            <p className="text-sm text-muted-foreground">{b.email}</p>
+                            <div className="grid grid-cols-2 gap-2 mt-3">
+                              <p className="text-sm"><strong>Contact:</strong> {b.contact_name}</p>
+                              <p className="text-sm"><strong>Industry:</strong> {b.industry}</p>
+                              <p className="text-sm"><strong>Interest:</strong> {b.interest_type}</p>
+                              <p className="text-sm"><strong>Phone:</strong> {b.phone || 'N/A'}</p>
+                            </div>
+                            {selectedBusiness?.id === b.id && b.message && (
+                              <div className="mt-4 p-3 bg-gray-50 rounded border">
+                                <p className="text-sm font-medium mb-1">Message:</p>
+                                <p className="text-sm text-gray-700">{b.message}</p>
+                              </div>
+                            )}
+                            <p className="text-xs text-muted-foreground mt-3">
+                              Submitted: {new Date(b.created_date).toLocaleString()}
+                            </p>
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <Badge>{b.status || 'pending'}</Badge>
+                            <select 
+                              value={businessStatus[b.id] || b.status || 'pending'}
+                              onChange={async (e) => {
+                                const newStatus = e.target.value;
+                                setBusinessStatus(prev => ({...prev, [b.id]: newStatus}));
+                                await base44.entities.BusinessInquiry.update(b.id, {status: newStatus});
+                                refetchBusinesses();
+                              }}
+                              className="text-xs px-2 py-1 border rounded"
+                            >
+                              <option value="pending">Pending</option>
+                              <option value="contacted">Contacted</option>
+                              <option value="qualified">Qualified</option>
+                              <option value="rejected">Rejected</option>
+                            </select>
+                          </div>
                         </div>
-                        <Badge>{b.status}</Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-4">
-                        Submitted: {new Date(b.created_date).toLocaleString()}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
               </TabsContent>
 
               <TabsContent value="creators" className="space-y-4">
@@ -337,8 +366,7 @@ export default function AdminDashboard() {
                         <div>
                           <h3 className="font-semibold">{c.name}</h3>
                           <p className="text-sm text-muted-foreground">{c.email}</p>
-                          <p className="text-sm mt-2"><strong>Subject:</strong> {c.subject}</p>
-                          <p className="text-sm mt-1">{c.message}</p>
+                          <p className="text-sm mt-2"><strong>Message:</strong> {c.message}</p>
                         </div>
                         <Badge>{c.status}</Badge>
                       </div>
@@ -358,15 +386,14 @@ export default function AdminDashboard() {
                         <div>
                           <h3 className="font-semibold">{p.business_name}</h3>
                           <p className="text-sm text-muted-foreground">{p.email}</p>
-                          <p className="text-sm mt-2"><strong>Code:</strong> {p.partner_code}</p>
+                          <p className="text-sm mt-2"><strong>Contact:</strong> {p.contact_name}</p>
                           <p className="text-sm"><strong>Type:</strong> {p.business_type}</p>
-                          <p className="text-sm"><strong>Referrals:</strong> {p.total_referrals}</p>
-                          <p className="text-sm"><strong>Earnings:</strong> ${p.total_earnings?.toFixed(2) || '0.00'}</p>
+                          <p className="text-sm"><strong>Code:</strong> {p.partner_code}</p>
                         </div>
                         <Badge>{p.status}</Badge>
                       </div>
                       <p className="text-xs text-muted-foreground mt-4">
-                        Joined: {new Date(p.created_date).toLocaleString()}
+                        Submitted: {new Date(p.created_date).toLocaleString()}
                       </p>
                     </CardContent>
                   </Card>
@@ -379,15 +406,16 @@ export default function AdminDashboard() {
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-sm"><strong>Customer:</strong> {r.customer_email}</p>
-                          <p className="text-sm"><strong>Product:</strong> {r.product_id}</p>
-                          <p className="text-sm"><strong>Order Value:</strong> ${r.order_value?.toFixed(2)}</p>
-                          <p className="text-sm"><strong>Partner Earnings:</strong> ${r.partner_earnings?.toFixed(2)}</p>
+                          <h3 className="font-semibold">Referral from Partner</h3>
+                          <p className="text-sm text-muted-foreground">{r.customer_email}</p>
+                          <p className="text-sm mt-2"><strong>Product:</strong> {r.product_id}</p>
+                          <p className="text-sm"><strong>Order Value:</strong> ${r.order_value}</p>
+                          <p className="text-sm"><strong>Earnings:</strong> ${r.partner_earnings}</p>
                         </div>
                         <Badge>{r.status}</Badge>
                       </div>
                       <p className="text-xs text-muted-foreground mt-4">
-                        Date: {new Date(r.created_date).toLocaleString()}
+                        Submitted: {new Date(r.created_date).toLocaleString()}
                       </p>
                     </CardContent>
                   </Card>
