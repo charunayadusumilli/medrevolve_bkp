@@ -87,6 +87,7 @@ import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import WaitingRoom from './pages/WaitingRoom';
+import ProviderOutreach from './pages/ProviderOutreach';
 import __Layout from './Layout.jsx';
 
 
@@ -131,6 +132,7 @@ export const PAGES = {
     "Terms": Terms,
     "VideoCall": VideoCall,
     "WaitingRoom": WaitingRoom,
+    "ProviderOutreach": ProviderOutreach,
 }
 
 export const pagesConfig = {
