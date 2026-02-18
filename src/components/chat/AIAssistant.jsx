@@ -268,12 +268,13 @@ ${activeCtx.persona}:`,
               {/* ── Header ── */}
               <div className={`bg-gradient-to-r ${ctx.color} px-4 py-3 flex items-center justify-between flex-shrink-0`}>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-lg flex-shrink-0">
-                    {ctx.avatar}
-                  </div>
+                  <PersonaAvatar personaKey={ctx.personaKey} size="md" ring />
                   <div>
                     <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
-                    <p className="text-[11px] text-white/65 leading-tight">MedRevolve · {ctx.audience} specialist</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
+                      <p className="text-[11px] text-white/65 leading-tight">Online · {ctx.audience} specialist</p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5">
