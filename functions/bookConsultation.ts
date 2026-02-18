@@ -62,8 +62,9 @@ Deno.serve(async (req) => {
 
     const data = await req.json();
 
-    if (!data.provider_id || !data.appointment_date || !data.appointment_time || !data.type) {
-      return Response.json({ error: 'Missing required fields' }, { status: 400 });
+    // Validate required fields (provider_id is now optional)
+    if (!data.appointment_date || !data.appointment_time || !data.type || !data.reason) {
+      return Response.json({ error: 'Missing required fields: appointment_date, appointment_time, type, reason' }, { status: 400 });
     }
 
     const appointmentDateTime = new Date(`${data.appointment_date}T${data.appointment_time}`);
@@ -71,11 +72,20 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Appointment must be in the future' }, { status: 400 });
     }
 
-    const provider = await base44.asServiceRole.entities.Provider.get(data.provider_id);
+    // Fetch provider if selected, otherwise null
+    let provider = null;
+    if (data.provider_id) {
+      try {
+        provider = await base44.asServiceRole.entities.Provider.get(data.provider_id);
+      } catch (err) {
+        console.error('Provider fetch error:', err);
+      }
+    }
+
     const duration = DURATION_MAP[data.type] || 30;
     const typeLabel = TYPE_LABEL[data.type] || data.type;
     const patientName = user.full_name || user.email;
-    const providerName = provider?.name || 'Licensed Provider';
+    const providerName = provider?.name || 'To Be Assigned';
     const providerTitle = provider?.title || '';
     const dateStr = formatDateLong(appointmentDateTime);
     const timeStr = formatTime(appointmentDateTime);
