@@ -28,6 +28,21 @@ export default function AppointmentDetailPanel({ appointment, onClose, providerI
   const [historyOpen, setHistoryOpen] = useState(false);
   const [prescribeOpen, setPrescribeOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [aiSummary, setAiSummary] = useState(appointment?.ai_summary || '');
+  const [followUp, setFollowUp] = useState(appointment?.follow_up_instructions || '');
+  const [diagnosisCodes, setDiagnosisCodes] = useState(appointment?.diagnosis_codes || []);
+
+  const handleAIApply = (data) => {
+    if (data.summary) setAiSummary(data.summary);
+    if (data.follow_up) setFollowUp(data.follow_up);
+    if (data.icd_codes?.length) setDiagnosisCodes(data.icd_codes.map(c => `${c.code} — ${c.description}`));
+    // Auto-save to appointment
+    updateMutation.mutate({ id: appointment.id, data: {
+      ai_summary: data.summary,
+      follow_up_instructions: data.follow_up,
+      diagnosis_codes: data.icd_codes?.map(c => `${c.code} — ${c.description}`),
+    }});
+  };
 
   const copyVideoLink = () => {
     if (appointment?.session_url) {
