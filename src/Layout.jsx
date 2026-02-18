@@ -185,6 +185,11 @@ export default function Layout({ children }) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2">
                     <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Overview</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-xl px-3 py-2">Partner Program</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-xl px-3 py-2">Creator Program</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ForBusiness')} className="cursor-pointer rounded-xl px-3 py-2">For Business</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-xl px-3 py-2">Partnerships</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Compliance</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer rounded-xl px-3 py-2">Pharmacy Contracts</Link></DropdownMenuItem>
