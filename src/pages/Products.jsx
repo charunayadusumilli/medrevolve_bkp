@@ -117,7 +117,7 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Start Gentle',
     promise: 'Perfect for beginners',
-    lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
     bg: 'bg-emerald-50',
     tag: 'Beginner Friendly',
     tagColor: 'bg-emerald-500',
