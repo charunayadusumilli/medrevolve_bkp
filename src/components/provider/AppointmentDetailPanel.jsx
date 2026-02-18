@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { createPageUrl } from '@/utils';
 import {
   X, Video, CheckCircle2, Ban, User, Clock,
-  FileText, Pill, Calendar, Save, ChevronDown, ChevronUp
+  FileText, Pill, Calendar, Save, ChevronDown, ChevronUp, Copy, Link2
 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import EPrescribeModal from '@/components/provider/EPrescribeModal';
@@ -26,6 +26,15 @@ export default function AppointmentDetailPanel({ appointment, onClose, providerI
   const [notesSaved, setNotesSaved] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [prescribeOpen, setPrescribeOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyVideoLink = () => {
+    if (appointment?.session_url) {
+      navigator.clipboard.writeText(appointment.session_url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   const { data: patientHistory } = useQuery({
     queryKey: ['patientHistory', appointment?.patient_email],
@@ -98,6 +107,21 @@ export default function AppointmentDetailPanel({ appointment, onClose, providerI
               </div>
             </div>
           </div>
+
+          {/* Video Call Link */}
+          {appointment.session_url && (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+              <p className="text-xs font-semibold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Video className="w-3.5 h-3.5" /> Video Call Link
+              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-blue-800 font-mono truncate flex-1">{appointment.session_url}</p>
+                <button onClick={copyVideoLink} className="flex-shrink-0 text-blue-600 hover:text-blue-800 transition-colors">
+                  {copied ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Reason */}
           {appointment.reason && (
@@ -192,6 +216,12 @@ export default function AppointmentDetailPanel({ appointment, onClose, providerI
             <Button variant="outline" className="w-full rounded-full border-[#4A6741] text-[#4A6741]"
               onClick={() => updateMutation.mutate({ id: appointment.id, data: { status: 'confirmed' } })}>
               <CheckCircle2 className="w-4 h-4 mr-2" /> Confirm Appointment
+            </Button>
+          )}
+          {appointment.status === 'in_progress' && (
+            <Button variant="outline" className="w-full rounded-full border-gray-300 text-gray-600 hover:bg-gray-50"
+              onClick={() => updateMutation.mutate({ id: appointment.id, data: { status: 'completed' } })}>
+              <CheckCircle2 className="w-4 h-4 mr-2" /> Mark Completed
             </Button>
           )}
           {['scheduled', 'confirmed'].includes(appointment.status) && (
