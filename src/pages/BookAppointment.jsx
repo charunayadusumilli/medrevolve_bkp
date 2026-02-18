@@ -653,17 +653,17 @@ export default function BookAppointment() {
   };
 
   const queryClient = useQueryClient();
-  const [isAuth, setIsAuth] = useState(null);
-
-  React.useEffect(() => {
-    base44.auth.isAuthenticated().then(setIsAuth);
-  }, []);
 
   const { data: providers = [] } = useQuery({
     queryKey: ['activeProviders'],
-    queryFn: () => base44.entities.Provider.filter({ is_active: true }, '-rating'),
-    enabled: isAuth === true,
-    retry: false
+    queryFn: async () => {
+      try {
+        return await base44.entities.Provider.filter({ is_active: true }, '-rating');
+      } catch (err) {
+        // User not authenticated - return empty list, allow form to proceed
+        return [];
+      }
+    }
   });
 
   const bookMutation = useMutation({
