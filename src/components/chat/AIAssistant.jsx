@@ -188,8 +188,8 @@ export default function AIAssistant() {
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setLoading(true);
 
-    const activeCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
-    const systemPrompt = buildSystemPrompt(activeCtx.persona, activeCtx.audience, pageName, pageProduct);
+    const activeCtx = getPageContext(pageName);
+    const systemPrompt = buildSystemPrompt(pageName, pageProduct);
 
     // Rolling conversation context (last 10 messages)
     const history = messages
