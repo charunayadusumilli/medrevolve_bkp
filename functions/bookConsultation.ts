@@ -90,18 +90,23 @@ Deno.serve(async (req) => {
     const dateStr = formatDateLong(appointmentDateTime);
     const timeStr = formatTime(appointmentDateTime);
 
-    // Create appointment
-    const appointment = await base44.asServiceRole.entities.Appointment.create({
-      provider_id: data.provider_id,
+    // Create appointment (provider_id optional, will be assigned later if not provided)
+    const appointmentData = {
       patient_email: user.email,
       appointment_date: appointmentDateTime.toISOString(),
       duration_minutes: duration,
       type: data.type,
-      reason: data.reason || '',
+      reason: data.reason,
       notes: data.notes || '',
-      status: 'scheduled',
+      status: data.provider_id ? 'scheduled' : 'pending',
       video_room_id: `room_${Date.now()}`
-    });
+    };
+    
+    if (data.provider_id) {
+      appointmentData.provider_id = data.provider_id;
+    }
+
+    const appointment = await base44.asServiceRole.entities.Appointment.create(appointmentData);
 
     // ── EMAIL to patient ────────────────────────────────────────────────
     await base44.asServiceRole.integrations.Core.SendEmail({
