@@ -113,8 +113,16 @@ export default function Layout({ children }) {
 
   const handleTreatToggle = () => setTreatOpen(!treatOpen);
 
+  // Scroll to top & close menus on nav click
+  const handleNavClick = (callback) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileMenuOpen(false);
+    setTreatOpen(false);
+    if (callback) callback();
+  };
+
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
       <AnalyticsTracker />
       <AIAssistant />
 
