@@ -358,6 +358,21 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
       </div>
 
       <div>
+        <Label htmlFor="email" className="text-sm font-semibold text-[#2D3A2D] mb-2 block">
+          Email address <span className="text-red-500">*</span>
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          value={formData.patient_email || ''}
+          onChange={(e) => setFormData({ ...formData, patient_email: e.target.value })}
+          placeholder="your.email@example.com"
+          className="rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741]"
+          required
+        />
+      </div>
+
+      <div>
         <Label htmlFor="reason" className="text-sm font-semibold text-[#2D3A2D] mb-2 block">
           Primary reason for visit <span className="text-red-500">*</span>
         </Label>
@@ -422,7 +437,7 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <Button
           type="button"
           onClick={onNext}
-          disabled={!formData.reason.trim()}
+          disabled={!formData.reason.trim() || !formData.patient_email?.trim()}
           className="flex-2 flex-grow-[2] bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
         >
           Review & Confirm <ArrowRight className="ml-2 w-4 h-4" />
@@ -593,18 +608,49 @@ export default function BookAppointment() {
   const urlParams = new URLSearchParams(window.location.search);
   const preSelectedProvider = urlParams.get('provider');
 
+  // Load form data from localStorage or initialize
+  const getInitialFormData = () => {
+    try {
+      const cached = localStorage.getItem('bookAppointmentForm');
+      return cached ? JSON.parse(cached) : {
+        provider_id: preSelectedProvider || '',
+        appointment_date: '',
+        appointment_time: '',
+        type: '',
+        reason: '',
+        notes: '',
+        phone: '',
+        patient_email: '',
+        recording_consent: false
+      };
+    } catch {
+      return {
+        provider_id: preSelectedProvider || '',
+        appointment_date: '',
+        appointment_time: '',
+        type: '',
+        reason: '',
+        notes: '',
+        phone: '',
+        patient_email: '',
+        recording_consent: false
+      };
+    }
+  };
+
   const [step, setStep] = useState(1);
   const [booked, setBooked] = useState(false);
-  const [formData, setFormData] = useState({
-    provider_id: preSelectedProvider || '',
-    appointment_date: '',
-    appointment_time: '',
-    type: '',
-    reason: '',
-    notes: '',
-    phone: '',
-    recording_consent: false
-  });
+  const [formData, setFormDataState] = useState(getInitialFormData());
+
+  // Cache form data to localStorage on change
+  const setFormData = (data) => {
+    setFormDataState(data);
+    try {
+      localStorage.setItem('bookAppointmentForm', JSON.stringify(data));
+    } catch (e) {
+      console.error('Failed to cache form data:', e);
+    }
+  };
 
   const queryClient = useQueryClient();
 
@@ -620,6 +666,12 @@ export default function BookAppointment() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['upcomingAppointments']);
+      // Clear cached form on successful booking
+      try {
+        localStorage.removeItem('bookAppointmentForm');
+      } catch (e) {
+        console.error('Failed to clear form cache:', e);
+      }
       setBooked(true);
     }
   });
