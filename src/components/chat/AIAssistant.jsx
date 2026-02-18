@@ -1,57 +1,105 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { MessageCircle, X, Send, Sparkles, ChevronDown } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, ChevronDown, RotateCcw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { PAGE_CONTEXTS, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
+import ReactMarkdown from 'react-markdown';
 
-function getPageName(pathname, search) {
-  const path = pathname.replace('/', '') || 'Home';
-  return path || 'Home';
+// Derive page name from react-router pathname
+function usePageContext() {
+  const location = useLocation();
+  const raw = location.pathname.replace(/^\//, '') || 'Home';
+  // Handle /ProductDetail?id=X → ProductDetail
+  const pageName = raw.split('?')[0] || 'Home';
+  const params = new URLSearchParams(location.search);
+  const pageProduct = params.get('name') || params.get('id') || null;
+  const ctx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+  return { pageName, pageProduct, ctx };
 }
 
-function getPageProduct(search) {
-  const params = new URLSearchParams(search);
-  return params.get('id') || params.get('name') || null;
-}
-
-function TypingIndicator() {
+function TypingDots() {
   return (
-    <div className="flex justify-start">
-      <div className="bg-gray-100 rounded-2xl px-4 py-3">
-        <div className="flex gap-1 items-center">
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }} />
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
-        </div>
-      </div>
+    <div className="flex gap-1 py-1">
+      {[0, 1, 2].map(i => (
+        <span
+          key={i}
+          className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+          style={{ animationDelay: `${i * 0.15}s` }}
+        />
+      ))}
     </div>
   );
 }
 
+function ChatBubble({ msg }) {
+  const isUser = msg.role === 'user';
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.18 }}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} gap-2`}
+    >
+      {!isUser && (
+        <div className="w-7 h-7 rounded-full bg-[#4A6741]/10 flex items-center justify-center text-base flex-shrink-0 mt-1">
+          {msg.avatar || '🌿'}
+        </div>
+      )}
+      <div
+        className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+          isUser
+            ? 'bg-[#2D3A2D] text-white rounded-br-sm'
+            : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
+        }`}
+      >
+        {isUser ? (
+          <p className="whitespace-pre-wrap">{msg.content}</p>
+        ) : (
+          <ReactMarkdown
+            className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0.5 prose-strong:text-[#2D3A2D]"
+            components={{
+              p: ({ children }) => <p className="my-1">{children}</p>,
+              ul: ({ children }) => <ul className="my-1 ml-4 list-disc">{children}</ul>,
+              li: ({ children }) => <li className="my-0.5">{children}</li>,
+              strong: ({ children }) => <strong className="font-semibold text-[#2D3A2D]">{children}</strong>,
+            }}
+          >
+            {msg.content}
+          </ReactMarkdown>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AIAssistant() {
-  const location = useLocation();
-  const pageName = getPageName(location.pathname, location.search);
-  const pageProduct = getPageProduct(location.search);
-  const ctx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+  const { pageName, pageProduct, ctx } = usePageContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
-  const [messages, setMessages] = useState([{ role: 'assistant', content: ctx.greeting }]);
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: ctx.greeting, avatar: ctx.avatar }
+  ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [faqOpen, setFaqOpen] = useState(false);
+  const [faqOpen, setFaqOpen] = useState(true);
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const prevPageRef = useRef(pageName);
 
   // Reset conversation when page changes
   useEffect(() => {
-    const newCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
-    setMessages([{ role: 'assistant', content: newCtx.greeting }]);
-    setFaqOpen(false);
+    if (prevPageRef.current !== pageName) {
+      prevPageRef.current = pageName;
+      const newCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+      setMessages([{ role: 'assistant', content: newCtx.greeting, avatar: newCtx.avatar }]);
+      setFaqOpen(true);
+    }
   }, [pageName]);
 
   useEffect(() => {
@@ -64,52 +112,67 @@ export default function AIAssistant() {
     }
   }, [isOpen, minimized]);
 
-  const sendMessage = async (text) => {
-    if (!text?.trim() || loading) return;
-    const userMsg = { role: 'user', content: text.trim() };
-    setMessages(prev => [...prev, userMsg]);
+  const sendMessage = useCallback(async (text) => {
+    const trimmed = (text || input).trim();
+    if (!trimmed || loading) return;
+
     setInput('');
-    setLoading(true);
     setFaqOpen(false);
+    setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
+    setLoading(true);
 
     const activeCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
     const systemPrompt = buildSystemPrompt(activeCtx.persona, activeCtx.audience, pageName, pageProduct);
 
-    // Build conversation history for context
+    // Rolling conversation context (last 10 messages)
     const history = messages
-      .slice(-8) // last 8 msgs for context window
-      .map(m => `${m.role === 'user' ? 'User' : 'Specialist'}: ${m.content}`)
-      .join('\n');
+      .slice(-10)
+      .map(m => `${m.role === 'user' ? 'User' : activeCtx.persona}: ${m.content}`)
+      .join('\n\n');
 
     try {
       const response = await base44.integrations.Core.InvokeLLM({
         prompt: `${systemPrompt}
 
-CONVERSATION HISTORY:
+---
+CONVERSATION SO FAR:
 ${history}
 
-User: ${text.trim()}
+User: ${trimmed}
 
-Respond as ${activeCtx.persona}:`,
+${activeCtx.persona}:`,
         add_context_from_internet: false,
       });
 
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: typeof response === 'string' ? response : JSON.stringify(response),
+        avatar: activeCtx.avatar,
+      }]);
     } catch {
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Sorry, I ran into an issue. Please try again in a moment!'
+        content: 'Sorry, I had a hiccup! Please try again in a moment.',
+        avatar: activeCtx.avatar,
       }]);
     } finally {
       setLoading(false);
     }
+  }, [input, loading, messages, pageName, pageProduct]);
+
+  const resetChat = () => {
+    const newCtx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+    setMessages([{ role: 'assistant', content: newCtx.greeting, avatar: newCtx.avatar }]);
+    setFaqOpen(true);
+    setInput('');
   };
 
-  const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE.customer;
+  const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE['customer'];
+  const showFaqs = faqOpen && messages.length <= 2;
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Action Button */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -117,14 +180,18 @@ Respond as ${activeCtx.persona}:`,
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            onClick={() => setIsOpen(true)}
-            className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br ${ctx.color} text-white shadow-xl flex items-center justify-center`}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.94 }}
+            onClick={() => { setIsOpen(true); setMinimized(false); }}
+            className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br ${ctx.color} text-white shadow-2xl flex items-center justify-center`}
+            whileHover={{ scale: 1.07 }}
+            whileTap={{ scale: 0.93 }}
           >
             <MessageCircle className="w-7 h-7" />
-            {/* Pulse ring */}
-            <span className="absolute inset-0 rounded-full animate-ping opacity-20 bg-white" />
+            {/* Persona label on hover effect (pulse) */}
+            <motion.span
+              className="absolute inset-0 rounded-full bg-white opacity-0"
+              animate={{ opacity: [0, 0.12, 0] }}
+              transition={{ repeat: Infinity, duration: 3, delay: 2 }}
+            />
           </motion.button>
         )}
       </AnimatePresence>
@@ -133,33 +200,45 @@ Respond as ${activeCtx.persona}:`,
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            key="chat"
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            key="chat-window"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.96 }}
-            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-1.5rem)]"
-            style={{ height: minimized ? 'auto' : 'min(600px, calc(100vh - 3rem))' }}
+            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+            className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col"
+            style={{ height: minimized ? 'auto' : 'min(620px, calc(100vh - 3rem))' }}
           >
-            <Card className="h-full flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
-              {/* Header */}
-              <div className={`bg-gradient-to-r ${ctx.color} text-white px-4 py-3 flex items-center justify-between flex-shrink-0`}>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="w-4 h-4" />
+            <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
+
+              {/* ── Header ── */}
+              <div className={`bg-gradient-to-r ${ctx.color} px-4 py-3 flex items-center justify-between flex-shrink-0`}>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-lg flex-shrink-0">
+                    {ctx.avatar}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm leading-tight">{ctx.persona}</p>
-                    <p className="text-[11px] text-white/75">MedRevolve Specialist</p>
+                    <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
+                    <p className="text-[11px] text-white/65 leading-tight">MedRevolve · {ctx.audience} specialist</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <button onClick={() => setMinimized(m => !m)}
-                    className="p-1.5 rounded-full hover:bg-white/20 transition-colors">
-                    <ChevronDown className={`w-4 h-4 transition-transform ${minimized ? 'rotate-180' : ''}`} />
+                <div className="flex items-center gap-0.5">
+                  <button
+                    onClick={resetChat}
+                    title="Reset conversation"
+                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
                   </button>
-                  <button onClick={() => setIsOpen(false)}
-                    className="p-1.5 rounded-full hover:bg-white/20 transition-colors">
+                  <button
+                    onClick={() => setMinimized(m => !m)}
+                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                  >
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${minimized ? 'rotate-180' : ''}`} />
+                  </button>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                  >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -167,54 +246,53 @@ Respond as ${activeCtx.persona}:`,
 
               {!minimized && (
                 <>
-                  {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FDFBF7]">
+                  {/* ── Messages ── */}
+                  <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#FAFAF8] min-h-0">
                     {messages.map((msg, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                      >
-                        <div className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                          msg.role === 'user'
-                            ? 'bg-[#4A6741] text-white rounded-br-sm'
-                            : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
-                        }`}>
-                          {msg.content}
-                        </div>
-                      </motion.div>
+                      <ChatBubble key={idx} msg={msg} />
                     ))}
-                    {loading && <TypingIndicator />}
+                    {loading && (
+                      <div className="flex justify-start gap-2">
+                        <div className="w-7 h-7 rounded-full bg-[#4A6741]/10 flex items-center justify-center text-base flex-shrink-0 mt-1">
+                          {ctx.avatar}
+                        </div>
+                        <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
+                          <TypingDots />
+                        </div>
+                      </div>
+                    )}
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* FAQ Quick Chips */}
-                  <div className="px-3 pt-2 pb-1 bg-white border-t border-gray-100">
+                  {/* ── FAQ Chips ── */}
+                  <div className="flex-shrink-0 bg-white border-t border-gray-100">
                     <button
                       onClick={() => setFaqOpen(o => !o)}
-                      className="text-xs text-[#4A6741] font-medium flex items-center gap-1 mb-1.5 hover:underline"
+                      className="w-full flex items-center justify-between px-4 py-2.5 text-xs text-[#4A6741] font-semibold hover:bg-[#F5F0E8] transition-colors"
                     >
-                      <Sparkles className="w-3 h-3" />
-                      Suggested questions
-                      <ChevronDown className={`w-3 h-3 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles className="w-3 h-3" />
+                        Common questions for {ctx.audience}s
+                      </span>
+                      <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
                     </button>
+
                     <AnimatePresence>
                       {faqOpen && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           className="overflow-hidden"
                         >
-                          <div className="flex flex-wrap gap-1.5 pb-2">
+                          <div className="px-3 pb-3 flex flex-wrap gap-1.5 max-h-[108px] overflow-y-auto">
                             {faqs.map(faq => (
                               <button
                                 key={faq.label}
                                 onClick={() => sendMessage(faq.q)}
                                 disabled={loading}
-                                className="text-[11px] px-2.5 py-1 bg-[#F5F0E8] hover:bg-[#E8E0D5] text-[#4A6741] rounded-full transition-colors border border-[#E8E0D5] font-medium"
+                                className="text-[11px] px-2.5 py-1.5 bg-[#F5F0E8] hover:bg-[#E8DDD0] text-[#4A6741] rounded-full font-medium border border-[#E8E0D5] transition-colors disabled:opacity-50 whitespace-nowrap"
                               >
                                 {faq.label}
                               </button>
@@ -225,27 +303,35 @@ Respond as ${activeCtx.persona}:`,
                     </AnimatePresence>
                   </div>
 
-                  {/* Input */}
-                  <div className="p-3 bg-white border-t border-gray-100">
-                    <div className="flex gap-2">
+                  {/* ── Input ── */}
+                  <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-gray-100">
+                    <div className="flex gap-2 items-center">
                       <Input
                         ref={inputRef}
                         value={input}
                         onChange={e => setInput(e.target.value)}
-                        onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage(input)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage(input);
+                          }
+                        }}
                         placeholder={`Ask your ${ctx.persona}...`}
-                        className="flex-1 rounded-full text-sm border-gray-200"
+                        className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
                         disabled={loading}
                       />
                       <Button
                         onClick={() => sendMessage(input)}
                         disabled={loading || !input.trim()}
                         size="icon"
-                        className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0`}
+                        className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0 w-9 h-9 shadow-md`}
                       >
-                        <Send className="w-4 h-4" />
+                        <Send className="w-3.5 h-3.5" />
                       </Button>
                     </div>
+                    <p className="text-center text-[10px] text-gray-300 mt-1.5">
+                      MedRevolve AI · Not a substitute for medical advice
+                    </p>
                   </div>
                 </>
               )}
