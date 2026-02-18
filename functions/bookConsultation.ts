@@ -161,23 +161,31 @@ support@medrevolve.com
     // ── EMAIL to admin ──────────────────────────────────────────────────
     const adminEmail = Deno.env.get('ADMIN_EMAIL');
     if (adminEmail) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Appointments',
-        to: adminEmail,
-        subject: `📅 New Appointment: ${patientName} — ${dateStr}`,
-        body: `New appointment booked.
+      try {
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          from_name: 'MedRevolve Appointments',
+          to: adminEmail,
+          subject: `📅 New Appointment: ${patientName} — ${dateStr}${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''}`,
+          body: `New appointment ${data.provider_id ? 'booked' : 'request received (needs provider assignment)'}.
 
 Patient:  ${patientName} (${user.email})
 Provider: ${providerName}${providerTitle ? ', ' + providerTitle : ''}
 Type:     ${typeLabel}
 Date:     ${dateStr} at ${timeStr}
 Duration: ${duration} min
-Reason:   ${data.reason || 'N/A'}
+Reason:   ${data.reason}
 Notes:    ${data.notes || 'None'}
 Appt ID:  ${appointment.id}
 Room:     ${appointment.video_room_id}
+Status:   ${appointment.status}
+${data.phone ? `Phone:    ${data.phone}` : ''}
+
+${!data.provider_id ? 'ACTION REQUIRED: Please assign a provider and update the appointment to trigger patient notification with provider details.' : ''}
 `
-      });
+        });
+      } catch (adminEmailErr) {
+        console.error('Admin email send error:', adminEmailErr);
+      }
     }
 
     // ── SMS to patient ──────────────────────────────────────────────────
