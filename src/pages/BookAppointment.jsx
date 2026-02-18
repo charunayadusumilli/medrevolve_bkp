@@ -461,8 +461,8 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
           </div>
         </div>
 
-        {/* Provider */}
-        {provider && (
+        {/* Provider or Assignment Notice */}
+        {provider ? (
           <div className="flex items-center gap-3 pb-4 border-b border-[#D8D0C5]">
             <img
               src={provider.photo || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&q=80'}
@@ -472,6 +472,16 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
             <div>
               <p className="font-semibold text-[#2D3A2D]">{provider.name}, {provider.title}</p>
               <p className="text-sm text-[#5A6B5A]">{provider.specialty}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 pb-4 border-b border-[#D8D0C5]">
+            <div className="flex items-start gap-2.5">
+              <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-blue-900 text-sm">Provider To Be Assigned</p>
+                <p className="text-xs text-blue-800 mt-0.5">We'll match you with the best available provider and notify you via email with their details and video call link.</p>
+              </div>
             </div>
           </div>
         )}
