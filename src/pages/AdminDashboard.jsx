@@ -131,14 +131,14 @@ export default function AdminDashboard() {
   }
 
   const stats = [
-    { label: 'Customer Intakes', value: customers?.length || 0, icon: Users, color: 'bg-blue-500' },
-    { label: 'Provider Applications', value: providers?.length || 0, icon: Stethoscope, color: 'bg-green-500' },
-    { label: 'Pharmacy Applications', value: pharmacies?.length || 0, icon: Pill, color: 'bg-purple-500' },
-    { label: 'Business Inquiries', value: businesses?.length || 0, icon: Building2, color: 'bg-orange-500' },
-    { label: 'Creator Applications', value: creators?.length || 0, icon: UserPlus, color: 'bg-pink-500' },
-    { label: 'Contact Requests', value: contacts?.length || 0, icon: MessageSquare, color: 'bg-cyan-500' },
-    { label: 'Active Partners', value: partners?.filter(p => p.status === 'active').length || 0, icon: DollarSign, color: 'bg-emerald-500' },
-    { label: 'Partner Referrals', value: referrals?.length || 0, icon: TrendingUp, color: 'bg-amber-500' }
+    { label: 'Customer Intakes', value: customers?.length || 0, icon: Users, color: 'bg-blue-500', loading: !customers },
+    { label: 'Provider Applications', value: providers?.length || 0, icon: Stethoscope, color: 'bg-green-500', loading: !providers },
+    { label: 'Pharmacy Applications', value: pharmacies?.length || 0, icon: Pill, color: 'bg-purple-500', loading: !pharmacies },
+    { label: 'Business Inquiries', value: businesses?.length || 0, icon: Building2, color: 'bg-orange-500', loading: !businesses },
+    { label: 'Creator Applications', value: creators?.length || 0, icon: UserPlus, color: 'bg-pink-500', loading: !creators },
+    { label: 'Contact Requests', value: contacts?.length || 0, icon: MessageSquare, color: 'bg-cyan-500', loading: !contacts },
+    { label: 'Active Partners', value: partners?.filter(p => p.status === 'active').length || 0, icon: DollarSign, color: 'bg-emerald-500', loading: !partners },
+    { label: 'Partner Referrals', value: referrals?.length || 0, icon: TrendingUp, color: 'bg-amber-500', loading: !referrals }
   ];
 
   const refetchAll = () => {
