@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   Users, Building2, Stethoscope, Pill, UserPlus, 
-  MessageSquare, DollarSign, TrendingUp, RefreshCw, BarChart3
+  MessageSquare, DollarSign, TrendingUp, RefreshCw, BarChart3,
+  Edit2, Trash2, CheckCircle, Clock
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
