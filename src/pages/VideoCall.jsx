@@ -10,8 +10,9 @@ import {
   Video, VideoOff, Mic, MicOff, PhoneOff,
   Monitor, MonitorOff, Circle, StopCircle,
   MessageSquare, Users, Maximize, Minimize,
-  Settings, ChevronUp, Volume2, VolumeX
+  ChevronUp, FileText, Lock, Shield
 } from 'lucide-react';
+import DocumentSharePanel from '@/components/video/DocumentSharePanel.jsx';
 
 export default function VideoCall() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function VideoCall() {
   const [callDuration, setCallDuration] = useState(0);
   const [callStatus, setCallStatus] = useState('connecting'); // connecting | live | ended
   const [showChat, setShowChat] = useState(false);
+  const [showDocs, setShowDocs] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [localStream, setLocalStream] = useState(null);
@@ -305,6 +307,13 @@ export default function VideoCall() {
                   <button onClick={() => setShowChat(c => !c)} className={`w-9 h-9 rounded-full backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/50 transition-colors ${showChat ? 'bg-[#4A6741]/80' : 'bg-black/30'}`}>
                     <MessageSquare className="w-4 h-4" />
                   </button>
+                  <button onClick={() => setShowDocs(d => !d)} className={`w-9 h-9 rounded-full backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/50 transition-colors ${showDocs ? 'bg-blue-500/80' : 'bg-black/30'}`}>
+                    <FileText className="w-4 h-4" />
+                  </button>
+                  <div className="flex items-center gap-1 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1.5">
+                    <Lock className="w-3 h-3 text-[#A8C99B]" />
+                    <span className="text-[#A8C99B] text-xs font-medium">HIPAA</span>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -336,6 +345,20 @@ export default function VideoCall() {
             )}
           </motion.div>
         </div>
+
+        {/* Document Share Panel */}
+        <AnimatePresence>
+          {showDocs && (
+            <motion.div
+              initial={{ x: 320, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 320, opacity: 0 }}
+              className="absolute right-0 top-0 bottom-0 w-80 z-20"
+            >
+              <DocumentSharePanel onClose={() => setShowDocs(false)} />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Chat panel */}
         <AnimatePresence>
