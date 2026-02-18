@@ -164,6 +164,55 @@ export default function AppointmentDetailPanel({ appointment, onClose, providerI
             </Button>
           </div>
 
+          {/* AI Clinical Assistant */}
+          <AIClinicalAssistant
+            notes={notes}
+            patientEmail={appointment.patient_email}
+            onApply={handleAIApply}
+          />
+
+          {/* AI-generated outputs (editable) */}
+          {(aiSummary || followUp || diagnosisCodes.length > 0) && (
+            <div className="space-y-3">
+              {aiSummary && (
+                <div>
+                  <p className="text-xs font-semibold text-[#5A6B5A] uppercase tracking-wider mb-1.5">Clinical Summary</p>
+                  <textarea
+                    value={aiSummary}
+                    onChange={e => setAiSummary(e.target.value)}
+                    rows={3}
+                    className="w-full text-sm rounded-xl border border-gray-200 p-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#4A6741]/30 focus:border-[#4A6741]"
+                  />
+                </div>
+              )}
+              {diagnosisCodes.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold text-[#5A6B5A] uppercase tracking-wider mb-1.5">Diagnosis Codes</p>
+                  <div className="space-y-1">
+                    {diagnosisCodes.map((c, i) => (
+                      <div key={i} className="text-xs bg-gray-50 rounded-lg px-3 py-2 font-mono text-[#2D3A2D]">{c}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {followUp && (
+                <div>
+                  <p className="text-xs font-semibold text-[#5A6B5A] uppercase tracking-wider mb-1.5">Follow-Up Instructions</p>
+                  <textarea
+                    value={followUp}
+                    onChange={e => setFollowUp(e.target.value)}
+                    rows={4}
+                    className="w-full text-sm rounded-xl border border-gray-200 p-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#4A6741]/30 focus:border-[#4A6741]"
+                  />
+                  <Button size="sm" onClick={() => updateMutation.mutate({ id: appointment.id, data: { follow_up_instructions: followUp, ai_summary: aiSummary } })}
+                    className="mt-2 rounded-full bg-[#4A6741] hover:bg-[#3D5636] text-white">
+                    <Save className="w-3.5 h-3.5 mr-1.5" /> Save All
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Patient History Accordion */}
           {patientHistory && (
             <div className="border border-gray-100 rounded-xl overflow-hidden">
