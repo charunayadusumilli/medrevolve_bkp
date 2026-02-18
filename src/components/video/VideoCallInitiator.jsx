@@ -20,8 +20,8 @@ export default function VideoCallInitiator({ appointmentId, appointmentTime, pro
         appointmentId
       });
 
-      // Navigate to video call with session token
-      navigate(createPageUrl(`VideoCall?id=${appointmentId}&token=${data.token}&room=${data.room}`));
+      // Navigate to waiting room first (then proceeds to video call)
+      navigate(createPageUrl(`WaitingRoom?id=${appointmentId}`));
     } catch (err) {
       setError(err.message || 'Failed to initialize video call');
       console.error('Video call error:', err);
