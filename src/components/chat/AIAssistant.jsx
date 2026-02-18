@@ -42,7 +42,7 @@ function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
 
 // Floating persona badge shown on FAB when closed
 function PersonaFAB({ ctx, onClick }) {
-  const vis = PERSONA_VISUALS[ctx.personaKey] || PERSONA_VISUALS['wellness_concierge'];
+  const vis = getPersonaVisuals(ctx.personaKey);
   const [imgErr, setImgErr] = React.useState(false);
   return (
     <motion.div
