@@ -159,7 +159,7 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Cellular Energy',
     promise: 'All-day mental clarity',
-    lifestyle: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=90',
     bg: 'bg-orange-50',
     tag: 'Brain Boost',
     tagColor: 'bg-orange-500',
