@@ -676,7 +676,17 @@ export default function BookAppointment() {
     }
   });
 
-  const handleSubmit = () => bookMutation.mutate(formData);
+  const handleSubmit = () => {
+    if (!formData.patient_email || !formData.patient_email.trim()) {
+      alert('Email address is required');
+      return;
+    }
+    if (!formData.reason || !formData.reason.trim()) {
+      alert('Please provide a reason for your visit');
+      return;
+    }
+    bookMutation.mutate(formData);
+  };
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] py-12 px-6 lg:px-8">
