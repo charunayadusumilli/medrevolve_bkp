@@ -7,60 +7,67 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-// Lifestyle-focused categories with real people imagery (30-65 age group)
+// Studio-quality pharmaceutical product imagery (Ro.co / Hims style)
 const categories = [
   {
     id: 'weight',
     name: 'Weight',
     description: 'Feel confident in your body',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80',
+    bg: 'from-slate-100 to-slate-200',
     available: true
   },
   {
     id: 'longevity',
     name: 'Longevity',
     description: 'Age gracefully, live fully',
-    image: 'https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=80',
+    bg: 'from-stone-100 to-stone-200',
     available: true
   },
   {
     id: 'hormone',
     name: 'Hormone',
     description: 'Balance from within',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80',
+    bg: 'from-zinc-100 to-zinc-200',
     available: true
   },
   {
     id: 'sexual',
     name: 'Sexual Health',
     description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1516589091380-5d8e87df6999?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=600&q=80',
+    bg: 'from-neutral-100 to-neutral-200',
     available: false
   },
   {
     id: 'hair',
     name: 'Hair',
     description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=600&q=80',
+    bg: 'from-gray-100 to-gray-200',
     available: false
   },
   {
     id: 'skin',
     name: 'Skin',
     description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=80',
+    bg: 'from-rose-50 to-rose-100',
     available: false
   },
   {
     id: 'support',
     name: 'Support',
     description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&q=80',
+    bg: 'from-sky-50 to-sky-100',
     available: false
   }
 ];
 
-// Products with lifestyle-oriented imagery
+// Studio pharmaceutical product imagery — capsules, vials, elegant packaging (Ro/Hims style)
 const allProducts = [
   {
     id: 1,
@@ -68,7 +75,8 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Weight Loss Injection',
     promise: 'Lose up to 15% body weight',
-    lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=800&q=90',
+    bg: 'bg-slate-50',
     tag: 'Most Popular',
     tagColor: 'bg-amber-500',
     price: 299,
@@ -81,7 +89,8 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Dual-Action Formula',
     promise: 'Up to 22% weight loss in studies',
-    lifestyle: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=90',
+    bg: 'bg-violet-50',
     tag: 'Strongest Results',
     tagColor: 'bg-violet-500',
     price: 399,
@@ -94,7 +103,8 @@ const allProducts = [
     category: 'weight',
     subtitle: 'No Needles Needed',
     promise: 'Same results, zero injections',
-    lifestyle: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=90',
+    bg: 'bg-teal-50',
     tag: 'Needle-Free',
     tagColor: 'bg-teal-500',
     price: 249,
@@ -107,7 +117,8 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Start Gentle',
     promise: 'Perfect for beginners',
-    lifestyle: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=90',
+    bg: 'bg-emerald-50',
     tag: 'Beginner Friendly',
     tagColor: 'bg-emerald-500',
     price: 199,
@@ -120,7 +131,8 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Growth Hormone Support',
     promise: 'Wake up feeling 10 years younger',
-    lifestyle: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=90',
+    bg: 'bg-rose-50',
     tag: 'Anti-Aging',
     tagColor: 'bg-rose-500',
     price: 199,
@@ -133,7 +145,8 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Master Antioxidant',
     promise: 'Glow from the inside out',
-    lifestyle: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=800&q=90',
+    bg: 'bg-pink-50',
     tag: 'Skin Glow',
     tagColor: 'bg-pink-500',
     price: 149,
@@ -146,7 +159,8 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Cellular Energy',
     promise: 'All-day mental clarity',
-    lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=90',
+    bg: 'bg-orange-50',
     tag: 'Brain Boost',
     tagColor: 'bg-orange-500',
     price: 179,
@@ -159,7 +173,8 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Energy Essential',
     promise: 'Feel energized in days',
-    lifestyle: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=800&q=90',
+    bg: 'bg-green-50',
     tag: 'Best Value',
     tagColor: 'bg-green-500',
     price: 79,
@@ -172,7 +187,8 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Cognitive Support',
     promise: 'Stay sharp at any age',
-    lifestyle: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=90',
+    bg: 'bg-blue-50',
     tag: 'Memory',
     tagColor: 'bg-blue-500',
     price: 159,
@@ -183,9 +199,10 @@ const allProducts = [
     id: 10,
     name: 'Testosterone Therapy',
     category: 'hormone',
-    subtitle: 'Men\'s Vitality',
+    subtitle: "Men's Vitality",
     promise: 'Reclaim your drive & strength',
-    lifestyle: 'https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=800&q=90',
+    bg: 'bg-indigo-50',
     tag: 'For Men',
     tagColor: 'bg-indigo-500',
     price: 199,
@@ -196,9 +213,10 @@ const allProducts = [
     id: 11,
     name: 'Estrogen Therapy',
     category: 'hormone',
-    subtitle: 'Women\'s Balance',
+    subtitle: "Women's Balance",
     promise: 'Navigate change with ease',
-    lifestyle: 'https://images.unsplash.com/photo-1583912268183-a34d2b3b39e4?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=800&q=90',
+    bg: 'bg-fuchsia-50',
     tag: 'For Women',
     tagColor: 'bg-fuchsia-500',
     price: 179,
@@ -211,7 +229,8 @@ const allProducts = [
     category: 'hormone',
     subtitle: 'Metabolic Balance',
     promise: 'Optimize your metabolism',
-    lifestyle: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=500&q=80',
+    lifestyle: 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=800&q=90',
+    bg: 'bg-cyan-50',
     tag: 'Metabolism',
     tagColor: 'bg-cyan-500',
     price: 149,
