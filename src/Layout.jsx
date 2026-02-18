@@ -225,6 +225,7 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Compliance</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer rounded-xl px-3 py-2">Pharmacy Contracts</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ProviderContracts')} className="cursor-pointer rounded-xl px-3 py-2">Provider Contracts</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Payments & Invoices</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
@@ -259,6 +260,12 @@ export default function Layout({ children }) {
                       <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
                         <LayoutDashboard className="w-4 h-4 text-[#4A6741]" />
                         <span>My Portal</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
+                        <Settings className="w-4 h-4 text-[#4A6741]" />
+                        <span>Payments & Invoices</span>
                       </Link>
                     </DropdownMenuItem>
                     {user.role === 'admin' && (
