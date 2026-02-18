@@ -131,7 +131,7 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Growth Hormone Support',
     promise: 'Wake up feeling 10 years younger',
-    lifestyle: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=90',
     bg: 'bg-rose-50',
     tag: 'Anti-Aging',
     tagColor: 'bg-rose-500',
