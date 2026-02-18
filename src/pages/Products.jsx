@@ -145,7 +145,7 @@ const allProducts = [
     category: 'longevity',
     subtitle: 'Master Antioxidant',
     promise: 'Glow from the inside out',
-    lifestyle: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=90',
+    lifestyle: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&q=90',
     bg: 'bg-pink-50',
     tag: 'Skin Glow',
     tagColor: 'bg-pink-500',
