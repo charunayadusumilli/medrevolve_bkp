@@ -558,18 +558,19 @@ function SuccessScreen({ formData, providers }) {
       </motion.div>
 
       <h2 className="text-3xl font-bold text-[#2D3A2D] mb-2">You're all set!</h2>
-      <p className="text-[#5A6B5A] mb-6">Your appointment has been confirmed.</p>
+      <p className="text-[#5A6B5A] mb-6">{provider ? 'Your appointment has been confirmed.' : 'Your appointment request has been submitted.'}</p>
 
       <div className="bg-[#F5F0E8] rounded-2xl p-5 text-left mb-6 max-w-sm mx-auto">
         <p className="font-semibold text-[#2D3A2D] mb-1">{apptType?.label}</p>
         {provider && <p className="text-sm text-[#5A6B5A]">with {provider.name}, {provider.title}</p>}
+        {!provider && <p className="text-sm text-[#5A6B5A]">Provider to be assigned</p>}
         <div className="mt-3 flex items-center gap-2 text-sm text-[#4A6741] font-medium">
           <Calendar className="w-4 h-4" /> {dateDisplay} at {formData.appointment_time}
         </div>
       </div>
 
       <p className="text-sm text-[#5A6B5A] mb-8">
-        A confirmation email{formData.phone ? ' and SMS' : ''} has been sent. You'll receive a reminder 24 hours before your appointment.
+        A confirmation email{formData.phone ? ' and SMS' : ''} has been sent. {!provider ? "We'll match you with the best available provider and send you their details along with your video call link. You'll receive a reminder 24 hours before your appointment." : "You'll receive a reminder 24 hours before your appointment."}
       </p>
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
