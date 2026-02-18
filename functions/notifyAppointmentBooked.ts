@@ -44,27 +44,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Send confirmation to patient
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      from_name: "MedRevolve",
-      to: appointment.patient_email,
-      subject: `✅ Appointment Confirmed - ${new Date(appointment.appointment_date).toLocaleDateString()}`,
-      body: `
-        <h2>Your Appointment is Confirmed</h2>
-        <p>Hello,</p>
-        <p>Your appointment has been successfully scheduled.</p>
-        <hr>
-        <p><strong>Provider:</strong> ${providerName}</p>
-        <p><strong>Date & Time:</strong> ${new Date(appointment.appointment_date).toLocaleString()}</p>
-        <p><strong>Type:</strong> ${appointment.type}</p>
-        <p><strong>Duration:</strong> ${appointment.duration_minutes} minutes</p>
-        <hr>
-        <p>We'll send you a reminder before your appointment.</p>
-        <p>If you need to reschedule, please log in to your patient portal.</p>
-        <br>
-        <p>Best regards,<br>MedRevolve Team</p>
-      `
-    });
+    // Note: Patient email notification is handled by bookConsultation function
+    // SendEmail integration only supports app users
 
     return Response.json({ 
       success: true,
