@@ -244,27 +244,10 @@ ${activeCtx.persona}:`,
 
   return (
     <>
-      {/* Floating Action Button */}
+      {/* Floating Action Button — dynamic persona */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            key="fab"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            onClick={() => { setIsOpen(true); setMinimized(false); }}
-            className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br ${ctx.color} text-white shadow-2xl flex items-center justify-center`}
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.93 }}
-          >
-            <MessageCircle className="w-7 h-7" />
-            {/* Persona label on hover effect (pulse) */}
-            <motion.span
-              className="absolute inset-0 rounded-full bg-white opacity-0"
-              animate={{ opacity: [0, 0.12, 0] }}
-              transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-            />
-          </motion.button>
+          <PersonaFAB ctx={ctx} onClick={() => { setIsOpen(true); setMinimized(false); }} />
         )}
       </AnimatePresence>
 
