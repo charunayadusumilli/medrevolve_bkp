@@ -177,7 +177,8 @@ function StepProviderTime({ formData, setFormData, onNext, onBack }) {
 
   const selectedProvider = providers.find(p => p.id === formData.provider_id);
 
-  const canNext = formData.provider_id && formData.appointment_date && formData.appointment_time;
+  // Can proceed with provider + time, OR with just time if no providers available
+  const canNext = formData.appointment_date && formData.appointment_time && (formData.provider_id || providers.length === 0);
 
   return (
     <div className="space-y-6">
