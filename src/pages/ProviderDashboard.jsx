@@ -14,7 +14,9 @@ import {
   FileText,
   Video,
   CheckCircle2,
-  Ban
+  Ban,
+  Pill,
+  Plus
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { format, parseISO, isSameDay } from 'date-fns';
@@ -22,10 +24,13 @@ import ProviderScheduleManager from '@/components/provider/ProviderScheduleManag
 import AppointmentCalendar from '@/components/provider/AppointmentCalendar';
 import AppointmentDetailPanel from '@/components/provider/AppointmentDetailPanel';
 import ProviderNotifications from '@/components/provider/ProviderNotifications';
+import PrescriptionHistory from '@/components/provider/PrescriptionHistory';
+import EPrescribeModal from '@/components/provider/EPrescribeModal';
 
 export default function ProviderDashboard() {
   const queryClient = useQueryClient();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [quickPrescribeOpen, setQuickPrescribeOpen] = useState(false);
 
   // Get current provider (assumes logged-in user is a provider)
   const { data: user } = useQuery({
@@ -177,11 +182,18 @@ export default function ProviderDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="calendar" className="space-y-6">
-          <TabsList className="bg-white">
-            <TabsTrigger value="calendar">Calendar</TabsTrigger>
-            <TabsTrigger value="appointments">List View</TabsTrigger>
-            <TabsTrigger value="schedule">Availability</TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between">
+            <TabsList className="bg-white">
+              <TabsTrigger value="calendar">Calendar</TabsTrigger>
+              <TabsTrigger value="appointments">Appointments</TabsTrigger>
+              <TabsTrigger value="prescriptions">Prescriptions</TabsTrigger>
+              <TabsTrigger value="schedule">Availability</TabsTrigger>
+            </TabsList>
+            <Button size="sm" className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
+              onClick={() => setQuickPrescribeOpen(true)}>
+              <Plus className="w-4 h-4 mr-1.5" /> New Rx
+            </Button>
+          </div>
 
           {/* Calendar Tab */}
           <TabsContent value="calendar">
@@ -221,6 +233,11 @@ export default function ProviderDashboard() {
             )}
           </TabsContent>
 
+          {/* Prescriptions Tab */}
+          <TabsContent value="prescriptions">
+            <PrescriptionHistory providerId={currentProvider.id} />
+          </TabsContent>
+
           {/* Schedule Tab */}
           <TabsContent value="schedule">
             <ProviderScheduleManager
@@ -235,8 +252,19 @@ export default function ProviderDashboard() {
           <AppointmentDetailPanel
             appointment={selectedAppointment}
             onClose={() => setSelectedAppointment(null)}
+            providerId={currentProvider.id}
+            providerName={`${currentProvider.name} ${currentProvider.title || ''}`}
           />
         )}
+
+        {/* Quick Prescribe (no appointment context) */}
+        <EPrescribeModal
+          open={quickPrescribeOpen}
+          onClose={() => setQuickPrescribeOpen(false)}
+          appointment={null}
+          providerId={currentProvider.id}
+          providerName={`${currentProvider.name} ${currentProvider.title || ''}`}
+        />
         </div>
         )}
       </div>
