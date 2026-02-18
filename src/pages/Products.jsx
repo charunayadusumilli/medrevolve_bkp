@@ -450,59 +450,47 @@ function CategoryCard({ category, isActive, onClick }) {
   return (
     <motion.div
       onClick={onClick}
-      className={`relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer group ${
-        !category.available ? 'opacity-80' : ''
-      }`}
-      whileHover={category.available ? { scale: 1.02 } : {}}
+      className={`relative rounded-2xl overflow-hidden cursor-pointer group border-2 transition-all duration-300
+        ${isActive ? 'border-[#2D3A2D] shadow-xl' : 'border-transparent'}
+        ${!category.available ? 'opacity-60 cursor-default' : 'hover:border-[#2D3A2D]/30 hover:shadow-lg'}
+        bg-white`}
+      whileHover={category.available ? { y: -4 } : {}}
       whileTap={category.available ? { scale: 0.98 } : {}}
     >
-      {/* Image */}
-      <img 
-        src={category.image}
-        alt={category.name}
-        className={`w-full h-full object-cover transition-transform duration-700 ${
-          category.available ? 'group-hover:scale-110' : ''
-        }`}
-      />
-      
-      {/* Gradient Overlay */}
-      <div className={`absolute inset-0 transition-opacity duration-300 ${
-        isActive 
-          ? 'bg-gradient-to-t from-[#4A6741]/90 via-[#4A6741]/40 to-transparent' 
-          : 'bg-gradient-to-t from-black/70 via-black/20 to-transparent'
-      }`} />
+      {/* Product Image — clean light bg, studio style */}
+      <div className={`aspect-[4/3] relative overflow-hidden ${category.bg || 'bg-gray-100'}`}>
+        <img
+          src={category.image}
+          alt={category.name}
+          className={`w-full h-full object-cover object-center transition-transform duration-700 ${
+            category.available ? 'group-hover:scale-105' : ''
+          }`}
+        />
+        {/* Subtle vignette only at bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/30 to-transparent" />
 
-      {/* Coming Soon Overlay */}
-      {!category.available && (
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-lg">
-            <Lock className="w-4 h-4 text-[#4A6741]" />
-            <span className="text-sm font-medium text-[#2D3A2D]">Coming Soon</span>
+        {/* Coming Soon pill */}
+        {!category.available && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-[2px]">
+            <div className="bg-white rounded-full px-4 py-1.5 flex items-center gap-1.5 shadow-md border border-gray-200">
+              <Lock className="w-3.5 h-3.5 text-[#4A6741]" />
+              <span className="text-xs font-semibold text-[#2D3A2D]">Coming Soon</span>
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-5">
-        <h3 className={`text-xl md:text-2xl font-medium transition-colors ${
-          isActive ? 'text-white' : 'text-white'
-        }`}>
-          {category.name}
-        </h3>
-        {category.available && (
-          <p className="text-white/80 text-sm mt-1">
-            {category.description}
-          </p>
         )}
       </div>
 
-      {/* Active Indicator */}
+      {/* Label */}
+      <div className="px-4 py-3">
+        <h3 className="font-semibold text-[#2D3A2D] text-base">{category.name}</h3>
+        {category.available && (
+          <p className="text-xs text-[#5A6B5A] mt-0.5">{category.description}</p>
+        )}
+      </div>
+
+      {/* Active underline */}
       {isActive && (
-        <motion.div
-          layoutId="activeCategory"
-          className="absolute inset-0 border-4 border-[#4A6741] rounded-2xl"
-          transition={{ duration: 0.3 }}
-        />
+        <motion.div layoutId="activeCat" className="h-0.5 bg-[#2D3A2D] mx-4 mb-3 rounded-full" />
       )}
     </motion.div>
   );
@@ -546,108 +534,77 @@ function ProductCard({ product }) {
   };
 
   return (
-    <motion.div 
-      className="bg-white rounded-3xl overflow-hidden group h-full flex flex-col shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#E8E0D5]/50"
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.3 }}
+    <motion.div
+      className="bg-white rounded-2xl overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-400 border border-gray-100"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25 }}
     >
       <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Hero Image with Lifestyle Focus */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#F5F0E8] to-[#E8E0D5]">
-          <img 
+        {/* Studio product shot — clean light bg, product centered */}
+        <div className={`relative aspect-square overflow-hidden ${product.bg || 'bg-gray-50'} flex items-center justify-center`}>
+          <img
             src={product.lifestyle}
             alt={product.name}
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
           />
-          
-          {/* Gradient overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-          
-          {/* Trust Badge - Top Left */}
+          {/* Tag pill — minimal, top-right */}
           {product.tag && (
-            <div className="absolute top-4 left-4">
-              <Badge className={`${product.tagColor} text-white border-none font-medium px-3 py-1 text-xs shadow-lg`}>
-                ★ {product.tag}
-              </Badge>
+            <div className="absolute top-3 right-3">
+              <span className={`${product.tagColor} text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow`}>
+                {product.tag}
+              </span>
             </div>
           )}
-
-          {/* Quick Result Promise - Bottom of Image */}
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <p className="text-white font-medium text-lg leading-tight drop-shadow-lg">
-              {product.promise || product.benefits[0]}
-            </p>
-          </div>
         </div>
 
-        {/* Content Section - Marketing Optimized */}
-        <div className="p-6 flex-1 flex flex-col">
-          {/* Category & Name */}
-          <div className="mb-3">
-            <p className="text-xs font-semibold text-[#4A6741] uppercase tracking-wider mb-1">
-              {product.subtitle}
-            </p>
-            <h3 className="text-xl font-semibold text-[#2D3A2D] group-hover:text-[#4A6741] transition-colors leading-tight">
-              {product.name}
-            </h3>
-          </div>
+        {/* Product Info */}
+        <div className="p-5 flex-1 flex flex-col">
+          <p className="text-[11px] font-bold text-[#4A6741] uppercase tracking-widest mb-1">{product.subtitle}</p>
+          <h3 className="text-lg font-semibold text-[#1A2A1A] leading-snug mb-2 group-hover:text-[#4A6741] transition-colors">
+            {product.name}
+          </h3>
+          <p className="text-sm text-[#5A6B5A] mb-4 leading-relaxed">{product.promise}</p>
 
-          {/* Benefit Pills - Scannable */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {product.benefits.slice(0, 3).map((benefit, i) => (
-              <span 
-                key={i} 
-                className="inline-flex items-center gap-1 text-xs bg-[#D4E5D7]/50 text-[#4A6741] px-2.5 py-1 rounded-full"
-              >
-                <span className="w-1 h-1 bg-[#4A6741] rounded-full"></span>
-                {benefit}
-              </span>
+          {/* Benefits */}
+          <div className="space-y-1.5 mb-4">
+            {product.benefits.slice(0, 3).map((b, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs text-[#2D3A2D]">
+                <div className="w-4 h-4 rounded-full bg-[#D4E5D7] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#4A6741] text-[9px] font-bold">✓</span>
+                </div>
+                {b}
+              </div>
             ))}
           </div>
 
-          {/* Social Proof */}
-          <div className="flex items-center gap-2 mb-4">
-            <div className="flex -space-x-2">
-              {[1,2,3].map(i => (
-                <div key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-[#D4E5D7] to-[#4A6741]/20 border-2 border-white flex items-center justify-center">
-                  <span className="text-[8px] text-[#4A6741]">✓</span>
-                </div>
-              ))}
-            </div>
-            <span className="text-xs text-[#5A6B5A]">
-              {product.customers || '5,000+'} customers this month
-            </span>
-          </div>
+          <div className="flex-1" />
 
-          {/* Spacer */}
-          <div className="flex-1"></div>
+          {/* Social proof */}
+          <p className="text-[11px] text-[#8A9A8A]">{product.customers} patients treated</p>
         </div>
       </Link>
 
-      {/* Price & CTA - outside Link so clicks register */}
-      <div className="px-6 pb-6 pt-4 border-t border-[#E8E0D5]">
-          <p className="text-xs text-[#5A6B5A] mb-3">
-            Includes medical consultation & free shipping
-          </p>
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-semibold text-[#2D3A2D]">${product.price}</span>
-                <span className="text-sm text-[#5A6B5A]">/mo</span>
-              </div>
-              <p className="text-xs text-[#4A6741] font-medium">Cancel anytime</p>
+      {/* Price + CTA */}
+      <div className="px-5 pb-5 pt-3 border-t border-gray-100">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-2xl font-bold text-[#1A2A1A]">${product.price}</span>
+              <span className="text-sm text-[#8A9A8A]">/mo</span>
             </div>
-            <Button 
-              size="sm"
-              onClick={handleSubscribe}
-              disabled={loading}
-              className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-5 transition-all shadow-lg shadow-[#4A6741]/20"
-            >
-              {loading ? 'Loading...' : 'Start Now'}
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            <p className="text-[11px] text-[#4A6741]">Includes consult + shipping</p>
           </div>
+          <Button
+            size="sm"
+            onClick={handleSubscribe}
+            disabled={loading}
+            className="bg-[#1A2A1A] hover:bg-[#2D3A2D] text-white rounded-full px-5 text-sm font-semibold"
+          >
+            {loading ? '...' : 'Get Started'}
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Button>
         </div>
-      </motion.div>
+      </div>
+    </motion.div>
   );
 }
