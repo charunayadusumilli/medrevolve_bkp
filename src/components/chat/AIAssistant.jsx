@@ -13,11 +13,10 @@ import ReactMarkdown from 'react-markdown';
 function usePageContext() {
   const location = useLocation();
   const raw = location.pathname.replace(/^\//, '') || 'Home';
-  // Handle /ProductDetail?id=X → ProductDetail
   const pageName = raw.split('?')[0] || 'Home';
   const params = new URLSearchParams(location.search);
   const pageProduct = params.get('name') || params.get('id') || null;
-  const ctx = PAGE_CONTEXTS[pageName] || PAGE_CONTEXTS.default;
+  const ctx = getPageContext(pageName);
   return { pageName, pageProduct, ctx };
 }
 
