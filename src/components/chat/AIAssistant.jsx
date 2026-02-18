@@ -234,7 +234,7 @@ ${activeCtx.persona}:`,
     setInput('');
   };
 
-  const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE['customer'];
+  const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE[AUDIENCES?.CUSTOMER] || [];
   const showFaqs = faqOpen && messages.length <= 2;
 
   return (
