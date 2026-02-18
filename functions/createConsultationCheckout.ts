@@ -12,73 +12,68 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { 
-            providerId, 
-            consultationType, 
-            preferredDate, 
-            preferredTime, 
-            reason,
-            patientState 
-        } = await req.json();
+        const { providerId, consultationType, preferredDate, preferredTime, reason, patientState, paymentTiming } = await req.json();
 
         if (!providerId || !consultationType || !reason) {
-            return Response.json({ 
-                error: 'Missing required fields' 
-            }, { status: 400 });
+            return Response.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        // Get provider to verify license for patient's state
-        const providers = await base44.asServiceRole.entities.ProviderContract.filter({
-            id: providerId,
-            status: 'active'
-        });
-
-        if (providers.length === 0) {
-            return Response.json({ 
-                error: 'Provider not found or inactive' 
-            }, { status: 404 });
+        // Get provider
+        const providers = await base44.asServiceRole.entities.Provider.filter({ id: providerId });
+        if (!providers.length) {
+            return Response.json({ error: 'Provider not found' }, { status: 404 });
         }
-
         const provider = providers[0];
 
-        // Verify compliance: provider must be licensed in patient's state
-        const complianceCheck = patientState && provider.states_licensed?.includes(patientState);
-        
-        if (patientState && !complianceCheck) {
-            return Response.json({ 
-                error: `Provider not licensed in ${patientState}. Please select a different provider.`,
-                compliance_issue: true
-            }, { status: 403 });
-        }
+        // Get provider rates (fall back to defaults)
+        const rateRecords = await base44.asServiceRole.entities.ProviderRate.filter({ provider_id: providerId });
+        const rates = rateRecords[0] || { video_rate: 99, phone_rate: 79, chat_rate: 49, in_person_rate: 149 };
 
-        // Pricing based on consultation type
-        const pricing = {
-            video: 9900,      // $99
-            phone: 7900,      // $79
-            chat: 4900,       // $49
-            in_person: 14900  // $149
+        const rateMap = {
+            video: rates.video_rate,
+            phone: rates.phone_rate,
+            chat: rates.chat_rate,
+            in_person: rates.in_person_rate
         };
 
-        const amount = pricing[consultationType] || 9900;
+        const amountDollars = rateMap[consultationType] || 99;
+        const amountCents = Math.round(amountDollars * 100);
 
-        // Create consultation booking record
+        // Generate invoice number
+        const invoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
+
+        // Create consultation booking
         const booking = await base44.entities.ConsultationBooking.create({
             patient_email: user.email,
             provider_id: providerId,
             consultation_type: consultationType,
             preferred_date: preferredDate,
             preferred_time: preferredTime,
-            reason: reason,
+            reason,
             payment_status: 'pending',
-            payment_amount: amount / 100,
+            payment_amount: amountDollars,
             booking_status: 'pending',
-            participant_state: patientState,
-            provider_state: provider.states_licensed?.[0] || 'CA',
-            compliance_verified: complianceCheck || false,
-            compliance_notes: complianceCheck 
-                ? 'Provider licensed in patient state' 
-                : 'No state verification performed'
+            participant_state: patientState || ''
         });
+
+        // Create payment record
+        const payment = await base44.asServiceRole.entities.ConsultationPayment.create({
+            booking_id: booking.id,
+            patient_email: user.email,
+            provider_id: providerId,
+            provider_name: `${provider.name}, ${provider.title}`,
+            consultation_type: consultationType,
+            amount: amountDollars,
+            status: 'pending',
+            payment_timing: paymentTiming || rates.payment_timing || 'before',
+            invoice_number: invoiceNumber,
+            appointment_date: preferredDate ? `${preferredDate}T${preferredTime || '10:00'}:00` : null
+        });
+
+        // If paying after, return booking without checkout
+        if ((paymentTiming || rates.payment_timing) === 'after') {
+            return Response.json({ bookingId: booking.id, paymentId: payment.id, payAfter: true, invoiceNumber });
+        }
 
         // Create Stripe checkout session
         const session = await stripe.checkout.sessions.create({
@@ -88,43 +83,37 @@ Deno.serve(async (req) => {
                     currency: 'usd',
                     product_data: {
                         name: `${consultationType.charAt(0).toUpperCase() + consultationType.slice(1)} Consultation`,
-                        description: `Healthcare consultation with ${provider.provider_name}`
+                        description: `With ${provider.name}, ${provider.title}`
                     },
-                    unit_amount: amount
+                    unit_amount: amountCents
                 },
                 quantity: 1
             }],
             mode: 'payment',
             customer_email: user.email,
-            success_url: `${req.headers.get('origin')}/MyAppointments?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${req.headers.get('origin')}/Consultations`,
+            success_url: `${req.headers.get('origin')}/PatientPortal?session_id={CHECKOUT_SESSION_ID}&booking=${booking.id}`,
+            cancel_url: `${req.headers.get('origin')}/BookAppointment`,
             metadata: {
                 base44_app_id: Deno.env.get('BASE44_APP_ID'),
                 booking_id: booking.id,
+                payment_id: payment.id,
                 provider_id: providerId,
                 consultation_type: consultationType,
                 patient_email: user.email,
-                patient_state: patientState || 'unknown'
+                invoice_number: invoiceNumber
             }
         });
 
-        // Update booking with payment intent
+        await base44.asServiceRole.entities.ConsultationPayment.update(payment.id, {
+            stripe_session_id: session.id
+        });
         await base44.entities.ConsultationBooking.update(booking.id, {
-            stripe_payment_intent: session.payment_intent
+            stripe_payment_intent: session.payment_intent || session.id
         });
 
-        console.log('Consultation checkout created:', {
-            bookingId: booking.id,
-            provider: provider.provider_name,
-            type: consultationType,
-            amount: amount / 100
-        });
+        console.log('Consultation checkout created:', { bookingId: booking.id, invoiceNumber, amount: amountDollars });
 
-        return Response.json({
-            sessionId: session.id,
-            sessionUrl: session.url,
-            bookingId: booking.id
-        });
+        return Response.json({ sessionId: session.id, sessionUrl: session.url, bookingId: booking.id, invoiceNumber });
     } catch (error) {
         console.error('Error creating consultation checkout:', error);
         return Response.json({ error: error.message }, { status: 500 });
