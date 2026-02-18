@@ -309,9 +309,7 @@ ${activeCtx.persona}:`,
                     ))}
                     {loading && (
                       <div className="flex justify-start gap-2">
-                        <div className="w-7 h-7 rounded-full bg-[#4A6741]/10 flex items-center justify-center text-base flex-shrink-0 mt-1">
-                          {ctx.avatar}
-                        </div>
+                        <PersonaAvatar personaKey={ctx.personaKey} size="sm" />
                         <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                           <TypingDots />
                         </div>
