@@ -192,6 +192,29 @@ export default function PatientPortal() {
             )}
           </TabsContent>
 
+          {/* AutoRx Tab */}
+          <TabsContent value="autorx" className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-light text-[#2D3A2D]">AutoRx Plans</h2>
+                <p className="text-sm text-[#5A6B5A] mt-1">Your 6-month recurring prescription plans</p>
+              </div>
+            </div>
+            {autoRxPlans.length === 0 ? (
+              <EmptyState
+                icon={RefreshCw}
+                title="No AutoRx Plans"
+                description="AutoRx plans are set up by your provider after your initial consultation. They enable automatic monthly prescription renewals without needing a new visit each month."
+              />
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {autoRxPlans.map(plan => (
+                  <AutoRxPlanCard key={plan.id} plan={plan} />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
           {/* Messages Tab */}
           <TabsContent value="messages" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
