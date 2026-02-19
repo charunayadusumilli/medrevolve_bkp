@@ -162,39 +162,33 @@ support@medrevolve.com
     }
 
     // ── EMAIL to admin ──────────────────────────────────────────────────
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
-    try {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Appointments',
-        to: adminEmail,
-        subject: `📅 ${!data.provider_id ? '⚠️ [ASSIGN PROVIDER] ' : ''}New Appointment: ${patientName} — ${dateStr}`,
-        body: `New appointment ${data.provider_id ? 'booked' : 'request received — PROVIDER ASSIGNMENT NEEDED'}.
+    const adminEmail = Deno.env.get('ADMIN_EMAIL');
+    if (adminEmail) {
+      try {
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          from_name: 'MedRevolve Appointments',
+          to: adminEmail,
+          subject: `📅 New Appointment: ${patientName} — ${dateStr}${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''}`,
+          body: `New appointment ${data.provider_id ? 'booked' : 'request received (needs provider assignment)'}.
 
-━━━━━━━━━━━━━━━━━━━━━━
-  APPOINTMENT DETAILS
-━━━━━━━━━━━━━━━━━━━━━━
-Patient:   ${patientName} (${patientEmailTo})
-${data.phone ? `Phone:     ${data.phone}` : ''}
-Provider:  ${providerName}${providerTitle ? ', ' + providerTitle : ''}
-Type:      ${typeLabel}
-Date:      ${dateStr} at ${timeStr}
-Duration:  ${duration} min
-Reason:    ${data.reason}
-Notes:     ${data.notes || 'None'}
-Appt ID:   ${appointment.id}
-Status:    ${appointment.status}
+Patient:  ${patientName} (${patientEmailTo})
+Provider: ${providerName}${providerTitle ? ', ' + providerTitle : ''}
+Type:     ${typeLabel}
+Date:     ${dateStr} at ${timeStr}
+Duration: ${duration} min
+Reason:   ${data.reason}
+Notes:    ${data.notes || 'None'}
+Appt ID:  ${appointment.id}
+Room:     ${appointment.video_room_id}
+Status:   ${appointment.status}
+${data.phone ? `Phone:    ${data.phone}` : ''}
 
-━━━━━━━━━━━━━━━━━━━━━━
-  ACTION REQUIRED
-━━━━━━━━━━━━━━━━━━━━━━
-${!data.provider_id
-  ? '⚠️  NO PROVIDER ASSIGNED — Assign a provider in Admin Dashboard ASAP\n✅  Once assigned, patient will receive provider details + video link\n✅  Target: assignment within 2 hours'
-  : '✅  Appointment confirmed — no action needed\n✅  Patient has received confirmation email'}
-
-Admin Dashboard: medrevolve.com/admin-dashboard`
-      });
-    } catch (adminEmailErr) {
-      console.error('Admin email send error:', adminEmailErr);
+${!data.provider_id ? 'ACTION REQUIRED: Please assign a provider and update the appointment to trigger patient notification with provider details.' : ''}
+`
+        });
+      } catch (adminEmailErr) {
+        console.error('Admin email send error:', adminEmailErr);
+      }
     }
 
     // ── SMS to patient ──────────────────────────────────────────────────
