@@ -46,6 +46,18 @@ export default function ProfileStep({ data, onUpdate }) {
         <h2 className="text-xl font-medium text-[#2D3A2D] mb-6">Your Information</h2>
 
         <div className="grid md:grid-cols-2 gap-6">
+          {/* Phone field rendered separately */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <Label htmlFor="phone" className="block mb-2 text-sm font-medium text-[#2D3A2D]">
+              Phone <span className="text-red-500">*</span>
+            </Label>
+            <PhoneInput
+              id="phone"
+              value={data.phone || ''}
+              onChange={(v) => handleChange('phone', v)}
+            />
+          </motion.div>
+
           {fields.map((field, idx) => (
             <motion.div
               key={field.key}
