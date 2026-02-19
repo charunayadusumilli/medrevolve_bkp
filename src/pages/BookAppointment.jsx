@@ -391,13 +391,10 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <Label htmlFor="phone" className="text-sm font-semibold text-[#2D3A2D] mb-2 block">
           Phone number <span className="text-[#9A8B7A] font-normal">(for SMS reminders)</span>
         </Label>
-        <Input
+        <PhoneInput
           id="phone"
-          type="tel"
           value={formData.phone || ''}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          placeholder="+1 (555) 000-0000"
-          className="rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741]"
+          onChange={(v) => setFormData({ ...formData, phone: v })}
         />
         <p className="text-xs text-[#9A8B7A] mt-1.5">We'll send you a reminder 24 hours before your appointment.</p>
       </div>
