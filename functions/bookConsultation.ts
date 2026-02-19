@@ -162,33 +162,46 @@ support@medrevolve.com
     }
 
     // ── EMAIL to admin ──────────────────────────────────────────────────
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      try {
-        await base44.asServiceRole.integrations.Core.SendEmail({
-          from_name: 'MedRevolve Appointments',
-          to: adminEmail,
-          subject: `📅 New Appointment: ${patientName} — ${dateStr}${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''}`,
-          body: `New appointment ${data.provider_id ? 'booked' : 'request received (needs provider assignment)'}.
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    try {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Platform',
+        to: adminEmail,
+        subject: `📅 New Appointment${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''} — ${patientName} on ${dateStr}`,
+        body: `A new appointment has been ${data.provider_id ? 'booked' : 'requested (provider not yet assigned)'}.
 
-Patient:  ${patientName} (${patientEmailTo})
-Provider: ${providerName}${providerTitle ? ', ' + providerTitle : ''}
-Type:     ${typeLabel}
-Date:     ${dateStr} at ${timeStr}
-Duration: ${duration} min
-Reason:   ${data.reason}
-Notes:    ${data.notes || 'None'}
-Appt ID:  ${appointment.id}
-Room:     ${appointment.video_room_id}
-Status:   ${appointment.status}
-${data.phone ? `Phone:    ${data.phone}` : ''}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  APPOINTMENT DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Patient:   ${patientName}
+Email:     ${patientEmailTo}
+Phone:     ${data.phone || 'Not provided'}
+Type:      ${typeLabel}
+Provider:  ${providerName}${providerTitle ? ', ' + providerTitle : ''}
+Date:      ${dateStr}
+Time:      ${timeStr}
+Duration:  ${duration} minutes
+Reason:    ${data.reason}
+Notes:     ${data.notes || 'None'}
+Status:    ${appointment.status}
+Appt ID:   ${appointment.id}
+Room ID:   ${appointment.video_room_id}
 
-${!data.provider_id ? 'ACTION REQUIRED: Please assign a provider and update the appointment to trigger patient notification with provider details.' : ''}
-`
-        });
-      } catch (adminEmailErr) {
-        console.error('Admin email send error:', adminEmailErr);
-      }
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ACTION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${!data.provider_id ? `☐  URGENT: Assign a provider to this appointment
+☐  Update appointment status to "scheduled"
+☐  Patient will be notified automatically upon provider assignment
+` : `☐  Confirm provider has been notified
+☐  Ensure video room is ready before appointment time
+`}☐  Send reminder 24 hours before appointment
+☐  Follow up with patient after consultation
+
+Admin Dashboard → https://app.medrevolve.com/admin-dashboard`
+      });
+    } catch (adminEmailErr) {
+      console.error('Admin email send error:', adminEmailErr);
     }
 
     // ── SMS to patient ──────────────────────────────────────────────────
