@@ -144,7 +144,8 @@ export default function AdminDashboard() {
     { label: 'Creator Applications', value: creators?.length || 0, icon: UserPlus, color: 'bg-pink-500', loading: !creators },
     { label: 'Contact Requests', value: contacts?.length || 0, icon: MessageSquare, color: 'bg-cyan-500', loading: !contacts },
     { label: 'Active Partners', value: partners?.filter(p => p.status === 'active').length || 0, icon: DollarSign, color: 'bg-emerald-500', loading: !partners },
-    { label: 'Partner Referrals', value: referrals?.length || 0, icon: TrendingUp, color: 'bg-amber-500', loading: !referrals }
+    { label: 'Partner Referrals', value: referrals?.length || 0, icon: TrendingUp, color: 'bg-amber-500', loading: !referrals },
+    { label: 'AutoRx Plans', value: autoRxPlans?.filter(p => p.status === 'active').length || 0, icon: Pill, color: 'bg-teal-500', loading: !autoRxPlans }
   ];
 
   const refetchAll = () => {
