@@ -61,7 +61,7 @@ async function sendEmailResend({ to, from_name, subject, html }) {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: `${from_name} <onboarding@resend.dev>`,
+      from: `${from_name} <noreply@medrevolve.com>`,
       to: [to],
       subject,
       html
