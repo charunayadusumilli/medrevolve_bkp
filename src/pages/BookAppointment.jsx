@@ -14,6 +14,7 @@ import {
   User, Video, Phone, MessageSquare, Stethoscope, RefreshCw,
   Star, ChevronLeft, ChevronRight, AlertCircle, Loader2
 } from 'lucide-react';
+import PhoneInput from '@/components/ui/PhoneInput';
 import { format, addDays, startOfWeek, isSameDay, isToday, isBefore, startOfDay } from 'date-fns';
 
 const APPOINTMENT_TYPES = [
