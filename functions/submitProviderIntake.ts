@@ -24,15 +24,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ ProviderIntake record created:', providerIntake.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Provider Application',
-        to: adminEmail,
-        subject: `New Provider Application - ${data.full_name}`,
-        body: `New Provider Application Received\n\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nTitle: ${data.title}\nSpecialty: ${data.specialty}\nLicense: ${data.license_number}\nStates Licensed: ${data.states_licensed?.join(', ') || 'N/A'}\nYears Experience: ${data.years_experience || 'N/A'}\n\nApplication ID: ${providerIntake.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Provider Applications',
+      to: adminEmail,
+      subject: `🩺 New Provider Application - ${data.full_name}, ${data.title}`,
+      body: `New Provider Application Received\n\n━━━━━━━━━━━━━━━━━━━━━━\n  PROVIDER DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nName:              ${data.full_name}\nTitle:             ${data.title}\nSpecialty:         ${data.specialty}\nEmail:             ${data.email}\nPhone:             ${data.phone || 'N/A'}\nLicense Number:    ${data.license_number}\nStates Licensed:   ${data.states_licensed?.join(', ') || 'N/A'}\nYears Experience:  ${data.years_experience || 'N/A'}\nPractice Type:     ${data.practice_type || 'N/A'}\nAvailability:      ${data.availability || 'N/A'}\n\nApplication ID:  ${providerIntake.id}\nSubmitted:       ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Verify license with state medical board\n✅ Review credentialing documents\n✅ Respond to applicant within 2-3 business days\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Provider Relations',
