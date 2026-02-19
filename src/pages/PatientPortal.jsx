@@ -107,6 +107,13 @@ export default function PatientPortal() {
               <Pill className="w-4 h-4 mr-2" />
               Prescriptions
             </TabsTrigger>
+            <TabsTrigger value="autorx" className="rounded-xl">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              AutoRx
+              {autoRxPlans.some(p => p.status === 'active' && p.next_followup_due && new Date(p.next_followup_due) <= new Date(Date.now() + 5 * 86400000)) && (
+                <span className="ml-1.5 w-2 h-2 bg-amber-500 rounded-full inline-block" />
+              )}
+            </TabsTrigger>
             <TabsTrigger value="messages" className="rounded-xl">
               <MessageSquare className="w-4 h-4 mr-2" />
               Messages
