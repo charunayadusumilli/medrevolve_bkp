@@ -1,10 +1,22 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
-async function sendEmailSafe(base44, params) {
-  try {
-    await base44.asServiceRole.integrations.Core.SendEmail(params);
-  } catch (e) {
-    console.warn('Email send skipped (non-fatal):', e.message);
+async function sendEmail({ to, from_name, subject, body }) {
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: `${from_name} <onboarding@resend.dev>`,
+      to: [to],
+      subject,
+      html: body
+    })
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend error:', err);
+  } else {
+    console.log('✅ Email sent via Resend to:', to);
   }
 }
 
@@ -34,16 +46,14 @@ Deno.serve(async (req) => {
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
-    // ── Admin notification ──────────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Platform',
       to: adminEmail,
       subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`,
-      body: `A new creator has applied to the MedRevolve Creator Program and requires review.
+      body: `<pre style="font-family:monospace;font-size:13px;">A new creator has applied to the MedRevolve Creator Program.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  CREATOR DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CREATOR DETAILS
+────────────────────────────────
 Name:             ${data.full_name}
 Email:            ${data.email}
 Phone:            ${data.phone || 'Not provided'}
@@ -55,9 +65,8 @@ Audience Niche:   ${data.audience_niche || 'Not specified'}
 Why They Want to Partner:
 ${data.why_partner || 'Not provided'}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ACTION CHECKLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTION CHECKLIST
+────────────────────────────────
 ☐  Review profile & audience alignment
 ☐  Check engagement rate on their profile
 ☐  Assess content quality and compliance fit
@@ -68,30 +77,27 @@ ${data.why_partner || 'Not provided'}
 Reference ID:  ${application.id}
 Submitted:     ${submittedAt} ET
 
-Admin Dashboard → https://app.medrevolve.com/admin-dashboard`
+Admin Dashboard → https://app.medrevolve.com/admin-dashboard</pre>`
     });
 
-    // ── Confirmation to creator ─────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Creator Program',
       to: data.email,
       subject: `✅ Application Received — MedRevolve Creator Program`,
-      body: `Hi ${data.full_name.split(' ')[0]},
+      body: `<pre style="font-family:monospace;font-size:13px;">Hi ${data.full_name.split(' ')[0]},
 
 Thank you for applying to the MedRevolve Creator Program! We love your passion for wellness and can't wait to review your application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  YOUR APPLICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YOUR APPLICATION
+────────────────────────────────
 Platform:       ${data.platform}${data.platform_handle ? ' (@' + data.platform_handle + ')' : ''}
 Followers:      ${data.followers_count}
 Niche:          ${data.audience_niche || 'General Wellness'}
 Reference ID:   ${application.id}
 Status:         Under Review
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  WHAT HAPPENS NEXT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT HAPPENS NEXT
+────────────────────────────────
 1. Our creator team reviews your application (24-48 hours)
 2. We assess your audience fit with our wellness community
 3. If approved, you'll receive your welcome package with:
@@ -100,16 +106,15 @@ Status:         Under Review
    • Content guidelines & brand assets
    • Dedicated creator support contact
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  QUESTIONS?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTIONS?
+────────────────────────────────
 Email:    creators@medrevolve.com
 Web:      https://medrevolve.com/for-creators
 
 Excited to potentially work together!
 
 Best regards,
-The MedRevolve Creator Team`
+The MedRevolve Creator Team</pre>`
     });
 
     // ── Zapier webhook (non-blocking) ───────────────────────────────────────

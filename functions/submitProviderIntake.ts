@@ -1,10 +1,22 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
-async function sendEmailSafe(base44, params) {
-  try {
-    await base44.asServiceRole.integrations.Core.SendEmail(params);
-  } catch (e) {
-    console.warn('Email send skipped (non-fatal):', e.message);
+async function sendEmail({ to, from_name, subject, body }) {
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: `${from_name} <onboarding@resend.dev>`,
+      to: [to],
+      subject,
+      html: body
+    })
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend error:', err);
+  } else {
+    console.log('✅ Email sent via Resend to:', to);
   }
 }
 
@@ -27,16 +39,14 @@ Deno.serve(async (req) => {
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
-    // ── Admin notification ──────────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Platform',
       to: adminEmail,
       subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`,
-      body: `A new healthcare provider has submitted an application and requires credentialing review.
+      body: `<pre style="font-family:monospace;font-size:13px;">A new healthcare provider has submitted an application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  PROVIDER DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROVIDER DETAILS
+────────────────────────────────
 Name:               ${data.full_name}
 Title:              ${data.title}
 Specialty:          ${data.specialty}
@@ -53,9 +63,8 @@ Certifications:     ${data.certifications || 'None listed'}
 Bio:
 ${data.bio || 'Not provided'}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ACTION CHECKLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTION CHECKLIST
+────────────────────────────────
 ☐  Verify license with state medical board
 ☐  Check NPI registry
 ☐  Schedule credentialing call
@@ -66,45 +75,41 @@ ${data.bio || 'Not provided'}
 Reference ID:  ${providerIntake.id}
 Submitted:     ${submittedAt} ET
 
-Admin Dashboard → https://app.medrevolve.com/provider-contracts`
+Admin Dashboard → https://app.medrevolve.com/provider-contracts</pre>`
     });
 
-    // ── Confirmation to provider ────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Provider Relations',
       to: data.email,
       subject: `✅ Application Received — MedRevolve Provider Program`,
-      body: `Dear ${data.full_name},
+      body: `<pre style="font-family:monospace;font-size:13px;">Dear ${data.full_name},
 
 Thank you for your interest in joining MedRevolve as a licensed healthcare provider. We're excited to review your application!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  APPLICATION SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+APPLICATION SUMMARY
+────────────────────────────────
 Name:            ${data.full_name}, ${data.title}
 Specialty:       ${data.specialty}
 License Number:  ${data.license_number}
 Reference ID:    ${providerIntake.id}
 Status:          Under Review
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  WHAT HAPPENS NEXT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT HAPPENS NEXT
+────────────────────────────────
 1. Our credentialing team reviews your application (2-3 business days)
 2. License verification with state medical board
 3. We schedule a credentialing call with you
 4. Upon approval, you receive an onboarding package and contract
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  QUESTIONS?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTIONS?
+────────────────────────────────
 Email:    providers@medrevolve.com
 Web:      https://medrevolve.com
 
 We'll be in touch soon!
 
 Best regards,
-MedRevolve Provider Relations Team`
+MedRevolve Provider Relations Team</pre>`
     });
 
     return Response.json({

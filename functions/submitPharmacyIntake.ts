@@ -1,10 +1,22 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
-async function sendEmailSafe(base44, params) {
-  try {
-    await base44.asServiceRole.integrations.Core.SendEmail(params);
-  } catch (e) {
-    console.warn('Email send skipped (non-fatal):', e.message);
+async function sendEmail({ to, from_name, subject, body }) {
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: `${from_name} <onboarding@resend.dev>`,
+      to: [to],
+      subject,
+      html: body
+    })
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend error:', err);
+  } else {
+    console.log('✅ Email sent via Resend to:', to);
   }
 }
 
@@ -27,16 +39,14 @@ Deno.serve(async (req) => {
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
-    // ── Admin notification ──────────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Platform',
       to: adminEmail,
       subject: `💊 New Pharmacy Application — ${data.pharmacy_name} [${data.pharmacy_type}]`,
-      body: `A new pharmacy has submitted a partnership application and requires review.
+      body: `<pre style="font-family:monospace;font-size:13px;">A new pharmacy has submitted a partnership application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  PHARMACY DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHARMACY DETAILS
+────────────────────────────────
 Pharmacy Name:        ${data.pharmacy_name}
 Contact Person:       ${data.contact_name}
 Email:                ${data.email}
@@ -54,9 +64,8 @@ ${data.city || ''}, ${data.state || ''} ${data.zip_code || ''}
 Why They Want to Partner:
 ${data.partnership_interest || 'Not provided'}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ACTION CHECKLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTION CHECKLIST
+────────────────────────────────
 ☐  Verify pharmacy license with state board
 ☐  Confirm NPI in registry
 ☐  Review compounding capabilities
@@ -68,45 +77,41 @@ ${data.partnership_interest || 'Not provided'}
 Reference ID:  ${pharmacyIntake.id}
 Submitted:     ${submittedAt} ET
 
-Admin Dashboard → https://app.medrevolve.com/pharmacy-contracts`
+Admin Dashboard → https://app.medrevolve.com/pharmacy-contracts</pre>`
     });
 
-    // ── Confirmation to pharmacy ────────────────────────────────────────────
-    await sendEmailSafe(base44, {
+    await sendEmail({
       from_name: 'MedRevolve Pharmacy Partnerships',
       to: data.email,
       subject: `✅ Partnership Application Received — MedRevolve`,
-      body: `Dear ${data.contact_name},
+      body: `<pre style="font-family:monospace;font-size:13px;">Dear ${data.contact_name},
 
 Thank you for ${data.pharmacy_name}'s interest in partnering with MedRevolve! We're excited to explore this opportunity with you.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  APPLICATION SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+APPLICATION SUMMARY
+────────────────────────────────
 Pharmacy:         ${data.pharmacy_name}
 Type:             ${data.pharmacy_type}
 License:          ${data.license_number}
 Reference ID:     ${pharmacyIntake.id}
 Status:           Under Review
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  WHAT HAPPENS NEXT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT HAPPENS NEXT
+────────────────────────────────
 1. Our partnerships team reviews your application (3-5 business days)
 2. License and accreditation verification
 3. We schedule an introductory call to discuss integration details
 4. Upon approval, you receive a partnership contract and onboarding guide
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  QUESTIONS?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTIONS?
+────────────────────────────────
 Email:    pharmacy@medrevolve.com
 Web:      https://medrevolve.com
 
 We look forward to working with you!
 
 Best regards,
-MedRevolve Pharmacy Partnerships Team`
+MedRevolve Pharmacy Partnerships Team</pre>`
     });
 
     return Response.json({
