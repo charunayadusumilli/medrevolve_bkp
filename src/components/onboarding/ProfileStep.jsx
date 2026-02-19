@@ -29,7 +29,6 @@ export default function ProfileStep({ data, onUpdate }) {
   const fields = [
     { label: 'Full Name', key: 'full_name', type: 'text', required: true },
     { label: 'Email', key: 'email', type: 'email', required: true },
-    { label: 'Phone', key: 'phone', type: 'tel', required: true },
     { label: 'Date of Birth', key: 'date_of_birth', type: 'date', required: true },
     { label: 'Address', key: 'address', type: 'text', required: true },
     { label: 'City', key: 'city', type: 'text', required: true },
