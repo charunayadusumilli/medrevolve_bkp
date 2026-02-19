@@ -26,11 +26,17 @@ Deno.serve(async (req) => {
       }, { status: 500 });
     }
 
+    // Normalize phone to E.164 (+1XXXXXXXXXX for US)
+    let normalizedTo = to.replace(/\D/g, '');
+    if (normalizedTo.startsWith('1') && normalizedTo.length === 11) normalizedTo = normalizedTo.slice(1);
+    if (normalizedTo.length === 10) normalizedTo = `+1${normalizedTo}`;
+    else if (!normalizedTo.startsWith('+')) normalizedTo = `+${normalizedTo}`;
+
     // Send SMS via Twilio
     const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
     
     const formData = new URLSearchParams();
-    formData.append('To', to);
+    formData.append('To', normalizedTo);
     formData.append('From', twilioPhone);
     formData.append('Body', message);
 
