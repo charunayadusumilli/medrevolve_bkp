@@ -2,16 +2,13 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 async function sendEmail({ to, from_name, subject, html }) {
   const apiKey = Deno.env.get('RESEND_API_KEY');
-  // Until domain is verified, Resend only allows sending to the account owner email
-  // Route all emails to ADMIN_EMAIL which should be the Resend account owner email
-  const deliverTo = Deno.env.get('ADMIN_EMAIL') || to;
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: `${from_name} <onboarding@resend.dev>`,
-      to: [deliverTo],
-      subject: `[To: ${to}] ${subject}`,
+      to: [to],
+      subject,
       html
     })
   });
