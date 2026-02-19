@@ -235,13 +235,13 @@ Deno.serve(async (req) => {
 
     // SMS to patient if phone provided
     if (data.phone) {
-      await sendSMS(data.phone, `MedRevolve 🌿 Hi ${firstName}! We received your intake for ${data.primary_interest}. Our team will reach out within 24 hours. Book now: medrevolve.com/consultations`);
+      await sendSMS(data.phone, `MedRevolve: Hi ${firstName}! We got your intake for ${data.primary_interest}. We'll reach out in 24hrs. medrevolve.com/consultations`);
     }
 
     // SMS to admin with lead details
-    const adminPhone = Deno.env.get('ADMIN_PHONE') || '5302006352';
+    const adminPhone = '5302006352';
     const phoneDisplay = data.phone || 'N/A';
-    await sendSMS(adminPhone, `🆕 MedRevolve Lead!\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${phoneDisplay}\nInterest: ${data.primary_interest}\nSource: ${data.heard_about_us || 'N/A'}\nConsult Pref: ${data.consultation_preference || 'N/A'}`);
+    await sendSMS(adminPhone, `NEW LEAD - ${data.full_name} | ${data.primary_interest} | ${data.email} | ${phoneDisplay} | ${data.consultation_preference || 'flexible'} | via ${data.heard_about_us || 'N/A'}`);
 
     return Response.json({
       success: true,
