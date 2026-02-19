@@ -335,44 +335,149 @@ Deno.serve(async (req) => {
       console.error('Patient email send error:', emailErr);
     }
 
-    // ── EMAIL to admin ──────────────────────────────────────────────────
+    // ── EMAIL to admin (HTML) ───────────────────────────────────────────
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const urgentColor = !data.provider_id ? '#dc2626' : '#16a34a';
+    const urgentLabel = !data.provider_id ? '⚠️ ACTION REQUIRED — Assign Provider' : '✅ Appointment Confirmed';
+
+    const adminEmailHtml = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#f1f5f1;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f1;padding:24px 16px;">
+    <tr><td align="center">
+      <table width="620" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;">
+
+        <!-- HEADER -->
+        <tr><td style="background:linear-gradient(135deg,#1a2a1a 0%,#2D3A2D 100%);border-radius:14px 14px 0 0;padding:24px 36px;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><span style="color:#ffffff;font-size:20px;font-weight:700;">🌿 MedRevolve</span><br/><span style="color:rgba(255,255,255,0.5);font-size:12px;">Admin Notification — Platform Alert</span></td>
+              <td align="right"><span style="background:${urgentColor};color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:0.5px;">NEW APPOINTMENT</span></td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- URGENT BANNER -->
+        <tr><td style="background:${urgentColor}18;border-left:4px solid ${urgentColor};padding:14px 36px;">
+          <span style="color:${urgentColor};font-size:14px;font-weight:700;">${urgentLabel}</span>
+          ${!data.provider_id ? `<p style="margin:4px 0 0;font-size:13px;color:#7f1d1d;">A patient has submitted an appointment request with no provider assigned. Please assign one within 2 hours to maintain our SLA.</p>` : `<p style="margin:4px 0 0;font-size:13px;color:#14532d;">This appointment is confirmed. Review details below and ensure the provider is ready.</p>`}
+        </td></tr>
+
+        <!-- BODY -->
+        <tr><td style="background:#ffffff;padding:28px 36px;">
+
+          <!-- Patient Card -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:20px;">
+            <tr><td style="background:#1e293b;border-radius:10px 10px 0 0;padding:10px 18px;">
+              <span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">👤 Patient Information</span>
+            </td></tr>
+            <tr><td style="padding:16px 18px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="35%" style="padding:5px 0;font-size:12px;color:#64748b;font-weight:600;">Full Name</td>
+                  <td style="padding:5px 0;font-size:13px;color:#111827;font-weight:600;">${patientName}</td>
+                </tr>
+                <tr>
+                  <td style="padding:5px 0;font-size:12px;color:#64748b;font-weight:600;">Email</td>
+                  <td style="padding:5px 0;font-size:13px;color:#111827;"><a href="mailto:${patientEmailTo}" style="color:#4A6741;text-decoration:none;">${patientEmailTo}</a></td>
+                </tr>
+                ${data.phone ? `<tr><td style="padding:5px 0;font-size:12px;color:#64748b;font-weight:600;">Phone</td><td style="padding:5px 0;font-size:13px;color:#111827;"><a href="tel:${data.phone}" style="color:#4A6741;text-decoration:none;">${data.phone}</a></td></tr>` : ''}
+              </table>
+            </td></tr>
+          </table>
+
+          <!-- Appointment Card -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:20px;">
+            <tr><td style="background:#4A6741;border-radius:10px 10px 0 0;padding:10px 18px;">
+              <span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">📋 Appointment Details</span>
+            </td></tr>
+            <tr><td style="padding:16px 18px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="35%" style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">Type</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${typeLabel}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">Provider</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:${!data.provider_id ? '#dc2626' : '#111827'};font-weight:${!data.provider_id ? '700' : '400'};">${!data.provider_id ? '⚠️ NOT ASSIGNED' : providerDisplay}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">📅 Date</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${dateStr}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">🕐 Time</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${timeStr}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">Duration</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${duration} minutes</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">Reason</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${data.reason}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b;font-weight:600;">Notes</td>
+                  <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#111827;">${data.notes || 'None'}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;font-size:12px;color:#64748b;font-weight:600;">Status</td>
+                  <td style="padding:6px 0;font-size:13px;"><span style="background:${appointment.status === 'scheduled' ? '#dcfce7' : '#fef9c3'};color:${appointment.status === 'scheduled' ? '#166534' : '#854d0e'};padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;">${appointment.status}</span></td>
+                </tr>
+              </table>
+            </td></tr>
+            <tr><td style="background:#f0fdf4;border-radius:0 0 10px 10px;padding:8px 18px;border-top:1px solid #d1fae5;">
+              <span style="color:#166534;font-size:11px;">🔒 ID: <strong>${appointment.id}</strong> &nbsp;·&nbsp; Room: <strong>${appointment.video_room_id}</strong></span>
+            </td></tr>
+          </table>
+
+          <!-- Action Checklist -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:${!data.provider_id ? '#fef2f2' : '#f0fdf4'};border:1px solid ${!data.provider_id ? '#fecaca' : '#bbf7d0'};border-radius:10px;margin-bottom:20px;">
+            <tr><td style="background:${!data.provider_id ? '#dc2626' : '#16a34a'};border-radius:10px 10px 0 0;padding:10px 18px;">
+              <span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">✅ Action Checklist</span>
+            </td></tr>
+            <tr><td style="padding:16px 18px;">
+              <table cellpadding="0" cellspacing="0">
+                ${!data.provider_id ? `
+                <tr><td style="padding:4px 0;font-size:13px;color:#7f1d1d;">☐ &nbsp;<strong>URGENT:</strong> Assign a provider in the Admin Dashboard</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#7f1d1d;">☐ &nbsp;Update appointment status to "scheduled"</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#7f1d1d;">☐ &nbsp;Patient notified automatically once provider assigned</td></tr>
+                ` : `
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">☑ &nbsp;Appointment confirmed — patient emailed</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">☐ &nbsp;Confirm provider has been notified</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">☐ &nbsp;Ensure video room is ready before appointment</td></tr>
+                `}
+                <tr><td style="padding:4px 0;font-size:13px;color:${!data.provider_id ? '#7f1d1d' : '#166534'};">☐ &nbsp;Send reminder 24 hours before appointment</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:${!data.provider_id ? '#7f1d1d' : '#166534'};">☐ &nbsp;Follow up with patient after consultation</td></tr>
+              </table>
+              <div style="margin-top:14px;">
+                <a href="https://medrevolve.com/admin-dashboard" style="display:inline-block;background:#2D3A2D;color:#ffffff;font-size:13px;font-weight:600;padding:10px 22px;border-radius:8px;text-decoration:none;">Open Admin Dashboard →</a>
+              </div>
+            </td></tr>
+          </table>
+
+        </td></tr>
+
+        <!-- FOOTER -->
+        <tr><td style="background:#1a2a1a;border-radius:0 0 14px 14px;padding:20px 36px;text-align:center;">
+          <p style="color:rgba(255,255,255,0.4);font-size:11px;margin:0 0 6px;">This is an internal admin notification from MedRevolve Platform.</p>
+          <a href="https://medrevolve.com/admin-dashboard" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none;">medrevolve.com/admin-dashboard</a>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
     try {
       await base44.asServiceRole.integrations.Core.SendEmail({
         from_name: 'MedRevolve Platform',
         to: adminEmail,
-        subject: `📅 New Appointment${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''} — ${patientName} on ${dateStr}`,
-        body: `A new appointment has been ${data.provider_id ? 'booked' : 'requested (provider not yet assigned)'}.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  APPOINTMENT DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Patient:   ${patientName}
-Email:     ${patientEmailTo}
-Phone:     ${data.phone || 'Not provided'}
-Type:      ${typeLabel}
-Provider:  ${providerName}${providerTitle ? ', ' + providerTitle : ''}
-Date:      ${dateStr}
-Time:      ${timeStr}
-Duration:  ${duration} minutes
-Reason:    ${data.reason}
-Notes:     ${data.notes || 'None'}
-Status:    ${appointment.status}
-Appt ID:   ${appointment.id}
-Room ID:   ${appointment.video_room_id}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ACTION CHECKLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${!data.provider_id ? `☐  URGENT: Assign a provider to this appointment
-☐  Update appointment status to "scheduled"
-☐  Patient will be notified automatically upon provider assignment
-` : `☐  Confirm provider has been notified
-☐  Ensure video room is ready before appointment time
-`}☐  Send reminder 24 hours before appointment
-☐  Follow up with patient after consultation
-
-Admin Dashboard → https://app.medrevolve.com/admin-dashboard`
+        subject: `📅 New Appointment${!data.provider_id ? ' [ASSIGN PROVIDER]' : ' ✅ Confirmed'} — ${patientName} · ${dateStr}`,
+        body: adminEmailHtml
       });
     } catch (adminEmailErr) {
       console.error('Admin email send error:', adminEmailErr);
