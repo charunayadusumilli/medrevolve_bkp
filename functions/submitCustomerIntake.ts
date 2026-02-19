@@ -24,15 +24,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ CustomerIntake record created:', customerIntake.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Customer Onboarding',
-        to: adminEmail,
-        subject: `New Customer Intake - ${data.full_name}`,
-        body: `New Customer Intake Submission\n\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nDOB: ${data.date_of_birth || 'N/A'}\nState: ${data.state || 'N/A'}\nPrimary Interest: ${data.primary_interest}\nConsultation Preference: ${data.consultation_preference || 'N/A'}\nSource: ${data.heard_about_us || 'N/A'}\nReferral Code: ${data.referral_code || 'None'}\n\nCustomer ID: ${customerIntake.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Customer Onboarding',
+      to: adminEmail,
+      subject: `🆕 New Customer Intake - ${data.full_name}`,
+      body: `New Customer Intake Submission\n\n━━━━━━━━━━━━━━━━━━━━━━\n  CUSTOMER DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nName:                  ${data.full_name}\nEmail:                 ${data.email}\nPhone:                 ${data.phone || 'N/A'}\nDate of Birth:         ${data.date_of_birth || 'N/A'}\nState:                 ${data.state || 'N/A'}\nPrimary Interest:      ${data.primary_interest}\nConsultation Pref:     ${data.consultation_preference || 'N/A'}\nHeard About Us:        ${data.heard_about_us || 'N/A'}\nReferral Code:         ${data.referral_code || 'None'}\n\nCustomer ID:  ${customerIntake.id}\nSubmitted:    ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Review this intake in the Admin Dashboard\n✅ Match customer with appropriate provider\n✅ Follow up within 24 hours\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Wellness Team',
