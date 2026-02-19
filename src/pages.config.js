@@ -89,6 +89,8 @@ import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import WaitingRoom from './pages/WaitingRoom';
+import BelugaIntegration from './pages/BelugaIntegration';
+import VisitTypeSelector from './pages/VisitTypeSelector';
 import __Layout from './Layout.jsx';
 
 
@@ -135,6 +137,8 @@ export const PAGES = {
     "Terms": Terms,
     "VideoCall": VideoCall,
     "WaitingRoom": WaitingRoom,
+    "BelugaIntegration": BelugaIntegration,
+    "VisitTypeSelector": VisitTypeSelector,
 }
 
 export const pagesConfig = {
