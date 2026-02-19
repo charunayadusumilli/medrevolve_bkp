@@ -172,10 +172,17 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold text-[#2D3A2D]">Admin Dashboard</h1>
             <p className="text-muted-foreground">View and manage all submissions</p>
           </div>
-          <Button onClick={refetchAll} variant="outline">
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh All
-          </Button>
+          <div className="flex gap-2">
+            <Link to={createPageUrl('BelugaIntegration')}>
+              <Button variant="outline" size="sm" className="rounded-full border-blue-300 text-blue-700 hover:bg-blue-50">
+                🔗 Beluga Integration
+              </Button>
+            </Link>
+            <Button onClick={refetchAll} variant="outline" size="sm">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </div>
 
         {/* Stats Grid */}
