@@ -14,6 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
 import AutoRxAdminTab from '@/components/admin/AutoRxAdminTab';
+import { Link } from 'react-router-dom';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
