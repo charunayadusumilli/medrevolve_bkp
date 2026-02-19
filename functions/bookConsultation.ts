@@ -115,10 +115,11 @@ Deno.serve(async (req) => {
       ? `  Provider:   ${providerName}${providerTitle ? ', ' + providerTitle : ''}`
       : `  Provider:   Will be assigned shortly`;
     
+    const patientEmailTo = data.patient_email || user.email;
     try {
       await base44.asServiceRole.integrations.Core.SendEmail({
         from_name: 'MedRevolve Care Team',
-        to: user.email,
+        to: patientEmailTo,
         subject: data.provider_id ? `✅ Appointment Confirmed — ${dateStr} at ${timeStr}` : `📋 Appointment Request Received — ${dateStr} at ${timeStr}`,
         body: `Hi ${patientName},
 
