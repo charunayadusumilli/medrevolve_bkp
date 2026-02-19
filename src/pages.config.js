@@ -49,6 +49,7 @@
  */
 import AdminDashboard from './pages/AdminDashboard';
 import AutoRxFollowup from './pages/AutoRxFollowup';
+import BelugaIntegration from './pages/BelugaIntegration';
 import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
 import Cart from './pages/Cart';
@@ -88,15 +89,15 @@ import ProviderProfile from './pages/ProviderProfile';
 import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
-import WaitingRoom from './pages/WaitingRoom';
-import BelugaIntegration from './pages/BelugaIntegration';
 import VisitTypeSelector from './pages/VisitTypeSelector';
+import WaitingRoom from './pages/WaitingRoom';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
     "AutoRxFollowup": AutoRxFollowup,
+    "BelugaIntegration": BelugaIntegration,
     "BookAppointment": BookAppointment,
     "BusinessInquiry": BusinessInquiry,
     "Cart": Cart,
@@ -136,9 +137,8 @@ export const PAGES = {
     "Questionnaire": Questionnaire,
     "Terms": Terms,
     "VideoCall": VideoCall,
-    "WaitingRoom": WaitingRoom,
-    "BelugaIntegration": BelugaIntegration,
     "VisitTypeSelector": VisitTypeSelector,
+    "WaitingRoom": WaitingRoom,
 }
 
 export const pagesConfig = {
