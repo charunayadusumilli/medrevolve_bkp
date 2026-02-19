@@ -12,7 +12,7 @@ Deno.serve(async (req) => {
     const requestedDate = new Date(date);
     const dayOfWeek = requestedDate.getDay();
 
-    // Get provider's schedule for this day
+    // Get provider's schedule for this day of week
     const schedules = await base44.asServiceRole.entities.ProviderSchedule.filter({
       provider_id,
       day_of_week: dayOfWeek,
@@ -20,43 +20,55 @@ Deno.serve(async (req) => {
     });
 
     if (schedules.length === 0) {
-      return Response.json({ 
-        available_slots: [],
-        message: 'Provider not available on this day'
-      });
+      return Response.json({ available_slots: [], message: 'Provider not available on this day' });
     }
 
-    // Get blocked times for this provider
     const startOfDay = new Date(requestedDate);
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(requestedDate);
     endOfDay.setHours(23, 59, 59, 999);
 
-    const blockedTimes = await base44.asServiceRole.entities.BlockedTime.filter({
-      provider_id
-    });
+    // Get all blocked times and filter relevant ones (one-off or recurring on this weekday)
+    const allBlockedTimes = await base44.asServiceRole.entities.BlockedTime.filter({ provider_id });
 
-    // Filter blocked times that overlap with requested date
-    const relevantBlocks = blockedTimes.filter(block => {
+    const relevantBlocks = allBlockedTimes.filter(block => {
+      if (block.is_recurring) {
+        const blockDay = block.recurring_day_of_week ?? new Date(block.start_datetime).getDay();
+        return blockDay === dayOfWeek;
+      }
       const blockStart = new Date(block.start_datetime);
       const blockEnd = new Date(block.end_datetime);
       return blockStart <= endOfDay && blockEnd >= startOfDay;
     });
 
-    // Get existing appointments for this provider on this date
-    const appointments = await base44.asServiceRole.entities.Appointment.filter({
+    // Get existing appointments on this date
+    const allAppointments = await base44.asServiceRole.entities.Appointment.filter({
       provider_id,
       status: ['scheduled', 'confirmed']
     });
+    const dateAppointments = allAppointments.filter(apt =>
+      new Date(apt.appointment_date).toDateString() === requestedDate.toDateString()
+    );
 
-    const dateAppointments = appointments.filter(apt => {
-      const aptDate = new Date(apt.appointment_date);
-      return aptDate.toDateString() === requestedDate.toDateString();
-    });
+    // Helper: is a given slot start time blocked?
+    const isTimeBlocked = (slotStart, block) => {
+      if (block.is_recurring) {
+        const [bStartH, bStartM] = (block.recurring_start_time || '00:00').split(':').map(Number);
+        const [bEndH, bEndM] = (block.recurring_end_time || '23:59').split(':').map(Number);
+        const blockStart = new Date(requestedDate);
+        blockStart.setHours(bStartH, bStartM, 0, 0);
+        const blockEnd = new Date(requestedDate);
+        blockEnd.setHours(bEndH, bEndM, 0, 0);
+        return slotStart >= blockStart && slotStart < blockEnd;
+      }
+      const blockStart = new Date(block.start_datetime);
+      const blockEnd = new Date(block.end_datetime);
+      return slotStart >= blockStart && slotStart < blockEnd;
+    };
 
-    // Generate available time slots
+    const now = new Date();
     const availableSlots = [];
-    
+
     for (const schedule of schedules) {
       const slotDuration = schedule.slot_duration_minutes || 30;
       const [startHour, startMin] = schedule.start_time.split(':').map(Number);
@@ -70,15 +82,11 @@ Deno.serve(async (req) => {
 
       while (currentTime < endTime) {
         const slotEnd = new Date(currentTime.getTime() + slotDuration * 60000);
-        
-        // Check if slot is blocked
-        const isBlocked = relevantBlocks.some(block => {
-          const blockStart = new Date(block.start_datetime);
-          const blockEnd = new Date(block.end_datetime);
-          return currentTime >= blockStart && currentTime < blockEnd;
-        });
 
-        // Check if slot is already booked
+        // Skip past slots
+        if (currentTime <= now) { currentTime = slotEnd; continue; }
+
+        const isBlocked = relevantBlocks.some(block => isTimeBlocked(currentTime, block));
         const isBooked = dateAppointments.some(apt => {
           const aptTime = new Date(apt.appointment_date);
           const aptEnd = new Date(aptTime.getTime() + (apt.duration_minutes || 30) * 60000);
@@ -89,10 +97,7 @@ Deno.serve(async (req) => {
           availableSlots.push({
             start_time: currentTime.toISOString(),
             end_time: slotEnd.toISOString(),
-            display_time: currentTime.toLocaleTimeString('en-US', {
-              hour: 'numeric',
-              minute: '2-digit'
-            })
+            display_time: currentTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
           });
         }
 
@@ -100,16 +105,10 @@ Deno.serve(async (req) => {
       }
     }
 
-    return Response.json({ 
-      available_slots: availableSlots,
-      provider_id,
-      date: requestedDate.toISOString()
-    });
+    return Response.json({ available_slots: availableSlots, provider_id, date: requestedDate.toISOString() });
 
   } catch (error) {
     console.error('Error getting availability:', error);
-    return Response.json({ 
-      error: error.message 
-    }, { status: 500 });
+    return Response.json({ error: error.message }, { status: 500 });
   }
 });
