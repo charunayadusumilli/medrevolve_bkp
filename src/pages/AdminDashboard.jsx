@@ -211,20 +211,25 @@ export default function AdminDashboard() {
             <CardTitle>Dashboard</CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="analytics" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 lg:grid-cols-9">
-                <TabsTrigger value="analytics">
-                  <BarChart3 className="w-4 h-4 mr-1" />
-                  Analytics
+            <Tabs defaultValue={defaultTab} className="w-full">
+              <TabsList className="flex flex-wrap h-auto gap-1 mb-2 bg-gray-100 p-1 rounded-xl">
+                <TabsTrigger value="analytics" className="rounded-lg text-xs">
+                  <BarChart3 className="w-3.5 h-3.5 mr-1" /> Analytics
                 </TabsTrigger>
-                <TabsTrigger value="customers">Customers</TabsTrigger>
-                <TabsTrigger value="providers">Providers</TabsTrigger>
-                <TabsTrigger value="pharmacies">Pharmacies</TabsTrigger>
-                <TabsTrigger value="businesses">Business</TabsTrigger>
-                <TabsTrigger value="creators">Creators</TabsTrigger>
-                <TabsTrigger value="contacts">Contact</TabsTrigger>
-                <TabsTrigger value="partners">Partners</TabsTrigger>
-                <TabsTrigger value="referrals">Referrals</TabsTrigger>
+                <TabsTrigger value="autorx" className="rounded-lg text-xs">
+                  <Pill className="w-3.5 h-3.5 mr-1" /> AutoRx
+                  {autoRxPlans?.filter(p => p.status === 'paused').length > 0 && (
+                    <span className="ml-1 w-1.5 h-1.5 bg-amber-500 rounded-full inline-block" />
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="customers" className="rounded-lg text-xs">Customers</TabsTrigger>
+                <TabsTrigger value="providers" className="rounded-lg text-xs">Providers</TabsTrigger>
+                <TabsTrigger value="pharmacies" className="rounded-lg text-xs">Pharmacies</TabsTrigger>
+                <TabsTrigger value="businesses" className="rounded-lg text-xs">Business</TabsTrigger>
+                <TabsTrigger value="creators" className="rounded-lg text-xs">Creators</TabsTrigger>
+                <TabsTrigger value="contacts" className="rounded-lg text-xs">Contact</TabsTrigger>
+                <TabsTrigger value="partners" className="rounded-lg text-xs">Partners</TabsTrigger>
+                <TabsTrigger value="referrals" className="rounded-lg text-xs">Referrals</TabsTrigger>
               </TabsList>
 
               <TabsContent value="analytics">
