@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
+import AutoRxAdminTab from '@/components/admin/AutoRxAdminTab';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
