@@ -1,5 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
+async function sendEmailSafe(base44, params) {
+  try {
+    await base44.asServiceRole.integrations.Core.SendEmail(params);
+  } catch (e) {
+    console.warn('Email send skipped (non-fatal):', e.message);
+  }
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -20,32 +28,21 @@ Deno.serve(async (req) => {
     console.log('✅ ContactRequest record created:', contactRequest.id);
 
     const adminEmail = Deno.env.get('ADMIN_EMAIL');
-
-    // Notify admin
     if (adminEmail) {
-      try {
-        await base44.asServiceRole.integrations.Core.SendEmail({
-          from_name: 'MedRevolve Contact Form',
-          to: adminEmail,
-          subject: `New Contact Request: ${data.subject || 'No Subject'} - from ${data.name}`,
-          body: `New Contact Form Submission\n\nFrom: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject || 'No Subject'}\n\nMessage:\n${data.message}\n\nContact ID: ${contactRequest.id}\nSubmitted: ${new Date().toLocaleString()}`
-        });
-      } catch (e) {
-        console.error('Admin email error:', e.message);
-      }
+      await sendEmailSafe(base44, {
+        from_name: 'MedRevolve Contact Form',
+        to: adminEmail,
+        subject: `New Contact: ${data.subject || 'No Subject'} - ${data.name}`,
+        body: `New Contact Form Submission\n\nFrom: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject || 'No Subject'}\n\nMessage:\n${data.message}\n\nContact ID: ${contactRequest.id}\nSubmitted: ${new Date().toLocaleString()}`
+      });
     }
 
-    // Confirmation to submitter
-    try {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Support',
-        to: data.email,
-        subject: 'We received your message',
-        body: `Hi ${data.name},\n\nThank you for reaching out to MedRevolve!\n\nWe've received your message and our team will get back to you within 24 hours.\n\nYour message:\n"${data.message}"\n\nBest regards,\nMedRevolve Support Team`
-      });
-    } catch (e) {
-      console.error('Confirmation email error:', e.message);
-    }
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Support',
+      to: data.email,
+      subject: 'We received your message',
+      body: `Hi ${data.name},\n\nThank you for reaching out to MedRevolve!\n\nWe've received your message and our team will get back to you within 24 hours.\n\nBest regards,\nMedRevolve Support Team`
+    });
 
     return Response.json({
       success: true,

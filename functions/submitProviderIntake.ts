@@ -1,5 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
+async function sendEmailSafe(base44, params) {
+  try {
+    await base44.asServiceRole.integrations.Core.SendEmail(params);
+  } catch (e) {
+    console.warn('Email send skipped (non-fatal):', e.message);
+  }
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -17,32 +25,21 @@ Deno.serve(async (req) => {
     console.log('✅ ProviderIntake record created:', providerIntake.id);
 
     const adminEmail = Deno.env.get('ADMIN_EMAIL');
-
-    // Notify admin
     if (adminEmail) {
-      try {
-        await base44.asServiceRole.integrations.Core.SendEmail({
-          from_name: 'MedRevolve Provider Application',
-          to: adminEmail,
-          subject: `New Provider Application - ${data.full_name}`,
-          body: `New Provider Application Received\n\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nTitle: ${data.title}\nSpecialty: ${data.specialty}\nLicense: ${data.license_number}\nStates Licensed: ${data.states_licensed?.join(', ') || 'N/A'}\nYears Experience: ${data.years_experience || 'N/A'}\nPractice Type: ${data.practice_type || 'N/A'}\n\nApplication ID: ${providerIntake.id}\nSubmitted: ${new Date().toLocaleString()}`
-        });
-      } catch (e) {
-        console.error('Admin email error:', e.message);
-      }
+      await sendEmailSafe(base44, {
+        from_name: 'MedRevolve Provider Application',
+        to: adminEmail,
+        subject: `New Provider Application - ${data.full_name}`,
+        body: `New Provider Application Received\n\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nTitle: ${data.title}\nSpecialty: ${data.specialty}\nLicense: ${data.license_number}\nStates Licensed: ${data.states_licensed?.join(', ') || 'N/A'}\nYears Experience: ${data.years_experience || 'N/A'}\n\nApplication ID: ${providerIntake.id}\nSubmitted: ${new Date().toLocaleString()}`
+      });
     }
 
-    // Confirmation to provider
-    try {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Provider Relations',
-        to: data.email,
-        subject: 'Provider Application Received - Next Steps',
-        body: `Dear ${data.full_name},\n\nThank you for your interest in joining MedRevolve as a healthcare provider!\n\nWe've received your application and our credentialing team is reviewing your information.\n\nWhat Happens Next:\n1. Credential Verification (2-3 business days)\n2. Interview & Onboarding (1 week)\n3. Profile Creation (1-2 days)\n4. Go Live!\n\nApplication Details:\n- Title: ${data.title}\n- Specialty: ${data.specialty}\n- License: ${data.license_number}\n- Application ID: ${providerIntake.id}\n\nQuestions? Email providers@medrevolve.com\n\nBest regards,\nMedRevolve Provider Relations Team`
-      });
-    } catch (e) {
-      console.error('Provider confirmation email error:', e.message);
-    }
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Provider Relations',
+      to: data.email,
+      subject: 'Provider Application Received - Next Steps',
+      body: `Dear ${data.full_name},\n\nThank you for your interest in joining MedRevolve as a healthcare provider!\n\nWe've received your application and our credentialing team will review it within 2-3 business days.\n\nApplication Details:\n- Title: ${data.title}\n- Specialty: ${data.specialty}\n- License: ${data.license_number}\n- Application ID: ${providerIntake.id}\n\nQuestions? Email providers@medrevolve.com\n\nBest regards,\nMedRevolve Provider Relations Team`
+    });
 
     return Response.json({
       success: true,
