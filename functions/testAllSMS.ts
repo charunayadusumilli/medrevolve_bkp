@@ -22,15 +22,11 @@ async function sendSMS(to, body) {
 
   const result = await res.json();
   if (!res.ok) {
-    console.error('SMS error:', result);
-    return { error: result.message };
+    console.error('SMS error:', JSON.stringify(result));
+    return { error: result.message, code: result.code, to: phoneE164 };
   }
-  console.log('✅ SMS sent:', result.sid);
-  return { success: true, sid: result.sid };
-}
-
-async function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  console.log('SMS sent:', result.sid, 'status:', result.status, 'to:', phoneE164);
+  return { success: true, sid: result.sid, status: result.status, to: phoneE164 };
 }
 
 Deno.serve(async (req) => {
@@ -44,34 +40,19 @@ Deno.serve(async (req) => {
     const adminPhone = '5302006352';
     const results = [];
 
-    // SMS 1 — Customer Intake
-    results.push(await sendSMS(adminPhone,
-      `1/5 🆕 CUSTOMER INTAKE\nName: Jane Smith\nEmail: jane@example.com\nPhone: (555) 867-5309\nInterest: Weight Management\nSource: Social Media\nConsult Pref: ASAP`
-    ));
-    await delay(1000);
+    const msgs = [
+      `1/5 NEW LEAD: Jane Smith | Weight Management | jane@example.com | 5558675309 | ASAP | Social Media`,
+      `2/5 PROVIDER APP: Dr. Michael Chen, MD | Internal Medicine | dr.chen@example.com | 5552345678`,
+      `3/5 PHARMACY APP: Pacific Compounding Rx | Sarah Lee | sarah@pacificrx.com | 5553456789 | Compounding`,
+      `4/5 CONTACT: Robert Johnson | rjohnson@email.com | Semaglutide pricing | Hi, I wanted to ask about pricing for semaglutide...`,
+      `5/5 APPOINTMENT: Emily Davis | emily@example.com | Initial Consultation | Feb 22 10:00 AM | Provider TBD`
+    ];
 
-    // SMS 2 — Provider Application
-    results.push(await sendSMS(adminPhone,
-      `2/5 👨‍⚕️ PROVIDER APPLICATION\nName: Dr. Michael Chen, MD\nEmail: dr.chen@example.com\nPhone: (555) 234-5678\nSpecialty: Internal Medicine\nLicense: CA-12345678\nStates: CA, TX, NY`
-    ));
-    await delay(1000);
-
-    // SMS 3 — Pharmacy Application
-    results.push(await sendSMS(adminPhone,
-      `3/5 💊 PHARMACY APPLICATION\nPharmacy: Pacific Compounding Rx\nContact: Sarah Lee\nEmail: sarah@pacificrx.com\nPhone: (555) 345-6789\nType: Compounding\nShipping: National`
-    ));
-    await delay(1000);
-
-    // SMS 4 — Contact Message
-    results.push(await sendSMS(adminPhone,
-      `4/5 📬 CONTACT MESSAGE\nFrom: Robert Johnson\nEmail: rjohnson@email.com\nSubject: Question about semaglutide\nMsg: Hi, I wanted to ask about the pricing for semaglutide injections and what the process looks like...`
-    ));
-    await delay(1000);
-
-    // SMS 5 — Appointment Booked
-    results.push(await sendSMS(adminPhone,
-      `5/5 📅 APPOINTMENT BOOKED\nPatient: Emily Davis\nEmail: emily@example.com\nPhone: (555) 456-7890\nType: Initial Consultation\nDate: Feb 22, 2026 at 10:00 AM\nReason: Starting a weight management program\nProvider: To Be Assigned ⚠️`
-    ));
+    for (const msg of msgs) {
+      const r = await sendSMS(adminPhone, msg);
+      results.push(r);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
 
     return Response.json({ success: true, sent: results.length, results });
 
