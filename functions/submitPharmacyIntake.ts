@@ -1,5 +1,23 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
+async function sendSMS(to, body) {
+  const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+  const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
+  const fromPhone = Deno.env.get('TWILIO_PHONE_NUMBER');
+  if (!accountSid || !authToken || !fromPhone || !to) return;
+  let normalized = to.replace(/\D/g, '');
+  if (normalized.startsWith('1') && normalized.length === 11) normalized = normalized.slice(1);
+  const phoneE164 = normalized.length === 10 ? `+1${normalized}` : `+${normalized}`;
+  const params = new URLSearchParams({ To: phoneE164, From: fromPhone, Body: body });
+  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`), 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  });
+  if (!res.ok) console.error('SMS error:', await res.text());
+  else console.log('✅ SMS sent to:', phoneE164);
+}
+
 async function sendEmail({ to, from_name, subject, html }) {
   const apiKey = Deno.env.get('RESEND_API_KEY');
   const res = await fetch('https://api.resend.com/emails', {
