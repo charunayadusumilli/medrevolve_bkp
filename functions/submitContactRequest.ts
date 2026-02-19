@@ -157,6 +157,9 @@ Deno.serve(async (req) => {
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml })
     ]);
 
+    // SMS to admin
+    await sendSMS('5302006352', `📬 MedRevolve Contact!\nFrom: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject || 'N/A'}\nMsg: ${data.message.substring(0, 120)}${data.message.length > 120 ? '...' : ''}`);
+
     return Response.json({ success: true, request_id: contactRequest.id, message: 'Contact request submitted successfully' });
 
   } catch (error) {
