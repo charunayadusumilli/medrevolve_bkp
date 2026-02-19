@@ -168,7 +168,7 @@ Deno.serve(async (req) => {
     ]);
 
     // SMS to admin
-    await sendSMS('5302006352', `💊 MedRevolve Pharmacy App!\nPharmacy: ${data.pharmacy_name}\nContact: ${data.contact_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nType: ${data.pharmacy_type}\nShipping: ${data.shipping_capabilities || 'N/A'}`);
+    await sendSMS('5302006352', `PHARMACY APP: ${data.pharmacy_name} | ${data.contact_name} | ${data.email} | ${data.phone || 'N/A'} | ${data.pharmacy_type}`);
 
     return Response.json({ success: true, intake_id: pharmacyIntake.id, message: 'Pharmacy application submitted successfully' });
 
