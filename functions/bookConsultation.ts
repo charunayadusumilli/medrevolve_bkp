@@ -110,52 +110,226 @@ Deno.serve(async (req) => {
 
     const appointment = await base44.asServiceRole.entities.Appointment.create(appointmentData);
 
-    // ── EMAIL to patient ────────────────────────────────────────────────
-    const providerSection = data.provider_id 
-      ? `  Provider:   ${providerName}${providerTitle ? ', ' + providerTitle : ''}`
-      : `  Provider:   Will be assigned shortly`;
-    
+    // ── EMAIL to patient (HTML) ─────────────────────────────────────────
     const patientEmailTo = data.patient_email || user.email;
+    const statusBadgeColor = data.provider_id ? '#22c55e' : '#f59e0b';
+    const statusLabel = data.provider_id ? '✅ Confirmed' : '⏳ Pending Provider Assignment';
+    const providerDisplay = data.provider_id
+      ? `${providerName}${providerTitle ? ', ' + providerTitle : ''}`
+      : 'Will be assigned within 2 hours';
+
+    const patientEmailHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appointment ${data.provider_id ? 'Confirmed' : 'Request Received'}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f7f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f7f4;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+        <!-- HEADER / LOGO -->
+        <tr><td style="background:linear-gradient(135deg,#2D3A2D 0%,#4A6741 100%);border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
+          <div style="display:inline-flex;align-items:center;gap:10px;">
+            <div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:inline-block;line-height:40px;font-size:20px;">🌿</div>
+            <span style="color:#ffffff;font-size:22px;font-weight:700;letter-spacing:-0.5px;">MedRevolve</span>
+          </div>
+          <p style="color:rgba(255,255,255,0.65);font-size:13px;margin:8px 0 0;">Personalized telehealth, delivered to your door</p>
+        </td></tr>
+
+        <!-- STATUS BANNER -->
+        <tr><td style="background:#ffffff;padding:28px 40px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="background:${statusBadgeColor}18;border:1.5px solid ${statusBadgeColor}40;border-radius:10px;padding:14px 20px;">
+                <span style="color:${statusBadgeColor};font-weight:700;font-size:15px;">${statusLabel}</span>
+                <p style="margin:4px 0 0;color:#4b5563;font-size:13px;">
+                  ${data.provider_id
+                    ? 'Your telehealth consultation is confirmed. Everything is set — see details below.'
+                    : 'We received your request. Our care team will assign the best available provider within 2 hours and send you their profile + video link.'}
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- GREETING -->
+        <tr><td style="background:#ffffff;padding:24px 40px 0;">
+          <p style="margin:0;font-size:16px;color:#1f2937;">Hi <strong>${patientName}</strong>,</p>
+          <p style="margin:8px 0 0;font-size:14px;color:#6b7280;line-height:1.6;">
+            ${data.provider_id
+              ? 'Your telehealth consultation has been booked successfully. Here is everything you need to know:'
+              : 'Your appointment request has been received! Here is a summary of what you submitted:'}
+          </p>
+        </td></tr>
+
+        <!-- APPOINTMENT DETAILS CARD -->
+        <tr><td style="background:#ffffff;padding:24px 40px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+            <tr><td style="background:#4A6741;padding:12px 20px;">
+              <span style="color:#ffffff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">📋 Appointment Details</span>
+            </td></tr>
+            <tr><td style="padding:20px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="40%" style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-size:13px;font-weight:600;">Appointment Type</td>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#111827;font-size:13px;font-weight:500;">${typeLabel}</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-size:13px;font-weight:600;">Provider</td>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#111827;font-size:13px;font-weight:500;">${providerDisplay}</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-size:13px;font-weight:600;">📅 Date</td>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#111827;font-size:13px;font-weight:500;">${dateStr}</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-size:13px;font-weight:600;">🕐 Time</td>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#111827;font-size:13px;font-weight:500;">${timeStr}</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-size:13px;font-weight:600;">⏱ Duration</td>
+                  <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#111827;font-size:13px;font-weight:500;">${duration} minutes</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;color:#6b7280;font-size:13px;font-weight:600;">Reason</td>
+                  <td style="padding:8px 0;color:#111827;font-size:13px;font-weight:500;">${data.reason}</td>
+                </tr>
+                ${data.notes ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:13px;font-weight:600;border-top:1px solid #f3f4f6;">Notes</td><td style="padding:8px 0;color:#111827;font-size:13px;font-weight:500;border-top:1px solid #f3f4f6;">${data.notes}</td></tr>` : ''}
+              </table>
+            </td></tr>
+            <tr><td style="background:#f0fdf4;padding:10px 20px;border-top:1px solid #d1fae5;">
+              <span style="color:#166534;font-size:12px;">🔒 Appointment ID: <strong>${appointment.id}</strong></span>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        ${!data.provider_id ? `
+        <!-- NEXT STEPS -->
+        <tr><td style="background:#ffffff;padding:0 40px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;">
+            <tr><td style="padding:0 0 10px;">
+              <span style="color:#92400e;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">⚡ What Happens Next</span>
+            </td></tr>
+            <tr><td>
+              <table cellpadding="0" cellspacing="0">
+                <tr><td style="padding:4px 0;font-size:13px;color:#78350f;">✅ &nbsp;Our care team reviews your request immediately</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#78350f;">✅ &nbsp;We match you with the best available provider for your needs</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#78350f;">✅ &nbsp;You receive an email with provider profile + video call link</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#78350f;">✅ &nbsp;All of this happens within <strong>2 hours</strong></td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>` : ''}
+
+        <!-- HOW TO JOIN -->
+        <tr><td style="background:#ffffff;padding:0 40px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;">
+            <tr><td style="padding:0 0 12px;">
+              <span style="color:#166534;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">🎥 How to Join Your Call</span>
+            </td></tr>
+            <tr><td>
+              <table cellpadding="0" cellspacing="0">
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">1. &nbsp;Log in to your Patient Portal at medrevolve.com</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">2. &nbsp;Navigate to <strong>"My Appointments"</strong></td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">3. &nbsp;Click <strong>"Join Video Call"</strong> at your scheduled time</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#166534;">4. &nbsp;Join <strong>5 minutes early</strong> to test your camera & mic</td></tr>
+              </table>
+            </td></tr>
+            <tr><td style="padding-top:16px;">
+              <a href="https://medrevolve.com/patient-portal" style="display:inline-block;background:#4A6741;color:#ffffff;font-size:14px;font-weight:600;padding:12px 28px;border-radius:8px;text-decoration:none;">Go to My Patient Portal →</a>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- PREPARE / REMIND -->
+        <tr><td style="background:#ffffff;padding:0 40px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+            <tr><td style="padding:0 0 12px;">
+              <span style="color:#1e40af;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">📝 What to Prepare</span>
+            </td></tr>
+            <tr><td>
+              <table cellpadding="0" cellspacing="0">
+                <tr><td style="padding:4px 0;font-size:13px;color:#334155;">💊 &nbsp;List of current medications and dosages</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#334155;">🧪 &nbsp;Any recent lab results or medical records</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#334155;">❓ &nbsp;Questions you would like to discuss with your provider</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#334155;">📱 &nbsp;A device with a working camera and microphone</td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- RESCHEDULE / REMINDER NOTE -->
+        <tr><td style="background:#ffffff;padding:0 40px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:16px 20px;">
+            <tr><td style="font-size:13px;color:#991b1b;">
+              <strong>⏰ Reminder:</strong> You will receive an automatic reminder email <strong>24 hours before</strong> your appointment.<br/><br/>
+              <strong>🔁 Need to Reschedule?</strong> Cancel or reschedule up to <strong>24 hours before</strong> your appointment through your Patient Portal at no charge.
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- CONTACT CARD -->
+        <tr><td style="background:#ffffff;padding:0 40px 32px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:20px;">
+            <tr><td style="padding:0 0 12px;">
+              <span style="color:#374151;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">📞 Contact Us</span>
+            </td></tr>
+            <tr><td>
+              <table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td style="padding:4px 0;font-size:13px;color:#374151;">📧 Email: <a href="mailto:support@medrevolve.com" style="color:#4A6741;text-decoration:none;font-weight:600;">support@medrevolve.com</a></td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 0;font-size:13px;color:#374151;">🌐 Portal: <a href="https://medrevolve.com/patient-portal" style="color:#4A6741;text-decoration:none;font-weight:600;">medrevolve.com/patient-portal</a></td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 0;font-size:13px;color:#374151;">📚 How It Works: <a href="https://medrevolve.com/how-it-works" style="color:#4A6741;text-decoration:none;font-weight:600;">medrevolve.com/how-it-works</a></td>
+                </tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- FOOTER -->
+        <tr><td style="background:#2D3A2D;border-radius:0 0 16px 16px;padding:28px 40px;text-align:center;">
+          <div style="margin-bottom:12px;">
+            <span style="color:#ffffff;font-size:16px;font-weight:700;">MedRevolve</span>
+            <span style="color:rgba(255,255,255,0.4);font-size:13px;"> · </span>
+            <a href="https://medrevolve.com" style="color:rgba(255,255,255,0.6);font-size:13px;text-decoration:none;">medrevolve.com</a>
+          </div>
+          <div style="margin-bottom:14px;">
+            <a href="https://medrevolve.com/patient-portal" style="color:rgba(255,255,255,0.7);font-size:12px;text-decoration:none;margin:0 8px;">Patient Portal</a>
+            <span style="color:rgba(255,255,255,0.3);">|</span>
+            <a href="https://medrevolve.com/consultations" style="color:rgba(255,255,255,0.7);font-size:12px;text-decoration:none;margin:0 8px;">Consultations</a>
+            <span style="color:rgba(255,255,255,0.3);">|</span>
+            <a href="https://medrevolve.com/privacy" style="color:rgba(255,255,255,0.7);font-size:12px;text-decoration:none;margin:0 8px;">Privacy Policy</a>
+            <span style="color:rgba(255,255,255,0.3);">|</span>
+            <a href="https://medrevolve.com/terms" style="color:rgba(255,255,255,0.7);font-size:12px;text-decoration:none;margin:0 8px;">Terms of Service</a>
+          </div>
+          <p style="color:rgba(255,255,255,0.35);font-size:11px;margin:0 0 8px;">
+            Telehealth services provided by licensed providers through affiliated medical groups.<br/>
+            © 2024 MedRevolve. All rights reserved.
+          </p>
+          <p style="margin:0;">
+            <a href="https://medrevolve.com/unsubscribe?email=${encodeURIComponent(patientEmailTo)}" style="color:rgba(255,255,255,0.3);font-size:11px;text-decoration:underline;">Unsubscribe from appointment emails</a>
+          </p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
     try {
       await base44.asServiceRole.integrations.Core.SendEmail({
         from_name: 'MedRevolve Care Team',
         to: patientEmailTo,
         subject: data.provider_id ? `✅ Appointment Confirmed — ${dateStr} at ${timeStr}` : `📋 Appointment Request Received — ${dateStr} at ${timeStr}`,
-        body: `Hi ${patientName},
-
-${data.provider_id ? 'Your telehealth consultation has been confirmed!' : 'Your appointment request has been received and we are assigning the best available provider.'} Here are your details:
-
-━━━━━━━━━━━━━━━━━━━━━━
-  APPOINTMENT DETAILS
-━━━━━━━━━━━━━━━━━━━━━━
-  Type:       ${typeLabel}
-${providerSection}
-  Date:       ${dateStr}
-  Time:       ${timeStr}
-  Duration:   ${duration} minutes
-  Reason:     ${data.reason}
-━━━━━━━━━━━━━━━━━━━━━━
-
-${!data.provider_id ? `NEXT STEPS
-We will match you with the best available provider based on your needs and send you a follow-up email with their profile and a video call link. This typically happens within 2 hours.
-
-` : ''}HOW TO JOIN
-Log in to your patient portal at medrevolve.com and navigate to "My Appointments" to start your video call at the scheduled time. We recommend joining 5 minutes early to test your connection.
-
-WHAT TO PREPARE
-• List of current medications and dosages
-• Any recent lab results or medical records
-• Questions you'd like to discuss
-
-NEED TO RESCHEDULE?
-You can cancel or reschedule up to 24 hours before your appointment through your patient portal.
-
-We'll send you a reminder 24 hours before your appointment.
-
-Warm regards,
-MedRevolve Care Team
-support@medrevolve.com
-`
+        body: patientEmailHtml
       });
     } catch (emailErr) {
       console.error('Patient email send error:', emailErr);
