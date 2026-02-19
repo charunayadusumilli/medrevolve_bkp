@@ -202,11 +202,10 @@ export default function CustomerIntake() {
 
                     <div>
                       <Label>Phone Number</Label>
-                      <Input
-                        type="tel"
-                        autoComplete="tel"
+                      <PhoneInput
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(v) => setFormData({ ...formData, phone: v })}
+                        className="mt-2"
                         placeholder="(555) 123-4567"
                         className="mt-2 h-12"
                       />
