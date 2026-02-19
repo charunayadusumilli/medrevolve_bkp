@@ -5,15 +5,10 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const data = await req.json();
 
-    // Validate required fields
     if (!data.company_name || !data.contact_name || !data.email || !data.interest_type) {
-      return Response.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+      return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Create inquiry record
     const inquiry = await base44.asServiceRole.entities.BusinessInquiry.create({
       company_name: data.company_name,
       contact_name: data.contact_name,
@@ -26,67 +21,37 @@ Deno.serve(async (req) => {
       status: 'new'
     });
 
-    // Send notification to business@medrevolve.com
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      from_name: 'MedRevolve Business Development',
-      to: 'business@medrevolve.com',
-      subject: `New Business Inquiry - ${data.company_name}`,
-      body: `
-🏢 New Business Inquiry Received
+    console.log('✅ BusinessInquiry record created:', inquiry.id);
 
-Company: ${data.company_name}
-Contact: ${data.contact_name}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}
-Industry: ${data.industry || 'Not specified'}
-Interest: ${data.interest_type}
-Company Size: ${data.company_size || 'Not provided'}
+    const adminEmail = Deno.env.get('ADMIN_EMAIL');
 
-Message:
-${data.message || 'No additional message'}
+    // Notify admin
+    if (adminEmail) {
+      try {
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          from_name: 'MedRevolve Business Development',
+          to: adminEmail,
+          subject: `New Business Inquiry - ${data.company_name}`,
+          body: `New Business Inquiry Received\n\nCompany: ${data.company_name}\nContact: ${data.contact_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nIndustry: ${data.industry || 'N/A'}\nInterest: ${data.interest_type}\nCompany Size: ${data.company_size || 'N/A'}\n\nMessage:\n${data.message || 'None'}\n\nInquiry ID: ${inquiry.id}\nSubmitted: ${new Date().toLocaleString()}\n\nAction Required: Follow up within 1-2 business days.`
+        });
+      } catch (e) {
+        console.error('Admin email error:', e.message);
+      }
+    }
 
-Inquiry ID: ${inquiry.id}
-Submitted: ${new Date().toLocaleString()}
+    // Confirmation to business contact
+    try {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Business Development',
+        to: data.email,
+        subject: 'Thank You for Your Interest - MedRevolve',
+        body: `Hi ${data.contact_name},\n\nThank you for your interest in partnering with MedRevolve!\n\nWe're excited to explore how we can support ${data.company_name}'s wellness initiatives.\n\nWhat's Next:\n- Our business development team will review your inquiry\n- We'll reach out within 1-2 business days to schedule a consultation\n\nInquiry ID: ${inquiry.id}\n\nBest regards,\nMedRevolve Business Development Team`
+      });
+    } catch (e) {
+      console.error('Business confirmation email error:', e.message);
+    }
 
-Action Required: Follow up within 1-2 business days.
-      `
-    });
-
-    // Send confirmation to business contact
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      from_name: 'MedRevolve Business Development',
-      to: data.email,
-      subject: 'Thank You for Your Interest - MedRevolve',
-      body: `
-Hi ${data.contact_name},
-
-Thank you for your interest in partnering with MedRevolve! 🤝
-
-We're excited to explore how we can support ${data.company_name}'s wellness initiatives.
-
-What's Next:
-✓ Our business development team will review your inquiry
-✓ We'll reach out within 1-2 business days
-✓ We'll schedule a consultation to discuss your specific needs
-
-Based on your interest in "${data.interest_type}", we'll prepare relevant information about:
-• Product catalogs and pricing
-• Partnership structures and terms
-• Implementation timelines
-• Success stories from similar businesses
-
-In the meantime, you can explore our business solutions at medrevolve.com/business
-
-We look forward to speaking with you soon!
-
-Best regards,
-MedRevolve Business Development Team
-
-Need immediate assistance? Call us at 1-800-MED-REVO
-      `
-    });
-
-    // Send to Zapier webhook
+    // Send to Zapier webhook (non-blocking)
     try {
       await fetch('https://hooks.zapier.com/hooks/catch/26459574/uevvvwi/', {
         method: 'POST',
@@ -103,9 +68,8 @@ Need immediate assistance? Call us at 1-800-MED-REVO
           form_type: 'business_inquiry'
         })
       });
-    } catch (webhookError) {
-      console.error('Zapier webhook error:', webhookError);
-      // Don't fail the entire request if webhook fails
+    } catch (e) {
+      console.error('Zapier webhook error:', e.message);
     }
 
     return Response.json({
@@ -116,9 +80,6 @@ Need immediate assistance? Call us at 1-800-MED-REVO
 
   } catch (error) {
     console.error('Error submitting business inquiry:', error);
-    return Response.json(
-      { error: error.message || 'Failed to submit inquiry' },
-      { status: 500 }
-    );
+    return Response.json({ error: error.message || 'Failed to submit inquiry' }, { status: 500 });
   }
 });
