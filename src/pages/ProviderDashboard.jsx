@@ -157,6 +157,8 @@ export default function ProviderDashboard() {
                 <TabsContent value="calendar">
                   <AppointmentCalendar
                     appointments={appointments}
+                    blockedTimes={blockedTimes}
+                    schedules={schedules}
                     onSelectAppointment={setSelectedAppointment}
                   />
                 </TabsContent>
