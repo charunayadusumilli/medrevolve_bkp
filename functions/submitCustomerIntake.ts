@@ -25,18 +25,78 @@ Deno.serve(async (req) => {
     console.log('✅ CustomerIntake record created:', customerIntake.id);
 
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+
+    // ── Admin notification ──────────────────────────────────────────────────
     await sendEmailSafe(base44, {
-      from_name: 'MedRevolve Customer Onboarding',
+      from_name: 'MedRevolve Platform',
       to: adminEmail,
-      subject: `🆕 New Customer Intake - ${data.full_name}`,
-      body: `New Customer Intake Submission\n\n━━━━━━━━━━━━━━━━━━━━━━\n  CUSTOMER DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nName:                  ${data.full_name}\nEmail:                 ${data.email}\nPhone:                 ${data.phone || 'N/A'}\nDate of Birth:         ${data.date_of_birth || 'N/A'}\nState:                 ${data.state || 'N/A'}\nPrimary Interest:      ${data.primary_interest}\nConsultation Pref:     ${data.consultation_preference || 'N/A'}\nHeard About Us:        ${data.heard_about_us || 'N/A'}\nReferral Code:         ${data.referral_code || 'None'}\n\nCustomer ID:  ${customerIntake.id}\nSubmitted:    ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Review this intake in the Admin Dashboard\n✅ Match customer with appropriate provider\n✅ Follow up within 24 hours\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+      subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`,
+      body: `A new customer has completed their intake form and requires follow-up within 24 hours.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CUSTOMER DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name:                  ${data.full_name}
+Email:                 ${data.email}
+Phone:                 ${data.phone || 'Not provided'}
+Date of Birth:         ${data.date_of_birth || 'Not provided'}
+State:                 ${data.state || 'Not provided'}
+Primary Interest:      ${data.primary_interest}
+Consultation Pref:     ${data.consultation_preference || 'Not specified'}
+How They Found Us:     ${data.heard_about_us || 'Not specified'}
+Referral Code:         ${data.referral_code || 'None'}
+Medical History Notes: ${data.medical_history_notes || 'None'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ACTION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐  Review intake in Admin Dashboard
+☐  Match with an appropriate licensed provider
+☐  Send provider match email or schedule consultation
+☐  Follow up within 24 hours
+
+Reference ID:  ${customerIntake.id}
+Submitted:     ${submittedAt} ET
+
+Admin Dashboard → https://app.medrevolve.com/admin-dashboard`
     });
 
+    // ── Confirmation to customer ────────────────────────────────────────────
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Wellness Team',
       to: data.email,
-      subject: 'Welcome to MedRevolve - Your Wellness Journey Starts Here!',
-      body: `Hi ${data.full_name},\n\nWelcome to MedRevolve! Thank you for completing your intake form.\n\nYour Wellness Interest: ${data.primary_interest}\n\nWhat Happens Next:\n1. Our wellness team reviews your information (24 hours)\n2. We match you with the right provider\n3. Schedule your initial consultation\n\nBook a Consultation: medrevolve.com/consultations\nPatient Portal: medrevolve.com/patient-portal\n\nBest regards,\nMedRevolve Wellness Team`
+      subject: `✅ We received your intake, ${data.full_name.split(' ')[0]}! Here's what happens next`,
+      body: `Hi ${data.full_name.split(' ')[0]},
+
+Thank you for completing your intake form — you're one step closer to your wellness goals!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  YOUR INTAKE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Wellness Interest:    ${data.primary_interest}
+Consultation Pref:    ${data.consultation_preference || 'Flexible'}
+Reference ID:         ${customerIntake.id}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  WHAT HAPPENS NEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Our wellness team reviews your information (within 24 hours)
+2. We match you with the best available licensed provider
+3. You'll receive a follow-up email with provider details + booking link
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  WANT TO MOVE FASTER?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Book a consultation now:  https://app.medrevolve.com/consultations
+Browse treatments:        https://app.medrevolve.com/products
+Access your portal:       https://app.medrevolve.com/patient-portal
+
+Questions? Reply to this email or contact us at support@medrevolve.com
+
+Warm regards,
+MedRevolve Wellness Team
+https://medrevolve.com`
     });
 
     return Response.json({

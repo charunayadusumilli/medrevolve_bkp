@@ -25,18 +25,86 @@ Deno.serve(async (req) => {
     console.log('✅ ProviderIntake record created:', providerIntake.id);
 
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+
+    // ── Admin notification ──────────────────────────────────────────────────
     await sendEmailSafe(base44, {
-      from_name: 'MedRevolve Provider Applications',
+      from_name: 'MedRevolve Platform',
       to: adminEmail,
-      subject: `🩺 New Provider Application - ${data.full_name}, ${data.title}`,
-      body: `New Provider Application Received\n\n━━━━━━━━━━━━━━━━━━━━━━\n  PROVIDER DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nName:              ${data.full_name}\nTitle:             ${data.title}\nSpecialty:         ${data.specialty}\nEmail:             ${data.email}\nPhone:             ${data.phone || 'N/A'}\nLicense Number:    ${data.license_number}\nStates Licensed:   ${data.states_licensed?.join(', ') || 'N/A'}\nYears Experience:  ${data.years_experience || 'N/A'}\nPractice Type:     ${data.practice_type || 'N/A'}\nAvailability:      ${data.availability || 'N/A'}\n\nApplication ID:  ${providerIntake.id}\nSubmitted:       ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Verify license with state medical board\n✅ Review credentialing documents\n✅ Respond to applicant within 2-3 business days\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+      subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`,
+      body: `A new healthcare provider has submitted an application and requires credentialing review.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PROVIDER DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name:               ${data.full_name}
+Title:              ${data.title}
+Specialty:          ${data.specialty}
+Email:              ${data.email}
+Phone:              ${data.phone || 'Not provided'}
+License Number:     ${data.license_number}
+States Licensed:    ${data.states_licensed?.join(', ') || 'Not provided'}
+Years Experience:   ${data.years_experience || 'Not provided'}
+Practice Type:      ${data.practice_type || 'Not specified'}
+Availability:       ${data.availability || 'Not specified'}
+Education:          ${data.education || 'Not provided'}
+Certifications:     ${data.certifications || 'None listed'}
+
+Bio:
+${data.bio || 'Not provided'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ACTION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐  Verify license with state medical board
+☐  Check NPI registry
+☐  Schedule credentialing call
+☐  Review malpractice insurance
+☐  Send contract & onboarding if approved
+☐  Respond to applicant within 2-3 business days
+
+Reference ID:  ${providerIntake.id}
+Submitted:     ${submittedAt} ET
+
+Admin Dashboard → https://app.medrevolve.com/provider-contracts`
     });
 
+    // ── Confirmation to provider ────────────────────────────────────────────
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Provider Relations',
       to: data.email,
-      subject: 'Provider Application Received - Next Steps',
-      body: `Dear ${data.full_name},\n\nThank you for your interest in joining MedRevolve as a healthcare provider!\n\nWe've received your application and our credentialing team will review it within 2-3 business days.\n\nApplication Details:\n- Title: ${data.title}\n- Specialty: ${data.specialty}\n- License: ${data.license_number}\n- Application ID: ${providerIntake.id}\n\nQuestions? Email providers@medrevolve.com\n\nBest regards,\nMedRevolve Provider Relations Team`
+      subject: `✅ Application Received — MedRevolve Provider Program`,
+      body: `Dear ${data.full_name},
+
+Thank you for your interest in joining MedRevolve as a licensed healthcare provider. We're excited to review your application!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  APPLICATION SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name:            ${data.full_name}, ${data.title}
+Specialty:       ${data.specialty}
+License Number:  ${data.license_number}
+Reference ID:    ${providerIntake.id}
+Status:          Under Review
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  WHAT HAPPENS NEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Our credentialing team reviews your application (2-3 business days)
+2. License verification with state medical board
+3. We schedule a credentialing call with you
+4. Upon approval, you receive an onboarding package and contract
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  QUESTIONS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Email:    providers@medrevolve.com
+Web:      https://medrevolve.com
+
+We'll be in touch soon!
+
+Best regards,
+MedRevolve Provider Relations Team`
     });
 
     return Response.json({

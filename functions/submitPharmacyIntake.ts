@@ -25,18 +25,88 @@ Deno.serve(async (req) => {
     console.log('✅ PharmacyIntake record created:', pharmacyIntake.id);
 
     const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+
+    // ── Admin notification ──────────────────────────────────────────────────
     await sendEmailSafe(base44, {
-      from_name: 'MedRevolve Pharmacy Partnerships',
+      from_name: 'MedRevolve Platform',
       to: adminEmail,
-      subject: `💊 New Pharmacy Application - ${data.pharmacy_name}`,
-      body: `New Pharmacy Partnership Application\n\n━━━━━━━━━━━━━━━━━━━━━━\n  PHARMACY DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nPharmacy Name:     ${data.pharmacy_name}\nPharmacy Type:     ${data.pharmacy_type}\nContact Person:    ${data.contact_name}\nEmail:             ${data.email}\nPhone:             ${data.phone || 'N/A'}\nLicense Number:    ${data.license_number}\nNPI Number:        ${data.npi_number || 'N/A'}\nLocation:          ${data.city || ''}, ${data.state || ''} ${data.zip_code || ''}\nShipping:          ${data.shipping_capabilities || 'N/A'}\nServices:          ${data.services_offered?.join(', ') || 'N/A'}\n\nPartnership Interest:\n${data.partnership_interest || 'N/A'}\n\nApplication ID:  ${pharmacyIntake.id}\nSubmitted:       ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Verify pharmacy license\n✅ Review partnership fit and capabilities\n✅ Respond within 3-5 business days\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+      subject: `💊 New Pharmacy Application — ${data.pharmacy_name} [${data.pharmacy_type}]`,
+      body: `A new pharmacy has submitted a partnership application and requires review.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PHARMACY DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Pharmacy Name:        ${data.pharmacy_name}
+Contact Person:       ${data.contact_name}
+Email:                ${data.email}
+Phone:                ${data.phone || 'Not provided'}
+License Number:       ${data.license_number}
+NPI Number:           ${data.npi_number || 'Not provided'}
+Pharmacy Type:        ${data.pharmacy_type}
+Shipping Capability:  ${data.shipping_capabilities || 'Not specified'}
+Services Offered:     ${data.services_offered?.join(', ') || 'Not specified'}
+
+Location:
+${data.address || ''}
+${data.city || ''}, ${data.state || ''} ${data.zip_code || ''}
+
+Why They Want to Partner:
+${data.partnership_interest || 'Not provided'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ACTION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐  Verify pharmacy license with state board
+☐  Confirm NPI in registry
+☐  Review compounding capabilities
+☐  Check shipping coverage for our patient base
+☐  Schedule intro call with pharmacy
+☐  Send contract if approved
+☐  Respond within 3-5 business days
+
+Reference ID:  ${pharmacyIntake.id}
+Submitted:     ${submittedAt} ET
+
+Admin Dashboard → https://app.medrevolve.com/pharmacy-contracts`
     });
 
+    // ── Confirmation to pharmacy ────────────────────────────────────────────
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Pharmacy Partnerships',
       to: data.email,
-      subject: 'Pharmacy Partnership Application Received',
-      body: `Dear ${data.contact_name},\n\nThank you for ${data.pharmacy_name}'s interest in partnering with MedRevolve!\n\nWe've received your application and will review it within 3-5 business days.\n\nApplication ID: ${pharmacyIntake.id}\n\nQuestions? Email pharmacy@medrevolve.com\n\nBest regards,\nMedRevolve Pharmacy Partnerships Team`
+      subject: `✅ Partnership Application Received — MedRevolve`,
+      body: `Dear ${data.contact_name},
+
+Thank you for ${data.pharmacy_name}'s interest in partnering with MedRevolve! We're excited to explore this opportunity with you.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  APPLICATION SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Pharmacy:         ${data.pharmacy_name}
+Type:             ${data.pharmacy_type}
+License:          ${data.license_number}
+Reference ID:     ${pharmacyIntake.id}
+Status:           Under Review
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  WHAT HAPPENS NEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Our partnerships team reviews your application (3-5 business days)
+2. License and accreditation verification
+3. We schedule an introductory call to discuss integration details
+4. Upon approval, you receive a partnership contract and onboarding guide
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  QUESTIONS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Email:    pharmacy@medrevolve.com
+Web:      https://medrevolve.com
+
+We look forward to working with you!
+
+Best regards,
+MedRevolve Pharmacy Partnerships Team`
     });
 
     return Response.json({
