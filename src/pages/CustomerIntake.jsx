@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, User, MapPin, Heart, Calendar, ArrowRight, ArrowLeft, Sparkles } from 'lucide-react';
+import PhoneInput from '@/components/ui/PhoneInput';
 
 const STEPS = [
   { id: 1, title: 'About You', icon: User },
