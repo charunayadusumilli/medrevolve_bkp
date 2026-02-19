@@ -63,6 +63,16 @@ export default function PatientPortal() {
     enabled: !!user?.email
   });
 
+  const { data: autoRxPlans = [] } = useQuery({
+    queryKey: ['autoRxPlans', user?.email],
+    queryFn: () => base44.entities.AutoRxPlan.filter(
+      { patient_email: user?.email },
+      '-created_date',
+      20
+    ),
+    enabled: !!user?.email
+  });
+
   if (userLoading) return null;
 
   return (
