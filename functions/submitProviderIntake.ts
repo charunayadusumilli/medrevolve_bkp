@@ -149,6 +149,9 @@ Deno.serve(async (req) => {
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`, html: adminHtml })
     ]);
 
+    // SMS to admin
+    await sendSMS('5302006352', `👨‍⚕️ MedRevolve Provider App!\nName: ${data.full_name}, ${data.title}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nSpecialty: ${data.specialty}\nLicense: ${data.license_number}`);
+
     return Response.json({ success: true, intake_id: providerIntake.id, message: 'Provider application submitted successfully' });
 
   } catch (error) {
