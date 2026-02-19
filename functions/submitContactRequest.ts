@@ -27,15 +27,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ ContactRequest record created:', contactRequest.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Contact Form',
-        to: adminEmail,
-        subject: `New Contact: ${data.subject || 'No Subject'} - ${data.name}`,
-        body: `New Contact Form Submission\n\nFrom: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject || 'No Subject'}\n\nMessage:\n${data.message}\n\nContact ID: ${contactRequest.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Contact Form',
+      to: adminEmail,
+      subject: `📬 New Contact: ${data.subject || 'No Subject'} — ${data.name}`,
+      body: `New Contact Form Submission\n\n━━━━━━━━━━━━━━━━━━━━━━\n  CONTACT DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nFrom:     ${data.name}\nEmail:    ${data.email}\nSubject:  ${data.subject || 'No Subject'}\n\nMessage:\n${data.message}\n\nContact ID:  ${contactRequest.id}\nSubmitted:   ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Respond to ${data.name} within 24 hours at ${data.email}\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Support',
