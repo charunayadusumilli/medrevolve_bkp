@@ -10,9 +10,10 @@ import { base44 } from '@/api/base44Client';
 import RequireAuth from '@/components/auth/RequireAuth';
 import { 
   Calendar, FileText, Pill, MessageSquare, User, 
-  Clock, CheckCircle, Video, Download, ArrowRight
+  Clock, CheckCircle, Video, Download, ArrowRight, RefreshCw
 } from 'lucide-react';
 import VideoCallInitiator from '@/components/video/VideoCallInitiator';
+import AutoRxPlanCard from '@/components/autorx/AutoRxPlanCard';
 
 export default function PatientPortal() {
   const [activeTab, setActiveTab] = useState('appointments');
