@@ -236,6 +236,10 @@ export default function AdminDashboard() {
                 <AnalyticsDashboard />
               </TabsContent>
 
+              <TabsContent value="autorx">
+                <AutoRxAdminTab />
+              </TabsContent>
+
               <TabsContent value="customers" className="space-y-4">
                 {customers?.map(c => (
                   <Card key={c.id}>
