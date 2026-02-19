@@ -196,6 +196,9 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to={createPageUrl('ProviderContracts')} className="cursor-pointer rounded-xl px-3 py-2">Provider Contracts</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ProviderOutreach')} className="cursor-pointer rounded-xl px-3 py-2">Provider Recruitment</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Payments & Invoices</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('BelugaIntegration')} className="cursor-pointer rounded-xl px-3 py-2">🔗 Beluga Integration</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('VisitTypeSelector')} className="cursor-pointer rounded-xl px-3 py-2">🏥 Visit Types</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
