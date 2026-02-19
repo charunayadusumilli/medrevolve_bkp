@@ -31,15 +31,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ BusinessInquiry record created:', inquiry.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Business Development',
-        to: adminEmail,
-        subject: `New Business Inquiry - ${data.company_name}`,
-        body: `New Business Inquiry\n\nCompany: ${data.company_name}\nContact: ${data.contact_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nIndustry: ${data.industry || 'N/A'}\nInterest: ${data.interest_type}\nSize: ${data.company_size || 'N/A'}\n\nMessage:\n${data.message || 'None'}\n\nInquiry ID: ${inquiry.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Business Development',
+      to: adminEmail,
+      subject: `🏢 New Business Inquiry - ${data.company_name} (${data.interest_type})`,
+      body: `New Business Inquiry\n\n━━━━━━━━━━━━━━━━━━━━━━\n  BUSINESS DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nCompany:         ${data.company_name}\nContact Person:  ${data.contact_name}\nEmail:           ${data.email}\nPhone:           ${data.phone || 'N/A'}\nIndustry:        ${data.industry || 'N/A'}\nInterest Type:   ${data.interest_type}\nCompany Size:    ${data.company_size || 'N/A'}\n\nMessage:\n${data.message || 'None'}\n\nInquiry ID:  ${inquiry.id}\nSubmitted:   ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Qualify this lead\n✅ Schedule a discovery call within 1-2 business days\n✅ Send partnership overview deck\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Business Development',
