@@ -96,7 +96,7 @@ const QUESTIONS = [
     icon: ClipboardList,
     question: 'Any additional comments, concerns, or questions for your provider?',
     type: 'textarea',
-    placeholder: 'Optional — share anything you'd like your provider to know...'
+    placeholder: "Optional — share anything you'd like your provider to know..."
   }
 ];
 
