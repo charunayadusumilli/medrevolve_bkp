@@ -501,8 +501,8 @@ Deno.serve(async (req) => {
         await sendSMS(
           data.phone,
           isConfirmed
-            ? `MedRevolve ✅ Your ${typeLabel} with ${providerName} is confirmed for ${dateStr} at ${timeStr}. Join via your Patient Portal: medrevolve.com/patient-portal — Reply HELP for support.`
-            : `MedRevolve 📋 Your ${typeLabel} request for ${dateStr} at ${timeStr} is received. We'll assign a provider & email you details within 2 hours. Portal: medrevolve.com/patient-portal`
+            ? `MedRevolve: Your ${typeLabel} with ${providerName} is confirmed for ${dateStr} at ${timeStr}. Portal: medrevolve.com/patient-portal`
+            : `MedRevolve: Your ${typeLabel} request for ${dateStr} at ${timeStr} is received. Provider assigned within 2 hours. Portal: medrevolve.com/patient-portal`
         );
       } catch (smsErr) {
         console.error('SMS send error:', smsErr);
