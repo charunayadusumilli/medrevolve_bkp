@@ -48,6 +48,7 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AdminDashboard from './pages/AdminDashboard';
+import AutoRxFollowup from './pages/AutoRxFollowup';
 import BookAppointment from './pages/BookAppointment';
 import BusinessInquiry from './pages/BusinessInquiry';
 import Cart from './pages/Cart';
@@ -88,12 +89,12 @@ import Questionnaire from './pages/Questionnaire';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import WaitingRoom from './pages/WaitingRoom';
-import AutoRxFollowup from './pages/AutoRxFollowup';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
+    "AutoRxFollowup": AutoRxFollowup,
     "BookAppointment": BookAppointment,
     "BusinessInquiry": BusinessInquiry,
     "Cart": Cart,
@@ -134,7 +135,6 @@ export const PAGES = {
     "Terms": Terms,
     "VideoCall": VideoCall,
     "WaitingRoom": WaitingRoom,
-    "AutoRxFollowup": AutoRxFollowup,
 }
 
 export const pagesConfig = {
