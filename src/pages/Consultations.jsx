@@ -177,24 +177,36 @@ export default function Consultations() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {providers.slice(0, 6).map((provider, index) => (
-              <motion.div
-                key={provider.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+          {providersError ? (
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
+              <Users className="w-12 h-12 text-amber-600 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-amber-900 mb-2">Unable to Load Providers</h3>
+              <p className="text-amber-800 mb-4">We're having trouble retrieving our provider list. This is temporary. Please try refreshing the page in a moment.</p>
+              <Button 
+                onClick={() => window.location.reload()}
+                className="bg-amber-600 hover:bg-amber-700 text-white rounded-full"
               >
-                <ProviderCard provider={provider} />
-              </motion.div>
-            ))}
-          </div>
-
-          {providers.length === 0 && (
+                Refresh Page
+              </Button>
+            </div>
+          ) : providers.length === 0 ? (
             <div className="text-center py-12">
               <Users className="w-16 h-16 text-[#D4E5D7] mx-auto mb-4" />
               <p className="text-[#5A6B5A] mb-6">Loading our medical team...</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {providers.slice(0, 6).map((provider, index) => (
+                <motion.div
+                  key={provider.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <ProviderCard provider={provider} />
+                </motion.div>
+              ))}
             </div>
           )}
         </div>
