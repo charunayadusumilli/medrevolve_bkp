@@ -24,15 +24,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ PharmacyIntake record created:', pharmacyIntake.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Pharmacy Partnerships',
-        to: adminEmail,
-        subject: `New Pharmacy Application - ${data.pharmacy_name}`,
-        body: `New Pharmacy Partnership Application\n\nPharmacy: ${data.pharmacy_name}\nContact: ${data.contact_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nLicense: ${data.license_number}\nNPI: ${data.npi_number || 'N/A'}\nType: ${data.pharmacy_type}\nLocation: ${data.city || ''}, ${data.state || ''} ${data.zip_code || ''}\n\nApplication ID: ${pharmacyIntake.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Pharmacy Partnerships',
+      to: adminEmail,
+      subject: `💊 New Pharmacy Application - ${data.pharmacy_name}`,
+      body: `New Pharmacy Partnership Application\n\n━━━━━━━━━━━━━━━━━━━━━━\n  PHARMACY DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nPharmacy Name:     ${data.pharmacy_name}\nPharmacy Type:     ${data.pharmacy_type}\nContact Person:    ${data.contact_name}\nEmail:             ${data.email}\nPhone:             ${data.phone || 'N/A'}\nLicense Number:    ${data.license_number}\nNPI Number:        ${data.npi_number || 'N/A'}\nLocation:          ${data.city || ''}, ${data.state || ''} ${data.zip_code || ''}\nShipping:          ${data.shipping_capabilities || 'N/A'}\nServices:          ${data.services_offered?.join(', ') || 'N/A'}\n\nPartnership Interest:\n${data.partnership_interest || 'N/A'}\n\nApplication ID:  ${pharmacyIntake.id}\nSubmitted:       ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Verify pharmacy license\n✅ Review partnership fit and capabilities\n✅ Respond within 3-5 business days\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Pharmacy Partnerships',
