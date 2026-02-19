@@ -206,8 +206,6 @@ export default function CustomerIntake() {
                         value={formData.phone}
                         onChange={(v) => setFormData({ ...formData, phone: v })}
                         className="mt-2"
-                        placeholder="(555) 123-4567"
-                        className="mt-2 h-12"
                       />
                     </div>
 
