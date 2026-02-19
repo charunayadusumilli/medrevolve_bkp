@@ -31,15 +31,13 @@ Deno.serve(async (req) => {
 
     console.log('✅ CreatorApplication record created:', application.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL');
-    if (adminEmail) {
-      await sendEmailSafe(base44, {
-        from_name: 'MedRevolve Creator Program',
-        to: adminEmail,
-        subject: `New Creator Application - ${data.full_name}`,
-        body: `New Creator Application\n\nName: ${data.full_name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nPlatform: ${data.platform}\nHandle: ${data.platform_handle || 'N/A'}\nFollowers: ${data.followers_count}\nNiche: ${data.audience_niche || 'N/A'}\n\nWhy Partner:\n${data.why_partner || 'N/A'}\n\nApplication ID: ${application.id}\nSubmitted: ${new Date().toLocaleString()}`
-      });
-    }
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    await sendEmailSafe(base44, {
+      from_name: 'MedRevolve Creator Program',
+      to: adminEmail,
+      subject: `🌟 New Creator Application - ${data.full_name} (${data.followers_count} followers)`,
+      body: `New Creator Program Application\n\n━━━━━━━━━━━━━━━━━━━━━━\n  CREATOR DETAILS\n━━━━━━━━━━━━━━━━━━━━━━\nName:        ${data.full_name}\nEmail:       ${data.email}\nPhone:       ${data.phone || 'N/A'}\nPlatform:    ${data.platform}\nHandle:      ${data.platform_handle || 'N/A'}\nFollowers:   ${data.followers_count}\nNiche:       ${data.audience_niche || 'N/A'}\n\nWhy Partner:\n${data.why_partner || 'N/A'}\n\nApplication ID:  ${application.id}\nSubmitted:       ${new Date().toLocaleString()}\n\n━━━━━━━━━━━━━━━━━━━━━━\n  ACTION REQUIRED\n━━━━━━━━━━━━━━━━━━━━━━\n✅ Review creator profile and audience fit\n✅ Approve or reject within 24-48 hours\n✅ If approved, send onboarding kit and referral link\n\nAdmin Dashboard: medrevolve.com/admin-dashboard`
+    });
 
     await sendEmailSafe(base44, {
       from_name: 'MedRevolve Creator Program',
