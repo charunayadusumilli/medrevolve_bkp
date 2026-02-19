@@ -15,7 +15,7 @@ import {
 export default function Consultations() {
   const [activeTab, setActiveTab] = useState('providers');
 
-  const { data: user } = useQuery({
+  const { data: user, isError: userError } = useQuery({
     queryKey: ['currentUser'],
     queryFn: () => base44.auth.me(),
     retry: false
@@ -28,12 +28,14 @@ export default function Consultations() {
       'appointment_date',
       10
     ),
-    enabled: !!user?.email
+    enabled: !!user?.email,
+    retry: false
   });
 
-  const { data: providers = [] } = useQuery({
+  const { data: providers = [], isError: providersError } = useQuery({
     queryKey: ['providers'],
-    queryFn: () => base44.entities.Provider.filter({ is_active: true }, '-rating', 20)
+    queryFn: () => base44.entities.Provider.filter({ is_active: true }, '-rating', 20),
+    retry: false
   });
 
   const features = [
