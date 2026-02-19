@@ -214,13 +214,10 @@ export default function PharmacyIntake() {
                       </div>
                       <div>
                         <Label>Phone</Label>
-                        <Input
-                          type="tel"
-                          autoComplete="tel"
+                        <PhoneInput
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="(555) 123-4567"
-                          className="mt-2 h-12"
+                          onChange={(v) => setFormData({ ...formData, phone: v })}
+                          className="mt-2"
                         />
                       </div>
                     </div>
