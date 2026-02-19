@@ -73,6 +73,11 @@ export default function AdminDashboard() {
     queryFn: () => base44.entities.PartnerReferral.list('-created_date', 100)
   });
 
+  const { data: autoRxPlans } = useQuery({
+    queryKey: ['autoRxPlansStats'],
+    queryFn: () => base44.entities.AutoRxPlan.list('-created_date', 200)
+  });
+
   React.useEffect(() => {
     if (currentUser) setUser(currentUser);
   }, [currentUser]);
