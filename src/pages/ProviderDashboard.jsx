@@ -59,6 +59,18 @@ export default function ProviderDashboard() {
     enabled: !!currentProvider?.id,
   });
 
+  const { data: schedules = [] } = useQuery({
+    queryKey: ['schedules', currentProvider?.id],
+    queryFn: () => base44.entities.ProviderSchedule.filter({ provider_id: currentProvider?.id }),
+    enabled: !!currentProvider?.id,
+  });
+
+  const { data: blockedTimes = [] } = useQuery({
+    queryKey: ['blockedTimes', currentProvider?.id],
+    queryFn: () => base44.entities.BlockedTime.filter({ provider_id: currentProvider?.id }),
+    enabled: !!currentProvider?.id,
+  });
+
   const { data: contracts = [] } = useQuery({
     queryKey: ['provider-contracts-self', user?.email],
     queryFn: () => base44.entities.ProviderContract.filter({ contact_email: user?.email }),
