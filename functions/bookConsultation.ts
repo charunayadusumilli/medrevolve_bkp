@@ -171,7 +171,7 @@ support@medrevolve.com
           subject: `📅 New Appointment: ${patientName} — ${dateStr}${!data.provider_id ? ' [NEEDS PROVIDER ASSIGNMENT]' : ''}`,
           body: `New appointment ${data.provider_id ? 'booked' : 'request received (needs provider assignment)'}.
 
-Patient:  ${patientName} (${user.email})
+Patient:  ${patientName} (${patientEmailTo})
 Provider: ${providerName}${providerTitle ? ', ' + providerTitle : ''}
 Type:     ${typeLabel}
 Date:     ${dateStr} at ${timeStr}
