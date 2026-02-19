@@ -168,7 +168,7 @@ Deno.serve(async (req) => {
     ]);
 
     // SMS to admin
-    await sendSMS('5302006352', `👨‍⚕️ MedRevolve Provider App!\nName: ${data.full_name}, ${data.title}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nSpecialty: ${data.specialty}\nLicense: ${data.license_number}`);
+    await sendSMS('5302006352', `PROVIDER APP: ${data.full_name}, ${data.title} | ${data.specialty} | ${data.email} | ${data.phone || 'N/A'}`);
 
     return Response.json({ success: true, intake_id: providerIntake.id, message: 'Provider application submitted successfully' });
 
