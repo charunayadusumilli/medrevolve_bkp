@@ -389,14 +389,31 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
 
       <div>
         <Label htmlFor="phone" className="text-sm font-semibold text-[#2D3A2D] mb-2 block">
-          Phone number <span className="text-[#9A8B7A] font-normal">(for SMS reminders)</span>
+          Phone number <span className="text-[#9A8B7A] font-normal">(optional)</span>
         </Label>
         <PhoneInput
           id="phone"
           value={formData.phone || ''}
-          onChange={(v) => setFormData({ ...formData, phone: v })}
+          onChange={(v) => setFormData({ ...formData, phone: v, sms_consent: v ? formData.sms_consent : false })}
         />
-        <p className="text-xs text-[#9A8B7A] mt-1.5">We'll send you a reminder 24 hours before your appointment.</p>
+        {formData.phone && (
+          <div className="mt-3 bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="smsConsent"
+                checked={formData.sms_consent || false}
+                onChange={(e) => setFormData({ ...formData, sms_consent: e.target.checked })}
+                className="w-4 h-4 rounded border-[#4A6741] accent-[#4A6741] mt-0.5 flex-shrink-0"
+              />
+              <label htmlFor="smsConsent" className="flex-1 text-xs text-[#2D3A2D] leading-relaxed">
+                <span className="font-semibold">I agree to receive SMS text messages from MedRevolve</span> at the phone number provided above, including appointment reminders and care updates. Message &amp; data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to unsubscribe at any time. Reply <strong>HELP</strong> for assistance. View our{' '}
+                <a href="/privacy" className="text-[#4A6741] underline" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
+                <a href="/terms" className="text-[#4A6741] underline" target="_blank" rel="noreferrer">Terms of Service</a>.
+              </label>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl p-4">
