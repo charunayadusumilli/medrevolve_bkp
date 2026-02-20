@@ -494,9 +494,9 @@ Deno.serve(async (req) => {
     } catch (e) { console.error('Admin email error:', e); }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // SMS to patient
+    // SMS to patient (only if they explicitly opted in)
     // ─────────────────────────────────────────────────────────────────────────
-    if (data.phone) {
+    if (data.phone && data.sms_consent) {
       try {
         await sendSMS(
           data.phone,
