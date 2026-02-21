@@ -715,36 +715,23 @@ function ProductCard({ product }) {
       transition={{ duration: 0.25 }}
     >
       <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Product image — studio / pharmaceutical style */}
-        <div className={`relative aspect-[4/3] overflow-hidden ${product.productBg || 'bg-gray-50'}`}>
-          <img
-            src={product.lifestyle}
-            alt={product.name}
-            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.05]"
-          />
-          {/* Top badges row */}
-          <div className="absolute top-3 left-3 right-3 flex items-start justify-between">
-            {/* Rx badge */}
+        {/* Dynamic RxProductVisual — cycles: branded product SVG → lifestyle → clinical */}
+        <div className={`relative aspect-[4/3] overflow-hidden ${product.productBg || 'bg-[#F5F2EE]'}`}>
+          <RxProductVisual product={product} size="md" autoPlay={true} className="w-full h-full" />
+
+          {/* Top badges row — always on top */}
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between z-10 pointer-events-none">
             {product.rx && (
               <span className="bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase backdrop-blur-sm">
                 Rx
               </span>
             )}
-            {/* Tag pill */}
             {product.tag && (
               <span className={`${product.tagColor} text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow ml-auto`}>
                 {product.tag}
               </span>
             )}
           </div>
-          {/* Form pill — bottom left */}
-          {product.form && (
-            <div className="absolute bottom-3 left-3">
-              <span className="bg-white/90 backdrop-blur-sm text-[#2D3A2D] text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/50 shadow-sm">
-                {product.form}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Product Info */}
