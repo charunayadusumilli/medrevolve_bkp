@@ -3,13 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, Mic, MicOff, Volume2, VolumeX, PhoneCall, PhoneOff } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, PERSONAS, AUDIENCES, getPersonaVisuals, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
 import ReactMarkdown from 'react-markdown';
 
-// Derive page name from react-router pathname
 function usePageContext() {
   const location = useLocation();
   const raw = location.pathname.replace(/^\//, '') || 'Home';
@@ -20,7 +19,6 @@ function usePageContext() {
   return { pageName, pageProduct, ctx };
 }
 
-// Persona Avatar — derives visuals directly from PERSONAS definition
 function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
   const vis = getPersonaVisuals(personaKey);
   const persona = PERSONAS[personaKey] || PERSONAS.wellness_concierge;
@@ -40,7 +38,6 @@ function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
   );
 }
 
-// Floating persona badge shown on FAB when closed
 function PersonaFAB({ ctx, onClick }) {
   const vis = getPersonaVisuals(ctx.personaKey);
   const [imgErr, setImgErr] = React.useState(false);
@@ -53,7 +50,6 @@ function PersonaFAB({ ctx, onClick }) {
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
       className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2"
     >
-      {/* Persona label pill */}
       <motion.div
         initial={{ opacity: 0, x: 12 }}
         animate={{ opacity: 1, x: 0 }}
@@ -64,8 +60,6 @@ function PersonaFAB({ ctx, onClick }) {
         <span>{ctx.persona}</span>
         <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
       </motion.div>
-
-      {/* Main FAB with persona photo */}
       <motion.button
         onClick={onClick}
         whileHover={{ scale: 1.07 }}
@@ -74,16 +68,10 @@ function PersonaFAB({ ctx, onClick }) {
         style={{ background: vis.fabBg }}
       >
         {!imgErr && vis.photo ? (
-          <img
-            src={vis.photo}
-            alt={ctx.persona}
-            className="w-full h-full object-cover"
-            onError={() => setImgErr(true)}
-          />
+          <img src={vis.photo} alt={ctx.persona} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
         ) : (
           <span className="font-bold text-white text-lg">{vis.initials}</span>
         )}
-        {/* Online indicator */}
         <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-white" />
       </motion.button>
     </motion.div>
@@ -94,10 +82,29 @@ function TypingDots() {
   return (
     <div className="flex gap-1 py-1">
       {[0, 1, 2].map(i => (
-        <span
+        <span key={i} className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+      ))}
+    </div>
+  );
+}
+
+// Animated sound wave bars for speaking indicator
+function SoundWave({ active }) {
+  return (
+    <div className="flex items-center gap-[3px] h-6">
+      {[1, 2, 3, 4, 5].map(i => (
+        <motion.div
           key={i}
-          className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
-          style={{ animationDelay: `${i * 0.15}s` }}
+          className="w-[3px] rounded-full bg-current"
+          animate={active ? {
+            height: ['6px', `${10 + Math.random() * 14}px`, '6px'],
+          } : { height: '6px' }}
+          transition={active ? {
+            duration: 0.4 + i * 0.1,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: i * 0.08,
+          } : {}}
         />
       ))}
     </div>
@@ -113,16 +120,10 @@ function ChatBubble({ msg }) {
       transition={{ duration: 0.18 }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} gap-2`}
     >
-      {!isUser && (
-        <PersonaAvatar personaKey={msg.personaKey} size="sm" />
-      )}
-      <div
-        className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-          isUser
-            ? 'bg-[#2D3A2D] text-white rounded-br-sm'
-            : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
-        }`}
-      >
+      {!isUser && <PersonaAvatar personaKey={msg.personaKey} size="sm" />}
+      <div className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+        isUser ? 'bg-[#2D3A2D] text-white rounded-br-sm' : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
+      }`}>
         {isUser ? (
           <p className="whitespace-pre-wrap">{msg.content}</p>
         ) : (
@@ -143,63 +144,104 @@ function ChatBubble({ msg }) {
   );
 }
 
-// Voice mode hook
-function useVoiceMode({ onTranscript, onSpeakText, isVoiceMode }) {
-  const recognitionRef = useRef(null);
-  const [isListening, setIsListening] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [voiceSupported] = useState(() => 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+// ── Full-screen Voice Call Overlay ──────────────────────────────────────────
+function VoiceCallOverlay({ ctx, status, isSpeaking, isListening, onEndCall, onToggleMic, isListeningPaused }) {
+  const vis = getPersonaVisuals(ctx.personaKey);
+  const [imgErr, setImgErr] = React.useState(false);
 
-  const startListening = useCallback(() => {
-    if (!voiceSupported) return;
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.onresult = (e) => {
-      const transcript = e.results[0][0].transcript;
-      onTranscript(transcript);
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => setIsListening(false);
-    recognitionRef.current = recognition;
-    recognition.start();
-    setIsListening(true);
-  }, [voiceSupported, onTranscript]);
+  const statusText = isSpeaking ? 'Speaking...' : isListening ? 'Listening...' : status === 'thinking' ? 'Thinking...' : 'Tap mic to speak';
 
-  const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
-    setIsListening(false);
-  }, []);
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
+      style={{ background: 'linear-gradient(135deg, #1a2a1a 0%, #2D3A2D 60%, #4A6741 100%)' }}
+    >
+      {/* Pulsing ring when speaking */}
+      <div className="relative mb-8">
+        {isSpeaking && (
+          <>
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{ background: 'rgba(74,103,65,0.3)' }}
+              animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{ background: 'rgba(74,103,65,0.2)' }}
+              animate={{ scale: [1, 1.7, 1], opacity: [0.4, 0, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+            />
+          </>
+        )}
+        {isListening && (
+          <motion.div
+            className="absolute inset-0 rounded-full border-4 border-red-400"
+            animate={{ scale: [1, 1.15, 1], opacity: [1, 0.5, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          />
+        )}
+        {/* Avatar */}
+        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl relative z-10">
+          {!imgErr && vis.photo ? (
+            <img src={vis.photo} alt={ctx.persona} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold" style={{ background: vis.fabBg }}>
+              {vis.initials}
+            </div>
+          )}
+        </div>
+      </div>
 
-  const speak = useCallback((text) => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const clean = text.replace(/[*#_`>]/g, '').replace(/\n+/g, ' ');
-    const utterance = new SpeechSynthesisUtterance(clean);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    utterance.volume = 1.0;
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    window.speechSynthesis.speak(utterance);
-  }, []);
+      {/* Name & status */}
+      <p className="text-white text-xl font-bold mb-1">{ctx.persona}</p>
+      <p className="text-white/50 text-sm mb-2">{ctx.role}</p>
 
-  const stopSpeaking = useCallback(() => {
-    window.speechSynthesis?.cancel();
-    setIsSpeaking(false);
-  }, []);
+      {/* Sound wave / status */}
+      <div className={`flex items-center gap-2 mb-10 text-sm font-medium ${
+        isSpeaking ? 'text-[#A8C99B]' : isListening ? 'text-red-300' : 'text-white/40'
+      }`}>
+        {isSpeaking ? (
+          <><SoundWave active={true} /> {statusText}</>
+        ) : isListening ? (
+          <><SoundWave active={true} /> {statusText}</>
+        ) : status === 'thinking' ? (
+          <><span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin inline-block" /> {statusText}</>
+        ) : (
+          <span>{statusText}</span>
+        )}
+      </div>
 
-  // Expose speak for external use
-  useEffect(() => {
-    onSpeakText.current = speak;
-  }, [speak, onSpeakText]);
+      {/* Controls */}
+      <div className="flex items-center gap-6">
+        {/* Mute/unmute */}
+        <button
+          onClick={onToggleMic}
+          className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${
+            isListeningPaused ? 'bg-white/10 text-white/40' : 'bg-white/20 hover:bg-white/30 text-white'
+          }`}
+        >
+          {isListeningPaused ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+        </button>
 
-  return { isListening, isSpeaking, startListening, stopListening, stopSpeaking, voiceSupported };
+        {/* End call */}
+        <button
+          onClick={onEndCall}
+          className="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center shadow-lg transition-all"
+        >
+          <PhoneOff className="w-7 h-7 text-white" />
+        </button>
+      </div>
+
+      <p className="text-white/20 text-xs mt-8">MedRevolve AI · Not medical advice</p>
+    </motion.div>
+  );
 }
 
+// ── Main Component ──────────────────────────────────────────────────────────
 export default function AIAssistant() {
   const { pageName, pageProduct, ctx } = usePageContext();
 
@@ -211,14 +253,25 @@ export default function AIAssistant() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [faqOpen, setFaqOpen] = useState(true);
-  const [isVoiceMode, setIsVoiceMode] = useState(false);
+
+  // Voice state
+  const [isVoiceCallOpen, setIsVoiceCallOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isListeningPaused, setIsListeningPaused] = useState(false);
+  const [voiceStatus, setVoiceStatus] = useState('idle'); // idle | thinking | listening | speaking
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const prevPageRef = useRef(pageName);
-  const speakRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const sendMessageRef = useRef(null);
+  const voiceLoopRef = useRef(false); // controls continuous loop
+  const isListeningPausedRef = useRef(false);
 
-  // Reset conversation when page changes
+  const voiceSupported = typeof window !== 'undefined' &&
+    ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+
   useEffect(() => {
     if (prevPageRef.current !== pageName) {
       prevPageRef.current = pageName;
@@ -233,40 +286,106 @@ export default function AIAssistant() {
   }, [messages, loading]);
 
   useEffect(() => {
-    if (isOpen && !minimized) {
+    if (isOpen && !minimized && !isVoiceCallOpen) {
       setTimeout(() => inputRef.current?.focus(), 200);
     }
-  }, [isOpen, minimized]);
+  }, [isOpen, minimized, isVoiceCallOpen]);
 
-  const { isListening, isSpeaking, startListening, stopListening, stopSpeaking, voiceSupported } = useVoiceMode({
-    onTranscript: useCallback((transcript) => {
-      sendMessageRef.current(transcript);
-    }, []),
-    onSpeakText: speakRef,
-    isVoiceMode,
-  });
+  // ── speak() — returns a promise that resolves when done ──────────────────
+  const speak = useCallback((text) => {
+    return new Promise((resolve) => {
+      if (!window.speechSynthesis) { resolve(); return; }
+      window.speechSynthesis.cancel();
 
-  // We need a ref to sendMessage to avoid stale closure in voice callback
-  const sendMessageRef = useRef(null);
+      // Strip markdown for speech
+      const clean = text
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        .replace(/#{1,6}\s/g, '')
+        .replace(/`{1,3}[^`]*`{1,3}/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/\n+/g, '. ')
+        .replace(/•/g, '')
+        .trim();
 
-  const sendMessage = useCallback(async (text) => {
+      const utterance = new SpeechSynthesisUtterance(clean);
+      utterance.lang = 'en-US';
+      utterance.rate = 1.05;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+
+      // Try to pick a natural voice
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(v =>
+        v.name.includes('Samantha') || v.name.includes('Karen') ||
+        v.name.includes('Google US English') || v.name.includes('Alex') ||
+        (v.lang === 'en-US' && !v.name.includes('Google'))
+      ) || voices.find(v => v.lang.startsWith('en'));
+      if (preferred) utterance.voice = preferred;
+
+      utterance.onstart = () => { setIsSpeaking(true); setVoiceStatus('speaking'); };
+      utterance.onend = () => { setIsSpeaking(false); resolve(); };
+      utterance.onerror = () => { setIsSpeaking(false); resolve(); };
+
+      window.speechSynthesis.speak(utterance);
+    });
+  }, []);
+
+  // ── startListeningOnce() — one round of mic input ────────────────────────
+  const startListeningOnce = useCallback(() => {
+    if (!voiceSupported || isListeningPausedRef.current) return;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.continuous = false;
+
+    recognition.onstart = () => { setIsListening(true); setVoiceStatus('listening'); };
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0]?.[0]?.transcript?.trim();
+      if (transcript) {
+        setIsListening(false);
+        sendMessageRef.current?.(transcript, true); // true = voice mode
+      }
+    };
+
+    recognition.onend = () => { setIsListening(false); };
+    recognition.onerror = (e) => {
+      setIsListening(false);
+      // On no-speech, restart listening if voice loop is still active
+      if (e.error === 'no-speech' && voiceLoopRef.current && !isListeningPausedRef.current) {
+        setTimeout(() => startListeningOnce(), 500);
+      }
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  }, [voiceSupported]);
+
+  // ── sendMessage ───────────────────────────────────────────────────────────
+  const sendMessage = useCallback(async (text, fromVoice = false) => {
     const trimmed = (text || input).trim();
     if (!trimmed || loading) return;
 
     setInput('');
     setFaqOpen(false);
-    setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setLoading(true);
+    if (fromVoice) setVoiceStatus('thinking');
 
     const activeCtx = getPageContext(pageName);
     const systemPrompt = buildSystemPrompt(pageName, pageProduct);
 
-    // Rolling conversation context (last 10 messages)
+    setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
+
     const history = messages
-      .slice(-10)
+      .slice(-12)
       .map(m => `${m.role === 'user' ? 'User' : activeCtx.persona}: ${m.content}`)
       .join('\n\n');
 
+    let replyText = 'Sorry, I had a hiccup! Try again in a moment.';
     try {
       const response = await base44.integrations.Core.InvokeLLM({
         prompt: `${systemPrompt}
@@ -277,37 +396,28 @@ ${history}
 
 User: ${trimmed}
 
-${activeCtx.persona}:`,
+${activeCtx.persona} (respond conversationally, as if speaking out loud — no bullet points, no markdown, just natural spoken sentences, 2-4 sentences max):`,
         add_context_from_internet: false,
       });
-
-      const replyText = typeof response === 'string' ? response : JSON.stringify(response);
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: replyText,
-        personaKey: activeCtx.personaKey,
-      }]);
-
-      // Auto-speak in voice mode
-      if (isVoiceMode && speakRef.current) {
-        speakRef.current(replyText);
-      }
+      replyText = typeof response === 'string' ? response : JSON.stringify(response);
     } catch {
-      const errText = 'Sorry, I had a hiccup! Please try again in a moment.';
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: errText,
-        personaKey: activeCtx.personaKey,
-      }]);
-      if (isVoiceMode && speakRef.current) {
-        speakRef.current(errText);
-      }
-    } finally {
-      setLoading(false);
+      // use default error text
     }
-  }, [input, loading, messages, pageName, pageProduct, isVoiceMode]);
 
-  // Keep ref in sync
+    setMessages(prev => [...prev, { role: 'assistant', content: replyText, personaKey: activeCtx.personaKey }]);
+    setLoading(false);
+
+    // In voice mode: speak then listen again
+    if (fromVoice && voiceLoopRef.current) {
+      setVoiceStatus('speaking');
+      await speak(replyText);
+      setVoiceStatus('idle');
+      if (voiceLoopRef.current && !isListeningPausedRef.current) {
+        setTimeout(() => startListeningOnce(), 300);
+      }
+    }
+  }, [input, loading, messages, pageName, pageProduct, speak, startListeningOnce]);
+
   useEffect(() => {
     sendMessageRef.current = sendMessage;
   }, [sendMessage]);
@@ -319,27 +429,69 @@ ${activeCtx.persona}:`,
     setInput('');
   };
 
-  const toggleVoiceMode = () => {
-    const entering = !isVoiceMode;
-    setIsVoiceMode(entering);
-    stopListening();
-    stopSpeaking();
-    if (entering) {
-      // Speak greeting when entering voice mode
-      setTimeout(() => {
-        if (speakRef.current) {
-          speakRef.current(messages[messages.length - 1]?.content || ctx.greeting);
-        }
-      }, 300);
+  // ── Start voice call ──────────────────────────────────────────────────────
+  const startVoiceCall = async () => {
+    setIsVoiceCallOpen(true);
+    voiceLoopRef.current = true;
+    isListeningPausedRef.current = false;
+    setIsListeningPaused(false);
+
+    // Speak greeting then start listening
+    const greeting = `Hi! I'm your ${ctx.persona} at MedRevolve. Feel free to ask me anything about our treatments, like semaglutide, tirzepatide, or any of our wellness programs. What would you like to know?`;
+    setVoiceStatus('speaking');
+    await speak(greeting);
+    setVoiceStatus('idle');
+
+    if (voiceLoopRef.current) {
+      setTimeout(() => startListeningOnce(), 300);
+    }
+  };
+
+  // ── End voice call ────────────────────────────────────────────────────────
+  const endVoiceCall = () => {
+    voiceLoopRef.current = false;
+    recognitionRef.current?.stop();
+    window.speechSynthesis?.cancel();
+    setIsVoiceCallOpen(false);
+    setIsListening(false);
+    setIsSpeaking(false);
+    setVoiceStatus('idle');
+  };
+
+  const toggleMicPause = () => {
+    const pausing = !isListeningPausedRef.current;
+    isListeningPausedRef.current = pausing;
+    setIsListeningPaused(pausing);
+    if (pausing) {
+      recognitionRef.current?.stop();
+    } else {
+      // Resume listening
+      if (!isSpeaking && !loading) {
+        setTimeout(() => startListeningOnce(), 200);
+      }
     }
   };
 
   const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE[AUDIENCES?.CUSTOMER] || [];
-  const showFaqs = faqOpen && messages.length <= 2;
 
   return (
     <>
-      {/* Floating Action Button — dynamic persona */}
+      {/* Voice call overlay */}
+      <AnimatePresence>
+        {isVoiceCallOpen && (
+          <VoiceCallOverlay
+            ctx={ctx}
+            status={voiceStatus}
+            isSpeaking={isSpeaking}
+            isListening={isListening}
+            isListeningPaused={isListeningPaused}
+            onEndCall={endVoiceCall}
+            onToggleMic={toggleMicPause}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* FAB */}
       <AnimatePresence>
         {!isOpen && (
           <PersonaFAB ctx={ctx} onClick={() => { setIsOpen(true); setMinimized(false); }} />
@@ -373,32 +525,22 @@ ${activeCtx.persona}:`,
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5">
-                  <button
-                    onClick={resetChat}
-                    title="Reset conversation"
-                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
-                  >
+                  <button onClick={resetChat} title="Reset" className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
                     <RotateCcw className="w-3.5 h-3.5" />
                   </button>
                   {voiceSupported && (
                     <button
-                      onClick={toggleVoiceMode}
-                      title={isVoiceMode ? 'Switch to text mode' : 'Switch to voice mode'}
-                      className={`p-2 rounded-xl transition-colors ${isVoiceMode ? 'bg-white/30 text-white' : 'hover:bg-white/20 text-white/70 hover:text-white'}`}
+                      onClick={startVoiceCall}
+                      title="Start voice conversation"
+                      className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
                     >
-                      {isVoiceMode ? <Volume2 className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
+                      <PhoneCall className="w-3.5 h-3.5" />
                     </button>
                   )}
-                  <button
-                    onClick={() => setMinimized(m => !m)}
-                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
-                  >
+                  <button onClick={() => setMinimized(m => !m)} className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
                     <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${minimized ? 'rotate-180' : ''}`} />
                   </button>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
-                  >
+                  <button onClick={() => setIsOpen(false)} className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -422,6 +564,22 @@ ${activeCtx.persona}:`,
                     <div ref={messagesEndRef} />
                   </div>
 
+                  {/* ── Voice call CTA banner ── */}
+                  {voiceSupported && (
+                    <div className="flex-shrink-0 bg-gradient-to-r from-[#4A6741]/10 to-[#6B8F5E]/10 border-t border-[#4A6741]/10 px-4 py-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <PhoneCall className="w-3.5 h-3.5 text-[#4A6741]" />
+                        <span className="text-xs text-[#4A6741] font-medium">Prefer to talk?</span>
+                      </div>
+                      <button
+                        onClick={startVoiceCall}
+                        className="text-xs bg-[#4A6741] text-white px-3 py-1 rounded-full font-semibold hover:bg-[#3D5636] transition-colors"
+                      >
+                        Start Voice Chat
+                      </button>
+                    </div>
+                  )}
+
                   {/* ── FAQ Chips ── */}
                   <div className="flex-shrink-0 bg-white border-t border-gray-100">
                     <button
@@ -430,11 +588,10 @@ ${activeCtx.persona}:`,
                     >
                       <span className="flex items-center gap-1.5">
                         <Sparkles className="w-3 h-3" />
-                        Common questions for {ctx.audience}s
+                        Common questions
                       </span>
                       <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
                     </button>
-
                     <AnimatePresence>
                       {faqOpen && (
                         <motion.div
@@ -461,81 +618,29 @@ ${activeCtx.persona}:`,
                     </AnimatePresence>
                   </div>
 
-                  {/* ── Input ── */}
+                  {/* ── Text Input ── */}
                   <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-gray-100">
-                    {isVoiceMode ? (
-                      /* ── Voice mode UI ── */
-                      <div className="flex flex-col items-center gap-3 py-2">
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          {isSpeaking ? (
-                            <><Volume2 className="w-3.5 h-3.5 text-[#4A6741] animate-pulse" /> Speaking...</>
-                          ) : isListening ? (
-                            <><Mic className="w-3.5 h-3.5 text-red-500 animate-pulse" /> Listening...</>
-                          ) : loading ? (
-                            <><span className="w-3.5 h-3.5 rounded-full border-2 border-[#4A6741] border-t-transparent animate-spin inline-block" /> Thinking...</>
-                          ) : (
-                            <span className="text-gray-400">Tap mic to speak</span>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {isSpeaking && (
-                            <button
-                              onClick={stopSpeaking}
-                              className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
-                            >
-                              <VolumeX className="w-4 h-4 text-gray-600" />
-                            </button>
-                          )}
-                          <button
-                            onClick={isListening ? stopListening : startListening}
-                            disabled={loading || isSpeaking}
-                            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all ${
-                              isListening
-                                ? 'bg-red-500 hover:bg-red-600 scale-105 ring-4 ring-red-200'
-                                : 'bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] hover:opacity-90 disabled:opacity-40'
-                            }`}
-                          >
-                            {isListening ? (
-                              <MicOff className="w-6 h-6 text-white" />
-                            ) : (
-                              <Mic className="w-6 h-6 text-white" />
-                            )}
-                          </button>
-                        </div>
-                        <button
-                          onClick={toggleVoiceMode}
-                          className="text-[11px] text-[#4A6741] underline underline-offset-2"
-                        >
-                          Switch to text mode
-                        </button>
-                      </div>
-                    ) : (
-                      /* ── Text mode UI ── */
-                      <div className="flex gap-2 items-center">
-                        <Input
-                          ref={inputRef}
-                          value={input}
-                          onChange={e => setInput(e.target.value)}
-                          onKeyDown={e => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                              e.preventDefault();
-                              sendMessage(input);
-                            }
-                          }}
-                          placeholder={`Ask your ${ctx.persona}...`}
-                          className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
-                          disabled={loading}
-                        />
-                        <Button
-                          onClick={() => sendMessage(input)}
-                          disabled={loading || !input.trim()}
-                          size="icon"
-                          className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0 w-9 h-9 shadow-md`}
-                        >
-                          <Send className="w-3.5 h-3.5" />
-                        </Button>
-                      </div>
-                    )}
+                    <div className="flex gap-2 items-center">
+                      <Input
+                        ref={inputRef}
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
+                        }}
+                        placeholder={`Ask your ${ctx.persona}...`}
+                        className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
+                        disabled={loading}
+                      />
+                      <Button
+                        onClick={() => sendMessage(input)}
+                        disabled={loading || !input.trim()}
+                        size="icon"
+                        className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0 w-9 h-9 shadow-md`}
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                      </Button>
+                    </div>
                     <p className="text-center text-[10px] text-gray-300 mt-1.5">
                       MedRevolve AI · Not a substitute for medical advice
                     </p>
