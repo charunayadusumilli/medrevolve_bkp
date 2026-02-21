@@ -648,8 +648,8 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
                         <Send className="w-3.5 h-3.5" />
                       </Button>
                     </div>
-                    <p className="text-center text-[10px] text-gray-300 mt-1.5">
-                      MedRevolve AI · Not a substitute for medical advice
+                    <p className="text-center text-[10px] text-gray-400 mt-1.5">
+                      🤖 AI Assistant · MedRevolve topics only · Not medical advice
                     </p>
                   </div>
                 </>
