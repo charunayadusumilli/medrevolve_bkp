@@ -380,7 +380,7 @@ const allProducts = [
     name: 'Testosterone + Semaglutide Stack',
     category: 'mens',
     subtitle: 'Performance Body Recomposition',
-    form: 'Injectable Vial',
+    form: 'Auto-Injector Pen',
     promise: 'Lose fat. Build muscle. At the same time.',
     lifestyle: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=90',
     productBg: 'bg-[#EEF0F5]',
