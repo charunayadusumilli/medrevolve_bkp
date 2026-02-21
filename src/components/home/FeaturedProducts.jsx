@@ -4,17 +4,65 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PRODUCT_ILLUSTRATIONS, PRODUCT_BG } from './ProductIllustration';
 
+// Premium lifestyle imagery — Hims/Ro style, no clinical drug shots
 const products = [
-  { id: 1, name: 'Semaglutide', category: 'Weight Loss', description: 'Lose up to 15% body weight with once-weekly dosing', tag: 'Best Seller' },
-  { id: 2, name: 'Tirzepatide', category: 'Weight Loss', description: 'Dual-action GLP-1 for maximum results', tag: 'Strongest' },
-  { id: 3, name: 'Sermorelin', category: 'Longevity', description: 'Sleep deeper, recover faster, feel younger', tag: null },
-  { id: 4, name: 'Glutathione', category: 'Longevity', description: 'Radiant skin and cellular health from within', tag: 'Glow' },
-  { id: 5, name: 'NAD+ Injection', category: 'Longevity', description: 'All-day energy and sharp mental clarity', tag: null },
-  { id: 6, name: 'Testosterone Therapy', category: "Men's Health", description: 'Reclaim your drive, strength and confidence', tag: null },
-  { id: 7, name: 'Semaglutide Drops', category: 'Weight Loss', description: 'Same results — zero injections required', tag: 'Needle-Free' },
-  { id: 8, name: 'Synapsin Spray', category: 'Longevity', description: 'Stay sharp and focused at any age', tag: null },
+  {
+    id: 1, name: 'Semaglutide', category: 'Weight Loss',
+    description: 'Lose up to 15% body weight with once-weekly dosing',
+    tag: 'Best Seller',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=85',
+    bg: '#F0F4EF'
+  },
+  {
+    id: 2, name: 'Tirzepatide', category: 'Weight Loss',
+    description: 'Dual-action GLP-1 for maximum results',
+    tag: 'Strongest',
+    image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600&q=85',
+    bg: '#EEF0F4'
+  },
+  {
+    id: 3, name: 'Sermorelin', category: 'Longevity',
+    description: 'Sleep deeper, recover faster, feel younger',
+    tag: null,
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=85',
+    bg: '#F4F0EE'
+  },
+  {
+    id: 4, name: 'Glutathione', category: 'Longevity',
+    description: 'Radiant skin and cellular health from within',
+    tag: 'Glow',
+    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=85',
+    bg: '#F4EEF0'
+  },
+  {
+    id: 5, name: 'NAD+ Injection', category: 'Longevity',
+    description: 'All-day energy and sharp mental clarity',
+    tag: null,
+    image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=85',
+    bg: '#EEF4F2'
+  },
+  {
+    id: 6, name: 'Testosterone Therapy', category: "Men's Health",
+    description: 'Reclaim your drive, strength and confidence',
+    tag: null,
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=85',
+    bg: '#EEEEF4'
+  },
+  {
+    id: 7, name: 'Semaglutide Drops', category: 'Weight Loss',
+    description: 'Same results — zero injections required',
+    tag: 'Needle-Free',
+    image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=85',
+    bg: '#EEF4EE'
+  },
+  {
+    id: 8, name: 'Synapsin Spray', category: 'Longevity',
+    description: 'Stay sharp and focused at any age',
+    tag: null,
+    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=85',
+    bg: '#F4F2EE'
+  },
 ];
 
 export default function FeaturedProducts() {
@@ -108,42 +156,43 @@ export default function FeaturedProducts() {
 }
 
 function ProductCard({ product }) {
-  const Illustration = PRODUCT_ILLUSTRATIONS[product.id];
-  const bg = PRODUCT_BG[product.id] || ['#E8F0E4', '#D4E8CC'];
-
   return (
-    <motion.div 
-      className="w-72 bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
-      whileHover={{ y: -8 }}
+    <motion.div
+      className="w-64 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-[#D1D5DB]/30"
+      whileHover={{ y: -6 }}
     >
+      {/* Lifestyle image — no drug shots */}
       <div
-        className="relative aspect-square overflow-hidden flex items-center justify-center p-6"
-        style={{ background: `linear-gradient(135deg, ${bg[0]} 0%, ${bg[1]} 100%)` }}
+        className="relative aspect-[4/3] overflow-hidden"
+        style={{ backgroundColor: product.bg }}
       >
-        <div className="w-full h-full transition-transform duration-500 group-hover:scale-105">
-          {Illustration && <Illustration />}
-        </div>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover object-center transition-transform duration-600 group-hover:scale-[1.06]"
+        />
+        {/* Subtle dark overlay at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         {product.tag && (
-          <span className="absolute top-4 left-4 bg-[#2D3A2D] text-white text-xs font-semibold px-3 py-1 rounded-full tracking-wide">
+          <span className="absolute top-3 left-3 bg-[#0F172A] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-widest uppercase">
             {product.tag}
           </span>
         )}
-        {/* MR watermark */}
-        <span className="absolute bottom-3 right-4 text-[10px] font-black text-black/10 tracking-tighter select-none">MR</span>
+        {/* MR branding — subtle, luxury */}
+        <span className="absolute bottom-2.5 right-3 text-[11px] font-black text-white/20 tracking-tighter select-none font-serif">MR</span>
       </div>
-      <div className="p-6">
-        <span className="text-xs font-medium text-[#4A6741] uppercase tracking-wide">
-          {product.category}
-        </span>
-        <h3 className="text-lg font-medium text-[#2D3A2D] mt-2 group-hover:text-[#4A6741] transition-colors">
+
+      <div className="p-5">
+        <p className="text-[10px] font-bold text-[#7A8F7C] uppercase tracking-[0.18em] mb-1">{product.category}</p>
+        <h3 className="text-base font-semibold text-[#0F172A] mb-1.5 group-hover:text-[#4A6741] transition-colors">
           {product.name}
         </h3>
-        <p className="text-sm text-[#5A6B5A] mt-2 line-clamp-2">
+        <p className="text-sm text-[#1E293B]/55 line-clamp-2 mb-4 leading-relaxed">
           {product.description}
         </p>
-        <div className="mt-4 flex items-center text-[#4A6741] text-sm font-medium group-hover:gap-2 transition-all">
+        <div className="flex items-center gap-1 text-[#0F172A] text-sm font-semibold group-hover:gap-2 transition-all">
           Learn More
-          <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
     </motion.div>
