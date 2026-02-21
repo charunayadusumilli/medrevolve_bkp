@@ -12,8 +12,8 @@ const slides = [
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
-    // Luxury gym — woman on treadmill, floor-to-ceiling windows, editorial
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=95',
+    // Woman in moody luxury gym, kettlebell, dramatic atmosphere
+    image: 'https://images.unsplash.com/photo-1549476464-37392f717541?w=1600&q=95',
     accent: '#A8C99B',
   },
   {
