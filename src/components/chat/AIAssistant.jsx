@@ -394,6 +394,11 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
     setMessages(prev => [...prev, { role: 'assistant', content: replyText, personaKey: activeCtx.personaKey }]);
     setLoading(false);
 
+    // Offer contextual FAQs after first response
+    if (messages.length <= 2) {
+      setFaqOpen(true);
+    }
+
     // Log conversation to database
     try {
       let userEmail = null;
