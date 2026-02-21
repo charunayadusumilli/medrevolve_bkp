@@ -399,7 +399,7 @@ const allProducts = [
     name: 'Semaglutide for Women',
     category: 'womens',
     subtitle: 'Female GLP-1 Weight Program',
-    form: 'Injectable Vial',
+    form: 'Auto-Injector Pen',
     promise: 'The most effective weight loss — designed for her',
     lifestyle: 'https://images.unsplash.com/photo-1549476464-37392f717541?w=800&q=90',
     productBg: 'bg-[#F5EEF3]',
