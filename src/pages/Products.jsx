@@ -8,15 +8,94 @@ import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lu
 import { base44 } from '@/api/base44Client';
 import RxProductVisual from '@/components/product/RxProductVisual';
 
+// Inline mini SVGs for category tiles (no import needed)
+const CategoryVials = {
+  weight: () => (
+    <svg width="70" height="100" viewBox="0 0 70 100" fill="none">
+      <rect x="22" y="4" width="26" height="10" rx="3" fill="#2D3A2D"/>
+      <rect x="26" y="12" width="18" height="5" rx="1.5" fill="#B0BBB0"/>
+      <rect x="18" y="16" width="34" height="72" rx="5" fill="white" fillOpacity="0.12" stroke="#C8D0C8" strokeWidth="1"/>
+      <rect x="19" y="52" width="32" height="35" rx="4" fill="#4A6741" fillOpacity="0.3"/>
+      <rect x="22" y="26" width="26" height="34" rx="2" fill="white" fillOpacity="0.88"/>
+      <rect x="24" y="29" width="22" height="9" rx="1.5" fill="#2D3A2D"/>
+      <text x="35" y="34.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4.5" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
+      <text x="35" y="44" textAnchor="middle" dominantBaseline="middle" fill="#2D3A2D" fontSize="5" fontWeight="700" fontFamily="sans-serif">Semaglutide</text>
+      <text x="35" y="52" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.5" fontFamily="sans-serif">GLP-1 · Rx Only</text>
+      <rect x="18" y="87" width="34" height="2" rx="1" fill="#B0BBB0"/>
+      <rect x="26" y="4" width="3" height="98" rx="1.5" fill="white" fillOpacity="0.12"/>
+    </svg>
+  ),
+  longevity: () => (
+    <svg width="70" height="100" viewBox="0 0 70 100" fill="none">
+      <rect x="22" y="4" width="26" height="10" rx="3" fill="#1A3A5C"/>
+      <rect x="26" y="12" width="18" height="5" rx="1.5" fill="#B0BBB0"/>
+      <rect x="18" y="16" width="34" height="72" rx="5" fill="white" fillOpacity="0.12" stroke="#C8D0C8" strokeWidth="1"/>
+      <rect x="19" y="52" width="32" height="35" rx="4" fill="#1A3A5C" fillOpacity="0.3"/>
+      <rect x="22" y="26" width="26" height="34" rx="2" fill="white" fillOpacity="0.88"/>
+      <rect x="24" y="29" width="22" height="9" rx="1.5" fill="#1A3A5C"/>
+      <text x="35" y="34.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4.5" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
+      <text x="35" y="44" textAnchor="middle" dominantBaseline="middle" fill="#1A3A5C" fontSize="5" fontWeight="700" fontFamily="sans-serif">Sermorelin</text>
+      <text x="35" y="52" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.5" fontFamily="sans-serif">Peptide · Rx</text>
+      <rect x="18" y="87" width="34" height="2" rx="1" fill="#B0BBB0"/>
+    </svg>
+  ),
+  hormone: () => (
+    <svg width="90" height="60" viewBox="0 0 90 60" fill="none">
+      <rect x="6" y="14" width="78" height="32" rx="10" fill="#6B3A8B" fillOpacity="0.9"/>
+      <rect x="6" y="14" width="22" height="32" rx="10" fill="#2D3A2D"/>
+      <rect x="26" y="14" width="10" height="32" fill="#2D3A2D"/>
+      <text x="21" y="30.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="5.5" fontWeight="800" fontFamily="serif">MR</text>
+      <rect x="40" y="17" width="40" height="26" rx="6" fill="white" fillOpacity="0.88"/>
+      <text x="60" y="26" textAnchor="middle" dominantBaseline="middle" fill="#6B3A8B" fontSize="6" fontWeight="700" fontFamily="sans-serif">Estradiol</text>
+      <text x="60" y="34" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="4" fontFamily="sans-serif">HRT · Cream · Rx Only</text>
+      <rect x="2" y="20" width="8" height="20" rx="2" fill="#C0C8C0"/>
+      <ellipse cx="74" cy="30" rx="11" ry="10" fill="#3D2D4D"/>
+    </svg>
+  ),
+  mens: () => (
+    <svg width="40" height="110" viewBox="0 0 40 110" fill="none">
+      <rect x="12" y="2" width="16" height="20" rx="5" fill="#E8ECE8"/>
+      <rect x="14" y="4" width="12" height="16" rx="4" fill="white" fillOpacity="0.5"/>
+      <rect x="9" y="20" width="22" height="72" rx="7" fill="#1A3A5C"/>
+      <rect x="11" y="22" width="6" height="68" rx="3" fill="white" fillOpacity="0.07"/>
+      <rect x="11" y="36" width="18" height="28" rx="3" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.5" strokeOpacity="0.2"/>
+      <rect x="13" y="44" width="14" height="12" rx="1.5" fill="#1A6B4A" fillOpacity="0.4"/>
+      <rect x="9" y="64" width="22" height="12" rx="0" fill="#2D5C8B"/>
+      <text x="20" y="70.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.3">MEDREVOLVE</text>
+      <rect x="9" y="92" width="22" height="8" rx="4" fill="#0F2A3A"/>
+      <text x="20" y="96.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="3.5" fontWeight="700">DOSE</text>
+      <rect x="14" y="99" width="12" height="10" rx="3" fill="#E0E0E0"/>
+    </svg>
+  ),
+  womens: () => (
+    <svg width="50" height="100" viewBox="0 0 50 100" fill="none">
+      <ellipse cx="25" cy="10" rx="12" ry="8" fill="#6B1A4A"/>
+      <ellipse cx="25" cy="9" rx="8" ry="5.5" fill="white" fillOpacity="0.12"/>
+      <rect x="21" y="16" width="8" height="7" rx="0" fill="#6B1A4A"/>
+      <rect x="22" y="21" width="6" height="12" rx="1" fill="#CCC"/>
+      <rect x="16" y="31" width="18" height="8" rx="2.5" fill="#B0B8B0"/>
+      <rect x="10" y="37" width="30" height="55" rx="8" fill="white" fillOpacity="0.1" stroke="#CCC" strokeWidth="1"/>
+      <rect x="11" y="66" width="28" height="25" rx="6" fill="#8B1A6B" fillOpacity="0.3"/>
+      <rect x="14" y="42" width="22" height="30" rx="3" fill="white" fillOpacity="0.88"/>
+      <rect x="16" y="45" width="18" height="8" rx="1.5" fill="#6B1A4A"/>
+      <text x="25" y="49.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="3.8" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
+      <text x="25" y="60" textAnchor="middle" dominantBaseline="middle" fill="#6B1A4A" fontSize="4.5" fontWeight="700" fontFamily="sans-serif">Semaglutide</text>
+      <text x="25" y="67" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.2" fontFamily="sans-serif">For Women · Rx</text>
+      <rect x="10" y="91" width="30" height="2" rx="1" fill="#B0B0B0"/>
+    </svg>
+  ),
+};
+
 // MR Branded — Hims/Ro/UpScript style category tiles
 const categories = [
   {
     id: 'weight',
     name: 'Weight Loss',
     description: 'GLP-1 & dual-action programs',
-    // Clean studio vial/pen shot on white — weight loss injectable
     image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=90',
     bg: 'bg-[#F0EDE8]',
+    bgGradient: 'radial-gradient(ellipse at center, #EAE5DC 0%, #F5F2EE 100%)',
+    svgVisual: CategoryVials.weight,
     available: true,
     accent: '#2D3A2D',
   },
@@ -26,6 +105,8 @@ const categories = [
     description: 'Peptides & cellular health',
     image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=90',
     bg: 'bg-[#EDF0EE]',
+    bgGradient: 'radial-gradient(ellipse at center, #DDE8E2 0%, #EEF5EE 100%)',
+    svgVisual: CategoryVials.longevity,
     available: true,
     accent: '#3D5636',
   },
@@ -35,6 +116,8 @@ const categories = [
     description: 'Balance & optimization',
     image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=90',
     bg: 'bg-[#EEEAF0]',
+    bgGradient: 'radial-gradient(ellipse at center, #E8E0F0 0%, #F5EEF8 100%)',
+    svgVisual: CategoryVials.hormone,
     available: true,
     accent: '#3D3656',
   },
@@ -44,6 +127,8 @@ const categories = [
     description: 'Performance & vitality',
     image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=90',
     bg: 'bg-[#E8EDF0]',
+    bgGradient: 'radial-gradient(ellipse at center, #D8E5EE 0%, #EEF3F8 100%)',
+    svgVisual: CategoryVials.mens,
     available: true,
     accent: '#1A3A5C',
   },
@@ -53,6 +138,8 @@ const categories = [
     description: 'Wellness from within',
     image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=90',
     bg: 'bg-[#F0EBF0]',
+    bgGradient: 'radial-gradient(ellipse at center, #EEE0EE 0%, #F8EEF5 100%)',
+    svgVisual: CategoryVials.womens,
     available: true,
     accent: '#5C1A4A',
   },
