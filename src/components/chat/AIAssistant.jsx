@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw, Mic, MicOff, Volume2, VolumeX, PhoneCall, PhoneOff } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, Mic, MicOff, PhoneCall, PhoneOff, Bot } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, PERSONAS, AUDIENCES, getPersonaVisuals, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
 import ReactMarkdown from 'react-markdown';
+import AvatarFigure from './AvatarFigure';
 
 function usePageContext() {
   const location = useLocation();
@@ -21,19 +22,13 @@ function usePageContext() {
 
 function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
   const vis = getPersonaVisuals(personaKey);
-  const persona = PERSONAS[personaKey] || PERSONAS.wellness_concierge;
-  const [imgErr, setImgErr] = React.useState(false);
-  const dims = size === 'sm' ? 'w-7 h-7 text-[11px]' : size === 'lg' ? 'w-14 h-14 text-lg' : 'w-9 h-9 text-sm';
+  const dims = size === 'sm' ? 'w-10 h-10' : size === 'lg' ? 'w-20 h-20' : 'w-12 h-12';
   return (
     <div
-      className={`${dims} rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center font-bold text-white ${ring ? 'ring-2 ring-white/40' : ''}`}
-      style={{ background: vis.fabBg }}
+      className={`${dims} rounded-2xl flex-shrink-0 overflow-hidden flex items-end justify-center ${ring ? 'ring-2 ring-white/40' : ''}`}
+      style={{ background: `linear-gradient(160deg, ${vis.gradient[0]}22 0%, ${vis.gradient[1]}44 100%)` }}
     >
-      {!imgErr && vis.photo ? (
-        <img src={vis.photo} alt={persona.name} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
-      ) : (
-        <span>{vis.initials}</span>
-      )}
+      <AvatarFigure personaKey={personaKey} size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'} animated={size !== 'sm'} />
     </div>
   );
 }
