@@ -671,6 +671,15 @@ export default function BookAppointment() {
 
   const queryClient = useQueryClient();
 
+  // Auto-fill email from logged-in user
+  useEffect(() => {
+    base44.auth.me().then(u => {
+      if (u?.email && !formData.patient_email) {
+        setFormData({ ...formData, patient_email: u.email });
+      }
+    }).catch(() => {});
+  }, []);
+
   const { data: providers = [] } = useQuery({
     queryKey: ['activeProviders'],
     queryFn: async () => {
