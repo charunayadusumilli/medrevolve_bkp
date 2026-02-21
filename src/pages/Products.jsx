@@ -120,7 +120,7 @@ const allProducts = [
     category: 'weight',
     subtitle: 'Sublingual — No Needles',
     form: 'Oral Drops',
-    promise: 'All the results, zero injections',
+    promise: 'All the results. Zero injections.',
     lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
     productBg: 'bg-[#EEF5F0]',
     tag: 'Needle-Free',
