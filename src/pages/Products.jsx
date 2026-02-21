@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import RxProductVisual from '@/components/product/RxProductVisual';
 
 // MR Branded — Hims/Ro/UpScript style category tiles
 const categories = [
