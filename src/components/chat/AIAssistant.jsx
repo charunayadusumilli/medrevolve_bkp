@@ -138,7 +138,6 @@ function ChatBubble({ msg }) {
 // ── Full-screen Voice Call Overlay ──────────────────────────────────────────
 function VoiceCallOverlay({ ctx, status, isSpeaking, isListening, onEndCall, onToggleMic, isListeningPaused }) {
   const vis = getPersonaVisuals(ctx.personaKey);
-  const [imgErr, setImgErr] = React.useState(false);
 
   const statusText = isSpeaking ? 'Speaking...' : isListening ? 'Listening...' : status === 'thinking' ? 'Thinking...' : 'Tap mic to speak';
 
