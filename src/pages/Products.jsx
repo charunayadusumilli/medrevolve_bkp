@@ -469,8 +469,10 @@ const categoryParamMap = {
   'weight': 'weight',
   'longevity': 'longevity',
   'hormone': 'hormone',
-  'mens_health': 'hormone',
-  'womens_health': 'hormone',
+  'mens_health': 'mens',
+  'mens': 'mens',
+  'womens_health': 'womens',
+  'womens': 'womens',
   'hair_loss': 'hair',
   'peptides': 'longevity',
 };
