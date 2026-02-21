@@ -5,20 +5,20 @@ import { Users, Shield, Building2, Leaf, Award, Clock } from 'lucide-react';
 const features = [
   {
     icon: Users,
-    title: 'Nationwide Doctors Network',
-    description: 'Board certified physicians and medical providers are available to answer your questions and guide your journey.',
+    title: 'Real Doctors, Not Algorithms',
+    description: 'Every treatment plan is written by a licensed physician or NP — not an AI bot. Board-certified experts who actually review your history.',
     color: '#4A6741'
   },
   {
     icon: Shield,
-    title: 'Quality Ingredients',
-    description: 'Our products adhere to the highest standards of medical compliance and regulation. NABP certified for your peace of mind.',
+    title: 'Pharmacy-Grade Quality',
+    description: 'Medications dispensed from licensed, NABP-certified partner pharmacies. Exactly what\'s prescribed. No gray-market sourcing.',
     color: '#6B8F5E'
   },
   {
     icon: Building2,
-    title: 'Nationwide Pharmacy Network',
-    description: 'We work with 503a pharmacy partners that are top-line and can scale with our fast-paced growth.',
+    title: 'Ongoing Coaching & Support',
+    description: 'Your care doesn\'t end at delivery. AI health coaching, provider check-ins, and a clinical team available between visits.',
     color: '#8B7355'
   }
 ];
