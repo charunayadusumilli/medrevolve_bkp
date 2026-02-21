@@ -319,6 +319,21 @@ ${activeCtx.persona}:`,
     setInput('');
   };
 
+  const toggleVoiceMode = () => {
+    const entering = !isVoiceMode;
+    setIsVoiceMode(entering);
+    stopListening();
+    stopSpeaking();
+    if (entering) {
+      // Speak greeting when entering voice mode
+      setTimeout(() => {
+        if (speakRef.current) {
+          speakRef.current(messages[messages.length - 1]?.content || ctx.greeting);
+        }
+      }, 300);
+    }
+  };
+
   const faqs = FAQ_BY_AUDIENCE[ctx.audience] || FAQ_BY_AUDIENCE[AUDIENCES?.CUSTOMER] || [];
   const showFaqs = faqOpen && messages.length <= 2;
 
