@@ -18,7 +18,7 @@ const categories = [
     name: 'Longevity',
     icon: Heart,
     description: 'Peptides & anti-aging',
-    image: 'https://images.unsplash.com/photo-1590253230532-a67f6bc61b9e?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80',
     available: true,
     color: '#6B8F5E',
     href: 'Products?category=longevity'
