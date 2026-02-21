@@ -7,63 +7,71 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-// Studio-quality pharmaceutical product imagery (Ro.co / Hims style)
+// MR Branded — Hims/Ro/UpScript style category tiles
 const categories = [
   {
     id: 'weight',
-    name: 'Weight',
-    description: 'Feel confident in your body',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
-    bg: 'from-slate-100 to-slate-200',
-    available: true
+    name: 'Weight Loss',
+    description: 'GLP-1 & dual-action programs',
+    // Clean studio vial/pen shot on white — weight loss injectable
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=90',
+    bg: 'bg-[#F0EDE8]',
+    available: true,
+    accent: '#2D3A2D',
   },
   {
     id: 'longevity',
     name: 'Longevity',
-    description: 'Age gracefully, live fully',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80',
-    bg: 'from-stone-100 to-stone-200',
-    available: true
+    description: 'Peptides & cellular health',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=90',
+    bg: 'bg-[#EDF0EE]',
+    available: true,
+    accent: '#3D5636',
   },
   {
     id: 'hormone',
-    name: 'Hormone',
-    description: 'Balance from within',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80',
-    bg: 'from-zinc-100 to-zinc-200',
-    available: true
+    name: 'Hormones',
+    description: 'Balance & optimization',
+    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=90',
+    bg: 'bg-[#EEEAF0]',
+    available: true,
+    accent: '#3D3656',
+  },
+  {
+    id: 'mens',
+    name: "Men's Health",
+    description: 'Performance & vitality',
+    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=90',
+    bg: 'bg-[#E8EDF0]',
+    available: true,
+    accent: '#1A3A5C',
+  },
+  {
+    id: 'womens',
+    name: "Women's Health",
+    description: 'Wellness from within',
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=90',
+    bg: 'bg-[#F0EBF0]',
+    available: true,
+    accent: '#5C1A4A',
+  },
+  {
+    id: 'hair',
+    name: 'Hair & Skin',
+    description: 'Coming Soon',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80',
+    bg: 'bg-[#F0EEEA]',
+    available: false,
+    accent: '#5C4A1A',
   },
   {
     id: 'sexual',
     name: 'Sexual Health',
     description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=600&q=80',
-    bg: 'from-neutral-100 to-neutral-200',
-    available: false
-  },
-  {
-    id: 'hair',
-    name: 'Hair',
-    description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=600&q=80',
-    bg: 'from-gray-100 to-gray-200',
-    available: false
-  },
-  {
-    id: 'skin',
-    name: 'Skin',
-    description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
-    bg: 'from-rose-50 to-rose-100',
-    available: false
-  },
-  {
-    id: 'support',
-    name: 'Support',
-    description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&q=80',
-    bg: 'from-sky-50 to-sky-100',
-    available: false
+    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80',
+    bg: 'bg-[#EEF0EA]',
+    available: false,
+    accent: '#2D4A1A',
   }
 ];
 
