@@ -363,7 +363,7 @@ const allProducts = [
     name: 'Finasteride + Minoxidil',
     category: 'mens',
     subtitle: 'Hair Loss Prevention',
-    form: 'Oral Tablet + Topical',
+    form: 'Topical Cream',
     promise: 'Stop hair loss before it stops you',
     lifestyle: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=90',
     productBg: 'bg-[#EEF5EE]',
