@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, PERSONAS, AUDIENCES, getPersonaVisuals, FAQ_BY_AUDIENCE, buildSystemPrompt } from './chatConfig';
