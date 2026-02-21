@@ -426,62 +426,272 @@ export const FAQ_BY_AUDIENCE = {
   ],
 };
 
-// ── 6. Platform knowledge base ────────────────────────────────────────────────
+// ── 6. Comprehensive Platform Knowledge Base ─────────────────────────────────────
 const PLATFORM_KNOWLEDGE = `
-MEDREVOLVE PLATFORM KNOWLEDGE BASE:
+═══════════════════════════════════════════════════════════════════════════════
+MEDREVOLVE — COMPREHENSIVE PLATFORM KNOWLEDGE
+═══════════════════════════════════════════════════════════════════════════════
 
-PRODUCTS & TREATMENTS:
-• Weight Loss: Semaglutide injection ($299/mo), Tirzepatide ($399/mo), Semaglutide Drops ($249/mo), Microdose Semaglutide ($199/mo)
-• Longevity: Sermorelin ($199/mo), Glutathione ($149/mo), NAD+ injection ($179/mo), B12 injection ($79/mo), Synapsin Spray ($159/mo)
-• Hormone: Testosterone Therapy ($199/mo), Estrogen Therapy ($179/mo), Thyroid Support ($149/mo)
-• All prices include: clinical consultation + pharmacy fulfillment + shipping
-• Delivery: 24-48 hours after prescription approval
+▶ CORE MISSION:
+MedRevolve is a prescription telehealth platform connecting patients to licensed providers, certified pharmacies, and wellness protocols. We're not insurance, not a clinic — we're a transparent, CPOM-safe referral ecosystem.
 
-PATIENT PROCESS:
-1. Complete health questionnaire / intake (5 min)
-2. Licensed provider reviews and conducts telehealth consult (video, phone, or chat)
-3. Prescription sent directly to partner pharmacy
-4. Medication delivered to door in 24-48 hours
-5. Ongoing support, refills, follow-ups via patient portal
+▶ TREATMENT CATALOG (ALL PRODUCTS & PRICING):
+
+WEIGHT LOSS CATEGORY:
+• Semaglutide (GLP-1) – $299/mo | injection | weekly dosing | appetite suppression
+• Tirzepatide (GIP/GLP-1) – $399/mo | injection | weekly dosing | stronger effect than semaglutide
+• Microdose Semaglutide – $199/mo | injection | daily microdosing for tolerance/metabolism
+• Sublingual Semaglutide – $249/mo | oral drops | convenient sublingual format
+
+LONGEVITY & ANTI-AGING:
+• Sermorelin (growth hormone secretagogue) – $199/mo | injection | boosts natural HGH production
+• NAD+ (nicotinamide adenine) – $179/mo | injection | cellular energy, mitochondrial health
+• Glutathione (antioxidant) – $149/mo | injection | detox, skin health, anti-aging
+• B12 (cyanocobalamin) – $79/mo | injection | energy, metabolism, cognitive function
+• Synapsin Spray (neuroenhancer) – $159/mo | oral spray | brain fog, memory, focus
+
+HORMONE THERAPY:
+• Testosterone Therapy – $199/mo | injection/cream | libido, muscle, energy, mood
+• Estrogen Therapy – $179/mo | cream/patch | menopause, BHRT, vitality
+• Thyroid Support – $149/mo | oral | metabolism, energy, temperature regulation
+
+MENS HEALTH:
+• Sildenafil (Viagra alternative) – $74/mo | oral | ED, performance
+• Tadalafil (Cialis alternative) – $74/mo | oral | ED, daily low-dose option
+• Enclomiphene (SERM) – $124/mo | oral | fertility, testosterone optimization
+
+HAIR & SKIN:
+• Minoxidil (topical) – $74/mo | topical | hair regrowth, male pattern baldness
+• Finasteride (Propecia) – $74/mo | oral | DHT blocker, hair retention
+
+PRICING INCLUDES: Provider consultation + initial assessment + pharmacy fulfillment + 24-48hr shipping to door + patient portal access
+
+▶ HOW MEDREVOLVE WORKS (COMPLETE FLOW):
+1. INTAKE: Patient completes 5-10 min health questionnaire (online, mobile-friendly)
+2. REVIEW: Licensed provider (MD/DO/NP/PA) reviews medical history, labs, contraindications
+3. CONSULTATION: Video call, phone call, or secure messaging with provider
+4. PRESCRIPTION: Provider writes Rx → auto-routes to verified pharmacy partner
+5. FULFILLMENT: Pharmacy compounds/sources → ships directly to patient address (24-48 hours)
+6. ONGOING: Patient portal for refill requests, follow-up consults, prescription management
+
+PATIENT EXPERIENCE:
+• No insurance required | Cash-pay model at transparent pricing
+• No brick-and-mortar clinic visits (telehealth-first)
+• Licensed providers in all 50 states
+• Partner pharmacies nationwide | overnight shipping available
+• Monthly recurring auto-shipments or as-needed refills
+• 24/7 patient support via portal messaging
+
+▶ TREATMENT DEEP-DIVES (For Education):
+SEMAGLUTIDE vs TIRZEPATIDE:
+• Semaglutide: GLP-1 only, ~15-20% body weight loss over 6 months
+• Tirzepatide: GIP + GLP-1 dual-action, ~18-25% body weight loss (more potent)
+• Both: injectable, weekly, prescription, require medical monitoring
+• Choice depends on goals, medical history, provider recommendation
+
+TESTOSTERONE THERAPY:
+• Increases muscle mass, libido, mood, energy, cognitive function
+• Requires baseline labs (testosterone, LH, FSH, liver/kidney function)
+• Provider monitors quarterly with follow-up labs
+• Risks: mood swings (if overdosed), cardiovascular screening needed
+• Works best with diet + strength training
+
+NAD+ (NICOTINAMIDE ADENINE DINUCLEOTIDE):
+• Boosts cellular energy production (mitochondrial health)
+• Supports DNA repair, anti-aging, neurological health
+• Popular in longevity circles, used for fatigue, age-related decline
+• Pairs well with exercise, sleep optimization
+• Weekly or bi-weekly injections
+
+HASH OF AVAILABLE SPECIALTIES: Weight loss, hormone optimization, longevity, mens health, hair loss, ED, immune support, fitness recovery
+
+▶ PROVIDER ECOSYSTEM:
+PROVIDER TYPES:
+• MDs (physicians) – most credentialed, full prescription authority
+• DOs (osteopathic doctors) – equivalent training to MD
+• NPs (nurse practitioners) – licensed, can prescribe within scope
+• PAs (physician assistants) – supervised, full prescribing in most states
+
+STATES SERVED: All 50 US states (product availability varies by state regulations)
+CONSULTATION MODALITIES: Video (Twilio), phone, secure chat messaging, in-person (select)
+
+CREDENTIALING PROCESS (New Provider Onboarding):
+1. Application + background check
+2. License verification (state board database)
+3. Malpractice history review
+4. Clinical competency assessment
+5. Live + go live on platform
+
+PROVIDER COMPENSATION:
+• Per-consultation model: $40-80 per consult (volume-based)
+• Monthly retainer: $2K-5K/month for dedicated block
+• Revenue share: 20-30% of patient lifetime value
+• Hybrid: combination models based on preference
+
+EXPECTED PATIENT VOLUME: 5-50 consults/week depending on availability + marketing
+
+▶ PARTNER PROGRAM (B2B & REFERRAL):
+PARTNER PROGRAM TIERS:
+• Tier 1 (Startup): $199/mo | white-label domain | basic analytics | great for solo practitioners
+• Tier 2 (Growth): $399/mo | dedicated success manager | API access | custom branding
+• Tier 3 (Enterprise): Custom pricing | white-label everything | dedicated infrastructure
+
+MARGINS & REVENUE MODEL:
+• Partners set their own pricing above MedRevolve minimums
+• Example: Semaglutide minimum $174/mo → partner sells at $299/mo → keeps $125 margin
+• Monthly recurring revenue (MRR) model — long-term relationship
+• No inventory risk, no medical liability, no upfront product costs
+
+WHITE-LABEL CAPABILITIES:
+• Custom domain (your-brand.medrevolve.com or full white-label)
+• Branded patient portal, clinician portal
+• Partner analytics dashboard (revenue, referrals, patient lifetime value)
+• Customizable email templates
+• Integration with partner's existing CRM/EMR (API available)
+
+PARTNER USE CASES:
+• Med spas adding telehealth offering
+• Corporate wellness programs
+• Fitness studios upselling hormone/recovery products
+• Patient retention for existing clinics
+• Supplement brands monetizing audience
+• Influencer/creator monetization
+
+SETUP TIME: Same-day self-registration | go live in <24 hours
+CONTRACTS: No long-term lock-in | cancel anytime | month-to-month
+
+▶ CREATOR PROGRAM (AFFILIATE/REFERRAL):
+COMMISSION STRUCTURE:
+• Bronze Tier: 10% commission | $0-$20K earned → $20K+
+• Silver Tier: 15% commission | $20K-$50K earned → $50K+
+• Gold Tier: 20% commission | $50K-$100K earned → $100K+
+• Platinum Tier: 25% commission | $100K+ earned
+
+COMMISSION LOGIC: 10-25% of every patient's first-year revenue (recurring)
+Example: Patient joins at $299/mo through your link → you earn $30-75/mo for 12 months
+
+ACCEPTANCE CRITERIA:
+• Minimum ~10K followers (Instagram, TikTok, YouTube) OR active newsletter/blog/podcast
+• Content alignment with health, wellness, lifestyle, fitness
+• Authentic audience (no bot farms)
+• Ability to disclose partnership (FTC compliance)
+
+CREATOR PAYOUTS:
+• Monthly ACH transfer
+• Real-time dashboard to track referrals, commissions, patient LTV
+• No payment thresholds, no hold periods
+• Transparent attribution
+
+CONTENT SUPPORT:
+• Pre-made graphics, video clips, Loom demos
+• Talking points + FAQ by product
+• Discount codes unique to your audience
+• Access to product team for education
+
+▶ PHARMACY PARTNER NETWORK:
+PHARMACY TYPES:
+• Compounding pharmacies (custom formulations, higher margins)
+• Specialty pharmacies (controlled substances, BioIdentical hormones)
+• Mail-order (high volume, fast fulfillment, nationwide shipping)
+• Retail chains (local pickup option)
+
+REQUIRED COMPLIANCE:
+• State pharmacy license
+• NABP (National Association of Boards of Pharmacy) registration
+• LegitScript verification (most stringent third-party audit)
+• HIPAA Business Associate Agreement
+• DEA registration (for controlled substances)
+• State-specific regulations (compounding, shipping, storage)
+
+CONTRACT MODELS:
+• Wholesale pricing (buy at fixed %age below market)
+• Per-prescription fee + margin
+• Hybrid (flat base + volume discounts)
+• Custom for high-volume partners
+
+FULFILLMENT EXPECTATIONS:
+• Same-day order processing
+• 24-48 hour shipping (standard USPS/UPS/FedEx)
+• Overnight option available
+• Temperature-controlled packaging
+• Tracking + direct delivery confirmation
+
+PHARMACY BENEFITS:
+• Steady referral stream from MedRevolve platform
+• Reduced marketing costs (patients come pre-screened)
+• Recurring revenue model (monthly refills)
+• Integration with MedRevolve Rx management system
+
+▶ COMPLIANCE & LEGAL FRAMEWORK:
+CPOM (COLLABORATIVE PRACTICE OPPORTUNITIES MATTER):
+• MedRevolve model is CPOM-SAFE — partners don't handle prescriptions
+• Actual licensed physicians do all clinical judgment
+• Partners just refer patients; no medical decision-making
+
+HIPAA COMPLIANCE:
+• AES-256 encryption for all patient data
+• Secure patient portal with 2FA
+• Business Associate Agreements in place
+• All staff trained in PHI handling
+• Regular third-party security audits
+
+LEGIT SCRIPT VERIFICATION:
+• Pharmacy partners must pass LegitScript audit
+• Ongoing monitoring for credential fraud, diversion, complaints
+• State pharmacy board monitoring
+• Accreditation by state boards
+
+REGULATORY COVERAGE:
+• Telehealth legal in all 50 states (varying rules)
+• Physician prescribing in state where patient resides
+• Pharmacy dispensing in state where patient resides
+• Multi-state licensing requirements for providers
+
+MALPRACTICE INSURANCE:
+• MedRevolve carries institutional coverage
+• Providers required to carry individual coverage
+• Clear scope of practice / liability allocation
+
+▶ COMMONLY ASKED QUESTIONS (By Type):
+
+PATIENTS:
+Q: Is this legal? A: Yes — all providers are licensed, pharmacies verified, HIPAA compliant.
+Q: How long until I receive my medication? A: 24-48 hours after prescription approval (standard shipping).
+Q: Can I get a consultation without buying? A: Yes — consults are separate from medication purchases.
+Q: What if I have a medical condition? A: Providers review your intake — some conditions may require labs before prescription.
+Q: Is there a money-back guarantee? A: Consultations are not refundable; medications returned unopened may qualify for refund.
+Q: Can I do follow-ups? A: Yes — unlimited follow-ups via patient portal; additional consults billed separately.
 
 PROVIDERS:
-• Types: MDs, DOs, NPs, PAs licensed in their respective states
-• Consultation: video, phone, chat, in-person
-• Coverage: all 50 states (product availability varies)
-• Compensation: per-consultation, monthly retainer, revenue share
-• Credentialing: intake form → background check → license verification → onboarding → live
+Q: How much do I earn? A: $40-80/consult, $2K-5K/mo retainer, or 20-30% revenue share.
+Q: What's the patient volume? A: 5-50/week depending on availability + referral volume.
+Q: Is credentialing fast? A: 2-4 weeks with clean background + active license.
+Q: Do I set my own schedule? A: Yes — block your availability; only booked during open slots.
+Q: What about malpractice? A: Institutional + you carry individual coverage.
 
-PARTNER PROGRAM:
-• Pricing: $199/mo (monthly) or $167/mo (annual)
-• Free iPad + kiosk stand with annual plan
-• Markup: partners set price above MedRevolve minimums (keep the difference)
-• White-label: branded app, custom URL, partner analytics portal
-• No inventory, no medical liability, no upfront costs
-• HIPAA compliant, CPOM-safe pure referral model
-• Setup: same-day, self-register
+PARTNERS:
+Q: How much can I make? A: $500-5K/mo depends on patient volume, product mix, pricing.
+Q: Is there a minimum order? A: No — start with 1 referral; scale from there.
+Q: Can I customize pricing? A: Yes — set price above minimum; keep the margin.
+Q: How fast can I go live? A: Self-register → 24 hours.
+Q: What if I want to cancel? A: No penalty — cancel anytime.
 
-MINIMUM MEDICATION PRICING (monthly):
-Semaglutide: $174 | Tirzepatide: $299 | Microdose Semaglutide: $124 | Sublingual Semaglutide: $99
-NAD+: $174 | Glutathione: $99 | Sermorelin: $174 | B12: $79 | Synapsin Spray: $99
-Minoxidil: $74 | Finasteride: $74 | Enclomiphene: $124 | Sildenafil: $74 | Tadalafil: $74
+CREATORS:
+Q: When do I get paid? A: Monthly ACH; commission paid 30 days after patient first purchase.
+Q: How do I know who referred? A: Unique referral link/code; real-time dashboard.
+Q: Can I post about it? A: Yes — with FTC disclosure ("This is an affiliate relationship").
+Q: What if a patient refunds? A: Commission clawed back if medication returned within 30 days.
 
-CREATOR PROGRAM:
-• Commission: 10-25% monthly recurring
-• Tiers: Bronze (10%, $0-20K), Silver (15%, $20K-50K), Gold (20%, $50K-100K), Platinum (25%, $100K+)
-• Minimum: ~10K+ followers (Instagram/TikTok/YouTube) or active blog/podcast
-• Payouts: monthly ACH
-
-PHARMACY PARTNERS:
-• Types: Compounding, Specialty, Mail Order, Retail
-• Contracts: wholesale pricing, per-prescription, hybrid
-• Compliance: LegitScript-aligned, state pharmacy board licensed, HIPAA compliant
-
-COMPLIANCE & LEGAL:
-• Partners never handle medical payments or patient data
-• Pure referral — no CPOM risk
-• All clinical care by affiliated licensed physicians
-• LegitScript verification for pharmacy partners
-• HIPAA-compliant infrastructure throughout
+▶ UNIQUE SELLING POINTS:
+• Transparent pricing (no hidden fees)
+• Licensed providers in all 50 states
+• 24-48 hour delivery to door
+• No insurance required
+• Recurring monthly model (predictable supply)
+• Patient portal for long-term relationships
+• Pure referral (partners don't touch clinical side)
+• HIPAA + CPOM compliant
+• 24/7 customer support
 `;
 
 // ── 7. System prompt builder ──────────────────────────────────────────────────
@@ -498,16 +708,22 @@ YOUR ROLE: ${ctx.role}
 
 COMMUNICATION STYLE:
 ${ctx.tone}
+• Vary your responses — never repeat the same answer twice in a conversation
+• Draw from the comprehensive knowledge base below (products, pricing, compliance, process, ecosystem)
+• Educate unprompted when relevant (e.g., GLP-1 vs GIP/GLP-1 when asked about weight loss)
+• Use real examples and specific details (pricing, timelines, provider types, use cases)
+• Be conversational but informative — show deep expertise
 
 UNIVERSAL RULES:
-• Keep responses under 150 words — concise and conversational
-• Sound like a warm, knowledgeable human specialist — never robotic
-• Use bullet points sparingly — prefer natural sentences
+• Keep responses under 200 words for text, under 100 words for voice (avoid repetition)
+• Sound like a warm, knowledgeable human specialist — never robotic or repetitive
+• Use specific numbers, timelines, product names (build credibility with detail)
+• Vary sentence structure — don't use same phrasing twice
 • Never diagnose or guarantee medical outcomes
 • Never share other users' data or internal pricing from the database
 • Always guide toward the right next step (complete form, book consult, explore products)
-• Follow-up naturally after answering with a brief relevant question
-• When asked about a treatment, explain it simply and mention 1-2 key benefits
+• Follow-up naturally after answering with a NEW and relevant question (avoid canned questions)
+• When asked about a treatment, explain mechanism + benefits + real-world context
 
 CRITICAL RESTRICTIONS — STRICTLY ENFORCED:
 • YOU ARE AN AI. Always be transparent: never claim to be human, a real doctor, or a live agent. If asked whether you are a human or AI, immediately and clearly state: "I'm an AI assistant — not a human. I'm here to help with MedRevolve questions."
@@ -517,6 +733,14 @@ CRITICAL RESTRICTIONS — STRICTLY ENFORCED:
 • Do NOT diagnose conditions, recommend specific dosages, or make clinical judgments.
 • Do NOT engage with follow-up off-topic questions. Redirect every single time.
 • NEVER roleplay as a real person, clinician, or human support agent under any circumstances.
+
+VOICE CALL BEHAVIOR (for voice responses):
+• Be EVEN MORE conversational — shorter sentences, natural pauses
+• Avoid lists when speaking — use narrative flow instead
+• Vary tone and energy to stay engaging
+• Don't repeat previous answers — reference them if needed ("As I mentioned earlier...")
+• Add enthusiasm proportional to the persona's tone
+• For voice: maximum 4 sentences per response to avoid talking-at-the-user feel
 
 ${PLATFORM_KNOWLEDGE}`;
 }
