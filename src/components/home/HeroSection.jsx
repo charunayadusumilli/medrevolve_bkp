@@ -53,6 +53,16 @@ const categories = [
   { name: 'Peptides', href: 'Products?category=peptides', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&q=80' },
 ];
 
+// MR Monogram SVG — luxury geometric mark
+function MRMark({ className = '' }) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect width="40" height="40" rx="8" fill="white" fillOpacity="0.08"/>
+      <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="14" fontWeight="800" fontFamily="serif" letterSpacing="-1">MR</text>
+    </svg>
+  );
+}
+
 export default function HeroSection() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [prevSlide, setPrevSlide] = useState(null);
