@@ -723,61 +723,40 @@ function CategoryCard({ category, isActive, onClick }) {
 }
 
 function ProductCard({ product }) {
-  const [loading, setLoading] = React.useState(false);
-
-  const handleSubscribe = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    setLoading(true);
-    try {
-      const priceMap = {
-        'Semaglutide': 'price_1T1ETDAuWpKZkJ8tlrK09kNp',
-        'NAD+ Spray': 'price_1T1ETDAuWpKZkJ8tdUByobRk',
-        'Testosterone Therapy': 'price_1T1ETDAuWpKZkJ8tZlbegXkW'
-      };
-      
-      const priceId = priceMap[product.name];
-      if (!priceId) {
-        alert('This product is not available for purchase yet');
-        return;
-      }
-
-      const { data } = await base44.functions.invoke('createCheckout', {
-        priceId,
-        successUrl: `${window.location.origin}/Products?success=true`,
-        cancelUrl: `${window.location.origin}/Products?canceled=true`
-      });
-
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (error) {
-      alert(error.message || 'Failed to start checkout');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <motion.div
-      className="bg-white rounded-2xl overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-400 border border-gray-100"
+      className="bg-white rounded-2xl overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-300 border border-gray-100"
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25 }}
     >
       <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Studio product shot — clean light bg, product centered */}
-        <div className={`relative aspect-square overflow-hidden ${product.bg || 'bg-gray-50'} flex items-center justify-center`}>
+        {/* Product image — studio / pharmaceutical style */}
+        <div className={`relative aspect-[4/3] overflow-hidden ${product.productBg || 'bg-gray-50'}`}>
           <img
             src={product.lifestyle}
             alt={product.name}
-            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.05]"
           />
-          {/* Tag pill — minimal, top-right */}
-          {product.tag && (
-            <div className="absolute top-3 right-3">
-              <span className={`${product.tagColor} text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow`}>
+          {/* Top badges row */}
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between">
+            {/* Rx badge */}
+            {product.rx && (
+              <span className="bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase backdrop-blur-sm">
+                Rx
+              </span>
+            )}
+            {/* Tag pill */}
+            {product.tag && (
+              <span className={`${product.tagColor} text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow ml-auto`}>
                 {product.tag}
+              </span>
+            )}
+          </div>
+          {/* Form pill — bottom left */}
+          {product.form && (
+            <div className="absolute bottom-3 left-3">
+              <span className="bg-white/90 backdrop-blur-sm text-[#2D3A2D] text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/50 shadow-sm">
+                {product.form}
               </span>
             </div>
           )}
@@ -785,8 +764,8 @@ function ProductCard({ product }) {
 
         {/* Product Info */}
         <div className="p-5 flex-1 flex flex-col">
-          <p className="text-[11px] font-bold text-[#4A6741] uppercase tracking-widest mb-1">{product.subtitle}</p>
-          <h3 className="text-lg font-semibold text-[#1A2A1A] leading-snug mb-2 group-hover:text-[#4A6741] transition-colors">
+          <p className="text-[10px] font-bold text-[#4A6741] uppercase tracking-[0.15em] mb-1">{product.subtitle}</p>
+          <h3 className="text-lg font-semibold text-[#1A2A1A] leading-snug mb-2 group-hover:text-[#2D3A2D] transition-colors">
             {product.name}
           </h3>
           <p className="text-sm text-[#5A6B5A] mb-4 leading-relaxed">{product.promise}</p>
@@ -794,8 +773,8 @@ function ProductCard({ product }) {
           {/* Benefits */}
           <div className="space-y-1.5 mb-4">
             {product.benefits.slice(0, 3).map((b, i) => (
-              <div key={i} className="flex items-center gap-2 text-xs text-[#2D3A2D]">
-                <div className="w-4 h-4 rounded-full bg-[#D4E5D7] flex items-center justify-center flex-shrink-0">
+              <div key={i} className="flex items-start gap-2 text-xs text-[#2D3A2D]">
+                <div className="w-4 h-4 rounded-full bg-[#D4E5D7] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-[#4A6741] text-[9px] font-bold">✓</span>
                 </div>
                 {b}
@@ -804,8 +783,6 @@ function ProductCard({ product }) {
           </div>
 
           <div className="flex-1" />
-
-          {/* Social proof */}
           <p className="text-[11px] text-[#8A9A8A]">{product.customers} patients treated</p>
         </div>
       </Link>
@@ -815,20 +792,21 @@ function ProductCard({ product }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-baseline gap-0.5">
+              <span className="text-xs text-[#8A9A8A] mr-0.5">from</span>
               <span className="text-2xl font-bold text-[#1A2A1A]">${product.price}</span>
               <span className="text-sm text-[#8A9A8A]">/mo</span>
             </div>
-            <p className="text-[11px] text-[#4A6741]">Includes consult + shipping</p>
+            <p className="text-[10px] text-[#4A6741] font-medium">Consult + Rx + Shipping</p>
           </div>
-          <Button
-            size="sm"
-            onClick={handleSubscribe}
-            disabled={loading}
-            className="bg-[#1A2A1A] hover:bg-[#2D3A2D] text-white rounded-full px-5 text-sm font-semibold"
-          >
-            {loading ? '...' : 'Get Started'}
-            <ArrowRight className="w-3.5 h-3.5 ml-1" />
-          </Button>
+          <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
+            <Button
+              size="sm"
+              className="bg-[#1A2A1A] hover:bg-[#2D3A2D] text-white rounded-full px-5 text-sm font-semibold"
+            >
+              Learn More
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </Button>
+          </Link>
         </div>
       </div>
     </motion.div>
