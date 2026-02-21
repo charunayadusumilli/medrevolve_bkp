@@ -984,6 +984,34 @@ function CategoryCard({ category, isActive, onClick }) {
 }
 
 function ProductCard({ product }) {
+  const [bgImage, setBgImage] = React.useState(null);
+  const [imageLoading, setImageLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    // Try to generate professional pharmaceutical image
+    const generateImage = async () => {
+      if (!product.form || product.lifestyle) return;
+      
+      setImageLoading(true);
+      try {
+        const response = await base44.functions.invoke('generatePharmaceuticalImage', {
+          productName: product.name,
+          form: product.form,
+          color: product.gradient?.[0] || product.accent,
+        });
+        if (response.data?.imageUrl) {
+          setBgImage(response.data.imageUrl);
+        }
+      } catch (err) {
+        console.error('Failed to generate product image:', err);
+      }
+      setImageLoading(false);
+    };
+    generateImage();
+  }, [product.name, product.form, product.lifestyle]);
+
+  const displayImage = bgImage || product.lifestyle;
+
   return (
     <motion.div
       className="bg-white rounded-2xl overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-300 border border-gray-100"
@@ -991,9 +1019,17 @@ function ProductCard({ product }) {
       transition={{ duration: 0.25 }}
     >
       <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Dynamic RxProductVisual — cycles: branded product SVG → lifestyle → clinical */}
-        <div className={`relative aspect-[4/3] overflow-hidden ${product.productBg || 'bg-[#F5F2EE]'}`}>
-          <RxProductVisual product={product} size="md" autoPlay={true} className="w-full h-full" />
+        {/* Professional pharmaceutical product visual */}
+        <div className={`relative aspect-[4/3] overflow-hidden flex items-center justify-center ${product.productBg || 'bg-[#F5F2EE]'}`}>
+          {displayImage ? (
+            <img 
+              src={displayImage} 
+              alt={product.name}
+              className="w-full h-full object-cover object-center"
+            />
+          ) : (
+            <RxProductVisual product={product} size="md" autoPlay={false} className="w-full h-full" />
+          )}
 
           {/* Top badges row — always on top */}
           <div className="absolute top-3 left-3 right-3 flex items-start justify-between z-10 pointer-events-none">
