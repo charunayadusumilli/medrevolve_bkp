@@ -380,6 +380,15 @@ ${activeCtx.persona}:`,
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                   </button>
+                  {voiceSupported && (
+                    <button
+                      onClick={toggleVoiceMode}
+                      title={isVoiceMode ? 'Switch to text mode' : 'Switch to voice mode'}
+                      className={`p-2 rounded-xl transition-colors ${isVoiceMode ? 'bg-white/30 text-white' : 'hover:bg-white/20 text-white/70 hover:text-white'}`}
+                    >
+                      {isVoiceMode ? <Volume2 className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
                   <button
                     onClick={() => setMinimized(m => !m)}
                     className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors"
