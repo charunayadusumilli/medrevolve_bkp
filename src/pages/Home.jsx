@@ -1,26 +1,27 @@
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServiceCategories from '@/components/home/ServiceCategories';
+import WellnessJourneySection from '@/components/home/WellnessJourneySection';
+import ProgramsStrip from '@/components/home/ProgramsStrip';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import HowItWorks from '@/components/home/HowItWorks';
 import DifferenceSection from '@/components/home/DifferenceSection';
-import ResultsSection from '@/components/home/ResultsSection';
+import TransformationStories from '@/components/home/TransformationStories';
 import FAQSection from '@/components/home/FAQSection';
 import CTASection from '@/components/home/CTASection';
-import PersonalizedRecommendations from '@/components/recommendations/PersonalizedRecommendations';
 import PartnerEcosystem from '@/components/home/PartnerEcosystem';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen" style={{ background: '#F8F6F2' }}>
       <HeroSection />
       <ServiceCategories />
-      <PersonalizedRecommendations title="Personalized Just For You" />
+      <WellnessJourneySection />
+      <ProgramsStrip />
       <FeaturedProducts />
       <HowItWorks />
       <DifferenceSection />
-      <ResultsSection />
-      {/* Ecosystem section — replaces top-nav clutter for creators/business/partners */}
+      <TransformationStories />
       <PartnerEcosystem />
       <CTASection />
       <FAQSection />

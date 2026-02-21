@@ -88,11 +88,12 @@ export default function FeaturedProducts() {
           viewport={{ once: true }}
         >
           <div>
-            <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-              Featured <span className="font-medium text-[#4A6741]">Products</span>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7A8F7C] mb-2">MedRevolve Precision Treatments</p>
+            <h2 className="text-3xl md:text-4xl font-light text-[#0F172A]">
+              Featured <span className="font-semibold">Products.</span>
             </h2>
-            <p className="text-lg text-[#5A6B5A] max-w-xl">
-              Discover our most popular wellness treatments, backed by science
+            <p className="text-base text-[#1E293B]/55 mt-2 max-w-sm">
+              Clinician-reviewed. Pharmacy-grade. Delivered discreetly.
             </p>
           </div>
           <div className="flex items-center gap-2 mt-6 md:mt-0">
