@@ -54,7 +54,7 @@ const categories = [
     name: "Men's Health",
     icon: HeartPulse,
     description: 'Performance & vitality',
-    image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
     available: true,
     color: '#5A7A8A',
     href: 'Products?category=mens_health'
