@@ -92,6 +92,7 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
+import AccountSettings from './pages/AccountSettings';
 import __Layout from './Layout.jsx';
 
 
@@ -141,6 +142,7 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
+    "AccountSettings": AccountSettings,
 }
 
 export const pagesConfig = {
