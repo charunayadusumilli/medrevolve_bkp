@@ -384,11 +384,13 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <Input
           id="reason"
           value={formData.reason}
-          onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, reason: e.target.value.slice(0, 200) })}
           placeholder={`e.g., ${selectedType?.label === 'Initial Consultation' ? 'Starting a weight management program' : 'Review my current treatment plan'}`}
-          className="rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741]"
+          className={`rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741] ${formData.reason && formData.reason.trim().length < 5 ? 'border-amber-300' : ''}`}
+          maxLength={200}
           required
         />
+        <p className="text-xs text-[#9A8B7A] text-right mt-1">{(formData.reason || '').length}/200</p>
       </div>
 
       <div>
