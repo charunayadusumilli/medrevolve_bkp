@@ -42,7 +42,7 @@ function PersonaFAB({ ctx, onClick }) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0, opacity: 0 }}
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-      className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2"
+      className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2"
     >
       <motion.div
         initial={{ opacity: 0, x: 12 }}
