@@ -90,7 +90,7 @@ export default function HeroSection() {
             animate={{ opacity: i === activeSlide ? 1 : 0 }}
             transition={{ duration: 1.4, ease: 'easeInOut' }}
           >
-            <img src={s.image} alt={s.tag} className="w-full h-full object-cover object-center" />
+            <img src={s.image} alt={s.tag} className="w-full h-full object-cover object-center" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'low'} />
             {/* Heavy dark overlay for editorial contrast */}
             <div className="absolute inset-0 bg-black/65" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
