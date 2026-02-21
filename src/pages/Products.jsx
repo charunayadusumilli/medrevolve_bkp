@@ -85,7 +85,7 @@ const allProducts = [
     name: 'Semaglutide',
     category: 'weight',
     subtitle: 'GLP-1 Weekly Injection',
-    form: 'Injectable Vial',
+    form: 'Auto-Injector Pen',
     promise: 'Lose up to 15% body weight',
     lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=90',
     productBg: 'bg-[#F5F2EE]',
