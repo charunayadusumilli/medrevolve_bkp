@@ -677,13 +677,13 @@ function CategoryCard({ category, isActive, onClick }) {
     <motion.div
       onClick={onClick}
       className={`relative rounded-2xl overflow-hidden cursor-pointer group border-2 transition-all duration-300
-        ${isActive ? 'border-[#2D3A2D] shadow-xl' : 'border-transparent'}
-        ${!category.available ? 'opacity-60 cursor-default' : 'hover:border-[#2D3A2D]/30 hover:shadow-lg'}
+        ${isActive ? 'border-[#2D3A2D] shadow-xl scale-[1.01]' : 'border-transparent'}
+        ${!category.available ? 'opacity-50 cursor-default' : 'hover:border-[#2D3A2D]/30 hover:shadow-lg'}
         bg-white`}
-      whileHover={category.available ? { y: -4 } : {}}
+      whileHover={category.available ? { y: -3 } : {}}
       whileTap={category.available ? { scale: 0.98 } : {}}
     >
-      {/* Product Image — clean light bg, studio style */}
+      {/* Category image — pharmacy/wellness aesthetic */}
       <div className={`aspect-[4/3] relative overflow-hidden ${category.bg || 'bg-gray-100'}`}>
         <img
           src={category.image}
@@ -692,32 +692,33 @@ function CategoryCard({ category, isActive, onClick }) {
             category.available ? 'group-hover:scale-105' : ''
           }`}
         />
-        {/* Subtle vignette only at bottom */}
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
 
-        {/* Coming Soon pill */}
+        {/* Coming Soon overlay */}
         {!category.available && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-[2px]">
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px]">
             <div className="bg-white rounded-full px-4 py-1.5 flex items-center gap-1.5 shadow-md border border-gray-200">
               <Lock className="w-3.5 h-3.5 text-[#4A6741]" />
               <span className="text-xs font-semibold text-[#2D3A2D]">Coming Soon</span>
             </div>
           </div>
         )}
+
+        {/* Active indicator */}
+        {isActive && (
+          <div className="absolute top-2 right-2">
+            <span className="bg-[#2D3A2D] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Selected</span>
+          </div>
+        )}
       </div>
 
       {/* Label */}
       <div className="px-4 py-3">
-        <h3 className="font-semibold text-[#2D3A2D] text-base">{category.name}</h3>
+        <h3 className="font-semibold text-[#2D3A2D] text-sm">{category.name}</h3>
         {category.available && (
           <p className="text-xs text-[#5A6B5A] mt-0.5">{category.description}</p>
         )}
       </div>
-
-      {/* Active underline */}
-      {isActive && (
-        <motion.div layoutId="activeCat" className="h-0.5 bg-[#2D3A2D] mx-4 mb-3 rounded-full" />
-      )}
     </motion.div>
   );
 }
