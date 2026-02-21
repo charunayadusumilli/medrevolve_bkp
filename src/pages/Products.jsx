@@ -687,7 +687,7 @@ export default function Products() {
           >
             <div className="max-w-7xl mx-auto">
               {/* Section Header */}
-              <div className="flex items-start justify-between mb-10 gap-4">
+              <div className="flex items-start justify-between mb-6 gap-4">
                 <div>
                   <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A6741] mb-2">
                     {categories.find(c => c.id === activeCategory)?.description}
@@ -696,9 +696,6 @@ export default function Products() {
                     {categories.find(c => c.id === activeCategory)?.name}
                     <span className="text-[#5A6B5A] text-2xl font-light ml-3">Rx Treatments</span>
                   </h2>
-                  <p className="text-[#5A6B5A] mt-2 text-sm">
-                    {filteredProducts.length} physician-prescribed treatments · Compounded at licensed pharmacy
-                  </p>
                 </div>
                 <Button
                   variant="outline"
@@ -709,19 +706,144 @@ export default function Products() {
                 </Button>
               </div>
 
-              {/* Products Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+              {/* Filter & Sort Bar */}
+              <div className="mb-8">
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  {/* Toggle filter panel */}
+                  <button
+                    onClick={() => setShowFilters(v => !v)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${
+                      showFilters || activeFilterCount > 0
+                        ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
+                        : 'bg-white border-gray-200 text-[#2D3A2D] hover:border-[#2D3A2D]'
+                    }`}
                   >
-                    <ProductCard product={product} />
-                  </motion.div>
-                ))}
+                    <SlidersHorizontal className="w-3.5 h-3.5" />
+                    Filters
+                    {activeFilterCount > 0 && (
+                      <span className="bg-white text-[#2D3A2D] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                        {activeFilterCount}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Sort dropdown */}
+                  <div className="relative">
+                    <select
+                      value={sortBy}
+                      onChange={e => setSortBy(e.target.value)}
+                      className="appearance-none pl-4 pr-8 py-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-[#2D3A2D] cursor-pointer focus:outline-none focus:border-[#2D3A2D] hover:border-[#2D3A2D] transition-colors"
+                    >
+                      {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                    </select>
+                    <ArrowUpDown className="w-3 h-3 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  </div>
+
+                  {/* Active filter chips */}
+                  {selectedForms.map(f => (
+                    <button key={f} onClick={() => toggleForm(f)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#4A6741]/10 text-[#4A6741] text-xs font-medium border border-[#4A6741]/20 hover:bg-[#4A6741]/20 transition-colors">
+                      {f} <X className="w-3 h-3" />
+                    </button>
+                  ))}
+                  {selectedBenefits.map(b => (
+                    <button key={b} onClick={() => toggleBenefit(b)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#4A6741]/10 text-[#4A6741] text-xs font-medium border border-[#4A6741]/20 hover:bg-[#4A6741]/20 transition-colors">
+                      {b} <X className="w-3 h-3" />
+                    </button>
+                  ))}
+                  {activeFilterCount > 0 && (
+                    <button onClick={clearFilters} className="text-xs text-[#8A9A8A] hover:text-[#2D3A2D] underline underline-offset-2 transition-colors">
+                      Clear all
+                    </button>
+                  )}
+                </div>
+
+                {/* Expandable filter panel */}
+                <AnimatePresence>
+                  {showFilters && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="bg-[#F9F7F4] rounded-2xl p-5 border border-gray-100 grid sm:grid-cols-2 gap-6">
+                        {/* Form filter */}
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#4A6741] mb-3">Delivery Form</p>
+                          <div className="flex flex-wrap gap-2">
+                            {ALL_FORMS.map(form => (
+                              <button
+                                key={form}
+                                onClick={() => toggleForm(form)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                                  selectedForms.includes(form)
+                                    ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
+                                    : 'bg-white text-[#2D3A2D] border-gray-200 hover:border-[#2D3A2D]'
+                                }`}
+                              >
+                                {form}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Benefit filter */}
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#4A6741] mb-3">Goal / Benefit</p>
+                          <div className="flex flex-wrap gap-2">
+                            {BENEFIT_FILTERS.map(bf => (
+                              <button
+                                key={bf.label}
+                                onClick={() => toggleBenefit(bf.label)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                                  selectedBenefits.includes(bf.label)
+                                    ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
+                                    : 'bg-white text-[#2D3A2D] border-gray-200 hover:border-[#2D3A2D]'
+                                }`}
+                              >
+                                {bf.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <p className="text-[#5A6B5A] text-sm mt-3">
+                  <span className="font-semibold text-[#1A2A1A]">{filteredProducts.length}</span> treatment{filteredProducts.length !== 1 ? 's' : ''} · Compounded at licensed pharmacy
+                </p>
               </div>
+
+              {/* Products Grid */}
+              <AnimatePresence mode="popLayout">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ delay: index * 0.06 }}
+                    >
+                      <ProductCard product={product} />
+                    </motion.div>
+                  )) : (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="col-span-3 text-center py-16"
+                    >
+                      <p className="text-[#8A9A8A] text-lg mb-3">No treatments match your filters.</p>
+                      <button onClick={clearFilters} className="text-[#4A6741] font-semibold underline underline-offset-2">Clear filters</button>
+                    </motion.div>
+                  )}
+                </div>
+              </AnimatePresence>
             </div>
           </motion.section>
         )}
