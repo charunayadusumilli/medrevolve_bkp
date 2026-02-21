@@ -669,13 +669,24 @@ function CategoryCard({ category, isActive, onClick }) {
     >
       {/* Category image — pharmacy/wellness aesthetic */}
       <div className={`aspect-[4/3] relative overflow-hidden ${category.bg || 'bg-gray-100'}`}>
-        <img
-          src={category.image}
-          alt={category.name}
-          className={`w-full h-full object-cover object-center transition-transform duration-700 ${
-            category.available ? 'group-hover:scale-105' : ''
-          }`}
-        />
+        {category.svgVisual ? (
+          <div className={`w-full h-full flex items-center justify-center ${category.bg}`} style={{ background: category.bgGradient }}>
+            <motion.div
+              animate={category.available ? { y: [0, -5, 0] } : {}}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              {category.svgVisual()}
+            </motion.div>
+          </div>
+        ) : (
+          <img
+            src={category.image}
+            alt={category.name}
+            className={`w-full h-full object-cover object-center transition-transform duration-700 ${
+              category.available ? 'group-hover:scale-105' : ''
+            }`}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
 
         {/* Coming Soon overlay */}
