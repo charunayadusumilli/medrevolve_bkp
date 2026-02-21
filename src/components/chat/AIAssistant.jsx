@@ -35,7 +35,6 @@ function PersonaAvatar({ personaKey, size = 'md', ring = false }) {
 
 function PersonaFAB({ ctx, onClick }) {
   const vis = getPersonaVisuals(ctx.personaKey);
-  const [imgErr, setImgErr] = React.useState(false);
   return (
     <motion.div
       key="fab"
@@ -43,7 +42,7 @@ function PersonaFAB({ ctx, onClick }) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0, opacity: 0 }}
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2"
+      className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2"
     >
       <motion.div
         initial={{ opacity: 0, x: 12 }}
@@ -52,22 +51,19 @@ function PersonaFAB({ ctx, onClick }) {
         className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg text-white"
         style={{ background: vis.fabBg }}
       >
-        <span>{ctx.persona}</span>
+        <Bot className="w-3 h-3" />
+        <span>AI {ctx.persona}</span>
         <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
       </motion.div>
       <motion.button
         onClick={onClick}
         whileHover={{ scale: 1.07 }}
         whileTap={{ scale: 0.93 }}
-        className="relative w-16 h-16 rounded-full shadow-2xl overflow-hidden flex items-center justify-center"
-        style={{ background: vis.fabBg }}
+        className="relative w-20 h-20 rounded-2xl shadow-2xl overflow-hidden flex items-end justify-center"
+        style={{ background: `linear-gradient(160deg, ${vis.gradient[0]}33, ${vis.gradient[1]}66)`, border: `2px solid ${vis.gradient[0]}55` }}
       >
-        {!imgErr && vis.photo ? (
-          <img src={vis.photo} alt={ctx.persona} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
-        ) : (
-          <span className="font-bold text-white text-lg">{vis.initials}</span>
-        )}
-        <span className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-white" />
+        <AvatarFigure personaKey={ctx.personaKey} size="md" animated={true} />
+        <span className="absolute top-1.5 right-1.5 w-3 h-3 rounded-full bg-green-400 border-2 border-white" />
       </motion.button>
     </motion.div>
   );
