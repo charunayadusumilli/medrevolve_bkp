@@ -546,21 +546,25 @@ export default function Products() {
           >
             <div className="max-w-7xl mx-auto">
               {/* Section Header */}
-              <div className="flex items-center justify-between mb-10">
+              <div className="flex items-start justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-light text-[#2D3A2D]">
-                    {categories.find(c => c.id === activeCategory)?.name} Products
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A6741] mb-2">
+                    {categories.find(c => c.id === activeCategory)?.description}
+                  </p>
+                  <h2 className="text-3xl md:text-4xl font-light text-[#1A2A1A]">
+                    {categories.find(c => c.id === activeCategory)?.name}
+                    <span className="text-[#5A6B5A] text-2xl font-light ml-3">Rx Treatments</span>
                   </h2>
-                  <p className="text-[#5A6B5A] mt-2">
-                    Personalized treatments backed by science
+                  <p className="text-[#5A6B5A] mt-2 text-sm">
+                    {filteredProducts.length} physician-prescribed treatments · Compounded at licensed pharmacy
                   </p>
                 </div>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   onClick={() => setActiveCategory(null)}
-                  className="text-[#5A6B5A] hover:text-[#2D3A2D]"
+                  className="flex-shrink-0 border-[#2D3A2D]/20 text-[#2D3A2D] hover:bg-[#2D3A2D] hover:text-white rounded-full text-sm"
                 >
-                  View All Categories
+                  All Categories
                 </Button>
               </div>
 
