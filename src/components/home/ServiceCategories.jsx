@@ -9,7 +9,7 @@ const categories = [
     name: 'Weight Loss',
     icon: Scale,
     description: 'GLP-1 programs that work',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=280&q=70&fm=webp',
     available: true,
     color: '#4A6741',
     href: 'Products?category=weight_loss'
@@ -18,7 +18,7 @@ const categories = [
     name: 'Longevity',
     icon: Heart,
     description: 'Peptides & anti-aging',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=280&q=70&fm=webp',
     available: true,
     color: '#6B8F5E',
     href: 'Products?category=longevity'
@@ -27,7 +27,7 @@ const categories = [
     name: 'Hormones',
     icon: Sparkles,
     description: 'Balance from within',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=280&q=70&fm=webp',
     available: true,
     color: '#8B7355',
     href: 'Products?category=hormone'
@@ -36,7 +36,7 @@ const categories = [
     name: 'Hair',
     icon: Scissors,
     description: 'Regrow & restore',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=280&q=70&fm=webp',
     available: false,
     color: '#A68B6A',
     href: 'Products?category=hair_loss'
@@ -45,7 +45,7 @@ const categories = [
     name: 'Skin',
     icon: Droplets,
     description: 'Glow from within',
-    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=280&q=70&fm=webp',
     available: false,
     color: '#C4A77D',
     href: 'Products'
@@ -54,7 +54,7 @@ const categories = [
     name: "Men's Health",
     icon: HeartPulse,
     description: 'Performance & vitality',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=280&q=70&fm=webp',
     available: true,
     color: '#5A7A8A',
     href: 'Products?category=mens_health'
