@@ -8,7 +8,7 @@ import { createPageUrl } from '@/utils';
 const slides = [
   {
     tag: 'Weight Loss',
-    headline: 'Finally, A Body\nYou Love.',
+    headline: 'FEEL\nBETTER.',
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
@@ -17,7 +17,7 @@ const slides = [
   },
   {
     tag: "Men's Health",
-    headline: 'Built For\nThe Modern Man.',
+    headline: 'BUILT\nDIFFERENT.',
     sub: 'Testosterone, vitality, and performance protocols — prescribed by real doctors.',
     cta: 'Get My Plan',
     ctaHref: 'Products?category=mens_health',
@@ -26,7 +26,7 @@ const slides = [
   },
   {
     tag: "Women's Wellness",
-    headline: 'Feel Like\nYourself Again.',
+    headline: 'YOUR\nBIOLOGY.',
     sub: 'Hormone balance, weight loss, and longevity — designed around your biology.',
     cta: 'Discover My Plan',
     ctaHref: 'Products?category=womens_health',
@@ -35,7 +35,7 @@ const slides = [
   },
   {
     tag: 'Longevity',
-    headline: 'Perform At\nEvery Age.',
+    headline: 'LIVE\nLONGER.',
     sub: 'Peptide protocols and longevity programs backed by cutting-edge science.',
     cta: 'Explore Longevity',
     ctaHref: 'Products?category=longevity',
