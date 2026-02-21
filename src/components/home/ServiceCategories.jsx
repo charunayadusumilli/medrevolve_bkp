@@ -6,52 +6,58 @@ import { Scale, Heart, Sparkles, Scissors, Droplets, HeartPulse, Lock } from 'lu
 
 const categories = [
   {
-    name: 'Weight',
+    name: 'Weight Loss',
     icon: Scale,
-    description: 'Sustainable weight management solutions',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
+    description: 'GLP-1 programs that work',
+    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=400&q=85',
     available: true,
-    color: '#4A6741'
+    color: '#4A6741',
+    href: 'Products?category=weight_loss'
   },
   {
     name: 'Longevity',
     icon: Heart,
-    description: 'Age gracefully with science-backed treatments',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80',
+    description: 'Peptides & anti-aging',
+    image: 'https://images.unsplash.com/photo-1590253230532-a67f6bc61b9e?w=400&q=85',
     available: true,
-    color: '#6B8F5E'
+    color: '#6B8F5E',
+    href: 'Products?category=longevity'
   },
   {
-    name: 'Hormone',
+    name: 'Hormones',
     icon: Sparkles,
-    description: 'Balance your hormones naturally',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
+    description: 'Balance from within',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=85',
     available: true,
-    color: '#8B7355'
+    color: '#8B7355',
+    href: 'Products?category=hormone'
   },
   {
     name: 'Hair',
     icon: Scissors,
-    description: 'Restore and revitalize your hair',
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80',
+    description: 'Regrow & restore',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85',
     available: false,
-    color: '#A68B6A'
+    color: '#A68B6A',
+    href: 'Products?category=hair_loss'
   },
   {
     name: 'Skin',
     icon: Droplets,
-    description: 'Rejuvenate your skin from within',
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=80',
+    description: 'Glow from within',
+    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&q=85',
     available: false,
-    color: '#C4A77D'
+    color: '#C4A77D',
+    href: 'Products'
   },
   {
-    name: 'Sex',
+    name: "Men's Health",
     icon: HeartPulse,
-    description: 'Enhance your intimate wellness',
-    image: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&q=80',
-    available: false,
-    color: '#8B6B61'
+    description: 'Performance & vitality',
+    image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=400&q=85',
+    available: true,
+    color: '#5A7A8A',
+    href: 'Products?category=mens_health'
   }
 ];
 
