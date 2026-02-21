@@ -108,22 +108,28 @@ export default function FeaturedProducts() {
 }
 
 function ProductCard({ product }) {
+  const Illustration = PRODUCT_ILLUSTRATIONS[product.id];
+  const bg = PRODUCT_BG[product.id] || ['#E8F0E4', '#D4E8CC'];
+
   return (
     <motion.div 
       className="w-72 bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
       whileHover={{ y: -8 }}
     >
-      <div className="relative aspect-square overflow-hidden bg-[#F5F0E8]">
-        <img 
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+      <div
+        className="relative aspect-square overflow-hidden flex items-center justify-center p-6"
+        style={{ background: `linear-gradient(135deg, ${bg[0]} 0%, ${bg[1]} 100%)` }}
+      >
+        <div className="w-full h-full transition-transform duration-500 group-hover:scale-105">
+          {Illustration && <Illustration />}
+        </div>
         {product.tag && (
-          <span className="absolute top-4 left-4 bg-[#4A6741] text-white text-xs font-medium px-3 py-1 rounded-full">
+          <span className="absolute top-4 left-4 bg-[#2D3A2D] text-white text-xs font-semibold px-3 py-1 rounded-full tracking-wide">
             {product.tag}
           </span>
         )}
+        {/* MR watermark */}
+        <span className="absolute bottom-3 right-4 text-[10px] font-black text-black/10 tracking-tighter select-none">MR</span>
       </div>
       <div className="p-6">
         <span className="text-xs font-medium text-[#4A6741] uppercase tracking-wide">
