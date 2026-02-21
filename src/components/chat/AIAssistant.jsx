@@ -238,6 +238,17 @@ export default function AIAssistant() {
     }
   }, [isOpen, minimized]);
 
+  const { isListening, isSpeaking, startListening, stopListening, stopSpeaking, voiceSupported } = useVoiceMode({
+    onTranscript: useCallback((transcript) => {
+      sendMessageRef.current(transcript);
+    }, []),
+    onSpeakText: speakRef,
+    isVoiceMode,
+  });
+
+  // We need a ref to sendMessage to avoid stale closure in voice callback
+  const sendMessageRef = useRef(null);
+
   const sendMessage = useCallback(async (text) => {
     const trimmed = (text || input).trim();
     if (!trimmed || loading) return;
@@ -270,21 +281,36 @@ ${activeCtx.persona}:`,
         add_context_from_internet: false,
       });
 
+      const replyText = typeof response === 'string' ? response : JSON.stringify(response);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: typeof response === 'string' ? response : JSON.stringify(response),
+        content: replyText,
         personaKey: activeCtx.personaKey,
       }]);
+
+      // Auto-speak in voice mode
+      if (isVoiceMode && speakRef.current) {
+        speakRef.current(replyText);
+      }
     } catch {
+      const errText = 'Sorry, I had a hiccup! Please try again in a moment.';
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Sorry, I had a hiccup! Please try again in a moment.',
+        content: errText,
         personaKey: activeCtx.personaKey,
       }]);
+      if (isVoiceMode && speakRef.current) {
+        speakRef.current(errText);
+      }
     } finally {
       setLoading(false);
     }
-  }, [input, loading, messages, pageName, pageProduct]);
+  }, [input, loading, messages, pageName, pageProduct, isVoiceMode]);
+
+  // Keep ref in sync
+  useEffect(() => {
+    sendMessageRef.current = sendMessage;
+  }, [sendMessage]);
 
   const resetChat = () => {
     const newCtx = getPageContext(pageName);
