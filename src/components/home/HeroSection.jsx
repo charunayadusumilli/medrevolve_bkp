@@ -12,7 +12,7 @@ const slides = [
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=1600&q=95',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=95',
     accent: '#A8C99B',
   },
   {
@@ -21,7 +21,7 @@ const slides = [
     sub: 'Testosterone, vitality, and performance protocols — prescribed by real doctors.',
     cta: 'Get My Plan',
     ctaHref: 'Products?category=mens_health',
-    image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=1600&q=95',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=95',
     accent: '#C9B99A',
   },
   {
@@ -39,7 +39,7 @@ const slides = [
     sub: 'Peptide protocols and longevity programs backed by cutting-edge science.',
     cta: 'Explore Longevity',
     ctaHref: 'Products?category=longevity',
-    image: 'https://images.unsplash.com/photo-1590253230532-a67f6bc61b9e?w=1600&q=95',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=95',
     accent: '#A8BFC9',
   },
 ];
