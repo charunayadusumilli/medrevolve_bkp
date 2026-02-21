@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const treatCategories = [
-  { name: 'Weight Loss', href: 'Products?category=weight_loss', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=120&q=80' },
-  { name: "Men's Health", href: 'Products?category=mens_health', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=120&q=80' },
-  { name: "Women's Health", href: 'Products?category=womens_health', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=120&q=80' },
-  { name: 'Longevity', href: 'Products?category=longevity', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=120&q=80' },
-  { name: 'Hair Loss', href: 'Products?category=hair_loss', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=120&q=80' },
+  { name: 'Weight Loss', href: 'Products?category=weight_loss', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=80' },
+  { name: "Men's Health", href: 'Products?category=mens', image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=120&q=80' },
+  { name: "Women's Health", href: 'Products?category=womens', image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=120&q=80' },
+  { name: 'Longevity', href: 'Products?category=longevity', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=120&q=80' },
+  { name: 'Hormones', href: 'Products?category=hormone', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=120&q=80' },
   { name: 'Peptides', href: 'Products?category=peptides', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=120&q=80' },
 ];
 
