@@ -10,64 +10,64 @@ const products = [
     id: 1,
     name: 'Semaglutide',
     category: 'Weight Loss',
-    description: 'FDA-approved treatment for sustainable weight management',
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80',
+    description: 'Lose up to 15% body weight with once-weekly dosing',
+    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=500&q=85',
     tag: 'Best Seller'
   },
   {
     id: 2,
     name: 'Tirzepatide',
     category: 'Weight Loss',
-    description: 'Advanced dual-action weight management solution',
-    image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=400&q=80',
-    tag: 'Popular'
+    description: 'Dual-action GLP-1 for maximum results',
+    image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=500&q=85',
+    tag: 'Strongest'
   },
   {
     id: 3,
     name: 'Sermorelin',
     category: 'Longevity',
-    description: 'Natural growth hormone releasing peptide',
-    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80',
+    description: 'Sleep deeper, recover faster, feel younger',
+    image: 'https://images.unsplash.com/photo-1590253230532-a67f6bc61b9e?w=500&q=85',
     tag: null
   },
   {
     id: 4,
-    name: 'Glutathione Injection',
+    name: 'Glutathione',
     category: 'Longevity',
-    description: 'Powerful antioxidant for cellular health',
-    image: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=400&q=80',
-    tag: 'New'
+    description: 'Radiant skin and cellular health from within',
+    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=85',
+    tag: 'Glow'
   },
   {
     id: 5,
-    name: 'NAD+ Nasal Spray',
+    name: 'NAD+ Injection',
     category: 'Longevity',
-    description: 'Boost cellular energy and metabolism',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80',
+    description: 'All-day energy and sharp mental clarity',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=85',
     tag: null
   },
   {
     id: 6,
-    name: 'B12 Injection',
-    category: 'Longevity',
-    description: 'Essential vitamin for energy and vitality',
-    image: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=400&q=80',
+    name: 'Testosterone Therapy',
+    category: "Men's Health",
+    description: 'Reclaim your drive, strength and confidence',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=85',
     tag: null
   },
   {
     id: 7,
-    name: 'Semaglutide Oral Drops',
+    name: 'Semaglutide Drops',
     category: 'Weight Loss',
-    description: 'Convenient oral alternative for weight management',
-    image: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&q=80',
-    tag: 'New'
+    description: 'Same results — zero injections required',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=85',
+    tag: 'Needle-Free'
   },
   {
     id: 8,
-    name: 'Synapsin Nasal Spray',
+    name: 'Synapsin Spray',
     category: 'Longevity',
-    description: 'Support cognitive function and brain health',
-    image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&q=80',
+    description: 'Stay sharp and focused at any age',
+    image: 'https://images.unsplash.com/photo-1581079289196-67865ea83118?w=500&q=85',
     tag: null
   }
 ];
