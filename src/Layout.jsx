@@ -270,8 +270,9 @@ export default function Layout({ children }) {
               ) : (
                 <>
                   <Button variant="ghost"
-                    className="hidden sm:flex text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8] rounded-full"
+                    className="hidden sm:flex text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8] rounded-full items-center gap-1.5"
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}>
+                    <User className="w-4 h-4" />
                     Sign In
                   </Button>
                   <Link to={createPageUrl('PatientOnboarding')} className="hidden sm:block">
