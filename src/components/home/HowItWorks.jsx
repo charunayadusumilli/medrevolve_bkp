@@ -8,38 +8,38 @@ import { ClipboardCheck, Stethoscope, Package, ArrowRight } from 'lucide-react';
 const steps = [
   {
     number: '01',
-    title: 'Complete Health Questionnaire',
-    description: 'Create your profile and complete a short health questionnaire. Share your wellness goals and medical history.',
+    title: 'Take a 5-Minute Assessment',
+    description: 'Tell us about your goals and health history. No doctor visit required — do it from your phone.',
     icon: ClipboardCheck,
-    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=90',
     details: [
-      'Create a profile with your contact information',
-      'Complete a comprehensive health questionnaire',
-      'Select your preferred treatment options'
+      'Takes under 5 minutes on any device',
+      'Share your goals and health background',
+      'No insurance or referral needed'
     ]
   },
   {
     number: '02',
-    title: 'Medical Review',
-    description: 'A licensed medical provider reviews your health history to prescribe the best possible solution for you.',
+    title: 'Get Matched With a Provider',
+    description: 'A licensed clinician reviews your profile and creates a personalized treatment plan — just for you.',
     icon: Stethoscope,
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=700&q=90',
     details: [
-      'Board-certified physician review',
-      'Personalized treatment recommendation',
-      'Direct communication if needed'
+      'Board-certified physicians & NPs',
+      'Personalized protocol, not generic scripts',
+      'Async review — no waiting room'
     ]
   },
   {
     number: '03',
-    title: 'Pharmacy Fulfillment',
-    description: 'Receive your medication directly and discreetly to your home within 3-5 business days.',
+    title: 'Delivered. Coached. Supported.',
+    description: 'Your treatment arrives discreetly in 24–48 hours. Your AI Health Coach and care team support you every step.',
     icon: Package,
-    image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=700&q=90',
     details: [
-      'Discreet packaging',
-      'Fast nationwide shipping',
-      'Ongoing support available'
+      'Discreet delivery in 24–48 hours',
+      'AI Health Coach between visits',
+      'Ongoing adjustments as you progress'
     ]
   }
 ];
