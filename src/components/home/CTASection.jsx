@@ -16,10 +16,10 @@ export default function CTASection() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-            Unlock Your <span className="font-medium text-[#4A6741]">Revenue Potential</span>
+            Grow With <span className="font-medium text-[#4A6741]">MedRevolve</span>
           </h2>
           <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-            Partner with MedRevolve and grow your business while helping others achieve their wellness goals
+            Join thousands of creators and businesses earning while helping others transform their health
           </p>
         </motion.div>
 
