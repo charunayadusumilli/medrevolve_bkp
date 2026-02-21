@@ -102,7 +102,7 @@ const allProducts = [
     name: 'Tirzepatide',
     category: 'weight',
     subtitle: 'Dual GIP/GLP-1 Injection',
-    form: 'Injectable Vial',
+    form: 'Auto-Injector Pen',
     promise: 'Up to 22% weight loss — strongest available',
     lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=90',
     productBg: 'bg-[#F0EDF5]',
