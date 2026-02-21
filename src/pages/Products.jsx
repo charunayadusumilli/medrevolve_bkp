@@ -492,19 +492,25 @@ export default function Products() {
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Hero Section */}
-      <section className="pt-8 pb-12 px-6 lg:px-8">
+      <section className="pt-10 pb-12 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-2xl mx-auto mb-12"
+            className="max-w-3xl mx-auto mb-12 text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4 tracking-tight">
-              Explore Our Products
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#4A6741] mb-3">Prescription Treatments</p>
+            <h1 className="text-4xl md:text-5xl font-light text-[#1A2A1A] mb-4 tracking-tight">
+              Clinically Proven.<br/><span className="font-semibold">Physician Prescribed.</span>
             </h1>
-            <p className="text-lg text-[#5A6B5A]">
-              Wellness that fits your life. Choose your path to feeling your best.
+            <p className="text-base text-[#5A6B5A] max-w-xl mx-auto">
+              Every treatment is compounded at a licensed Rx pharmacy, prescribed by a board-certified provider, and shipped discreetly to your door. Select your category to explore.
             </p>
+            <div className="flex items-center justify-center gap-6 mt-6 text-xs text-[#5A6B5A]">
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Licensed Providers</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Compounding Pharmacy</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Discreet Shipping</span>
+            </div>
           </motion.div>
 
           {/* Category Grid - FrontCare Style */}
