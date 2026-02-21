@@ -515,8 +515,8 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col"
-            style={{ height: minimized ? 'auto' : 'min(620px, calc(100vh - 3rem))' }}
+            className="fixed bottom-6 right-6 z-40 w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col"
+            style={{ height: minimized ? 'auto' : 'min(580px, calc(100vh - 8rem))' }}
           >
             <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
 
@@ -525,10 +525,15 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
                 <div className="flex items-center gap-3">
                   <PersonaAvatar personaKey={ctx.personaKey} size="md" ring />
                   <div>
-                    <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
+                    <div className="flex items-center gap-1.5">
+                      <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
+                      <span className="text-[10px] bg-white/20 text-white/80 px-1.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                        <Bot className="w-2.5 h-2.5" /> AI
+                      </span>
+                    </div>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
-                      <p className="text-[11px] text-white/65 leading-tight">Online · {ctx.audience} specialist</p>
+                      <p className="text-[11px] text-white/65 leading-tight">AI Assistant · MedRevolve only</p>
                     </div>
                   </div>
                 </div>
