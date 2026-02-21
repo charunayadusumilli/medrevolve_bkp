@@ -84,6 +84,8 @@ export default function WellnessJourneySection() {
                         src={j.image}
                         alt={j.category}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10 md:bg-gradient-to-l md:from-transparent md:to-white/5" />
                       {/* Number overlay */}
