@@ -400,9 +400,18 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <PhoneInput
           id="phone"
           value={formData.phone || ''}
-          onChange={(v) => setFormData({ ...formData, phone: v, sms_consent: v ? formData.sms_consent : false })}
+          onChange={(v) => {
+            const isValid = !v || /^\+\d{10,}$/.test(v);
+            setFormData({ 
+              ...formData, 
+              phone: v, 
+              sms_consent: v && isValid ? formData.sms_consent : false,
+              _phoneError: v && !isValid ? 'Please enter a valid phone number with at least 10 digits' : ''
+            });
+          }}
         />
-        {formData.phone && (
+        {formData._phoneError && <p className="text-xs text-red-500 mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{formData._phoneError}</p>}
+        {formData.phone && !formData._phoneError && (
           <div className="mt-3 bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <input
@@ -534,21 +543,21 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
          </div>
 
         {/* Patient Email */}
-        <div className="flex items-start gap-3 pb-4 border-b border-[#D8D0C5]">
+        <div className="flex items-start gap-3 py-4 border-b border-[#D8D0C5]">
           <User className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
           <div className="flex-1 min-w-0 overflow-hidden">
             <p className="font-semibold text-[#2D3A2D] mb-0.5">Email</p>
-            <p className="text-sm text-[#5A6B5A] break-all">{formData.patient_email}</p>
+            <p className="text-sm text-[#5A6B5A] break-all overflow-hidden text-ellipsis">{formData.patient_email}</p>
           </div>
         </div>
 
         {/* Reason */}
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-3 py-4">
           <MessageSquare className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
           <div className="flex-1 min-w-0 overflow-hidden">
             <p className="font-semibold text-[#2D3A2D] mb-0.5">Reason</p>
-            <p className="text-sm text-[#5A6B5A] break-words" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{formData.reason}</p>
-            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic break-words" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{formData.notes}</p>}
+            <p className="text-sm text-[#5A6B5A] break-words whitespace-pre-wrap">{formData.reason}</p>
+            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic break-words whitespace-pre-wrap">{formData.notes}</p>}
           </div>
         </div>
       </div>
@@ -688,11 +697,18 @@ export default function BookAppointment() {
 
   // Auto-fill email from logged-in user
   useEffect(() => {
-    base44.auth.me().then(u => {
-      if (u?.email && !formData.patient_email) {
-        setFormData({ ...formData, patient_email: u.email });
-      }
-    }).catch(() => {});
+    const autoFillEmail = async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (isAuth) {
+          const u = await base44.auth.me();
+          if (u?.email && !formData.patient_email) {
+            setFormData({ ...formData, patient_email: u.email });
+          }
+        }
+      } catch {}
+    };
+    autoFillEmail();
   }, []);
 
   const { data: providers = [] } = useQuery({
