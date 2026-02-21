@@ -16,13 +16,16 @@ Deno.serve(async (req) => {
             }, { status: 400 });
         }
 
-        // Try to get current user
+        // Try to get current user (may fail during login flow)
         let userEmail = null;
         try {
-            const user = await base44.auth.me();
-            userEmail = user?.email;
+            const isAuth = await base44.auth.isAuthenticated();
+            if (isAuth) {
+                const user = await base44.auth.me();
+                userEmail = user?.email;
+            }
         } catch {
-            // User not logged in
+            // User not logged in or in login flow — safe to ignore
         }
 
         // Get session ID from cookie or generate
