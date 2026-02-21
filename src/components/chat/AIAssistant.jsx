@@ -176,14 +176,9 @@ function VoiceCallOverlay({ ctx, status, isSpeaking, isListening, onEndCall, onT
           />
         )}
         {/* Avatar */}
-        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl relative z-10">
-          {!imgErr && vis.photo ? (
-            <img src={vis.photo} alt={ctx.persona} className="w-full h-full object-cover" onError={() => setImgErr(true)} />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold" style={{ background: vis.fabBg }}>
-              {vis.initials}
-            </div>
-          )}
+        <div className="w-32 h-36 rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl relative z-10 flex items-end justify-center"
+          style={{ background: `linear-gradient(160deg, ${vis.gradient[0]}33, ${vis.gradient[1]}55)` }}>
+          <AvatarFigure personaKey={ctx.personaKey} size="lg" animated={true} />
         </div>
       </div>
 
