@@ -565,17 +565,70 @@ const categoryParamMap = {
   'peptides': 'longevity',
 };
 
+// All unique form types across products
+const ALL_FORMS = ['Auto-Injector Pen', 'Injectable Vial', 'Oral Tablet', 'Oral Capsule', 'Oral Drops', 'Topical Cream', 'Nasal Spray', 'Cream / Tablet'];
+
+// Benefit keyword buckets for filtering
+const BENEFIT_FILTERS = [
+  { label: 'Weight Loss', keywords: ['weight loss', 'lose weight', 'fat loss', 'GLP-1', 'metabolism'] },
+  { label: 'Energy & Mood', keywords: ['energy', 'mood', 'cognition', 'fatigue', 'mental'] },
+  { label: 'Recovery', keywords: ['recovery', 'healing', 'repair', 'tendon', 'muscle'] },
+  { label: 'Hormone Balance', keywords: ['hormone', 'testosterone', 'estrogen', 'libido', 'TRT', 'HRT', 'thyroid'] },
+  { label: 'Anti-Aging', keywords: ['anti-aging', 'longevity', 'cellular', 'DNA', 'sleep', 'GH'] },
+  { label: 'Skin & Hair', keywords: ['skin', 'hair', 'acne', 'brightening', 'glow'] },
+];
+
+const SORT_OPTIONS = [
+  { value: 'popularity', label: 'Most Popular' },
+  { value: 'price_asc', label: 'Price: Low to High' },
+  { value: 'price_desc', label: 'Price: High to Low' },
+];
+
+// Parse customer count string to number for popularity sort
+function parseCustomers(str) {
+  return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
+}
+
 export default function Products() {
   const urlParams = new URLSearchParams(window.location.search);
   const rawCategory = urlParams.get('category') || null;
   const initialCategory = rawCategory ? (categoryParamMap[rawCategory] || rawCategory) : null;
   
   const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [selectedForms, setSelectedForms] = useState([]);
+  const [selectedBenefits, setSelectedBenefits] = useState([]);
+  const [sortBy, setSortBy] = useState('popularity');
+  const [showFilters, setShowFilters] = useState(false);
+
+  const toggleForm = (form) => setSelectedForms(prev => prev.includes(form) ? prev.filter(f => f !== form) : [...prev, form]);
+  const toggleBenefit = (b) => setSelectedBenefits(prev => prev.includes(b) ? prev.filter(x => x !== b) : [...prev, b]);
+  const clearFilters = () => { setSelectedForms([]); setSelectedBenefits([]); setSortBy('popularity'); };
+  const activeFilterCount = selectedForms.length + selectedBenefits.length + (sortBy !== 'popularity' ? 1 : 0);
 
   const filteredProducts = useMemo(() => {
     if (!activeCategory) return [];
-    return allProducts.filter(product => product.category === activeCategory);
-  }, [activeCategory]);
+    let products = allProducts.filter(product => product.category === activeCategory);
+
+    if (selectedForms.length > 0) {
+      products = products.filter(p => selectedForms.includes(p.form));
+    }
+
+    if (selectedBenefits.length > 0) {
+      products = products.filter(p => {
+        const text = [...p.benefits, p.description, p.promise, p.subtitle].join(' ').toLowerCase();
+        return selectedBenefits.some(label => {
+          const bucket = BENEFIT_FILTERS.find(b => b.label === label);
+          return bucket?.keywords.some(kw => text.includes(kw.toLowerCase()));
+        });
+      });
+    }
+
+    if (sortBy === 'price_asc') products = [...products].sort((a, b) => a.price - b.price);
+    else if (sortBy === 'price_desc') products = [...products].sort((a, b) => b.price - a.price);
+    else products = [...products].sort((a, b) => parseCustomers(b.customers) - parseCustomers(a.customers));
+
+    return products;
+  }, [activeCategory, selectedForms, selectedBenefits, sortBy]);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
