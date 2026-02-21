@@ -146,9 +146,9 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-2 flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center">
-                <Leaf className="w-5 h-5 text-white" />
+            <Link to={createPageUrl('Home')} className="flex items-center gap-2.5 flex-shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] flex items-center justify-center shadow-sm">
+                <span className="text-white font-black text-sm tracking-tighter leading-none">MR</span>
               </div>
               <span className="text-lg font-bold text-[#2D3A2D] tracking-tight">MedRevolve</span>
             </Link>
