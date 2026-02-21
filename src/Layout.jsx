@@ -171,6 +171,10 @@ export default function Layout({ children }) {
               </div>
 
               <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+                <Link to={createPageUrl('Programs')} className="block">Programs</Link>
+              </button>
+
+              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
                 <Link to={createPageUrl('Consultations')} className="block">Consultations</Link>
               </button>
 
