@@ -463,30 +463,79 @@ ${activeCtx.persona}:`,
 
                   {/* ── Input ── */}
                   <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-gray-100">
-                    <div className="flex gap-2 items-center">
-                      <Input
-                        ref={inputRef}
-                        value={input}
-                        onChange={e => setInput(e.target.value)}
-                        onKeyDown={e => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            sendMessage(input);
-                          }
-                        }}
-                        placeholder={`Ask your ${ctx.persona}...`}
-                        className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
-                        disabled={loading}
-                      />
-                      <Button
-                        onClick={() => sendMessage(input)}
-                        disabled={loading || !input.trim()}
-                        size="icon"
-                        className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0 w-9 h-9 shadow-md`}
-                      >
-                        <Send className="w-3.5 h-3.5" />
-                      </Button>
-                    </div>
+                    {isVoiceMode ? (
+                      /* ── Voice mode UI ── */
+                      <div className="flex flex-col items-center gap-3 py-2">
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          {isSpeaking ? (
+                            <><Volume2 className="w-3.5 h-3.5 text-[#4A6741] animate-pulse" /> Speaking...</>
+                          ) : isListening ? (
+                            <><Mic className="w-3.5 h-3.5 text-red-500 animate-pulse" /> Listening...</>
+                          ) : loading ? (
+                            <><span className="w-3.5 h-3.5 rounded-full border-2 border-[#4A6741] border-t-transparent animate-spin inline-block" /> Thinking...</>
+                          ) : (
+                            <span className="text-gray-400">Tap mic to speak</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3">
+                          {isSpeaking && (
+                            <button
+                              onClick={stopSpeaking}
+                              className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                            >
+                              <VolumeX className="w-4 h-4 text-gray-600" />
+                            </button>
+                          )}
+                          <button
+                            onClick={isListening ? stopListening : startListening}
+                            disabled={loading || isSpeaking}
+                            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all ${
+                              isListening
+                                ? 'bg-red-500 hover:bg-red-600 scale-105 ring-4 ring-red-200'
+                                : 'bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] hover:opacity-90 disabled:opacity-40'
+                            }`}
+                          >
+                            {isListening ? (
+                              <MicOff className="w-6 h-6 text-white" />
+                            ) : (
+                              <Mic className="w-6 h-6 text-white" />
+                            )}
+                          </button>
+                        </div>
+                        <button
+                          onClick={toggleVoiceMode}
+                          className="text-[11px] text-[#4A6741] underline underline-offset-2"
+                        >
+                          Switch to text mode
+                        </button>
+                      </div>
+                    ) : (
+                      /* ── Text mode UI ── */
+                      <div className="flex gap-2 items-center">
+                        <Input
+                          ref={inputRef}
+                          value={input}
+                          onChange={e => setInput(e.target.value)}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              sendMessage(input);
+                            }
+                          }}
+                          placeholder={`Ask your ${ctx.persona}...`}
+                          className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
+                          disabled={loading}
+                        />
+                        <Button
+                          onClick={() => sendMessage(input)}
+                          disabled={loading || !input.trim()}
+                          size="icon"
+                          className={`rounded-full bg-gradient-to-br ${ctx.color} border-0 flex-shrink-0 w-9 h-9 shadow-md`}
+                        >
+                          <Send className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    )}
                     <p className="text-center text-[10px] text-gray-300 mt-1.5">
                       MedRevolve AI · Not a substitute for medical advice
                     </p>
