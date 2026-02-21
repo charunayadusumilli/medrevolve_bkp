@@ -366,11 +366,15 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
           id="email"
           type="email"
           value={formData.patient_email || ''}
-          onChange={(e) => setFormData({ ...formData, patient_email: e.target.value })}
+          onChange={(e) => {
+            const val = e.target.value;
+            setFormData({ ...formData, patient_email: val, _emailError: val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ? 'Please enter a valid email address' : '' });
+          }}
           placeholder="your.email@example.com"
-          className="rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741]"
+          className={`rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741] ${formData._emailError ? 'border-red-400' : ''}`}
           required
         />
+        {formData._emailError && <p className="text-xs text-red-500 mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{formData._emailError}</p>}
       </div>
 
       <div>
