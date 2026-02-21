@@ -102,7 +102,7 @@ export default function ServiceCategories() {
           {categories.map((category) => (
             <motion.div key={category.name} variants={item}>
               {category.available ? (
-                <Link to={createPageUrl(`Products?category=${category.name.toLowerCase()}`)}>
+                <Link to={createPageUrl(category.href)}>
                   <CategoryCard category={category} />
                 </Link>
               ) : (
