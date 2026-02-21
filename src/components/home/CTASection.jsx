@@ -15,11 +15,12 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-            Grow With <span className="font-medium text-[#4A6741]">MedRevolve</span>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7A8F7C] mb-3">Build With Us</p>
+          <h2 className="text-4xl md:text-5xl font-light text-[#0F172A] mb-4">
+            Grow With <span className="font-semibold">MedRevolve.</span>
           </h2>
-          <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-            Join thousands of creators and businesses earning while helping others transform their health
+          <p className="text-base text-[#1E293B]/55 max-w-xl mx-auto">
+            Join creators and businesses earning while helping others transform their health and lives.
           </p>
         </motion.div>
 

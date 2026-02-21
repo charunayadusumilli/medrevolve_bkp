@@ -56,11 +56,12 @@ export default function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-            How It <span className="font-medium text-[#4A6741]">Works</span>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7A8F7C] mb-3">Simple. Clear. Effective.</p>
+          <h2 className="text-4xl md:text-5xl font-light text-[#0F172A] mb-4">
+            How It <span className="font-semibold">Works.</span>
           </h2>
-          <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-            Your wellness journey in three simple steps
+          <p className="text-base text-[#1E293B]/55 max-w-xl mx-auto">
+            From your first assessment to ongoing transformation — three steps, no waiting rooms.
           </p>
         </motion.div>
 
