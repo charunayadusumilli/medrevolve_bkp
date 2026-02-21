@@ -12,7 +12,8 @@ const slides = [
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=95',
+    // Luxury gym — woman on treadmill, floor-to-ceiling windows, editorial
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=95',
     accent: '#A8C99B',
   },
   {
@@ -21,7 +22,8 @@ const slides = [
     sub: 'Testosterone, vitality, and performance protocols — prescribed by real doctors.',
     cta: 'Get My Plan',
     ctaHref: 'Products?category=mens_health',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=95',
+    // Athletic man, battle ropes, dark dramatic gym — raw & powerful
+    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=1600&q=95',
     accent: '#C9B99A',
   },
   {
@@ -30,7 +32,8 @@ const slides = [
     sub: 'Hormone balance, weight loss, and longevity — designed around your biology.',
     cta: 'Discover My Plan',
     ctaHref: 'Products?category=womens_health',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&q=95',
+    // Elegant woman wellness spa, serene luxury environment
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=95',
     accent: '#D4A8C9',
   },
   {
@@ -39,7 +42,8 @@ const slides = [
     sub: 'Peptide protocols and longevity programs backed by cutting-edge science.',
     cta: 'Explore Longevity',
     ctaHref: 'Products?category=longevity',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=95',
+    // Luxury indoor pool / spa — aspirational longevity lifestyle
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=95',
     accent: '#A8BFC9',
   },
 ];

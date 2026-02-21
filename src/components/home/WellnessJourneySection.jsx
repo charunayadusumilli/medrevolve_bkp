@@ -12,7 +12,8 @@ const journeys = [
     body: 'GLP-1 and dual-action protocols clinically proven to reduce body weight by up to 22%. Physician-supervised, structured, and intentional.',
     cta: 'Explore Weight Programs',
     href: 'Products?category=weight_loss',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=90',
+    // Woman in high-end gym, moody lighting, kettlebell — aspirational weight loss
+    image: 'https://images.unsplash.com/photo-1549476464-37392f717541?w=900&q=90',
     pill: 'Most Popular',
   },
   {
@@ -22,7 +23,8 @@ const journeys = [
     body: 'NAD+, Sermorelin, Glutathione — precision peptide protocols backed by cutting-edge cellular science. Age on your terms.',
     cta: 'Explore Longevity',
     href: 'Products?category=longevity',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&q=90',
+    // Luxury spa / wellness center pool, editorial serene
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=90',
     pill: 'Science-Backed',
   },
   {
@@ -32,7 +34,8 @@ const journeys = [
     body: 'Testosterone optimization, performance protocols, and vitality programs — prescribed by real physicians, delivered discreetly.',
     cta: "Explore Men's Health",
     href: 'Products?category=mens_health',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=90',
+    // Muscular man lifting in dramatic dark luxury gym — powerful, raw, aspirational
+    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=900&q=90',
     pill: 'High Performance',
   },
   {
@@ -42,7 +45,8 @@ const journeys = [
     body: 'Hormone balance, weight loss, and longevity — designed entirely around your biology. Modern medicine meeting modern woman.',
     cta: "Explore Women's Health",
     href: 'Products?category=womens_health',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=90',
+    // Elegant woman yoga in luxury studio, natural light, premium
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&q=90',
     pill: 'Personalized',
   },
 ];
