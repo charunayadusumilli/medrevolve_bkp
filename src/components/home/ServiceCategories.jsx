@@ -9,7 +9,7 @@ const categories = [
     name: 'Weight Loss',
     icon: Scale,
     description: 'GLP-1 programs that work',
-    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=400&q=85',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
     available: true,
     color: '#4A6741',
     href: 'Products?category=weight_loss'
