@@ -736,7 +736,12 @@ function ProductCard({ product }) {
 
         {/* Product Info */}
         <div className="p-5 flex-1 flex flex-col">
-          <p className="text-[10px] font-bold text-[#4A6741] uppercase tracking-[0.15em] mb-1">{product.subtitle}</p>
+          <div className="flex items-center gap-2 mb-1">
+            <p className="text-[10px] font-bold text-[#4A6741] uppercase tracking-[0.15em]">{product.subtitle}</p>
+            {product.form && (
+              <span className="text-[9px] font-medium text-[#8A9A8A] bg-[#F0EDE8] px-2 py-0.5 rounded-full">{product.form}</span>
+            )}
+          </div>
           <h3 className="text-lg font-semibold text-[#1A2A1A] leading-snug mb-2 group-hover:text-[#2D3A2D] transition-colors">
             {product.name}
           </h3>
