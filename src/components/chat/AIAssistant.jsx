@@ -521,13 +521,13 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
                   <div>
                     <div className="flex items-center gap-1.5">
                       <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
-                      <span className="text-[10px] bg-white/20 text-white/80 px-1.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                      <span className="text-[10px] bg-white/25 text-white px-1.5 py-0.5 rounded-full font-bold flex items-center gap-1 border border-white/30">
                         <Bot className="w-2.5 h-2.5" /> AI
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
-                      <p className="text-[11px] text-white/65 leading-tight">AI Assistant · MedRevolve only</p>
+                      <p className="text-[11px] text-white/70 leading-tight">AI Assistant · Not a real human</p>
                     </div>
                   </div>
                 </div>
