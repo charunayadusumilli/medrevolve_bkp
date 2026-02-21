@@ -40,14 +40,13 @@ export default function DifferenceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="inline-block text-sm font-medium text-[#4A6741] uppercase tracking-wide mb-4">
-            Why Choose Us
-          </span>
-          <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-            The <span className="font-medium text-[#4A6741]">MedRevolve</span> Difference
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7A8F7C] mb-3">Why MedRevolve</p>
+          <h2 className="text-4xl md:text-5xl font-light text-[#0F172A] mb-4">
+            Precision. Discretion.<br />
+            <span className="font-semibold">Modern Wellness.</span>
           </h2>
-          <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-            We're committed to providing the highest quality wellness solutions with care and transparency
+          <p className="text-base text-[#1E293B]/55 max-w-xl mx-auto">
+            We treat the whole person — not just the symptom. Physician oversight, pharmacy-grade quality, and ongoing coaching at every step.
           </p>
         </motion.div>
 

@@ -78,17 +78,18 @@ export default function ServiceCategories() {
   return (
     <section className="py-24 px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-            Explore Our <span className="font-medium text-[#4A6741]">Services</span>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7A8F7C] mb-3">Where Will You Begin?</p>
+          <h2 className="text-4xl md:text-5xl font-light text-[#0F172A] mb-3">
+            Explore Our <span className="font-semibold">Services.</span>
           </h2>
-          <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-            Personalized wellness solutions designed to help you thrive
+          <p className="text-base text-[#1E293B]/55 max-w-lg mx-auto">
+            Precision wellness solutions designed around your goals — not generic protocols.
           </p>
         </motion.div>
 
