@@ -571,18 +571,18 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* ── Voice call CTA banner ── */}
+                  {/* ── AI Voice banner ── */}
                   {voiceSupported && (
-                    <div className="flex-shrink-0 bg-gradient-to-r from-[#4A6741]/10 to-[#6B8F5E]/10 border-t border-[#4A6741]/10 px-4 py-2 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <PhoneCall className="w-3.5 h-3.5 text-[#4A6741]" />
-                        <span className="text-xs text-[#4A6741] font-medium">Prefer to talk?</span>
+                    <div className="flex-shrink-0 bg-[#F5F0E8] border-t border-[#E8E0D5] px-4 py-2 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <Bot className="w-3.5 h-3.5 text-[#4A6741]" />
+                        <span className="text-xs text-[#5A6B5A]">AI voice assistant</span>
                       </div>
                       <button
                         onClick={startVoiceCall}
                         className="text-xs bg-[#4A6741] text-white px-3 py-1 rounded-full font-semibold hover:bg-[#3D5636] transition-colors"
                       >
-                        Start Voice Chat
+                        Talk to AI
                       </button>
                     </div>
                   )}
