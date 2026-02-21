@@ -4,72 +4,17 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PRODUCT_ILLUSTRATIONS, PRODUCT_BG } from './ProductIllustration';
 
 const products = [
-  {
-    id: 1,
-    name: 'Semaglutide',
-    category: 'Weight Loss',
-    description: 'Lose up to 15% body weight with once-weekly dosing',
-    image: 'https://images.unsplash.com/photo-1609899464926-da5a3b1d460f?w=500&q=85',
-    tag: 'Best Seller'
-  },
-  {
-    id: 2,
-    name: 'Tirzepatide',
-    category: 'Weight Loss',
-    description: 'Dual-action GLP-1 for maximum results',
-    image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=500&q=85',
-    tag: 'Strongest'
-  },
-  {
-    id: 3,
-    name: 'Sermorelin',
-    category: 'Longevity',
-    description: 'Sleep deeper, recover faster, feel younger',
-    image: 'https://images.unsplash.com/photo-1590253230532-a67f6bc61b9e?w=500&q=85',
-    tag: null
-  },
-  {
-    id: 4,
-    name: 'Glutathione',
-    category: 'Longevity',
-    description: 'Radiant skin and cellular health from within',
-    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=500&q=85',
-    tag: 'Glow'
-  },
-  {
-    id: 5,
-    name: 'NAD+ Injection',
-    category: 'Longevity',
-    description: 'All-day energy and sharp mental clarity',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=85',
-    tag: null
-  },
-  {
-    id: 6,
-    name: 'Testosterone Therapy',
-    category: "Men's Health",
-    description: 'Reclaim your drive, strength and confidence',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=85',
-    tag: null
-  },
-  {
-    id: 7,
-    name: 'Semaglutide Drops',
-    category: 'Weight Loss',
-    description: 'Same results — zero injections required',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=85',
-    tag: 'Needle-Free'
-  },
-  {
-    id: 8,
-    name: 'Synapsin Spray',
-    category: 'Longevity',
-    description: 'Stay sharp and focused at any age',
-    image: 'https://images.unsplash.com/photo-1581079289196-67865ea83118?w=500&q=85',
-    tag: null
-  }
+  { id: 1, name: 'Semaglutide', category: 'Weight Loss', description: 'Lose up to 15% body weight with once-weekly dosing', tag: 'Best Seller' },
+  { id: 2, name: 'Tirzepatide', category: 'Weight Loss', description: 'Dual-action GLP-1 for maximum results', tag: 'Strongest' },
+  { id: 3, name: 'Sermorelin', category: 'Longevity', description: 'Sleep deeper, recover faster, feel younger', tag: null },
+  { id: 4, name: 'Glutathione', category: 'Longevity', description: 'Radiant skin and cellular health from within', tag: 'Glow' },
+  { id: 5, name: 'NAD+ Injection', category: 'Longevity', description: 'All-day energy and sharp mental clarity', tag: null },
+  { id: 6, name: 'Testosterone Therapy', category: "Men's Health", description: 'Reclaim your drive, strength and confidence', tag: null },
+  { id: 7, name: 'Semaglutide Drops', category: 'Weight Loss', description: 'Same results — zero injections required', tag: 'Needle-Free' },
+  { id: 8, name: 'Synapsin Spray', category: 'Longevity', description: 'Stay sharp and focused at any age', tag: null },
 ];
 
 export default function FeaturedProducts() {
