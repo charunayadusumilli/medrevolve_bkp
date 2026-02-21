@@ -420,6 +420,7 @@ export default function Layout({ children }) {
             <div>
               <h4 className="font-semibold mb-4 text-sm uppercase tracking-widest text-white/40">Programs</h4>
               <ul className="space-y-2.5">
+                <li><Link to={createPageUrl('Programs')} className="text-white/60 hover:text-white text-sm transition-colors">Diet & Health Programs</Link></li>
                 <li><Link to={createPageUrl('PartnerProgram')} className="text-white/60 hover:text-white text-sm transition-colors">Partner Program</Link></li>
                 <li><Link to={createPageUrl('ForCreators')} className="text-white/60 hover:text-white text-sm transition-colors">Creator Program</Link></li>
                 <li><Link to={createPageUrl('ForBusiness')} className="text-white/60 hover:text-white text-sm transition-colors">For Business</Link></li>
