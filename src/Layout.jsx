@@ -386,9 +386,9 @@ export default function Layout({ children }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
             {/* Brand */}
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2 mb-5">
+              <div className="flex items-center gap-2.5 mb-5">
                 <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center">
-                  <Leaf className="w-5 h-5 text-white" />
+                  <span className="text-white font-black text-sm tracking-tighter">MR</span>
                 </div>
                 <span className="text-lg font-bold">MedRevolve</span>
               </div>
