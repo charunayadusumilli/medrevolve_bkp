@@ -530,10 +530,10 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
         {/* Reason */}
         <div className="flex items-start gap-3">
           <MessageSquare className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="font-semibold text-[#2D3A2D] mb-0.5">Reason</p>
-            <p className="text-sm text-[#5A6B5A]">{formData.reason}</p>
-            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic">{formData.notes}</p>}
+            <p className="text-sm text-[#5A6B5A] break-words">{formData.reason}</p>
+            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic break-words">{formData.notes}</p>}
           </div>
         </div>
       </div>
