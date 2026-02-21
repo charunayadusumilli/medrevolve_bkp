@@ -292,9 +292,9 @@ export default function Layout({ children }) {
                 <SheetContent side="right" className="w-full max-w-sm bg-white p-0">
                   <div className="flex flex-col h-full">
                     <div className="flex items-center justify-between p-5 border-b border-[#E8E0D5]">
-                      <Link to={createPageUrl('Home')} className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center">
-                          <Leaf className="w-4 h-4 text-white" />
+                      <Link to={createPageUrl('Home')} className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] flex items-center justify-center shadow-sm">
+                          <span className="text-white font-black text-xs tracking-tighter">MR</span>
                         </div>
                         <span className="text-lg font-bold text-[#2D3A2D]">MedRevolve</span>
                       </Link>
