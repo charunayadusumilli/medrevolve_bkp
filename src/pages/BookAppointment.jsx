@@ -439,10 +439,12 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <Textarea
           id="notes"
           value={formData.notes}
-          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+          onChange={(e) => { if (e.target.value.length <= 500) setFormData({ ...formData, notes: e.target.value }); }}
           placeholder="Current medications, allergies, specific questions, or anything else your provider should know..."
           className="rounded-xl border-[#E8E0D5] focus-visible:ring-[#4A6741] h-28"
+          maxLength={500}
         />
+        <p className="text-xs text-[#9A8B7A] text-right mt-1">{(formData.notes || '').length}/500</p>
       </div>
 
       <div className="flex gap-3">
