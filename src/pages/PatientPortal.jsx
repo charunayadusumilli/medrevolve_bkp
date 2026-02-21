@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import VideoCallInitiator from '@/components/video/VideoCallInitiator';
 import AutoRxPlanCard from '@/components/autorx/AutoRxPlanCard';
+import AIHealthCoach from '@/components/coach/AIHealthCoach';
 
 export default function PatientPortal() {
   const [activeTab, setActiveTab] = useState('appointments');

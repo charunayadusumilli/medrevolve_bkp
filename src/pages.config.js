@@ -81,6 +81,7 @@ import PharmacyIntake from './pages/PharmacyIntake';
 import Privacy from './pages/Privacy';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+import Programs from './pages/Programs';
 import ProviderContracts from './pages/ProviderContracts';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
@@ -91,7 +92,6 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
-import Programs from './pages/Programs';
 import __Layout from './Layout.jsx';
 
 
@@ -130,6 +130,7 @@ export const PAGES = {
     "Privacy": Privacy,
     "ProductDetail": ProductDetail,
     "Products": Products,
+    "Programs": Programs,
     "ProviderContracts": ProviderContracts,
     "ProviderDashboard": ProviderDashboard,
     "ProviderIntake": ProviderIntake,
@@ -140,7 +141,6 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
-    "Programs": Programs,
 }
 
 export const pagesConfig = {
