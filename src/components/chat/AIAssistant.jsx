@@ -143,6 +143,63 @@ function ChatBubble({ msg }) {
   );
 }
 
+// Voice mode hook
+function useVoiceMode({ onTranscript, onSpeakText, isVoiceMode }) {
+  const recognitionRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceSupported] = useState(() => 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+
+  const startListening = useCallback(() => {
+    if (!voiceSupported) return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      onTranscript(transcript);
+    };
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsListening(true);
+  }, [voiceSupported, onTranscript]);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  }, []);
+
+  const speak = useCallback((text) => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const clean = text.replace(/[*#_`>]/g, '').replace(/\n+/g, ' ');
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
+  const stopSpeaking = useCallback(() => {
+    window.speechSynthesis?.cancel();
+    setIsSpeaking(false);
+  }, []);
+
+  // Expose speak for external use
+  useEffect(() => {
+    onSpeakText.current = speak;
+  }, [speak, onSpeakText]);
+
+  return { isListening, isSpeaking, startListening, stopListening, stopSpeaking, voiceSupported };
+}
+
 export default function AIAssistant() {
   const { pageName, pageProduct, ctx } = usePageContext();
 
@@ -154,10 +211,12 @@ export default function AIAssistant() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [faqOpen, setFaqOpen] = useState(true);
+  const [isVoiceMode, setIsVoiceMode] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const prevPageRef = useRef(pageName);
+  const speakRef = useRef(null);
 
   // Reset conversation when page changes
   useEffect(() => {
