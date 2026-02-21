@@ -366,6 +366,8 @@ export default function AIAssistant() {
   }, [voiceSupported]);
 
   // ── sendMessage ───────────────────────────────────────────────────────────
+  const sessionId = useRef(`chat-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+
   const sendMessage = useCallback(async (text, fromVoice = false) => {
     const trimmed = (text || input).trim();
     if (!trimmed || loading) return;
@@ -406,6 +408,21 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
 
     setMessages(prev => [...prev, { role: 'assistant', content: replyText, personaKey: activeCtx.personaKey }]);
     setLoading(false);
+
+    // Log conversation to database
+    try {
+      let userEmail = null;
+      try { const u = await base44.auth.me(); userEmail = u?.email; } catch {}
+      await base44.entities.ChatLog.create({
+        session_id: sessionId.current,
+        user_email: userEmail,
+        page_name: pageName,
+        user_message: trimmed,
+        ai_response: replyText,
+        user_agent: navigator.userAgent,
+      });
+    } catch {}
+
 
     // In voice mode: speak then listen again
     if (fromVoice && voiceLoopRef.current) {
