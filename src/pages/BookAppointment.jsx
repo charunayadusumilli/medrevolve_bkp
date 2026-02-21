@@ -458,7 +458,7 @@ function StepDetails({ formData, setFormData, onNext, onBack }) {
         <Button
           type="button"
           onClick={onNext}
-          disabled={!formData.reason.trim() || !formData.patient_email?.trim()}
+          disabled={!formData.reason.trim() || !formData.patient_email?.trim() || !!formData._emailError}
           className="flex-2 flex-grow-[2] bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
         >
           Review & Confirm <ArrowRight className="ml-2 w-4 h-4" />
