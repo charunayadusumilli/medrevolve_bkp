@@ -223,7 +223,7 @@ export default function Layout({ children }) {
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-[#2D3A2D] hover:bg-[#F5F0E8] rounded-full px-3">
+                    <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-[#2D3A2D] hover:bg-[#F5F0E8] rounded-full px-3" aria-label="Account settings">
                       <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
                         {user.full_name?.[0] || user.email?.[0] || 'U'}
                       </div>
