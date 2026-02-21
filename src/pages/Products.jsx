@@ -513,46 +513,19 @@ export default function Products() {
             </div>
           </motion.div>
 
-          {/* Category Grid - FrontCare Style */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {/* First Row - 4 categories */}
-            {categories.slice(0, 4).map((category, index) => (
+          {/* Category Grid — 7 tiles, 4 per row */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+            {categories.map((category, index) => (
               <motion.div
                 key={category.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.07 }}
               >
                 <CategoryCard 
                   category={category} 
                   isActive={activeCategory === category.id}
-                  onClick={() => category.available && setActiveCategory(category.id)}
-                />
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Second Row - 3 categories + Title */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3 md:mt-4">
-            <motion.div 
-              className="hidden md:flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              {/* Empty space or could add decorative element */}
-            </motion.div>
-            {categories.slice(4).map((category, index) => (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
-              >
-                <CategoryCard 
-                  category={category} 
-                  isActive={activeCategory === category.id}
-                  onClick={() => category.available && setActiveCategory(category.id)}
+                  onClick={() => category.available && setActiveCategory(activeCategory === category.id ? null : category.id)}
                 />
               </motion.div>
             ))}
