@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Sparkles, Heart, Scale, Leaf, Lock, ChevronRight } from 'lucide-react';
+import { ArrowRight, Leaf, Lock, ChevronRight, SlidersHorizontal, X, ArrowUpDown, TrendingUp, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import RxProductVisual from '@/components/product/RxProductVisual';
 
