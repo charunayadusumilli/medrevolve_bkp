@@ -94,6 +94,17 @@ export default function PatientPortal() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+
+        {/* AI Health Coach — always visible at top of portal */}
+        <div className="mb-8">
+          <AIHealthCoach
+            user={user}
+            prescriptions={prescriptions}
+            appointments={appointments}
+            summaries={summaries}
+          />
+        </div>
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full justify-start bg-white rounded-2xl p-2 mb-8">
             <TabsTrigger value="appointments" className="rounded-xl">
