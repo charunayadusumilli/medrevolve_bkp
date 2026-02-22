@@ -235,8 +235,8 @@ export default function AIAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.93 }}
             transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-[35] w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col pointer-events-auto"
-            style={{ height: minimized ? 'auto' : 'min(580px, calc(100vh - 80px))', top: 'auto' }}
+            className="fixed bottom-6 right-6 z-[45] w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col pointer-events-auto"
+            style={{ height: minimized ? 'auto' : 'min(580px, calc(100vh - 90px))', top: 'auto', maxHeight: 'calc(100vh - 90px)' }}
           >
             <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border border-[#E8E0D5]">
 
