@@ -545,19 +545,19 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
         {/* Patient Email */}
         <div className="flex items-start gap-3 py-4 border-b border-[#D8D0C5]">
           <User className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
-          <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex-1 min-w-0">
             <p className="font-semibold text-[#2D3A2D] mb-0.5">Email</p>
-            <p className="text-sm text-[#5A6B5A] break-all overflow-hidden text-ellipsis">{formData.patient_email}</p>
+            <p className="text-sm text-[#5A6B5A] truncate">{formData.patient_email}</p>
           </div>
         </div>
 
         {/* Reason */}
         <div className="flex items-start gap-3 py-4">
           <MessageSquare className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
-          <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex-1 min-w-0">
             <p className="font-semibold text-[#2D3A2D] mb-0.5">Reason</p>
-            <p className="text-sm text-[#5A6B5A] break-words whitespace-pre-wrap">{formData.reason}</p>
-            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic break-words whitespace-pre-wrap">{formData.notes}</p>}
+            <p className="text-sm text-[#5A6B5A] line-clamp-3">{formData.reason}</p>
+            {formData.notes && <p className="text-sm text-[#5A6B5A] mt-1 italic line-clamp-2">{formData.notes}</p>}
           </div>
         </div>
       </div>
