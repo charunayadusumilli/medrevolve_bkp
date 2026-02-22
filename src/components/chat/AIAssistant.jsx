@@ -160,6 +160,7 @@ export default function AIAssistant() {
     }
 
     setMessages(prev => [...prev, { role: 'assistant', content: replyText, personaKey: activeCtx.personaKey }]);
+    if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'assistant', content: replyText }]);
     setLoading(false);
     if (messages.length <= 2) setFaqOpen(true);
 
