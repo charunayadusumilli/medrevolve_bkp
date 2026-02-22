@@ -44,6 +44,7 @@ function PersonaFAB({ ctx, onClick }) {
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
       className="fixed bottom-6 right-6 z-[35] flex flex-col items-end gap-2"
     >
+      {/* Label pill */}
       <motion.div
         initial={{ opacity: 0, x: 12 }}
         animate={{ opacity: 1, x: 0 }}
@@ -52,18 +53,33 @@ function PersonaFAB({ ctx, onClick }) {
         style={{ background: vis.fabBg }}
       >
         <Bot className="w-3 h-3" />
-        <span>AI {ctx.persona}</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
+        <span>AI Assistant</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-white/70 animate-pulse" />
       </motion.div>
+
+      {/* Avatar FAB — figure stands at bottom, expands into chatbox on click */}
       <motion.button
         onClick={onClick}
-        whileHover={{ scale: 1.07 }}
-        whileTap={{ scale: 0.93 }}
-        className="relative w-20 h-20 rounded-2xl shadow-2xl overflow-hidden flex items-end justify-center"
-        style={{ background: `linear-gradient(160deg, ${vis.gradient[0]}33, ${vis.gradient[1]}66)`, border: `2px solid ${vis.gradient[0]}55` }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="relative overflow-hidden flex items-end justify-center shadow-2xl"
+        style={{
+          width: 80,
+          height: 96,
+          borderRadius: '20px',
+          background: `linear-gradient(175deg, ${vis.gradient[0]}18 0%, ${vis.gradient[1]}35 100%)`,
+          border: `2px solid ${vis.gradient[0]}60`,
+        }}
       >
-        <AvatarFigure personaKey={ctx.personaKey} size="md" animated={true} />
-        <span className="absolute top-1.5 right-1.5 w-3 h-3 rounded-full bg-green-400 border-2 border-white" />
+        {/* Subtle floor gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-6 rounded-b-[18px]"
+          style={{ background: `linear-gradient(to top, ${vis.gradient[0]}30, transparent)` }} />
+        {/* Avatar figure filling the card */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-end">
+          <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={true} />
+        </div>
+        {/* Online dot */}
+        <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-white shadow-sm z-10" />
       </motion.button>
     </motion.div>
   );
