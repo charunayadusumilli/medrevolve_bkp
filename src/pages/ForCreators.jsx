@@ -264,10 +264,12 @@ export default function ForCreators() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <img 
+              <img
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80"
                 alt="Content Creator"
                 className="rounded-3xl shadow-2xl"
+                loading="lazy"
+                decoding="async"
               />
               
               {/* Floating Earnings Card */}

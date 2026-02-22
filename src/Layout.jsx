@@ -44,7 +44,7 @@ function TreatMegaMenu({ onClose }) {
               onClick={() => { onClose(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group"
             >
-              <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" />
+              <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" loading="lazy" decoding="async" />
               <span className="font-medium text-[#2D3A2D] text-sm group-hover:text-[#4A6741] transition-colors">{cat.name}</span>
             </Link>
           ))}
@@ -312,7 +312,7 @@ export default function Layout({ children }) {
                                         <Link key={cat.name} to={createPageUrl(cat.href)}
                                           className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
                                           onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                                          <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
+                                          <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" loading="lazy" decoding="async" />
                                           {cat.name}
                                         </Link>
                                       ))}

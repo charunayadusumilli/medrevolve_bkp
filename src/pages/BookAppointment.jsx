@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -514,20 +514,22 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
             <img
               src={provider.photo || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&q=80'}
               alt={provider.name}
-              className="w-10 h-10 rounded-xl object-cover"
+              className="w-10 h-10 rounded-xl object-cover flex-shrink-0"
             />
-            <div>
-              <p className="font-semibold text-[#2D3A2D]">{provider.name}, {provider.title}</p>
-              <p className="text-sm text-[#5A6B5A]">{provider.specialty}</p>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-[#2D3A2D] truncate">{provider.name}, {provider.title}</p>
+              <p className="text-sm text-[#5A6B5A] truncate">{provider.specialty}</p>
             </div>
           </div>
         ) : (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 pb-4 border-b border-[#D8D0C5]">
-            <div className="flex items-start gap-2.5">
-              <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-semibold text-blue-900 text-sm">Provider To Be Assigned</p>
-                <p className="text-xs text-blue-800 mt-0.5">We'll match you with the best available provider and notify you via email with their details and video call link.</p>
+          <div className="pb-4 border-b border-[#D8D0C5]">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div className="flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-blue-900 text-sm">Provider To Be Assigned</p>
+                  <p className="text-xs text-blue-800 mt-0.5">We'll match you with the best available provider and notify you via email with their details and video call link.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -536,9 +538,9 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
         {/* Date & Time */}
          <div className="flex items-start gap-3 py-4 border-b border-[#D8D0C5]">
            <Calendar className="w-5 h-5 text-[#4A6741] mt-0.5 flex-shrink-0" />
-           <div>
-             <p className="font-semibold text-[#2D3A2D]">{dateDisplay}</p>
-             <p className="text-sm text-[#5A6B5A] flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {formData.appointment_time}</p>
+           <div className="flex-1 min-w-0">
+             <p className="font-semibold text-[#2D3A2D] break-words">{dateDisplay}</p>
+             <p className="text-sm text-[#5A6B5A] flex items-center gap-1"><Clock className="w-3.5 h-3.5 flex-shrink-0" /> {formData.appointment_time}</p>
            </div>
          </div>
 
@@ -564,7 +566,7 @@ function StepConfirm({ formData, providers, onSubmit, onBack, isSubmitting }) {
 
       <div className="bg-[#4A6741]/5 border border-[#4A6741]/20 rounded-xl px-4 py-3 flex items-start gap-2.5">
          <CheckCircle2 className="w-4 h-4 text-[#4A6741] mt-0.5 flex-shrink-0" />
-         <p className="text-sm text-[#4A6741]">
+         <p className="text-sm text-[#4A6741] flex-1 min-w-0">
            A confirmation email{formData.phone ? ' and SMS' : ''} will be sent immediately. {!provider && "Once a provider is assigned, you will receive an email with their details and your video call link. "} A reminder will follow 24 hours before your appointment.
          </p>
        </div>

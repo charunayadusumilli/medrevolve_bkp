@@ -15,5 +15,46 @@ export default defineConfig({
       visualEditAgent: true
     }),
     react(),
-  ]
+  ],
+  build: {
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React core — cached separately, changes rarely
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          // Animation library — large, changes rarely
+          'vendor-motion': ['framer-motion'],
+          // Data fetching — changes rarely
+          'vendor-query': ['@tanstack/react-query'],
+          // Form handling
+          'vendor-forms': ['react-hook-form', '@hookform/resolvers', 'zod'],
+          // Date utilities
+          'vendor-dates': ['date-fns'],
+          // Radix UI primitives — large, changes rarely
+          'vendor-radix': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-label',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-progress',
+            '@radix-ui/react-radio-group',
+            '@radix-ui/react-select',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-switch',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tooltip',
+          ],
+          // Stripe payment library
+          'vendor-stripe': ['@stripe/react-stripe-js', '@stripe/stripe-js'],
+        },
+      },
+    },
+  },
 });

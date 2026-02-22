@@ -106,10 +106,12 @@ export default function Consultations() {
               animate={{ opacity: 1, x: 0 }}
               className="relative"
             >
-              <img 
+              <img
                 src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80"
                 alt="Telehealth Consultation"
                 className="rounded-3xl shadow-2xl"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>
@@ -279,10 +281,12 @@ function ProviderCard({ provider }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
       <div className="aspect-square bg-[#F5F0E8] overflow-hidden">
-        <img 
+        <img
           src={provider.photo || `https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80`}
           alt={provider.name}
           className="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="p-6">

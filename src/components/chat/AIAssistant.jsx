@@ -197,7 +197,7 @@ export default function AIAssistant() {
     isListeningPausedRef.current = false; setIsListeningPaused(false);
     setVoiceTranscript([]);
     setVoiceStatus('speaking');
-    const greeting = `Hi! I'm your ${ctx.persona} at MedRevolve. Ask me anything about our treatments, consultations, or wellness programs.`;
+    const greeting = `Hi! I'm your AI ${ctx.persona} at MedRevolve — not a human, but here to help! Ask me anything about our treatments, consultations, or wellness programs.`;
     setVoiceTranscript([{ role: 'assistant', content: greeting }]);
     await speak(greeting);
     setVoiceStatus('idle');
@@ -251,7 +251,7 @@ export default function AIAssistant() {
             exit={{ opacity: 0, y: 32, scale: 0.93 }}
             transition={{ type: 'spring', damping: 26, stiffness: 300 }}
             className="fixed bottom-6 right-6 z-[45] w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col pointer-events-auto"
-            style={{ height: minimized ? 'auto' : 'min(580px, calc(100vh - 90px))', top: 'auto', maxHeight: 'calc(100vh - 90px)' }}
+            style={{ height: minimized ? 'auto' : 'min(560px, calc(100vh - 170px))', top: 'auto', maxHeight: 'calc(100vh - 170px)' }}
           >
             <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border border-[#E8E0D5]">
 

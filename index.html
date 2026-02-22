@@ -2,10 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Base44 APP</title>
+
+    <!-- SEO -->
+    <title>MedRevolve – Personalized Telehealth & Wellness</title>
+    <meta name="description" content="MedRevolve connects you with licensed providers for GLP-1 weight loss, hormone therapy, peptides, and more — delivered to your door." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
+
+    <!-- Preconnect to external image CDNs (saves 200–400ms on first image load) -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preconnect" href="https://i.pravatar.cc" crossorigin />
+
+    <!-- Preload the LCP hero image (first slide, mobile-optimised width) -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1549476464-37392f717541?w=800&q=75&fm=webp"
+      fetchpriority="high"
+    />
   </head>
   <body>
     <div id="root"></div>

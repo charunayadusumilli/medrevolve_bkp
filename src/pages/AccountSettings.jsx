@@ -39,7 +39,7 @@ export default function AccountSettings() {
   const validatePhone = (phone) => {
     if (!phone) return '';
     const digits = phone.replace(/\D/g, '');
-    if (digits.length < 7) return 'Please enter a valid phone number';
+    if (digits.length < 10) return 'Please enter a valid phone number with at least 10 digits';
     return '';
   };
 

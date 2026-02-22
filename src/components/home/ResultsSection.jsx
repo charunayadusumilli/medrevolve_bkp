@@ -92,10 +92,12 @@ export default function ResultsSection() {
                   key={index}
                   className="w-48 h-64 rounded-2xl overflow-hidden flex-shrink-0"
                 >
-                  <img 
+                  <img
                     src={img}
                     alt="Transformation"
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ))}
@@ -149,10 +151,12 @@ export default function ResultsSection() {
                   </p>
                   
                   <div className="flex items-center gap-4">
-                    <img 
+                    <img
                       src={testimonial.image}
                       alt={testimonial.name}
                       className="w-12 h-12 rounded-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div>
                       <p className="font-medium text-[#2D3A2D]">{testimonial.name}</p>
