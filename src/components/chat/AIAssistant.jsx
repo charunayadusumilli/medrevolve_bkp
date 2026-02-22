@@ -51,6 +51,7 @@ export default function AIAssistant() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isListeningPaused, setIsListeningPaused] = useState(false);
   const [voiceStatus, setVoiceStatus] = useState('idle');
+  const [voiceTranscript, setVoiceTranscript] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
