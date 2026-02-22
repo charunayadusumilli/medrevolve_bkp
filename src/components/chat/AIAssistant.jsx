@@ -137,6 +137,7 @@ export default function AIAssistant() {
     const activeCtx = getPageContext(pageName);
     const systemPrompt = buildSystemPrompt(pageName, pageProduct);
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
+    if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'user', content: trimmed }]);
 
     const history = messages.slice(-12)
       .map(m => `${m.role === 'user' ? 'User' : activeCtx.persona}: ${m.content}`)
