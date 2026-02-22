@@ -538,7 +538,13 @@ ${activeCtx.persona} (respond conversationally, as if speaking out loud — no b
               {/* ── Header ── */}
               <div className={`bg-gradient-to-r ${ctx.color} px-4 py-3 flex items-center justify-between flex-shrink-0`}>
                 <div className="flex items-center gap-3">
-                  <PersonaAvatar personaKey={ctx.personaKey} size="md" ring />
+                  {/* Inline avatar in header — cropped figure showing head/shoulders */}
+                  <div className="w-11 h-11 rounded-xl overflow-hidden flex items-end justify-center flex-shrink-0"
+                    style={{ background: 'rgba(255,255,255,0.15)' }}>
+                    <div style={{ transform: 'scale(0.7)', transformOrigin: 'bottom center', marginBottom: -2 }}>
+                      <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={false} />
+                    </div>
+                  </div>
                   <div>
                     <div className="flex items-center gap-1.5">
                       <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
