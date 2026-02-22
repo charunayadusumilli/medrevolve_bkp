@@ -3,18 +3,20 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const { prompt } = await req.json();
 
-    const response = await base44.integrations.Core.InvokeLLM({
-      prompt: 'Say hello in one sentence.',
+    if (!prompt) {
+      return Response.json({ error: 'prompt is required' }, { status: 400 });
+    }
+
+    const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      prompt,
       add_context_from_internet: false,
     });
 
-    console.log('Response type:', typeof response);
-    console.log('Response value:', JSON.stringify(response));
-
-    return Response.json({ response, type: typeof response });
+    return Response.json({ reply: response });
   } catch (err) {
-    console.error('Error:', err);
+    console.error('Chat error:', err);
     return Response.json({ error: err.message }, { status: 500 });
   }
 });
