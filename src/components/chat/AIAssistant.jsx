@@ -230,6 +230,8 @@ export default function AIAssistant() {
             isSpeaking={isSpeaking} isListening={isListening}
             isListeningPaused={isListeningPaused}
             onEndCall={endVoiceCall} onToggleMic={toggleMicPause}
+            transcript={voiceTranscript}
+            onSendText={(text) => sendMessage(text, true)}
           />
         )}
       </AnimatePresence>
