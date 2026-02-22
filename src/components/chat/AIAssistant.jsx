@@ -195,8 +195,11 @@ export default function AIAssistant() {
   const startVoiceCall = async () => {
     setIsVoiceOpen(true); voiceLoopRef.current = true;
     isListeningPausedRef.current = false; setIsListeningPaused(false);
+    setVoiceTranscript([]);
     setVoiceStatus('speaking');
-    await speak(`Hi! I'm your ${ctx.persona} at MedRevolve. Ask me anything about our treatments, consultations, or wellness programs.`);
+    const greeting = `Hi! I'm your ${ctx.persona} at MedRevolve. Ask me anything about our treatments, consultations, or wellness programs.`;
+    setVoiceTranscript([{ role: 'assistant', content: greeting }]);
+    await speak(greeting);
     setVoiceStatus('idle');
     if (voiceLoopRef.current) setTimeout(() => startListeningOnce(), 300);
   };
