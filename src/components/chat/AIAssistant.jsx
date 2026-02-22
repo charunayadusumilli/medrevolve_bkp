@@ -139,14 +139,14 @@ export default function AIAssistant() {
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'user', content: trimmed }]);
 
-    const history = messages.slice(-12)
+    const history = messages.slice(-16)
       .map(m => `${m.role === 'user' ? 'User' : activeCtx.persona}: ${m.content}`)
       .join('\n\n');
 
     let replyText = 'Sorry, I had a hiccup! Try again in a moment.';
     try {
       const response = await base44.integrations.Core.InvokeLLM({
-        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (respond naturally, 2–4 sentences):`,
+        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (be warm, genuinely helpful, connect their question to their wellness journey and naturally guide toward MedRevolve solutions. End with a question or clear next step):`,
         add_context_from_internet: false,
       });
       if (typeof response === 'string') {
