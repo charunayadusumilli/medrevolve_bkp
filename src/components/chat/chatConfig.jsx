@@ -207,59 +207,59 @@ export const PAGE_CONTEXTS = {
   // ── Customer pages ─────────────────────────────────────────────────────────
   Home: {
     personaKey: 'wellness_concierge',
-    greeting: "Hi! I'm your Wellness Concierge 🌿 Whether you're curious about treatments, wondering how telehealth works, or ready to start — I'm here. What can I help you with?",
+    greeting: "Hey! 👋 I'm your personal wellness guide at MedRevolve. Tell me — what's your #1 health goal right now? Weight loss, more energy, better hormones, longevity? Let's build your transformation plan together 🌿",
   },
   Products: {
    personaKey: 'treatment_advisor',
-   greeting: "Welcome to our treatment catalog! 💊 I can explain how semaglutide and tirzepatide work, compare weight loss options, or dive deep into any treatment — longevity, hormones, men's health, and more. What interests you?",
+   greeting: "You're in the right place! 💊 Whether you're exploring weight loss, hormone optimization, longevity, or men's/women's health — I can help you find exactly what fits your body and goals. What are you trying to achieve?",
   },
   ProductDetail: {
    personaKey: 'treatment_advisor',
-   greeting: "Perfect — let's dig into this treatment! Ask me how it works, expected results, real patient outcomes, dosing, side effects, contraindications, or your next steps to get started.",
+   greeting: "Great choice to explore this one! Let me break down exactly how it works, what real results look like, and whether it's the right fit for your situation. What's your main goal? 🎯",
   },
   HowItWorks: {
     personaKey: 'wellness_concierge',
-    greeting: "Great question to be asking! 🌿 I can walk you through the entire MedRevolve journey — from intake to doorstep delivery. What would you like to know?",
+    greeting: "Love that you're doing your research! 🌿 The MedRevolve process is surprisingly simple — intake, provider consult, prescription, delivered to your door. Want me to walk you through it step by step, or do you have a specific question?",
   },
   Cart: {
     personaKey: 'treatment_advisor',
-    greeting: "Almost there! 🛒 Have questions about what's in your cart, how checkout works, or what to expect after ordering? I'm here.",
+    greeting: "You're so close to starting your transformation! 🛒 Any questions before you checkout? I can also suggest complementary treatments or lifestyle tips to maximize your results.",
   },
   Consultations: {
     personaKey: 'consultation_coordinator',
-    greeting: "Looking to connect with a provider? 📅 I can help you choose the right provider, explain consultation types (video, phone, chat), and walk you through booking.",
+    greeting: "Talking to a real provider is a game-changer 🩺 I can help you pick the right consultation type, prep your questions, and know exactly what to expect. What's bringing you in?",
   },
   BookAppointment: {
     personaKey: 'consultation_coordinator',
-    greeting: "Ready to book? I can explain what happens during a consultation, how to pick the right appointment type, or answer scheduling questions.",
+    greeting: "This is a big step — and a great one! 🎯 I'm here to make booking seamless. Need help picking a provider, choosing appointment type, or knowing what to say? Ask away!",
   },
   ProviderProfile: {
     personaKey: 'consultation_coordinator',
-    greeting: "Looking at a provider profile? I can help you understand their specialties, what to expect, or walk you through booking an appointment 📅",
+    greeting: "Getting to know your provider before booking is smart! I can tell you what to expect in a consultation, how to get the most out of your visit, or help you compare providers 📅",
   },
   PatientPortal: {
     personaKey: 'patient_support',
-    greeting: "Welcome to your portal! 🩺 I can help you understand prescriptions, track appointments, navigate refills, or answer questions about your care journey.",
+    greeting: "Welcome back! 🌟 How's your wellness journey going? I can help with prescriptions, appointments, refills, or if you want to talk about optimizing your current protocol.",
   },
   MyAppointments: {
     personaKey: 'patient_support',
-    greeting: "Hi! I can help you manage appointments — rescheduling, understanding types, preparing for your visit, or anything you need 🩺",
+    greeting: "Hey! Let me help you get the most from your appointments 🩺 Whether you're prepping questions for your provider, rescheduling, or curious about what happens next — I've got you.",
   },
   Messages: {
     personaKey: 'patient_support',
-    greeting: "Hi! I'm here if you need help messaging your provider, understanding communication etiquette, or anything about your care 💬",
+    greeting: "Your provider relationship matters 💬 I can help you craft the right message, understand what to share, or just answer any care questions you have. What's on your mind?",
   },
   CustomerIntake: {
     personaKey: 'onboarding_guide',
-    greeting: "Excited to have you here! 🎯 I'll help you complete your intake smoothly — what to expect, what info you'll need, and what happens after you submit.",
+    greeting: "This is day one of something amazing 🎯 The intake takes about 5-10 minutes and unlocks your personalized protocol. I'm here to guide you through it and answer anything that comes up!",
   },
   PatientOnboarding: {
     personaKey: 'onboarding_guide',
-    greeting: "Let's get you set up! 🎯 The process is quick — I can walk you through each step and make sure you feel confident getting started.",
+    greeting: "Welcome to the start of your transformation! 🚀 Let's get you set up quickly. I'll walk you through each step and answer any questions — what's your biggest health goal?",
   },
   Questionnaire: {
     personaKey: 'onboarding_guide',
-    greeting: "Hi! I can explain why we ask certain questions, what our providers look for, and what happens after your questionnaire is reviewed 📋",
+    greeting: "These questions help your provider build the perfect protocol for YOU 📋 Be honest — the more they know, the better your results. Questions about anything you see here?",
   },
 
   // ── Creator pages ──────────────────────────────────────────────────────────
