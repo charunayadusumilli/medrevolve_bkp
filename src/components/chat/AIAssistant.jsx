@@ -147,7 +147,12 @@ export default function AIAssistant() {
         prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (respond naturally, 2–4 sentences):`,
         add_context_from_internet: false,
       });
-      replyText = typeof response === 'string' ? response : (response?.text || response?.content || JSON.stringify(response));
+      if (typeof response === 'string') {
+        replyText = response;
+      } else if (response && typeof response === 'object') {
+        replyText = response.text || response.content || response.message || response.response || JSON.stringify(response);
+      }
+      console.log('LLM response type:', typeof response, response);
     } catch (err) {
       console.error('Chat LLM error:', err);
     }
