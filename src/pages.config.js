@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AccountSettings from './pages/AccountSettings';
 import AdminDashboard from './pages/AdminDashboard';
 import AutoRxFollowup from './pages/AutoRxFollowup';
 import BelugaIntegration from './pages/BelugaIntegration';
@@ -92,11 +93,11 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
-import AccountSettings from './pages/AccountSettings';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AccountSettings": AccountSettings,
     "AdminDashboard": AdminDashboard,
     "AutoRxFollowup": AutoRxFollowup,
     "BelugaIntegration": BelugaIntegration,
@@ -142,7 +143,6 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
-    "AccountSettings": AccountSettings,
 }
 
 export const pagesConfig = {

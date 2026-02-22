@@ -984,23 +984,26 @@ function CategoryCard({ category, isActive, onClick }) {
 }
 
 function ProductCard({ product }) {
-  const [bgImage, setBgImage] = React.useState(null);
+  const [aiImage, setAiImage] = React.useState(null);
   const [imageLoading, setImageLoading] = React.useState(false);
+  const cacheKey = `mr_img_${product.id}`;
 
   React.useEffect(() => {
-    // Try to generate professional pharmaceutical image
+    // Check session cache first
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) { setAiImage(cached); return; }
+
     const generateImage = async () => {
-      if (!product.form || product.lifestyle) return;
-      
       setImageLoading(true);
       try {
-        const response = await base44.functions.invoke('generatePharmaceuticalImage', {
+        const response = await base44.functions.invoke('generateProductVisual', {
           productName: product.name,
           form: product.form,
-          color: product.gradient?.[0] || product.accent,
+          category: product.category,
         });
         if (response.data?.imageUrl) {
-          setBgImage(response.data.imageUrl);
+          sessionStorage.setItem(cacheKey, response.data.imageUrl);
+          setAiImage(response.data.imageUrl);
         }
       } catch (err) {
         console.error('Failed to generate product image:', err);
@@ -1008,9 +1011,12 @@ function ProductCard({ product }) {
       setImageLoading(false);
     };
     generateImage();
-  }, [product.name, product.form, product.lifestyle]);
+  }, [product.id]);
 
-  const displayImage = bgImage || product.lifestyle;
+  // Priority: AI generated → lifestyle photo → SVG fallback
+  const showAI = aiImage && !imageLoading;
+  const showLifestyle = !showAI && product.lifestyle;
+  const showSVG = !showAI && !showLifestyle;
 
   return (
     <motion.div
@@ -1019,17 +1025,45 @@ function ProductCard({ product }) {
       transition={{ duration: 0.25 }}
     >
       <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Professional pharmaceutical product visual */}
+        {/* Product visual area */}
         <div className={`relative aspect-[4/3] overflow-hidden flex items-center justify-center ${product.productBg || 'bg-[#F5F2EE]'}`}>
-          {displayImage ? (
-            <img 
-              src={displayImage} 
+          
+          {/* AI Generated image */}
+          {showAI && (
+            <img
+              src={aiImage}
+              alt={product.name}
+              className="w-full h-full object-cover object-center transition-opacity duration-500"
+            />
+          )}
+
+          {/* Lifestyle fallback */}
+          {showLifestyle && (
+            <img
+              src={product.lifestyle}
               alt={product.name}
               className="w-full h-full object-cover object-center"
             />
-          ) : (
+          )}
+
+          {/* SVG fallback */}
+          {showSVG && !imageLoading && (
             <RxProductVisual product={product} size="md" autoPlay={false} className="w-full h-full" />
           )}
+
+          {/* Loading shimmer */}
+          {imageLoading && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+              style={{ background: product.productBg || '#F5F2EE' }}>
+              <RxProductVisual product={product} size="md" autoPlay={false} className="w-full h-full opacity-40" />
+              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          )}
+
 
           {/* Top badges row — always on top */}
           <div className="absolute top-3 left-3 right-3 flex items-start justify-between z-10 pointer-events-none">
