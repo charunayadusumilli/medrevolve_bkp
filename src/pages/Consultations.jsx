@@ -200,7 +200,12 @@ export default function Consultations() {
           ) : providers.length === 0 ? (
             <div className="text-center py-12">
               <Users className="w-16 h-16 text-[#D4E5D7] mx-auto mb-4" />
-              <p className="text-[#5A6B5A] mb-6">Loading our medical team...</p>
+              <p className="text-[#5A6B5A] mb-6">Our medical team is being set up. Check back soon!</p>
+              <Link to={createPageUrl('BookAppointment')}>
+                <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full">
+                  Book a Consultation Anyway
+                </Button>
+              </Link>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
