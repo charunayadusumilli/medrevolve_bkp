@@ -34,7 +34,13 @@ export default function Consultations() {
 
   const { data: providers = [], isError: providersError } = useQuery({
     queryKey: ['providers'],
-    queryFn: () => base44.entities.Provider.filter({ is_active: true }, '-rating', 20),
+    queryFn: async () => {
+      try {
+        return await base44.entities.Provider.list('-created_date', 20);
+      } catch {
+        return [];
+      }
+    },
     retry: false
   });
 
