@@ -182,6 +182,10 @@ export default function Layout({ children }) {
                 <Link to={createPageUrl('VisitTypeSelector')} className="block">Browse Treatments</Link>
               </button>
 
+              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+                <Link to={createPageUrl('TelehealthPlatform')} className="block">Telehealth Platform</Link>
+              </button>
+
               {/* Admin only */}
               {user?.role === 'admin' && (
                 <DropdownMenu>
