@@ -5,8 +5,8 @@ async function getZohoAccessToken() {
   const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
   const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
 
-  // Always use the real Zoho accounts domain for OAuth, not the custom domain
-  const tokenUrl = `https://accounts.zoho.com/oauth/v2/token`;
+  // Always use the official Zoho OAuth domain - never use ZOHO_DOMAIN for auth
+  const tokenUrl = "https://accounts.zoho.com/oauth/v2/token";
   const response = await fetch(tokenUrl, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
