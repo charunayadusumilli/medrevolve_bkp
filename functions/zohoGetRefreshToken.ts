@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
       code: code,
       client_id: clientId,
       client_secret: clientSecret,
-      redirect_uri: 'https://www.zoho.com',
+      redirect_uri: 'https://medrevolve.base44.app',
       grant_type: 'authorization_code'
     });
 
