@@ -32,7 +32,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: "Invalid event type" }, { status: 400 });
     }
 
-    const adminEmail = Deno.env.get("ADMIN_EMAIL");
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "admin@medrevolve.com";
     const isPartner = event?.entity_name === "Partner";
     
     // Format the signup data based on entity type
@@ -56,12 +56,13 @@ Deno.serve(async (req) => {
 
     // Send welcome email to partner
     if (isPartner && data.email) {
-      const firstName = data.contact_name?.split(' ')[0] || data.business_name;
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: "MedRevolve Partners",
-        to: data.email,
-        subject: `Welcome ${data.business_name}! Your Partner Account is Ready`,
-        body: `<h2>Welcome to MedRevolve Partners!</h2>
+      try {
+        const firstName = data.contact_name?.split(' ')[0] || data.business_name;
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          from_name: "MedRevolve Partners",
+          to: data.email,
+          subject: `Welcome ${data.business_name}! Your Partner Account is Ready`,
+          body: `<h2>Welcome to MedRevolve Partners!</h2>
 <p>Hi ${firstName},</p>
 <p>Congratulations! Your partner account is ready.</p>
 <p><strong>Partner Code:</strong> ${data.partner_code}</p>
@@ -76,47 +77,54 @@ Deno.serve(async (req) => {
 </ul>
 <p>Log in to your partner portal to get started!</p>
 <p>Questions? Contact us at partners@medrevolve.com</p>`
-      });
+        });
+      } catch (emailError) {
+        console.error("Failed to send partner welcome email:", emailError);
+      }
     }
 
     // Send welcome email to the new user (not for partners since they have a different flow)
     if (!isPartner && data.email) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: "MedRevolve",
-        to: data.email,
-        subject: "Welcome to MedRevolve! 🌿",
-        body: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background: #2D3A2D; padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
-              <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to MedRevolve</h1>
-              <p style="color: #A8C99B; margin: 8px 0 0;">Your wellness journey starts here</p>
-            </div>
-            <div style="background: #FDFBF7; padding: 32px; border-radius: 0 0 12px 12px; border: 1px solid #E8E0D5;">
-              <p style="color: #2D3A2D; font-size: 16px;">Hi ${data.full_name || 'there'},</p>
-              <p style="color: #555; line-height: 1.6;">Thank you for joining MedRevolve! We're excited to help you on your personalized wellness journey.</p>
-              <p style="color: #555; line-height: 1.6;">With MedRevolve, you get access to:</p>
-              <ul style="color: #555; line-height: 2;">
-                <li>Licensed healthcare providers available for telehealth consultations</li>
-                <li>Personalized treatment protocols tailored to your goals</li>
-                <li>Prescription medications delivered to your door in 24-48 hours</li>
-                <li>Ongoing support and follow-up care</li>
-              </ul>
-              <div style="text-align: center; margin: 32px 0;">
-                <a href="https://medrevolve.base44.app" style="background: #2D3A2D; color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 16px;">Get Started →</a>
+      try {
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          from_name: "MedRevolve",
+          to: data.email,
+          subject: "Welcome to MedRevolve! 🌿",
+          body: `
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+              <div style="background: #2D3A2D; padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
+                <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to MedRevolve</h1>
+                <p style="color: #A8C99B; margin: 8px 0 0;">Your wellness journey starts here</p>
               </div>
-              <p style="color: #999; font-size: 13px; text-align: center; margin-top: 24px;">If you have any questions, just reply to this email or visit our <a href="https://medrevolve.base44.app" style="color: #4A6741;">help center</a>.</p>
+              <div style="background: #FDFBF7; padding: 32px; border-radius: 0 0 12px 12px; border: 1px solid #E8E0D5;">
+                <p style="color: #2D3A2D; font-size: 16px;">Hi ${data.full_name || 'there'},</p>
+                <p style="color: #555; line-height: 1.6;">Thank you for joining MedRevolve! We're excited to help you on your personalized wellness journey.</p>
+                <p style="color: #555; line-height: 1.6;">With MedRevolve, you get access to:</p>
+                <ul style="color: #555; line-height: 2;">
+                  <li>Licensed healthcare providers available for telehealth consultations</li>
+                  <li>Personalized treatment protocols tailored to your goals</li>
+                  <li>Prescription medications delivered to your door in 24-48 hours</li>
+                  <li>Ongoing support and follow-up care</li>
+                </ul>
+                <div style="text-align: center; margin: 32px 0;">
+                  <a href="https://medrevolve.base44.app" style="background: #2D3A2D; color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 16px;">Get Started →</a>
+                </div>
+                <p style="color: #999; font-size: 13px; text-align: center; margin-top: 24px;">If you have any questions, just reply to this email or visit our <a href="https://medrevolve.base44.app" style="color: #4A6741;">help center</a>.</p>
+              </div>
             </div>
-          </div>
-        `
-      });
+          `
+        });
+      } catch (emailError) {
+        console.error("Failed to send user welcome email:", emailError);
+      }
     }
 
     // Send email notification to admin
-    if (adminEmail) {
-      const emailSubject = isPartner 
+    try {
+      const emailSubject = isPartner
         ? `🤝 New Partner Signup: ${data.contact_name} (${data.business_name})`
         : `🎉 New User Signup: ${data.full_name || data.email}`;
-      
+
       const emailBody = isPartner
         ? `
           <h2>New Partner Registered</h2>
@@ -147,6 +155,8 @@ Deno.serve(async (req) => {
         subject: emailSubject,
         body: emailBody
       });
+    } catch (adminEmailError) {
+      console.error("Failed to send admin notification email:", adminEmailError);
     }
 
     // Create contact in Zoho CRM

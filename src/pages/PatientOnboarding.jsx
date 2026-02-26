@@ -90,6 +90,18 @@ export default function PatientOnboarding() {
             completed_at: new Date().toISOString()
           })
         });
+
+        // Send welcome email to patient + admin notification
+        try {
+          await base44.functions.invoke('notifyOnboardingComplete', {
+            email: user.email,
+            full_name: profileData.full_name || user.full_name || user.email,
+            phone: profileData.phone || '',
+            state: profileData.state || ''
+          });
+        } catch (emailError) {
+          console.error('Onboarding notification failed:', emailError);
+        }
       }
       handleNext();
     } catch (error) {
