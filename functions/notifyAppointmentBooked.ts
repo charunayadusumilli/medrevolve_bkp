@@ -26,18 +26,20 @@ Deno.serve(async (req) => {
       console.log("Could not fetch provider:", e);
     }
 
+    const appointmentDate = new Date(appointment.appointment_date).toLocaleString('en-US', { timeZone: 'America/New_York' });
+
     // Send notification to admin
     if (adminEmail) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        from_name: "MedRevolve Appointments",
+      await resend.emails.send({
+        from: "MedRevolve Appointments <noreply@medrevolve.com>",
         to: adminEmail,
         subject: `📅 New Appointment Booked: ${appointment.type}`,
-        body: `
+        html: `
           <h2>New Appointment Scheduled</h2>
           <p><strong>Patient:</strong> ${appointment.patient_email}</p>
           <p><strong>Provider:</strong> ${providerName}</p>
           <p><strong>Type:</strong> ${appointment.type}</p>
-          <p><strong>Date & Time:</strong> ${new Date(appointment.appointment_date).toLocaleString()}</p>
+          <p><strong>Date & Time:</strong> ${appointmentDate}</p>
           <p><strong>Duration:</strong> ${appointment.duration_minutes} minutes</p>
           <p><strong>Reason:</strong> ${appointment.reason || 'Not specified'}</p>
           ${appointment.notes ? `<p><strong>Notes:</strong> ${appointment.notes}</p>` : ''}
@@ -47,8 +49,27 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Note: Patient email notification is handled by bookConsultation function
-    // SendEmail integration only supports app users
+    // Send confirmation email to patient
+    if (appointment.patient_email) {
+      await resend.emails.send({
+        from: "MedRevolve <noreply@medrevolve.com>",
+        to: appointment.patient_email,
+        subject: `✅ Appointment Confirmed`,
+        html: `
+          <h2>Your Appointment is Confirmed</h2>
+          <p>Hi there,</p>
+          <p>Your appointment has been successfully scheduled.</p>
+          <p><strong>Provider:</strong> ${providerName}</p>
+          <p><strong>Type:</strong> ${appointment.type?.replace(/_/g, ' ')}</p>
+          <p><strong>Date & Time:</strong> ${appointmentDate}</p>
+          <p><strong>Duration:</strong> ${appointment.duration_minutes} minutes</p>
+          ${appointment.reason ? `<p><strong>Reason:</strong> ${appointment.reason}</p>` : ''}
+          <hr>
+          <p>If you need to reschedule or cancel, please contact us as soon as possible.</p>
+          <p>— The MedRevolve Team</p>
+        `
+      });
+    }
 
     return Response.json({ 
       success: true,
