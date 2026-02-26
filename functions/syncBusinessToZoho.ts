@@ -42,7 +42,8 @@ Deno.serve(async (req) => {
 
     const inquiry = inquiries[0];
     const token = await getZohoAccessToken();
-    const domain = Deno.env.get("ZOHO_DOMAIN") || "zoho.com";
+    // API calls use zohoapis.com (not the custom domain)
+    const domain = "zohoapis.com";
 
     // Determine lead priority
     const isHighPriority = ["White Label", "Partnership"].includes(inquiry.interest_type);
