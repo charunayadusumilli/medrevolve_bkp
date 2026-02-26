@@ -54,6 +54,31 @@ Deno.serve(async (req) => {
       created: data.created_date
     };
 
+    // Send welcome email to partner
+    if (isPartner && data.email) {
+      const firstName = data.contact_name?.split(' ')[0] || data.business_name;
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        from_name: "MedRevolve Partners",
+        to: data.email,
+        subject: `Welcome ${data.business_name}! Your Partner Account is Ready`,
+        body: `<h2>Welcome to MedRevolve Partners!</h2>
+<p>Hi ${firstName},</p>
+<p>Congratulations! Your partner account is ready.</p>
+<p><strong>Partner Code:</strong> ${data.partner_code}</p>
+<p><strong>Status:</strong> ${data.subscription_status}</p>
+<h3>What's Included:</h3>
+<ul>
+<li>White-label client portal</li>
+<li>25+ telehealth programs</li>
+<li>Full compliance support</li>
+<li>Partner dashboard with analytics</li>
+<li>Marketing resources</li>
+</ul>
+<p>Log in to your partner portal to get started!</p>
+<p>Questions? Contact us at partners@medrevolve.com</p>`
+      });
+    }
+
     // Send welcome email to the new user (not for partners since they have a different flow)
     if (!isPartner && data.email) {
       await base44.asServiceRole.integrations.Core.SendEmail({
