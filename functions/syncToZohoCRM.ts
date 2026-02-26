@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
     const clientId = Deno.env.get('ZOHO_CLIENT_ID');
     const clientSecret = Deno.env.get('ZOHO_CLIENT_SECRET');
     const refreshToken = Deno.env.get('ZOHO_REFRESH_TOKEN');
-    const domain = Deno.env.get('ZOHO_DOMAIN') || 'https://www.zohoapis.com';
+    const domain = 'https://www.zohoapis.com';
 
     if (!clientId || !clientSecret || !refreshToken) {
       return Response.json({ 

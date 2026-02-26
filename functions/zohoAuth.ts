@@ -5,13 +5,11 @@ export async function getZohoAccessToken() {
   const clientId = Deno.env.get("ZOHO_CLIENT_ID");
   const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
   const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
-  const domain = Deno.env.get("ZOHO_DOMAIN") || "zoho.com";
-
   if (!clientId || !clientSecret || !refreshToken) {
     throw new Error("Missing Zoho credentials. Please set ZOHO_CLIENT_ID, ZOHO_CLIENT_SECRET, and ZOHO_REFRESH_TOKEN");
   }
 
-  const tokenUrl = `https://accounts.${domain}/oauth/v2/token`;
+  const tokenUrl = "https://accounts.zoho.com/oauth/v2/token";
   
   const response = await fetch(tokenUrl, {
     method: "POST",

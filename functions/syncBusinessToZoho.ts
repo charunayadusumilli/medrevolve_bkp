@@ -43,8 +43,8 @@ Deno.serve(async (req) => {
 
     const inquiry = inquiries[0];
     const token = await getZohoAccessToken();
-    // API calls use zohoapis.com (not the custom domain)
-    const domain = "zohoapis.com";
+    // Hardcoded Zoho API domain
+    const domain = "www.zohoapis.com";
 
     // Determine lead priority
     const isHighPriority = ["White Label", "Partnership"].includes(inquiry.interest_type);
@@ -73,7 +73,7 @@ Deno.serve(async (req) => {
       }]
     };
 
-    const zohoResponse = await fetch(`https://www.${domain}/crm/v2/Leads`, {
+    const zohoResponse = await fetch(`https://${domain}/crm/v2/Leads`, {
       method: "POST",
       headers: {
         "Authorization": `Zoho-oauthtoken ${token}`,

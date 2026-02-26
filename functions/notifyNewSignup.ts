@@ -4,9 +4,7 @@ async function getZohoAccessToken() {
   const clientId = Deno.env.get("ZOHO_CLIENT_ID");
   const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
   const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
-  const domain = Deno.env.get("ZOHO_DOMAIN") || "zoho.com";
-
-  const tokenUrl = `https://accounts.${domain}/oauth/v2/token`;
+  const tokenUrl = "https://accounts.zoho.com/oauth/v2/token";
   const response = await fetch(tokenUrl, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -162,7 +160,6 @@ Deno.serve(async (req) => {
     // Create contact in Zoho CRM
     try {
       const token = await getZohoAccessToken();
-      const domain = Deno.env.get("ZOHO_DOMAIN") || "zoho.com";
 
       const contactData = isPartner ? {
         data: [{
@@ -193,7 +190,7 @@ Deno.serve(async (req) => {
         }]
       };
 
-      await fetch(`https://www.zohoapis.${domain}/crm/v2/Contacts`, {
+      await fetch("https://www.zohoapis.com/crm/v2/Contacts", {
         method: "POST",
         headers: {
           "Authorization": `Zoho-oauthtoken ${token}`,
