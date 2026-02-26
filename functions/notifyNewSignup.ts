@@ -1,23 +1,18 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 async function sendEmail({ to, from_name, subject, html }) {
-  const apiKey = Deno.env.get('RESEND_API_KEY');
-  const res = await fetch('https://api.resend.com/emails', {
+  const token = await getZohoAccessToken();
+  const res = await fetch('https://mail.zoho.com/api/accounts/2234922000000008002/messages', {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: `${from_name} <admin@medrevolve.com>`,
-      to: [to],
-      subject,
-      html
-    })
+    headers: { 'Authorization': `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fromAddress: 'charunya.adusumilli@hanu-consulting.com', toAddress: to, subject, content: html, mailFormat: 'html' })
   });
   if (!res.ok) {
     const errText = await res.text();
-    console.error('Resend error:', errText);
-    throw new Error(`Resend failed: ${errText}`);
+    console.error('Zoho Mail error:', errText);
+    throw new Error(`Zoho Mail failed: ${errText}`);
   } else {
-    console.log('✅ Email sent via Resend to:', to);
+    console.log('✅ Email sent via Zoho Mail to:', to);
   }
 }
 

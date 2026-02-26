@@ -1,7 +1,33 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
-import { Resend } from 'npm:resend@4.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+async function getZohoAccessToken() {
+  const clientId = Deno.env.get("ZOHO_CLIENT_ID");
+  const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
+  const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
+  const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret, grant_type: "refresh_token" })
+  });
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function sendEmail({ to, subject, html }) {
+  const token = await getZohoAccessToken();
+  const res = await fetch('https://mail.zoho.com/api/accounts/2234922000000008002/messages', {
+    method: 'POST',
+    headers: { 'Authorization': `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fromAddress: 'charunya.adusumilli@hanu-consulting.com', toAddress: to, subject, content: html, mailFormat: 'html' })
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    console.error('Zoho Mail error:', errText);
+    throw new Error(`Zoho Mail failed: ${errText}`);
+  } else {
+    console.log('✅ Email sent via Zoho Mail to:', to);
+  }
+}
 
 Deno.serve(async (req) => {
   try {
@@ -30,8 +56,7 @@ Deno.serve(async (req) => {
 
     // Send notification to admin
     if (adminEmail) {
-      await resend.emails.send({
-        from: "MedRevolve Appointments <noreply@medrevolve.com>",
+      await sendEmail({
         to: adminEmail,
         subject: `📅 New Appointment Booked: ${appointment.type}`,
         html: `
@@ -51,8 +76,7 @@ Deno.serve(async (req) => {
 
     // Send confirmation email to patient
     if (appointment.patient_email) {
-      await resend.emails.send({
-        from: "MedRevolve <noreply@medrevolve.com>",
+      await sendEmail({
         to: appointment.patient_email,
         subject: `✅ Appointment Confirmed`,
         html: `
