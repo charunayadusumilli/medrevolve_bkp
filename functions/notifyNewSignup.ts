@@ -6,7 +6,7 @@ async function sendEmail({ to, from_name, subject, html }) {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: `${from_name} <noreply@medrevolve.com>`,
+      from: `${from_name} <admin@medrevolve.com>`,
       to: [to],
       subject,
       html
@@ -78,7 +78,7 @@ Deno.serve(async (req) => {
       try {
         const firstName = data.contact_name?.split(' ')[0] || data.business_name;
         await sendEmail({
-          from_name: "MedRevolve Partners",
+          from_name: "MedRevolve Admin",
           to: data.email,
           subject: `Welcome ${data.business_name}! Your Partner Account is Ready`,
           html: `<h2>Welcome to MedRevolve Partners!</h2>
@@ -106,7 +106,7 @@ Deno.serve(async (req) => {
     if (!isPartner && data.email) {
       try {
         await sendEmail({
-          from_name: "MedRevolve",
+          from_name: "MedRevolve Admin",
           to: data.email,
           subject: "Welcome to MedRevolve! 🌿",
           html: `
@@ -169,7 +169,7 @@ Deno.serve(async (req) => {
         `;
 
       await sendEmail({
-        from_name: "MedRevolve Notifications",
+        from_name: "MedRevolve Admin",
         to: adminEmail,
         subject: emailSubject,
         html: emailBody
