@@ -40,7 +40,6 @@ Deno.serve(async (req) => {
 
     const app = applications[0];
     const token = await getZohoAccessToken();
-    const domain = Deno.env.get("ZOHO_DOMAIN") || "zoho.com";
 
     // Create lead in Zoho CRM
     const leadData = {
