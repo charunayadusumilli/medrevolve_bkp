@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
     const payload = await req.json();
     
     // Handle both direct calls and entity automation payloads
-    const application_id = payload.application_id || payload.event?.id;
+    const application_id = payload.application_id || payload.event?.entity_id;
 
     if (!application_id) {
       return Response.json({ error: "application_id required" }, { status: 400 });
