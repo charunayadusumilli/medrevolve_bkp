@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
       }]
     };
 
-    const zohoResponse = await fetch(`https://www.zohoapis.${domain}/crm/v2/Leads`, {
+    const zohoResponse = await fetch(`https://www.${domain}/crm/v2/Leads`, {
       method: "POST",
       headers: {
         "Authorization": `Zoho-oauthtoken ${token}`,
