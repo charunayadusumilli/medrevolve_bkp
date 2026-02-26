@@ -48,7 +48,15 @@ Deno.serve(async (req) => {
       }, { status: 500 });
     }
 
-    console.log('✅ Zoho refresh token obtained successfully');
+    console.log('✅ Zoho token response:', JSON.stringify(data));
+
+    if (!data.refresh_token) {
+      return Response.json({
+        success: false,
+        error: 'No refresh_token in response - code may be expired or already used',
+        zoho_response: data
+      });
+    }
 
     return Response.json({
       success: true,
