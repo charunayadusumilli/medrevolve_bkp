@@ -1,5 +1,26 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
+async function sendEmail({ to, from_name, subject, html }) {
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: `${from_name} <noreply@medrevolve.com>`,
+      to: [to],
+      subject,
+      html
+    })
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    console.error('Resend error:', errText);
+    throw new Error(`Resend failed: ${errText}`);
+  } else {
+    console.log('✅ Email sent via Resend to:', to);
+  }
+}
+
 async function getZohoAccessToken() {
   const clientId = Deno.env.get("ZOHO_CLIENT_ID");
   const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
@@ -56,11 +77,11 @@ Deno.serve(async (req) => {
     if (isPartner && data.email) {
       try {
         const firstName = data.contact_name?.split(' ')[0] || data.business_name;
-        await base44.asServiceRole.integrations.Core.SendEmail({
+        await sendEmail({
           from_name: "MedRevolve Partners",
           to: data.email,
           subject: `Welcome ${data.business_name}! Your Partner Account is Ready`,
-          body: `<h2>Welcome to MedRevolve Partners!</h2>
+          html: `<h2>Welcome to MedRevolve Partners!</h2>
 <p>Hi ${firstName},</p>
 <p>Congratulations! Your partner account is ready.</p>
 <p><strong>Partner Code:</strong> ${data.partner_code}</p>
@@ -84,11 +105,11 @@ Deno.serve(async (req) => {
     // Send welcome email to the new user (not for partners since they have a different flow)
     if (!isPartner && data.email) {
       try {
-        await base44.asServiceRole.integrations.Core.SendEmail({
+        await sendEmail({
           from_name: "MedRevolve",
           to: data.email,
           subject: "Welcome to MedRevolve! 🌿",
-          body: `
+          html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
               <div style="background: #2D3A2D; padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
                 <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to MedRevolve</h1>
@@ -147,11 +168,11 @@ Deno.serve(async (req) => {
           <p>User has been added to the system.</p>
         `;
 
-      await base44.asServiceRole.integrations.Core.SendEmail({
+      await sendEmail({
         from_name: "MedRevolve Notifications",
         to: adminEmail,
         subject: emailSubject,
-        body: emailBody
+        html: emailBody
       });
     } catch (adminEmailError) {
       console.error("Failed to send admin notification email:", adminEmailError);
