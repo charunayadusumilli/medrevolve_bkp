@@ -50,7 +50,7 @@ const categories = [
   { name: "Women's Health", href: 'Products?category=womens_health', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80' },
   { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&q=80' },
   { name: 'Hair Loss', href: 'Products?category=hair_loss', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=80&q=80' },
-  { name: 'Peptides', href: 'Products?category=peptides', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&q=80' },
+  { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&q=80' },
 ];
 
 // MR Monogram SVG — luxury geometric mark

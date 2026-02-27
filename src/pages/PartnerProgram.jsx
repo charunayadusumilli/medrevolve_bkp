@@ -68,7 +68,8 @@ const medications = {
   ],
   'Peptides & Wellness': [
     'Injectable NAD+', 'NAD+ Nasal Spray', 'NAD+ Cream',
-    'Injectable Glutathione', 'Injectable Sermorelin', 'Injectable B-12'
+    'Injectable Glutathione', 'Injectable Sermorelin', 'Injectable B-12',
+    'Ipamorelin + CJC-1295'
   ],
   'Hair & Esthetics': [
     'Minoxidil Tablets', 'Finasteride Tablets',
