@@ -126,6 +126,12 @@ const COMPLIANCE_BADGES = [
   { label: 'SOC 2 Type II', icon: Lock },
   { label: 'DEA Compliant', icon: Shield },
   { label: '50-State Licensed', icon: Globe },
+  { label: 'Zoho SOC 2 Certified', icon: Lock },
+  { label: 'ISO 27001 Aligned', icon: Shield },
+  { label: 'GDPR Compliant', icon: CheckCircle },
+  { label: 'CCPA Compliant', icon: CheckCircle },
+  { label: 'PCI DSS (via Stripe)', icon: Lock },
+  { label: 'PCAB Accredited Pharmacy Partners', icon: CheckCircle },
 ];
 
 // ── Sub-components ────────────────────────────────────────────────────────────

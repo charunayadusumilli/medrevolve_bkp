@@ -66,6 +66,7 @@ import ForCreators from './pages/ForCreators';
 import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
 import IntegrationsDashboard from './pages/IntegrationsDashboard';
+import MDIntegrationsDashboard from './pages/MDIntegrationsDashboard';
 import Messages from './pages/Messages';
 import MyAppointments from './pages/MyAppointments';
 import OrderSuccess from './pages/OrderSuccess';
@@ -94,7 +95,6 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
-import MDIntegrationsDashboard from './pages/MDIntegrationsDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -118,6 +118,7 @@ export const PAGES = {
     "Home": Home,
     "HowItWorks": HowItWorks,
     "IntegrationsDashboard": IntegrationsDashboard,
+    "MDIntegrationsDashboard": MDIntegrationsDashboard,
     "Messages": Messages,
     "MyAppointments": MyAppointments,
     "OrderSuccess": OrderSuccess,
@@ -146,7 +147,6 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
-    "MDIntegrationsDashboard": MDIntegrationsDashboard,
 }
 
 export const pagesConfig = {

@@ -121,6 +121,12 @@ const compliancePoints = [
   'Pure referral compensation model — no CPOM risk',
   'No payment-processor risk since partners don\'t take payment for medical services',
   'MedRevolve\'s affiliated physicians are responsible for all medical treatment',
+  'Platform is LegitScript Certified for online telehealth',
+  'SOC 2 Type II compliant infrastructure (via Zoho)',
+  'PCI DSS compliant payment processing via Stripe',
+  'GDPR & CCPA data privacy compliance',
+  'PCAB-accredited compounding pharmacy partners',
+  'ISO 27001-aligned security practices',
 ];
 
 const faqs = [
