@@ -443,7 +443,7 @@ export default function TelehealthPlatform() {
           <p className="text-white/60 mb-10 max-w-xl mx-auto">
             Every layer of MedRevolve is architected to meet the highest regulatory standards so your practice is protected from day one.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {COMPLIANCE_BADGES.map(badge => {
               const Icon = badge.icon;
               return (
