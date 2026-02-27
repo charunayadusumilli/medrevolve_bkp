@@ -36,7 +36,7 @@ const slides = [
   {
     tag: 'Longevity',
     headline: 'LIVE\nLONGER.',
-    sub: 'Peptide protocols and longevity programs backed by cutting-edge science.',
+    sub: 'Longevity protocols and physician-prescribed wellness programs backed by science.',
     cta: 'Explore Longevity',
     ctaHref: 'Products?category=longevity',
     image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80&fm=webp',
