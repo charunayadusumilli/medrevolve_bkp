@@ -822,5 +822,6 @@ export default function BookAppointment() {
         </motion.div>
       </div>
     </div>
+    </RequireAuthGate>
   );
 }
