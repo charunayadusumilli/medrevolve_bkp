@@ -223,8 +223,20 @@ export default function PatientOnboarding() {
           </motion.div>
         </AnimatePresence>
 
+        {/* Validation Error */}
+        {validationError && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6 flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm"
+          >
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            {validationError}
+          </motion.div>
+        )}
+
         {/* Navigation Buttons */}
-        <div className="flex items-center justify-between gap-4 mt-12">
+        <div className="flex items-center justify-between gap-4 mt-6">
           <Button
             variant="outline"
             onClick={handlePrevious}
