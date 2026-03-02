@@ -29,6 +29,7 @@ export default function PatientOnboarding() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [validationError, setValidationError] = useState('');
 
   useEffect(() => {
     const checkUser = async () => {
