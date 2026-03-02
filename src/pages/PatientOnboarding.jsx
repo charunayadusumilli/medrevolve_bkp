@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { createPageUrl } from '@/utils';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, AlertCircle } from 'lucide-react';
 import WelcomeStep from '@/components/onboarding/WelcomeStep.jsx';
 import ProfileStep from '@/components/onboarding/ProfileStep.jsx';
 import DocumentUploadStep from '@/components/onboarding/DocumentUploadStep.jsx';
