@@ -104,6 +104,7 @@ export default function PatientOnboarding() {
   };
 
   const handlePrevious = () => {
+    setValidationError('');
     setCurrentStep(prev => (prev > 0 ? prev - 1 : 0));
   };
 
