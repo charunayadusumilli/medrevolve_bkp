@@ -820,8 +820,8 @@ export default function BookAppointment() {
             </div>
           )}
         </motion.div>
+        </div>
       </div>
-    </div>
     </RequireAuthGate>
   );
 }
