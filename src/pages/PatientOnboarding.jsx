@@ -57,7 +57,44 @@ export default function PatientOnboarding() {
     { title: 'Done', description: 'Ready to go!' }
   ];
 
+  const validateStep = () => {
+    setValidationError('');
+
+    if (currentStep === 1) {
+      // Profile step validation
+      const required = ['full_name', 'email', 'date_of_birth', 'phone', 'address', 'city', 'state', 'zip_code'];
+      for (const field of required) {
+        if (!profileData[field] || !profileData[field].toString().trim()) {
+          setValidationError(`Please fill in all required fields before continuing.`);
+          return false;
+        }
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(profileData.email)) {
+        setValidationError('Please enter a valid email address.');
+        return false;
+      }
+      const phone = profileData.phone.replace(/\D/g, '');
+      if (phone.length < 10) {
+        setValidationError('Please enter a valid phone number.');
+        return false;
+      }
+    }
+
+    if (currentStep === 2) {
+      // Document upload validation
+      if (!documents.id_document) {
+        setValidationError('Please upload your Government ID before continuing.');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleNext = async () => {
+    if (!validateStep()) return;
+
     if (currentStep === steps.length - 1) {
       // Final step - redirect to portal
       window.location.href = createPageUrl('PatientPortal');
