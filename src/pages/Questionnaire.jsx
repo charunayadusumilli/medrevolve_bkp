@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
 import { base44 } from '@/api/base44Client';
+import RequireAuthGate from '@/components/auth/RequireAuthGate';
 import { 
   ArrowRight, ArrowLeft, Check, User, Heart, Scale, 
   Pill, FileText, Leaf

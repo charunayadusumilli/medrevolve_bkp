@@ -15,6 +15,7 @@ import {
   Star, ChevronLeft, ChevronRight, AlertCircle, Loader2
 } from 'lucide-react';
 import PhoneInput from '@/components/ui/PhoneInput';
+import RequireAuthGate from '@/components/auth/RequireAuthGate';
 import { format, addDays, startOfWeek, isSameDay, isToday, isBefore, startOfDay } from 'date-fns';
 
 const APPOINTMENT_TYPES = [
