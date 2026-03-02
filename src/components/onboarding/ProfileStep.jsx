@@ -68,7 +68,13 @@ export default function ProfileStep({ data, onUpdate }) {
               id="phone"
               value={data.phone || ''}
               onChange={(v) => handleChange('phone', v)}
+              onBlur={() => handleBlur('phone', data.phone)}
             />
+            {errors.phone && (
+              <div className="flex items-center gap-1.5 mt-1 text-sm text-red-500">
+                <AlertCircle className="w-3.5 h-3.5" />{errors.phone}
+              </div>
+            )}
           </motion.div>
 
           {fields.map((field, idx) => (
@@ -80,24 +86,24 @@ export default function ProfileStep({ data, onUpdate }) {
             >
               <Label htmlFor={field.key} className="block mb-2 text-sm font-medium text-[#2D3A2D]">
                 {field.label}
-                {field.required && <span className="text-red-500">*</span>}
+                {field.required && <span className="text-red-500 ml-0.5">*</span>}
               </Label>
               <Input
                 id={field.key}
                 type={field.type}
                 value={data[field.key] || ''}
                 onChange={(e) => handleChange(field.key, e.target.value)}
+                onBlur={(e) => handleBlur(field.key, e.target.value)}
                 className={`rounded-lg border ${
                   errors[field.key]
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-[#E8E0D5] focus:ring-[#4A6741]'
                 }`}
-                placeholder={field.label}
+                placeholder={field.placeholder || field.label}
               />
               {errors[field.key] && (
-                <div className="flex items-center gap-2 mt-1 text-sm text-red-500">
-                  <AlertCircle className="w-4 h-4" />
-                  {errors[field.key]}
+                <div className="flex items-center gap-1.5 mt-1 text-sm text-red-500">
+                  <AlertCircle className="w-3.5 h-3.5" />{errors[field.key]}
                 </div>
               )}
             </motion.div>
