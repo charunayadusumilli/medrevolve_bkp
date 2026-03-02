@@ -155,6 +155,7 @@ export default function Questionnaire() {
   const Icon = currentQuestion.icon;
 
   return (
+    <RequireAuthGate>
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Header */}
       <div className="fixed top-20 left-0 right-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-lg border-b border-[#E8E0D5]">
@@ -295,5 +296,6 @@ export default function Questionnaire() {
         </div>
       </div>
     </div>
+    </RequireAuthGate>
   );
 }

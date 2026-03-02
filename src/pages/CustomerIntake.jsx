@@ -106,6 +106,7 @@ export default function CustomerIntake() {
   }
 
   return (
+    <RequireAuthGate>
     <div className="min-h-screen bg-gradient-to-br from-[#FDFBF7] to-[#F5F0E8] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
@@ -465,5 +466,6 @@ export default function CustomerIntake() {
         </motion.div>
       </div>
     </div>
+    </RequireAuthGate>
   );
 }

@@ -756,6 +756,7 @@ export default function BookAppointment() {
   };
 
   return (
+    <RequireAuthGate>
     <div className="min-h-screen bg-[#FDFBF7] py-12 px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {!booked && (
