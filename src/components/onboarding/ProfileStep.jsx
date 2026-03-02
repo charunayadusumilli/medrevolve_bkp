@@ -8,32 +8,45 @@ import PhoneInput from '@/components/ui/PhoneInput';
 export default function ProfileStep({ data, onUpdate }) {
   const [errors, setErrors] = useState({});
 
+  const validateField = (field, value) => {
+    const v = (value || '').toString().trim();
+    if (!v) return `${fieldLabels[field] || field} is required.`;
+    if (field === 'full_name' && v.split(' ').filter(Boolean).length < 2)
+      return 'Please enter your first and last name.';
+    if (field === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+      return 'Please enter a valid email address.';
+    if (field === 'phone' && v.replace(/\D/g, '').length < 10)
+      return 'Please enter a valid 10-digit phone number.';
+    if (field === 'zip_code' && !/^\d{5}(-\d{4})?$/.test(v))
+      return 'Please enter a valid ZIP code (e.g. 12345).';
+    return '';
+  };
+
+  const fieldLabels = {
+    full_name: 'Full Name', email: 'Email', date_of_birth: 'Date of Birth',
+    address: 'Address', city: 'City', state: 'State', zip_code: 'ZIP Code', phone: 'Phone'
+  };
+
   const handleChange = (field, value) => {
-    onUpdate({
-      ...data,
-      [field]: value
-    });
+    onUpdate({ ...data, [field]: value });
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePhone = (phone) => {
-    return /^\d{10}$/.test(phone.replace(/\D/g, ''));
+  const handleBlur = (field, value) => {
+    const error = validateField(field, value);
+    if (error) setErrors(prev => ({ ...prev, [field]: error }));
   };
 
   const fields = [
-    { label: 'Full Name', key: 'full_name', type: 'text', required: true },
-    { label: 'Email', key: 'email', type: 'email', required: true },
+    { label: 'Full Name', key: 'full_name', type: 'text', required: true, placeholder: 'John Smith' },
+    { label: 'Email', key: 'email', type: 'email', required: true, placeholder: 'john@example.com' },
     { label: 'Date of Birth', key: 'date_of_birth', type: 'date', required: true },
-    { label: 'Address', key: 'address', type: 'text', required: true },
-    { label: 'City', key: 'city', type: 'text', required: true },
-    { label: 'State', key: 'state', type: 'text', required: true },
-    { label: 'ZIP Code', key: 'zip_code', type: 'text', required: true }
+    { label: 'Address', key: 'address', type: 'text', required: true, placeholder: '123 Main St' },
+    { label: 'City', key: 'city', type: 'text', required: true, placeholder: 'New York' },
+    { label: 'State', key: 'state', type: 'text', required: true, placeholder: 'NY' },
+    { label: 'ZIP Code', key: 'zip_code', type: 'text', required: true, placeholder: '10001' }
   ];
 
   return (
