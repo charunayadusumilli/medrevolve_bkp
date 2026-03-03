@@ -728,18 +728,34 @@ export default function BookAppointment() {
 
   const bookMutation = useMutation({
     mutationFn: async (data) => {
-      const res = await base44.functions.invoke('bookConsultation', data);
+      // Check if running in iframe — Stripe checkout won't work in iframe
+      if (window.self !== window.top) {
+        throw new Error('Payment checkout only works from the published app, not inside a preview frame.');
+      }
+      const res = await base44.functions.invoke('createConsultationCheckout', {
+        patientEmail: data.patient_email,
+        providerId: data.provider_id || null,
+        appointmentType: data.type,
+        consultationType: 'video',
+        appointmentDate: data.appointment_date,
+        appointmentTime: data.appointment_time,
+        preferredDate: data.appointment_date,
+        preferredTime: data.appointment_time,
+        reason: data.reason,
+        notes: data.notes || ''
+      });
       return res.data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['upcomingAppointments']);
-      // Clear cached form on successful booking
-      try {
-        localStorage.removeItem('bookAppointmentForm');
-      } catch (e) {
-        console.error('Failed to clear form cache:', e);
+    onSuccess: (data) => {
+      if (data.sessionUrl) {
+        // Redirect to Stripe checkout
+        try { localStorage.removeItem('bookAppointmentForm'); } catch {}
+        window.location.href = data.sessionUrl;
+      } else {
+        // Pay-after flow — booking created without payment
+        try { localStorage.removeItem('bookAppointmentForm'); } catch {}
+        setBooked(true);
       }
-      setBooked(true);
     }
   });
 
