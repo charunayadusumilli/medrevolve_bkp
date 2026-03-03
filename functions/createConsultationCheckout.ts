@@ -19,60 +19,61 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Patient email is required' }, { status: 400 });
         }
 
-        if (!providerId || !consultationType || !reason) {
-            return Response.json({ error: 'Missing required fields' }, { status: 400 });
+        if (!reason) {
+            return Response.json({ error: 'Reason is required' }, { status: 400 });
         }
 
-        // Get provider
-        const providers = await base44.asServiceRole.entities.Provider.filter({ id: providerId });
-        if (!providers.length) {
-            return Response.json({ error: 'Provider not found' }, { status: 404 });
+        // Get provider (optional)
+        let provider = null;
+        let rates = { video_rate: 99, phone_rate: 79, chat_rate: 49, in_person_rate: 149, payment_timing: 'before' };
+        if (providerId) {
+            const providers = await base44.asServiceRole.entities.Provider.filter({ id: providerId });
+            if (providers.length) provider = providers[0];
+            const rateRecords = await base44.asServiceRole.entities.ProviderRate.filter({ provider_id: providerId });
+            if (rateRecords.length) rates = rateRecords[0];
         }
-        const provider = providers[0];
-
-        // Get provider rates (fall back to defaults)
-        const rateRecords = await base44.asServiceRole.entities.ProviderRate.filter({ provider_id: providerId });
-        const rates = rateRecords[0] || { video_rate: 99, phone_rate: 79, chat_rate: 49, in_person_rate: 149 };
 
         const rateMap = {
-            video: rates.video_rate,
-            phone: rates.phone_rate,
-            chat: rates.chat_rate,
-            in_person: rates.in_person_rate
+            video: rates.video_rate || 99,
+            phone: rates.phone_rate || 79,
+            chat: rates.chat_rate || 49,
+            in_person: rates.in_person_rate || 149
         };
 
-        const amountDollars = rateMap[consultationType] || 99;
+        // Use a flat consultation fee if no provider assigned
+        const amountDollars = rateMap[resolvedConsultationType] || 99;
         const amountCents = Math.round(amountDollars * 100);
 
         // Generate invoice number
         const invoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
 
         // Create consultation booking
-        const booking = await base44.entities.ConsultationBooking.create({
-            patient_email: user.email,
-            provider_id: providerId,
-            consultation_type: consultationType,
-            preferred_date: preferredDate,
-            preferred_time: preferredTime,
+        const bookingData = {
+            patient_email: resolvedEmail,
+            consultation_type: resolvedConsultationType,
+            preferred_date: resolvedDate,
+            preferred_time: resolvedTime,
             reason,
             payment_status: 'pending',
             payment_amount: amountDollars,
             booking_status: 'pending',
             participant_state: patientState || ''
-        });
+        };
+        if (providerId) bookingData.provider_id = providerId;
+        const booking = await base44.asServiceRole.entities.ConsultationBooking.create(bookingData);
 
         // Create payment record
         const payment = await base44.asServiceRole.entities.ConsultationPayment.create({
             booking_id: booking.id,
-            patient_email: user.email,
-            provider_id: providerId,
-            provider_name: `${provider.name}, ${provider.title}`,
-            consultation_type: consultationType,
+            patient_email: resolvedEmail,
+            provider_id: providerId || '',
+            provider_name: provider ? `${provider.name}, ${provider.title}` : 'To Be Assigned',
+            consultation_type: resolvedConsultationType,
             amount: amountDollars,
             status: 'pending',
             payment_timing: paymentTiming || rates.payment_timing || 'before',
             invoice_number: invoiceNumber,
-            appointment_date: preferredDate ? `${preferredDate}T${preferredTime || '10:00'}:00` : null
+            appointment_date: resolvedDate ? `${resolvedDate}T${resolvedTime || '10:00'}:00` : null
         });
 
         // If paying after, return booking without checkout
@@ -80,31 +81,35 @@ Deno.serve(async (req) => {
             return Response.json({ bookingId: booking.id, paymentId: payment.id, payAfter: true, invoiceNumber });
         }
 
+        const consultationLabel = appointmentType ? appointmentType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : `${resolvedConsultationType.charAt(0).toUpperCase() + resolvedConsultationType.slice(1)} Consultation`;
+        const providerDesc = provider ? `With ${provider.name}, ${provider.title}` : 'MedRevolve Licensed Provider';
+
         // Create Stripe checkout session
+        const origin = req.headers.get('origin') || 'https://medi-revolve-care.base44.app';
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
                 price_data: {
                     currency: 'usd',
                     product_data: {
-                        name: `${consultationType.charAt(0).toUpperCase() + consultationType.slice(1)} Consultation`,
-                        description: `With ${provider.name}, ${provider.title}`
+                        name: consultationLabel,
+                        description: providerDesc
                     },
                     unit_amount: amountCents
                 },
                 quantity: 1
             }],
             mode: 'payment',
-            customer_email: user.email,
-            success_url: `${req.headers.get('origin')}/PatientPortal?session_id={CHECKOUT_SESSION_ID}&booking=${booking.id}`,
-            cancel_url: `${req.headers.get('origin')}/BookAppointment`,
+            customer_email: resolvedEmail,
+            success_url: `${origin}/PatientPortal?session_id={CHECKOUT_SESSION_ID}&booking=${booking.id}`,
+            cancel_url: `${origin}/BookAppointment`,
             metadata: {
                 base44_app_id: Deno.env.get('BASE44_APP_ID'),
                 booking_id: booking.id,
                 payment_id: payment.id,
-                provider_id: providerId,
-                consultation_type: consultationType,
-                patient_email: user.email,
+                provider_id: providerId || '',
+                consultation_type: resolvedConsultationType,
+                patient_email: resolvedEmail,
                 invoice_number: invoiceNumber
             }
         });
