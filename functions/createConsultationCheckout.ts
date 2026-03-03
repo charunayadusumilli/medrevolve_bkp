@@ -117,7 +117,7 @@ Deno.serve(async (req) => {
         await base44.asServiceRole.entities.ConsultationPayment.update(payment.id, {
             stripe_session_id: session.id
         });
-        await base44.entities.ConsultationBooking.update(booking.id, {
+        await base44.asServiceRole.entities.ConsultationBooking.update(booking.id, {
             stripe_payment_intent: session.payment_intent || session.id
         });
 
