@@ -6,13 +6,18 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'));
 Deno.serve(async (req) => {
     try {
         const base44 = createClientFromRequest(req);
-        const user = await base44.auth.me();
 
-        if (!user) {
-            return Response.json({ error: 'Unauthorized' }, { status: 401 });
+        const { providerId, consultationType, preferredDate, preferredTime, reason, patientState, paymentTiming, patientEmail, appointmentType, appointmentDate, appointmentTime, notes } = await req.json();
+
+        // Support both field name conventions
+        const resolvedEmail = patientEmail;
+        const resolvedConsultationType = consultationType || 'video';
+        const resolvedDate = preferredDate || appointmentDate;
+        const resolvedTime = preferredTime || appointmentTime;
+
+        if (!resolvedEmail) {
+            return Response.json({ error: 'Patient email is required' }, { status: 400 });
         }
-
-        const { providerId, consultationType, preferredDate, preferredTime, reason, patientState, paymentTiming } = await req.json();
 
         if (!providerId || !consultationType || !reason) {
             return Response.json({ error: 'Missing required fields' }, { status: 400 });
