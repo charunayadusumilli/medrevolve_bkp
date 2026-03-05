@@ -13,20 +13,21 @@ async function sendGmailNotification(base44, { to, subject, html }) {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { event, data } = await req.json();
+    const payload = await req.json();
+    const event = payload.event || {};
+    const data = payload.data || {};
 
-    // Handle User, Partner, and PatientIntake entity create events
-    if (event?.type !== "create" || !["User", "Partner", "PatientIntake"].includes(event?.entity_name)) {
+    // Handle PatientIntake entity create events only
+    if (event.type !== "create" || event.entity_name !== "PatientIntake") {
       return Response.json({ error: "Invalid event type" }, { status: 400 });
     }
 
     // PatientIntake: send welcome email directly using the intake email
-    if (event?.entity_name === "PatientIntake" && data?.email) {
+    if (data?.email) {
       const profile = (() => { try { return JSON.parse(data.answers_json || '{}')?.profile || {}; } catch { return {}; } })();
       const firstName = (profile.full_name || data.email)?.split(' ')[0] || 'there';
       try {
-        await sendEmail({
-          from_name: "MedRevolve Wellness Team",
+        await sendGmailNotification(base44, {
           to: data.email,
           subject: `Welcome to MedRevolve, ${firstName}! 🌿 Your account is confirmed`,
           html: `
