@@ -12,7 +12,7 @@ const slides = [
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1549476464-37392f717541?w=1200&q=80&fm=webp',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=90&fm=webp',
     accent: '#A8C99B',
   },
   {
@@ -20,8 +20,8 @@ const slides = [
     headline: 'BUILT\nDIFFERENT.',
     sub: 'Testosterone, vitality, and performance protocols — prescribed by real doctors.',
     cta: 'Get My Plan',
-    ctaHref: 'Products?category=mens_health',
-    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=1200&q=80&fm=webp',
+    ctaHref: 'Programs',
+    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1600&q=90&fm=webp',
     accent: '#C9B99A',
   },
   {
@@ -29,8 +29,8 @@ const slides = [
     headline: 'YOUR\nBIOLOGY.',
     sub: 'Hormone balance, weight loss, and longevity — designed around your biology.',
     cta: 'Discover My Plan',
-    ctaHref: 'Products?category=womens_health',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&q=80&fm=webp',
+    ctaHref: 'Programs',
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=90&fm=webp',
     accent: '#D4A8C9',
   },
   {
@@ -38,8 +38,8 @@ const slides = [
     headline: 'LIVE\nLONGER.',
     sub: 'Longevity protocols and physician-prescribed wellness programs backed by science.',
     cta: 'Explore Longevity',
-    ctaHref: 'Products?category=longevity',
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80&fm=webp',
+    ctaHref: 'Programs',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=90&fm=webp',
     accent: '#A8BFC9',
   },
 ];
