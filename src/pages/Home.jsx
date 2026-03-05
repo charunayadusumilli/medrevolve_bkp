@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 // Above-the-fold sections — loaded eagerly for fast LCP
 import HeroSection from '@/components/home/HeroSection';
 import ServiceCategories from '@/components/home/ServiceCategories';
+import VideoAdStrip from '@/components/home/VideoAdStrip';
 
 // Below-the-fold sections — lazy-loaded to reduce initial JS parse time
 const WellnessJourneySection = lazy(() => import('@/components/home/WellnessJourneySection'));
@@ -24,6 +25,7 @@ export default function Home() {
     <div className="min-h-screen" style={{ background: '#F8F6F2' }}>
       {/* Eager: above the fold */}
       <HeroSection />
+      <VideoAdStrip />
       <ServiceCategories />
 
       {/* Lazy: below the fold */}
