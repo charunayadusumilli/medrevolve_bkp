@@ -27,6 +27,7 @@ export default function ProviderIntake() {
     phone: '',
     title: '',
     specialty: '',
+    npi_number: '',
     license_number: '',
     states_licensed: [],
     years_experience: '',
