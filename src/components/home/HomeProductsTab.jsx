@@ -205,8 +205,8 @@ export default function HomeProductsTab() {
             </motion.div>
           )}
         </AnimatePresence>
+          </div>
         </div>
-      </div>
     </div>
   );
 }
