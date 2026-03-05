@@ -206,7 +206,6 @@ export default function HomeProductsTab() {
           )}
         </AnimatePresence>
       </div>
-      </div>
     </div>
   );
 }
