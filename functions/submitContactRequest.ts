@@ -61,7 +61,8 @@ Deno.serve(async (req) => {
       subject: data.subject || '', message: data.message, status: 'new'
     });
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
     const firstName = data.name.split(' ')[0];
 
