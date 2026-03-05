@@ -68,36 +68,47 @@ export default function TransformationStories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.12 }}
-              className="bg-[#1E293B] rounded-2xl p-7 flex flex-col border border-white/5 hover:border-[#C6A75E]/20 transition-colors"
+              className="relative rounded-2xl overflow-hidden flex flex-col border border-white/5 hover:border-[#C6A75E]/30 transition-all duration-300 group"
+              style={{ minHeight: 400 }}
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-5">
-                {[...Array(t.stars)].map((_, si) => (
-                  <Star key={si} className="w-3.5 h-3.5 fill-[#C6A75E] text-[#C6A75E]" />
-                ))}
+              {/* Background lifestyle photo */}
+              <div className="absolute inset-0">
+                <img src={t.bg} alt="" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
               </div>
 
-              {/* Quote */}
-              <p className="text-white/70 text-sm leading-relaxed flex-1 mb-6 italic">
-                "{t.quote}"
-              </p>
+              {/* Content */}
+              <div className="relative z-10 flex flex-col justify-end h-full p-7 pt-16">
+                {/* Stars */}
+                <div className="flex gap-1 mb-4">
+                  {[...Array(t.stars)].map((_, si) => (
+                    <Star key={si} className="w-3.5 h-3.5 fill-[#C6A75E] text-[#C6A75E]" />
+                  ))}
+                </div>
 
-              {/* Result badge */}
-              <div className="bg-[#C6A75E]/10 border border-[#C6A75E]/20 rounded-xl px-3 py-2 mb-5">
-                <p className="text-[#C6A75E] text-xs font-semibold">{t.result}</p>
-                <p className="text-white/40 text-[11px]">{t.program}</p>
-              </div>
+                {/* Quote */}
+                <p className="text-white/85 text-sm leading-relaxed mb-5 italic">
+                  "{t.quote}"
+                </p>
 
-              {/* Person */}
-              <div className="flex items-center gap-3">
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover object-center"
-                />
-                <div>
-                  <p className="text-white text-sm font-semibold">{t.name}, {t.age}</p>
-                  <p className="text-white/35 text-xs">{t.location}</p>
+                {/* Result badge */}
+                <div className="bg-[#C6A75E]/15 border border-[#C6A75E]/30 rounded-xl px-3 py-2 mb-4 backdrop-blur-sm">
+                  <p className="text-[#C6A75E] text-xs font-bold">{t.result}</p>
+                  <p className="text-white/50 text-[11px]">{t.program}</p>
+                </div>
+
+                {/* Person */}
+                <div className="flex items-center gap-3">
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="w-11 h-11 rounded-full object-cover object-top ring-2 ring-[#C6A75E]/40"
+                    loading="lazy"
+                  />
+                  <div>
+                    <p className="text-white text-sm font-semibold">{t.name}, {t.age}</p>
+                    <p className="text-white/40 text-xs">{t.location}</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
