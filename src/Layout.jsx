@@ -60,6 +60,16 @@ function TreatMegaMenu({ onClose }) {
 }
 
 export default function Layout({ children }) {
+  useEffect(() => {
+    if (document.getElementById('Cookiebot')) return;
+    const script = document.createElement('script');
+    script.id = 'Cookiebot';
+    script.src = 'https://consent.cookiebot.com/uc.js';
+    script.setAttribute('data-cbid', 'f872245e-106f-4258-bb1a-084567404e79');
+    script.type = 'text/javascript';
+    script.async = true;
+    document.head.insertBefore(script, document.head.firstChild);
+  }, []);
   const cyclingWords = ['Feel Better', 'Look Better', 'Live Longer', 'Be Stronger', 'Start Today'];
   const [cycleIndex, setCycleIndex] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
