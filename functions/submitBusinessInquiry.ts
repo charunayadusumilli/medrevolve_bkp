@@ -173,7 +173,7 @@ Deno.serve(async (req) => {
       sendEmail({ from_name: 'MedRevolve Business Development', to: data.email, subject: `✅ Inquiry Received — MedRevolve is excited to connect with ${data.company_name}`, html: bizHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult@2024', subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult2024@gmail.com', subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'business',
         data,

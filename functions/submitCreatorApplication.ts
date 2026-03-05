@@ -186,7 +186,7 @@ Deno.serve(async (req) => {
       sendEmail({ from_name: 'MedRevolve Creator Program', to: data.email, subject: `✅ Application Received — MedRevolve Creator Program`, html: creatorHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult@2024', subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult2024@gmail.com', subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'creator',
         data,

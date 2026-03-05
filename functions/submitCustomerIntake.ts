@@ -245,7 +245,7 @@ Deno.serve(async (req) => {
       sendEmail({ from_name: 'MedRevolve Wellness Team', to: data.email, subject: `✅ Welcome to MedRevolve, ${firstName}! Here's what happens next`, html: patientHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult@2024', subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult2024@gmail.com', subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'customer',
         data,
