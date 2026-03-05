@@ -344,8 +344,7 @@ export default function Layout({ children }) {
                       <div className="pt-4 border-t border-[#E8E0D5] mt-2">
                         <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Consultations & Services</p>
                         <Link to={createPageUrl('Programs')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Programs</Link>
-                      <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Book Consultation</Link>
-                      <Link to={createPageUrl('VisitTypeSelector')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Browse Treatments</Link>
+                      <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Consultations</Link>
                       </div>
 
                       {/* Programs section moved to admin only */}
