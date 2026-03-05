@@ -15,7 +15,7 @@ const ads = [
     href: 'Questionnaire',
     // Looping Unsplash lifestyle video via their mp4 endpoint
     video: 'https://videos.pexels.com/video-files/4067013/4067013-hd_1920_1080_25fps.mp4',
-    poster: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=85&fm=webp',
+    poster: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=85&fm=webp&sat=20&bright=10',
     accent: '#A8C99B',
   },
   {
@@ -27,7 +27,7 @@ const ads = [
     cta: 'Explore Longevity',
     href: 'Programs',
     video: 'https://videos.pexels.com/video-files/5699277/5699277-hd_1920_1080_30fps.mp4',
-    poster: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=85&fm=webp',
+    poster: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=85&fm=webp&sat=20&bright=10',
     accent: '#A8BFC9',
   },
   {

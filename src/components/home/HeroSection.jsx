@@ -12,7 +12,7 @@ const slides = [
     sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
     cta: 'Start My Assessment',
     ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=90&fm=webp',
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=90&fm=webp&sat=20&bright=10',
     accent: '#A8C99B',
   },
   {
@@ -39,7 +39,7 @@ const slides = [
     sub: 'Longevity protocols and physician-prescribed wellness programs backed by science.',
     cta: 'Explore Longevity',
     ctaHref: 'Programs',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=90&fm=webp',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&q=90&fm=webp&sat=20&bright=10',
     accent: '#A8BFC9',
   },
 ];
