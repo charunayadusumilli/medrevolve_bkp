@@ -1,39 +1,13 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
-async function sendEmail({ to, from_name, subject, html }) {
-  const token = await getZohoAccessToken();
-  const res = await fetch('https://mail.zoho.com/api/accounts/2234922000000008002/messages', {
-    method: 'POST',
-    headers: { 'Authorization': `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fromAddress: 'charunya.adusumilli@hanu-consulting.com', toAddress: to, subject, content: html, mailFormat: 'html' })
+async function sendGmailNotification(base44, { to, subject, html }) {
+  const response = await base44.integrations.Core.SendEmail({
+    to,
+    subject,
+    body: html
   });
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error('Zoho Mail error:', errText);
-    throw new Error(`Zoho Mail failed: ${errText}`);
-  } else {
-    console.log('✅ Email sent via Zoho Mail to:', to);
-  }
-}
-
-async function getZohoAccessToken() {
-  const clientId = Deno.env.get("ZOHO_CLIENT_ID");
-  const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
-  const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
-  const tokenUrl = "https://accounts.zoho.com/oauth/v2/token";
-  const response = await fetch(tokenUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      refresh_token: refreshToken,
-      client_id: clientId,
-      client_secret: clientSecret,
-      grant_type: "refresh_token"
-    })
-  });
-
-  const data = await response.json();
-  return data.access_token;
+  console.log('✅ Email sent via Gmail to:', to);
+  return response;
 }
 
 Deno.serve(async (req) => {
