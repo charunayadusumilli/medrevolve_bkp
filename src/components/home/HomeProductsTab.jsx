@@ -84,129 +84,129 @@ export default function HomeProductsTab() {
       <div className="py-16 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-        <motion.div className="mb-10 text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#7A8F7C] mb-2">Start Today</p>
-          <h2 className="text-3xl md:text-4xl font-light text-[#0F172A] mb-3">
-            What do you want to <span className="font-semibold">feel better</span> at?
-          </h2>
-          <p className="text-sm text-[#5A6B5A] max-w-md mx-auto">
-            Select a category to see physician-prescribed treatments. Every product requires a quick consultation.
-          </p>
-        </motion.div>
+          <motion.div className="mb-10 text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#7A8F7C] mb-2">Start Today</p>
+            <h2 className="text-3xl md:text-4xl font-light text-[#0F172A] mb-3">
+              What do you want to <span className="font-semibold">feel better</span> at?
+            </h2>
+            <p className="text-sm text-[#5A6B5A] max-w-md mx-auto">
+              Select a category to see physician-prescribed treatments. Every product requires a quick consultation.
+            </p>
+          </motion.div>
 
-        {/* Category Selector */}
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10"
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        >
-          {categories.map((cat, i) => {
-            const Icon = cat.icon;
-            const isActive = activeCategory === cat.id;
-            return (
-              <motion.button
-                key={cat.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                onClick={() => cat.available && setActiveCategory(isActive ? null : cat.id)}
-                className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all text-center
-                  ${isActive ? 'border-[#2D3A2D] bg-[#2D3A2D] text-white shadow-xl' : 'border-transparent bg-[#F8F6F2] hover:border-[#2D3A2D]/30 text-[#2D3A2D]'}
-                  ${!cat.available ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}`}
-                whileHover={cat.available ? { y: -4 } : {}}
-                whileTap={cat.available ? { scale: 0.97 } : {}}
-              >
-                {!cat.available && (
-                  <div className="absolute top-2 right-2">
-                    <Lock className="w-3 h-3 text-gray-400" />
-                  </div>
-                )}
-                <span className="text-2xl">{cat.emoji}</span>
-                <span className="font-semibold text-sm leading-tight">{cat.name}</span>
-                <span className={`text-[10px] leading-snug ${isActive ? 'text-white/70' : 'text-[#5A6B5A]'}`}>{cat.available ? cat.desc : 'Coming soon'}</span>
-              </motion.button>
-            );
-          })}
-        </motion.div>
+          {/* Category Selector */}
+          <motion.div
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          >
+            {categories.map((cat, i) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              return (
+                <motion.button
+                  key={cat.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  onClick={() => cat.available && setActiveCategory(isActive ? null : cat.id)}
+                  className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all text-center
+                    ${isActive ? 'border-[#2D3A2D] bg-[#2D3A2D] text-white shadow-xl' : 'border-transparent bg-[#F8F6F2] hover:border-[#2D3A2D]/30 text-[#2D3A2D]'}
+                    ${!cat.available ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}`}
+                  whileHover={cat.available ? { y: -4 } : {}}
+                  whileTap={cat.available ? { scale: 0.97 } : {}}
+                >
+                  {!cat.available && (
+                    <div className="absolute top-2 right-2">
+                      <Lock className="w-3 h-3 text-gray-400" />
+                    </div>
+                  )}
+                  <span className="text-2xl">{cat.emoji}</span>
+                  <span className="font-semibold text-sm leading-tight">{cat.name}</span>
+                  <span className={`text-[10px] leading-snug ${isActive ? 'text-white/70' : 'text-[#5A6B5A]'}`}>{cat.available ? cat.desc : 'Coming soon'}</span>
+                </motion.button>
+              );
+            })}
+          </motion.div>
 
-        {/* Product Reveal */}
-        <AnimatePresence mode="wait">
-          {activeCategory && products.length > 0 && (
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
-            >
-              {/* Workflow Banner */}
-              <div className="flex items-center gap-3 mb-6 p-4 bg-[#F5F0E8] rounded-2xl">
-                <div className="flex items-center gap-2 text-sm text-[#2D3A2D] font-medium flex-1">
-                  <span className="w-6 h-6 rounded-full bg-[#4A6741] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">1</span>
-                  Choose product
-                  <ChevronRight className="w-4 h-4 text-gray-300" />
-                  <span className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
-                  Quick consult
-                  <ChevronRight className="w-4 h-4 text-gray-300" />
-                  <span className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">3</span>
-                  Rx delivered
-                </div>
-                <Link to={createPageUrl(activeCat.href)} onClick={() => window.scrollTo({ top: 0 })}>
-                  <Button size="sm" variant="outline" className="rounded-full border-[#2D3A2D] text-[#2D3A2D] hover:bg-[#2D3A2D] hover:text-white text-xs flex-shrink-0">
-                    See all {activeCat.name}
-                    <ArrowRight className="w-3 h-3 ml-1" />
-                  </Button>
-                </Link>
-              </div>
-
-              <div className="grid sm:grid-cols-3 gap-5">
-                {products.map((product, i) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <MiniProductCard product={product} categoryHref={activeCat.href} />
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Bottom CTA */}
+          {/* Product Reveal */}
+          <AnimatePresence mode="wait">
+            {activeCategory && products.length > 0 && (
               <motion.div
+                key={activeCategory}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35 }}
+              >
+                {/* Workflow Banner */}
+                <div className="flex items-center gap-3 mb-6 p-4 bg-[#F5F0E8] rounded-2xl">
+                  <div className="flex items-center gap-2 text-sm text-[#2D3A2D] font-medium flex-1">
+                    <span className="w-6 h-6 rounded-full bg-[#4A6741] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    Choose product
+                    <ChevronRight className="w-4 h-4 text-gray-300" />
+                    <span className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    Quick consult
+                    <ChevronRight className="w-4 h-4 text-gray-300" />
+                    <span className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    Rx delivered
+                  </div>
+                  <Link to={createPageUrl(activeCat.href)} onClick={() => window.scrollTo({ top: 0 })}>
+                    <Button size="sm" variant="outline" className="rounded-full border-[#2D3A2D] text-[#2D3A2D] hover:bg-[#2D3A2D] hover:text-white text-xs flex-shrink-0">
+                      See all {activeCat.name}
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+
+                <div className="grid sm:grid-cols-3 gap-5">
+                  {products.map((product, i) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <MiniProductCard product={product} categoryHref={activeCat.href} />
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Bottom CTA */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="mt-8 flex flex-wrap items-center justify-center gap-4"
+                >
+                  <Link to={createPageUrl('VisitTypeSelector')} onClick={() => window.scrollTo({ top: 0 })}>
+                    <Button className="bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full px-8">
+                      Browse All Treatments
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                  <Link to={createPageUrl('Consultations')} onClick={() => window.scrollTo({ top: 0 })}>
+                    <Button variant="outline" className="rounded-full border-[#2D3A2D] text-[#2D3A2D] hover:bg-[#F5F0E8] px-8">
+                      Book a Consultation First
+                    </Button>
+                  </Link>
+                </motion.div>
+              </motion.div>
+            )}
+
+            {!activeCategory && (
+              <motion.div
+                key="default"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="mt-8 flex flex-wrap items-center justify-center gap-4"
+                exit={{ opacity: 0 }}
+                className="text-center py-8 text-[#8A9A8A] text-sm"
               >
-                <Link to={createPageUrl('VisitTypeSelector')} onClick={() => window.scrollTo({ top: 0 })}>
-                  <Button className="bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full px-8">
-                    Browse All Treatments
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-                <Link to={createPageUrl('Consultations')} onClick={() => window.scrollTo({ top: 0 })}>
-                  <Button variant="outline" className="rounded-full border-[#2D3A2D] text-[#2D3A2D] hover:bg-[#F5F0E8] px-8">
-                    Book a Consultation First
-                  </Button>
-                </Link>
+                ↑ Select a category above to see treatments
               </motion.div>
-            </motion.div>
-          )}
-
-          {!activeCategory && (
-            <motion.div
-              key="default"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center py-8 text-[#8A9A8A] text-sm"
-            >
-              ↑ Select a category above to see treatments
-            </motion.div>
-          )}
-        </AnimatePresence>
-          </div>
+            )}
+          </AnimatePresence>
         </div>
+      </div>
     </div>
   );
 }
