@@ -1,149 +1,263 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { trackEvent } from '@/components/analytics/AnalyticsTracker';
-import { 
-  Video, Calendar, MessageSquare, Clock, Star, 
-  ArrowRight, CheckCircle, Shield, Users
+import {
+  Video, Calendar, MessageSquare, Clock, Star,
+  ArrowRight, Shield, Users, CheckCircle, FileText,
+  Stethoscope, Zap, Lock
 } from 'lucide-react';
 
-export default function Consultations() {
-  const [activeTab, setActiveTab] = useState('providers');
+const consultTypes = [
+  {
+    id: 'weight',
+    icon: '⚖️',
+    label: 'Weight Loss',
+    sub: 'GLP-1, Semaglutide, Tirzepatide',
+    desc: 'A licensed provider will review your health history and prescribe the right GLP-1 protocol for your goals.',
+    duration: '20–30 min',
+    price: '$79',
+    href: 'BookAppointment?type=weight_loss',
+    accent: '#4A6741',
+  },
+  {
+    id: 'mens',
+    icon: '⚡',
+    label: "Men's Health",
+    sub: 'Testosterone, TRT, Performance',
+    desc: 'Comprehensive consultation covering testosterone levels, energy, and vitality optimization.',
+    duration: '25–30 min',
+    price: '$79',
+    href: 'BookAppointment?type=mens_health',
+    accent: '#4338CA',
+  },
+  {
+    id: 'womens',
+    icon: '🌸',
+    label: "Women's Health",
+    sub: 'Hormones, Menopause, Wellness',
+    desc: 'Hormone panel review, BHRT consultation, and a personalized wellness protocol.',
+    duration: '25–30 min',
+    price: '$79',
+    href: 'BookAppointment?type=womens_health',
+    accent: '#A21CAF',
+  },
+  {
+    id: 'longevity',
+    icon: '🧬',
+    label: 'Longevity & Peptides',
+    sub: 'NAD+, Sermorelin, BPC-157',
+    desc: 'Explore cutting-edge peptide protocols and longevity biomarkers with a specialist.',
+    duration: '30 min',
+    price: '$99',
+    href: 'BookAppointment?type=longevity',
+    accent: '#7C3AED',
+  },
+  {
+    id: 'general',
+    icon: '🩺',
+    label: 'General Wellness',
+    sub: 'Labs, Referrals, Health Review',
+    desc: 'A comprehensive wellness consult covering labs, health goals, and a full protocol review.',
+    duration: '30 min',
+    price: '$79',
+    href: 'BookAppointment?type=general',
+    accent: '#0891B2',
+  },
+  {
+    id: 'followup',
+    icon: '📋',
+    label: 'Follow-Up Visit',
+    sub: 'Dosage Adjustment, Check-In',
+    desc: 'Already a member? Schedule a quick follow-up to adjust your dosage or review results.',
+    duration: '15 min',
+    price: '$49',
+    href: 'BookAppointment?type=follow_up',
+    accent: '#8B7355',
+  },
+];
 
-  const { data: user, isError: userError } = useQuery({
+const process = [
+  { step: '01', icon: Calendar, title: 'Book Your Visit', desc: 'Pick a consult type, choose your provider (or let us match you), and pick a time.' },
+  { step: '02', icon: FileText, title: 'Complete Intake', desc: 'Fill out a short health questionnaire before your appointment. Takes 3 minutes.' },
+  { step: '03', icon: Video, title: 'Video Consultation', desc: 'Connect with your provider via secure HIPAA-compliant video. Ask everything.' },
+  { step: '04', icon: Stethoscope, title: 'Receive Your Rx', desc: 'Your provider writes a prescription (if appropriate) — sent directly to your pharmacy.' },
+];
+
+export default function Consultations() {
+  const { data: user } = useQuery({
     queryKey: ['currentUser'],
     queryFn: () => base44.auth.me(),
-    retry: false
+    retry: false,
   });
 
   const { data: upcomingAppointments = [] } = useQuery({
     queryKey: ['upcomingAppointments', user?.email],
     queryFn: () => base44.entities.Appointment.filter(
       { patient_email: user?.email, status: ['scheduled', 'confirmed'] },
-      'appointment_date',
-      10
+      'appointment_date', 5
     ),
     enabled: !!user?.email,
-    retry: false
+    retry: false,
   });
 
-  const { data: providers = [], isError: providersError } = useQuery({
+  const { data: providers = [] } = useQuery({
     queryKey: ['providers'],
-    queryFn: async () => {
-      try {
-        return await base44.entities.Provider.list('-created_date', 20);
-      } catch {
-        return [];
-      }
-    },
-    retry: false
+    queryFn: () => base44.entities.Provider.list('-created_date', 6),
+    retry: false,
   });
-
-  const features = [
-    {
-      icon: Video,
-      title: 'Secure Video Calls',
-      description: 'HIPAA-compliant video consultations from anywhere'
-    },
-    {
-      icon: MessageSquare,
-      title: 'Direct Messaging',
-      description: 'Secure messaging with your provider between visits'
-    },
-    {
-      icon: Calendar,
-      title: 'Easy Scheduling',
-      description: 'Book appointments at times that work for you'
-    },
-    {
-      icon: Shield,
-      title: 'Private & Secure',
-      description: 'Your health information is protected and confidential'
-    }
-  ];
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
-      {/* Hero Section */}
-      <section className="pt-12 pb-16 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-            >
-              <h1 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-                Expert Care, <span className="font-medium text-[#4A6741]">Anytime, Anywhere</span>
-              </h1>
-              <p className="text-lg text-[#5A6B5A] mb-8">
-                Connect with licensed medical providers through secure video consultations. 
-                Get personalized care, prescription adjustments, and expert guidance from the comfort of home.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to={createPageUrl('BookAppointment')}>
-                  <Button 
-                    size="lg"
-                    className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8"
-                    onClick={() => trackEvent('Book Consultation', 'Consultations', { source: 'hero_cta' })}
-                  >
-                    Book Consultation
-                    <Calendar className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
+    <div className="min-h-screen bg-[#0A1628]">
+
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="relative pt-20 pb-24 px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=70&fm=webp"
+            alt="" className="w-full h-full object-cover opacity-15" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]" />
+        </div>
+        <div className="relative max-w-5xl mx-auto text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-8">
+              <Shield className="w-3.5 h-3.5 text-[#A8C99B]" />
+              <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">HIPAA-Compliant Telehealth</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-5 leading-tight" style={{ letterSpacing: '-0.03em' }}>
+              Real Doctors.<br />
+              <span className="text-[#A8C99B]">Real Results.</span>
+            </h1>
+            <p className="text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Same-day or next-day telehealth consultations with licensed physicians and NPs. Get your personalized protocol, prescription, and ongoing support.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link to={createPageUrl('BookAppointment')}>
+                <Button size="lg" className="bg-white text-[#0A1628] hover:bg-white/90 rounded-none px-10 font-bold text-base shadow-2xl">
+                  Book a Consultation <Calendar className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              {user && (
                 <Link to={createPageUrl('MyAppointments')}>
-                  <Button 
-                    variant="outline"
-                    size="lg"
-                    className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full px-8"
-                  >
+                  <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-none px-8 border border-white/20 text-base">
                     My Appointments
                   </Button>
                 </Link>
-              </div>
-            </motion.div>
+              )}
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="relative"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80"
-                alt="Telehealth Consultation"
-                className="rounded-3xl shadow-2xl"
-                loading="lazy"
-                decoding="async"
-              />
-            </motion.div>
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
+              {[
+                { icon: Shield, label: 'HIPAA-Compliant' },
+                { icon: Users, label: '200+ Providers' },
+                { icon: Star, label: '4.9★ Rating' },
+                { icon: Zap, label: 'Same-Day Visits' },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-2 text-white/40 text-sm">
+                  <Icon className="w-4 h-4 text-[#A8C99B]" />
+                  {label}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Upcoming Appointments (if logged in) ──────────────────────── */}
+      {upcomingAppointments.length > 0 && (
+        <section className="py-12 px-6 lg:px-8 bg-white/5 border-y border-white/10">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-white">Your Upcoming Appointments</h2>
+              <Link to={createPageUrl('MyAppointments')}>
+                <button className="text-[#A8C99B] text-sm font-medium hover:text-white transition-colors flex items-center gap-1">
+                  View all <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {upcomingAppointments.slice(0, 3).map(apt => (
+                <div key={apt.id} className="bg-white/5 border border-white/10 rounded-2xl p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-2 h-2 rounded-full bg-[#A8C99B]" />
+                    <span className="text-[#A8C99B] text-xs font-bold uppercase tracking-widest">{apt.status}</span>
+                  </div>
+                  <p className="text-white font-semibold text-sm">
+                    {new Date(apt.appointment_date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                  </p>
+                  <p className="text-white/40 text-xs mt-1">
+                    {new Date(apt.appointment_date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Consult Types ─────────────────────────────────────────────── */}
+      <section className="py-24 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-[#A8C99B]/60 mb-3">Choose Your Visit Type</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
+              What Are You Looking For?
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {consultTypes.map((ct, i) => (
+              <motion.div key={ct.id}
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+                <Link to={createPageUrl(ct.href)} onClick={() => window.scrollTo({ top: 0 })}>
+                  <div className="group bg-[#1E293B] border border-white/5 hover:border-white/20 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="text-3xl">{ct.icon}</div>
+                      <span className="text-xs font-bold text-white/30 flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> {ct.duration}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-1">{ct.label}</h3>
+                    <p className="text-xs font-medium mb-3" style={{ color: ct.accent }}>{ct.sub}</p>
+                    <p className="text-white/45 text-sm leading-relaxed flex-1">{ct.desc}</p>
+                    <div className="flex items-center justify-between mt-5 pt-4 border-t border-white/10">
+                      <span className="text-white font-bold text-lg">{ct.price}</span>
+                      <span className="flex items-center gap-1.5 text-sm font-bold transition-all group-hover:gap-2.5"
+                        style={{ color: ct.accent }}>
+                        Book Now <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
+      {/* ── How It Works ──────────────────────────────────────────────── */}
+      <section className="py-20 px-6 lg:px-8 bg-[#0F172A]">
+        <div className="max-w-5xl mx-auto">
+          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-3xl font-black text-white mb-2" style={{ letterSpacing: '-0.02em' }}>How It Works</h2>
+            <p className="text-white/40">From booking to prescription in 4 steps.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-4 gap-8">
+            {process.map((p, i) => {
+              const Icon = p.icon;
               return (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-[#D4E5D7] flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-8 h-8 text-[#4A6741]" />
+                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  className="text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-6 h-6 text-[#A8C99B]" />
                   </div>
-                  <h3 className="font-medium text-[#2D3A2D] mb-2">{feature.title}</h3>
-                  <p className="text-sm text-[#5A6B5A]">{feature.description}</p>
+                  <p className="text-[10px] font-bold text-[#A8C99B]/50 uppercase tracking-widest mb-1">{p.step}</p>
+                  <h3 className="font-bold text-white text-sm mb-2">{p.title}</h3>
+                  <p className="text-white/35 text-xs leading-relaxed">{p.desc}</p>
                 </motion.div>
               );
             })}
@@ -151,195 +265,77 @@ export default function Consultations() {
         </div>
       </section>
 
-      {/* Upcoming Appointments Preview */}
-      {upcomingAppointments.length > 0 && (
-        <section className="py-16 px-6 lg:px-8 bg-[#F5F0E8]">
+      {/* ── Meet Our Providers ────────────────────────────────────────── */}
+      {providers.length > 0 && (
+        <section className="py-20 px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-light text-[#2D3A2D]">Your Upcoming Appointments</h2>
-              <Link to={createPageUrl('MyAppointments')}>
-                <Button variant="ghost" className="text-[#4A6741]">
-                  View All
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
+            <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <h2 className="text-3xl font-black text-white mb-2" style={{ letterSpacing: '-0.02em' }}>Meet Your Providers</h2>
+              <p className="text-white/40">Board-certified. Licensed. Dedicated to your results.</p>
+            </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcomingAppointments.slice(0, 3).map((appointment) => (
-                <AppointmentCard key={appointment.id} appointment={appointment} />
+              {providers.map((provider, i) => (
+                <motion.div key={provider.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                  <div className="bg-[#1E293B] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all">
+                    <div className="aspect-[4/3] bg-[#0F172A] overflow-hidden">
+                      <img src={provider.photo || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80'}
+                        alt={provider.name} className="w-full h-full object-cover" loading="lazy" />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-bold text-white text-base mb-0.5">{provider.name}, {provider.title}</h3>
+                      <p className="text-[#A8C99B] text-sm mb-3">{provider.specialty}</p>
+                      {provider.rating && (
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="flex">
+                            {[...Array(5)].map((_, j) => (
+                              <Star key={j} className={`w-3.5 h-3.5 ${j < Math.floor(provider.rating) ? 'fill-amber-400 text-amber-400' : 'text-white/10'}`} />
+                            ))}
+                          </div>
+                          <span className="text-white/30 text-xs">{provider.total_consultations}+ consults</span>
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <Link to={createPageUrl(`ProviderProfile?id=${provider.id}`)} className="flex-1">
+                          <Button size="sm" variant="ghost" className="w-full text-white/60 border border-white/10 hover:bg-white/5 rounded-none text-xs">Profile</Button>
+                        </Link>
+                        <Link to={createPageUrl(`BookAppointment?provider=${provider.id}`)} className="flex-1">
+                          <Button size="sm" className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-none text-xs">Book</Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* Meet Our Providers */}
-      <section className="py-16 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-light text-[#2D3A2D] mb-4">
-              Meet Our <span className="font-medium text-[#4A6741]">Medical Team</span>
-            </h2>
-            <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-              Board-certified providers dedicated to your wellness journey
-            </p>
-          </div>
-
-          {providersError ? (
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
-              <Users className="w-12 h-12 text-amber-600 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-amber-900 mb-2">Unable to Load Providers</h3>
-              <p className="text-amber-800 mb-4">We're having trouble retrieving our provider list. This is temporary. Please try refreshing the page in a moment.</p>
-              <Button 
-                onClick={() => window.location.reload()}
-                className="bg-amber-600 hover:bg-amber-700 text-white rounded-full"
-              >
-                Refresh Page
-              </Button>
-            </div>
-          ) : providers.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="w-16 h-16 text-[#D4E5D7] mx-auto mb-4" />
-              <p className="text-[#5A6B5A] mb-6">Our medical team is being set up. Check back soon!</p>
-              <Link to={createPageUrl('BookAppointment')}>
-                <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full">
-                  Book a Consultation Anyway
-                </Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {providers.slice(0, 6).map((provider, index) => (
-                <motion.div
-                  key={provider.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <ProviderCard provider={provider} />
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] to-[#3D5636]">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
-              Ready to Get Started?
-            </h2>
-            <p className="text-white/80 text-lg mb-8">
-              Book your consultation today and take the next step in your wellness journey
-            </p>
-            <Link to={createPageUrl('BookAppointment')}>
-              <Button 
-                size="lg"
-                className="bg-white text-[#4A6741] hover:bg-white/90 rounded-full px-10 py-6"
-              >
-                Schedule Your Consultation
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function AppointmentCard({ appointment }) {
-  const appointmentDate = new Date(appointment.appointment_date);
-  
-  return (
-    <Link to={createPageUrl(`AppointmentDetails?id=${appointment.id}`)}>
-      <motion.div 
-        className="bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow"
-        whileHover={{ y: -4 }}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <Badge className="bg-[#D4E5D7] text-[#4A6741] border-none">
-            {appointment.type.replace('_', ' ')}
-          </Badge>
-          <Clock className="w-4 h-4 text-[#5A6B5A]" />
-        </div>
-        <p className="font-medium text-[#2D3A2D] mb-2">
-          {appointmentDate.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            month: 'long', 
-            day: 'numeric' 
-          })}
-        </p>
-        <p className="text-sm text-[#5A6B5A]">
-          {appointmentDate.toLocaleTimeString('en-US', { 
-            hour: 'numeric', 
-            minute: '2-digit' 
-          })}
-        </p>
-      </motion.div>
-    </Link>
-  );
-}
-
-function ProviderCard({ provider }) {
-  return (
-    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
-      <div className="aspect-square bg-[#F5F0E8] overflow-hidden">
-        <img
-          src={provider.photo || `https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80`}
-          alt={provider.name}
-          className="w-full h-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <div className="p-6">
-        <h3 className="font-medium text-[#2D3A2D] text-lg mb-1">
-          {provider.name}, {provider.title}
-        </h3>
-        <p className="text-sm text-[#4A6741] mb-3">{provider.specialty}</p>
-        {provider.rating && (
-          <div className="flex items-center gap-2 mb-4">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i}
-                  className={`w-4 h-4 ${i < Math.floor(provider.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-[#5A6B5A]">
-              {provider.total_consultations}+ consultations
-            </span>
-          </div>
-        )}
-        <div className="flex gap-2">
-          <Link to={createPageUrl(`ProviderProfile?id=${provider.id}`)} className="flex-1">
-            <Button 
-              size="sm"
-              variant="outline"
-              className="w-full border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full"
-            >
-              Profile
-            </Button>
+      {/* ── No providers placeholder ──────────────────────────────────── */}
+      {providers.length === 0 && (
+        <section className="py-16 px-6 text-center">
+          <Users className="w-14 h-14 text-white/10 mx-auto mb-4" />
+          <p className="text-white/30 mb-6">Our provider team is being set up. You can still book below.</p>
+          <Link to={createPageUrl('BookAppointment')}>
+            <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-none px-8">Book a Consultation</Button>
           </Link>
-          <Link to={createPageUrl(`BookAppointment?provider=${provider.id}`)} className="flex-1">
-            <Button 
-              size="sm"
-              className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full"
-            >
-              Book
+        </section>
+      )}
+
+      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#0F172A]">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-black text-white mb-3" style={{ letterSpacing: '-0.02em' }}>
+            Ready to Talk to a Doctor?
+          </h2>
+          <p className="text-white/40 mb-10">Book today. Same-day availability. Prescription sent in 24 hours.</p>
+          <Link to={createPageUrl('BookAppointment')}>
+            <Button size="lg" className="bg-white text-[#0A1628] hover:bg-white/90 rounded-none px-12 font-bold text-base">
+              Schedule My Consultation <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
