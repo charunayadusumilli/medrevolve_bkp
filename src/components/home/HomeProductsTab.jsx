@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { ArrowRight, Lock, ChevronRight, Sparkles, Zap, Heart, Scale, HeartPulse, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import RevolvingContentStrip from '@/components/home/RevolvingContentStrip';
 
 const categories = [
   { id: 'weight', name: 'Weight Loss', icon: Scale, emoji: '⚖️', desc: 'GLP-1 programs, semaglutide, tirzepatide', color: '#2D3A2D', bg: '#F0F4EF', available: true, href: 'Products?category=weight_loss' },
@@ -78,7 +79,9 @@ export default function HomeProductsTab() {
   const products = featuredByCategory[activeCategory] || [];
 
   return (
-    <div className="py-16 px-6 lg:px-8 bg-white">
+    <div className="bg-white">
+      <RevolvingContentStrip />
+      <div className="py-16 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div className="mb-10 text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
