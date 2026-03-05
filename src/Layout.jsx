@@ -61,28 +61,42 @@ function TreatMegaMenu({ onClose }) {
 
 export default function Layout({ children }) {
   useEffect(() => {
-    if (document.getElementById('Cookiebot')) return;
-    const script = document.createElement('script');
-    script.id = 'Cookiebot';
-    script.src = 'https://consent.cookiebot.com/uc.js';
-    script.setAttribute('data-cbid', 'f872245e-106f-4258-bb1a-084567404e79');
-    script.type = 'text/javascript';
-    script.async = true;
-    document.head.insertBefore(script, document.head.firstChild);
+    // ── Cookiebot consent ──────────────────────────────────
+    if (!document.getElementById('Cookiebot')) {
+      const script = document.createElement('script');
+      script.id = 'Cookiebot';
+      script.src = 'https://consent.cookiebot.com/uc.js';
+      script.setAttribute('data-cbid', 'f872245e-106f-4258-bb1a-084567404e79');
+      script.type = 'text/javascript';
+      script.async = true;
+      document.head.insertBefore(script, document.head.firstChild);
+    }
 
-    // Google tag (gtag.js)
-    if (document.getElementById('gtag-script')) return;
-    const gtagScript = document.createElement('script');
-    gtagScript.id = 'gtag-script';
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
-    gtagScript.async = true;
-    document.head.insertBefore(gtagScript, document.head.firstChild);
+    // ── Google Analytics (gtag) ───────────────────────────
+    if (!document.getElementById('gtag-script')) {
+      const gtagScript = document.createElement('script');
+      gtagScript.id = 'gtag-script';
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
+      gtagScript.async = true;
+      document.head.appendChild(gtagScript);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-BZTEFSTDPL');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-BZTEFSTDPL');
+    }
+
+    // ── Preconnect hints for fast image/video load ────────
+    ['https://images.unsplash.com', 'https://videos.pexels.com'].forEach(href => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const l = document.createElement('link');
+        l.rel = 'preconnect';
+        l.href = href;
+        l.crossOrigin = '';
+        document.head.appendChild(l);
+      }
+    });
   }, []);
   const cyclingWords = ['Feel Better', 'Look Better', 'Live Longer', 'Be Stronger', 'Start Today'];
   const [cycleIndex, setCycleIndex] = useState(0);
