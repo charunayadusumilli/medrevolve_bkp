@@ -89,13 +89,13 @@ import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
 import ProviderOutreach from './pages/ProviderOutreach';
 import ProviderProfile from './pages/ProviderProfile';
+import QualiphyConsult from './pages/QualiphyConsult';
 import Questionnaire from './pages/Questionnaire';
 import TelehealthPlatform from './pages/TelehealthPlatform';
 import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
-import QualiphyConsult from './pages/QualiphyConsult';
 import __Layout from './Layout.jsx';
 
 
@@ -142,13 +142,13 @@ export const PAGES = {
     "ProviderIntake": ProviderIntake,
     "ProviderOutreach": ProviderOutreach,
     "ProviderProfile": ProviderProfile,
+    "QualiphyConsult": QualiphyConsult,
     "Questionnaire": Questionnaire,
     "TelehealthPlatform": TelehealthPlatform,
     "Terms": Terms,
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
-    "QualiphyConsult": QualiphyConsult,
 }
 
 export const pagesConfig = {

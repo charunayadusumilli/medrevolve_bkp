@@ -202,16 +202,8 @@ export default function Layout({ children }) {
                 Programs
               </Link>
 
-              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-semibold text-white bg-[#4A6741] hover:bg-[#3D5636] rounded-full transition-all">
                 Consultations
-              </Link>
-
-              <Link to={createPageUrl('VisitTypeSelector')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                Browse Treatments
-              </Link>
-
-              <Link to={createPageUrl('QualiphyConsult')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-semibold text-white bg-[#4A6741] hover:bg-[#3D5636] rounded-full transition-all">
-                Live Consult
               </Link>
 
               {/* Admin only */}
