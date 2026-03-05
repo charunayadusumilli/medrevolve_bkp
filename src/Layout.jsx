@@ -210,6 +210,10 @@ export default function Layout({ children }) {
                 Browse Treatments
               </Link>
 
+              <Link to={createPageUrl('QualiphyConsult')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-semibold text-white bg-[#4A6741] hover:bg-[#3D5636] rounded-full transition-all">
+                Live Consult
+              </Link>
+
               {/* Admin only */}
               {user?.role === 'admin' && (
                 <DropdownMenu>
