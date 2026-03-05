@@ -208,21 +208,17 @@ export default function Layout({ children }) {
                 </AnimatePresence>
               </div>
 
-              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                <Link to={createPageUrl('Programs')} className="block">Programs</Link>
-              </button>
+              <Link to={createPageUrl('Programs')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+                Programs
+              </Link>
 
-              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                <Link to={createPageUrl('Consultations')} className="block">Consultations</Link>
-              </button>
+              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+                Consultations
+              </Link>
 
-              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                <Link to={createPageUrl('VisitTypeSelector')} className="block">Browse Treatments</Link>
-              </button>
-
-              <button onClick={() => handleNavClick(() => setTreatOpen(false))} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                <Link to={createPageUrl('TelehealthPlatform')} className="block">Telehealth Platform</Link>
-              </button>
+              <Link to={createPageUrl('VisitTypeSelector')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
+                Browse Treatments
+              </Link>
 
               {/* Admin only */}
               {user?.role === 'admin' && (
