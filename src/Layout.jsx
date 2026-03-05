@@ -155,11 +155,11 @@ export default function Layout({ children }) {
       <AIAssistant />
 
       {/* Announcement Bar */}
-      <div className="bg-[#2D3A2D] text-white text-center py-2.5 px-4 text-sm font-medium">
-        ✦ Your wellness, elevated. Personalized protocols from licensed providers, delivered to your door.{' '}
-          <Link to={createPageUrl('Products')} className="underline underline-offset-2 hover:text-[#A8C99B] transition-colors">
-            Begin your journey →
-          </Link>
+      <div className="bg-[#2D3A2D] text-white text-center py-2 px-4 text-xs font-medium tracking-wide">
+        ✦ Physician-prescribed protocols. Licensed pharmacies. Delivered in 24–48 hrs.{' '}
+        <Link to={createPageUrl('Consultations')} className="underline underline-offset-2 hover:text-[#A8C99B] transition-colors font-semibold">
+          Book a consultation →
+        </Link>
       </div>
 
       {/* Header */}
