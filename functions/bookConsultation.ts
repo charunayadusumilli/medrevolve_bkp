@@ -495,12 +495,10 @@ Deno.serve(async (req) => {
 </html>`;
 
     try {
-      await sendEmailResend({
-        from_name: 'MedRevolve Platform',
-        to: adminEmail,
-        subject: `📅 New Appointment${!isConfirmed ? ' [ASSIGN PROVIDER]' : ' ✅'} — ${patientName} · ${dateStr}`,
-        html: adminHtml
-      });
+      await Promise.all([
+        sendEmailResend({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `📅 New Appointment${!isConfirmed ? ' [ASSIGN PROVIDER]' : ' ✅'} — ${patientName} · ${dateStr}`, html: adminHtml }),
+        sendEmailResend({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `📅 New Appointment${!isConfirmed ? ' [ASSIGN PROVIDER]' : ' ✅'} — ${patientName} · ${dateStr}`, html: adminHtml }),
+      ]);
     } catch (e) { console.error('Admin email error:', e); }
 
     // ─────────────────────────────────────────────────────────────────────────
