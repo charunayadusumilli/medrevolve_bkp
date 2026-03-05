@@ -10,7 +10,8 @@ const testimonials = [
     program: 'Weight Loss — Semaglutide',
     result: 'Lost 34 lbs in 4 months',
     quote: 'I had tried everything for years. MedRevolve was the first time someone actually listened, built a plan around my life, and the results followed. I feel like myself again.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80',
+    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=90&fm=webp',
+    bg: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&fm=webp',
     stars: 5,
   },
   {
@@ -20,7 +21,8 @@ const testimonials = [
     program: "Men's Health — Testosterone",
     result: 'Energy levels transformed',
     quote: 'The process was discreet, fast, and genuinely personal. Within 6 weeks my energy, focus and drive were back. This is the platform I wish existed 10 years ago.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&q=80',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=90&fm=webp',
+    bg: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80&fm=webp',
     stars: 5,
   },
   {
@@ -30,7 +32,8 @@ const testimonials = [
     program: 'Longevity — NAD+ + Sermorelin',
     result: 'Sleeping 8 hrs, recovering faster',
     quote: 'Peptide protocols changed how I age. My recovery is sharper, my mind is clearer. MedRevolve treats you like a whole person, not a transaction.',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=200&q=80',
+    image: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&q=90&fm=webp',
+    bg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fm=webp',
     stars: 5,
   },
 ];
