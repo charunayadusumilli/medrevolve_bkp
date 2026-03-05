@@ -431,11 +431,10 @@ export default function Layout({ children }) {
                 Prescription telehealth at transparent prices. Real doctors, licensed pharmacies, delivered in 24-48 hours.
               </p>
               <div className="flex gap-3">
-                {([Instagram, Twitter, Facebook, Youtube]).map((SI, i) => (
-                  <a key={i} href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-                    <SI className="w-4 h-4" />
-                  </a>
-                ))}
+                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Instagram className="w-4 h-4" /></a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Twitter className="w-4 h-4" /></a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Facebook className="w-4 h-4" /></a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Youtube className="w-4 h-4" /></a>
               </div>
             </div>
 
