@@ -45,7 +45,7 @@ const slides = [
 ];
 
 const categories = [
-  { name: 'Weight Loss', href: 'Products?category=weight_loss', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&q=80' },
+  { name: 'Weight Loss', href: 'Products?category=weight_loss', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=80&q=80' },
   { name: "Men's Health", href: 'Products?category=mens_health', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=80&q=80' },
   { name: "Women's Health", href: 'Products?category=womens_health', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80' },
   { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&q=80' },
