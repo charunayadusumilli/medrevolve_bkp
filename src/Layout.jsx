@@ -69,6 +69,20 @@ export default function Layout({ children }) {
     script.type = 'text/javascript';
     script.async = true;
     document.head.insertBefore(script, document.head.firstChild);
+
+    // Google tag (gtag.js)
+    if (document.getElementById('gtag-script')) return;
+    const gtagScript = document.createElement('script');
+    gtagScript.id = 'gtag-script';
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
+    gtagScript.async = true;
+    document.head.insertBefore(gtagScript, document.head.firstChild);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-BZTEFSTDPL');
   }, []);
   const cyclingWords = ['Feel Better', 'Look Better', 'Live Longer', 'Be Stronger', 'Start Today'];
   const [cycleIndex, setCycleIndex] = useState(0);
