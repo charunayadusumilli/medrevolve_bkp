@@ -82,7 +82,7 @@ export default function HomeProductsTab() {
     <div className="bg-white">
       <RevolvingContentStrip />
       <div className="py-16 px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div className="mb-10 text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#7A8F7C] mb-2">Start Today</p>
