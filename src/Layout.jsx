@@ -141,16 +141,6 @@ export default function Layout({ children }) {
     return () => { cancelled = true; };
   }, [location.pathname]);
 
-  // Determine user's dashboard based on role
-  const getDashboardUrl = () => {
-    if (!user) return null;
-    if (user.role === 'admin') return createPageUrl('AdminDashboard');
-    // Check user attributes for role hints
-    return createPageUrl('PatientPortal');
-  };
-
-  const handleTreatToggle = () => setTreatOpen(!treatOpen);
-
   // Scroll to top & close menus on nav click
   const handleNavClick = (callback) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -511,7 +501,7 @@ export default function Layout({ children }) {
           </div>
 
           <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/30 text-xs">© 2024 MedRevolve. All rights reserved. Not affiliated with any insurance provider.</p>
+            <p className="text-white/30 text-xs">© 2025 MedRevolve. All rights reserved. Not affiliated with any insurance provider.</p>
             <p className="text-white/20 text-xs">Telehealth services provided by licensed providers through affiliated medical groups.</p>
           </div>
         </div>
