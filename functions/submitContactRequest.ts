@@ -173,7 +173,8 @@ Deno.serve(async (req) => {
 
     await Promise.all([
       sendEmail({ from_name: 'MedRevolve Support', to: data.email, subject: `✅ We got your message, ${firstName}! We'll respond within 24 hours`, html: patientHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml })
+      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml }),
     ]);
 
     // SMS to admin
