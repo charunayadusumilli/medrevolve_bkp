@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
 async function sendSMS(to, body) {
   const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
@@ -18,33 +18,27 @@ async function sendSMS(to, body) {
   else console.log('✅ SMS sent to:', phoneE164);
 }
 
-async function getZohoAccessToken() {
-  const clientId = Deno.env.get("ZOHO_CLIENT_ID");
-  const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
-  const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
-  const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret, grant_type: "refresh_token" })
-  });
-  const data = await response.json();
-  return data.access_token;
-}
-
-async function sendEmail({ to, from_name, subject, html }) {
-  const token = await getZohoAccessToken();
-  const res = await fetch('https://mail.zoho.com/api/accounts/2234922000000008002/messages', {
+async function sendEmail(base44, { to, subject, html }) {
+  const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+  const emailLines = [
+    `From: MedRevolve <noreply@medrevolve.com>`,
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8',
+    '',
+    html,
+  ];
+  const raw = btoa(unescape(encodeURIComponent(emailLines.join('\r\n'))))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
     method: 'POST',
-    headers: { 'Authorization': `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fromAddress: 'charunya.adusumilli@hanu-consulting.com', toAddress: to, subject, content: html, mailFormat: 'html' })
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ raw }),
   });
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error('Zoho Mail error:', errText);
-    throw new Error(`Zoho Mail failed: ${errText}`);
-  } else {
-    console.log('✅ Email sent via Zoho Mail to:', to);
-  }
+  const data = await res.json();
+  if (!res.ok) { console.error('Gmail error:', JSON.stringify(data)); throw new Error(data.error?.message || 'Gmail send failed'); }
+  console.log('✅ Gmail sent to:', to);
 }
 
 Deno.serve(async (req) => {
