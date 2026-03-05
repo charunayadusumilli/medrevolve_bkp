@@ -170,7 +170,13 @@ Deno.serve(async (req) => {
 
     await Promise.all([
       sendEmail({ from_name: 'MedRevolve Business Development', to: data.email, subject: `✅ Inquiry Received — MedRevolve is excited to connect with ${data.company_name}`, html: bizHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml })
+      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
+      base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
+        form_type: 'business',
+        data,
+        submitter_name: data.company_name,
+        submitter_email: data.email,
+      }).catch(e => console.error('Drive upload failed (non-blocking):', e.message)),
     ]);
 
     // Zapier webhook (non-blocking)

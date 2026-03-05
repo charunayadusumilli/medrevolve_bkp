@@ -183,7 +183,13 @@ Deno.serve(async (req) => {
 
     await Promise.all([
       sendEmail({ from_name: 'MedRevolve Creator Program', to: data.email, subject: `✅ Application Received — MedRevolve Creator Program`, html: creatorHtml }),
-      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml })
+      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `🎯 New Creator Application — ${data.full_name} [${data.platform}, ${data.followers_count} followers]`, html: adminHtml }),
+      base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
+        form_type: 'creator',
+        data,
+        submitter_name: data.full_name,
+        submitter_email: data.email,
+      }).catch(e => console.error('Drive upload failed (non-blocking):', e.message)),
     ]);
 
     // Zapier webhook (non-blocking)
