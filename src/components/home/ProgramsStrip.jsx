@@ -9,14 +9,14 @@ const programs = [
     icon: '⚖️',
     title: 'Weight Optimization',
     desc: 'GLP-1 protocols with ongoing physician support and nutrition coaching.',
-    href: 'Products?category=weight_loss',
+    href: 'Programs',
     color: '#4A6741',
   },
   {
     icon: '🧬',
     title: 'Peptide Protocols',
     desc: 'NAD+, BPC-157, Sermorelin — cellular optimization for longevity.',
-    href: 'Products?category=longevity',
+    href: 'Programs',
     color: '#0F172A',
   },
   {
@@ -37,14 +37,14 @@ const programs = [
     icon: '⚡',
     title: 'Hormone Therapy',
     desc: 'Testosterone & estrogen optimization. Balance from within.',
-    href: 'Products?category=hormone',
+    href: 'Programs',
     color: '#1E293B',
   },
   {
     icon: '🧠',
     title: 'Cognitive & Skin',
     desc: 'Synapsin, Glutathione, and skin-forward wellness programs.',
-    href: 'Products',
+    href: 'Programs',
     color: '#8B7355',
   },
 ];
@@ -66,7 +66,11 @@ export default function ProgramsStrip() {
               <span className="font-semibold">One platform.</span>
             </h2>
           </div>
-          <Link to={createPageUrl('Programs')} className="mt-4 md:mt-0 flex items-center gap-2 text-sm font-semibold text-[#0F172A] hover:gap-3 transition-all" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <Link
+            to={createPageUrl('Programs')}
+            className="mt-4 md:mt-0 flex items-center gap-2 text-sm font-semibold text-[#0F172A] hover:gap-3 transition-all"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
             View All Programs <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
