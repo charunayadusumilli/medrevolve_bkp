@@ -57,7 +57,8 @@ Deno.serve(async (req) => {
     }
 
     const providerIntake = await base44.asServiceRole.entities.ProviderIntake.create({ ...data, status: 'pending' });
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
     const firstName = data.full_name.split(' ')[0];
 

@@ -68,7 +68,8 @@ Deno.serve(async (req) => {
 
     console.log('✅ CustomerIntake record created:', customerIntake.id);
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const firstName = data.full_name.split(' ')[0];
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 

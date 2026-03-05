@@ -44,7 +44,8 @@ Deno.serve(async (req) => {
       company_size: data.company_size || '', message: data.message || '', status: 'new'
     });
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
     // Business confirmation email

@@ -403,7 +403,8 @@ Deno.serve(async (req) => {
     // ─────────────────────────────────────────────────────────────────────────
     // ADMIN EMAIL
     // ─────────────────────────────────────────────────────────────────────────
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const urgentColor = !isConfirmed ? '#dc2626' : '#16a34a';
 
     const adminHtml = `<!DOCTYPE html>

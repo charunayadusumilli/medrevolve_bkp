@@ -57,7 +57,8 @@ Deno.serve(async (req) => {
     }
 
     const pharmacyIntake = await base44.asServiceRole.entities.PharmacyIntake.create({ ...data, status: 'pending' });
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'admin@medrevolve.com';
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'krish@medrevolve.com';
+    const adminEmail2 = 'admin@medrevolve.com';
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
     // Pharmacy confirmation email
