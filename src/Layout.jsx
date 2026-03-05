@@ -476,7 +476,7 @@ export default function Layout({ children }) {
             </div>
           </div>
 
-          {/* Portal Access */}
+          {/* Portal Access — Admin link only shown to logged-in admins */}
           <div className="mt-12 pt-8 border-t border-white/10">
             <p className="text-white/25 text-xs uppercase tracking-widest mb-3">Account Access</p>
             <div className="flex flex-wrap gap-x-6 gap-y-2">
@@ -491,11 +491,6 @@ export default function Layout({ children }) {
                   {item.label}
                 </Link>
               ))}
-              {user?.role === 'admin' && (
-                <Link to={createPageUrl('AdminDashboard')} className="text-[#A8C99B] hover:text-white text-sm transition-colors">
-                  Admin Dashboard
-                </Link>
-              )}
             </div>
           </div>
 
