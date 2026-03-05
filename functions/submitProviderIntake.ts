@@ -184,6 +184,8 @@ Deno.serve(async (req) => {
     await Promise.all([
       sendEmail({ from_name: 'MedRevolve Provider Relations', to: data.email, subject: `✅ Application Received — MedRevolve Provider Program`, html: providerHtml }),
       sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail, subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: adminEmail2, subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`, html: adminHtml }),
+      sendEmail({ from_name: 'MedRevolve Platform', to: 'solconsult@2024', subject: `👨‍⚕️ New Provider Application — ${data.full_name}, ${data.title} [${data.specialty}]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'provider',
         data,
