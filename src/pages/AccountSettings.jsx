@@ -52,10 +52,14 @@ export default function AccountSettings() {
     setSuccess('');
     try {
       await base44.auth.updateMe({ full_name: form.full_name, phone: form.phone });
-      setSuccess('Profile updated successfully.');
-      // Refresh user
+      // Refresh user and sync form state
       const updated = await base44.auth.me();
       setUser(updated);
+      setForm({
+        full_name: updated.full_name || '',
+        phone: updated.phone || '',
+      });
+      setSuccess('Profile updated successfully.');
     } catch (e) {
       setError(e?.message || 'Failed to save changes. Please try again.');
     } finally {

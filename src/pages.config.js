@@ -87,6 +87,7 @@ import Programs from './pages/Programs';
 import ProviderContracts from './pages/ProviderContracts';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ProviderIntake from './pages/ProviderIntake';
+import ProviderOnboarding from './pages/ProviderOnboarding';
 import ProviderOutreach from './pages/ProviderOutreach';
 import ProviderProfile from './pages/ProviderProfile';
 import QualiphyConsult from './pages/QualiphyConsult';
@@ -96,7 +97,6 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
-import ProviderOnboarding from './pages/ProviderOnboarding';
 import __Layout from './Layout.jsx';
 
 
@@ -141,6 +141,7 @@ export const PAGES = {
     "ProviderContracts": ProviderContracts,
     "ProviderDashboard": ProviderDashboard,
     "ProviderIntake": ProviderIntake,
+    "ProviderOnboarding": ProviderOnboarding,
     "ProviderOutreach": ProviderOutreach,
     "ProviderProfile": ProviderProfile,
     "QualiphyConsult": QualiphyConsult,
@@ -150,7 +151,6 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
-    "ProviderOnboarding": ProviderOnboarding,
 }
 
 export const pagesConfig = {
