@@ -51,7 +51,8 @@ export default function AccountSettings() {
     setError('');
     setSuccess('');
     try {
-      await base44.auth.updateMe({ full_name: form.full_name, phone: form.phone });
+      // Use entity update to persist full_name and phone on the user record
+      await base44.entities.User.update(user.id, { full_name: form.full_name, phone: form.phone });
       // Refresh user and sync form state
       const updated = await base44.auth.me();
       setUser(updated);
