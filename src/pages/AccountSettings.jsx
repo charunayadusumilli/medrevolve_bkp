@@ -92,10 +92,10 @@ export default function AccountSettings() {
             {/* Avatar */}
             <div className="flex items-center gap-4 pb-6 border-b border-[#E8E0D5]">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] flex items-center justify-center text-white text-2xl font-bold shadow-md">
-                {user.full_name?.[0] || user.email?.[0] || 'U'}
+                {(form.full_name?.[0] || user.email?.[0] || 'U').toUpperCase()}
               </div>
               <div>
-                <p className="font-semibold text-[#2D3A2D] text-lg">{user.full_name || 'No name set'}</p>
+                <p className="font-semibold text-[#2D3A2D] text-lg">{form.full_name || user.full_name || 'No name set'}</p>
                 <p className="text-sm text-[#5A6B5A]">{user.email}</p>
                 <Badge className="mt-1 bg-[#4A6741]/10 text-[#4A6741] border-none text-xs capitalize">
                   {user.role || 'user'}
