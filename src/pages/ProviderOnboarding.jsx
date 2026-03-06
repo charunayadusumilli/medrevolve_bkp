@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
+// Note: QualiPhyExamStep, ProviderBasicInfoForm, LiveConsultationStep are defined below in this file
 import { base44 } from '@/api/base44Client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
