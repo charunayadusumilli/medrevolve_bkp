@@ -51,15 +51,9 @@ export default function AccountSettings() {
     setError('');
     setSuccess('');
     try {
-      // Use entity update to persist full_name and phone on the user record
-      await base44.entities.User.update(user.id, { full_name: form.full_name, phone: form.phone });
-      // Refresh user and sync form state
-      const updated = await base44.auth.me();
-      setUser(updated);
-      setForm({
-        full_name: updated.full_name || '',
-        phone: updated.phone || '',
-      });
+      await base44.auth.updateMe({ full_name: form.full_name, phone: form.phone });
+      // Update local user state without re-fetching (re-fetch would overwrite with stale data)
+      setUser(prev => ({ ...prev, full_name: form.full_name, phone: form.phone }));
       setSuccess('Profile updated successfully.');
     } catch (e) {
       setError(e?.message || 'Failed to save changes. Please try again.');
