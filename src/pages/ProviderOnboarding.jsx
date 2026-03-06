@@ -419,7 +419,7 @@ function QualiPhyExamStep({ email, onStartExam, isLoading, inviteUrl, status, on
 function LiveConsultationStep({ email }) {
   const [consultationScheduled, setConsultationScheduled] = React.useState(false);
 
-  const scheduleConsultation = React.useMutation({
+  const scheduleConsultation = useMutation({
     mutationFn: async () => {
       await base44.functions.invoke('scheduleProviderConsultation', { email });
       return true;
