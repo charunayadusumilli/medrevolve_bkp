@@ -77,6 +77,24 @@ export default function CustomerIntake() {
     consultation_preference: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [emailLocked, setEmailLocked] = useState(false);
+
+  useEffect(() => {
+    const prefill = async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (isAuth) {
+          const user = await base44.auth.me();
+          if (user?.email) {
+            setFormData(prev => ({ ...prev, email: user.email, full_name: prev.full_name || user.display_name || user.full_name || '' }));
+            setEmailLocked(true);
+          }
+        }
+      } catch {}
+    };
+    prefill();
+  }, []);
 
   const submitMutation = useMutation({
     mutationFn: (data) => base44.functions.invoke('submitCustomerIntake', data),
@@ -85,14 +103,25 @@ export default function CustomerIntake() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const stepErrors = validate(currentStep, formData);
+    if (Object.keys(stepErrors).length > 0) { setErrors(stepErrors); return; }
     submitMutation.mutate(formData);
   };
 
+  const update = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+  };
+
   const nextStep = () => {
+    const stepErrors = validate(currentStep, formData);
+    if (Object.keys(stepErrors).length > 0) { setErrors(stepErrors); return; }
+    setErrors({});
     if (currentStep < STEPS.length) setCurrentStep(currentStep + 1);
   };
 
   const prevStep = () => {
+    setErrors({});
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
