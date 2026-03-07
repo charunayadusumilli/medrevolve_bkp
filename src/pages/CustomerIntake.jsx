@@ -374,8 +374,8 @@ export default function CustomerIntake() {
 
                     <div>
                       <Label>Primary Wellness Interest *</Label>
-                      <Select value={formData.primary_interest} onValueChange={(val) => setFormData({ ...formData, primary_interest: val })}>
-                        <SelectTrigger className="mt-2 h-12">
+                      <Select value={formData.primary_interest} onValueChange={(val) => update('primary_interest', val)}>
+                        <SelectTrigger className={`mt-2 h-12 ${errors.primary_interest ? 'border-red-400' : ''}`}>
                           <SelectValue placeholder="Select your main goal" />
                         </SelectTrigger>
                         <SelectContent>
@@ -387,11 +387,12 @@ export default function CustomerIntake() {
                           <SelectItem value="General Wellness">General Wellness</SelectItem>
                         </SelectContent>
                       </Select>
+                      <FieldError msg={errors.primary_interest} />
                     </div>
 
                     <div>
                       <Label>When would you like to start?</Label>
-                      <Select value={formData.consultation_preference} onValueChange={(val) => setFormData({ ...formData, consultation_preference: val })}>
+                      <Select value={formData.consultation_preference} onValueChange={(val) => update('consultation_preference', val)}>
                         <SelectTrigger className="mt-2 h-12">
                           <SelectValue placeholder="Select your timeline" />
                         </SelectTrigger>
@@ -406,7 +407,7 @@ export default function CustomerIntake() {
 
                     <div>
                       <Label>How did you hear about us?</Label>
-                      <Select value={formData.heard_about_us} onValueChange={(val) => setFormData({ ...formData, heard_about_us: val })}>
+                      <Select value={formData.heard_about_us} onValueChange={(val) => update('heard_about_us', val)}>
                         <SelectTrigger className="mt-2 h-12">
                           <SelectValue placeholder="Select source" />
                         </SelectTrigger>
@@ -426,7 +427,7 @@ export default function CustomerIntake() {
                       <Label>Referral Code (Optional)</Label>
                       <Input
                         value={formData.referral_code}
-                        onChange={(e) => setFormData({ ...formData, referral_code: e.target.value })}
+                        onChange={(e) => update('referral_code', e.target.value)}
                         placeholder="Enter code for discount"
                         className="mt-2 h-12"
                       />
