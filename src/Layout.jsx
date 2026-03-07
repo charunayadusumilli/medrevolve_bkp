@@ -8,23 +8,23 @@ import {
   Menu, ChevronDown, Leaf, X,
   Phone, Mail, MapPin,
   Instagram, Twitter, Facebook, Youtube, ShoppingCart,
-  User, LogOut, Settings, LayoutDashboard
-} from 'lucide-react';
+  User, LogOut, Settings, LayoutDashboard } from
+'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AIAssistant from '@/components/chat/AIAssistant';
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
+"@/components/ui/dropdown-menu";
 
 const treatCategories = [
-  { name: 'Weight Loss', href: 'Products?category=weight_loss', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=80' },
-  { name: "Men's Health", href: 'Products?category=mens', image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=120&q=80' },
-  { name: "Women's Health", href: 'Products?category=womens', image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=120&q=80' },
-  { name: 'Longevity', href: 'Products?category=longevity', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=120&q=80' },
-  { name: 'Hormones', href: 'Products?category=hormone', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=120&q=80' },
-  { name: 'Peptides', href: 'Products?category=peptides', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=120&q=80' },
-];
+{ name: 'Weight Loss', href: 'Products?category=weight_loss', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=80' },
+{ name: "Men's Health", href: 'Products?category=mens', image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=120&q=80' },
+{ name: "Women's Health", href: 'Products?category=womens', image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=120&q=80' },
+{ name: 'Longevity', href: 'Products?category=longevity', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=120&q=80' },
+{ name: 'Hormones', href: 'Products?category=hormone', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=120&q=80' },
+{ name: 'Peptides', href: 'Products?category=peptides', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=120&q=80' }];
+
 
 function TreatMegaMenu({ onClose }) {
   return (
@@ -33,30 +33,30 @@ function TreatMegaMenu({ onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.18 }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 z-50"
-    >
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 z-50">
+
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Browse by Category</p>
       <div className="grid grid-cols-3 gap-3">
-        {treatCategories.map((cat) => (
-            <Link
-              key={cat.name}
-              to={createPageUrl(cat.href)}
-              onClick={() => { onClose(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group"
-            >
+        {treatCategories.map((cat) =>
+        <Link
+          key={cat.name}
+          to={createPageUrl(cat.href)}
+          onClick={() => {onClose();window.scrollTo({ top: 0, behavior: 'smooth' });}}
+          className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group">
+
               <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" loading="lazy" decoding="async" />
               <span className="font-medium text-[#2D3A2D] text-sm group-hover:text-[#4A6741] transition-colors">{cat.name}</span>
             </Link>
-          ))}
+        )}
       </div>
       <div className="mt-4 pt-4 border-t border-gray-100">
-        <Link to={createPageUrl('Products')} onClick={() => { onClose(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#4A6741]/5 hover:bg-[#4A6741]/10 transition-colors">
+        <Link to={createPageUrl('Products')} onClick={() => {onClose();window.scrollTo({ top: 0, behavior: 'smooth' });}}
+        className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#4A6741]/5 hover:bg-[#4A6741]/10 transition-colors">
           <span className="font-semibold text-[#4A6741] text-sm">View All Products →</span>
         </Link>
       </div>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 export default function Layout({ children }) {
@@ -81,14 +81,14 @@ export default function Layout({ children }) {
       document.head.appendChild(gtagScript);
 
       window.dataLayer = window.dataLayer || [];
-      function gtag(){window.dataLayer.push(arguments);}
+      function gtag() {window.dataLayer.push(arguments);}
       window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', 'G-BZTEFSTDPL');
     }
 
     // ── Preconnect hints for fast image/video load ────────
-    ['https://images.unsplash.com', 'https://videos.pexels.com'].forEach(href => {
+    ['https://images.unsplash.com', 'https://videos.pexels.com'].forEach((href) => {
       if (!document.querySelector(`link[href="${href}"]`)) {
         const l = document.createElement('link');
         l.rel = 'preconnect';
@@ -112,7 +112,7 @@ export default function Layout({ children }) {
     const interval = setInterval(() => {
       setFadeIn(false);
       setTimeout(() => {
-        setCycleIndex(prev => (prev + 1) % cyclingWords.length);
+        setCycleIndex((prev) => (prev + 1) % cyclingWords.length);
         setFadeIn(true);
       }, 300);
     }, 2200);
@@ -130,7 +130,7 @@ export default function Layout({ children }) {
     const checkUser = async () => {
       try {
         const isAuth = await base44.auth.isAuthenticated();
-        if (!isAuth) { if (!cancelled) setUser(null); return; }
+        if (!isAuth) {if (!cancelled) setUser(null);return;}
         const currentUser = await base44.auth.me();
         if (!cancelled) setUser(currentUser);
       } catch {
@@ -138,7 +138,7 @@ export default function Layout({ children }) {
       }
     };
     checkUser();
-    return () => { cancelled = true; };
+    return () => {cancelled = true;};
   }, [location.pathname]);
 
   // Scroll to top & close menus on nav click
@@ -165,12 +165,12 @@ export default function Layout({ children }) {
       {/* Header */}
       <motion.header
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-white/98 backdrop-blur-lg shadow-sm' : 'bg-white'
-        }`}
+        scrolled ? 'bg-white/98 backdrop-blur-lg shadow-sm' : 'bg-white'}`
+        }
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
+        transition={{ duration: 0.4 }}>
+
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -187,14 +187,14 @@ export default function Layout({ children }) {
               <div className="relative" onMouseEnter={() => setTreatOpen(true)} onMouseLeave={() => setTreatOpen(false)}>
                 <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
                   <span
-                    style={{ transition: 'opacity 0.3s ease', opacity: fadeIn ? 1 : 0, minWidth: 90, display: 'inline-block', textAlign: 'left' }}
-                  >
+                    style={{ transition: 'opacity 0.3s ease', opacity: fadeIn ? 1 : 0, minWidth: 90, display: 'inline-block', textAlign: 'left' }}>
+
                     {cyclingWords[cycleIndex]}
                   </span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${treatOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
-                  {treatOpen && <TreatMegaMenu onClose={() => { setTreatOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />}
+                  {treatOpen && <TreatMegaMenu onClose={() => {setTreatOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}} />}
                 </AnimatePresence>
               </div>
 
@@ -207,8 +207,8 @@ export default function Layout({ children }) {
               </Link>
 
               {/* Admin only */}
-              {user?.role === 'admin' && (
-                <DropdownMenu>
+              {user?.role === 'admin' &&
+              <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-[#4A6741] bg-[#4A6741]/10 rounded-full hover:bg-[#4A6741]/20 transition-all">
                       ⚡ Admin
@@ -233,7 +233,7 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to={createPageUrl('VisitTypeSelector')} className="cursor-pointer rounded-xl px-3 py-2">🏥 Visit Types</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              )}
+              }
             </nav>
 
             {/* Right Actions */}
@@ -244,8 +244,8 @@ export default function Layout({ children }) {
                 </Button>
               </Link>
 
-              {user ? (
-                <DropdownMenu>
+              {user ?
+              <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-[#2D3A2D] hover:bg-[#F5F0E8] rounded-full px-3 border border-[#E8E0D5]" aria-label="Account settings">
                       <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
@@ -257,7 +257,7 @@ export default function Layout({ children }) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2 min-w-[200px]" align="end">
                     <div className="px-3 py-2 mb-1">
-                      <p className="font-semibold text-[#2D3A2D] text-sm">{user.full_name}</p>
+                      <p className="text-[#2D3A2D] text-sm font-semibold">{user.full_name}</p>
                       <p className="text-xs text-gray-400 truncate">{user.email}</p>
                     </div>
                     <DropdownMenuSeparator />
@@ -279,29 +279,29 @@ export default function Layout({ children }) {
                         <span>Payments & Invoices</span>
                       </Link>
                     </DropdownMenuItem>
-                    {user.role === 'admin' && (
-                      <DropdownMenuItem asChild>
+                    {user.role === 'admin' &&
+                  <DropdownMenuItem asChild>
                         <Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
                           <Settings className="w-4 h-4 text-[#4A6741]" />
                           <span>Admin Dashboard</span>
                         </Link>
                       </DropdownMenuItem>
-                    )}
+                  }
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-red-50"
-                      onClick={() => base44.auth.logout('/')}
-                    >
+                    className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-red-50"
+                    onClick={() => base44.auth.logout('/')}>
+
                       <LogOut className="w-4 h-4" />
                       <span>Sign Out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <>
+                </DropdownMenu> :
+
+              <>
                   <Button variant="ghost"
-                    className="hidden sm:flex text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8] rounded-full items-center gap-1.5"
-                    onClick={() => base44.auth.redirectToLogin(window.location.href)}>
+                className="hidden sm:flex text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8] rounded-full items-center gap-1.5"
+                onClick={() => base44.auth.redirectToLogin(window.location.href)}>
                     <User className="w-4 h-4" />
                     Sign In
                   </Button>
@@ -311,7 +311,7 @@ export default function Layout({ children }) {
                     </Button>
                   </Link>
                 </>
-                )}
+              }
 
               {/* Mobile Menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -332,61 +332,61 @@ export default function Layout({ children }) {
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                                      {treatCategories.map(cat => (
-                                        <Link key={cat.name} to={createPageUrl(cat.href)}
-                                          className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
-                                          onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                                      {treatCategories.map((cat) =>
+                      <Link key={cat.name} to={createPageUrl(cat.href)}
+                      className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
+                      onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>
                                           <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" loading="lazy" decoding="async" />
                                           {cat.name}
                                         </Link>
-                                      ))}
+                      )}
 
                       <div className="pt-4 border-t border-[#E8E0D5] mt-2">
                         <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Consultations & Services</p>
-                        <Link to={createPageUrl('Programs')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Programs</Link>
-                      <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Consultations</Link>
+                        <Link to={createPageUrl('Programs')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Programs</Link>
+                      <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Consultations</Link>
                       </div>
 
                       {/* Programs section moved to admin only */}
 
-                      {user && (
-                        <div className="pt-4 border-t border-[#E8E0D5]">
+                      {user &&
+                      <div className="pt-4 border-t border-[#E8E0D5]">
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">My Account</p>
-                          <Link to={createPageUrl('PatientPortal')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>My Portal</Link>
-                          {user.role === 'admin' && (
-                            <Link to={createPageUrl('AdminDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Admin Dashboard</Link>
-                          )}
+                          <Link to={createPageUrl('PatientPortal')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>My Portal</Link>
+                          {user.role === 'admin' &&
+                        <Link to={createPageUrl('AdminDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Admin Dashboard</Link>
+                        }
                         </div>
-                      )}
+                      }
 
-                      {user?.role === 'admin' && (
-                        <div className="pt-4 border-t border-[#E8E0D5]">
+                      {user?.role === 'admin' &&
+                      <div className="pt-4 border-t border-[#E8E0D5]">
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Programs</p>
-                          <Link to={createPageUrl('PartnerProgram')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Partner Program</Link>
-                          <Link to={createPageUrl('ForCreators')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Creator Program</Link>
-                          <Link to={createPageUrl('ForBusiness')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>For Business</Link>
+                          <Link to={createPageUrl('PartnerProgram')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Partner Program</Link>
+                          <Link to={createPageUrl('ForCreators')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Creator Program</Link>
+                          <Link to={createPageUrl('ForBusiness')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>For Business</Link>
                           <div className="pt-4 border-t border-[#E8E0D5] mt-2">
                             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Command Center</p>
-                            <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Compliance</Link>
-                            <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Partnerships</Link>
+                            <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Compliance</Link>
+                            <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Partnerships</Link>
                           </div>
                         </div>
-                      )}
+                      }
                     </nav>
 
                     <div className="p-5 border-t border-[#E8E0D5] space-y-2">
-                      {user ? (
-                        <Button
-                          variant="outline"
-                          className="w-full rounded-full border-red-200 text-red-500"
-                          onClick={() => { base44.auth.logout('/'); setMobileMenuOpen(false); }}
-                        >
+                      {user ?
+                      <Button
+                        variant="outline"
+                        className="w-full rounded-full border-red-200 text-red-500"
+                        onClick={() => {base44.auth.logout('/');setMobileMenuOpen(false);}}>
+
                           Sign Out
-                        </Button>
-                      ) : (
-                        <>
+                        </Button> :
+
+                      <>
                           <Button variant="outline" className="w-full rounded-full border-[#4A6741] text-[#4A6741]"
-                            onClick={() => { base44.auth.redirectToLogin(window.location.href); setMobileMenuOpen(false); }}>
+                        onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
                           <Link to={createPageUrl('PatientOnboarding')} onClick={() => setMobileMenuOpen(false)}>
@@ -395,7 +395,7 @@ export default function Layout({ children }) {
                             </Button>
                           </Link>
                         </>
-                      )}
+                      }
                     </div>
                   </div>
                 </SheetContent>
@@ -437,11 +437,11 @@ export default function Layout({ children }) {
             <div>
               <h4 className="font-semibold mb-4 text-sm uppercase tracking-widest text-white/40">Treatments</h4>
               <ul className="space-y-2.5">
-                {treatCategories.map(cat => (
-                  <li key={cat.name}>
+                {treatCategories.map((cat) =>
+                <li key={cat.name}>
                     <Link to={createPageUrl(cat.href)} className="text-white/60 hover:text-white text-sm transition-colors">{cat.name}</Link>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -476,16 +476,16 @@ export default function Layout({ children }) {
             <p className="text-white/25 text-xs uppercase tracking-widest mb-3">Account Access</p>
             <div className="flex flex-wrap gap-x-6 gap-y-2">
               {[
-                { label: 'Patient Portal', page: 'PatientPortal' },
-                { label: 'Provider Portal', page: 'ProviderDashboard' },
-                { label: 'Partner Portal', page: 'PartnerPortal' },
-                { label: 'Creator Portal', page: 'ForCreators' },
-              ].map(item => (
-                <Link key={item.page} to={createPageUrl(item.page)}
-                  className="text-white/40 hover:text-white text-sm transition-colors">
+              { label: 'Patient Portal', page: 'PatientPortal' },
+              { label: 'Provider Portal', page: 'ProviderDashboard' },
+              { label: 'Partner Portal', page: 'PartnerPortal' },
+              { label: 'Creator Portal', page: 'ForCreators' }].
+              map((item) =>
+              <Link key={item.page} to={createPageUrl(item.page)}
+              className="text-white/40 hover:text-white text-sm transition-colors">
                   {item.label}
                 </Link>
-              ))}
+              )}
             </div>
           </div>
 
@@ -495,6 +495,6 @@ export default function Layout({ children }) {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 }
