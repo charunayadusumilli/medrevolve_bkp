@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { AlertCircle } from 'lucide-react';
 import PhoneInput from '@/components/ui/PhoneInput';
 
-export default function ProfileStep({ data, onUpdate }) {
+export default function ProfileStep({ data, onUpdate, emailLocked = false }) {
   const [errors, setErrors] = useState({});
 
   const validateField = (field, value) => {
