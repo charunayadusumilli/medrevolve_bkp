@@ -248,11 +248,11 @@ export default function CustomerIntake() {
                       <Input
                         autoComplete="name"
                         value={formData.full_name}
-                        onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                        onChange={(e) => update('full_name', e.target.value)}
                         placeholder="John Doe"
-                        required
-                        className="mt-2 h-12"
+                        className={`mt-2 h-12 ${errors.full_name ? 'border-red-400' : ''}`}
                       />
+                      <FieldError msg={errors.full_name} />
                     </div>
 
                     <div>
@@ -261,31 +261,36 @@ export default function CustomerIntake() {
                         type="email"
                         autoComplete="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => !emailLocked && update('email', e.target.value)}
+                        readOnly={emailLocked}
                         placeholder="john@example.com"
-                        required
-                        className="mt-2 h-12"
+                        className={`mt-2 h-12 ${emailLocked ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : ''} ${errors.email ? 'border-red-400' : ''}`}
                       />
+                      {emailLocked && <p className="text-xs text-[#5A6B5A] mt-1">Email is linked to your account.</p>}
+                      <FieldError msg={errors.email} />
                     </div>
 
                     <div>
-                      <Label>Phone Number</Label>
+                      <Label>Phone Number *</Label>
                       <PhoneInput
                         value={formData.phone}
-                        onChange={(v) => setFormData({ ...formData, phone: v })}
+                        onChange={(v) => update('phone', v)}
                         className="mt-2"
                       />
+                      <FieldError msg={errors.phone} />
                     </div>
 
                     <div>
-                      <Label>Date of Birth</Label>
+                      <Label>Date of Birth *</Label>
                       <Input
                         type="date"
                         autoComplete="bday"
                         value={formData.date_of_birth}
-                        onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
-                        className="mt-2 h-12"
+                        max={new Date().toISOString().split('T')[0]}
+                        onChange={(e) => update('date_of_birth', e.target.value)}
+                        className={`mt-2 h-12 ${errors.date_of_birth ? 'border-red-400' : ''}`}
                       />
+                      <FieldError msg={errors.date_of_birth} />
                     </div>
                   </motion.div>
                 )}
