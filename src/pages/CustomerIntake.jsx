@@ -515,7 +515,7 @@ export default function CustomerIntake() {
                 ) : (
                   <Button
                     type="submit"
-                    disabled={submitMutation.isPending || !formData.full_name || !formData.email || !formData.primary_interest}
+                    disabled={submitMutation.isPending}
                     className="bg-[#4A6741] hover:bg-[#3D5636] text-white px-8 ml-auto"
                   >
                     {submitMutation.isPending ? 'Submitting...' : 'Complete Journey'}
