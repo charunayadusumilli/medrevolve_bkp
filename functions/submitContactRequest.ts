@@ -169,6 +169,8 @@ Deno.serve(async (req) => {
       sendEmail(base44, { to: data.email, subject: `✅ We got your message, ${firstName}! We'll respond within 24 hours`, html: patientHtml }),
       sendEmail(base44, { to: adminEmail, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml }),
       sendEmail(base44, { to: adminEmail2, subject: `📬 New Contact Message — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml }),
+      base44.asServiceRole.functions.invoke('syncToHubspot', { source: 'contact_request', data })
+        .catch(e => console.error('HubSpot sync failed (non-blocking):', e.message)),
     ]);
 
     // SMS to admin
