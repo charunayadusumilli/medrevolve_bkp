@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
         jobtitle: `${data.title || ''} - ${data.specialty || ''}`,
         hs_lead_status: 'NEW',
         lifecyclestage: 'lead',
-        description: `MedRevolve Provider Application | Title: ${data.title || ''} | Specialty: ${data.specialty || ''} | License: ${data.license_number || ''} | States: ${(data.states_licensed || []).join(', ')} | Years Exp: ${data.years_experience || ''} | Practice: ${data.practice_type || ''}`,
+        website: 'medrevolve.com',
       };
     } else {
       return Response.json({ error: 'Unknown source' }, { status: 400 });
