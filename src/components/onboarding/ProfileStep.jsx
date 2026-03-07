@@ -19,6 +19,8 @@ export default function ProfileStep({ data, onUpdate }) {
       return 'Please enter a valid 10-digit phone number.';
     if (field === 'zip_code' && !/^\d{5}(-\d{4})?$/.test(v))
       return 'Please enter a valid ZIP code (e.g. 12345).';
+    if (field === 'date_of_birth' && new Date(v) >= new Date())
+      return 'Date of birth cannot be a future date.';
     return '';
   };
 
