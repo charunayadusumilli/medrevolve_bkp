@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
         company: data.company_name || '',
         hs_lead_status: 'NEW',
         lifecyclestage: 'lead',
-        description: `MedRevolve Business Inquiry | Industry: ${data.industry || ''} | Interest: ${data.interest_type || ''} | Company Size: ${data.company_size || ''} | Message: ${data.message || ''}`,
+        website: 'medrevolve.com',
       };
     } else if (source === 'creator_application') {
       const nameParts = (data.full_name || '').split(' ');
