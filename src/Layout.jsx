@@ -249,7 +249,7 @@ export default function Layout({ children }) {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-[#2D3A2D] hover:bg-[#F5F0E8] rounded-full px-3 border border-[#E8E0D5]" aria-label="Account settings">
                       <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
-                        {user.full_name?.[0] || user.email?.[0] || 'U'}
+                        {(user.display_name || user.full_name)?.[0] || user.email?.[0] || 'U'}
                       </div>
                       <span className="text-sm font-medium max-w-[100px] truncate">{user.full_name || 'Account'}</span>
                       <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
