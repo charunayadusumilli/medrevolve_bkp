@@ -216,6 +216,7 @@ export default function PatientOnboarding() {
               <ProfileStep
                 data={profileData}
                 onUpdate={handleProfileUpdate}
+                emailLocked={emailLocked}
               />
             )}
             {currentStep === 2 && (
