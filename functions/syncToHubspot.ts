@@ -49,7 +49,7 @@ Deno.serve(async (req) => {
         phone: data.phone || '',
         hs_lead_status: 'NEW',
         lifecyclestage: 'lead',
-        description: `MedRevolve Creator Application | Platform: ${data.platform || ''} | Handle: ${data.platform_handle || ''} | Followers: ${data.followers_count || ''} | Niche: ${data.audience_niche || ''} | Why Partner: ${data.why_partner || ''}`,
+        website: 'medrevolve.com',
       };
     } else if (source === 'provider_intake') {
       const nameParts = (data.full_name || '').split(' ');
