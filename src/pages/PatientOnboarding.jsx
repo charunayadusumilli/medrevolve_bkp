@@ -40,7 +40,11 @@ export default function PatientOnboarding() {
           const currentUser = await base44.auth.me();
           setUser(currentUser);
           if (currentUser.full_name) {
-            setProfileData(prev => ({ ...prev, full_name: currentUser.full_name }));
+            setProfileData(prev => ({ ...prev, full_name: currentUser.display_name || currentUser.full_name }));
+          }
+          if (currentUser.email) {
+            setProfileData(prev => ({ ...prev, email: currentUser.email }));
+            setEmailLocked(true);
           }
         }
       } catch (error) {
