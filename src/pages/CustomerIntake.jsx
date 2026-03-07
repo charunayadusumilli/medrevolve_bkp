@@ -452,7 +452,7 @@ export default function CustomerIntake() {
                       <Label>Insurance Provider (Optional)</Label>
                       <Input
                         value={formData.insurance_provider}
-                        onChange={(e) => setFormData({ ...formData, insurance_provider: e.target.value })}
+                        onChange={(e) => update('insurance_provider', e.target.value)}
                         placeholder="e.g., Blue Cross, Aetna, UnitedHealthcare"
                         className="mt-2 h-12"
                       />
@@ -462,21 +462,28 @@ export default function CustomerIntake() {
                       <Label>Insurance Member ID (Optional)</Label>
                       <Input
                         value={formData.insurance_id}
-                        onChange={(e) => setFormData({ ...formData, insurance_id: e.target.value })}
+                        onChange={(e) => update('insurance_id', e.target.value)}
                         placeholder="Member ID"
                         className="mt-2 h-12"
                       />
                     </div>
 
                     <div>
-                      <Label>Medical History (Optional)</Label>
+                      <Label>Additional Notes / Medical History (Optional)</Label>
                       <Textarea
                         value={formData.medical_history_notes}
-                        onChange={(e) => setFormData({ ...formData, medical_history_notes: e.target.value })}
+                        onChange={(e) => {
+                          if (e.target.value.length <= NOTES_MAX) update('medical_history_notes', e.target.value);
+                        }}
                         placeholder="Any conditions, medications, or allergies we should know about..."
                         className="mt-2 min-h-[120px]"
                       />
-                      <p className="text-xs text-[#5A6B5A] mt-2">This information helps your provider create a safe, personalized plan</p>
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-xs text-[#5A6B5A]">This information helps your provider create a safe, personalized plan</p>
+                        <span className={`text-xs ${formData.medical_history_notes.length >= NOTES_MAX ? 'text-red-500 font-semibold' : 'text-[#5A6B5A]'}`}>
+                          {formData.medical_history_notes.length}/{NOTES_MAX}
+                        </span>
+                      </div>
                     </div>
                   </motion.div>
                 )}
