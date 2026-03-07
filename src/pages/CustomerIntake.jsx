@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,9 +9,46 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle2, User, MapPin, Heart, Calendar, ArrowRight, ArrowLeft, Sparkles } from 'lucide-react';
+import { CheckCircle2, User, MapPin, Heart, Calendar, ArrowRight, ArrowLeft, Sparkles, AlertCircle } from 'lucide-react';
 import PhoneInput from '@/components/ui/PhoneInput';
 import RequireAuthGate from '@/components/auth/RequireAuthGate';
+
+const NOTES_MAX = 500;
+
+function FieldError({ msg }) {
+  if (!msg) return null;
+  return (
+    <div className="flex items-center gap-1.5 mt-1 text-sm text-red-500">
+      <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+      {msg}
+    </div>
+  );
+}
+
+function validate(step, formData) {
+  const errors = {};
+  if (step === 1) {
+    if (!formData.full_name.trim()) errors.full_name = 'Full name is required.';
+    if (!formData.email.trim()) errors.email = 'Email is required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email address.';
+    const digits = formData.phone.replace(/\D/g, '');
+    if (!formData.phone) errors.phone = 'Phone number is required.';
+    else if (digits.length < 10) errors.phone = 'Please enter a valid 10-digit phone number.';
+    if (!formData.date_of_birth) errors.date_of_birth = 'Date of birth is required.';
+    else if (new Date(formData.date_of_birth) >= new Date()) errors.date_of_birth = 'Date of birth cannot be a future date.';
+  }
+  if (step === 2) {
+    if (!formData.address.trim()) errors.address = 'Street address is required.';
+    if (!formData.city.trim()) errors.city = 'City is required.';
+    if (!formData.state.trim()) errors.state = 'State is required.';
+    if (!formData.zip_code.trim()) errors.zip_code = 'ZIP code is required.';
+    else if (!/^\d{5}(-\d{4})?$/.test(formData.zip_code.trim())) errors.zip_code = 'Please enter a valid ZIP code (e.g. 12345).';
+  }
+  if (step === 3) {
+    if (!formData.primary_interest) errors.primary_interest = 'Please select your primary wellness interest.';
+  }
+  return errors;
+}
 
 const STEPS = [
   { id: 1, title: 'About You', icon: User },
