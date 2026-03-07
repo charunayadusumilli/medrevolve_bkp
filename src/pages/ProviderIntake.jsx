@@ -42,6 +42,7 @@ export default function ProviderIntake() {
   const submitMutation = useMutation({
     mutationFn: (data) => base44.functions.invoke('submitProviderIntake', data),
     onSuccess: () => setSubmitted(true),
+    onError: (err) => alert('Submission failed: ' + (err?.message || 'Please try again.')),
   });
 
   const handleSubmit = (e) => {
