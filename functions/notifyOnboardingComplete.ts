@@ -206,6 +206,11 @@ Deno.serve(async (req) => {
       console.error('Failed to send admin onboarding notification:', err);
     }
 
+    // Sync to HubSpot (non-blocking)
+    const base44 = createClientFromRequest(req);
+    base44.asServiceRole.functions.invoke('syncToHubspot', { source: 'patient_onboarding', data })
+      .catch(e => console.error('HubSpot sync failed (non-blocking):', e.message));
+
     return Response.json({
       success: true,
       message: 'Onboarding notification emails sent'
