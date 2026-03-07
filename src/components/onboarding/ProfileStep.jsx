@@ -79,37 +79,43 @@ export default function ProfileStep({ data, onUpdate, emailLocked = false }) {
             )}
           </motion.div>
 
-          {fields.map((field, idx) => (
-            <motion.div
-              key={field.key}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-            >
-              <Label htmlFor={field.key} className="block mb-2 text-sm font-medium text-[#2D3A2D]">
-                {field.label}
-                {field.required && <span className="text-red-500 ml-0.5">*</span>}
-              </Label>
-              <Input
-                id={field.key}
-                type={field.type}
-                value={data[field.key] || ''}
-                onChange={(e) => handleChange(field.key, e.target.value)}
-                onBlur={(e) => handleBlur(field.key, e.target.value)}
-                className={`rounded-lg border ${
-                  errors[field.key]
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-[#E8E0D5] focus:ring-[#4A6741]'
-                }`}
-                placeholder={field.placeholder || field.label}
-              />
-              {errors[field.key] && (
-                <div className="flex items-center gap-1.5 mt-1 text-sm text-red-500">
-                  <AlertCircle className="w-3.5 h-3.5" />{errors[field.key]}
-                </div>
-              )}
-            </motion.div>
-          ))}
+          {fields.map((field, idx) => {
+            const isEmailLocked = field.key === 'email' && emailLocked;
+            return (
+              <motion.div
+                key={field.key}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                <Label htmlFor={field.key} className="block mb-2 text-sm font-medium text-[#2D3A2D]">
+                  {field.label}
+                  {field.required && <span className="text-red-500 ml-0.5">*</span>}
+                </Label>
+                <Input
+                  id={field.key}
+                  type={field.type}
+                  value={data[field.key] || ''}
+                  onChange={(e) => !isEmailLocked && handleChange(field.key, e.target.value)}
+                  onBlur={(e) => handleBlur(field.key, e.target.value)}
+                  readOnly={isEmailLocked}
+                  max={field.key === 'date_of_birth' ? new Date().toISOString().split('T')[0] : undefined}
+                  className={`rounded-lg border ${isEmailLocked ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : ''} ${
+                    errors[field.key]
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-[#E8E0D5] focus:ring-[#4A6741]'
+                  }`}
+                  placeholder={field.placeholder || field.label}
+                />
+                {isEmailLocked && <p className="text-xs text-[#5A6B5A] mt-1">Email is linked to your account.</p>}
+                {errors[field.key] && (
+                  <div className="flex items-center gap-1.5 mt-1 text-sm text-red-500">
+                    <AlertCircle className="w-3.5 h-3.5" />{errors[field.key]}
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
 
