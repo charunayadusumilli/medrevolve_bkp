@@ -63,6 +63,44 @@ Deno.serve(async (req) => {
         lifecyclestage: 'lead',
         website: 'medrevolve.com',
       };
+    } else if (source === 'pharmacy_intake') {
+      const nameParts = (data.contact_name || '').split(' ');
+      contactProps = {
+        email: data.email,
+        firstname: nameParts[0] || '',
+        lastname: nameParts.slice(1).join(' ') || '',
+        phone: data.phone || '',
+        company: data.pharmacy_name || '',
+        jobtitle: data.pharmacy_type || '',
+        hs_lead_status: 'NEW',
+        lifecyclestage: 'lead',
+        website: 'medrevolve.com',
+      };
+    } else if (source === 'contact_request') {
+      const nameParts = (data.name || '').split(' ');
+      contactProps = {
+        email: data.email,
+        firstname: nameParts[0] || '',
+        lastname: nameParts.slice(1).join(' ') || '',
+        hs_lead_status: 'NEW',
+        lifecyclestage: 'lead',
+        website: 'medrevolve.com',
+      };
+    } else if (source === 'patient_onboarding') {
+      const nameParts = (data.full_name || '').split(' ');
+      contactProps = {
+        email: data.email,
+        firstname: nameParts[0] || '',
+        lastname: nameParts.slice(1).join(' ') || '',
+        phone: data.phone || '',
+        city: data.city || '',
+        state: data.state || '',
+        zip: data.zip_code || '',
+        jobtitle: data.primary_interest || '',
+        hs_lead_status: 'NEW',
+        lifecyclestage: 'lead',
+        website: 'medrevolve.com',
+      };
     } else {
       return Response.json({ error: 'Unknown source' }, { status: 400 });
     }
