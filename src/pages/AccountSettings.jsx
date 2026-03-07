@@ -51,9 +51,8 @@ export default function AccountSettings() {
     setError('');
     setSuccess('');
     try {
-      await base44.auth.updateMe({ full_name: form.full_name, phone: form.phone });
-      // Update local user state without re-fetching (re-fetch would overwrite with stale data)
-      setUser(prev => ({ ...prev, full_name: form.full_name, phone: form.phone }));
+      await base44.auth.updateMe({ display_name: form.full_name, phone: form.phone });
+      setUser(prev => ({ ...prev, display_name: form.full_name, phone: form.phone }));
       setSuccess('Profile updated successfully.');
     } catch (e) {
       setError(e?.message || 'Failed to save changes. Please try again.');
