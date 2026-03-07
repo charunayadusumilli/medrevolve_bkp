@@ -26,7 +26,7 @@ export default function AccountSettings() {
     base44.auth.me().then(u => {
       setUser(u);
       setForm({
-        full_name: u?.full_name || '',
+        full_name: u?.display_name || u?.full_name || '',
         phone: u?.phone || '',
       });
       setLoading(false);
