@@ -25,7 +25,8 @@ Deno.serve(async (req) => {
         hs_lead_status: 'NEW',
         lifecyclestage: 'lead',
         jobtitle: data.primary_interest || '',
-        description: `MedRevolve Customer Intake | Interest: ${data.primary_interest || ''} | Heard about us: ${data.heard_about_us || ''} | Consultation pref: ${data.consultation_preference || ''} | Notes: ${data.medical_history_notes || ''}`,
+        website: 'medrevolve.com',
+        hs_analytics_source: 'SOCIAL_MEDIA',
       };
     } else if (source === 'business_inquiry') {
       const nameParts = (data.contact_name || '').split(' ');
