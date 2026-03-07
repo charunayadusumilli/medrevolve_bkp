@@ -309,48 +309,52 @@ export default function CustomerIntake() {
                     </div>
 
                     <div>
-                      <Label>Street Address</Label>
+                      <Label>Street Address *</Label>
                       <Input
                         autoComplete="street-address"
                         value={formData.address}
-                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                        onChange={(e) => update('address', e.target.value)}
                         placeholder="123 Main Street"
-                        className="mt-2 h-12"
+                        className={`mt-2 h-12 ${errors.address ? 'border-red-400' : ''}`}
                       />
+                      <FieldError msg={errors.address} />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>City</Label>
+                        <Label>City *</Label>
                         <Input
                           autoComplete="address-level2"
                           value={formData.city}
-                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                          onChange={(e) => update('city', e.target.value)}
                           placeholder="Los Angeles"
-                          className="mt-2 h-12"
+                          className={`mt-2 h-12 ${errors.city ? 'border-red-400' : ''}`}
                         />
+                        <FieldError msg={errors.city} />
                       </div>
                       <div>
-                        <Label>State</Label>
+                        <Label>State *</Label>
                         <Input
                           autoComplete="address-level1"
                           value={formData.state}
-                          onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                          onChange={(e) => update('state', e.target.value)}
                           placeholder="CA"
-                          className="mt-2 h-12"
+                          className={`mt-2 h-12 ${errors.state ? 'border-red-400' : ''}`}
                         />
+                        <FieldError msg={errors.state} />
                       </div>
                     </div>
 
                     <div>
-                      <Label>ZIP Code</Label>
+                      <Label>ZIP Code *</Label>
                       <Input
                         autoComplete="postal-code"
                         value={formData.zip_code}
-                        onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
+                        onChange={(e) => update('zip_code', e.target.value)}
                         placeholder="90001"
-                        className="mt-2 h-12"
+                        className={`mt-2 h-12 ${errors.zip_code ? 'border-red-400' : ''}`}
                       />
+                      <FieldError msg={errors.zip_code} />
                     </div>
                   </motion.div>
                 )}
