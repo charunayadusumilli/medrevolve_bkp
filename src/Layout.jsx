@@ -257,7 +257,7 @@ export default function Layout({ children }) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2 min-w-[200px]" align="end">
                     <div className="px-3 py-2 mb-1">
-                      <p className="text-[#2D3A2D] text-sm font-semibold">{user.full_name}</p>
+                      <p className="text-[#2D3A2D] text-sm font-semibold">{user.display_name || user.full_name}</p>
                       <p className="text-xs text-gray-400 truncate">{user.email}</p>
                     </div>
                     <DropdownMenuSeparator />
