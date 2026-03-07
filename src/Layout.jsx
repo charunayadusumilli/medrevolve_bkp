@@ -251,7 +251,7 @@ export default function Layout({ children }) {
                       <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
                         {(user.display_name || user.full_name)?.[0] || user.email?.[0] || 'U'}
                       </div>
-                      <span className="text-sm font-medium max-w-[100px] truncate">{user.full_name || 'Account'}</span>
+                      <span className="text-sm font-medium max-w-[100px] truncate">{user.display_name || user.full_name || 'Account'}</span>
                       <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
                     </Button>
                   </DropdownMenuTrigger>
