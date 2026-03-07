@@ -95,7 +95,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({ properties: contactProps }),
       });
       result = await updateRes.json();
-      console.log(`Updated HubSpot contact ${contactId} for ${source}`);
+      console.log(`Updated HubSpot contact ${contactId} for ${source}:`, JSON.stringify(result));
     } else {
       // Create new contact
       const createRes = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
@@ -107,7 +107,12 @@ Deno.serve(async (req) => {
         body: JSON.stringify({ properties: contactProps }),
       });
       result = await createRes.json();
-      console.log(`Created HubSpot contact for ${source}:`, result.id);
+      console.log(`HubSpot create response for ${source}:`, JSON.stringify(result));
+    }
+
+    if (result.status === 'error' || result.message) {
+      console.error('HubSpot API error:', JSON.stringify(result));
+      return Response.json({ error: result.message, details: result }, { status: 400 });
     }
 
     return Response.json({ success: true, hubspot_id: result.id });
