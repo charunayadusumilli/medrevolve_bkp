@@ -81,7 +81,15 @@ export default function PatientOnboarding() {
       }
       const phone = profileData.phone.replace(/\D/g, '');
       if (phone.length < 10) {
-        setValidationError('Please enter a valid phone number.');
+        setValidationError('Please enter a valid phone number (10 digits).');
+        return false;
+      }
+      if (profileData.date_of_birth && new Date(profileData.date_of_birth) >= new Date()) {
+        setValidationError('Date of birth cannot be a future date.');
+        return false;
+      }
+      if (profileData.zip_code && !/^\d{5}(-\d{4})?$/.test(profileData.zip_code.trim())) {
+        setValidationError('Please enter a valid ZIP code (e.g. 12345).');
         return false;
       }
     }
