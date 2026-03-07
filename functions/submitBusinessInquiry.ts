@@ -173,6 +173,8 @@ Deno.serve(async (req) => {
         submitter_name: data.company_name,
         submitter_email: data.email,
       }).catch(e => console.error('Drive upload failed (non-blocking):', e.message)),
+      base44.asServiceRole.functions.invoke('syncToHubspot', { source: 'business_inquiry', data })
+        .catch(e => console.error('HubSpot sync failed (non-blocking):', e.message)),
     ]);
 
     // Zapier webhook (non-blocking)
