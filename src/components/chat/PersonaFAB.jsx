@@ -1,11 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import RevBotLogo from './RevBotLogo';
-import AvatarFigure from './AvatarFigure';
-import { getPersonaVisuals } from './chatConfig';
 
 export default function PersonaFAB({ ctx, onClick }) {
-  const vis = getPersonaVisuals(ctx.personaKey);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
@@ -13,41 +11,52 @@ export default function PersonaFAB({ ctx, onClick }) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0, opacity: 0 }}
       transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-      className="fixed bottom-6 right-6 z-[35] flex flex-col items-end gap-2"
+      className="fixed bottom-6 right-6 z-[35] flex items-center justify-end"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Label pill */}
-      <motion.div
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.55, duration: 0.3 }}
-        className="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-bold shadow-xl text-white pointer-events-none tracking-wide"
-        style={{ background: vis.fabBg, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)' }}
-      >
-        <RevBotLogo size={14} color="white" />
-        <span>Rev Bot</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse shadow-sm" />
-      </motion.div>
+      {/* Slide-out label — appears to the LEFT of the button on hover */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            key="label"
+            initial={{ opacity: 0, x: 16, width: 0 }}
+            animate={{ opacity: 1, x: 0, width: 'auto' }}
+            exit={{ opacity: 0, x: 16, width: 0 }}
+            transition={{ type: 'spring', damping: 22, stiffness: 320 }}
+            className="overflow-hidden mr-2"
+          >
+            <div
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold text-white whitespace-nowrap shadow-xl"
+              style={{
+                background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 50%, #4A6741 100%)',
+                border: '1px solid rgba(255,255,255,0.12)',
+              }}
+            >
+              <RevBotLogo size={15} color="white" />
+              <span>Rev Bot</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* FAB button */}
       <motion.button
         onClick={onClick}
-        whileHover={{ scale: 1.07 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93 }}
         aria-label="Open Rev Bot AI assistant"
-        className="relative flex items-center justify-center shadow-2xl overflow-hidden"
+        className="relative flex items-center justify-center shadow-2xl flex-shrink-0"
         style={{
-          width: 64,
-          height: 64,
+          width: 62,
+          height: 62,
           borderRadius: '50%',
-          background: vis.fabBg,
-          border: `2px solid rgba(255,255,255,0.25)`,
-          boxShadow: `0 8px 32px ${vis.gradient[0]}55, 0 2px 8px rgba(0,0,0,0.18)`,
+          background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)',
+          border: '2px solid rgba(74, 103, 65, 0.5)',
+          boxShadow: '0 8px 32px rgba(45,58,45,0.55), 0 2px 8px rgba(0,0,0,0.25)',
         }}
       >
-        {/* Logo centered */}
         <RevBotLogo size={30} color="white" />
-        {/* Online dot */}
-        <span className="absolute bottom-1 right-1 w-3 h-3 rounded-full bg-green-400 border-2 border-white shadow-sm z-10" />
       </motion.button>
     </motion.div>
   );
