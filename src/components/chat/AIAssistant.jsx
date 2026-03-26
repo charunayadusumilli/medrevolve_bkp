@@ -7,7 +7,7 @@ import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall } from 'lucide-rea
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals } from './chatConfig';
-import AvatarFigure from './AvatarFigure';
+
 import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
 import PersonaFAB from './PersonaFAB';
@@ -262,19 +262,18 @@ export default function AIAssistant() {
                 style={{ background: `linear-gradient(135deg, ${vis.gradient[0]} 0%, ${vis.gradient[1]} 100%)` }}
               >
                 <div className="flex items-center gap-3">
-                  {/* Avatar portrait */}
-                  <div className="flex-shrink-0 rounded-xl overflow-hidden"
-                    style={{ background: 'rgba(255,255,255,0.15)', padding: 3 }}>
-                    <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={false} />
+                  {/* Rev Bot Logo */}
+                  <div
+                    className="flex-shrink-0 flex items-center justify-center rounded-full"
+                    style={{ width: 36, height: 36, background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)', border: '2px solid rgba(255,255,255,0.2)' }}
+                  >
+                    <RevBotLogo size={20} color="white" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-bold text-white text-sm leading-tight tracking-tight">Rev Bot</p>
-                      <span className="text-[9px] bg-white/25 text-white px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 border border-white/30">
-                        <RevBotLogo size={9} /> AI
-                      </span>
+                    <p className="font-semibold text-white text-sm leading-tight tracking-wide">Rev Bot</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
-                      <p className="text-[10px] text-white/65 leading-tight">{ctx.persona} · AI</p>
+                      <p className="text-[10px] text-white/60 leading-tight">AI Assistant · Online</p>
                     </div>
                   </div>
                 </div>
