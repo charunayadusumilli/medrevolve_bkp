@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bot } from 'lucide-react';
+import RevBotLogo from './RevBotLogo';
 import AvatarFigure from './AvatarFigure';
 import { getPersonaVisuals } from './chatConfig';
 
@@ -23,8 +23,8 @@ export default function PersonaFAB({ ctx, onClick }) {
         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg text-white pointer-events-none"
         style={{ background: vis.fabBg }}
       >
-        <Bot className="w-3 h-3" />
-        <span>AI Assistant</span>
+        <RevBotLogo size={13} />
+        <span>Rev Bot</span>
         <span className="w-1.5 h-1.5 rounded-full bg-white/70 animate-pulse" />
       </motion.div>
 
@@ -33,7 +33,7 @@ export default function PersonaFAB({ ctx, onClick }) {
         onClick={onClick}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        aria-label="Open AI chat assistant"
+        aria-label="Open Rev Bot AI assistant"
         className="relative flex items-center justify-center shadow-2xl overflow-hidden"
         style={{
           width: 68,

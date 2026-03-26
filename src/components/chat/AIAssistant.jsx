@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall, Bot } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals } from './chatConfig';
@@ -11,6 +11,7 @@ import AvatarFigure from './AvatarFigure';
 import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
 import PersonaFAB from './PersonaFAB';
+import RevBotLogo from './RevBotLogo';
 
 function usePageContext() {
   const location = useLocation();
@@ -197,7 +198,7 @@ export default function AIAssistant() {
     isListeningPausedRef.current = false; setIsListeningPaused(false);
     setVoiceTranscript([]);
     setVoiceStatus('speaking');
-    const greeting = `Hi! I'm your AI ${ctx.persona} at MedRevolve — not a human, but here to help! Ask me anything about our treatments, consultations, or wellness programs.`;
+    const greeting = `Hi! I'm Rev Bot, your AI ${ctx.persona} at MedRevolve — not a human, but here to help! Ask me anything about our treatments, consultations, or wellness programs.`;
     setVoiceTranscript([{ role: 'assistant', content: greeting }]);
     await speak(greeting);
     setVoiceStatus('idle');
@@ -267,15 +268,13 @@ export default function AIAssistant() {
                     <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={false} />
                   </div>
                   <div>
-                    <div className="flex items-center gap-1.5">
-                      <p className="font-semibold text-white text-sm leading-tight">{ctx.persona}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-white text-sm leading-tight tracking-tight">Rev Bot</p>
                       <span className="text-[9px] bg-white/25 text-white px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 border border-white/30">
-                        <Bot className="w-2 h-2" /> AI
+                        <RevBotLogo size={9} /> AI
                       </span>
-                    </div>
-                    <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
-                      <p className="text-[10px] text-white/65 leading-tight">AI · Not a real human</p>
+                      <p className="text-[10px] text-white/65 leading-tight">{ctx.persona} · AI</p>
                     </div>
                   </div>
                 </div>
@@ -382,7 +381,7 @@ export default function AIAssistant() {
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); } }}
-                        placeholder={`Ask your ${ctx.persona}...`}
+                        placeholder={`Ask Rev Bot anything...`}
                         className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
                         disabled={loading}
                         aria-label="Chat input"

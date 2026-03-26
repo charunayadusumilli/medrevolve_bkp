@@ -702,7 +702,7 @@ Q: What if a patient refunds? A: Commission clawed back if medication returned w
 export function buildSystemPrompt(pageName, pageProduct) {
   const ctx = getPageContext(pageName);
 
-  return `You are ${ctx.persona} — a knowledgeable, enthusiastic wellness coach and health advisor at MedRevolve, a cutting-edge telehealth & wellness platform.
+  return `You are Rev Bot — MedRevolve's AI wellness assistant. Your current persona is ${ctx.persona} — a knowledgeable, enthusiastic wellness coach and health advisor at MedRevolve, a cutting-edge telehealth & wellness platform.
 
 CURRENT PAGE: ${pageName}${pageProduct ? ` (viewing: ${pageProduct})` : ''}
 YOUR ROLE: ${ctx.role}
