@@ -5,7 +5,7 @@ import {
   MessageSquare, ChevronDown, Sparkles, Loader2, Volume2, VolumeX,
   Camera, ScreenShare, StopCircle, Maximize2, Minimize2, Send, X
 } from 'lucide-react';
-import AvatarFigure from './AvatarFigure';
+import RevBotLogo from './RevBotLogo';
 
 // ─── Sound Wave Visualizer ────────────────────────────────────────────────────
 function SoundBars({ active, color = '#A8C99B', bars = 16, height = 48 }) {
@@ -342,7 +342,7 @@ export default function VoiceCallPanel({
               animate={isSpeaking ? { scale: [1, 1.04, 1] } : { scale: 1 }}
               transition={{ duration: 0.8, repeat: isSpeaking ? Infinity : 0 }}
             >
-              <AvatarFigure personaKey={personaKey} size="lg" animated={isSpeaking} />
+              <RevBotLogo size={72} color="white" />
             </motion.div>
 
             {/* Status dot */}
