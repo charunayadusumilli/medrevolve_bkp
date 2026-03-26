@@ -94,10 +94,22 @@ export default function AIAssistant() {
       .replace(/#{1,6}\s/g, '').replace(/`[^`]*`/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\n+/g, '. ').replace(/•/g, '').trim();
     const utterance = new SpeechSynthesisUtterance(clean);
-    utterance.lang = 'en-US'; utterance.rate = 1.05;
+    utterance.lang = 'en-US';
+    utterance.rate = 0.92;
+    utterance.pitch = 1.1;
+    utterance.volume = 1;
     const voices = window.speechSynthesis.getVoices();
-    const pref = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google US English') || (v.lang === 'en-US' && !v.name.includes('Google'))) || voices.find(v => v.lang.startsWith('en'));
-    if (pref) utterance.voice = pref;
+    // Prefer natural-sounding female voices
+    const femaleVoice =
+      voices.find(v => v.name === 'Samantha') ||
+      voices.find(v => v.name === 'Karen') ||
+      voices.find(v => v.name === 'Moira') ||
+      voices.find(v => v.name.includes('Zira')) ||
+      voices.find(v => v.name === 'Google US English' && v.lang === 'en-US') ||
+      voices.find(v => /female|woman|girl/i.test(v.name) && v.lang.startsWith('en')) ||
+      voices.find(v => v.lang === 'en-US' && !v.name.toLowerCase().includes('male')) ||
+      voices.find(v => v.lang.startsWith('en'));
+    if (femaleVoice) utterance.voice = femaleVoice;
     utterance.onstart = () => { setIsSpeaking(true); setVoiceStatus('speaking'); };
     utterance.onend = () => { setIsSpeaking(false); resolve(); };
     utterance.onerror = () => { setIsSpeaking(false); resolve(); };
@@ -198,7 +210,10 @@ export default function AIAssistant() {
     isListeningPausedRef.current = false; setIsListeningPaused(false);
     setVoiceTranscript([]);
     setVoiceStatus('speaking');
-    const greeting = `Hi! I'm Rev Bot, your AI ${ctx.persona} at MedRevolve — not a human, but here to help! Ask me anything about our treatments, consultations, or wellness programs.`;
+    let firstName = '';
+    try { const u = await base44.auth.me(); firstName = (u?.full_name || u?.display_name || '').split(' ')[0]; } catch {}
+    const nameGreeting = firstName ? `, ${firstName}` : '';
+    const greeting = `Hey${nameGreeting}! I'm Rev, your personal wellness guide at MedRevolve. I'm here to help with anything — treatments, consultations, or just figuring out the best next step for your health journey. What's on your mind?`;
     setVoiceTranscript([{ role: 'assistant', content: greeting }]);
     await speak(greeting);
     setVoiceStatus('idle');
