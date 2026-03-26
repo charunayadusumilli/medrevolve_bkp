@@ -310,7 +310,12 @@ export default function AIAssistant() {
                     ))}
                     {loading && (
                       <div className="flex justify-start gap-2.5">
-                        <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={false} />
+                        <div
+                          className="flex-shrink-0 mt-0.5 flex items-center justify-center rounded-full"
+                          style={{ width: 28, height: 28, background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)' }}
+                        >
+                          <RevBotLogo size={16} color="white" />
+                        </div>
                         <div className="bg-white border border-[#E8E0D5] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                           <TypingDots />
                         </div>

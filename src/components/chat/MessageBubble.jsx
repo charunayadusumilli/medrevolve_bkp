@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { ThumbsUp, ThumbsDown, Copy, Check } from 'lucide-react';
-import AvatarFigure from './AvatarFigure';
+import RevBotLogo from './RevBotLogo';
 
 export default function MessageBubble({ msg, onFeedback }) {
   const isUser = msg.role === 'user';
@@ -28,8 +28,15 @@ export default function MessageBubble({ msg, onFeedback }) {
       className={`flex gap-2.5 ${isUser ? 'justify-end' : 'justify-start'}`}
     >
       {!isUser && (
-        <div className="flex-shrink-0 mt-0.5">
-          <AvatarFigure personaKey={msg.personaKey} size="sm" animated={false} />
+        <div
+          className="flex-shrink-0 mt-0.5 flex items-center justify-center rounded-full"
+          style={{
+            width: 28,
+            height: 28,
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)',
+          }}
+        >
+          <RevBotLogo size={16} color="white" />
         </div>
       )}
 
