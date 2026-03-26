@@ -39,14 +39,15 @@ export default function PersonaFAB({ ctx, onClick }) {
           width: 64,
           height: 64,
           borderRadius: '50%',
-          background: '#0A0A0A',
-          border: `1.5px solid rgba(255,255,255,0.1)`,
-          boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.25)`,
+          background: vis.fabBg,
+          border: `2px solid rgba(255,255,255,0.25)`,
+          boxShadow: `0 8px 32px ${vis.gradient[0]}55, 0 2px 8px rgba(0,0,0,0.18)`,
         }}
       >
         {/* Logo centered */}
         <RevBotLogo size={30} color="white" />
-
+        {/* Online dot */}
+        <span className="absolute bottom-1 right-1 w-3 h-3 rounded-full bg-green-400 border-2 border-white shadow-sm z-10" />
       </motion.button>
     </motion.div>
   );
