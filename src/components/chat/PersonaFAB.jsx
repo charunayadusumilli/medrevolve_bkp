@@ -20,31 +20,32 @@ export default function PersonaFAB({ ctx, onClick }) {
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.55, duration: 0.3 }}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg text-white pointer-events-none"
-        style={{ background: vis.fabBg }}
+        className="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-bold shadow-xl text-white pointer-events-none tracking-wide"
+        style={{ background: vis.fabBg, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)' }}
       >
-        <RevBotLogo size={13} />
+        <RevBotLogo size={14} color="white" />
         <span>Rev Bot</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-white/70 animate-pulse" />
+        <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse shadow-sm" />
       </motion.div>
 
       {/* FAB button */}
       <motion.button
         onClick={onClick}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.94 }}
+        whileHover={{ scale: 1.07 }}
+        whileTap={{ scale: 0.93 }}
         aria-label="Open Rev Bot AI assistant"
         className="relative flex items-center justify-center shadow-2xl overflow-hidden"
         style={{
-          width: 68,
-          height: 68,
+          width: 64,
+          height: 64,
           borderRadius: '50%',
-          background: `linear-gradient(140deg, ${vis.gradient[0]}22 0%, ${vis.gradient[1]}44 100%)`,
-          border: `2.5px solid ${vis.gradient[0]}70`,
-          backdropFilter: 'blur(8px)',
+          background: vis.fabBg,
+          border: `2px solid rgba(255,255,255,0.25)`,
+          boxShadow: `0 8px 32px ${vis.gradient[0]}55, 0 2px 8px rgba(0,0,0,0.18)`,
         }}
       >
-        <AvatarFigure personaKey={ctx.personaKey} size="sm" animated={true} />
+        {/* Logo centered */}
+        <RevBotLogo size={30} color="white" />
         {/* Online dot */}
         <span className="absolute bottom-1 right-1 w-3 h-3 rounded-full bg-green-400 border-2 border-white shadow-sm z-10" />
       </motion.button>
