@@ -10,7 +10,7 @@ import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals }
 
 import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
-import PersonaFAB from './PersonaFAB';
+import FloatingAvatar from './FloatingAvatar';
 import Avatar3D from './Avatar3D';
 
 function usePageContext() {
@@ -252,9 +252,9 @@ export default function AIAssistant() {
         )}
       </AnimatePresence>
 
-      {/* FAB */}
+      {/* Floating 3D Avatar */}
       <AnimatePresence>
-        {!isOpen && <PersonaFAB ctx={ctx} onClick={() => { setIsOpen(true); setMinimized(false); }} />}
+        {!isOpen && <FloatingAvatar onClick={() => { setIsOpen(true); setMinimized(false); }} />}
       </AnimatePresence>
 
       {/* Chat Window */}
@@ -276,14 +276,13 @@ export default function AIAssistant() {
                 className="px-4 py-3.5 flex items-center justify-between flex-shrink-0 relative overflow-hidden"
                 style={{ background: `linear-gradient(135deg, #0a0a0a 0%, ${vis.gradient[0]} 60%, ${vis.gradient[1]} 100%)` }}
               >
-                <div className="flex items-center gap-4 relative z-10">
-                  <Avatar3D size={56} animated={true} />
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                    <Avatar3D size={36} animated={true} />
+                  </div>
                   <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-bold text-white text-base leading-tight">Rev</p>
-                      <span className="text-[9px] font-semibold bg-emerald-500/30 text-emerald-100 px-2 py-0.5 rounded-full uppercase tracking-wider">Active</span>
-                    </div>
-                    <p className="text-[11px] text-white/60 mt-0.5">{ctx.role}</p>
+                    <p className="font-bold text-white text-sm">Rev</p>
+                    <p className="text-[10px] text-white/60">{ctx.role}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5 relative z-10">
