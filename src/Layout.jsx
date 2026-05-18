@@ -5,59 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
-  Menu, ChevronDown, Leaf, X,
-  Phone, Mail, MapPin,
-  Instagram, Twitter, Facebook, Youtube, ShoppingCart,
-  User, LogOut, Settings, LayoutDashboard } from
-'lucide-react';
+  Menu, ChevronDown,
+  Instagram, Twitter, Facebook, Youtube,
+  User, LogOut, Settings, LayoutDashboard } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AIAssistant from '@/components/chat/AIAssistant';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
 "@/components/ui/dropdown-menu";
-
-const treatCategories = [
-{ name: 'Weight Loss', href: 'Products?category=weight_loss', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=80' },
-{ name: "Men's Health", href: 'Products?category=mens', image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=120&q=80' },
-{ name: "Women's Health", href: 'Products?category=womens', image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=120&q=80' },
-{ name: 'Longevity', href: 'Products?category=longevity', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=120&q=80' },
-{ name: 'Hormones', href: 'Products?category=hormone', image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=120&q=80' },
-{ name: 'Peptides', href: 'Products?category=peptides', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=120&q=80' }];
-
-
-function TreatMegaMenu({ onClose }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.18 }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 z-50">
-
-      <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Browse by Category</p>
-      <div className="grid grid-cols-3 gap-3">
-        {treatCategories.map((cat) =>
-        <Link
-          key={cat.name}
-          to={createPageUrl(cat.href)}
-          onClick={() => {onClose();window.scrollTo({ top: 0, behavior: 'smooth' });}}
-          className="flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F0E8] transition-colors group">
-
-              <img src={cat.image} alt={cat.name} className="w-10 h-10 rounded-lg object-cover" loading="lazy" decoding="async" />
-              <span className="font-medium text-[#2D3A2D] text-sm group-hover:text-[#4A6741] transition-colors">{cat.name}</span>
-            </Link>
-        )}
-      </div>
-      <div className="mt-4 pt-4 border-t border-gray-100">
-        <Link to={createPageUrl('Products')} onClick={() => {onClose();window.scrollTo({ top: 0, behavior: 'smooth' });}}
-        className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#4A6741]/5 hover:bg-[#4A6741]/10 transition-colors">
-          <span className="font-semibold text-[#4A6741] text-sm">View All Products →</span>
-        </Link>
-      </div>
-    </motion.div>);
-
-}
 
 export default function Layout({ children }) {
   useEffect(() => {
@@ -98,26 +54,10 @@ export default function Layout({ children }) {
       }
     });
   }, []);
-  const cyclingWords = ['Feel Better', 'Look Better', 'Live Longer', 'Be Stronger', 'Start Today'];
-  const [cycleIndex, setCycleIndex] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
-
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [treatOpen, setTreatOpen] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeIn(false);
-      setTimeout(() => {
-        setCycleIndex((prev) => (prev + 1) % cyclingWords.length);
-        setFadeIn(true);
-      }, 300);
-    }, 2200);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -145,7 +85,6 @@ export default function Layout({ children }) {
   const handleNavClick = (callback) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
-    setTreatOpen(false);
     if (callback) callback();
   };
 
@@ -154,19 +93,11 @@ export default function Layout({ children }) {
       <AnalyticsTracker />
       <AIAssistant />
 
-      {/* Announcement Bar */}
-      <div className="bg-[#0A0A0A] text-white/70 text-center py-2 px-4 text-[11px] font-medium tracking-[0.15em] uppercase border-b border-white/5">
-        ✦ The Operating System for Modern Wellness Commerce &nbsp;·&nbsp; Products · Telehealth · Compliance · Payments{' '}
-        <Link to={createPageUrl('MerchantOnboarding')} className="underline underline-offset-2 hover:text-white transition-colors font-semibold ml-2">
-          Apply Now →
-        </Link>
-      </div>
-
       {/* Header */}
       <motion.header
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/98 backdrop-blur-lg shadow-sm' : 'bg-white'}`
-        }
+          scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'
+        }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.4 }}>
@@ -175,34 +106,24 @@ export default function Layout({ children }) {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to={createPageUrl('Home')} className="flex items-center gap-2.5 flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] flex items-center justify-center shadow-sm">
-                <span className="text-white font-black text-sm tracking-tighter leading-none">MR</span>
+              <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
+                <span className="text-black font-black text-[11px] tracking-tight">MR</span>
               </div>
-              <span className="text-lg font-bold text-[#2D3A2D] tracking-tight">MedRevolve</span>
+              <span className="text-base font-bold text-white tracking-tight">MedRevolve</span>
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {/* What We Treat Mega Menu */}
-              <div className="relative" onMouseEnter={() => setTreatOpen(true)} onMouseLeave={() => setTreatOpen(false)}>
-                <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                  <span
-                    style={{ transition: 'opacity 0.3s ease', opacity: fadeIn ? 1 : 0, minWidth: 90, display: 'inline-block', textAlign: 'left' }}>
-
-                    {cyclingWords[cycleIndex]}
-                  </span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${treatOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {treatOpen && <TreatMegaMenu onClose={() => {setTreatOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}} />}
-                </AnimatePresence>
-              </div>
-
-              <Link to={createPageUrl('Programs')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] rounded-lg hover:bg-[#F5F0E8] transition-all">
-                Programs
+            {/* Desktop Nav — simple 4 links */}
+            <nav className="hidden lg:flex items-center gap-8">
+              <Link to={createPageUrl('Products')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                Products
               </Link>
-
-              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="px-4 py-2 text-sm font-semibold text-white bg-[#4A6741] hover:bg-[#3D5636] rounded-full transition-all">
+              <Link to={createPageUrl('TelehealthPlatform')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                Telehealth
+              </Link>
+              <Link to={createPageUrl('ForBusiness')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                For Business
+              </Link>
+              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Consultations
               </Link>
 
@@ -210,198 +131,133 @@ export default function Layout({ children }) {
               {user?.role === 'admin' &&
               <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-[#4A6741] bg-[#4A6741]/10 rounded-full hover:bg-[#4A6741]/20 transition-all">
-                      ⚡ Admin
-                      <ChevronDown className="w-3 h-3" />
+                    <button className="flex items-center gap-1 text-sm text-[#6B8F5E] hover:text-[#8FB88F] transition-colors">
+                      Admin <ChevronDown className="w-3 h-3" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2">
-                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Overview</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-xl px-3 py-2">Partner Program</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-xl px-3 py-2">Creator Program</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ForBusiness')} className="cursor-pointer rounded-xl px-3 py-2">For Business</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-xl px-3 py-2">Partnerships</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Compliance</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PharmacyContracts')} className="cursor-pointer rounded-xl px-3 py-2">Pharmacy Contracts</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ProviderContracts')} className="cursor-pointer rounded-xl px-3 py-2">Provider Contracts</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ProviderOutreach')} className="cursor-pointer rounded-xl px-3 py-2">Provider Recruitment</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2">Payments & Invoices</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('BelugaIntegration')} className="cursor-pointer rounded-xl px-3 py-2">🔗 Beluga Integration</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('VisitTypeSelector')} className="cursor-pointer rounded-xl px-3 py-2">🏥 Visit Types</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-xl px-3 py-2">🚀 Merchant Onboarding</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-xl px-3 py-2">📊 Merchant Dashboard</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantInventoryPage')} className="cursor-pointer rounded-xl px-3 py-2">📦 Inventory Manager</Link></DropdownMenuItem>
+                  <DropdownMenuContent className="bg-[#111] border border-white/10 rounded-xl shadow-2xl p-2 min-w-[220px]">
+                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Overview</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">🚀 Merchant Onboarding</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📊 Merchant Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantInventoryPage')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📦 Inventory</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Compliance</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Partnerships</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Payments</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Partner Program</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Creator Program</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               }
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-2">
-              <Link to={createPageUrl('Cart')} className="hidden sm:flex">
-                <Button variant="ghost" size="icon" className="relative text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8]">
-                  <ShoppingCart className="w-5 h-5" />
-                </Button>
-              </Link>
-
+            <div className="flex items-center gap-3">
               {user ?
               <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-[#2D3A2D] hover:bg-[#F5F0E8] rounded-full px-3 border border-[#E8E0D5]" aria-label="Account settings">
+                    <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full px-3" aria-label="Account">
                       <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
                         {(user.display_name || user.full_name)?.[0] || user.email?.[0] || 'U'}
                       </div>
-                      <span className="text-sm font-medium max-w-[100px] truncate">{user.display_name || user.full_name || 'Account'}</span>
-                      <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
+                      <ChevronDown className="w-3.5 h-3.5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white rounded-2xl border-none shadow-2xl p-2 min-w-[200px]" align="end">
+                  <DropdownMenuContent className="bg-[#111] border border-white/10 rounded-xl shadow-2xl p-2 min-w-[200px]" align="end">
                     <div className="px-3 py-2 mb-1">
-                      <p className="text-[#2D3A2D] text-sm font-semibold">{user.display_name || user.full_name}</p>
-                      <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                      <p className="text-white text-sm font-semibold">{user.display_name || user.full_name}</p>
+                      <p className="text-xs text-white/40 truncate">{user.email}</p>
                     </div>
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
-                        <LayoutDashboard className="w-4 h-4 text-[#4A6741]" />
-                        <span>My Portal</span>
+                      <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
+                        <LayoutDashboard className="w-4 h-4" /><span>My Portal</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
-                        <User className="w-4 h-4 text-[#4A6741]" />
-                        <span>Account Settings</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
-                        <Settings className="w-4 h-4 text-[#4A6741]" />
-                        <span>Payments & Invoices</span>
+                      <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
+                        <User className="w-4 h-4" /><span>Settings</span>
                       </Link>
                     </DropdownMenuItem>
                     {user.role === 'admin' &&
-                  <DropdownMenuItem asChild>
-                        <Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2">
-                          <Settings className="w-4 h-4 text-[#4A6741]" />
-                          <span>Admin Dashboard</span>
+                      <DropdownMenuItem asChild>
+                        <Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
+                          <Settings className="w-4 h-4" /><span>Admin</span>
                         </Link>
                       </DropdownMenuItem>
-                  }
-                    <DropdownMenuSeparator />
+                    }
+                    <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem
-                    className="cursor-pointer rounded-xl px-3 py-2 flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-red-50"
-                    onClick={() => base44.auth.logout('/')}>
-
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                      className="cursor-pointer rounded-lg px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 text-sm flex items-center gap-2"
+                      onClick={() => base44.auth.logout('/')}>
+                      <LogOut className="w-4 h-4" /><span>Sign Out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
-                </DropdownMenu> :
-
-              <>
-                  <Button variant="ghost"
-                className="hidden sm:flex text-sm font-medium text-[#2D3A2D] hover:text-[#4A6741] hover:bg-[#F5F0E8] rounded-full items-center gap-1.5"
+                </DropdownMenu>
+              :
+              <Button variant="ghost"
+                className="hidden sm:flex text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-full items-center gap-1.5"
                 onClick={() => base44.auth.redirectToLogin(window.location.href)}>
-                    <User className="w-4 h-4" />
-                    Sign In
-                  </Button>
-                  <Link to={createPageUrl('PatientOnboarding')} className="hidden sm:block">
-                    <Button className="bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full px-5 text-sm font-semibold">
-                      Get Started
-                    </Button>
-                  </Link>
-                </>
+                <User className="w-4 h-4" /> Sign In
+              </Button>
               }
+
+              <Link to={createPageUrl('MerchantOnboarding')} className="hidden sm:block">
+                <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
+                  Get Started
+                </Button>
+              </Link>
 
               {/* Mobile Menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild className="lg:hidden">
-                  <Button variant="ghost" size="icon">
-                    <Menu className="w-5 h-5 text-[#2D3A2D]" />
+                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                    <Menu className="w-5 h-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-full max-w-sm bg-white p-0">
+                <SheetContent side="right" className="w-full max-w-sm bg-[#0A0A0A] border-l border-white/10 p-0">
                   <div className="flex flex-col h-full">
-                    <div className="flex items-center justify-between p-5 border-b border-[#E8E0D5]">
+                    <div className="flex items-center justify-between p-5 border-b border-white/10">
                       <Link to={createPageUrl('Home')} className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2D3A2D] to-[#4A6741] flex items-center justify-center shadow-sm">
-                          <span className="text-white font-black text-xs tracking-tighter">MR</span>
+                        <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
+                          <span className="text-black font-black text-[10px]">MR</span>
                         </div>
-                        <span className="text-lg font-bold text-[#2D3A2D]">MedRevolve</span>
+                        <span className="text-base font-bold text-white">MedRevolve</span>
                       </Link>
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                                      {treatCategories.map((cat) =>
-                      <Link key={cat.name} to={createPageUrl(cat.href)}
-                      className="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-[#F5F0E8] text-sm font-medium text-[#2D3A2D]"
-                      onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>
-                                          <img src={cat.image} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" loading="lazy" decoding="async" />
-                                          {cat.name}
-                                        </Link>
+                      <Link to={createPageUrl('Products')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Products</Link>
+                      <Link to={createPageUrl('TelehealthPlatform')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Telehealth</Link>
+                      <Link to={createPageUrl('ForBusiness')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>For Business</Link>
+                      <Link to={createPageUrl('Consultations')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Consultations</Link>
+
+                      {user && (
+                        <div className="pt-4 border-t border-white/10 mt-2">
+                          <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-2 px-3">My Account</p>
+                          <Link to={createPageUrl('PatientPortal')} className="block py-3 px-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>My Portal</Link>
+                          {user.role === 'admin' && <Link to={createPageUrl('AdminDashboard')} className="block py-3 px-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Admin Dashboard</Link>}
+                        </div>
                       )}
-
-                      <div className="pt-4 border-t border-[#E8E0D5] mt-2">
-                        <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Consultations & Services</p>
-                        <Link to={createPageUrl('Programs')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Programs</Link>
-                      <Link to={createPageUrl('Consultations')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#2D3A2D] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Consultations</Link>
-                      </div>
-
-                      {/* Programs section moved to admin only */}
-
-                      {user &&
-                      <div className="pt-4 border-t border-[#E8E0D5]">
-                          <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">My Account</p>
-                          <Link to={createPageUrl('PatientPortal')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>My Portal</Link>
-                          {user.role === 'admin' &&
-                        <Link to={createPageUrl('AdminDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Admin Dashboard</Link>
-                        }
-                        </div>
-                      }
-
-                      {user?.role === 'admin' &&
-                      <div className="pt-4 border-t border-[#E8E0D5]">
-                          <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Programs</p>
-                          <Link to={createPageUrl('PartnerProgram')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Partner Program</Link>
-                          <Link to={createPageUrl('ForCreators')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Creator Program</Link>
-                          <Link to={createPageUrl('ForBusiness')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>For Business</Link>
-                          <div className="pt-4 border-t border-[#E8E0D5] mt-2">
-                            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Command Center</p>
-                            <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Compliance</Link>
-                            <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Partnerships</Link>
-                          <div className="pt-3 border-t border-[#E8E0D5] mt-2">
-                            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Merchant Platform</p>
-                            <Link to={createPageUrl('MerchantOnboarding')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>🚀 Merchant Onboarding</Link>
-                            <Link to={createPageUrl('MerchantDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>📊 Merchant Dashboard</Link>
-                            <Link to={createPageUrl('MerchantInventoryPage')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>📦 Inventory Manager</Link>
-                          </div>
-                          </div>
-                        </div>
-                      }
                     </nav>
 
-                    <div className="p-5 border-t border-[#E8E0D5] space-y-2">
+                    <div className="p-5 border-t border-white/10 space-y-2">
                       {user ?
-                      <Button
-                        variant="outline"
-                        className="w-full rounded-full border-red-200 text-red-500"
-                        onClick={() => {base44.auth.logout('/');setMobileMenuOpen(false);}}>
-
+                        <Button variant="outline" className="w-full rounded-sm border-red-500/40 text-red-400 hover:bg-red-500/10"
+                          onClick={() => {base44.auth.logout('/');setMobileMenuOpen(false);}}>
                           Sign Out
-                        </Button> :
-
-                      <>
-                          <Button variant="outline" className="w-full rounded-full border-[#4A6741] text-[#4A6741]"
-                        onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
+                        </Button>
+                      :
+                        <>
+                          <Button variant="outline" className="w-full rounded-sm border-white/20 text-white hover:bg-white/10"
+                            onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          <Link to={createPageUrl('PatientOnboarding')} onClick={() => setMobileMenuOpen(false)}>
-                            <Button className="w-full bg-[#2D3A2D] hover:bg-[#1D2A1D] text-white rounded-full">
-                              Get Started Free
+                          <Link to={createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
+                            <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
+                              Get Started
                             </Button>
                           </Link>
                         </>
@@ -421,87 +277,67 @@ export default function Layout({ children }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#1A2A1A] text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <footer className="bg-[#060606] border-t border-white/8 text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center">
-                  <span className="text-white font-black text-sm tracking-tighter">MR</span>
+                <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
+                  <span className="text-black font-black text-[10px]">MR</span>
                 </div>
-                <span className="text-lg font-bold">MedRevolve</span>
+                <span className="text-base font-bold text-white">MedRevolve</span>
               </div>
-              <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-xs">
-                The operating system for modern wellness merchants. Products, telehealth, compliance, payments — all in one platform.
+              <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-xs">
+                The operating system for modern wellness merchants. Products, telehealth, compliance, payments — all under your brand.
               </p>
               <div className="flex gap-3">
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Instagram className="w-4 h-4" /></a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Twitter className="w-4 h-4" /></a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Facebook className="w-4 h-4" /></a>
-                <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Youtube className="w-4 h-4" /></a>
+                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Instagram className="w-3.5 h-3.5 text-white/50" /></a>
+                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Twitter className="w-3.5 h-3.5 text-white/50" /></a>
+                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Youtube className="w-3.5 h-3.5 text-white/50" /></a>
               </div>
             </div>
 
-            {/* Treatments */}
+            {/* Platform */}
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-widest text-white/40">Treatments</h4>
-              <ul className="space-y-2.5">
-                {treatCategories.map((cat) =>
-                <li key={cat.name}>
-                    <Link to={createPageUrl(cat.href)} className="text-white/60 hover:text-white text-sm transition-colors">{cat.name}</Link>
-                  </li>
-                )}
+              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Platform</h4>
+              <ul className="space-y-3">
+                <li><Link to={createPageUrl('Products')} className="text-white/45 hover:text-white text-sm transition-colors">Products Catalog</Link></li>
+                <li><Link to={createPageUrl('TelehealthPlatform')} className="text-white/45 hover:text-white text-sm transition-colors">Telehealth</Link></li>
+                <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Merchant Onboarding</Link></li>
+                <li><Link to={createPageUrl('Consultations')} className="text-white/45 hover:text-white text-sm transition-colors">Consultations</Link></li>
+                <li><Link to={createPageUrl('Programs')} className="text-white/45 hover:text-white text-sm transition-colors">Health Programs</Link></li>
               </ul>
             </div>
 
-            {/* Programs */}
+            {/* Partners */}
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-widest text-white/40">Programs</h4>
-              <ul className="space-y-2.5">
-                <li><Link to={createPageUrl('Programs')} className="text-white/60 hover:text-white text-sm transition-colors">Diet & Health Programs</Link></li>
-                <li><Link to={createPageUrl('PartnerProgram')} className="text-white/60 hover:text-white text-sm transition-colors">Partner Program</Link></li>
-                <li><Link to={createPageUrl('ForCreators')} className="text-white/60 hover:text-white text-sm transition-colors">Creator Program</Link></li>
-                <li><Link to={createPageUrl('ForBusiness')} className="text-white/60 hover:text-white text-sm transition-colors">For Business</Link></li>
-                <li><Link to={createPageUrl('ProviderIntake')} className="text-white/60 hover:text-white text-sm transition-colors">Join as Provider</Link></li>
-                <li><Link to={createPageUrl('PharmacyIntake')} className="text-white/60 hover:text-white text-sm transition-colors">Join as Pharmacy</Link></li>
+              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Partners</h4>
+              <ul className="space-y-3">
+                <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
+                <li><Link to={createPageUrl('PartnerProgram')} className="text-white/45 hover:text-white text-sm transition-colors">Partner Program</Link></li>
+                <li><Link to={createPageUrl('ForCreators')} className="text-white/45 hover:text-white text-sm transition-colors">Creator Program</Link></li>
+                <li><Link to={createPageUrl('ProviderIntake')} className="text-white/45 hover:text-white text-sm transition-colors">Join as Provider</Link></li>
+                <li><Link to={createPageUrl('PharmacyIntake')} className="text-white/45 hover:text-white text-sm transition-colors">Join as Pharmacy</Link></li>
               </ul>
             </div>
 
             {/* Company */}
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-widest text-white/40">Company</h4>
-              <ul className="space-y-2.5">
-                <li><Link to={createPageUrl('Consultations')} className="text-white/60 hover:text-white text-sm transition-colors">Consultations</Link></li>
-                <li><Link to={createPageUrl('HowItWorks')} className="text-white/60 hover:text-white text-sm transition-colors">How It Works</Link></li>
-                <li><Link to={createPageUrl('Contact')} className="text-white/60 hover:text-white text-sm transition-colors">Contact</Link></li>
-                <li><Link to={createPageUrl('Privacy')} className="text-white/60 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
-                <li><Link to={createPageUrl('Terms')} className="text-white/60 hover:text-white text-sm transition-colors">Terms of Service</Link></li>
+              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Company</h4>
+              <ul className="space-y-3">
+                <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
+                <li><Link to={createPageUrl('Contact')} className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
+                <li><Link to={createPageUrl('Privacy')} className="text-white/45 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
+                <li><Link to={createPageUrl('Terms')} className="text-white/45 hover:text-white text-sm transition-colors">Terms of Service</Link></li>
+                <li><a href="mailto:rned@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">rned@medrevolve.com</a></li>
               </ul>
             </div>
           </div>
 
-          {/* Portal Access — Admin link only shown to logged-in admins */}
-          <div className="mt-12 pt-8 border-t border-white/10">
-            <p className="text-white/25 text-xs uppercase tracking-widest mb-3">Account Access</p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {[
-              { label: 'Patient Portal', page: 'PatientPortal' },
-              { label: 'Provider Portal', page: 'ProviderDashboard' },
-              { label: 'Partner Portal', page: 'PartnerPortal' },
-              { label: 'Creator Portal', page: 'ForCreators' }].
-              map((item) =>
-              <Link key={item.page} to={createPageUrl(item.page)}
-              className="text-white/40 hover:text-white text-sm transition-colors">
-                  {item.label}
-                </Link>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/30 text-xs">© 2025 MedRevolve. All rights reserved. Not affiliated with any insurance provider.</p>
-            <p className="text-white/20 text-xs">Telehealth services provided by licensed providers through affiliated medical groups.</p>
+          <div className="mt-12 pt-8 border-t border-white/8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/20 text-xs">© 2025 MedRevolve. All rights reserved.</p>
+            <p className="text-white/15 text-xs">Telehealth services provided by licensed providers through affiliated medical groups.</p>
           </div>
         </div>
       </footer>
