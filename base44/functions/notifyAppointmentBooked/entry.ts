@@ -1,32 +1,31 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-async function getZohoAccessToken() {
-  const clientId = Deno.env.get("ZOHO_CLIENT_ID");
-  const clientSecret = Deno.env.get("ZOHO_CLIENT_SECRET");
-  const refreshToken = Deno.env.get("ZOHO_REFRESH_TOKEN");
-  const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret, grant_type: "refresh_token" })
-  });
-  const data = await response.json();
-  return data.access_token;
-}
+// Triggered by Appointment entity create automation
+// Sends confirmation emails via Gmail (rned@medrevolve.com) to patient and admin
 
-async function sendEmail({ to, subject, html }) {
-  const token = await getZohoAccessToken();
-  const res = await fetch('https://mail.zoho.com/api/accounts/2234922000000008002/messages', {
+async function sendViaGmail(base44, { to, subject, html }) {
+  const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+  const emailLines = [
+    `From: MedRevolve Care Team <rned@medrevolve.com>`,
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8',
+    '',
+    html,
+  ];
+  const raw = btoa(unescape(encodeURIComponent(emailLines.join('\r\n'))))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
     method: 'POST',
-    headers: { 'Authorization': `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fromAddress: 'charunya.adusumilli@hanu-consulting.com', toAddress: to, subject, content: html, mailFormat: 'html' })
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ raw }),
   });
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error('Zoho Mail error:', errText);
-    throw new Error(`Zoho Mail failed: ${errText}`);
-  } else {
-    console.log('✅ Email sent via Zoho Mail to:', to);
-  }
+  const result = await res.json();
+  if (!res.ok) throw new Error(result.error?.message || 'Gmail send failed');
+  console.log(`✅ Gmail sent to ${to} — messageId: ${result.id}`);
+  return result;
 }
 
 Deno.serve(async (req) => {
@@ -34,74 +33,97 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const { event, data } = await req.json();
 
-    if (event?.type !== "create" || event?.entity_name !== "Appointment") {
-      return Response.json({ error: "Invalid event type" }, { status: 400 });
+    if (event?.type !== 'create' || event?.entity_name !== 'Appointment') {
+      return Response.json({ skipped: true, reason: 'Not an Appointment create event' });
     }
 
     const appointment = data;
-    const adminEmail = Deno.env.get("ADMIN_EMAIL");
+    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'rned@medrevolve.com';
+    const appointmentDate = new Date(appointment.appointment_date)
+      .toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
 
-    // Get provider details
-    let providerName = "Provider";
+    let providerName = 'Provider (to be assigned)';
     try {
       const providers = await base44.asServiceRole.entities.Provider.filter({ id: appointment.provider_id });
-      if (providers?.length > 0) {
-        providerName = providers[0].name;
-      }
-    } catch (e) {
-      console.log("Could not fetch provider:", e);
-    }
+      if (providers?.length > 0) providerName = providers[0].name;
+    } catch {}
 
-    const appointmentDate = new Date(appointment.appointment_date).toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const meetRow = appointment.google_meet_link
+      ? `<tr style="background:#e8f4fd;"><td style="padding:9px 0;font-size:12px;color:#9ca3af;font-weight:600;">🎥 Meet Link</td><td style="padding:9px 0;"><a href="${appointment.google_meet_link}" style="color:#4285F4;font-weight:700;font-size:14px;">${appointment.google_meet_link}</a></td></tr>`
+      : '';
 
-    // Send notification to admin
-    if (adminEmail) {
-      await sendEmail({
-        to: adminEmail,
-        subject: `📅 New Appointment Booked: ${appointment.type}`,
-        html: `
-          <h2>New Appointment Scheduled</h2>
-          <p><strong>Patient:</strong> ${appointment.patient_email}</p>
-          <p><strong>Provider:</strong> ${providerName}</p>
-          <p><strong>Type:</strong> ${appointment.type}</p>
-          <p><strong>Date & Time:</strong> ${appointmentDate}</p>
-          <p><strong>Duration:</strong> ${appointment.duration_minutes} minutes</p>
-          <p><strong>Reason:</strong> ${appointment.reason || 'Not specified'}</p>
-          ${appointment.notes ? `<p><strong>Notes:</strong> ${appointment.notes}</p>` : ''}
-          <hr>
-          <p>Appointment has been confirmed and added to the schedule.</p>
-        `
-      });
-    }
+    // Patient confirmation email
+    const patientHtml = `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:linear-gradient(135deg,#1f2d1f,#4A6741);padding:28px 32px;border-radius:12px 12px 0 0;text-align:center;">
+    <div style="font-size:28px;">🌿</div>
+    <h1 style="color:#fff;margin:8px 0 4px;font-size:22px;">Appointment Confirmed</h1>
+    <p style="color:rgba(255,255,255,0.6);margin:0;font-size:13px;">MedRevolve Telehealth</p>
+  </div>
+  <div style="background:#fff;padding:28px 32px;border:1px solid #e5e7eb;border-top:none;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+      <tr style="background:#4A6741;"><td colspan="2" style="padding:10px 16px;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">📋 Your Appointment Details</td></tr>
+      <tr style="background:#f9fafb;"><td style="padding:9px 16px;font-size:12px;color:#9ca3af;font-weight:600;">Type</td><td style="padding:9px 16px;font-size:14px;font-weight:600;">${appointment.type?.replace(/_/g, ' ')}</td></tr>
+      <tr><td style="padding:9px 16px;font-size:12px;color:#9ca3af;font-weight:600;">Provider</td><td style="padding:9px 16px;font-size:14px;">${providerName}</td></tr>
+      <tr style="background:#f9fafb;"><td style="padding:9px 16px;font-size:12px;color:#9ca3af;font-weight:600;">📅 Date & Time</td><td style="padding:9px 16px;font-size:14px;font-weight:600;">${appointmentDate} ET</td></tr>
+      <tr><td style="padding:9px 16px;font-size:12px;color:#9ca3af;font-weight:600;">Duration</td><td style="padding:9px 16px;font-size:14px;">${appointment.duration_minutes || 30} minutes</td></tr>
+      ${meetRow}
+    </table>
+    ${appointment.google_meet_link ? `
+    <div style="margin-top:20px;text-align:center;">
+      <a href="${appointment.google_meet_link}" style="display:inline-block;background:#4285F4;color:#fff;padding:13px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;">🎥 Join Google Meet →</a>
+    </div>` : ''}
+    <div style="margin-top:20px;padding:14px 18px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:13px;color:#166534;">
+      ⏰ You'll receive an automatic reminder 24 hours before your appointment via email.
+    </div>
+    <div style="margin-top:14px;text-align:center;">
+      <a href="https://medrevolve.base44.app" style="display:inline-block;background:#1f2d1f;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Open My Patient Portal →</a>
+    </div>
+  </div>
+  <div style="background:#1f2d1f;padding:16px 32px;border-radius:0 0 12px 12px;text-align:center;">
+    <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:0;">MedRevolve · rned@medrevolve.com · Telehealth services by licensed providers</p>
+  </div>
+</div>`;
 
-    // Send confirmation email to patient
-    if (appointment.patient_email) {
-      await sendEmail({
+    // Admin notification
+    const adminHtml = `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:#0a0a0a;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <p style="color:#fff;margin:0;font-size:14px;font-weight:800;">MEDREVOLVE — New Appointment</p>
+  </div>
+  <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;padding:20px 24px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;">
+      <tr style="background:#f9fafb;"><td style="padding:8px 12px;color:#6b7280;width:35%;">Patient</td><td style="padding:8px 12px;font-weight:600;">${appointment.patient_email}</td></tr>
+      <tr><td style="padding:8px 12px;color:#6b7280;">Provider</td><td style="padding:8px 12px;">${providerName}</td></tr>
+      <tr style="background:#f9fafb;"><td style="padding:8px 12px;color:#6b7280;">Type</td><td style="padding:8px 12px;">${appointment.type?.replace(/_/g, ' ')}</td></tr>
+      <tr><td style="padding:8px 12px;color:#6b7280;">Date & Time</td><td style="padding:8px 12px;font-weight:600;">${appointmentDate} ET</td></tr>
+      ${appointment.google_meet_link ? `<tr style="background:#e8f4fd;"><td style="padding:8px 12px;color:#6b7280;">Google Meet</td><td style="padding:8px 12px;"><a href="${appointment.google_meet_link}" style="color:#4285F4;">${appointment.google_meet_link}</a></td></tr>` : ''}
+      ${appointment.google_calendar_link ? `<tr><td style="padding:8px 12px;color:#6b7280;">Calendar Event</td><td style="padding:8px 12px;"><a href="${appointment.google_calendar_link}" style="color:#4A6741;">View in Google Calendar</a></td></tr>` : ''}
+    </table>
+    <div style="margin-top:16px;">
+      <a href="https://medrevolve.base44.app/AdminDashboard" style="display:inline-block;background:#1f2d1f;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">Open Admin Dashboard →</a>
+    </div>
+  </div>
+</div>`;
+
+    // Send emails in parallel (non-blocking errors)
+    await Promise.allSettled([
+      appointment.patient_email ? sendViaGmail(base44, {
         to: appointment.patient_email,
-        subject: `✅ Appointment Confirmed`,
-        html: `
-          <h2>Your Appointment is Confirmed</h2>
-          <p>Hi there,</p>
-          <p>Your appointment has been successfully scheduled.</p>
-          <p><strong>Provider:</strong> ${providerName}</p>
-          <p><strong>Type:</strong> ${appointment.type?.replace(/_/g, ' ')}</p>
-          <p><strong>Date & Time:</strong> ${appointmentDate}</p>
-          <p><strong>Duration:</strong> ${appointment.duration_minutes} minutes</p>
-          ${appointment.reason ? `<p><strong>Reason:</strong> ${appointment.reason}</p>` : ''}
-          <hr>
-          <p>If you need to reschedule or cancel, please contact us as soon as possible.</p>
-          <p>— The MedRevolve Team</p>
-        `
-      });
-    }
+        subject: `✅ Appointment Confirmed — ${appointmentDate}`,
+        html: patientHtml,
+      }) : Promise.resolve(),
+      sendViaGmail(base44, {
+        to: adminEmail,
+        subject: `📅 New Appointment — ${appointment.patient_email} · ${appointmentDate}`,
+        html: adminHtml,
+      }),
+    ]);
 
-    return Response.json({ 
-      success: true,
-      message: "Appointment notifications sent"
-    });
+    return Response.json({ success: true, message: 'Appointment notifications sent via Gmail' });
 
   } catch (error) {
-    console.error("Notification error:", error);
+    console.error('notifyAppointmentBooked error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

@@ -1,0 +1,113 @@
+{
+  "name": "Appointment",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "description": "ID of the provider"
+    },
+    "patient_email": {
+      "type": "string",
+      "description": "Patient email (from created_by)"
+    },
+    "appointment_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of appointment"
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "default": 30,
+      "description": "Appointment duration in minutes"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "initial_consultation",
+        "follow_up",
+        "dosage_adjustment",
+        "general_inquiry"
+      ],
+      "description": "Type of appointment"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "scheduled",
+        "confirmed",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Appointment status"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for appointment"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes from patient"
+    },
+    "provider_notes": {
+      "type": "string",
+      "description": "Provider's clinical notes (private)"
+    },
+    "consultation_notes": {
+      "type": "string",
+      "description": "Consultation notes added during/after appointment"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI-generated clinical summary"
+    },
+    "follow_up_instructions": {
+      "type": "string",
+      "description": "AI-drafted follow-up instructions for patient"
+    },
+    "diagnosis_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "ICD-10 diagnosis codes"
+    },
+    "video_room_id": {
+      "type": "string",
+      "description": "Video call room identifier"
+    },
+    "session_url": {
+      "type": "string",
+      "description": "Video call session URL"
+    },
+    "prescription_provided": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether prescription was provided"
+    },
+    "google_event_id": {
+      "type": "string",
+      "description": "Google Calendar event ID"
+    },
+    "google_meet_link": {
+      "type": "string",
+      "description": "Google Meet video call link"
+    },
+    "google_calendar_link": {
+      "type": "string",
+      "description": "Google Calendar event HTML link"
+    },
+    "google_synced_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When last synced to Google Calendar"
+    }
+  },
+  "required": [
+    "patient_email",
+    "appointment_date",
+    "type"
+  ]
+}
