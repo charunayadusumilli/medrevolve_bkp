@@ -121,6 +121,84 @@ export default function MerchantOnboarding() {
         });
       }
 
+      // Also save as BusinessInquiry for admin capture
+      await base44.entities.BusinessInquiry.create({
+        company_name: form.businessName,
+        contact_name: form.contactName,
+        email: form.email,
+        phone: form.phone,
+        industry: form.businessType || 'Other',
+        interest_type: 'White Label',
+        company_size: form.productCategories.join(', '),
+        message: `Merchant onboarding submitted. Partner ID: ${partner.id}. Domain: ${form.domainName || 'none'}. Modules: ${form.selectedModules.join(', ')}. Monthly: $${monthlyTotal + 99}. LLC: ${form.llcName}. EIN: ${form.ein}. State: ${form.stateOfIncorporation}.`,
+        status: 'new',
+      });
+
+      // Send notification email to rned@medrevolve.com
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Platform',
+        to: 'rned@medrevolve.com',
+        subject: `🚀 New Merchant Application — ${form.businessName}`,
+        body: `
+<h2>New Merchant Onboarding Submitted</h2>
+
+<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
+  <tr><td style="padding:8px;color:#666;width:160px;"><b>Business Name</b></td><td style="padding:8px;">${form.businessName}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Business Type</b></td><td style="padding:8px;">${form.businessType}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Contact Name</b></td><td style="padding:8px;">${form.contactName}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Email</b></td><td style="padding:8px;">${form.email}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Phone</b></td><td style="padding:8px;">${form.phone || 'Not provided'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Website</b></td><td style="padding:8px;">${form.website || 'Not provided'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>LLC / Entity</b></td><td style="padding:8px;">${form.llcName || 'Not provided'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>EIN</b></td><td style="padding:8px;">${form.ein || 'Not provided'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>State of Inc.</b></td><td style="padding:8px;">${form.stateOfIncorporation || 'Not provided'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Domain</b></td><td style="padding:8px;">${form.domainName ? form.domainName + (form.domainChoice === 'subdomain' ? '.medrevolve.co' : '') : 'Not set'} (${form.domainChoice})</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Product Categories</b></td><td style="padding:8px;">${form.productCategories.join(', ') || 'None selected'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Modules Selected</b></td><td style="padding:8px;">${form.selectedModules.join(', ')}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Monthly Revenue</b></td><td style="padding:8px;font-weight:bold;color:#2d7a2d;">$${monthlyTotal + 99}/month</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Partner Code</b></td><td style="padding:8px;font-family:monospace;">${partnerCode}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Partner ID</b></td><td style="padding:8px;font-family:monospace;font-size:12px;">${partner.id}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Submitted At</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
+</table>
+
+<br/>
+<p style="color:#888;font-size:12px;">This is an automated notification from MedRevolve Platform. Log in to the Admin Dashboard to review and activate this merchant.</p>
+        `.trim(),
+      });
+
+      // Also send confirmation email to the merchant
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve',
+        to: form.email,
+        subject: `Welcome to MedRevolve — Your Platform is Being Set Up`,
+        body: `
+<h2>Welcome to MedRevolve, ${form.contactName}!</h2>
+
+<p>Your merchant platform application for <strong>${form.businessName}</strong> has been received and is being reviewed by our team.</p>
+
+<h3>What happens next:</h3>
+<ol>
+  <li><strong>Review (24–48 hours)</strong> — Our team will review your application and verify your information.</li>
+  <li><strong>Account Activation</strong> — You'll receive an email once your account is activated.</li>
+  <li><strong>Onboarding Call</strong> — A dedicated onboarding manager will schedule a kickoff call with you.</li>
+</ol>
+
+<h3>Your Application Summary:</h3>
+<ul>
+  <li>Business: ${form.businessName}</li>
+  <li>Modules: ${form.selectedModules.join(', ')}</li>
+  <li>Monthly Plan: $${monthlyTotal + 99}/month (7-day free trial)</li>
+  <li>Domain: ${form.domainName || 'Not configured yet'}</li>
+</ul>
+
+<p>In the meantime, you can log in to your <a href="https://app.medrevolve.com/MerchantDashboard">Merchant Dashboard</a> to explore the platform.</p>
+
+<p>Questions? Reply to this email or contact us at <a href="mailto:rned@medrevolve.com">rned@medrevolve.com</a></p>
+
+<p>— The MedRevolve Team</p>
+        `.trim(),
+      });
+
       navigate(createPageUrl('MerchantDashboard'));
     } catch (e) {
       setError('Setup failed. Please try again.');
