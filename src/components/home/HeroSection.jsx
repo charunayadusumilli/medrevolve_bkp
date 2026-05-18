@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -29,28 +29,6 @@ export default function HeroSection() {
 
       {/* Vertical accent lines */}
       <div className="absolute left-[calc(50%-1px)] top-0 bottom-0 w-px bg-white/5 hidden lg:block" />
-
-      {/* Top nav bar */}
-      <div className="relative z-20 flex items-center justify-between px-8 lg:px-16 py-6 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-white flex items-center justify-center">
-            <span className="text-black text-[11px] font-black tracking-tight">MR</span>
-          </div>
-          <span className="text-white/30 text-[11px] tracking-[0.25em] uppercase font-medium hidden sm:block">MedRevolve</span>
-        </div>
-        <div className="hidden lg:flex items-center gap-10">
-          {pillars.map((pi, i) => (
-            <button key={i} onClick={() => setActive(i)}
-              className={`text-[11px] tracking-[0.2em] uppercase font-medium transition-colors ${i === active ? 'text-white' : 'text-white/30 hover:text-white/60'}`}>
-              {pi.label}
-            </button>
-          ))}
-        </div>
-        <Link to={createPageUrl('MerchantOnboarding')}
-          className="text-[11px] tracking-[0.2em] uppercase font-medium text-white/50 hover:text-white transition-colors flex items-center gap-2">
-          Get Access <ArrowUpRight className="w-3 h-3" />
-        </Link>
-      </div>
 
       {/* Main hero content */}
       <div className="relative z-10 flex-1 flex flex-col lg:flex-row">
