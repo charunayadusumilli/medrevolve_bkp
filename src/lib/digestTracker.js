@@ -55,8 +55,18 @@ async function sendDigest() {
 
   const nowStr = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
+  // Only send if there are high-value events
+  const highValueEvents = events.filter(e => 
+    ['merchant_onboarding', 'creator_application', 'business_inquiry', 'patient_onboarding', 'contact_request'].includes(e.type)
+  );
+  
+  if (highValueEvents.length === 0) {
+    clearStoredEvents();
+    return;
+  }
+
   // Group by type
-  const grouped = events.reduce((acc, e) => {
+  const grouped = highValueEvents.reduce((acc, e) => {
     acc[e.type] = acc[e.type] || [];
     acc[e.type].push(e);
     return acc;
@@ -75,15 +85,11 @@ async function sendDigest() {
     creator_application: '🎥 Creator Applications',
     patient_onboarding: '🏥 Patient Onboardings',
     business_inquiry: '💼 Business Inquiries',
-    page_view: '👁️ Page Views',
-    button_click: '🖱️ Button Clicks',
-    other: '📋 Other Events',
   };
 
   let sectionsHtml = '';
 
   for (const [type, typeEvents] of Object.entries(grouped)) {
-    if (type === 'page_view' || type === 'button_click') continue; // skip noise
 
     const label = typeLabels[type] || `📋 ${type}`;
     sectionsHtml += `
@@ -103,34 +109,7 @@ async function sendDigest() {
 </table>`;
   }
 
-  // Page view stats summary
-  const pageViews = grouped['page_view'] || [];
-  const clicks = grouped['button_click'] || [];
-  const pageStats = pageViews.reduce((acc, e) => {
-    const p = e.data?.page || 'Unknown';
-    acc[p] = (acc[p] || 0) + 1;
-    return acc;
-  }, {});
-
-  const trafficHtml = Object.keys(pageStats).length > 0 ? `
-<h3 style="margin:20px 0 8px;font-size:14px;color:#111;border-bottom:1px solid #e5e7eb;padding-bottom:4px;">👁️ Page Traffic (${pageViews.length} views, ${clicks.length} clicks)</h3>
-<table style="width:100%;border-collapse:collapse;font-size:12px;">
-  <thead><tr style="background:#f3f4f6;">
-    <th style="padding:6px 10px;text-align:left;border:1px solid #e5e7eb;">Page</th>
-    <th style="padding:6px 10px;text-align:left;border:1px solid #e5e7eb;">Views</th>
-  </tr></thead>
-  <tbody>
-    ${Object.entries(pageStats).sort((a, b) => b[1] - a[1]).map(([page, count], i) => `
-    <tr style="background:${i % 2 === 0 ? '#fff' : '#f9fafb'};">
-      <td style="padding:5px 10px;border:1px solid #e5e7eb;">${page}</td>
-      <td style="padding:5px 10px;border:1px solid #e5e7eb;font-weight:600;">${count}</td>
-    </tr>`).join('')}
-  </tbody>
-</table>` : '';
-
-  const highValueCount = events.filter(e =>
-    ['merchant_onboarding', 'creator_application', 'business_inquiry', 'patient_onboarding', 'contact_request'].includes(e.type)
-  ).length;
+  const highValueCount = highValueEvents.length;
 
   const body = `
 <div style="font-family:Arial,sans-serif;max-width:800px;margin:0 auto;color:#111;">
@@ -144,7 +123,6 @@ async function sendDigest() {
       <p style="margin:3px 0 0;font-size:11px;color:#15803d;">Period ending ${nowStr} ET</p>
     </div>
     ${sectionsHtml}
-    ${trafficHtml}
   </div>
   <div style="background:#f9fafb;border:1px solid #e5e7eb;border-top:none;padding:10px 24px;border-radius:0 0 8px 8px;text-align:center;">
     <p style="margin:0;font-size:10px;color:#9ca3af;">MedRevolve Client-Side Digest · Sent every 30 minutes when activity detected</p>
@@ -156,12 +134,12 @@ async function sendDigest() {
     await base44.integrations.Core.SendEmail({
       from_name: 'MedRevolve Platform',
       to: NOTIFY_EMAIL,
-      subject: `📊 [${events.length} Events] MedRevolve 30-Min Digest — ${nowStr}`,
+      subject: `📊 [${highValueEvents.length} High-Value Events] MedRevolve Digest — ${nowStr}`,
       body,
     });
     clearStoredEvents();
     setLastSent();
-    console.log(`[Digest] Sent ${events.length} events to ${NOTIFY_EMAIL}`);
+    console.log(`[Digest] Sent ${highValueEvents.length} high-value events to ${NOTIFY_EMAIL}`);
   } catch (err) {
     console.error('[Digest] Failed to send digest:', err);
   }
@@ -185,43 +163,14 @@ function formatEventData(data) {
   return parts.join(' · ') || JSON.stringify(data).slice(0, 120);
 }
 
-// ── Startup test email — fires once per session to confirm delivery ─────────
+// ── Startup test email — disabled to avoid external email errors ─────────
 async function sendStartupPing() {
-  try {
-    const already = sessionStorage.getItem('mr_ping_sent');
-    if (already) return;
-    sessionStorage.setItem('mr_ping_sent', '1');
+  const already = sessionStorage.getItem('mr_ping_sent');
+  if (already) return;
+  sessionStorage.setItem('mr_ping_sent', '1');
 
-    const nowStr = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    await base44.integrations.Core.SendEmail({
-      from_name: 'MedRevolve Platform',
-      to: NOTIFY_EMAIL,
-      subject: `✅ MedRevolve Platform Active — ${nowStr} ET`,
-      body: `
-<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
-  <div style="background:#0a0a0a;padding:18px 24px;border-radius:8px 8px 0 0;">
-    <h1 style="color:#fff;margin:0;font-size:16px;font-weight:800;letter-spacing:0.05em;">MEDREVOLVE</h1>
-    <p style="color:rgba(255,255,255,0.4);margin:3px 0 0;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Platform Activity Ping</p>
-  </div>
-  <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;padding:24px;">
-    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;margin-bottom:16px;">
-      <p style="margin:0;font-size:15px;font-weight:700;color:#14532d;">✅ Email delivery confirmed — platform is live</p>
-      <p style="margin:4px 0 0;font-size:12px;color:#15803d;">Session started at ${nowStr} ET</p>
-    </div>
-    <p style="font-size:13px;color:#374151;">This confirms the MedRevolve email notification system is working correctly. You will receive:</p>
-    <ul style="font-size:13px;color:#374151;line-height:1.8;">
-      <li>📧 <b>Immediate alerts</b> for every form submission (merchant, contact, creator, patient)</li>
-      <li>📊 <b>Activity digests</b> every 5 minutes when traffic is detected</li>
-      <li>🚀 <b>Startup ping</b> each new browser session (this email)</li>
-    </ul>
-    <p style="font-size:12px;color:#9ca3af;margin-top:16px;">Sent to: ${NOTIFY_EMAIL} · Page: ${window.location.pathname || '/'}</p>
-  </div>
-</div>`.trim(),
-    });
-    console.log('[Ping] Startup email sent to', NOTIFY_EMAIL);
-  } catch (err) {
-    console.error('[Ping] Failed to send startup ping:', err);
-  }
+  const nowStr = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+  console.log('[Ping] Platform active at', nowStr);
 }
 
 // Start the 5-min interval checker
