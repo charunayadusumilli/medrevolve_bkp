@@ -355,7 +355,10 @@ export default function MerchantOnboarding() {
                       </div>
                       <div>
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Website (if any)</Label>
-                        <Input value={form.website} onChange={e => set('website', e.target.value)}
+                        <Input 
+                          value={form.website} 
+                          onChange={e => set('website', e.target.value)}
+                          className="bg-yellow-50 border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500"
                           placeholder="https://yoursite.com" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
                       </div>
                       <div>
