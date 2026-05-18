@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   Users, Building2, Stethoscope, Pill, UserPlus, 
-  MessageSquare, DollarSign, TrendingUp, RefreshCw, BarChart3
+  MessageSquare, DollarSign, TrendingUp, RefreshCw, BarChart3, Package, Globe
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
@@ -56,6 +56,14 @@ function AdminDashboardInner() {
     queryKey: ['autoRxPlansStats'],
     queryFn: () => base44.entities.AutoRxPlan.list('-created_date', 200)
   });
+  const { data: merchantModules, refetch: refetchModules } = useQuery({
+    queryKey: ['merchantModulesAdmin'],
+    queryFn: () => base44.entities.MerchantModule.list('-created_date', 200)
+  });
+  const { data: merchantInventory } = useQuery({
+    queryKey: ['merchantInventoryAdmin'],
+    queryFn: () => base44.entities.MerchantInventory.list('-created_date', 200)
+  });
 
   const stats = [
     { label: 'Customer Intakes', value: customers?.length || 0, icon: Users, color: 'bg-blue-500', loading: !customers },
@@ -66,13 +74,14 @@ function AdminDashboardInner() {
     { label: 'Contact Requests', value: contacts?.length || 0, icon: MessageSquare, color: 'bg-cyan-500', loading: !contacts },
     { label: 'Active Partners', value: partners?.filter(p => p.status === 'active').length || 0, icon: DollarSign, color: 'bg-emerald-500', loading: !partners },
     { label: 'Partner Referrals', value: referrals?.length || 0, icon: TrendingUp, color: 'bg-amber-500', loading: !referrals },
-    { label: 'AutoRx Plans', value: autoRxPlans?.filter(p => p.status === 'active').length || 0, icon: Pill, color: 'bg-teal-500', loading: !autoRxPlans }
+    { label: 'AutoRx Plans', value: autoRxPlans?.filter(p => p.status === 'active').length || 0, icon: Pill, color: 'bg-teal-500', loading: !autoRxPlans },
+    { label: 'Active Modules', value: merchantModules?.filter(m => m.is_active).length || 0, icon: Package, color: 'bg-violet-500', loading: !merchantModules },
   ];
 
   const refetchAll = () => {
     refetchCustomers(); refetchProviders(); refetchPharmacies();
     refetchBusinesses(); refetchCreators(); refetchContacts();
-    refetchPartners(); refetchReferrals();
+    refetchPartners(); refetchReferrals(); refetchModules();
   };
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -144,6 +153,9 @@ function AdminDashboardInner() {
                 <TabsTrigger value="contacts" className="rounded-lg text-xs">Contact</TabsTrigger>
                 <TabsTrigger value="partners" className="rounded-lg text-xs">Partners</TabsTrigger>
                 <TabsTrigger value="referrals" className="rounded-lg text-xs">Referrals</TabsTrigger>
+                <TabsTrigger value="merchants" className="rounded-lg text-xs">
+                  <Package className="w-3.5 h-3.5 mr-1" /> Merchants
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="analytics"><AnalyticsDashboard /></TabsContent>
@@ -299,6 +311,51 @@ function AdminDashboardInner() {
                     <p className="text-xs text-muted-foreground mt-4">Submitted: {new Date(p.created_date).toLocaleString()}</p>
                   </CardContent></Card>
                 ))}
+              </TabsContent>
+
+              <TabsContent value="merchants" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-[#2D3A2D]">Merchant Modules</h3>
+                  <Link to={createPageUrl('MerchantOnboarding')}>
+                    <Button size="sm" className="bg-[#4A6741] text-white text-xs">+ New Merchant</Button>
+                  </Link>
+                </div>
+                {merchantModules?.map(m => (
+                  <Card key={m.id}><CardContent className="pt-6">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="font-semibold">{m.merchant_name}</h3>
+                        <p className="text-sm text-muted-foreground">{m.module_key?.replace(/_/g, ' ')}</p>
+                        <p className="text-sm mt-1"><strong>Monthly Fee:</strong> ${m.monthly_fee || 0}</p>
+                        <p className="text-sm"><strong>Active:</strong> {m.is_active ? 'Yes' : 'No'}</p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Badge className={m.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}>{m.status}</Badge>
+                        <Button size="sm" variant="outline" className="text-xs"
+                          onClick={() => base44.entities.MerchantModule.update(m.id, { is_active: !m.is_active }).then(refetchModules)}>
+                          {m.is_active ? 'Deactivate' : 'Activate'}
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-3">Added: {new Date(m.created_date).toLocaleString()}</p>
+                  </CardContent></Card>
+                ))}
+                {merchantInventory?.filter(i => i.current_stock <= i.min_stock_threshold).length > 0 && (
+                  <div className="mt-4">
+                    <h4 className="font-semibold text-amber-700 mb-2">⚠️ Low Stock Alerts</h4>
+                    {merchantInventory.filter(i => i.current_stock <= i.min_stock_threshold).map(item => (
+                      <Card key={item.id} className="border-amber-200"><CardContent className="pt-4">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="font-medium text-sm">{item.product_name}</p>
+                            <p className="text-xs text-muted-foreground">{item.merchant_name}</p>
+                          </div>
+                          <Badge className="bg-amber-100 text-amber-800">{item.current_stock} left (min: {item.min_stock_threshold})</Badge>
+                        </div>
+                      </CardContent></Card>
+                    ))}
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="referrals" className="space-y-4">

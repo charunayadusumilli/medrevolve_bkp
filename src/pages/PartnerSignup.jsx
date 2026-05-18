@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -98,14 +98,23 @@ export default function PartnerSignup() {
               })}
             </div>
 
-            <Button
-              size="lg"
-              onClick={() => setStep(2)}
-              className="bg-white text-[#2D3A2D] hover:bg-white/90 text-lg px-12 py-6 rounded-full"
-            >
-              Get Started Now
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <Button
+                size="lg"
+                onClick={() => setStep(2)}
+                className="bg-white text-[#2D3A2D] hover:bg-white/90 text-lg px-12 py-6 rounded-full"
+              >
+                Quick Signup
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Link to={createPageUrl('MerchantOnboarding')}>
+                <Button size="lg" variant="outline"
+                  className="border-white/50 text-white hover:bg-white/10 text-lg px-10 py-6 rounded-full">
+                  Full Platform Setup
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            </div>
             
             <p className="text-sm text-white/60 mt-6">
               $299/month • No contracts • Cancel anytime

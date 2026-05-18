@@ -1,0 +1,115 @@
+{
+  "name": "MerchantInventory",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string",
+      "description": "FK to Partner entity"
+    },
+    "merchant_name": {
+      "type": "string",
+      "description": "Partner business name (denormalized)"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Product identifier"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product display name"
+    },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "GLP",
+        "RUO",
+        "supplement",
+        "device",
+        "other"
+      ],
+      "description": "Product regulatory classification"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "weight_loss",
+        "mens_health",
+        "womens_health",
+        "longevity",
+        "hormone",
+        "peptides",
+        "hair_loss",
+        "other"
+      ],
+      "description": "Product category"
+    },
+    "current_stock": {
+      "type": "integer",
+      "default": 0,
+      "description": "Current inventory count"
+    },
+    "min_stock_threshold": {
+      "type": "integer",
+      "default": 10,
+      "description": "Alert threshold \u2014 reorder when stock hits this level"
+    },
+    "reorder_quantity": {
+      "type": "integer",
+      "default": 50,
+      "description": "Default quantity to reorder"
+    },
+    "unit_cost": {
+      "type": "number",
+      "description": "Cost per unit"
+    },
+    "retail_price": {
+      "type": "number",
+      "description": "Merchant's retail price"
+    },
+    "backup_product_id": {
+      "type": "string",
+      "description": "Fallback product ID if this goes out of stock"
+    },
+    "backup_product_name": {
+      "type": "string",
+      "description": "Fallback product name"
+    },
+    "supplier_name": {
+      "type": "string",
+      "description": "Primary supplier"
+    },
+    "avg_delivery_days": {
+      "type": "integer",
+      "default": 3,
+      "description": "Average days for restock delivery"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Batch expiry date"
+    },
+    "last_restocked": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last restock date"
+    },
+    "auto_reorder": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to auto-trigger reorders"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this product is currently offered"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes"
+    }
+  },
+  "required": [
+    "merchant_id",
+    "product_name"
+  ]
+}

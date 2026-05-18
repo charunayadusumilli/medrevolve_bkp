@@ -97,6 +97,10 @@ import Terms from './pages/Terms';
 import VideoCall from './pages/VideoCall';
 import VisitTypeSelector from './pages/VisitTypeSelector';
 import WaitingRoom from './pages/WaitingRoom';
+import MerchantOnboarding from './pages/MerchantOnboarding';
+import MerchantDashboard from './pages/MerchantDashboard';
+import MerchantInventoryPage from './pages/MerchantInventoryPage';
+import MerchantDomainPage from './pages/MerchantDomainPage';
 import __Layout from './Layout.jsx';
 
 
@@ -151,6 +155,10 @@ export const PAGES = {
     "VideoCall": VideoCall,
     "VisitTypeSelector": VisitTypeSelector,
     "WaitingRoom": WaitingRoom,
+    "MerchantOnboarding": MerchantOnboarding,
+    "MerchantDashboard": MerchantDashboard,
+    "MerchantInventoryPage": MerchantInventoryPage,
+    "MerchantDomainPage": MerchantDomainPage,
 }
 
 export const pagesConfig = {

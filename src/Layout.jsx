@@ -231,6 +231,10 @@ export default function Layout({ children }) {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild><Link to={createPageUrl('BelugaIntegration')} className="cursor-pointer rounded-xl px-3 py-2">🔗 Beluga Integration</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('VisitTypeSelector')} className="cursor-pointer rounded-xl px-3 py-2">🏥 Visit Types</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-xl px-3 py-2">🚀 Merchant Onboarding</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-xl px-3 py-2">📊 Merchant Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantInventoryPage')} className="cursor-pointer rounded-xl px-3 py-2">📦 Inventory Manager</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               }
@@ -369,6 +373,12 @@ export default function Layout({ children }) {
                             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Command Center</p>
                             <Link to={createPageUrl('ComplianceDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Compliance</Link>
                             <Link to={createPageUrl('PartnershipHub')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>Partnerships</Link>
+                          <div className="pt-3 border-t border-[#E8E0D5] mt-2">
+                            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-3">Merchant Platform</p>
+                            <Link to={createPageUrl('MerchantOnboarding')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>🚀 Merchant Onboarding</Link>
+                            <Link to={createPageUrl('MerchantDashboard')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>📊 Merchant Dashboard</Link>
+                            <Link to={createPageUrl('MerchantInventoryPage')} className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#4A6741] hover:bg-[#F5F0E8]" onClick={() => {setMobileMenuOpen(false);window.scrollTo({ top: 0, behavior: 'smooth' });}}>📦 Inventory Manager</Link>
+                          </div>
                           </div>
                         </div>
                       }

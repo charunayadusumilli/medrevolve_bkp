@@ -1,0 +1,87 @@
+{
+  "name": "MerchantOrder",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string",
+      "description": "FK to Partner entity"
+    },
+    "merchant_name": {
+      "type": "string",
+      "description": "Merchant business name"
+    },
+    "order_type": {
+      "type": "string",
+      "enum": [
+        "restock",
+        "new_product",
+        "emergency"
+      ],
+      "default": "restock",
+      "description": "Why order was placed"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "inventory_id": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "unit_cost": {
+            "type": "number"
+          },
+          "line_total": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Order line items"
+    },
+    "total_cost": {
+      "type": "number"
+    },
+    "supplier_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "confirmed",
+        "in_transit",
+        "received",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "ordered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expected_delivery": {
+      "type": "string",
+      "format": "date"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tracking_number": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "merchant_id"
+  ]
+}

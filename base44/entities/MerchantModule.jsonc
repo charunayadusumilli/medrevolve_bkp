@@ -1,0 +1,75 @@
+{
+  "name": "MerchantModule",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string",
+      "description": "FK to Partner entity"
+    },
+    "merchant_name": {
+      "type": "string",
+      "description": "Partner business name (denormalized)"
+    },
+    "module_key": {
+      "type": "string",
+      "enum": [
+        "domain_hosting",
+        "website_builder",
+        "card_processing",
+        "crypto_processing",
+        "inventory",
+        "compliance",
+        "pharmacy",
+        "telehealth",
+        "marketing",
+        "lms",
+        "llc_formation",
+        "billing"
+      ],
+      "description": "Which module this record represents"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this module is enabled for the merchant"
+    },
+    "activated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When module was activated"
+    },
+    "stripe_subscription_id": {
+      "type": "string",
+      "description": "Stripe subscription ID for this module"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "description": "Monthly fee for this module"
+    },
+    "trial_ends_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Trial expiry date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "trial",
+        "active",
+        "past_due",
+        "cancelled",
+        "pending"
+      ],
+      "default": "pending",
+      "description": "Module billing status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Admin notes"
+    }
+  },
+  "required": [
+    "merchant_id",
+    "module_key"
+  ]
+}

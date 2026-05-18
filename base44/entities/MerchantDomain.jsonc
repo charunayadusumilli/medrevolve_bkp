@@ -1,0 +1,91 @@
+{
+  "name": "MerchantDomain",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string",
+      "description": "FK to Partner entity"
+    },
+    "merchant_name": {
+      "type": "string",
+      "description": "Partner business name (denormalized)"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Full domain name e.g. mystore.com"
+    },
+    "domain_type": {
+      "type": "string",
+      "enum": [
+        "new_purchase",
+        "existing",
+        "subdomain"
+      ],
+      "description": "How the domain is being configured"
+    },
+    "registrar": {
+      "type": "string",
+      "enum": [
+        "godaddy",
+        "namecheap",
+        "cloudflare",
+        "existing_registrar",
+        "medrevolve_subdomain"
+      ],
+      "description": "Domain registrar"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "checking_availability",
+        "available",
+        "unavailable",
+        "purchasing",
+        "provisioning",
+        "active",
+        "failed",
+        "pending_dns"
+      ],
+      "default": "checking_availability",
+      "description": "Current domain setup status"
+    },
+    "dns_configured": {
+      "type": "boolean",
+      "default": false
+    },
+    "ssl_active": {
+      "type": "boolean",
+      "default": false
+    },
+    "auto_renew": {
+      "type": "boolean",
+      "default": true
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number",
+      "description": "Amount paid for domain"
+    },
+    "registrar_domain_id": {
+      "type": "string",
+      "description": "ID from registrar API"
+    },
+    "nameservers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Configured nameservers"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "merchant_id",
+    "domain"
+  ]
+}
