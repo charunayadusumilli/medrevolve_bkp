@@ -628,13 +628,13 @@ export default function Products() {
             className="max-w-3xl mx-auto mb-12 text-center"
           >
             <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#4A6741] mb-3">Prescription Treatments</p>
-            <h1 className="text-4xl md:text-5xl font-light text-[#1A2A1A] mb-4 tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-light text-[#1a1a1a] mb-4 tracking-tight">
               Clinically Proven.<br/><span className="font-semibold">Physician Prescribed.</span>
             </h1>
-            <p className="text-base text-[#5A6B5A] max-w-xl mx-auto">
+            <p className="text-sm md:text-base text-[#666666] max-w-xl mx-auto">
               Every treatment is compounded at a licensed Rx pharmacy, prescribed by a board-certified provider, and shipped discreetly to your door. Select your category to explore.
             </p>
-            <div className="flex items-center justify-center gap-6 mt-6 text-xs text-[#5A6B5A]">
+            <div className="flex items-center justify-center gap-4 md:gap-6 mt-6 text-xs text-[#666666]">
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Licensed Providers</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Compounding Pharmacy</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Discreet Shipping</span>
@@ -679,9 +679,9 @@ export default function Products() {
                   <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A6741] mb-2">
                     {categories.find(c => c.id === activeCategory)?.description}
                   </p>
-                  <h2 className="text-3xl md:text-4xl font-light text-[#1A2A1A]">
+                  <h2 className="text-2xl md:text-4xl font-light text-[#1a1a1a]">
                     {categories.find(c => c.id === activeCategory)?.name}
-                    <span className="text-[#5A6B5A] text-2xl font-light ml-3">Rx Treatments</span>
+                    <span className="text-[#666666] text-xl md:text-2xl font-light ml-3">Rx Treatments</span>
                   </h2>
                 </div>
                 <Button
@@ -800,8 +800,8 @@ export default function Products() {
                   )}
                 </AnimatePresence>
 
-                <p className="text-[#5A6B5A] text-sm mt-3">
-                  <span className="font-semibold text-[#1A2A1A]">{filteredProducts.length}</span> treatment{filteredProducts.length !== 1 ? 's' : ''} · Compounded at licensed pharmacy
+                <p className="text-[#666666] text-sm mt-3">
+                  <span className="font-semibold text-[#1a1a1a]">{filteredProducts.length}</span> treatment{filteredProducts.length !== 1 ? 's' : ''} · Compounded at licensed pharmacy
                 </p>
               </div>
 
@@ -847,10 +847,10 @@ export default function Products() {
             <div className="w-20 h-20 rounded-full bg-[#D4E5D7] flex items-center justify-center mx-auto mb-6">
               <Leaf className="w-10 h-10 text-[#4A6741]" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-light text-[#2D3A2D] mb-4">
+            <h2 className="text-2xl md:text-3xl font-light text-[#1a1a1a] mb-4">
               Choose Your Wellness Journey
             </h2>
-            <p className="text-[#5A6B5A] mb-6">
+            <p className="text-[#666666] mb-6">
               Select a category above to explore treatments designed for your specific goals. 
               Every journey is unique—let's find yours.
             </p>
@@ -887,16 +887,16 @@ export default function Products() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-4xl font-light text-[#4A6741] mb-2">50,000+</div>
-              <p className="text-[#5A6B5A]">Happy Customers</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">50,000+</div>
+              <p className="text-[#666666] text-sm md:text-base">Happy Customers</p>
             </div>
             <div>
-              <div className="text-4xl font-light text-[#4A6741] mb-2">Licensed</div>
-              <p className="text-[#5A6B5A]">Medical Providers</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Licensed</div>
+              <p className="text-[#666666] text-sm md:text-base">Medical Providers</p>
             </div>
             <div>
-              <div className="text-4xl font-light text-[#4A6741] mb-2">24-48 hrs</div>
-              <p className="text-[#5A6B5A]">Discreet Delivery</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">24-48 hrs</div>
+              <p className="text-[#666666] text-sm md:text-base">Discreet Delivery</p>
             </div>
           </div>
         </div>
@@ -958,9 +958,9 @@ function CategoryCard({ category, isActive, onClick }) {
 
       {/* Label */}
       <div className="px-4 py-3">
-        <h3 className="font-semibold text-[#2D3A2D] text-sm">{category.name}</h3>
+        <h3 className="font-semibold text-[#1a1a1a] text-sm">{category.name}</h3>
         {category.available && (
-          <p className="text-xs text-[#5A6B5A] mt-0.5">{category.description}</p>
+          <p className="text-xs text-[#666666] mt-0.5">{category.description}</p>
         )}
       </div>
     </motion.div>
@@ -1069,13 +1069,13 @@ function ProductCard({ product }) {
           <div className="flex items-center gap-2 mb-1">
             <p className="text-[10px] font-bold text-[#4A6741] uppercase tracking-[0.15em]">{product.subtitle}</p>
             {product.form && (
-              <span className="text-[9px] font-medium text-[#8A9A8A] bg-[#F0EDE8] px-2 py-0.5 rounded-full">{product.form}</span>
+              <span className="text-[9px] font-medium text-[#666666] bg-[#F0EDE8] px-2 py-0.5 rounded-full">{product.form}</span>
             )}
           </div>
-          <h3 className="text-lg font-semibold text-[#1A2A1A] leading-snug mb-2 group-hover:text-[#2D3A2D] transition-colors">
+          <h3 className="text-base md:text-lg font-semibold text-[#1a1a1a] leading-snug mb-2 group-hover:text-[#2D3A2D] transition-colors">
             {product.name}
           </h3>
-          <p className="text-sm text-[#5A6B5A] mb-4 leading-relaxed">{product.promise}</p>
+          <p className="text-sm text-[#666666] mb-4 leading-relaxed">{product.promise}</p>
 
           {/* Benefits */}
           <div className="space-y-1.5 mb-4">
@@ -1090,7 +1090,7 @@ function ProductCard({ product }) {
           </div>
 
           <div className="flex-1" />
-          <p className="text-[11px] text-[#8A9A8A]">{product.customers} patients treated</p>
+          <p className="text-[11px] text-[#666666]">{product.customers} patients treated</p>
         </div>
       </Link>
 
@@ -1099,9 +1099,9 @@ function ProductCard({ product }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-baseline gap-0.5">
-              <span className="text-xs text-[#8A9A8A] mr-0.5">from</span>
-              <span className="text-2xl font-bold text-[#1A2A1A]">${product.price}</span>
-              <span className="text-sm text-[#8A9A8A]">/mo</span>
+              <span className="text-xs text-[#666666] mr-0.5">from</span>
+              <span className="text-xl md:text-2xl font-bold text-[#1a1a1a]">${product.price}</span>
+              <span className="text-sm text-[#666666]">/mo</span>
             </div>
             <p className="text-[10px] text-[#4A6741] font-medium">Consult + Rx + Shipping</p>
           </div>

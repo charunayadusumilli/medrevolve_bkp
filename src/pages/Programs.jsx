@@ -240,11 +240,11 @@ export default function Programs() {
               <Leaf className="w-3.5 h-3.5 text-[#A8C99B]" />
               <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">Medically Supervised Programs</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight" style={{ letterSpacing: '-0.03em' }}>
+            <h1 className="text-3xl md:text-7xl font-black text-white mb-6 leading-tight" style={{ letterSpacing: '-0.03em' }}>
               Your Journey.<br />
               <span className="text-[#A8C99B]">Built Around You.</span>
             </h1>
-            <p className="text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
               Consultation. Prescription. Delivery. Coaching. One seamless telehealth experience, powered by real licensed providers.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -285,10 +285,10 @@ export default function Programs() {
         <div className="max-w-7xl mx-auto">
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="text-xs font-bold tracking-[0.25em] uppercase text-[#A8C99B]/60 mb-3">How It Works</p>
-            <h2 className="text-4xl md:text-5xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
+            <h2 className="text-3xl md:text-5xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
               The MedRevolve Journey
             </h2>
-            <p className="text-white/40 mt-3 max-w-md mx-auto">From your first consultation to ongoing optimization — every step managed.</p>
+            <p className="text-white/60 mt-3 max-w-md mx-auto text-sm md:text-base">From your first consultation to ongoing optimization — every step managed.</p>
           </motion.div>
 
           {/* Journey step tabs */}
@@ -326,11 +326,11 @@ export default function Programs() {
                 </div>
               </div>
               <div>
-                <h3 className="text-4xl font-black text-white mb-4 leading-tight" style={{ letterSpacing: '-0.02em' }}>
+                <h3 className="text-2xl md:text-4xl font-black text-white mb-4 leading-tight" style={{ letterSpacing: '-0.02em' }}>
                   {activeStep.title}
                 </h3>
-                <p className="text-white/55 text-base leading-relaxed mb-4">{activeStep.desc}</p>
-                <p className="text-white/30 text-sm italic mb-8">{activeStep.detail}</p>
+                <p className="text-white/70 text-sm md:text-base leading-relaxed mb-4">{activeStep.desc}</p>
+                <p className="text-white/50 text-sm italic mb-8">{activeStep.detail}</p>
                 <Link to={createPageUrl(activeStep.href)} onClick={() => window.scrollTo({ top: 0 })}>
                   <button className="flex items-center gap-2 px-8 py-3 font-bold text-sm text-black rounded-none hover:opacity-85 transition-all"
                     style={{ background: activeStep.accent }}>
@@ -356,7 +356,7 @@ export default function Programs() {
         <div className="max-w-7xl mx-auto">
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="text-xs font-bold tracking-[0.25em] uppercase text-[#A8C99B]/60 mb-3">Treatment Programs</p>
-            <h2 className="text-4xl md:text-5xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
+            <h2 className="text-3xl md:text-5xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
               Choose Your Program
             </h2>
           </motion.div>
@@ -373,8 +373,8 @@ export default function Programs() {
       <section className="py-20 px-6 lg:px-8 bg-[#0A1628]">
         <div className="max-w-4xl mx-auto">
           <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-3xl font-black text-white mb-2" style={{ letterSpacing: '-0.02em' }}>Why MedRevolve?</h2>
-            <p className="text-white/40">Not all health programs are created equal.</p>
+            <h2 className="text-2xl md:text-3xl font-black text-white mb-2" style={{ letterSpacing: '-0.02em' }}>Why MedRevolve?</h2>
+            <p className="text-white/60 text-sm md:text-base">Not all health programs are created equal.</p>
           </motion.div>
           <div className="bg-[#1E293B] rounded-2xl overflow-hidden border border-white/5">
             <div className="grid grid-cols-3 text-center">
@@ -397,7 +397,7 @@ export default function Programs() {
               ['Transparent flat-rate pricing', true, false],
             ].map(([feature, ours, theirs], i) => (
               <div key={i} className={`grid grid-cols-3 text-center border-t border-white/5 ${i % 2 === 0 ? '' : 'bg-white/2'}`}>
-                <div className="p-4 text-sm text-white/70 font-medium text-left px-6">{feature}</div>
+                <div className="p-4 text-sm md:text-base text-white/80 font-medium text-left px-6">{feature}</div>
                 <div className="p-4 bg-[#A8C99B]/5 border-r border-white/5">
                   {ours === true ? <span className="text-[#A8C99B] font-bold text-lg">✓</span> : <span className="text-sm text-[#A8C99B]">{ours}</span>}
                 </div>
@@ -413,7 +413,7 @@ export default function Programs() {
       {/* ── FAQ ───────────────────────────────────────────────────────── */}
       <section className="py-20 px-6 lg:px-8 bg-[#0F172A]">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black text-white mb-10 text-center" style={{ letterSpacing: '-0.02em' }}>Common Questions</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-white mb-10 text-center" style={{ letterSpacing: '-0.02em' }}>Common Questions</h2>
           <div className="divide-y divide-white/10">
             {faqs.map((faq, i) => <FAQItem key={i} faq={faq} />)}
           </div>
@@ -423,10 +423,10 @@ export default function Programs() {
       {/* ── Final CTA ─────────────────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-8 bg-[#0A1628]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4" style={{ letterSpacing: '-0.03em' }}>
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-4" style={{ letterSpacing: '-0.03em' }}>
             Ready to Begin?
           </h2>
-          <p className="text-white/40 mb-10 text-lg">Answer 5 questions and get matched with the right program and provider today.</p>
+          <p className="text-white/70 mb-10 text-base md:text-lg">Answer 5 questions and get matched with the right program and provider today.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl('Consultations')}>
               <Button size="lg" className="bg-white text-[#0A1628] hover:bg-white/90 rounded-none px-10 font-bold text-base shadow-xl">
