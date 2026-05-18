@@ -15,10 +15,13 @@ const steps = [
 
 export default function WorkflowTimeline() {
   return (
-    <section className="bg-[#040404] border-t border-white/5 py-24 px-8 lg:px-16">
+    <section className="relative bg-[#040404] border-t border-white/5 py-24 px-8 lg:px-16 overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1600&q=40)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#040404] via-transparent to-[#040404]" />
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-16">
+      <div className="relative max-w-7xl mx-auto mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div>
             <p className="text-[10px] tracking-[0.35em] uppercase text-white/25 mb-4 font-medium">The Process</p>
@@ -37,7 +40,7 @@ export default function WorkflowTimeline() {
       </div>
 
       {/* Timeline grid */}
-      <div className="max-w-7xl mx-auto">
+      <div className="relative max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
           {steps.map((step, i) => (
             <motion.div key={i}

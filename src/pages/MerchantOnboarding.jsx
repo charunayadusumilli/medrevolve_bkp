@@ -287,8 +287,11 @@ export default function MerchantOnboarding() {
 
   // ── Main wizard ─────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#080808] py-10 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-[#080808] py-10 px-4 relative">
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=40)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/80 to-[#080808]" />
+      <div className="relative max-w-2xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-10">

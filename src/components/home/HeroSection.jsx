@@ -34,8 +34,13 @@ export default function HeroSection() {
       <div className="absolute inset-0 opacity-[0.025]"
         style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
 
+      {/* Background image */}
+      <div className="absolute inset-0 opacity-[0.12]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=60)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]" />
+
       {/* Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06]"
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-[0.08]"
         style={{ background: 'radial-gradient(circle, #4A6741 0%, transparent 70%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-24 w-full">
@@ -58,7 +63,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}>
             <h1 className="font-black text-white leading-[0.95] tracking-[-0.03em] mb-6"
               style={{ fontSize: 'clamp(3rem, 7vw, 6.5rem)' }}>
-              Launch Your{' '}
+              Your{' '}
               <span className="relative inline-block">
                 <motion.span
                   key={wordIdx}
@@ -70,7 +75,8 @@ export default function HeroSection() {
                   {words[wordIdx]}
                 </motion.span>
               </span>
-              <br />Business — Launch Now
+              <br />Business,
+              <br />Live Today.
             </h1>
           </motion.div>
 

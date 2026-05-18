@@ -72,8 +72,12 @@ export default function PillarsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group relative flex flex-col p-10 lg:p-12 min-h-[480px]"
+              className="group relative flex flex-col p-10 lg:p-12 min-h-[480px] overflow-hidden"
               style={{ background: pillar.bg }}>
+              {/* Subtle bg texture */}
+              <div className="absolute inset-0 opacity-[0.06]"
+                style={{ backgroundImage: `url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=40)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+              <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${pillar.bg} 40%, transparent 100%)` }} />
 
               {/* Index */}
               <div className="flex items-center justify-between mb-12">
