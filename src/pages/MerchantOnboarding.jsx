@@ -281,7 +281,9 @@ export default function MerchantOnboarding() {
       console.log('Running activation sequence...');
       await runActivationSequence(partner.id);
       console.log('✅ Activation complete, navigating to dashboard...');
-      navigate(createPageUrl('MerchantDashboard'));
+      setTimeout(() => {
+        navigate(createPageUrl('MerchantDashboard'));
+      }, 500);
     } catch (e) {
       const errorMessage = e.message || 'Unknown error occurred';
       console.error('Merchant onboarding error:', e);
