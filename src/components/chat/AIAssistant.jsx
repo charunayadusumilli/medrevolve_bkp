@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals } from './chatConfig';
@@ -267,44 +267,49 @@ export default function AIAssistant() {
             exit={{ opacity: 0, y: 32, scale: 0.93 }}
             transition={{ type: 'spring', damping: 26, stiffness: 300 }}
             className="fixed bottom-6 right-6 z-[45] w-[400px] max-w-[calc(100vw-1.5rem)] flex flex-col pointer-events-auto"
-            style={{ height: minimized ? 'auto' : 'min(560px, calc(100vh - 170px))', top: 'auto', maxHeight: 'calc(100vh - 170px)' }}
+            style={{ height: minimized ? 'auto' : 'min(580px, calc(100vh - 160px))', top: 'auto', maxHeight: 'calc(100vh - 160px)' }}
           >
-            <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border border-[#E8E0D5]">
+            <Card className="flex flex-col h-full shadow-2xl rounded-2xl overflow-hidden border-0">
 
               {/* ── Header ── */}
               <div
-                className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${vis.gradient[0]} 0%, ${vis.gradient[1]} 100%)` }}
+                className="px-4 py-3.5 flex items-center justify-between flex-shrink-0 relative overflow-hidden"
+                style={{ background: `linear-gradient(135deg, #0a0a0a 0%, ${vis.gradient[0]} 60%, ${vis.gradient[1]} 100%)` }}
               >
-                <div className="flex items-center gap-3">
-                  {/* Rev Bot Logo */}
+                {/* Subtle pattern overlay */}
+                <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+
+                <div className="flex items-center gap-3 relative z-10">
                   <div
-                    className="flex-shrink-0 flex items-center justify-center rounded-full"
-                    style={{ width: 36, height: 36, background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)', border: '2px solid rgba(255,255,255,0.2)' }}
+                    className="flex-shrink-0 flex items-center justify-center rounded-xl shadow-lg"
+                    style={{ width: 38, height: 38, background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)', border: '1.5px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}
                   >
                     <RevBotLogo size={20} color="white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-white text-sm leading-tight tracking-wide">Rev Bot</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-white text-sm leading-tight tracking-wide">Rev Bot</p>
+                      <span className="text-[9px] font-semibold bg-white/15 text-white/80 px-1.5 py-0.5 rounded-full uppercase tracking-wider">AI</span>
+                    </div>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
-                      <p className="text-[10px] text-white/60 leading-tight">AI Assistant · Online</p>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50" />
+                      <p className="text-[10px] text-white/50 leading-tight">{ctx.role}</p>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-0.5">
-                  <button onClick={resetChat} title="Reset chat" className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+                <div className="flex items-center gap-0.5 relative z-10">
+                  <button onClick={resetChat} title="New chat" className="p-1.5 rounded-lg hover:bg-white/15 text-white/50 hover:text-white transition-all">
                     <RotateCcw className="w-3.5 h-3.5" />
                   </button>
                   {voiceSupported && (
-                    <button onClick={startVoiceCall} title="Voice call" className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+                    <button onClick={startVoiceCall} title="Voice call" className="p-1.5 rounded-lg hover:bg-white/15 text-white/50 hover:text-white transition-all">
                       <PhoneCall className="w-3.5 h-3.5" />
                     </button>
                   )}
-                  <button onClick={() => setMinimized(m => !m)} className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+                  <button onClick={() => setMinimized(m => !m)} className="p-1.5 rounded-lg hover:bg-white/15 text-white/50 hover:text-white transition-all">
                     <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${minimized ? 'rotate-180' : ''}`} />
                   </button>
-                  <button onClick={() => setIsOpen(false)} className="p-2 rounded-xl hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+                  <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg hover:bg-white/15 text-white/50 hover:text-white transition-all">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -317,7 +322,7 @@ export default function AIAssistant() {
                     role="log"
                     aria-live="polite"
                     aria-label="Chat messages"
-                    className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#FAFAF8] min-h-0"
+                    className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#F8F7F4] min-h-0"
                   >
                     {messages.map((msg, idx) => (
                       <MessageBubble key={idx} msg={msg} />
@@ -325,12 +330,12 @@ export default function AIAssistant() {
                     {loading && (
                       <div className="flex justify-start gap-2.5">
                         <div
-                          className="flex-shrink-0 mt-0.5 flex items-center justify-center rounded-full"
-                          style={{ width: 28, height: 28, background: 'linear-gradient(135deg, #1a1a1a 0%, #2D3A2D 55%, #4A6741 100%)' }}
+                          className="flex-shrink-0 mt-0.5 flex items-center justify-center rounded-xl shadow-sm"
+                          style={{ width: 28, height: 28, background: 'linear-gradient(135deg, #0a0a0a 0%, #2D3A2D 55%, #4A6741 100%)' }}
                         >
-                          <RevBotLogo size={16} color="white" />
+                          <RevBotLogo size={15} color="white" />
                         </div>
-                        <div className="bg-white border border-[#E8E0D5] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
+                        <div className="bg-white border border-[#EBEBEB] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                           <TypingDots />
                         </div>
                       </div>
@@ -338,31 +343,37 @@ export default function AIAssistant() {
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* ── Voice banner ── */}
-                  {voiceSupported && (
-                    <div className="flex-shrink-0 bg-[#F5F0E8] border-t border-[#E8E0D5] px-4 py-2 flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5">
-                        <PhoneCall className="w-3.5 h-3.5 text-[#4A6741]" />
-                        <span className="text-xs text-[#5A6B5A]">Prefer to talk?</span>
+                  {/* ── Suggested Prompts (context-aware, shown when few messages) ── */}
+                  {ctx.suggestedPrompts?.length > 0 && messages.length <= 2 && (
+                    <div className="flex-shrink-0 px-3 pt-2 pb-1 bg-[#F8F7F4] border-t border-[#EBEBEB]">
+                      <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1.5 px-1 flex items-center gap-1">
+                        <Zap className="w-2.5 h-2.5" /> Quick questions
+                      </p>
+                      <div className="flex flex-col gap-1.5">
+                        {ctx.suggestedPrompts.map((prompt, i) => (
+                          <button
+                            key={i}
+                            onClick={() => sendMessage(prompt)}
+                            disabled={loading}
+                            className="text-left text-xs px-3 py-2 bg-white hover:bg-[#4A6741] text-[#374151] hover:text-white rounded-xl font-medium border border-[#EBEBEB] hover:border-[#4A6741] transition-all disabled:opacity-50 shadow-sm"
+                          >
+                            {prompt}
+                          </button>
+                        ))}
                       </div>
-                      <button
-                        onClick={startVoiceCall}
-                        className="text-xs bg-[#4A6741] text-white px-3 py-1 rounded-full font-semibold hover:bg-[#3D5636] transition-colors"
-                      >
-                        Start Voice Call
-                      </button>
                     </div>
                   )}
 
                   {/* ── FAQ Chips ── */}
-                  <div className="flex-shrink-0 bg-white border-t border-gray-100">
+                  <div className="flex-shrink-0 bg-white border-t border-[#EBEBEB]">
                     <button
                       onClick={() => setFaqOpen(o => !o)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 text-xs text-[#4A6741] font-semibold hover:bg-[#F5F0E8] transition-colors"
+                      className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold hover:bg-gray-50 transition-colors"
+                      style={{ color: vis.gradient[0] }}
                     >
                       <span className="flex items-center gap-1.5">
                         <Sparkles className="w-3 h-3" />
-                        Common questions
+                        More questions
                       </span>
                       <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -375,13 +386,13 @@ export default function AIAssistant() {
                           transition={{ duration: 0.2 }}
                           className="overflow-hidden"
                         >
-                          <div className="px-3 pb-3 flex flex-wrap gap-1.5 max-h-[100px] overflow-y-auto">
+                          <div className="px-3 pb-3 flex flex-wrap gap-1.5 max-h-[96px] overflow-y-auto">
                             {faqs.map(faq => (
                               <button
                                 key={faq.label}
                                 onClick={() => sendMessage(faq.q)}
                                 disabled={loading}
-                                className="text-[11px] px-2.5 py-1.5 bg-[#F5F0E8] hover:bg-[#E8DDD0] text-[#4A6741] rounded-full font-medium border border-[#E8E0D5] transition-colors disabled:opacity-50 whitespace-nowrap"
+                                className="text-[11px] px-2.5 py-1.5 bg-gray-50 hover:bg-gray-100 text-gray-600 hover:text-gray-900 rounded-full font-medium border border-gray-200 transition-all disabled:opacity-50 whitespace-nowrap"
                               >
                                 {faq.label}
                               </button>
@@ -393,33 +404,43 @@ export default function AIAssistant() {
                   </div>
 
                   {/* ── Input ── */}
-                  <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-gray-100">
+                  <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-[#EBEBEB]">
                     <div className="flex gap-2 items-center">
-                      <Input
-                        ref={inputRef}
-                        value={input}
-                        onChange={e => setInput(e.target.value)}
-                        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); } }}
-                        placeholder={`Ask Rev Bot anything...`}
-                        className="flex-1 rounded-full text-sm border-gray-200 bg-[#FAFAF8] focus:bg-white"
-                        disabled={loading}
-                        aria-label="Chat input"
-                        maxLength={2000}
-                      />
+                      <div className="flex-1 relative">
+                        <Input
+                          ref={inputRef}
+                          value={input}
+                          onChange={e => setInput(e.target.value)}
+                          onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); } }}
+                          placeholder={ctx.placeholder || 'Ask Rev Bot anything...'}
+                          className="flex-1 rounded-full text-sm border-gray-200 bg-gray-50 focus:bg-white pr-3 pl-4"
+                          disabled={loading}
+                          aria-label="Chat input"
+                          maxLength={2000}
+                        />
+                      </div>
                       <Button
                         onClick={() => sendMessage(input)}
                         disabled={loading || !input.trim()}
                         size="icon"
-                        className="rounded-full border-0 flex-shrink-0 w-9 h-9 shadow-md"
-                        style={{ background: `linear-gradient(135deg, ${vis.gradient[0]}, ${vis.gradient[1]})` }}
+                        className="rounded-full border-0 flex-shrink-0 w-9 h-9 shadow-md disabled:opacity-40"
+                        style={{ background: input.trim() ? `linear-gradient(135deg, ${vis.gradient[0]}, ${vis.gradient[1]})` : '#e5e7eb' }}
                         aria-label="Send message"
                       >
-                        <Send className="w-3.5 h-3.5" />
+                        <Send className="w-3.5 h-3.5 text-white" />
                       </Button>
                     </div>
-                    <p className="text-center text-[10px] text-gray-400 mt-1.5">
-                      🤖 AI · MedRevolve topics only · Not medical advice
-                    </p>
+                    <div className="flex items-center justify-between mt-1.5 px-1">
+                      <p className="text-[10px] text-gray-400">Not medical advice · AI may make mistakes</p>
+                      {voiceSupported && (
+                        <button
+                          onClick={startVoiceCall}
+                          className="text-[10px] text-gray-400 hover:text-gray-600 flex items-center gap-1 transition-colors"
+                        >
+                          <PhoneCall className="w-2.5 h-2.5" /> Talk instead
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </>
               )}

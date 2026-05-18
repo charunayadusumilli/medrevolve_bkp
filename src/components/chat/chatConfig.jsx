@@ -202,144 +202,364 @@ export function getPersonaVisuals(personaKey) {
 //
 //  personaKey: must match a key in PERSONAS above
 //  greeting:   first message shown to user on this page
+//  placeholder: dynamic input placeholder for this page
+//  suggestedPrompts: 3 context-aware one-liner quick prompts shown above input
 //
 export const PAGE_CONTEXTS = {
   // ── Customer pages ─────────────────────────────────────────────────────────
   Home: {
     personaKey: 'wellness_concierge',
-    greeting: "Hey! 👋 I'm your personal wellness guide at MedRevolve. Tell me — what's your #1 health goal right now? Weight loss, more energy, better hormones, longevity? Let's build your transformation plan together 🌿",
+    greeting: "Hey! 👋 I'm Rev — your personal MedRevolve guide. We're the operating system powering modern wellness commerce: treatments, telehealth, compliance, and payments all in one place. What health goal can I help you crush today? 🌿",
+    placeholder: "What's your #1 health goal right now?",
+    suggestedPrompts: [
+      "How does MedRevolve work?",
+      "Best treatment for weight loss?",
+      "How do I get started today?",
+    ],
   },
   Products: {
-   personaKey: 'treatment_advisor',
-   greeting: "You're in the right place! 💊 Whether you're exploring weight loss, hormone optimization, longevity, or men's/women's health — I can help you find exactly what fits your body and goals. What are you trying to achieve?",
+    personaKey: 'treatment_advisor',
+    greeting: "You're in the right place! 💊 I know every product in our catalog — weight loss, hormone optimization, longevity, men's & women's health. Tell me your goal and I'll match you to the perfect protocol.",
+    placeholder: "What are you trying to achieve?",
+    suggestedPrompts: [
+      "Semaglutide vs Tirzepatide?",
+      "Best for hormone balance?",
+      "What's included in the price?",
+    ],
   },
   ProductDetail: {
-   personaKey: 'treatment_advisor',
-   greeting: "Great choice to explore this one! Let me break down exactly how it works, what real results look like, and whether it's the right fit for your situation. What's your main goal? 🎯",
+    personaKey: 'treatment_advisor',
+    greeting: "Great choice to explore this one! 🎯 Let me break down exactly how it works, what real results look like, and whether it's the right fit for your situation.",
+    placeholder: "Ask me about this treatment...",
+    suggestedPrompts: [
+      "How fast does this work?",
+      "Any side effects I should know?",
+      "Is this right for my goals?",
+    ],
   },
   HowItWorks: {
     personaKey: 'wellness_concierge',
-    greeting: "Love that you're doing your research! 🌿 The MedRevolve process is surprisingly simple — intake, provider consult, prescription, delivered to your door. Want me to walk you through it step by step, or do you have a specific question?",
+    greeting: "Love that you're doing your research! 🌿 The MedRevolve process is simple: intake → provider consult → prescription → delivered to your door in 24-48 hrs. Want the full walkthrough?",
+    placeholder: "Ask about the process...",
+    suggestedPrompts: [
+      "Walk me through all 6 steps",
+      "How fast is delivery?",
+      "Do I need insurance?",
+    ],
   },
   Cart: {
     personaKey: 'treatment_advisor',
-    greeting: "You're so close to starting your transformation! 🛒 Any questions before you checkout? I can also suggest complementary treatments or lifestyle tips to maximize your results.",
+    greeting: "You're so close to starting your transformation! 🛒 Any questions before you checkout? I can also suggest complementary treatments to maximize your results.",
+    placeholder: "Questions before you checkout?",
+    suggestedPrompts: [
+      "What's included with my order?",
+      "Can I stack treatments?",
+      "What happens after I order?",
+    ],
   },
   Consultations: {
     personaKey: 'consultation_coordinator',
     greeting: "Talking to a real provider is a game-changer 🩺 I can help you pick the right consultation type, prep your questions, and know exactly what to expect. What's bringing you in?",
+    placeholder: "What do you want to discuss with a provider?",
+    suggestedPrompts: [
+      "What type of consult do I need?",
+      "How do I prepare for my visit?",
+      "How long does a consult take?",
+    ],
   },
   BookAppointment: {
     personaKey: 'consultation_coordinator',
-    greeting: "This is a big step — and a great one! 🎯 I'm here to make booking seamless. Need help picking a provider, choosing appointment type, or knowing what to say? Ask away!",
+    greeting: "This is a big step — and a great one! 🎯 I'm here to make booking seamless. Need help picking a provider, choosing appointment type, or knowing what to say?",
+    placeholder: "Need help booking or preparing?",
+    suggestedPrompts: [
+      "How do I pick the right provider?",
+      "What should I tell my doctor?",
+      "Can I reschedule easily?",
+    ],
   },
   ProviderProfile: {
     personaKey: 'consultation_coordinator',
-    greeting: "Getting to know your provider before booking is smart! I can tell you what to expect in a consultation, how to get the most out of your visit, or help you compare providers 📅",
+    greeting: "Getting to know your provider before booking is smart! 📅 I can tell you what to expect in a consultation, how to get the most from your visit, or help you compare providers.",
+    placeholder: "Ask me about this provider...",
+    suggestedPrompts: [
+      "What should I ask in my consult?",
+      "How do I get the most out of this visit?",
+      "What happens after the appointment?",
+    ],
   },
   PatientPortal: {
     personaKey: 'patient_support',
-    greeting: "Welcome back! 🌟 How's your wellness journey going? I can help with prescriptions, appointments, refills, or if you want to talk about optimizing your current protocol.",
+    greeting: "Welcome back! 🌟 How's your wellness journey going? I can help with prescriptions, appointments, refills, or optimizing your current protocol.",
+    placeholder: "How can I help with your care today?",
+    suggestedPrompts: [
+      "How do I request a refill?",
+      "When is my next appointment?",
+      "How do I message my provider?",
+    ],
   },
   MyAppointments: {
     personaKey: 'patient_support',
-    greeting: "Hey! Let me help you get the most from your appointments 🩺 Whether you're prepping questions for your provider, rescheduling, or curious about what happens next — I've got you.",
+    greeting: "Hey! Let me help you get the most from your appointments 🩺 Whether prepping questions, rescheduling, or wondering what's next — I've got you.",
+    placeholder: "Ask about your appointments...",
+    suggestedPrompts: [
+      "How do I reschedule?",
+      "What should I prep before my visit?",
+      "What happens after my consult?",
+    ],
   },
   Messages: {
     personaKey: 'patient_support',
-    greeting: "Your provider relationship matters 💬 I can help you craft the right message, understand what to share, or just answer any care questions you have. What's on your mind?",
+    greeting: "Your provider relationship matters 💬 I can help you craft the right message, understand what to share, or answer any care questions you have.",
+    placeholder: "What do you want to communicate?",
+    suggestedPrompts: [
+      "How do I message my provider?",
+      "What should I share about symptoms?",
+      "How fast do providers respond?",
+    ],
   },
   CustomerIntake: {
     personaKey: 'onboarding_guide',
-    greeting: "This is day one of something amazing 🎯 The intake takes about 5-10 minutes and unlocks your personalized protocol. I'm here to guide you through it and answer anything that comes up!",
+    greeting: "This is day one of something amazing! 🎯 The intake takes 5-10 minutes and unlocks your personalized protocol. I'm here to guide you through every step.",
+    placeholder: "Questions about the intake form?",
+    suggestedPrompts: [
+      "What info do I need to complete this?",
+      "Is my data secure?",
+      "What happens after I submit?",
+    ],
   },
   PatientOnboarding: {
     personaKey: 'onboarding_guide',
-    greeting: "Welcome to the start of your transformation! 🚀 Let's get you set up quickly. I'll walk you through each step and answer any questions — what's your biggest health goal?",
+    greeting: "Welcome to the start of your transformation! 🚀 Let's get you set up quickly. I'll guide you through each step — what's your biggest health goal?",
+    placeholder: "Questions during onboarding?",
+    suggestedPrompts: [
+      "What documents do I need?",
+      "How long does onboarding take?",
+      "What happens after I finish?",
+    ],
   },
   Questionnaire: {
     personaKey: 'onboarding_guide',
-    greeting: "These questions help your provider build the perfect protocol for YOU 📋 Be honest — the more they know, the better your results. Questions about anything you see here?",
+    greeting: "These questions help your provider build the perfect protocol for YOU 📋 Be thorough — the more detail, the better your results. Questions about anything here?",
+    placeholder: "Ask about these questions...",
+    suggestedPrompts: [
+      "Why does my weight history matter?",
+      "What if I'm on medications?",
+      "Is this info shared with anyone?",
+    ],
+  },
+
+  // ── Merchant pages ─────────────────────────────────────────────────────────
+  MerchantOnboarding: {
+    personaKey: 'partner_manager',
+    greeting: "Welcome to the MedRevolve OS — the operating system for modern wellness commerce! 🚀 I can walk you through every module: domain, payments, telehealth, compliance, inventory, and more. What do you want to launch first?",
+    placeholder: "What would you like to set up?",
+    suggestedPrompts: [
+      "What modules should I activate?",
+      "How fast can I go live?",
+      "What's the monthly cost breakdown?",
+    ],
+  },
+  MerchantDashboard: {
+    personaKey: 'partner_manager',
+    greeting: "Your merchant command center is live! 📊 I can help you read your metrics, activate modules, manage inventory alerts, or grow your GMV. What are you working on?",
+    placeholder: "Ask about your merchant account...",
+    suggestedPrompts: [
+      "How do I read my GMV dashboard?",
+      "What modules should I add next?",
+      "How do I set up inventory alerts?",
+    ],
+  },
+  MerchantInventoryPage: {
+    personaKey: 'partner_manager',
+    greeting: "Smart merchants stay ahead of stockouts! 📦 I can help with reorder thresholds, backup product routing, supplier setup, or reading your inventory analytics.",
+    placeholder: "Ask about inventory management...",
+    suggestedPrompts: [
+      "How do I set reorder alerts?",
+      "What's a backup product strategy?",
+      "How does auto-reorder work?",
+    ],
   },
 
   // ── Creator pages ──────────────────────────────────────────────────────────
   ForCreators: {
     personaKey: 'creator_manager',
-    greeting: "Hey! 👋 I'm your Creator Partnership Manager ✨ Want to know about commission tiers, approval requirements, or how to maximize referral revenue? Ask anything!",
+    greeting: "Hey creator! ✨ The MedRevolve creator program is built to turn your wellness audience into serious recurring income — up to 25% commission on every referral. Want the full breakdown?",
+    placeholder: "Ask about the creator program...",
+    suggestedPrompts: [
+      "What commission do I earn?",
+      "What's the minimum follower count?",
+      "How fast do I get paid?",
+    ],
   },
   CreatorApplication: {
     personaKey: 'creator_manager',
-    greeting: "Excited you're applying! ✨ I can walk you through the application, explain what we look for, and tell you what to expect after submitting.",
+    greeting: "Excited you're applying! ✨ I can walk you through what we look for, help you write a stronger application, and tell you exactly what to expect after submitting.",
+    placeholder: "Questions about the application?",
+    suggestedPrompts: [
+      "What makes a strong application?",
+      "How long does approval take?",
+      "What platforms do you accept?",
+    ],
   },
 
   // ── Partner pages ──────────────────────────────────────────────────────────
   PartnerProgram: {
     personaKey: 'partner_manager',
-    greeting: "Welcome! I know every detail of this program 🤝 — earnings, white-label setup, compliance model, minimum pricing, how to go live today. What do you want to know?",
+    greeting: "Welcome to the MedRevolve Partner Program 🤝 — we've powered $2.4M+ in monthly GMV for our network. White-label, revenue share, compliance built-in. What do you want to know?",
+    placeholder: "Ask about the partner program...",
+    suggestedPrompts: [
+      "How does revenue sharing work?",
+      "Can I white-label everything?",
+      "What does the $99/mo include?",
+    ],
   },
   PartnerPortal: {
     personaKey: 'partner_manager',
-    greeting: "Hi! Let's make your portal work harder for you 📊 I can help with tracking referrals, earnings, setting up your branded storefront, or anything partner-related.",
+    greeting: "Hi! Let's make your portal work harder for you 📊 I can help with referral tracking, earnings optimization, branded storefront setup, or any partner question.",
+    placeholder: "How can I help with your portal?",
+    suggestedPrompts: [
+      "How do I track my referrals?",
+      "How do I share my referral code?",
+      "How do I view my earnings?",
+    ],
   },
   PartnerSignup: {
     personaKey: 'partner_manager',
-    greeting: "Let's get you set up 🚀 Signing up takes minutes — I can explain what happens after you register, what your portal includes, and how fast you can go live.",
+    greeting: "Let's get you set up in under 5 minutes 🚀 I can explain exactly what happens after you register, what your portal includes, and how to go live fast.",
+    placeholder: "Questions before you sign up?",
+    suggestedPrompts: [
+      "What do I get access to after signing up?",
+      "Is there any setup fee?",
+      "How long until I go live?",
+    ],
   },
   ForBusiness: {
     personaKey: 'enterprise_advisor',
-    greeting: "Exploring our enterprise options? I can outline white-label capabilities, API integration, custom pricing, and what a full B2B deployment looks like 🏢",
+    greeting: "Exploring our enterprise solutions? 🏢 I can outline white-label capabilities, B2B pricing, custom API integration, and what a full wellness platform deployment looks like for your business.",
+    placeholder: "Tell me about your business needs...",
+    suggestedPrompts: [
+      "What does white-label include?",
+      "How fast can we launch?",
+      "Do you handle compliance for us?",
+    ],
   },
   BusinessInquiry: {
     personaKey: 'enterprise_advisor',
-    greeting: "Thanks for your interest 🏢 I can answer questions about how our B2B model works, what's included, and what to expect after submitting your inquiry.",
+    greeting: "Thanks for your interest in MedRevolve for Business! 🏢 I can answer how our B2B model works, what's included in each tier, and what to expect after submitting your inquiry.",
+    placeholder: "Questions about business solutions?",
+    suggestedPrompts: [
+      "What's in the white-label tier?",
+      "Can I see a product demo?",
+      "What does setup take?",
+    ],
   },
 
   // ── Provider pages ─────────────────────────────────────────────────────────
   ProviderIntake: {
     personaKey: 'provider_onboarding',
-    greeting: "Welcome, clinician! 🩺 I can explain our credentialing process, compensation models, patient volume expectations, malpractice coverage, and daily practice on MedRevolve.",
+    greeting: "Welcome, clinician! 🩺 Our provider network powers telehealth at scale across all 50 states. I can walk you through credentialing, compensation, patient volume, and daily workflow on MedRevolve.",
+    placeholder: "Ask about joining as a provider...",
+    suggestedPrompts: [
+      "What's the compensation structure?",
+      "How does credentialing work?",
+      "What patient volume can I expect?",
+    ],
   },
   ProviderDashboard: {
     personaKey: 'provider_support',
-    greeting: "Hello, Doctor! 👨‍⚕️ Need help with scheduling, e-prescribing, your contract, patient records, or anything dashboard-related? I've got you.",
+    greeting: "Hello, Doctor! 👨‍⚕️ Need help with scheduling, e-prescribing, your contract, patient records, or anything dashboard-related? I'll keep it quick.",
+    placeholder: "Ask about your provider tools...",
+    suggestedPrompts: [
+      "How do I e-prescribe?",
+      "How do I manage my schedule?",
+      "How do I view patient history?",
+    ],
   },
   ProviderContracts: {
     personaKey: 'provider_onboarding',
     greeting: "Hi! I can explain compensation models (per-consult, retainer, revenue share), contract terms, renewal process, and what each tier includes 📋",
+    placeholder: "Ask about your contract details...",
+    suggestedPrompts: [
+      "What are the per-consult rates?",
+      "Can I switch compensation models?",
+      "What does the contract cover?",
+    ],
   },
   ProviderOutreach: {
     personaKey: 'ops_advisor',
-    greeting: "Welcome to Provider Recruitment 📨 I can help craft outreach emails, suggest talking points for different specialties, or advise on recruitment best practices.",
+    greeting: "Welcome to Provider Recruitment 📨 I can help craft outreach templates, suggest talking points for different specialties, or advise on recruitment strategy.",
+    placeholder: "Ask about provider recruitment...",
+    suggestedPrompts: [
+      "What makes an effective outreach email?",
+      "Which specialties are highest priority?",
+      "What objections do providers raise?",
+    ],
   },
 
   // ── Pharmacy pages ─────────────────────────────────────────────────────────
   PharmacyIntake: {
     personaKey: 'pharmacy_coordinator',
-    greeting: "Hi! I can walk you through the application, required licenses and documents, our contract models, fulfillment expectations, and compliance requirements 💊",
+    greeting: "Hi! I can walk you through the pharmacy application, required licenses, contract models, fulfillment expectations, and compliance requirements 💊",
+    placeholder: "Ask about joining as a pharmacy...",
+    suggestedPrompts: [
+      "What licenses are required?",
+      "What fulfillment speed is expected?",
+      "How does the contract work?",
+    ],
   },
   PharmacyContracts: {
     personaKey: 'pharmacy_coordinator',
     greeting: "Welcome! I can help with pharmacy contract details — pricing models, fulfillment SLAs, prescription routing, compliance standards, and onboarding timelines 📑",
+    placeholder: "Ask about pharmacy contracts...",
+    suggestedPrompts: [
+      "What's the pricing model?",
+      "How are prescriptions routed?",
+      "What does LegitScript require?",
+    ],
   },
 
   // ── Admin pages ────────────────────────────────────────────────────────────
   AdminDashboard: {
     personaKey: 'ops_advisor',
-    greeting: "Hey! I can help with metrics interpretation, partner onboarding workflows, compliance processes, or anything operational ⚡",
+    greeting: "Hey! I can help with metrics interpretation, partner onboarding workflows, compliance processes, or anything operational across the platform ⚡",
+    placeholder: "Ask about platform operations...",
+    suggestedPrompts: [
+      "What metrics should I prioritize?",
+      "Walk me through partner onboarding",
+      "How do I review compliance status?",
+    ],
   },
   ComplianceDashboard: {
     personaKey: 'compliance_specialist',
     greeting: "Welcome to Compliance 🛡️ I can help with LegitScript verification workflows, document review checklists, risk scoring, or telehealth compliance best practices.",
+    placeholder: "Ask about compliance requirements...",
+    suggestedPrompts: [
+      "Walk me through LegitScript verification",
+      "What documents are needed for review?",
+      "How do I flag a compliance risk?",
+    ],
   },
   PartnershipHub: {
     personaKey: 'ops_advisor',
-    greeting: "Let's grow the network 🌐 I can advise on partnership outreach strategy, integration priority, API evaluation, or advancing deals through the pipeline.",
+    greeting: "Let's grow the network 🌐 I can advise on partnership outreach strategy, integration priorities, API evaluation, or advancing deals through the pipeline.",
+    placeholder: "Ask about growing the partnership network...",
+    suggestedPrompts: [
+      "How do I prioritize the pipeline?",
+      "What makes a strong partnership deal?",
+      "How do I advance stalled deals?",
+    ],
   },
 
   // ── Default fallback ───────────────────────────────────────────────────────
   default: {
     personaKey: 'wellness_concierge',
-    greeting: "Hi! I'm your MedRevolve Specialist 🌿 I can help with treatments, consultations, partnerships, providers, or pharmacy questions. What brings you here today?",
+    greeting: "Hi! I'm Rev — your MedRevolve guide 🌿 I can help with treatments, consultations, merchant setup, partnerships, providers, or pharmacy questions. What brings you here today?",
+    placeholder: "Ask me anything about MedRevolve...",
+    suggestedPrompts: [
+      "How does MedRevolve work?",
+      "What treatments do you offer?",
+      "How do I get started?",
+    ],
   },
 };
 
@@ -354,11 +574,13 @@ export function getPageContext(pageName) {
   const visuals = getPersonaVisuals(cfg.personaKey);
   return {
     // Identity
-    personaKey:  cfg.personaKey,
-    persona:     persona.name,
-    audience:    persona.audience,
-    role:        persona.role,
-    greeting:    cfg.greeting,
+    personaKey:       cfg.personaKey,
+    persona:          persona.name,
+    audience:         persona.audience,
+    role:             persona.role,
+    greeting:         cfg.greeting,
+    placeholder:      cfg.placeholder || 'Ask me anything...',
+    suggestedPrompts: cfg.suggestedPrompts || [],
     // Visuals (derived from persona)
     photo:       visuals.photo,
     initials:    visuals.initials,
@@ -436,8 +658,50 @@ const PLATFORM_KNOWLEDGE = `
 MEDREVOLVE — COMPREHENSIVE PLATFORM KNOWLEDGE
 ═══════════════════════════════════════════════════════════════════════════════
 
-▶ CORE MISSION:
-MedRevolve is a prescription telehealth platform connecting patients to licensed providers, certified pharmacies, and wellness protocols. We're not insurance, not a clinic — we're a transparent, CPOM-safe referral ecosystem.
+▶ CORE MISSION & BRAND IDENTITY:
+MedRevolve is THE OPERATING SYSTEM FOR MODERN WELLNESS COMMERCE — a full-stack platform that powers DTC wellness merchants with everything they need to launch, sell, and scale: Products · Telehealth · Compliance · Payments — all in one place. We're not insurance, not a clinic — we're a transparent, CPOM-safe ecosystem that started as a DTC merchant ourselves, so we built what we actually needed.
+
+▶ PLATFORM STATS (Real Metrics to Share):
+• $2.4M+ monthly GMV processed across merchant network
+• 94%+ merchant retention rate (12-month cohort)
+• 30-day average merchant launch-to-live timeline
+• Licensed providers in all 50 US states
+• 24-48 hour prescription delivery to patient door
+• 200+ wellness merchants powered on the platform
+
+▶ THE MEDREVOLVE OS — MERCHANT MODULE STACK:
+MedRevolve is the command center for wellness merchants. The 12 modules every merchant can activate:
+1. Domain & Hosting – Custom domain provisioning, SSL, DNS management
+2. Website Builder – Branded wellness storefront, product pages, SEO
+3. Card Processing – Stripe-powered payments, subscriptions, PCI-compliant checkout
+4. Crypto Processing – Accept crypto for wellness products and consults
+5. Inventory Management – Real-time stock tracking, reorder alerts, backup product routing
+6. Compliance Layer – LegitScript, HIPAA, CPOM, state licensing — all handled
+7. Pharmacy Network – Access to verified compounding + mail-order pharmacy partners
+8. Telehealth Module – Licensed provider network, video consults, e-prescribing
+9. Marketing Suite – Email, SMS, retargeting, referral program tools
+10. LMS (MedRevolve University) – Staff training, compliance courses, product education
+11. LLC Formation – Business entity formation for new merchants
+12. Billing & Invoicing – Automated billing, subscription management, payout reconciliation
+
+BASE PLATFORM: $99/mo | Each module: $49-$299/mo depending on complexity
+GO-LIVE TIMELINE: Self-register → 24-48 hours | Full buildout: 30 days
+
+▶ WHO MEDREVOLVE SERVES (MERCHANT TYPES):
+• Med Spas & Wellness Clinics – Adding telehealth + GLP-1 product lines
+• DTC Health Brands – Needing white-label provider + pharmacy infrastructure
+• Fitness Studios & Coaches – Monetizing with hormone/peptide protocols
+• Corporate Wellness Programs – Employee health benefit platforms
+• Supplement & Nutraceutical Brands – Adding Rx as an upsell
+• Influencers & Creators – Building their own branded wellness store
+• Existing Telehealth Cos – Needing better compliance + pharmacy rails
+
+▶ MEDREVOLVE UNIVERSITY (Education Hub):
+• Certification programs for wellness merchants, staff, and operators
+• Tracks: Compliance & Regulatory, Product Science, Telehealth Operations, Commerce & Growth
+• Courses: GLP-1 Essentials, HIPAA for Wellness Businesses, Pharmacy Partnerships, Merchant Launch Playbook
+• On-demand + live cohort formats
+• Completion certificates for staff training and compliance documentation
 
 ▶ TREATMENT CATALOG (ALL PRODUCTS & PRICING):
 
