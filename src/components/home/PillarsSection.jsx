@@ -75,12 +75,12 @@ export default function PillarsSection() {
               className="group relative flex flex-col p-10 lg:p-12 min-h-[480px] overflow-hidden"
               style={{ background: pillar.bg }}>
               {/* Subtle bg texture */}
-              <div className="absolute inset-0 opacity-[0.06]"
+              <div className="absolute inset-0 opacity-[0.06] z-0"
                 style={{ backgroundImage: `url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=40)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-              <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${pillar.bg} 40%, transparent 100%)` }} />
+              <div className="absolute inset-0 z-0" style={{ background: `linear-gradient(135deg, ${pillar.bg} 40%, transparent 100%)` }} />
 
               {/* Index */}
-              <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center justify-between mb-12 relative z-10">
                 <span className="text-[10px] tracking-[0.35em] uppercase font-medium" style={{ color: pillar.light + '60' }}>
                   {pillar.index}
                 </span>
@@ -90,16 +90,16 @@ export default function PillarsSection() {
               </div>
 
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-8" style={{ background: pillar.accent + '20' }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-8 relative z-10" style={{ background: pillar.accent + '20' }}>
                 <Icon className="w-6 h-6" style={{ color: pillar.light }} />
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">{pillar.title}</h3>
-              <p className="text-white/40 text-sm leading-relaxed mb-8 flex-1">{pillar.description}</p>
+              <h3 className="text-2xl font-bold text-white mb-4 leading-tight relative z-10">{pillar.title}</h3>
+              <p className="text-white/40 text-sm leading-relaxed mb-8 flex-1 relative z-10">{pillar.description}</p>
 
               {/* Feature list */}
-              <ul className="space-y-2 mb-10">
+              <ul className="space-y-2 mb-10 relative z-10">
                 {pillar.items.map((item, j) => (
                   <li key={j} className="flex items-center gap-3">
                     <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: pillar.light }} />
@@ -111,7 +111,7 @@ export default function PillarsSection() {
               {/* CTA */}
               <Link to={createPageUrl(pillar.href)}
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="flex items-center gap-2 text-sm font-semibold tracking-wide group-hover:gap-3 transition-all"
+                className="flex items-center gap-2 text-sm font-semibold tracking-wide group-hover:gap-3 transition-all relative z-10 cursor-pointer hover:underline"
                 style={{ color: pillar.light }}>
                 Explore {pillar.category}
                 <ArrowUpRight className="w-4 h-4" />
