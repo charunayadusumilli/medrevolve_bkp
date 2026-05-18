@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -246,8 +246,9 @@ export default function MerchantOnboarding() {
       await runActivationSequence(partner.id);
       navigate(createPageUrl('MerchantDashboard'));
     } catch (e) {
-      setError('Setup failed. Please try again.');
-      console.error(e);
+      const errorMessage = e.message || 'Unknown error occurred';
+      console.error('Merchant onboarding error:', e);
+      setError(`Setup failed: ${errorMessage}. Please contact support if this persists.`);
       setActivating(false);
     } finally {
       setLoading(false);
@@ -337,7 +338,7 @@ export default function MerchantOnboarding() {
                       <div className="sm:col-span-2">
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Business Name *</Label>
                         <Input value={form.businessName} onChange={e => set('businessName', e.target.value)}
-                          placeholder="Elite Peptide Solutions" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                          placeholder="Elite Peptide Solutions" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                       </div>
                       <div>
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Business Type *</Label>
