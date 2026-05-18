@@ -7,7 +7,7 @@ import { createPageUrl } from '@/utils';
 const stats = [
   { v: '200+', l: 'Merchant Partners' },
   { v: '50K+', l: 'Patients Served' },
-  { v: '30 Days', l: 'To Go Live' },
+  { v: 'Now', l: 'Launch Today' },
   { v: 'HIPAA', l: 'Compliant' },
 ];
 
@@ -70,7 +70,7 @@ export default function HeroSection() {
                   {words[wordIdx]}
                 </motion.span>
               </span>
-              <br />Business in 30 Days
+              <br />Business — Launch Now
             </h1>
           </motion.div>
 

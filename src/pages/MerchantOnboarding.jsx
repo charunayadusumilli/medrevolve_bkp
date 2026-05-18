@@ -215,11 +215,11 @@ export default function MerchantOnboarding() {
       await base44.integrations.Core.SendEmail({
         from_name: 'MedRevolve',
         to: form.email,
-        subject: `Your MedRevolve platform is launching — next steps inside`,
+        subject: `Your MedRevolve platform is LIVE — you're launched!`,
         body: `
-<h2>Welcome, ${form.contactName}! 🚀</h2>
-<p>Your <strong>${form.businessName}</strong> platform is being activated right now. Here's what's happening:</p>
-<h3>What we're building for you:</h3>
+<h2>You're Live, ${form.contactName}! 🚀</h2>
+<p>Your <strong>${form.businessName}</strong> platform is launching right now — instantly. Here's what's been activated:</p>
+<h3>What's live for you:</h3>
 <ul>
   <li>✅ White-label storefront (${STOREFRONT_TEMPLATES.find(t => t.id === form.templateId)?.label} template)</li>
   <li>✅ Domain provisioning: ${form.domainName}${form.domainChoice === 'subdomain' ? '.medrevolve.co' : ''}</li>
@@ -293,10 +293,10 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 mb-4 text-white/50 text-xs tracking-widest uppercase">
-            <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> Launch in 30 days
+            <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> Launch Now — Instantly
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Set Up Your Wellness Platform</h1>
-          <p className="text-white/40 text-sm">Everything automated — LLC, storefront, products, team, compliance.</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Wellness Platform Now</h1>
+          <p className="text-white/40 text-sm">Everything automated — LLC, storefront, products, team, compliance. Live today.</p>
         </div>
 
         {/* Progress */}
@@ -328,7 +328,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold">Business Information</h2>
-                      <p className="text-white/40 text-sm mt-1">Tell us about your business so we can customize your platform.</p>
+                      <p className="text-white/40 text-sm mt-1">Tell us about your business — we'll have your platform live by the end of this form.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
