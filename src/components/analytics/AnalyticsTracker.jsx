@@ -1,44 +1,29 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { trackDigestEvent, startDigestTracker } from '@/lib/digestTracker';
+
+let digestStarted = false;
 
 export default function AnalyticsTracker() {
   const location = useLocation();
 
   useEffect(() => {
-    // Track page view
-    const trackPageView = async () => {
-      try {
-        const pageName = location.pathname.replace('/', '') || 'Home';
-        await base44.functions.invoke('trackEvent', {
-          eventType: 'page_view',
-          pageName: pageName,
-          metadata: {
-            path: location.pathname,
-            search: location.search
-          }
-        });
-      } catch (error) {
-        console.error('Analytics tracking error:', error);
-      }
-    };
+    // Start 30-min digest tracker once
+    if (!digestStarted) {
+      startDigestTracker();
+      digestStarted = true;
+    }
+  }, []);
 
-    trackPageView();
+  useEffect(() => {
+    const pageName = location.pathname.replace('/', '') || 'Home';
+    trackDigestEvent('page_view', { page: pageName, path: location.pathname, search: location.search });
   }, [location]);
 
-  return null; // This component doesn't render anything
+  return null;
 }
 
-// Helper function to track custom events
-export const trackEvent = async (action, pageName, metadata = {}) => {
-  try {
-    await base44.functions.invoke('trackEvent', {
-      eventType: 'button_click',
-      pageName: pageName,
-      action: action,
-      metadata: metadata
-    });
-  } catch (error) {
-    console.error('Event tracking error:', error);
-  }
+// Helper function to track custom events — also feeds the digest
+export const trackEvent = (action, pageName, metadata = {}) => {
+  trackDigestEvent('button_click', { action, page: pageName, ...metadata });
 };

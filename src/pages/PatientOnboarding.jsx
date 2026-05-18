@@ -143,14 +143,34 @@ export default function PatientOnboarding() {
           })
         });
 
-        // Send welcome email to patient + admin notification
+        // Notify rned@medrevolve.com + send welcome to patient
         try {
-          await base44.functions.invoke('notifyOnboardingComplete', {
-            email: user.email,
-            full_name: profileData.full_name || user.full_name || user.email,
-            phone: profileData.phone || '',
-            state: profileData.state || ''
-          });
+          await Promise.all([
+            base44.integrations.Core.SendEmail({
+              from_name: 'MedRevolve Platform',
+              to: 'rned@medrevolve.com',
+              subject: `🏥 New Patient Onboarded — ${profileData.full_name || user.email}`,
+              body: `
+<h2>New Patient Onboarding Completed</h2>
+<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
+  <tr><td style="padding:8px;color:#666;width:140px;"><b>Full Name</b></td><td style="padding:8px;">${profileData.full_name || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Email</b></td><td style="padding:8px;">${user.email}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Phone</b></td><td style="padding:8px;">${profileData.phone || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>State</b></td><td style="padding:8px;">${profileData.state || '—'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>City</b></td><td style="padding:8px;">${profileData.city || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>DOB</b></td><td style="padding:8px;">${profileData.date_of_birth || '—'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>ID Uploaded</b></td><td style="padding:8px;">${documents.id_document ? '✅ Yes' : '❌ No'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Completed</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
+</table>
+              `.trim(),
+            }),
+            base44.integrations.Core.SendEmail({
+              from_name: 'MedRevolve',
+              to: user.email,
+              subject: 'Welcome to MedRevolve — Your Account is Ready',
+              body: `<h2>Welcome, ${profileData.full_name || 'there'}!</h2><p>Your MedRevolve account has been set up successfully. You can now book consultations, access your health programs, and manage your prescriptions from your patient portal.</p><p>Questions? Contact us at <a href="mailto:rned@medrevolve.com">rned@medrevolve.com</a></p><p>— The MedRevolve Team</p>`,
+            }),
+          ]);
         } catch (emailError) {
           console.error('Onboarding notification failed:', emailError);
         }

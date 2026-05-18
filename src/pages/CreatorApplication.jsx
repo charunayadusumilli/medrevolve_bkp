@@ -27,8 +27,34 @@ export default function CreatorApplication() {
 
   const submitApplication = useMutation({
     mutationFn: async (data) => {
-      const response = await base44.functions.invoke('submitCreatorApplication', data);
-      return response.data;
+      // Save to DB
+      const record = await base44.entities.CreatorApplication.create({
+        ...data,
+        status: 'pending',
+      });
+
+      // Notify rned@medrevolve.com immediately
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Creators',
+        to: 'rned@medrevolve.com',
+        subject: `🎥 New Creator Application — ${data.full_name} (${data.platform} · ${data.followers_count})`,
+        body: `
+<h2>New Creator Application</h2>
+<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
+  <tr><td style="padding:8px;color:#666;width:140px;"><b>Name</b></td><td style="padding:8px;">${data.full_name}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Email</b></td><td style="padding:8px;">${data.email}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Phone</b></td><td style="padding:8px;">${data.phone || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Platform</b></td><td style="padding:8px;">${data.platform}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Handle</b></td><td style="padding:8px;">${data.platform_handle || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Followers</b></td><td style="padding:8px;font-weight:bold;">${data.followers_count}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Niche</b></td><td style="padding:8px;">${data.audience_niche || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Why Partner</b></td><td style="padding:8px;white-space:pre-wrap;">${data.why_partner || '—'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Submitted</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
+</table>
+        `.trim(),
+      });
+
+      return record;
     },
     onSuccess: () => {
       setSubmitted(true);

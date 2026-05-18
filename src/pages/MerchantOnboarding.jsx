@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { base44 } from '@/api/base44Client';
 import { createPageUrl } from '@/utils';
+import { trackDigestEvent } from '@/lib/digestTracker';
 import {
   Check, ArrowRight, ArrowLeft, Loader2, Building2, Globe,
   ShieldCheck, Package, CreditCard, Zap, Lock, Star, AlertCircle
@@ -199,6 +200,7 @@ export default function MerchantOnboarding() {
         `.trim(),
       });
 
+      trackDigestEvent('merchant_onboarding', { business_name: form.businessName, contact_name: form.contactName, email: form.email, phone: form.phone, monthly_fee: monthlyTotal + 99, business_type: form.businessType });
       navigate(createPageUrl('MerchantDashboard'));
     } catch (e) {
       setError('Setup failed. Please try again.');

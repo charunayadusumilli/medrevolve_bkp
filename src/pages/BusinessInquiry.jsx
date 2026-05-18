@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useMutation } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { trackDigestEvent } from '@/lib/digestTracker';
 import { ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 
 export default function BusinessInquiry() {
@@ -27,8 +28,32 @@ export default function BusinessInquiry() {
 
   const submitInquiry = useMutation({
     mutationFn: async (data) => {
-      const response = await base44.functions.invoke('submitBusinessInquiry', data);
-      return response.data;
+      // Save to DB
+      const record = await base44.entities.BusinessInquiry.create({ ...data, status: 'new' });
+
+      // Notify rned@medrevolve.com immediately
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve B2B',
+        to: 'rned@medrevolve.com',
+        subject: `💼 New B2B Inquiry — ${data.company_name} (${data.interest_type})`,
+        body: `
+<h2>New Business Inquiry</h2>
+<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
+  <tr><td style="padding:8px;color:#666;width:140px;"><b>Company</b></td><td style="padding:8px;">${data.company_name}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Contact</b></td><td style="padding:8px;">${data.contact_name}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Email</b></td><td style="padding:8px;">${data.email}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Phone</b></td><td style="padding:8px;">${data.phone || '—'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Industry</b></td><td style="padding:8px;">${data.industry}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Interest</b></td><td style="padding:8px;font-weight:bold;">${data.interest_type}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Company Size</b></td><td style="padding:8px;">${data.company_size || '—'}</td></tr>
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Message</b></td><td style="padding:8px;white-space:pre-wrap;">${data.message || '—'}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Submitted</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
+</table>
+        `.trim(),
+      });
+
+      trackDigestEvent('business_inquiry', { company_name: data.company_name, contact_name: data.contact_name, email: data.email, interest_type: data.interest_type, industry: data.industry });
+      return record;
     },
     onSuccess: () => {
       setSubmitted(true);
