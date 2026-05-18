@@ -8,10 +8,116 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { 
-  CheckCircle2, AlertCircle, Settings, Mail, MessageSquare, 
-  Calendar, Database, Zap, CreditCard, Send, Phone, CheckCircle,
-  ExternalLink, Copy
+  CheckCircle2, AlertCircle, Settings, CheckCircle,
+  ExternalLink, Copy, Zap
 } from 'lucide-react';
+
+// Brand logo components using official brand colors & SVGs
+const BrandLogo = ({ name, size = 48 }) => {
+  const logos = {
+    stripe: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#635BFF"/>
+        <path d="M27.5 23.5c0-1.4 1.1-2 2.9-2 2.6 0 5.9.8 8.5 2.2V16c-2.8-1.1-5.6-1.5-8.5-1.5-7 0-11.6 3.6-11.6 9.7 0 9.5 13 8 13 12.1 0 1.7-1.5 2.2-3.4 2.2-3 0-6.7-1.2-9.7-2.9v7.8c3.3 1.4 6.6 2 9.7 2 7.2 0 12.1-3.5 12.1-9.7-.1-10.2-13.0-8.4-13.0-12.2z" fill="white"/>
+      </svg>
+    ),
+    gmail: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1"/>
+        <path d="M10 20h40v26H10z" fill="#F1F3F4" rx="2"/>
+        <path d="M10 20l20 15 20-15" stroke="#EA4335" strokeWidth="2.5" fill="none"/>
+        <path d="M10 20v26h6V28l14 10 14-10v18h6V20l-20 15z" fill="#4285F4"/>
+        <path d="M10 20l20 15 20-15H10z" fill="#EA4335"/>
+        <path d="M10 46h6V28l-6-8v26z" fill="#34A853"/>
+        <path d="M50 46h-6V28l6-8v26z" fill="#FBBC04"/>
+      </svg>
+    ),
+    googlecalendar: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1"/>
+        <rect x="10" y="12" width="40" height="38" rx="4" fill="#ffffff" stroke="#4285F4" strokeWidth="2"/>
+        <rect x="10" y="12" width="40" height="12" rx="4" fill="#4285F4"/>
+        <rect x="10" y="20" width="40" height="4" fill="#4285F4"/>
+        <text x="30" y="40" textAnchor="middle" fill="#4285F4" fontSize="16" fontWeight="bold">30</text>
+        <line x1="20" y1="12" x2="20" y2="8" stroke="#4285F4" strokeWidth="3" strokeLinecap="round"/>
+        <line x1="40" y1="12" x2="40" y2="8" stroke="#4285F4" strokeWidth="3" strokeLinecap="round"/>
+      </svg>
+    ),
+    googledrive: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1"/>
+        <path d="M30 10L44 36H16L30 10z" fill="#4285F4"/>
+        <path d="M16 36L8 50h20L36 36H16z" fill="#34A853"/>
+        <path d="M44 36L52 50H32L24 36h20z" fill="#FBBC04"/>
+      </svg>
+    ),
+    twilio: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#F22F46"/>
+        <circle cx="30" cy="30" r="14" fill="none" stroke="white" strokeWidth="3"/>
+        <circle cx="23" cy="23" r="3.5" fill="white"/>
+        <circle cx="37" cy="23" r="3.5" fill="white"/>
+        <circle cx="23" cy="37" r="3.5" fill="white"/>
+        <circle cx="37" cy="37" r="3.5" fill="white"/>
+      </svg>
+    ),
+    zapier: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#FF4A00"/>
+        <path d="M30 12v14M30 34v14M12 30h14M34 30h14M17.5 17.5l9.9 9.9M32.6 32.6l9.9 9.9M17.5 42.5l9.9-9.9M32.6 27.4l9.9-9.9" stroke="white" strokeWidth="3.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    zoho: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#E42527"/>
+        <text x="30" y="38" textAnchor="middle" fill="white" fontSize="18" fontWeight="900" fontFamily="Arial">ZOHO</text>
+      </svg>
+    ),
+    hubspot: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#FF7A59"/>
+        <circle cx="37" cy="20" r="6" fill="white"/>
+        <circle cx="37" cy="20" r="3" fill="#FF7A59"/>
+        <path d="M31 20h-8a10 10 0 0 0-10 10v0a10 10 0 0 0 10 10h2" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round"/>
+        <circle cx="25" cy="40" r="5" fill="white"/>
+      </svg>
+    ),
+    whatsapp: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#25D366"/>
+        <path d="M30 10C19 10 10 19 10 30c0 3.6 1 7 2.7 9.9L10 50l10.4-2.7C23.2 49 26.5 50 30 50c11 0 20-9 20-20S41 10 30 10z" fill="white"/>
+        <path d="M39.5 35.5c-.5.5-1.1.9-1.8.9-.7 0-3.5-1.4-5.9-3.8-2.4-2.4-3.8-5.2-3.8-5.9 0-.7.4-1.3.9-1.8l1-1c.4-.4.9-.4 1.3 0l2.1 2.1c.4.4.4.9 0 1.3l-.7.7c-.2.2-.2.5 0 .7l2.9 2.9c.2.2.5.2.7 0l.7-.7c.4-.4.9-.4 1.3 0l2.1 2.1c.4.4.4.9 0 1.3l-1 1z" fill="#25D366"/>
+      </svg>
+    ),
+    facebook: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#1877F2"/>
+        <path d="M33 50V33h5.5l.8-6.5H33V23c0-1.8.5-3 3.1-3H39.5V14.2C38.7 14.1 36.6 14 34.2 14c-5 0-8.4 3-8.4 8.6V26.5H20V33h5.8v17H33z" fill="white"/>
+      </svg>
+    ),
+    sendgrid: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#1A82E2"/>
+        <rect x="12" y="12" width="16" height="16" rx="2" fill="white" opacity="0.9"/>
+        <rect x="12" y="32" width="16" height="16" rx="2" fill="white" opacity="0.5"/>
+        <rect x="32" y="12" width="16" height="16" rx="2" fill="white" opacity="0.5"/>
+        <rect x="32" y="32" width="16" height="16" rx="2" fill="white" opacity="0.9"/>
+      </svg>
+    ),
+    medrevolve: (
+      <svg viewBox="0 0 60 60" width={size} height={size}>
+        <rect width="60" height="60" rx="12" fill="#2D3A2D"/>
+        <text x="30" y="38" textAnchor="middle" fill="white" fontSize="14" fontWeight="900" fontFamily="Arial">MR</text>
+      </svg>
+    ),
+  };
+  return logos[name] || (
+    <svg viewBox="0 0 60 60" width={size} height={size}>
+      <rect width="60" height="60" rx="12" fill="#f3f4f6"/>
+      <text x="30" y="35" textAnchor="middle" fill="#9ca3af" fontSize="10">{name}</text>
+    </svg>
+  );
+};
 
 function ZohoOAuthFlow() {
   const [step, setStep] = useState(1);
@@ -187,7 +293,7 @@ export default function IntegrationsDashboard() {
   const integrations = [
     {
       name: 'Stripe Payments',
-      icon: CreditCard,
+      logo: 'stripe',
       status: 'configured',
       description: 'Payment processing for subscriptions and products',
       type: 'payment',
@@ -195,71 +301,97 @@ export default function IntegrationsDashboard() {
       docs: 'https://stripe.com/docs'
     },
     {
-      name: 'Email (Core)',
-      icon: Mail,
+      name: 'Gmail',
+      logo: 'gmail',
       status: 'active',
-      description: 'Built-in transactional email service',
+      description: 'Transactional email from rned@medrevolve.com',
       type: 'communication',
-      details: 'Sending to support@medrevolve.com and customers',
+      details: 'Connected via Google OAuth — sending all platform notifications',
+      action: null
+    },
+    {
+      name: 'Google Calendar',
+      logo: 'googlecalendar',
+      status: 'active',
+      description: 'Appointment scheduling & Google Meet links',
+      type: 'scheduling',
+      details: 'Connected — auto-creates calendar events + Meet links on booking',
+      action: null
+    },
+    {
+      name: 'Google Drive',
+      logo: 'googledrive',
+      status: 'active',
+      description: 'Intake form storage and document management',
+      type: 'storage',
+      details: 'Connected — intake forms and compliance docs synced to Drive',
+      action: null
+    },
+    {
+      name: 'HubSpot CRM',
+      logo: 'hubspot',
+      status: 'active',
+      description: 'Lead and contact management',
+      type: 'crm',
+      details: 'Connected — contacts and deals synced automatically',
       action: null
     },
     {
       name: 'Twilio SMS',
-      icon: Phone,
-      status: 'needs_config',
-      description: 'SMS reminders and notifications',
+      logo: 'twilio',
+      status: 'configured',
+      description: 'SMS reminders and appointment notifications',
       type: 'communication',
-      details: 'Requires: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER',
-      action: 'Set secrets in Environment Variables',
+      details: 'Account SID + Auth Token configured',
+      action: 'Test via test panel below',
       testable: true
     },
     {
-      name: 'Zapier Webhooks',
-      icon: Zap,
+      name: 'Zapier',
+      logo: 'zapier',
       status: 'active',
-      description: 'Connects to 5,000+ apps',
+      description: 'Connects to 5,000+ apps via webhooks',
       type: 'automation',
       details: 'Active webhooks: Creator Applications, Business Inquiries',
-      action: 'View EmailAudit page for details'
+      action: 'View EmailAudit page for webhook URLs'
     },
     {
       name: 'Zoho CRM',
-      icon: Database,
+      logo: 'zoho',
       status: 'partial',
-      description: 'Lead and contact management',
+      description: 'Legacy CRM — being migrated to HubSpot',
       type: 'crm',
-      details: 'Has client credentials, needs ZOHO_REFRESH_TOKEN',
+      details: 'Has client credentials, needs ZOHO_REFRESH_TOKEN to fully activate',
       action: 'Generate refresh token at api-console.zoho.com',
       testable: true
     },
     {
-      name: 'Google Calendar',
-      icon: Calendar,
-      status: 'needs_auth',
-      description: 'Provider scheduling and appointments',
-      type: 'scheduling',
-      details: 'OAuth authorization required',
-      action: 'Click Authorize below',
-      authRequired: true
+      name: 'WhatsApp Business',
+      logo: 'whatsapp',
+      status: 'available',
+      description: 'Patient messaging via WhatsApp',
+      type: 'communication',
+      details: 'Available via Twilio WhatsApp API — requires additional setup',
+      action: 'Enable via Twilio WhatsApp sandbox'
     },
     {
-      name: 'SendGrid Email',
-      icon: Send,
+      name: 'Facebook / Meta',
+      logo: 'facebook',
+      status: 'available',
+      description: 'Lead ads and Messenger integration',
+      type: 'marketing',
+      details: 'Connect Meta Ads for lead capture and Messenger support',
+      action: 'Requires Meta Business account'
+    },
+    {
+      name: 'SendGrid',
+      logo: 'sendgrid',
       status: 'optional',
-      description: 'Enhanced email delivery (optional upgrade)',
+      description: 'High-volume email delivery (optional upgrade)',
       type: 'communication',
-      details: 'Optional: Better deliverability, analytics, templates',
+      details: 'Optional: Enhanced deliverability, email analytics and templates',
       action: 'Get API key from app.sendgrid.com'
     },
-    {
-      name: 'Gmail API',
-      icon: Mail,
-      status: 'available',
-      description: 'Advanced email management',
-      type: 'communication',
-      details: 'OAuth authorization available',
-      action: 'Can authorize if needed'
-    }
   ];
 
   const getStatusIcon = (status) => {
@@ -313,80 +445,45 @@ export default function IntegrationsDashboard() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-light text-[#2D3A2D] mb-2">
-            Integrations <span className="font-medium">Dashboard</span>
-          </h1>
-          <p className="text-[#5A6B5A]">Manage all your third-party integrations</p>
+        <div className="mb-8 flex items-center gap-5">
+          <BrandLogo name="medrevolve" size={56} />
+          <div>
+            <h1 className="text-3xl font-bold text-[#2D3A2D]">Integrations Hub</h1>
+            <p className="text-[#5A6B5A] mt-1">All connected services powering the MedRevolve platform</p>
+          </div>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold text-[#4A6741]">
-                    {integrations.filter(i => i.status === 'active' || i.status === 'configured').length}
-                  </p>
-                  <p className="text-sm text-[#5A6B5A]">Active</p>
-                </div>
-                <CheckCircle2 className="w-8 h-8 text-green-500" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {[
+            { label: 'Connected', count: integrations.filter(i => i.status === 'active').length, color: 'text-green-600', icon: '✅', bg: 'bg-green-50 border-green-200' },
+            { label: 'Configured', count: integrations.filter(i => i.status === 'configured' || i.status === 'partial').length, color: 'text-blue-600', icon: '⚙️', bg: 'bg-blue-50 border-blue-200' },
+            { label: 'Needs Setup', count: integrations.filter(i => ['needs_config','needs_auth'].includes(i.status)).length, color: 'text-amber-600', icon: '⚠️', bg: 'bg-amber-50 border-amber-200' },
+            { label: 'Available', count: integrations.filter(i => ['available','optional'].includes(i.status)).length, color: 'text-gray-500', icon: '🔌', bg: 'bg-gray-50 border-gray-200' },
+          ].map(({ label, count, color, icon, bg }) => (
+            <div key={label} className={`rounded-2xl border p-5 flex items-center justify-between ${bg}`}>
+              <div>
+                <p className={`text-3xl font-bold ${color}`}>{count}</p>
+                <p className="text-sm text-gray-600 mt-0.5">{label}</p>
               </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold text-[#D4A574]">
-                    {integrations.filter(i => i.status === 'partial' || i.status === 'needs_config' || i.status === 'needs_auth').length}
-                  </p>
-                  <p className="text-sm text-[#5A6B5A]">Needs Setup</p>
-                </div>
-                <AlertCircle className="w-8 h-8 text-yellow-500" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold text-[#5A6B5A]">
-                    {integrations.filter(i => i.status === 'available' || i.status === 'optional').length}
-                  </p>
-                  <p className="text-sm text-[#5A6B5A]">Available</p>
-                </div>
-                <Settings className="w-8 h-8 text-gray-400" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold text-[#2D3A2D]">
-                    {integrations.length}
-                  </p>
-                  <p className="text-sm text-[#5A6B5A]">Total</p>
-                </div>
-                <Zap className="w-8 h-8 text-[#4A6741]" />
-              </div>
-            </CardContent>
-          </Card>
+              <span className="text-3xl">{icon}</span>
+            </div>
+          ))}
         </div>
 
         {/* Integrations by Category */}
-        {['payment', 'communication', 'crm', 'scheduling', 'automation'].map(type => {
+        {['payment', 'communication', 'scheduling', 'storage', 'crm', 'automation', 'marketing'].map(type => {
           const categoryIntegrations = integrations.filter(i => i.type === type);
           if (categoryIntegrations.length === 0) return null;
 
           const typeNames = {
-            payment: 'Payment Processing',
-            communication: 'Communication',
-            crm: 'CRM & Business',
-            scheduling: 'Scheduling',
-            automation: 'Automation'
+            payment: '💳 Payment Processing',
+            communication: '📡 Communication',
+            crm: '🏢 CRM & Business',
+            scheduling: '📅 Scheduling',
+            automation: '⚡ Automation',
+            storage: '🗄️ Storage',
+            marketing: '📣 Marketing',
           };
 
           return (
@@ -394,27 +491,25 @@ export default function IntegrationsDashboard() {
               <h2 className="text-xl font-medium text-[#2D3A2D] mb-4">
                 {typeNames[type]}
               </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {categoryIntegrations.map((integration) => {
-                  const Icon = integration.icon;
-                  return (
-                    <Card key={integration.name}>
-                      <CardHeader>
+              <div className="grid md:grid-cols-2 gap-5">
+                {categoryIntegrations.map((integration) => (
+                    <Card key={integration.name} className="overflow-hidden border border-[#E8E0D5] shadow-sm hover:shadow-md transition-shadow">
+                      <CardHeader className="pb-3">
                         <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-xl bg-[#F5F0E8] flex items-center justify-center">
-                              <Icon className="w-6 h-6 text-[#4A6741]" />
+                          <div className="flex items-center gap-4">
+                            <div className="flex-shrink-0">
+                              <BrandLogo name={integration.logo} size={48} />
                             </div>
                             <div>
-                              <CardTitle className="text-lg">{integration.name}</CardTitle>
-                              <CardDescription>{integration.description}</CardDescription>
+                              <CardTitle className="text-base font-bold text-[#1a2a1a]">{integration.name}</CardTitle>
+                              <CardDescription className="text-sm mt-0.5">{integration.description}</CardDescription>
                             </div>
                           </div>
                           {getStatusIcon(integration.status)}
                         </div>
                       </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3">
+                      <CardContent className="pt-0">
+                        <div className="space-y-2.5">
                           <div className="flex items-center gap-2">
                             {getStatusBadge(integration.status)}
                           </div>
@@ -422,18 +517,11 @@ export default function IntegrationsDashboard() {
                             <p className="text-sm text-[#5A6B5A]">{integration.details}</p>
                           )}
                           {integration.action && (
-                            <p className="text-sm font-medium text-[#4A6741]">
-                              → {integration.action}
-                            </p>
+                            <p className="text-sm font-medium text-[#4A6741]">→ {integration.action}</p>
                           )}
                           {integration.docs && (
-                            <a 
-                              href={integration.docs}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm text-[#4A6741] underline"
-                            >
-                              View Documentation
+                            <a href={integration.docs} target="_blank" rel="noopener noreferrer" className="text-sm text-[#4A6741] underline flex items-center gap-1">
+                              View Documentation <ExternalLink className="w-3 h-3" />
                             </a>
                           )}
 
@@ -498,8 +586,7 @@ export default function IntegrationsDashboard() {
                         </div>
                       </CardContent>
                     </Card>
-                  );
-                })}
+                ))}
               </div>
             </div>
           );
