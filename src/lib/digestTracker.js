@@ -8,7 +8,7 @@ import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'mr_digest_events';
 const LAST_SENT_KEY = 'mr_digest_last_sent';
-const INTERVAL_MS = 30 * 60 * 1000; // 30 minutes
+const INTERVAL_MS = 5 * 60 * 1000; // 5 minutes (was 30)
 const NOTIFY_EMAIL = 'rned@medrevolve.com';
 
 export function trackDigestEvent(type, data) {
@@ -185,17 +185,56 @@ function formatEventData(data) {
   return parts.join(' · ') || JSON.stringify(data).slice(0, 120);
 }
 
-// Start the 30-min interval checker
+// ── Startup test email — fires once per session to confirm delivery ─────────
+async function sendStartupPing() {
+  try {
+    const already = sessionStorage.getItem('mr_ping_sent');
+    if (already) return;
+    sessionStorage.setItem('mr_ping_sent', '1');
+
+    const nowStr = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    await base44.integrations.Core.SendEmail({
+      from_name: 'MedRevolve Platform',
+      to: NOTIFY_EMAIL,
+      subject: `✅ MedRevolve Platform Active — ${nowStr} ET`,
+      body: `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:#0a0a0a;padding:18px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:16px;font-weight:800;letter-spacing:0.05em;">MEDREVOLVE</h1>
+    <p style="color:rgba(255,255,255,0.4);margin:3px 0 0;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Platform Activity Ping</p>
+  </div>
+  <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;padding:24px;">
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+      <p style="margin:0;font-size:15px;font-weight:700;color:#14532d;">✅ Email delivery confirmed — platform is live</p>
+      <p style="margin:4px 0 0;font-size:12px;color:#15803d;">Session started at ${nowStr} ET</p>
+    </div>
+    <p style="font-size:13px;color:#374151;">This confirms the MedRevolve email notification system is working correctly. You will receive:</p>
+    <ul style="font-size:13px;color:#374151;line-height:1.8;">
+      <li>📧 <b>Immediate alerts</b> for every form submission (merchant, contact, creator, patient)</li>
+      <li>📊 <b>Activity digests</b> every 5 minutes when traffic is detected</li>
+      <li>🚀 <b>Startup ping</b> each new browser session (this email)</li>
+    </ul>
+    <p style="font-size:12px;color:#9ca3af;margin-top:16px;">Sent to: ${NOTIFY_EMAIL} · Page: ${window.location.pathname || '/'}</p>
+  </div>
+</div>`.trim(),
+    });
+    console.log('[Ping] Startup email sent to', NOTIFY_EMAIL);
+  } catch (err) {
+    console.error('[Ping] Failed to send startup ping:', err);
+  }
+}
+
+// Start the 5-min interval checker
 let digestInterval = null;
 
 export function startDigestTracker() {
   if (digestInterval) return;
 
-  // Check immediately on start if overdue
-  const lastSent = getLastSent();
-  if (Date.now() - lastSent >= INTERVAL_MS) {
-    sendDigest();
-  }
+  // Send startup ping immediately to verify email delivery
+  sendStartupPing();
+
+  // Fire digest immediately if there are stored events from last session
+  sendDigest();
 
   digestInterval = setInterval(() => {
     sendDigest();

@@ -137,8 +137,20 @@ export default function ForCreators() {
     }
   ];
 
-  const handleQuickApply = () => {
+  const handleQuickApply = async () => {
+    if (!email) return;
     trackEvent('Quick Apply Email Submit', 'ForCreators', { email });
+    // Send immediate notification to admin
+    try {
+      await base44.integrations.Core.SendEmail({
+        from_name: 'MedRevolve Platform',
+        to: 'rned@medrevolve.com',
+        subject: `🎥 Creator Quick-Apply — ${email}`,
+        body: `<h2>Creator Quick-Apply Submitted</h2><table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;"><tr><td style="padding:8px;color:#666;width:120px;"><b>Email</b></td><td style="padding:8px;">${email}</td></tr><tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Submitted</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US',{timeZone:'America/New_York'})} ET</td></tr><tr><td style="padding:8px;color:#666;"><b>Source</b></td><td style="padding:8px;">ForCreators Quick-Apply CTA</td></tr></table><p style="color:#888;font-size:12px;margin-top:16px;">Redirected to full application form.</p>`,
+      });
+    } catch (e) {
+      console.error('[QuickApply] Email failed:', e);
+    }
     window.location.href = createPageUrl(`CreatorApplication?email=${encodeURIComponent(email)}`);
   };
 
