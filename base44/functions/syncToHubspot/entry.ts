@@ -1,4 +1,15 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+
+// Maps entity names to HubSpot source keys — used when called from entity automations
+const ENTITY_SOURCE_MAP = {
+  CustomerIntake: 'customer_intake',
+  BusinessInquiry: 'business_inquiry',
+  CreatorApplication: 'creator_application',
+  ProviderIntake: 'provider_intake',
+  PharmacyIntake: 'pharmacy_intake',
+  ContactRequest: 'contact_request',
+  Partner: 'patient_onboarding',
+};
 
 Deno.serve(async (req) => {
   try {
@@ -6,7 +17,20 @@ Deno.serve(async (req) => {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('hubspot');
 
     const body = await req.json();
-    const { source, data } = body;
+
+    // Support both direct calls {source, data} and entity automation payloads {event, data}
+    let source = body.source;
+    let data = body.data;
+
+    if (!source && body.event?.entity_name) {
+      source = ENTITY_SOURCE_MAP[body.event.entity_name];
+      data = body.data;
+    }
+
+    if (!source || !data) {
+      console.error('Missing source or data:', JSON.stringify(body));
+      return Response.json({ error: 'Missing source or data' }, { status: 400 });
+    }
 
     // Build contact properties based on source
     let contactProps = {};
@@ -26,7 +50,6 @@ Deno.serve(async (req) => {
         lifecyclestage: 'lead',
         jobtitle: data.primary_interest || '',
         website: 'medrevolve.com',
-        hs_analytics_source: 'SOCIAL_MEDIA',
       };
     } else if (source === 'business_inquiry') {
       const nameParts = (data.contact_name || '').split(' ');
@@ -86,36 +109,36 @@ Deno.serve(async (req) => {
         lifecyclestage: 'lead',
         website: 'medrevolve.com',
       };
-    } else if (source === 'patient_onboarding') {
-      const nameParts = (data.full_name || '').split(' ');
+    } else if (source === 'patient_onboarding' || source === 'merchant_onboarding') {
+      const nameParts = (data.full_name || data.contactName || '').split(' ');
       contactProps = {
         email: data.email,
         firstname: nameParts[0] || '',
         lastname: nameParts.slice(1).join(' ') || '',
         phone: data.phone || '',
+        company: data.businessName || data.business_name || '',
         city: data.city || '',
         state: data.state || '',
-        zip: data.zip_code || '',
-        jobtitle: data.primary_interest || '',
         hs_lead_status: 'NEW',
-        lifecyclestage: 'lead',
+        lifecyclestage: source === 'merchant_onboarding' ? 'opportunity' : 'lead',
         website: 'medrevolve.com',
       };
     } else {
-      return Response.json({ error: 'Unknown source' }, { status: 400 });
+      console.warn(`Unknown source: ${source}, skipping`);
+      return Response.json({ skipped: true, reason: `Unknown source: ${source}` });
     }
 
-    // Check if contact already exists
+    if (!contactProps.email) {
+      console.warn('No email found in data, skipping HubSpot sync');
+      return Response.json({ skipped: true, reason: 'No email' });
+    }
+
+    // Upsert contact (search first, then create or update)
     const searchRes = await fetch('https://api.hubapi.com/crm/v3/objects/contacts/search', {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
+      headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        filterGroups: [{
-          filters: [{ propertyName: 'email', operator: 'EQ', value: contactProps.email }]
-        }],
+        filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: contactProps.email }] }],
         limit: 1,
       }),
     });
@@ -123,30 +146,22 @@ Deno.serve(async (req) => {
 
     let result;
     if (searchData.total > 0) {
-      // Update existing contact
       const contactId = searchData.results[0].id;
       const updateRes = await fetch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, {
         method: 'PATCH',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ properties: contactProps }),
       });
       result = await updateRes.json();
-      console.log(`Updated HubSpot contact ${contactId} for ${source}:`, JSON.stringify(result));
+      console.log(`✅ Updated HubSpot contact ${contactId} [${source}]`);
     } else {
-      // Create new contact
       const createRes = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ properties: contactProps }),
       });
       result = await createRes.json();
-      console.log(`HubSpot create response for ${source}:`, JSON.stringify(result));
+      console.log(`✅ Created HubSpot contact [${source}]:`, result.id);
     }
 
     if (result.status === 'error' || result.message) {
@@ -154,7 +169,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: result.message, details: result }, { status: 400 });
     }
 
-    return Response.json({ success: true, hubspot_id: result.id });
+    return Response.json({ success: true, hubspot_id: result.id, source });
   } catch (error) {
     console.error('HubSpot sync error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });

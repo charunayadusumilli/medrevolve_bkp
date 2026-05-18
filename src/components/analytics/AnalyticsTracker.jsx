@@ -69,7 +69,31 @@ export default function AnalyticsTracker() {
   return null;
 }
 
-// Helper function to track custom events — also feeds the digest
+// Helper function to track custom events — feeds digest AND backend analytics
 export const trackEvent = (action, pageName, metadata = {}) => {
   trackDigestEvent('button_click', { action, page: pageName, ...metadata });
+  // Also persist high-value events to backend analytics db
+  const highValue = ['submit', 'onboard', 'book', 'checkout', 'purchase', 'apply', 'signup'];
+  if (highValue.some(k => action?.toLowerCase().includes(k))) {
+    base44.functions.invoke('masterAnalytics', {
+      eventType: 'button_click',
+      pageName,
+      action,
+      metadata,
+      severity: 'high',
+    }).catch(() => {});
+  }
+};
+
+// Track form submissions with full backend persistence
+export const trackFormSubmit = (formName, pageName, data = {}) => {
+  trackDigestEvent(formName, { ...data, page: pageName });
+  base44.functions.invoke('masterAnalytics', {
+    eventType: formName,
+    pageName,
+    action: 'form_submit',
+    userEmail: data.email || null,
+    metadata: data,
+    severity: 'high',
+  }).catch(() => {});
 };
