@@ -342,7 +342,7 @@ export default function MerchantOnboarding() {
                       <div>
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Business Type *</Label>
                         <Select value={form.businessType} onValueChange={v => set('businessType', v)}>
-                          <SelectTrigger className="mt-1 bg-white/8 border-white/15 text-white"><SelectValue placeholder="Select type" /></SelectTrigger>
+                          <SelectTrigger className="mt-1 bg-white border-gray-300 text-gray-900 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]"><SelectValue placeholder="Select type" /></SelectTrigger>
                           <SelectContent>
                             <SelectItem value="Clinic">Clinic / Med Spa</SelectItem>
                             <SelectItem value="Gym">Gym / Fitness Studio</SelectItem>
@@ -358,23 +358,23 @@ export default function MerchantOnboarding() {
                         <Input 
                           value={form.website} 
                           onChange={e => set('website', e.target.value)}
-                          className="bg-yellow-50 border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500"
-                          placeholder="https://yoursite.com" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                          className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]"
+                          placeholder="https://yoursite.com" />
                       </div>
                       <div>
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Your Full Name *</Label>
                         <Input value={form.contactName} onChange={e => set('contactName', e.target.value)}
-                          placeholder="John Doe" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                          placeholder="John Doe" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                       </div>
                       <div>
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Phone *</Label>
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
-                          placeholder="(555) 123-4567" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                          placeholder="(555) 123-4567" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                       </div>
                       <div className="sm:col-span-2">
                         <Label className="text-white/60 text-xs uppercase tracking-widest">Business Email *</Label>
                         <Input type="email" value={form.email} onChange={e => set('email', e.target.value)}
-                          placeholder="owner@business.com" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                          placeholder="owner@business.com" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                       </div>
                     </div>
                   </>
@@ -413,17 +413,17 @@ export default function MerchantOnboarding() {
                         <div className="sm:col-span-2">
                           <Label className="text-white/60 text-xs uppercase tracking-widest">LLC / Entity Name *</Label>
                           <Input value={form.llcName} onChange={e => set('llcName', e.target.value)}
-                            placeholder="Elite Peptide Solutions LLC" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                            placeholder="Elite Peptide Solutions LLC" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                         </div>
                         <div>
                           <Label className="text-white/60 text-xs uppercase tracking-widest">EIN (Tax ID) *</Label>
                           <Input value={form.ein} onChange={e => set('ein', e.target.value)}
-                            placeholder="XX-XXXXXXX" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                            placeholder="XX-XXXXXXX" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                         </div>
                         <div>
                           <Label className="text-white/60 text-xs uppercase tracking-widest">State of Incorporation *</Label>
                           <Select value={form.stateOfIncorporation} onValueChange={v => set('stateOfIncorporation', v)}>
-                            <SelectTrigger className="mt-1 bg-white/8 border-white/15 text-white"><SelectValue placeholder="Select state" /></SelectTrigger>
+                            <SelectTrigger className="mt-1 bg-white border-gray-300 text-gray-900 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]"><SelectValue placeholder="Select state" /></SelectTrigger>
                             <SelectContent>
                               {['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'].map(s => (
                                 <SelectItem key={s} value={s}>{s}</SelectItem>
@@ -436,7 +436,7 @@ export default function MerchantOnboarding() {
                             Owner SSN Last 4 <Lock className="w-3 h-3 text-white/30" />
                           </Label>
                           <Input value={form.ownerSSNLast4} onChange={e => set('ownerSSNLast4', e.target.value.slice(0,4))}
-                            placeholder="XXXX" maxLength={4} className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                            placeholder="XXXX" maxLength={4} className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                           <p className="text-xs text-white/30 mt-1">Encrypted · KYC only</p>
                         </div>
                         <div className="sm:col-span-2">
@@ -485,7 +485,7 @@ export default function MerchantOnboarding() {
                         <div>
                           <Label className="text-white/60 text-xs uppercase tracking-widest">Desired Business Name *</Label>
                           <Input value={form.llcName} onChange={e => set('llcName', e.target.value)}
-                            placeholder="Elite Peptide Solutions" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                            placeholder="Elite Peptide Solutions" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                           <p className="text-xs text-white/30 mt-1">We'll check availability and file "{form.llcName || 'your name'} LLC"</p>
                         </div>
 
@@ -544,7 +544,7 @@ export default function MerchantOnboarding() {
                       <Label className="text-white/60 text-xs uppercase tracking-widest">Brand Display Name</Label>
                       <Input value={form.brandName} onChange={e => set('brandName', e.target.value)}
                         placeholder={form.businessName || 'Your Brand Name'}
-                        className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                        className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                       <p className="text-white/30 text-xs mt-1">This appears on your storefront. Default: your business name.</p>
                     </div>
                     <div className="bg-[#4A6741]/10 border border-[#4A6741]/30 rounded-lg p-4 text-sm text-white/60">
@@ -586,7 +586,7 @@ export default function MerchantOnboarding() {
                       <div className="flex items-center gap-2 mt-1">
                         <Input value={form.domainName} onChange={e => set('domainName', e.target.value)}
                           placeholder={form.domainChoice === 'subdomain' ? 'yourname' : 'yoursite.com'}
-                          className="bg-white/8 border-white/15 text-white placeholder:text-white/25 flex-1" />
+                          className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741] flex-1" />
                         {form.domainChoice === 'subdomain' && (
                           <span className="text-white/40 text-sm whitespace-nowrap">.medrevolve.co</span>
                         )}
@@ -683,23 +683,23 @@ export default function MerchantOnboarding() {
                         <div>
                           <Label className="text-white/50 text-xs">Name on Card</Label>
                           <Input value={form.cardName} onChange={e => set('cardName', e.target.value)}
-                            placeholder="John Doe" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                            placeholder="John Doe" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                         </div>
                         <div>
                           <Label className="text-white/50 text-xs">Card Number</Label>
                           <Input value={form.cardNumber} onChange={e => set('cardNumber', e.target.value.replace(/\D/g,'').slice(0,16))}
-                            placeholder="4242 4242 4242 4242" className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25 font-mono" />
+                            placeholder="4242 4242 4242 4242" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741] font-mono" />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <Label className="text-white/50 text-xs">Expiry</Label>
                             <Input value={form.cardExpiry} onChange={e => set('cardExpiry', e.target.value)}
-                              placeholder="MM/YY" maxLength={5} className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                              placeholder="MM/YY" maxLength={5} className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                           </div>
                           <div>
                             <Label className="text-white/50 text-xs">CVC</Label>
                             <Input value={form.cardCvc} onChange={e => set('cardCvc', e.target.value.slice(0,4))}
-                              placeholder="123" maxLength={4} className="mt-1 bg-white/8 border-white/15 text-white placeholder:text-white/25" />
+                              placeholder="123" maxLength={4} className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
                           </div>
                         </div>
                         <p className="text-white/25 text-xs flex items-center gap-1.5">
