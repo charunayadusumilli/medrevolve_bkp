@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -968,11 +968,11 @@ function CategoryCard({ category, isActive, onClick }) {
 }
 
 function ProductCard({ product }) {
-  const [aiImage, setAiImage] = React.useState(null);
-  const [imageLoading, setImageLoading] = React.useState(false);
+  const [aiImage, setAiImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
   const cacheKey = `mr_img_${product.id}`;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Check session cache first
     const cached = sessionStorage.getItem(cacheKey);
     if (cached) { setAiImage(cached); return; }
