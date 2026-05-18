@@ -29,11 +29,13 @@ const MODULE_DEFS = [
 function MerchantDashboardInner() {
   const queryClient = useQueryClient();
   const [partner, setPartner] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const { data: partners = [] } = useQuery({
+  const { data: partners = [], isLoading: partnersLoading, isError: partnersError } = useQuery({
     queryKey: ['my-partner'],
     queryFn: async () => {
       const user = await base44.auth.me();
+      setCurrentUser(user);
       return base44.entities.Partner.filter({ email: user.email });
     }
   });
@@ -100,16 +102,116 @@ function MerchantDashboardInner() {
     { label: 'Active Modules', value: activeModuleKeys.length, icon: TrendingUp, color: 'text-amber-400', bg: 'bg-amber-500/10' },
   ];
 
-  if (!partner) {
+  // ── PHASE 1: Loading ──────────────────────────────────────────
+  if (partnersLoading) {
     return (
       <div className="min-h-screen bg-[#0F1A0F] flex items-center justify-center">
-        <div className="text-center text-white">
-          <div className="w-8 h-8 border-2 border-[#4A6741] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/60">Loading your platform...</p>
-          <div className="mt-6">
-            <p className="text-white/40 text-sm mb-3">No merchant account found?</p>
+        <div className="text-center text-white max-w-sm px-6">
+          <div className="w-10 h-10 border-2 border-[#4A6741] border-t-transparent rounded-full animate-spin mx-auto mb-5" />
+          <p className="text-white font-semibold mb-1">Loading your platform...</p>
+          <p className="text-white/30 text-sm">Checking merchant account for <span className="text-white/60">{currentUser?.email || '...'}</span></p>
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {['Authenticating', 'Fetching account', 'Loading modules'].map((step, i) => (
+              <div key={i} className="flex items-center gap-1.5 text-[10px] text-white/20 tracking-wide">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#4A6741]/50 animate-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
+                {step}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── PHASE 2: Error fetching ────────────────────────────────────
+  if (partnersError) {
+    return (
+      <div className="min-h-screen bg-[#0F1A0F] flex items-center justify-center">
+        <div className="text-center text-white max-w-md px-6">
+          <div className="w-14 h-14 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-5">
+            <AlertCircle className="w-7 h-7 text-red-400" />
+          </div>
+          <p className="text-white font-bold text-lg mb-2">Failed to load platform</p>
+          <p className="text-white/40 text-sm mb-2">There was a network error fetching your account.</p>
+          <p className="text-white/20 text-xs mb-6">Logged in as: <span className="text-white/40">{currentUser?.email}</span></p>
+          <div className="flex flex-col gap-3">
+            <Button onClick={() => queryClient.invalidateQueries({ queryKey: ['my-partner'] })}
+              className="bg-[#4A6741] hover:bg-[#3D5636] text-white w-full">
+              Retry Connection
+            </Button>
             <Link to={createPageUrl('MerchantOnboarding')}>
-              <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white">Set Up Your Platform</Button>
+              <Button variant="outline" className="border-white/15 text-white/60 hover:text-white w-full">
+                Start Fresh Onboarding
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── PHASE 3: No merchant account found ────────────────────────
+  if (!partner) {
+    return (
+      <div className="min-h-screen bg-[#0F1A0F] flex items-center justify-center px-6">
+        <div className="text-white max-w-lg w-full">
+
+          {/* Status breakdown */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-amber-500/10 rounded-full flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-amber-400" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-lg">No merchant account found</p>
+                <p className="text-white/40 text-sm">Signed in as <span className="text-amber-400/70">{currentUser?.email}</span></p>
+              </div>
+            </div>
+
+            {/* Phase checklist */}
+            <div className="bg-white/3 border border-white/8 rounded-2xl p-5 space-y-3 mb-6">
+              <p className="text-white/30 text-[10px] tracking-[0.2em] uppercase mb-4 font-semibold">Platform Load Status</p>
+              {[
+                { label: 'Authentication', detail: `Signed in as ${currentUser?.email || 'unknown'}`, status: 'ok' },
+                { label: 'Merchant lookup', detail: `Searched Partner records for email match`, status: 'ok' },
+                { label: 'Account found', detail: `No Partner record linked to this email`, status: 'fail' },
+                { label: 'Dashboard load', detail: 'Blocked — requires merchant account', status: 'blocked' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold
+                    ${item.status === 'ok' ? 'bg-green-500/20 text-green-400' :
+                      item.status === 'fail' ? 'bg-red-500/20 text-red-400' :
+                      'bg-white/10 text-white/30'}`}>
+                    {item.status === 'ok' ? '✓' : item.status === 'fail' ? '✗' : '—'}
+                  </div>
+                  <div>
+                    <p className={`text-sm font-semibold ${item.status === 'ok' ? 'text-white/70' : item.status === 'fail' ? 'text-red-400' : 'text-white/25'}`}>
+                      {item.label}
+                    </p>
+                    <p className="text-white/25 text-xs">{item.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-white/30 text-sm leading-relaxed">
+              Your email <span className="text-white/60">{currentUser?.email}</span> doesn't have a linked merchant account yet.
+              This happens if you signed up but haven't completed onboarding, or if you're using a different email than the one you applied with.
+            </p>
+          </div>
+
+          {/* Actions */}
+          <div className="space-y-3">
+            <Link to={createPageUrl('MerchantOnboarding')} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white w-full h-12 font-semibold">
+                Complete Merchant Onboarding
+              </Button>
+            </Link>
+            <p className="text-center text-white/20 text-xs">Already applied with a different email? Contact support.</p>
+            <Link to={createPageUrl('Home')} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <Button variant="ghost" className="text-white/30 hover:text-white w-full text-sm">
+                ← Return to Homepage
+              </Button>
             </Link>
           </div>
         </div>
