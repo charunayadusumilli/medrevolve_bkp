@@ -11,7 +11,7 @@ import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals }
 import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
 import PersonaFAB from './PersonaFAB';
-import RevBotLogo from './RevBotLogo';
+import Avatar3D from './Avatar3D';
 
 function usePageContext() {
   const location = useLocation();
@@ -276,25 +276,14 @@ export default function AIAssistant() {
                 className="px-4 py-3.5 flex items-center justify-between flex-shrink-0 relative overflow-hidden"
                 style={{ background: `linear-gradient(135deg, #0a0a0a 0%, ${vis.gradient[0]} 60%, ${vis.gradient[1]} 100%)` }}
               >
-                {/* Subtle pattern overlay */}
-                <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-
-                <div className="flex items-center gap-3 relative z-10">
-                  <div
-                    className="flex-shrink-0 flex items-center justify-center rounded-xl shadow-lg"
-                    style={{ width: 38, height: 38, background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)', border: '1.5px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}
-                  >
-                    <RevBotLogo size={20} color="white" />
-                  </div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <Avatar3D size={56} animated={true} />
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-white text-sm leading-tight tracking-wide">Rev Bot</p>
-                      <span className="text-[9px] font-semibold bg-white/15 text-white/80 px-1.5 py-0.5 rounded-full uppercase tracking-wider">AI</span>
+                      <p className="font-bold text-white text-base leading-tight">Rev</p>
+                      <span className="text-[9px] font-semibold bg-emerald-500/30 text-emerald-100 px-2 py-0.5 rounded-full uppercase tracking-wider">Active</span>
                     </div>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50" />
-                      <p className="text-[10px] text-white/50 leading-tight">{ctx.role}</p>
-                    </div>
+                    <p className="text-[11px] text-white/60 mt-0.5">{ctx.role}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5 relative z-10">
@@ -325,37 +314,28 @@ export default function AIAssistant() {
                     className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#F8F7F4] min-h-0"
                   >
                     {messages.map((msg, idx) => (
-                      <MessageBubble key={idx} msg={msg} />
-                    ))}
-                    {loading && (
-                      <div className="flex justify-start gap-2.5">
-                        <div
-                          className="flex-shrink-0 mt-0.5 flex items-center justify-center rounded-xl shadow-sm"
-                          style={{ width: 28, height: 28, background: 'linear-gradient(135deg, #0a0a0a 0%, #2D3A2D 55%, #4A6741 100%)' }}
-                        >
-                          <RevBotLogo size={15} color="white" />
-                        </div>
-                        <div className="bg-white border border-[#EBEBEB] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
-                          <TypingDots />
-                        </div>
-                      </div>
-                    )}
+                       <MessageBubble key={idx} msg={msg} />
+                     ))}
+                     {loading && (
+                       <div className="flex justify-start">
+                         <div className="bg-white border border-[#EBEBEB] rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
+                           <TypingDots />
+                         </div>
+                       </div>
+                     )}
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* ── Suggested Prompts (context-aware, shown when few messages) ── */}
+                  {/* ── Suggested Prompts (compact chips) ── */}
                   {ctx.suggestedPrompts?.length > 0 && messages.length <= 2 && (
-                    <div className="flex-shrink-0 px-3 pt-2 pb-1 bg-[#F8F7F4] border-t border-[#EBEBEB]">
-                      <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1.5 px-1 flex items-center gap-1">
-                        <Zap className="w-2.5 h-2.5" /> Quick questions
-                      </p>
-                      <div className="flex flex-col gap-1.5">
+                    <div className="flex-shrink-0 px-3 py-2 bg-[#F8F7F4] border-t border-[#EBEBEB]">
+                      <div className="flex flex-wrap gap-2">
                         {ctx.suggestedPrompts.map((prompt, i) => (
                           <button
                             key={i}
                             onClick={() => sendMessage(prompt)}
                             disabled={loading}
-                            className="text-left text-xs px-3 py-2 bg-white hover:bg-[#4A6741] text-[#374151] hover:text-white rounded-xl font-medium border border-[#EBEBEB] hover:border-[#4A6741] transition-all disabled:opacity-50 shadow-sm"
+                            className="text-[11px] px-3 py-1.5 bg-white hover:bg-[#4A6741] text-gray-700 hover:text-white rounded-full font-medium border border-[#EBEBEB] hover:border-[#4A6741] transition-all disabled:opacity-50"
                           >
                             {prompt}
                           </button>
@@ -364,83 +344,71 @@ export default function AIAssistant() {
                     </div>
                   )}
 
-                  {/* ── FAQ Chips ── */}
-                  <div className="flex-shrink-0 bg-white border-t border-[#EBEBEB]">
-                    <button
-                      onClick={() => setFaqOpen(o => !o)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold hover:bg-gray-50 transition-colors"
-                      style={{ color: vis.gradient[0] }}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <Sparkles className="w-3 h-3" />
-                        More questions
-                      </span>
-                      <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    <AnimatePresence>
-                      {faqOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-3 pb-3 flex flex-wrap gap-1.5 max-h-[96px] overflow-y-auto">
-                            {faqs.map(faq => (
-                              <button
-                                key={faq.label}
-                                onClick={() => sendMessage(faq.q)}
-                                disabled={loading}
-                                className="text-[11px] px-2.5 py-1.5 bg-gray-50 hover:bg-gray-100 text-gray-600 hover:text-gray-900 rounded-full font-medium border border-gray-200 transition-all disabled:opacity-50 whitespace-nowrap"
-                              >
-                                {faq.label}
-                              </button>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  {/* ── FAQ Quick Access ── */}
+                  {faqs.length > 0 && (
+                    <div className="flex-shrink-0 px-3 py-2 bg-[#F8F7F4] border-t border-[#EBEBEB]">
+                      <button
+                        onClick={() => setFaqOpen(o => !o)}
+                        className="w-full flex items-center justify-between text-[11px] font-semibold text-gray-600 hover:text-gray-900 mb-1.5"
+                      >
+                        <span className="flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" /> More help
+                        </span>
+                        <ChevronDown className={`w-3 h-3 transition-transform ${faqOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {faqOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.15 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="flex flex-wrap gap-1.5">
+                              {faqs.map(faq => (
+                                <button
+                                  key={faq.label}
+                                  onClick={() => sendMessage(faq.q)}
+                                  disabled={loading}
+                                  className="text-[10px] px-2 py-1 bg-white hover:bg-gray-100 text-gray-600 rounded-full border border-gray-200 transition-all disabled:opacity-50"
+                                >
+                                  {faq.label}
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
 
                   {/* ── Input ── */}
-                  <div className="flex-shrink-0 px-3 pb-3 pt-2 bg-white border-t border-[#EBEBEB]">
-                    <div className="flex gap-2 items-center">
-                      <div className="flex-1 relative">
-                        <Input
-                          ref={inputRef}
-                          value={input}
-                          onChange={e => setInput(e.target.value)}
-                          onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); } }}
-                          placeholder={ctx.placeholder || 'Ask Rev Bot anything...'}
-                          className="flex-1 rounded-full text-sm border-gray-200 bg-gray-50 focus:bg-white pr-3 pl-4"
-                          disabled={loading}
-                          aria-label="Chat input"
-                          maxLength={2000}
-                        />
-                      </div>
+                  <div className="flex-shrink-0 px-3 py-3 bg-white border-t border-[#EBEBEB]">
+                    <div className="flex gap-2 items-center mb-2">
+                      <Input
+                        ref={inputRef}
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); } }}
+                        placeholder={ctx.placeholder || 'Your question...'}
+                        className="flex-1 rounded-full text-sm border-gray-200 bg-gray-50 focus:bg-white"
+                        disabled={loading}
+                        aria-label="Chat input"
+                        maxLength={2000}
+                      />
                       <Button
                         onClick={() => sendMessage(input)}
                         disabled={loading || !input.trim()}
                         size="icon"
-                        className="rounded-full border-0 flex-shrink-0 w-9 h-9 shadow-md disabled:opacity-40"
+                        className="rounded-full border-0 w-8 h-8 shadow-md disabled:opacity-40"
                         style={{ background: input.trim() ? `linear-gradient(135deg, ${vis.gradient[0]}, ${vis.gradient[1]})` : '#e5e7eb' }}
-                        aria-label="Send message"
+                        aria-label="Send"
                       >
                         <Send className="w-3.5 h-3.5 text-white" />
                       </Button>
                     </div>
-                    <div className="flex items-center justify-between mt-1.5 px-1">
-                      <p className="text-[10px] text-gray-400">Not medical advice · AI may make mistakes</p>
-                      {voiceSupported && (
-                        <button
-                          onClick={startVoiceCall}
-                          className="text-[10px] text-gray-400 hover:text-gray-600 flex items-center gap-1 transition-colors"
-                        >
-                          <PhoneCall className="w-2.5 h-2.5" /> Talk instead
-                        </button>
-                      )}
-                    </div>
+                    <p className="text-[9px] text-gray-400 text-center">Not medical advice</p>
                   </div>
                 </>
               )}
