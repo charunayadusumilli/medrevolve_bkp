@@ -53,10 +53,9 @@ export default function AnalyticsTracker() {
   const location = useLocation();
 
   useEffect(() => {
-    // Start digest tracker + send startup email once per session
+    // Start digest tracker (startup email disabled until domain verification completes)
     if (!digestStarted) {
       startDigestTracker();
-      sendDirectStartupEmail();
       digestStarted = true;
     }
   }, []);
