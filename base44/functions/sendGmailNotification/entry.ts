@@ -14,10 +14,9 @@ Deno.serve(async (req) => {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
 
-    // Build RFC 2822 email
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'noreply@medrevolve.com';
+    // Build RFC 2822 email — always send from rned@medrevolve.com
     const emailLines = [
-      `From: MedRevolve <${adminEmail}>`,
+      `From: MedRevolve <rned@medrevolve.com>`,
       `To: ${to}`,
       `Subject: ${subject}`,
       'MIME-Version: 1.0',

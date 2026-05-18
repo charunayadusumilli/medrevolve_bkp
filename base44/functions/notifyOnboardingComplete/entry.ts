@@ -36,7 +36,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Email and full name are required' }, { status: 400 });
     }
 
-    const adminEmail = Deno.env.get('ADMIN_EMAIL') || 'rned@medrevolve.com';
+    const adminEmail = 'rned@medrevolve.com';
     const firstName = data.full_name.split(' ')[0];
     const completedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
