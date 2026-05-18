@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
@@ -7,6 +7,8 @@ import { Upload, FileText, Check, AlertCircle, Loader2 } from 'lucide-react';
 export default function DocumentUploadStep({ data, onUpdate }) {
   const [uploading, setUploading] = useState({});
   const [uploadProgress, setUploadProgress] = useState({});
+  const [uploadErrors, setUploadErrors] = useState({});
+  const fileInputRefs = useRef({});
 
   const documentTypes = [
     {
@@ -25,23 +27,50 @@ export default function DocumentUploadStep({ data, onUpdate }) {
 
   const handleFileUpload = async (e, docKey) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.warn('No file selected');
+      return;
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+      setUploadErrors(prev => ({ ...prev, [docKey]: 'Please upload a valid image or PDF file' }));
+      return;
+    }
+
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+      setUploadErrors(prev => ({ ...prev, [docKey]: 'File size must be less than 10MB' }));
+      return;
+    }
 
     setUploading(prev => ({ ...prev, [docKey]: true }));
     setUploadProgress(prev => ({ ...prev, [docKey]: 0 }));
+    setUploadErrors(prev => ({ ...prev, [docKey]: '' }));
 
     try {
+      console.log(`📤 Uploading ${docKey}...`, file.name, file.type, file.size);
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      console.log(`✅ Upload successful: ${file_url}`);
+      
       onUpdate({
         ...data,
         [docKey]: file_url
       });
       setUploadProgress(prev => ({ ...prev, [docKey]: 100 }));
     } catch (error) {
-      console.error(`Failed to upload ${docKey}:`, error);
+      console.error(`❌ Failed to upload ${docKey}:`, error);
+      setUploadErrors(prev => ({ ...prev, [docKey]: error.message || 'Failed to upload file. Please try again.' }));
     } finally {
       setUploading(prev => ({ ...prev, [docKey]: false }));
     }
+  };
+
+  const triggerFileInput = (docKey) => {
+    console.log(`🖱️ Triggering file input for ${docKey}`);
+    fileInputRefs.current[docKey]?.click();
   };
 
   return (
@@ -76,9 +105,10 @@ export default function DocumentUploadStep({ data, onUpdate }) {
                       <span className="text-sm font-medium">Document uploaded</span>
                     </div>
                   ) : (
-                    <label className="inline-block">
+                    <div>
                       <Button
                         type="button"
+                        onClick={() => triggerFileInput(doc.key)}
                         disabled={uploading[doc.key]}
                         className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-lg"
                       >
@@ -95,13 +125,23 @@ export default function DocumentUploadStep({ data, onUpdate }) {
                         )}
                       </Button>
                       <input
+                        ref={(el) => {
+                          if (el) fileInputRefs.current[doc.key] = el;
+                        }}
                         type="file"
                         accept={doc.accepts}
                         onChange={(e) => handleFileUpload(e, doc.key)}
                         disabled={uploading[doc.key]}
                         className="hidden"
+                        aria-label={`Upload ${doc.label}`}
                       />
-                    </label>
+                      {uploadErrors[doc.key] && (
+                        <p className="text-red-600 text-sm mt-2 flex items-center gap-1">
+                          <AlertCircle className="w-4 h-4" />
+                          {uploadErrors[doc.key]}
+                        </p>
+                      )}
+                    </div>
                   )}
                 </div>
 
