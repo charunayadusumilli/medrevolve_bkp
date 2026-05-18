@@ -1,218 +1,141 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
-const slides = [
-  {
-    tag: 'Weight Loss',
-    headline: 'FEEL\nBETTER.',
-    sub: 'GLP-1 programs, personalized nutrition, and 1:1 coaching — delivered to your door.',
-    cta: 'Start My Assessment',
-    ctaHref: 'Questionnaire',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=90&fm=webp&sat=20&bright=10',
-    accent: '#A8C99B',
-  },
-  {
-    tag: "Men's Health",
-    headline: 'BUILT\nDIFFERENT.',
-    sub: 'Testosterone, vitality, and performance protocols — prescribed by real doctors.',
-    cta: 'Get My Plan',
-    ctaHref: 'Programs',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1600&q=90&fm=webp',
-    accent: '#C9B99A',
-  },
-  {
-    tag: "Women's Wellness",
-    headline: 'YOUR\nBIOLOGY.',
-    sub: 'Hormone balance, weight loss, and longevity — designed around your biology.',
-    cta: 'Discover My Plan',
-    ctaHref: 'Programs',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=90&fm=webp',
-    accent: '#D4A8C9',
-  },
-  {
-    tag: 'Longevity',
-    headline: 'LIVE\nLONGER.',
-    sub: 'Longevity protocols and physician-prescribed wellness programs backed by science.',
-    cta: 'Explore Longevity',
-    ctaHref: 'Programs',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&q=90&fm=webp&sat=20&bright=10',
-    accent: '#A8BFC9',
-  },
+const pillars = [
+  { index: '01', label: 'PRODUCTS', title: 'GLP-1 & Peptide\nCatalog', sub: 'Curated pharmaceutical-grade inventory — GLP-1s, peptides, hormone protocols — sourced, labeled, and shipped.' },
+  { index: '02', label: 'TELEHEALTH', title: 'Provider Network\n& Clinical OS', sub: 'White-label telehealth infrastructure with credentialed providers, prescribing workflows, and patient management built in.' },
+  { index: '03', label: 'SERVICES', title: 'Launch. Comply.\nScale.', sub: 'MedRevolve University, payment rails, compliance certification, and full-stack merchant support from day one.' },
 ];
-
-const categories = [
-  { name: 'Weight Loss', href: 'Products?category=weight_loss', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=80&q=80' },
-  { name: "Men's Health", href: 'Products?category=mens_health', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=80&q=80' },
-  { name: "Women's Health", href: 'Products?category=womens_health', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80' },
-  { name: 'Longevity', href: 'Products?category=longevity', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&q=80' },
-  { name: 'Hair Loss', href: 'Products?category=hair_loss', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=80&q=80' },
-  { name: 'Peptides', href: 'Products?category=peptides', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&q=80' },
-];
-
-// MR Monogram SVG — luxury geometric mark
-function MRMark({ className = '' }) {
-  return (
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <rect width="40" height="40" rx="8" fill="white" fillOpacity="0.08"/>
-      <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="14" fontWeight="800" fontFamily="serif" letterSpacing="-1">MR</text>
-    </svg>
-  );
-}
 
 export default function HeroSection() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [prevSlide, setPrevSlide] = useState(null);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPrevSlide(activeSlide);
-      setActiveSlide(prev => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [activeSlide]);
+    const t = setInterval(() => setActive(p => (p + 1) % pillars.length), 5000);
+    return () => clearInterval(t);
+  }, []);
 
-  const slide = slides[activeSlide];
+  const p = pillars[active];
 
   return (
-    <section className="relative bg-black overflow-hidden">
-      {/* Full-viewport hero — NDStudio style: edge-to-edge, full black, massive type */}
-      <div className="relative min-h-screen flex flex-col">
+    <section className="relative bg-[#0A0A0A] min-h-screen flex flex-col overflow-hidden">
 
-        {/* Background images with crossfade — slightly dimmer for editorial look */}
-        {slides.map((s, i) => (
-          <motion.div
-            key={i}
-            className="absolute inset-0"
-            animate={{ opacity: i === activeSlide ? 1 : 0 }}
-            transition={{ duration: 1.4, ease: 'easeInOut' }}
-          >
-            <img src={s.image} alt={s.tag} className="w-full h-full object-cover object-center" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'low'} />
-            {/* Heavy dark overlay for editorial contrast */}
-            <div className="absolute inset-0 bg-black/65" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
-          </motion.div>
-        ))}
+      {/* Subtle grid texture */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '80px 80px' }} />
 
-        {/* Main content — NDStudio: text left-aligned bottom-anchored large */}
-        <div className="relative z-10 flex-1 flex flex-col justify-end">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full pb-20 pt-32">
+      {/* Vertical accent lines */}
+      <div className="absolute left-[calc(50%-1px)] top-0 bottom-0 w-px bg-white/5 hidden lg:block" />
 
-            {/* Eyebrow label */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`tag-${activeSlide}`}
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="mb-4"
-              >
-                <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-white/40">
-                  {slide.tag}
-                </span>
-              </motion.div>
-            </AnimatePresence>
+      {/* Top nav bar */}
+      <div className="relative z-20 flex items-center justify-between px-8 lg:px-16 py-6 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-white flex items-center justify-center">
+            <span className="text-black text-[11px] font-black tracking-tight">MR</span>
+          </div>
+          <span className="text-white/30 text-[11px] tracking-[0.25em] uppercase font-medium hidden sm:block">MedRevolve</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-10">
+          {pillars.map((pi, i) => (
+            <button key={i} onClick={() => setActive(i)}
+              className={`text-[11px] tracking-[0.2em] uppercase font-medium transition-colors ${i === active ? 'text-white' : 'text-white/30 hover:text-white/60'}`}>
+              {pi.label}
+            </button>
+          ))}
+        </div>
+        <Link to={createPageUrl('MerchantOnboarding')}
+          className="text-[11px] tracking-[0.2em] uppercase font-medium text-white/50 hover:text-white transition-colors flex items-center gap-2">
+          Get Access <ArrowUpRight className="w-3 h-3" />
+        </Link>
+      </div>
 
-            {/* Headline — massive, bold, editorial like NDStudio */}
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={`h-${activeSlide}`}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="font-black text-white leading-[0.92] tracking-tighter mb-8"
-                style={{
-                  whiteSpace: 'pre-line',
-                  fontSize: 'clamp(4rem, 12vw, 10rem)',
-                  letterSpacing: '-0.03em',
-                }}
-              >
-                {slide.headline}
-              </motion.h1>
-            </AnimatePresence>
+      {/* Main hero content */}
+      <div className="relative z-10 flex-1 flex flex-col lg:flex-row">
 
-            {/* Bottom row: sub + CTAs side by side */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`bottom-${activeSlide}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45, delay: 0.1 }}
-                className="flex flex-col sm:flex-row sm:items-end justify-between gap-6"
-              >
-                <p className="text-base text-white/50 max-w-sm leading-relaxed font-light">
-                  {slide.sub}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
-                  <Link to={createPageUrl(slide.ctaHref)}>
-                    <Button
-                      className="bg-white text-black hover:bg-white/90 font-bold text-sm px-7 h-12 rounded-none tracking-wide"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                      {slide.cta}
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                  <Link to={createPageUrl('Consultations')}>
-                    <Button variant="ghost"
-                      className="text-white hover:bg-white/10 text-sm px-7 h-12 rounded-none border border-white/20 tracking-wide"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                      Book a consultation
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        {/* LEFT: Pillar selector */}
+        <div className="hidden lg:flex flex-col justify-end pb-20 px-16 pt-16 w-80 flex-shrink-0 border-r border-white/5">
+          <div className="space-y-1">
+            {pillars.map((pi, i) => (
+              <button key={i} onClick={() => setActive(i)}
+                className={`group w-full text-left px-4 py-4 border-l-2 transition-all duration-400
+                  ${i === active ? 'border-white bg-white/3' : 'border-white/10 hover:border-white/30'}`}>
+                <p className={`text-[10px] tracking-[0.3em] uppercase mb-1 transition-colors ${i === active ? 'text-white/60' : 'text-white/20 group-hover:text-white/40'}`}>{pi.index}</p>
+                <p className={`text-sm font-semibold tracking-wide transition-colors ${i === active ? 'text-white' : 'text-white/30 group-hover:text-white/60'}`}>{pi.label}</p>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Bottom bar — minimal stats + slide dots */}
-        <div className="relative z-10 border-t border-white/10 bg-black/40 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-8">
-              {[
-                { value: '50K+', label: 'Patients' },
-                { value: '200+', label: 'Providers' },
-                { value: '4.9★', label: 'Rating' },
-              ].map((stat) => (
-                <div key={stat.value} className="flex items-baseline gap-1.5">
-                  <p className="text-white font-bold text-sm leading-none">{stat.value}</p>
-                  <p className="text-white/30 text-[11px]">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-1.5">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setPrevSlide(activeSlide); setActiveSlide(i); }}
-                  className={`transition-all duration-500 ${
-                    i === activeSlide ? 'bg-white w-6 h-0.5' : 'bg-white/25 w-2 h-0.5 hover:bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
+        {/* CENTER: Big headline */}
+        <div className="flex-1 flex flex-col justify-end pb-16 px-8 lg:px-16 pt-16">
+          <AnimatePresence mode="wait">
+            <motion.div key={active}
+              initial={{ opacity: 0, y: 48 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -24 }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}>
+
+              <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 mb-6 font-medium">
+                {p.index} — {p.label}
+              </p>
+
+              <h1 className="font-black text-white leading-[0.9] tracking-[-0.03em] mb-8"
+                style={{ fontSize: 'clamp(3.5rem, 9vw, 8.5rem)', whiteSpace: 'pre-line' }}>
+                {p.title}
+              </h1>
+
+              <p className="text-base text-white/40 max-w-md leading-relaxed font-light mb-10">
+                {p.sub}
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <Link to={createPageUrl('MerchantOnboarding')}>
+                  <button className="flex items-center gap-3 bg-white text-black px-8 py-4 text-[13px] font-bold tracking-widest uppercase hover:bg-white/90 transition-colors">
+                    Start Platform
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
+                <Link to={createPageUrl('ForBusiness')}>
+                  <button className="flex items-center gap-3 border border-white/20 text-white px-8 py-4 text-[13px] font-medium tracking-widest uppercase hover:bg-white/5 transition-colors">
+                    Learn More
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* RIGHT: Progress indicator */}
+        <div className="hidden lg:flex flex-col justify-end pb-20 px-10 w-20 flex-shrink-0 border-l border-white/5 items-center">
+          <div className="flex flex-col gap-1.5">
+            {pillars.map((_, i) => (
+              <button key={i} onClick={() => setActive(i)}
+                className={`transition-all duration-500 rounded-full ${i === active ? 'bg-white h-8 w-0.5' : 'bg-white/20 h-2 w-0.5 hover:bg-white/50'}`} />
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Category strip — clean dark bar */}
-      <div className="bg-black border-b border-white/8">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center gap-0 overflow-x-auto scrollbar-hide divide-x divide-white/10">
-            {categories.map((cat) => (
-              <Link key={cat.name} to={createPageUrl(cat.href)}
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="flex-shrink-0 flex items-center gap-2.5 px-6 py-4 text-white/40 hover:text-white text-xs font-semibold tracking-widest uppercase transition-all hover:bg-white/5">
-                {cat.name}
-              </Link>
+      {/* Bottom stats bar */}
+      <div className="relative z-10 border-t border-white/5 px-8 lg:px-16 py-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-8 lg:gap-16">
+            {[
+              { v: '200+', l: 'Merchant Partners' },
+              { v: '50K+', l: 'Patients Served' },
+              { v: '99%', l: 'Uptime SLA' },
+              { v: 'HIPAA', l: 'Compliant' },
+            ].map(s => (
+              <div key={s.v} className="flex flex-col">
+                <span className="text-white text-sm font-bold">{s.v}</span>
+                <span className="text-white/25 text-[10px] tracking-[0.15em] uppercase">{s.l}</span>
+              </div>
             ))}
           </div>
+          <p className="text-white/20 text-[10px] tracking-[0.15em] uppercase hidden md:block">The Operating System for Modern Wellness Commerce</p>
         </div>
       </div>
     </section>

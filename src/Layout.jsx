@@ -155,10 +155,10 @@ export default function Layout({ children }) {
       <AIAssistant />
 
       {/* Announcement Bar */}
-      <div className="bg-[#2D3A2D] text-white text-center py-2 px-4 text-xs font-medium tracking-wide">
-        ✦ Physician-prescribed protocols. Licensed pharmacies. Delivered in 24–48 hrs.{' '}
-        <Link to={createPageUrl('Consultations')} className="underline underline-offset-2 hover:text-[#A8C99B] transition-colors font-semibold">
-          Book a consultation →
+      <div className="bg-[#0A0A0A] text-white/70 text-center py-2 px-4 text-[11px] font-medium tracking-[0.15em] uppercase border-b border-white/5">
+        ✦ The Operating System for Modern Wellness Commerce &nbsp;·&nbsp; Products · Telehealth · Compliance · Payments{' '}
+        <Link to={createPageUrl('MerchantOnboarding')} className="underline underline-offset-2 hover:text-white transition-colors font-semibold ml-2">
+          Apply Now →
         </Link>
       </div>
 
@@ -433,7 +433,7 @@ export default function Layout({ children }) {
                 <span className="text-lg font-bold">MedRevolve</span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-xs">
-                Prescription telehealth at transparent prices. Real doctors, licensed pharmacies, delivered in 24-48 hours.
+                The operating system for modern wellness merchants. Products, telehealth, compliance, payments — all in one platform.
               </p>
               <div className="flex gap-3">
                 <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><Instagram className="w-4 h-4" /></a>
