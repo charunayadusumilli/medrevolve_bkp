@@ -127,10 +127,27 @@ export default function MerchantOnboarding() {
   const handleSubmit = async () => {
     setLoading(true);
     setError('');
+    console.log('Starting merchant onboarding submission...', form);
     try {
+      // Validate required fields
+      if (!form.businessName || !form.email || !form.contactName || !form.phone) {
+        throw new Error('Please fill in all required business information');
+      }
+      if (form.hasLLC === null) {
+        throw new Error('Please select whether you have an LLC');
+      }
+      if (form.hasLLC === true && (!form.llcName || !form.ein || !form.stateOfIncorporation)) {
+        throw new Error('Please fill in all LLC information');
+      }
+      if (!form.domainName) {
+        throw new Error('Please provide a domain name');
+      }
+
+      console.log('Validation passed, generating partner code...');
       const partnerCode = form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12)
         + Math.random().toString(36).substr(2, 5);
 
+      console.log('Creating Partner record...');
       const partner = await base44.entities.Partner.create({
         business_name: form.businessName,
         contact_name: form.contactName,
@@ -145,9 +162,11 @@ export default function MerchantOnboarding() {
         monthly_fee: monthlyTotal,
       });
 
+      console.log('✅ Partner created:', partner.id);
       setPartnerId(partner.id);
 
       // Domain record
+      console.log('Creating MerchantDomain record...');
       if (form.domainName) {
         await base44.entities.MerchantDomain.create({
           merchant_id: partner.id,
@@ -159,7 +178,10 @@ export default function MerchantOnboarding() {
         });
       }
 
+      console.log('✅ Domain record created');
+
       // Module records
+      console.log('Creating MerchantModule records...', form.selectedModules);
       for (const key of form.selectedModules) {
         const mod = MODULE_OPTIONS.find(m => m.key === key);
         await base44.entities.MerchantModule.create({
@@ -172,7 +194,10 @@ export default function MerchantOnboarding() {
         });
       }
 
+      console.log('✅ Module records created');
+
       // BusinessInquiry capture
+      console.log('Creating BusinessInquiry record...');
       await base44.entities.BusinessInquiry.create({
         company_name: form.businessName,
         contact_name: form.contactName,
@@ -185,7 +210,10 @@ export default function MerchantOnboarding() {
         status: 'new',
       });
 
+      console.log('✅ BusinessInquiry created');
+
       // Admin notification
+      console.log('Sending admin notification email...');
       await base44.integrations.Core.SendEmail({
         from_name: 'MedRevolve Platform',
         to: 'rned@medrevolve.com',
@@ -211,7 +239,10 @@ export default function MerchantOnboarding() {
         `.trim(),
       });
 
+      console.log('✅ Admin email sent');
+
       // Merchant welcome email
+      console.log('Sending merchant welcome email...');
       await base44.integrations.Core.SendEmail({
         from_name: 'MedRevolve',
         to: form.email,
@@ -236,14 +267,20 @@ export default function MerchantOnboarding() {
         `.trim(),
       });
 
+      console.log('✅ Welcome email sent');
+
       trackDigestEvent('merchant_onboarding', {
         business_name: form.businessName, contact_name: form.contactName,
         email: form.email, phone: form.phone, monthly_fee: monthlyTotal,
         llc_formation: form.wantLLCFormation, template: form.templateId,
       });
 
+      console.log('✅ Tracking event logged');
+
       // Run the visual activation sequence, then redirect
+      console.log('Running activation sequence...');
       await runActivationSequence(partner.id);
+      console.log('✅ Activation complete, navigating to dashboard...');
       navigate(createPageUrl('MerchantDashboard'));
     } catch (e) {
       const errorMessage = e.message || 'Unknown error occurred';
