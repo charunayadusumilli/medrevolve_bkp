@@ -607,6 +607,7 @@ export const FAQ_BY_AUDIENCE = {
     { label: '👨‍⚕️ Talk to a doctor',        q: 'How do I get a consultation with one of your licensed providers?' },
     { label: '🔬 Men\'s health',            q: 'What do you offer for men\'s health — testosterone, performance, energy, and vitality?' },
     { label: '🌸 Women\'s health',          q: 'What treatments do you have for women — hormones, weight, energy, and anti-aging?' },
+    { label: '⚔️ vs. Hims / Ro / Noom',    q: 'How does MedRevolve compare to Hims, Ro, Noom, and other GLP-1 programs in price and value?' },
   ],
   [AUDIENCES.CREATOR]: [
     { label: 'Commission rates',  q: 'What commission rates do creators earn and how do tiers work?' },
@@ -630,6 +631,8 @@ export const FAQ_BY_AUDIENCE = {
     { label: '🏢 Full cost breakdown',     q: 'Give me the full cost breakdown of running on MedRevolve including all modules.' },
     { label: '⚖️ CPOM safe model',        q: 'Explain how MedRevolve is CPOM-safe and why that matters for my business.' },
     { label: '🎓 MedRevolve University',   q: 'What is MedRevolve University and do I need it?' },
+    { label: '⚔️ vs. DIY / competitors',   q: 'How does MedRevolve compare in price and features to building this myself or using other platforms?' },
+    { label: '💬 Pricing objections',       q: 'How do I handle the "too expensive" or "I can build it cheaper" objection when talking about MedRevolve?' },
   ],
   [AUDIENCES.PROVIDER]: [
     { label: 'Compensation',          q: 'How are providers compensated — per consultation, retainer, or revenue share?' },
@@ -1096,6 +1099,138 @@ Q: What if a patient refunds? A: Commission clawed back if medication returned w
 • Pure referral (partners don't touch clinical side)
 • HIPAA + CPOM compliant
 • 24/7 customer support
+
+▶ COMPETITIVE PRICING INTELLIGENCE — KNOW THIS COLD:
+
+══════════════════════════════════════════════
+CONSUMER / PATIENT PRICING: HOW WE COMPARE
+══════════════════════════════════════════════
+
+SEMAGLUTIDE (GLP-1 Weight Loss):
+• Hims/Hers: $299/mo (compound sema, no titration support, no portal)
+• Ro (Roman): $299/mo (sema program, limited provider access, limited titration)
+• Noom Med: $149-199/mo (behavioral program + sema, heavily app-gated, no real provider access)
+• Found: $99/mo program fee + $169-299/mo Rx = $268-398/mo total (hidden stacking)
+• WeightWatchers Rx (Sequence): $99/mo + separate Rx cost = $250-350/mo blended
+• Calibrate: $199/mo program + separate Rx = $350-499/mo total
+• LifeMD (Shapiro MD): $197-299/mo
+• Henry: $297/mo (limited states, no compound option, branded drug path)
+✅ MedRevolve: $299/mo ALL-IN (consult + compound Rx + fulfillment + portal + provider follow-up)
+MedRevolve Advantage: No hidden tiers, no program fee stacking, compound pricing, real provider access.
+
+TIRZEPATIDE (Dual GIP/GLP-1):
+• Hims: not currently widely available
+• Ro: $449-599/mo (branded or compound, state-restricted)
+• LifeMD: $399-499/mo
+• Henry: $449/mo (limited availability)
+• Eden: $399/mo (compound, limited support)
+✅ MedRevolve: $399/mo ALL-IN (includes provider consult, compound Rx, shipping, portal)
+MedRevolve Advantage: Competitive at market rate with full-stack support included.
+
+TESTOSTERONE THERAPY (Men's Health):
+• Hims: $35-75/mo (topical/injection, minimal monitoring)
+• Roman: $99-199/mo (branded + compound options, labs extra)
+• Maximus: $129/mo (protocol-only, limited provider access)
+• Fountain TRT: $99-149/mo (compound inject, no lab monitoring)
+• Defy Medical: $200-400/mo (comprehensive, but premium)
+• Evolve Telemed: $149-199/mo
+✅ MedRevolve: $199/mo (injectable TRT, quarterly lab monitoring, provider oversight included)
+MedRevolve Advantage: Mid-market price point with premium support. Labs included in protocol.
+
+NAD+ INJECTIONS (Longevity):
+• Regen Medical: $250-400/mo
+• AgelessRx: $199-299/mo (subcutaneous, limited support)
+• IV Drip bars / med spas: $150-400/session (in-person only, not recurring)
+✅ MedRevolve: $179/mo (subcutaneous injection kit, monthly shipment, provider supervised)
+MedRevolve Advantage: Lowest recurring price with provider oversight for at-home use.
+
+ED TREATMENTS (Sildenafil / Tadalafil):
+• Hims: $17-35/mo (generic, limited dosing)
+• Roman: $34-68/mo (generic + brand options)
+• Keeps: $25-40/mo (generic)
+• GoodRx + pharmacy: $20-50/mo (no provider, no portal)
+• Rex MD: $39-85/mo
+✅ MedRevolve: $74/mo (compound or generic, provider included, portal access)
+MedRevolve Advantage: Slightly above commodity price but bundled with ongoing provider access.
+
+HAIR LOSS (Minoxidil / Finasteride):
+• Hims: $22-55/mo (combo topical/oral)
+• Keeps: $25-35/mo
+• Roman: $30-55/mo
+• Ro: bundled packages $99-199/mo
+✅ MedRevolve: $74/mo per product (provider-supervised, compound formulations available)
+MedRevolve Advantage: Compound formulations allow custom strength — differentiated from generic-only competitors.
+
+══════════════════════════════════════════════
+MERCHANT / PLATFORM PRICING: HOW WE COMPARE
+══════════════════════════════════════════════
+
+BUILDING A TELEHEALTH BUSINESS — DIY COST:
+If someone builds their own equivalent to MedRevolve from scratch:
+• Legal entity + compliance counsel: $5,000-25,000 upfront
+• HIPAA-compliant tech stack (EHR, portal, e-prescribing): $500-2,000/mo
+• Telehealth video platform (Twilio, Zoom Health): $200-800/mo
+• Payment processing (high-risk wellness): $200-500/mo + 3-5% per txn
+• LegitScript certification: $1,500+ upfront + $400/mo ongoing
+• Pharmacy relationships (MOUs, contracts): 3-9 months of negotiation
+• Provider credentialing: $200-500 per provider + ongoing monitoring
+• Website + brand: $3,000-15,000 upfront + $200/mo hosting
+• Marketing tools (email, SMS, retargeting): $300-800/mo
+• Total DIY: $15,000-50,000 upfront + $2,000-5,000/mo ongoing
+✅ MedRevolve Full Stack: $1,200-1,400/mo — everything above, launch in 30 days.
+MedRevolve Advantage: 12-18 months faster, $30K-$100K cheaper, compliance built-in from day one.
+
+COMPETITOR MERCHANT PLATFORMS:
+• Osmind (mental health focus): $300-600/mo, no GLP, no pharmacy network
+• Cerbo (EHR only): $299-500/mo, just EMR, no telehealth, no commerce
+• Elation Health: $300-500/mo, clinical only, no merchant features
+• Healthie: $99-300/mo, nutrition/coaching only, no Rx
+• Spruce Health: $149-299/mo, messaging only, no commerce or Rx
+• Hint Health (DPC): $99-250/mo, membership only, no compound pharmacy
+• Truepill (now Pharmerica Digital): $500-2,000/mo platform fee + fulfillment, no merchant builder
+• GoGoMeds/similar white-label Rx: $500-1,500/mo, Rx only, no website, no compliance layer
+✅ MedRevolve: $99-1,400/mo (scales with needs) — the ONLY platform combining website builder + telehealth + pharmacy + compliance + payments + inventory in one system.
+
+COMPETITOR COMPLIANCE SOLUTIONS:
+• LegitScript Certification: $1,500+ upfront + $400-600/mo — just a CERTIFICATE, no products, no tech
+• NABP Accreditation: $1,000-3,000 audit fee — pharmacy only, not merchant
+• Consulting firms (healthcare compliance): $200-500/hr — advisory only
+✅ MedRevolve Compliance Module: $149/mo — active compliance layer BUILT INTO the platform, not just a certificate.
+
+══════════════════════════════════════════════
+HOW TO POSITION MEDREVOLVE PRICE IN A CONVERSATION
+══════════════════════════════════════════════
+
+FOR CONSUMERS comparing prices:
+"Our $299/mo for Semaglutide is all-inclusive — provider consult, Rx, pharmacy fulfillment, and portal access. Competitors like Hims or Ro charge the same or more but don't always include follow-up provider access or compound flexibility. You're not paying more — you're getting more for the same price."
+
+FOR MERCHANTS/OPERATORS comparing DIY vs. MedRevolve:
+"Think about what it costs to build this yourself: $30-100K upfront in legal, tech, and compliance, plus $2-5K/month to run it. With MedRevolve at $99-1,400/mo depending on what you activate, you skip all of that and go live in 30 days. It's not just cheaper — it's 12-18 months faster."
+
+FOR OPERATORS comparing other platforms:
+"Every other platform does one thing — EHR, or messaging, or Rx. MedRevolve is the only platform that packages the full stack: website, telehealth, pharmacy, compliance, and payments. Comparing us to Cerbo or Healthie is like comparing a full-service restaurant to a kitchen supply store."
+
+FOR PRICE-SENSITIVE PROSPECTS (entry level):
+"You can start for $99/mo and only activate modules as you grow. The telehealth module at $199/mo pays for itself with 2-4 active patients. You don't have to buy everything upfront — build as you scale."
+
+══════════════════════════════════════════════
+PRICING OBJECTION HANDLERS
+══════════════════════════════════════════════
+
+"It's too expensive":
+→ "Let's do the math. Telehealth module is $199/mo. If you have 2 active patients on Semaglutide at $125/mo margin each, that's $250/mo back — module is paid for with room to spare. Every patient after that is pure margin."
+
+"I can build it cheaper":
+→ "You can — but the legal setup alone runs $10-25K, LegitScript is $1,500 upfront, and finding a pharmacy willing to work with a new operator takes 3-9 months of relationship-building. MedRevolve already has all of that in place. What's your time worth?"
+
+"Hims/Ro does this for less":
+→ "Hims and Ro are consumer brands — they're your competition, not your tools. MedRevolve gives YOU the infrastructure to compete with them, under your own brand. Totally different use case."
+
+"Why not just use Shopify + Stripe?":
+→ "Shopify and Stripe will get your account shut down within weeks if you're selling compound GLP-1s or peptides. Payment processors flag these immediately without a documented compliance stack. That's exactly what MedRevolve's processor relationships and compliance layer solve."
+
+"Do I pay if I have no patients yet?":
+→ "The $99/mo base gets your domain, site, and dashboard live. You don't need to activate the telehealth or pharmacy modules until you're ready to take patients. Start lean, scale up."
 `;
 
 // ── 7. System prompt builder ──────────────────────────────────────────────────
