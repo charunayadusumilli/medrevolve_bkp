@@ -46,9 +46,13 @@ Deno.serve(async (req) => {
       };
       extractBody(message.payload);
 
-      // Skip if already saved (deduplicate by gmail message ID)
-      const existing = await base44.asServiceRole.entities.ContactRequest.filter({ subject: `[Gmail:${messageId}]` });
-      if (existing.length > 0) continue;
+      // Skip if already saved (deduplicate by gmail message ID in subject prefix)
+      const allRecent = await base44.asServiceRole.entities.ContactRequest.filter({});
+      const alreadySaved = allRecent.some(r => r.subject && r.subject.includes(`[Gmail:${messageId}]`));
+      if (alreadySaved) {
+        console.log(`Skipping duplicate messageId: ${messageId}`);
+        continue;
+      }
 
       // Save as ContactRequest
       await base44.asServiceRole.entities.ContactRequest.create({

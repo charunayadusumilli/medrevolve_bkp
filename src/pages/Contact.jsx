@@ -54,32 +54,15 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Save to DB
-      await base44.entities.ContactRequest.create({
+      // Use the backend function — handles DB save + Gmail notifications to any email
+      const response = await base44.functions.invoke('submitContactRequest', {
         name: formData.name,
         email: formData.email,
         subject: formData.subject,
         message: formData.message,
-        status: 'new',
       });
 
-      // Notify rned@medrevolve.com immediately
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve Contact',
-        to: 'rned@medrevolve.com',
-        subject: `✉️ New Contact Request — ${formData.subject || 'No Subject'} from ${formData.name}`,
-        body: `
-<h2>New Contact Form Submission</h2>
-<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
-  <tr><td style="padding:8px;color:#666;width:100px;"><b>Name</b></td><td style="padding:8px;">${formData.name}</td></tr>
-  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Email</b></td><td style="padding:8px;">${formData.email}</td></tr>
-  <tr><td style="padding:8px;color:#666;"><b>Subject</b></td><td style="padding:8px;">${formData.subject || '—'}</td></tr>
-  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Message</b></td><td style="padding:8px;white-space:pre-wrap;">${formData.message}</td></tr>
-  <tr><td style="padding:8px;color:#666;"><b>Submitted</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
-</table>
-        `.trim(),
-      });
-
+      if (response.data?.error) throw new Error(response.data.error);
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting contact form:', error);
