@@ -43,6 +43,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
@@ -58,6 +59,7 @@ export default function Contact() {
       const response = await base44.functions.invoke('submitContactRequest', {
         name: formData.name,
         email: formData.email,
+        phone: formData.phone,
         subject: formData.subject,
         message: formData.message,
       });
@@ -163,6 +165,17 @@ export default function Contact() {
                           required
                         />
                       </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="phone" className="text-[#2D3A2D]">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="mt-2 rounded-xl border-[#E8E0D5]"
+                        placeholder="+1 (555) 000-0000"
+                      />
                     </div>
                     <div>
                       <Label htmlFor="subject" className="text-[#2D3A2D]">Subject</Label>

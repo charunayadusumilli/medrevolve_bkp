@@ -1,0 +1,95 @@
+{
+  "name": "ContactRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Contact name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of inquiry"
+    },
+    "message": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website_form",
+        "gmail_inbox",
+        "ctm_call",
+        "ctm_text",
+        "ctm_form",
+        "twilio_sms",
+        "direct"
+      ],
+      "default": "website_form",
+      "description": "Where this lead came from"
+    },
+    "call_tracking_number": {
+      "type": "string",
+      "description": "CTM tracking number that was called"
+    },
+    "call_duration_seconds": {
+      "type": "integer",
+      "description": "Duration of call in seconds (CTM)"
+    },
+    "call_recording_url": {
+      "type": "string",
+      "description": "URL to call recording (CTM)"
+    },
+    "hubspot_contact_id": {
+      "type": "string",
+      "description": "HubSpot contact ID after sync"
+    },
+    "hubspot_deal_id": {
+      "type": "string",
+      "description": "HubSpot deal ID after CRM campaign created"
+    },
+    "meeting_booked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether a meeting has been booked"
+    },
+    "meeting_link": {
+      "type": "string",
+      "description": "Google Calendar meeting link"
+    },
+    "campaign_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether CRM campaign has been triggered"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_progress",
+        "meeting_scheduled",
+        "resolved"
+      ],
+      "default": "new",
+      "description": "Request status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal admin notes"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ]
+}

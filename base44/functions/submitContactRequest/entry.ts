@@ -52,7 +52,10 @@ Deno.serve(async (req) => {
 
     const contactRequest = await base44.asServiceRole.entities.ContactRequest.create({
       name: data.name, email: data.email,
-      subject: data.subject || '', message: data.message, status: 'new'
+      phone: data.phone || '',
+      subject: data.subject || '', message: data.message,
+      source: 'website_form',
+      status: 'new'
     });
 
     const adminEmail = 'krish@medrevolve.com';

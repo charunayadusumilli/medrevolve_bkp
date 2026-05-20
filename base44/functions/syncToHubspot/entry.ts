@@ -105,6 +105,7 @@ Deno.serve(async (req) => {
         email: data.email,
         firstname: nameParts[0] || '',
         lastname: nameParts.slice(1).join(' ') || '',
+        phone: data.phone || '',
         hs_lead_status: 'NEW',
         lifecyclestage: 'lead',
         website: 'medrevolve.com',
