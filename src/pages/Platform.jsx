@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -97,15 +97,17 @@ const FAQS = [
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function Platform() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialTab = urlParams.get('tab') || 'telehealth';
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('tab') || 'telehealth';
+  });
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     const tab = params.get('tab');
     if (tab) setActiveTab(tab);
-  }, [window.location.search]);
+  }, [location.search]);
   const [activeJourneyStep, setActiveJourneyStep] = useState(0);
   const [activeTrack, setActiveTrack] = useState('glp');
   const [activeFaq, setActiveFaq] = useState(null);
