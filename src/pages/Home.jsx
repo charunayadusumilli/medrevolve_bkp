@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
+import StartPlatformCTA from '@/components/home/StartPlatformCTA';
 import JourneySelector from '@/components/home/JourneySelector';
 import BrandJourney from '@/components/home/BrandJourney';
 import PillarsSection from '@/components/home/PillarsSection';
@@ -15,6 +16,9 @@ export default function Home() {
     <div className="min-h-screen bg-[#080808]">
       {/* 1. Hero — rotating pillars, cinematic dark */}
       <HeroSection />
+
+      {/* 1.5. Start Your Platform — prominent CTA with dynamic scroll */}
+      <StartPlatformCTA />
 
       {/* 2. Journey Selector — 5 distinct entry paths */}
       <JourneySelector />
