@@ -102,6 +102,7 @@ import MerchantDashboard from './pages/MerchantDashboard';
 import MerchantInventoryPage from './pages/MerchantInventoryPage';
 import MerchantDomainPage from './pages/MerchantDomainPage';
 import StrategyIntelligence from './pages/StrategyIntelligence';
+import ResearchProducts from './pages/ResearchProducts';
 import __Layout from './Layout.jsx';
 
 
@@ -161,6 +162,7 @@ export const PAGES = {
     "MerchantInventoryPage": MerchantInventoryPage,
     "MerchantDomainPage": MerchantDomainPage,
     "StrategyIntelligence": StrategyIntelligence,
+    "ResearchProducts": ResearchProducts,
 }
 
 export const pagesConfig = {

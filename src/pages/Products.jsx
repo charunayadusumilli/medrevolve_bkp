@@ -1,1127 +1,252 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Leaf, Lock, ChevronRight, SlidersHorizontal, X, ArrowUpDown, TrendingUp, ChevronDown } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
-import RxProductVisual from '@/components/product/RxProductVisual';
+import { ArrowRight, Droplets, ShieldCheck, FlaskConical, Building2, ChevronRight, ExternalLink } from 'lucide-react';
 
-// Inline mini SVGs for category tiles (no import needed)
-const CategoryVials = {
-  weight: () => (
-    <svg width="70" height="100" viewBox="0 0 70 100" fill="none">
-      <rect x="22" y="4" width="26" height="10" rx="3" fill="#2D3A2D"/>
-      <rect x="26" y="12" width="18" height="5" rx="1.5" fill="#B0BBB0"/>
-      <rect x="18" y="16" width="34" height="72" rx="5" fill="white" fillOpacity="0.12" stroke="#C8D0C8" strokeWidth="1"/>
-      <rect x="19" y="52" width="32" height="35" rx="4" fill="#4A6741" fillOpacity="0.3"/>
-      <rect x="22" y="26" width="26" height="34" rx="2" fill="white" fillOpacity="0.88"/>
-      <rect x="24" y="29" width="22" height="9" rx="1.5" fill="#2D3A2D"/>
-      <text x="35" y="34.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4.5" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
-      <text x="35" y="44" textAnchor="middle" dominantBaseline="middle" fill="#2D3A2D" fontSize="5" fontWeight="700" fontFamily="sans-serif">Semaglutide</text>
-      <text x="35" y="52" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.5" fontFamily="sans-serif">GLP-1 · Rx Only</text>
-      <rect x="18" y="87" width="34" height="2" rx="1" fill="#B0BBB0"/>
-      <rect x="26" y="4" width="3" height="98" rx="1.5" fill="white" fillOpacity="0.12"/>
-    </svg>
-  ),
-  longevity: () => (
-    <svg width="70" height="100" viewBox="0 0 70 100" fill="none">
-      <rect x="22" y="4" width="26" height="10" rx="3" fill="#1A3A5C"/>
-      <rect x="26" y="12" width="18" height="5" rx="1.5" fill="#B0BBB0"/>
-      <rect x="18" y="16" width="34" height="72" rx="5" fill="white" fillOpacity="0.12" stroke="#C8D0C8" strokeWidth="1"/>
-      <rect x="19" y="52" width="32" height="35" rx="4" fill="#1A3A5C" fillOpacity="0.3"/>
-      <rect x="22" y="26" width="26" height="34" rx="2" fill="white" fillOpacity="0.88"/>
-      <rect x="24" y="29" width="22" height="9" rx="1.5" fill="#1A3A5C"/>
-      <text x="35" y="34.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4.5" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
-      <text x="35" y="44" textAnchor="middle" dominantBaseline="middle" fill="#1A3A5C" fontSize="5" fontWeight="700" fontFamily="sans-serif">Sermorelin</text>
-      <text x="35" y="52" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.5" fontFamily="sans-serif">Peptide · Rx</text>
-      <rect x="18" y="87" width="34" height="2" rx="1" fill="#B0BBB0"/>
-    </svg>
-  ),
-  hormone: () => (
-    <svg width="90" height="60" viewBox="0 0 90 60" fill="none">
-      <rect x="6" y="14" width="78" height="32" rx="10" fill="#6B3A8B" fillOpacity="0.9"/>
-      <rect x="6" y="14" width="22" height="32" rx="10" fill="#2D3A2D"/>
-      <rect x="26" y="14" width="10" height="32" fill="#2D3A2D"/>
-      <text x="21" y="30.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="5.5" fontWeight="800" fontFamily="serif">MR</text>
-      <rect x="40" y="17" width="40" height="26" rx="6" fill="white" fillOpacity="0.88"/>
-      <text x="60" y="26" textAnchor="middle" dominantBaseline="middle" fill="#6B3A8B" fontSize="6" fontWeight="700" fontFamily="sans-serif">Estradiol</text>
-      <text x="60" y="34" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="4" fontFamily="sans-serif">HRT · Cream · Rx Only</text>
-      <rect x="2" y="20" width="8" height="20" rx="2" fill="#C0C8C0"/>
-      <ellipse cx="74" cy="30" rx="11" ry="10" fill="#3D2D4D"/>
-    </svg>
-  ),
-  mens: () => (
-    <svg width="40" height="110" viewBox="0 0 40 110" fill="none">
-      <rect x="12" y="2" width="16" height="20" rx="5" fill="#E8ECE8"/>
-      <rect x="14" y="4" width="12" height="16" rx="4" fill="white" fillOpacity="0.5"/>
-      <rect x="9" y="20" width="22" height="72" rx="7" fill="#1A3A5C"/>
-      <rect x="11" y="22" width="6" height="68" rx="3" fill="white" fillOpacity="0.07"/>
-      <rect x="11" y="36" width="18" height="28" rx="3" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.5" strokeOpacity="0.2"/>
-      <rect x="13" y="44" width="14" height="12" rx="1.5" fill="#1A6B4A" fillOpacity="0.4"/>
-      <rect x="9" y="64" width="22" height="12" rx="0" fill="#2D5C8B"/>
-      <text x="20" y="70.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="4" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.3">MEDREVOLVE</text>
-      <rect x="9" y="92" width="22" height="8" rx="4" fill="#0F2A3A"/>
-      <text x="20" y="96.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="3.5" fontWeight="700">DOSE</text>
-      <rect x="14" y="99" width="12" height="10" rx="3" fill="#E0E0E0"/>
-    </svg>
-  ),
-  womens: () => (
-    <svg width="50" height="100" viewBox="0 0 50 100" fill="none">
-      <ellipse cx="25" cy="10" rx="12" ry="8" fill="#6B1A4A"/>
-      <ellipse cx="25" cy="9" rx="8" ry="5.5" fill="white" fillOpacity="0.12"/>
-      <rect x="21" y="16" width="8" height="7" rx="0" fill="#6B1A4A"/>
-      <rect x="22" y="21" width="6" height="12" rx="1" fill="#CCC"/>
-      <rect x="16" y="31" width="18" height="8" rx="2.5" fill="#B0B8B0"/>
-      <rect x="10" y="37" width="30" height="55" rx="8" fill="white" fillOpacity="0.1" stroke="#CCC" strokeWidth="1"/>
-      <rect x="11" y="66" width="28" height="25" rx="6" fill="#8B1A6B" fillOpacity="0.3"/>
-      <rect x="14" y="42" width="22" height="30" rx="3" fill="white" fillOpacity="0.88"/>
-      <rect x="16" y="45" width="18" height="8" rx="1.5" fill="#6B1A4A"/>
-      <text x="25" y="49.5" textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="3.8" fontWeight="800" fontFamily="sans-serif">MEDREVOLVE</text>
-      <text x="25" y="60" textAnchor="middle" dominantBaseline="middle" fill="#6B1A4A" fontSize="4.5" fontWeight="700" fontFamily="sans-serif">Semaglutide</text>
-      <text x="25" y="67" textAnchor="middle" dominantBaseline="middle" fill="#888" fontSize="3.2" fontFamily="sans-serif">For Women · Rx</text>
-      <rect x="10" y="91" width="30" height="2" rx="1" fill="#B0B0B0"/>
-    </svg>
-  ),
-};
-
-// MR Branded — Hims/Ro/UpScript style category tiles
-const categories = [
-  {
-    id: 'weight',
-    name: 'Weight Loss',
-    description: 'GLP-1 & dual-action programs',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=90',
-    bg: 'bg-[#F0EDE8]',
-    bgGradient: 'radial-gradient(ellipse at center, #EAE5DC 0%, #F5F2EE 100%)',
-    svgVisual: CategoryVials.weight,
-    available: true,
-    accent: '#2D3A2D',
-  },
-  {
-    id: 'longevity',
-    name: 'Longevity',
-    description: 'Peptides & cellular health',
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=90',
-    bg: 'bg-[#EDF0EE]',
-    bgGradient: 'radial-gradient(ellipse at center, #DDE8E2 0%, #EEF5EE 100%)',
-    svgVisual: CategoryVials.longevity,
-    available: true,
-    accent: '#3D5636',
-  },
-  {
-    id: 'hormone',
-    name: 'Hormones',
-    description: 'Balance & optimization',
-    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=90',
-    bg: 'bg-[#EEEAF0]',
-    bgGradient: 'radial-gradient(ellipse at center, #E8E0F0 0%, #F5EEF8 100%)',
-    svgVisual: CategoryVials.hormone,
-    available: true,
-    accent: '#3D3656',
-  },
-  {
-    id: 'mens',
-    name: "Men's Health",
-    description: 'Performance & vitality',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=90',
-    bg: 'bg-[#E8EDF0]',
-    bgGradient: 'radial-gradient(ellipse at center, #D8E5EE 0%, #EEF3F8 100%)',
-    svgVisual: CategoryVials.mens,
-    available: true,
-    accent: '#1A3A5C',
-  },
-  {
-    id: 'womens',
-    name: "Women's Health",
-    description: 'Wellness from within',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=90',
-    bg: 'bg-[#F0EBF0]',
-    bgGradient: 'radial-gradient(ellipse at center, #EEE0EE 0%, #F8EEF5 100%)',
-    svgVisual: CategoryVials.womens,
-    available: true,
-    accent: '#5C1A4A',
-  },
-  {
-    id: 'hair',
-    name: 'Hair & Skin',
-    description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80',
-    bg: 'bg-[#F0EEEA]',
-    available: false,
-    accent: '#5C4A1A',
-  },
-  {
-    id: 'sexual',
-    name: 'Sexual Health',
-    description: 'Coming Soon',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80',
-    bg: 'bg-[#EEF0EA]',
-    available: false,
-    accent: '#2D4A1A',
-  }
-];
-
-// MedRevolve Rx Products — Hims/Ro/UpScript/Fehr-inspired branded product catalog
-// Each product uses studio pharmaceutical imagery: clean vials, pens, injectables, tablets on minimal backgrounds
-const allProducts = [
-  // ─── WEIGHT LOSS ───────────────────────────────────────────────────────────
-  {
-    id: 1,
-    name: 'Semaglutide',
-    category: 'weight',
-    subtitle: 'GLP-1 Weekly Injectable',
-    form: 'Injectable Vial',
-    promise: 'Support healthy weight management',
-    lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=90',
-    productBg: 'bg-[#F5F2EE]',
-    tag: 'Most Popular',
-    tagColor: 'bg-[#2D3A2D]',
-    price: 299,
-    customers: '12,400+',
-    rx: true,
-    gradient: ['#2D3A2D', '#4A6741'],
-    benefits: ['GLP-1 receptor agonist compound', 'Once weekly subcutaneous injection', 'Physician-prescribed protocol', 'Compounded at licensed 503A pharmacy'],
-    description: 'Compounded Semaglutide is a GLP-1 receptor agonist prescribed by a licensed physician and dispensed through a licensed compounding pharmacy. Requires medical consultation and prescription.',
-  },
-  {
-    id: 2,
-    name: 'Tirzepatide',
-    category: 'weight',
-    subtitle: 'Dual GIP/GLP-1 Compound',
-    form: 'Injectable Vial',
-    promise: 'Dual-receptor weight management support',
-    lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=90',
-    productBg: 'bg-[#F0EDF5]',
-    tag: 'Advanced Formula',
-    tagColor: 'bg-[#4C3D6B]',
-    price: 399,
-    customers: '8,200+',
-    rx: true,
-    gradient: ['#4C3D6B', '#6B4D8B'],
-    benefits: ['Dual GIP + GLP-1 receptor mechanism', 'Physician-managed compounded protocol', 'Best-in-class clinical outcomes', 'Once weekly injection'],
-    description: 'Compounded Tirzepatide is a dual GIP and GLP-1 receptor agonist, prescribed by licensed physicians and dispensed through our partner 503A/503B compounding pharmacies. Prescription required.',
-  },
-  {
-    id: 3,
-    name: 'Semaglutide Sublingual Drops',
-    category: 'weight',
-    subtitle: 'Oral Sublingual Formula',
-    form: 'Oral Drops',
-    promise: 'GLP-1 support without injections',
-    lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
-    productBg: 'bg-[#EEF5F0]',
-    tag: 'Needle-Free',
-    tagColor: 'bg-[#2D6B4C]',
-    price: 249,
-    customers: '6,800+',
-    rx: true,
-    benefits: ['Sublingual daily drops', 'Non-injectable delivery method', 'Travel-friendly dropper bottle', 'GLP-1 receptor agonist compound'],
-    description: 'Oral sublingual compounded Semaglutide for patients prescribed an alternative to injectable protocols. Same active compound class in a daily sublingual drop format. Prescription required.',
-  },
-  {
-    id: 4,
-    name: 'Tirzepatide + B12 Compound',
-    category: 'weight',
-    subtitle: 'Enhanced Energy Formula',
-    form: 'Injectable Vial',
-    promise: 'Weight management with energy support',
-    lifestyle: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=90',
-    productBg: 'bg-[#F5EEE8]',
-    tag: 'Energy Support',
-    tagColor: 'bg-[#B45309]',
-    price: 449,
-    customers: '3,100+',
-    rx: true,
-    benefits: ['Tirzepatide + Vitamin B12 compound', 'Energy support during weight management', 'Compounded at licensed pharmacy', 'Physician-managed weekly protocol'],
-    description: 'A compounded combination of Tirzepatide and Vitamin B12, prescribed to support both weight management and energy levels. Available through physician consultation and prescription only.',
-  },
-  {
-    id: 5,
-    name: 'MIC + B12 Lipotropic',
-    category: 'weight',
-    subtitle: 'Fat-Burning Injection',
-    form: 'Injectable Vial',
-    promise: 'Accelerate fat loss & metabolism',
-    lifestyle: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=800&q=90',
-    productBg: 'bg-[#EEF2F5]',
-    tag: 'Metabolism',
-    tagColor: 'bg-[#1A5CA0]',
-    price: 129,
-    customers: '9,400+',
-    rx: true,
-    benefits: ['Methionine, Inositol & Choline (MIC)', 'B12 energy support', 'Enhances fat metabolism', 'Great as GLP-1 add-on'],
-    description: 'MIC Lipotropic injections combine Methionine, Inositol, Choline, and B12 to support fat metabolism. Physician-prescribed and dispensed through licensed pharmacies. Individual results vary.',
-  },
-
-  // ─── LONGEVITY ──────────────────────────────────────────────────────────────
-  {
-    id: 6,
-    name: 'Sermorelin',
-    category: 'longevity',
-    subtitle: 'Growth Hormone-Releasing Peptide',
-    form: 'Injectable Vial',
-    promise: 'Support sleep, recovery, and energy',
-    lifestyle: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=800&q=90',
-    productBg: 'bg-[#F5EEEE]',
-    tag: 'Anti-Aging',
-    tagColor: 'bg-[#9B1A1A]',
-    price: 199,
-    customers: '7,300+',
-    rx: true,
-    benefits: ['Stimulates natural GH release', 'Deep restorative sleep', 'Faster muscle recovery', 'Subcutaneous nightly injection'],
-    description: 'Sermorelin is a compounded growth hormone-releasing peptide prescribed to support natural GH release. Requires physician evaluation and prescription. Dispensed through licensed compounding pharmacies.',
-  },
-
-  {
-    id: 8,
-    name: 'NAD+ Injection',
-    category: 'longevity',
-    subtitle: 'Cellular Energy & Longevity',
-    form: 'Injectable Vial',
-    promise: 'Restore cellular energy from the inside out',
-    lifestyle: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=800&q=90',
-    productBg: 'bg-[#EEF5EE]',
-    tag: 'Brain & Body',
-    tagColor: 'bg-[#1A6B2D]',
-    price: 179,
-    customers: '5,400+',
-    rx: true,
-    benefits: ['Boosts NAD+ at cellular level', 'Cognitive clarity & focus', 'Enhanced stamina & endurance', 'Supports DNA repair'],
-    description: 'NAD+ (Nicotinamide Adenine Dinucleotide) is essential for cellular energy production and DNA repair. Injectables deliver NAD+ directly into the bloodstream for maximum bioavailability.',
-  },
-  {
-    id: 9,
-    name: 'Glutathione IV Push',
-    category: 'longevity',
-    subtitle: 'Master Antioxidant',
-    form: 'Injectable Vial',
-    promise: 'Glow, detox, and protect from the inside',
-    lifestyle: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=90',
-    productBg: 'bg-[#F5EEF3]',
-    tag: 'Skin & Immunity',
-    tagColor: 'bg-[#8B1A6B]',
-    price: 149,
-    customers: '9,600+',
-    rx: true,
-    benefits: ['Radiant skin brightening', 'Liver detox & protection', 'Powerful immune support', 'Antioxidant cellular defense'],
-    description: 'Glutathione is the body\'s master antioxidant. Our injectable Glutathione supports liver detox, immune function, and is known for its skin-brightening and anti-aging properties.',
-  },
-  {
-    id: 10,
-    name: 'B12 + MIC Weekly Shot',
-    category: 'longevity',
-    subtitle: 'Energy & Mood Essential',
-    form: 'Injectable Vial',
-    promise: 'Feel energized and sharp within days',
-    lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
-    productBg: 'bg-[#EEF5F2]',
-    tag: 'Best Value',
-    tagColor: 'bg-[#1A6B4A]',
-    price: 79,
-    customers: '15,200+',
-    rx: true,
-    gradient: ['#1A6B4A', '#2D8B6B'],
-    benefits: ['Vitamin B12 methylcobalamin', 'Instant natural energy', 'Better mood & cognition', 'Supports red blood cell production'],
-    description: 'Our most accessible injectable — weekly Methylcobalamin B12 shots deliver fast, noticeable energy and mood improvements. Often paired with GLP-1 programs to counter fatigue.',
-  },
-
-  // ─── HORMONES ───────────────────────────────────────────────────────────────
-  {
-    id: 11,
-    name: 'Testosterone Cypionate',
-    category: 'hormone',
-    subtitle: 'TRT — Men\'s Optimization',
-    form: 'Injectable Vial',
-    promise: 'Reclaim your energy, strength & drive',
-    lifestyle: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=90',
-    productBg: 'bg-[#EEF0F5]',
-    tag: 'For Men',
-    tagColor: 'bg-[#1A3A6B]',
-    price: 199,
-    customers: '11,100+',
-    rx: true,
-    benefits: ['Physician-managed TRT protocol', 'Lean muscle & strength gains', 'Improved libido & mood', 'Weekly self-injection kit included'],
-    description: 'Our Testosterone Replacement Therapy (TRT) program includes physician consultation, lab work, and ongoing management. Weekly Testosterone Cypionate injections to restore optimal T levels.',
-  },
-  {
-    id: 12,
-    name: 'Estradiol + Progesterone',
-    category: 'hormone',
-    subtitle: 'Women\'s HRT — Balance & Relief',
-    form: 'Cream / Tablet',
-    promise: 'Feel like yourself again',
-    lifestyle: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=90',
-    productBg: 'bg-[#F5EEF5]',
-    tag: 'For Women',
-    tagColor: 'bg-[#6B1A6B]',
-    price: 179,
-    customers: '8,900+',
-    rx: true,
-    benefits: ['Bioidentical hormone formula', 'Hot flash & night sweat relief', 'Mood stabilization', 'Topical cream or oral tablet'],
-    description: 'Compounded bioidentical Estradiol and Progesterone for women navigating perimenopause and menopause. Customized to your labs and symptom profile.',
-  },
-  {
-    id: 13,
-    name: 'Thyroid T3/T4 Compound',
-    category: 'hormone',
-    subtitle: 'Metabolic Thyroid Support',
-    form: 'Oral Capsule',
-    promise: 'Steady energy, clear mind, healthy weight',
-    lifestyle: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=90',
-    productBg: 'bg-[#EEF5F5]',
-    tag: 'Metabolism',
-    tagColor: 'bg-[#1A6B6B]',
-    price: 149,
-    customers: '6,200+',
-    rx: true,
-    benefits: ['Compounded T3/T4 blend', 'Tailored to your thyroid labs', 'Steady all-day energy', 'Weight & metabolism support'],
-    description: 'Our compounded T3/T4 thyroid formula is customized to your specific thyroid panel. Where standard Synthroid fails, our compounded blend fills the gap.',
-  },
-  {
-    id: 14,
-    name: 'DHEA + Pregnenolone',
-    category: 'hormone',
-    subtitle: 'Adrenal & Hormonal Foundation',
-    form: 'Oral Capsule',
-    promise: 'Restore your hormonal baseline',
-    lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
-    productBg: 'bg-[#F5F2EE]',
-    tag: 'Foundation',
-    tagColor: 'bg-[#6B4A1A]',
-    price: 99,
-    customers: '4,800+',
-    rx: true,
-    benefits: ['DHEA adrenal precursor', 'Pregnenolone neurosteroid', 'Mood & libido support', 'Daily oral capsule'],
-    description: 'DHEA and Pregnenolone are foundational adrenal hormones that decline sharply with age. Restoring them provides a hormonal base for energy, cognition, and mood.',
-  },
-
-  // ─── MEN'S HEALTH ───────────────────────────────────────────────────────────
-  {
-    id: 15,
-    name: 'Sildenafil',
-    category: 'mens',
-    subtitle: 'PDE5 Inhibitor — Physician Prescribed',
-    form: 'Oral Tablet',
-    promise: 'Physician-prescribed ED support',
-    lifestyle: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=90',
-    productBg: 'bg-[#EEF0F5]',
-    tag: 'Rx Required',
-    tagColor: 'bg-[#1A3A6B]',
-    price: 89,
-    customers: '14,600+',
-    rx: true,
-    benefits: ['Compounded Sildenafil tablet', 'Works in 30–60 minutes', 'Discreet shipping', 'Physician-prescribed protocol'],
-    description: 'Compounded Sildenafil is a PDE5 inhibitor prescribed by licensed physicians for erectile dysfunction. Available in tablets and custom dosage blends. Prescription and medical consultation required.',
-  },
-  {
-    id: 16,
-    name: 'Tadalafil Daily',
-    category: 'mens',
-    subtitle: 'Daily PDE5 Inhibitor',
-    form: 'Oral Tablet',
-    promise: 'Daily ED support — physician managed',
-    lifestyle: 'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800&q=90',
-    productBg: 'bg-[#F5F0EE]',
-    tag: 'Daily Rx',
-    tagColor: 'bg-[#6B2D1A]',
-    price: 79,
-    customers: '11,200+',
-    rx: true,
-    benefits: ['Compounded Tadalafil tablet', 'Once daily dosing option', 'Also indicated for BPH symptoms', 'Extended duration formula'],
-    description: 'Compounded daily Tadalafil is a long-acting PDE5 inhibitor prescribed for erectile dysfunction and BPH. Physician consultation and prescription required for dispensing.',
-  },
-  {
-    id: 17,
-    name: 'Finasteride + Minoxidil',
-    category: 'mens',
-    subtitle: 'Hair Loss Prevention',
-    form: 'Topical Cream',
-    promise: 'Stop hair loss before it stops you',
-    lifestyle: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=90',
-    productBg: 'bg-[#EEF5EE]',
-    tag: 'Hair Rx',
-    tagColor: 'bg-[#1A6B3A]',
-    price: 49,
-    customers: '18,400+',
-    rx: true,
-    benefits: ['Finasteride blocks DHT hair loss', 'Minoxidil stimulates regrowth', 'Compounded topical combo', 'Proven 2-drug protocol'],
-    description: 'Our compounded Finasteride + Minoxidil topical combines the two most proven hair loss treatments in a single daily application — no pills, no mess.',
-  },
-  {
-    id: 18,
-    name: 'Testosterone + Semaglutide Stack',
-    category: 'mens',
-    subtitle: 'Performance Body Recomposition',
-    form: 'Auto-Injector Pen',
-    promise: 'Lose fat. Build muscle. At the same time.',
-    lifestyle: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=90',
-    productBg: 'bg-[#EEF0F5]',
-    tag: 'Power Stack',
-    tagColor: 'bg-[#1A1A6B]',
-    price: 449,
-    customers: '3,600+',
-    rx: true,
-    benefits: ['TRT + GLP-1 combination protocol', 'Fat loss with muscle preservation', 'Improved body composition', 'Full physician management'],
-    description: 'A physician-managed protocol combining compounded Testosterone and Semaglutide GLP-1, designed for body recomposition. Both compounds require prescription and are dispensed through licensed pharmacies.',
-  },
-
-  // ─── WOMEN'S HEALTH ─────────────────────────────────────────────────────────
-  {
-    id: 19,
-    name: 'Semaglutide for Women',
-    category: 'womens',
-    subtitle: 'Female GLP-1 Weight Program',
-    form: 'Auto-Injector Pen',
-    promise: 'The most effective weight loss — designed for her',
-    lifestyle: 'https://images.unsplash.com/photo-1549476464-37392f717541?w=800&q=90',
-    productBg: 'bg-[#F5EEF3]',
-    tag: 'Most Popular',
-    tagColor: 'bg-[#6B1A4A]',
-    price: 299,
-    customers: '9,800+',
-    rx: true,
-    benefits: ['GLP-1 weekly injection', 'Balanced with female hormone profile', 'Physician-managed program', 'Includes nutrition coaching'],
-    description: 'Our female-focused Semaglutide protocol accounts for hormonal cycles and contraindication screening. Delivered with a full care team, not just a vial.',
-  },
-  {
-    id: 20,
-    name: 'Estriol Vaginal Cream',
-    category: 'womens',
-    subtitle: 'Vaginal Atrophy & Dryness',
-    form: 'Topical Cream',
-    promise: 'Restore comfort and confidence',
-    lifestyle: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=90',
-    productBg: 'bg-[#F5EEF5]',
-    tag: 'Feminine Health',
-    tagColor: 'bg-[#8B1A6B]',
-    price: 99,
-    customers: '5,200+',
-    rx: true,
-    benefits: ['Compounded Estriol 0.5mg cream', 'Restores vaginal tissue', 'Relieves dryness & discomfort', 'Gentle localized application'],
-    description: 'Compounded Estriol vaginal cream provides localized estrogen support to relieve vaginal dryness, atrophy, and discomfort — common in peri/post-menopause — with minimal systemic absorption.',
-  },
-  {
-    id: 21,
-    name: 'Oxytocin Nasal Spray',
-    category: 'womens',
-    subtitle: 'Mood, Bonding & Intimacy',
-    form: 'Nasal Spray',
-    promise: 'Feel more connected, present & calm',
-    lifestyle: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=90',
-    productBg: 'bg-[#F5F0F5]',
-    tag: 'Wellness',
-    tagColor: 'bg-[#6B3A8B]',
-    price: 129,
-    customers: '3,400+',
-    rx: true,
-    benefits: ['Intranasal oxytocin delivery', 'Mood & emotional wellbeing', 'Supports intimacy & bonding', 'Anxiety & stress relief'],
-    description: 'Compounded intranasal Oxytocin — the "bonding hormone" — delivered via nasal spray for fast absorption. Supports emotional regulation, intimacy, and social connection.',
-  },
-  {
-    id: 22,
-    name: 'Spironolactone (Acne/Hair)',
-    category: 'womens',
-    subtitle: 'Hormonal Acne & Hair Thinning',
-    form: 'Oral Tablet',
-    promise: 'Clear skin. Fuller hair. From the source.',
-    lifestyle: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=90',
-    productBg: 'bg-[#F5EEF0]',
-    tag: 'Skin + Hair',
-    tagColor: 'bg-[#8B1A3A]',
-    price: 59,
-    customers: '7,100+',
-    rx: true,
-    benefits: ['Anti-androgen mechanism', 'Reduces hormonal acne', 'Slows female pattern hair loss', 'Daily oral tablet'],
-    description: 'Spironolactone is the go-to prescription for women with androgen-driven acne and hair thinning. It blocks the hormonal signals at the root of both conditions.',
-  },
-];
-
-// Map URL param values to internal category IDs
-const categoryParamMap = {
-  'weight_loss': 'weight',
-  'weight': 'weight',
-  'longevity': 'longevity',
-  'hormone': 'hormone',
-  'mens_health': 'mens',
-  'mens': 'mens',
-  'womens_health': 'womens',
-  'womens': 'womens',
-  'hair_loss': 'hair',
-  'peptides': 'longevity',
-};
-
-// All unique form types across products
-const ALL_FORMS = ['Auto-Injector Pen', 'Injectable Vial', 'Oral Tablet', 'Oral Capsule', 'Oral Drops', 'Topical Cream', 'Nasal Spray', 'Cream / Tablet'];
-
-// Benefit keyword buckets for filtering
-const BENEFIT_FILTERS = [
-  { label: 'Weight Loss', keywords: ['weight loss', 'lose weight', 'fat loss', 'GLP-1', 'metabolism'] },
-  { label: 'Energy & Mood', keywords: ['energy', 'mood', 'cognition', 'fatigue', 'mental'] },
-  { label: 'Recovery', keywords: ['recovery', 'healing', 'repair', 'tendon', 'muscle'] },
-  { label: 'Hormone Balance', keywords: ['hormone', 'testosterone', 'estrogen', 'libido', 'TRT', 'HRT', 'thyroid'] },
-  { label: 'Anti-Aging', keywords: ['anti-aging', 'longevity', 'cellular', 'DNA', 'sleep', 'GH'] },
-  { label: 'Skin & Hair', keywords: ['skin', 'hair', 'acne', 'brightening', 'glow'] },
-];
-
-const SORT_OPTIONS = [
-  { value: 'popularity', label: 'Most Popular' },
-  { value: 'price_asc', label: 'Price: Low to High' },
-  { value: 'price_desc', label: 'Price: High to Low' },
-];
-
-// Parse customer count string to number for popularity sort
-function parseCustomers(str) {
-  return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
-}
+// ─────────────────────────────────────────────────────────────────────────────
+// medrevolve.com PRODUCTS PAGE — COMPLIANCE NOTICE
+//
+// Per FDA / LegitScript / Mastercard compliance requirements:
+//   • This page ONLY displays Bacteriostatic Water (ancillary supply)
+//   • NO GLP-1 compounds (Semaglutide, Tirzepatide, etc.) on this page
+//   • NO RUO peptides (BPC-157, CJC-1295, TB-500, etc.) on this page
+//   • GLP-1 Rx products are available to merchants on their white-label sites
+//   • RUO products are on a SEPARATE domain with appropriate disclaimers
+//   • Cross-contamination between RUO and consumer/GLP sites = compliance failure
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Products() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const rawCategory = urlParams.get('category') || null;
-  const initialCategory = rawCategory ? (categoryParamMap[rawCategory] || rawCategory) : null;
-  
-  const [activeCategory, setActiveCategory] = useState(initialCategory);
-  const [selectedForms, setSelectedForms] = useState([]);
-  const [selectedBenefits, setSelectedBenefits] = useState([]);
-  const [sortBy, setSortBy] = useState('popularity');
-  const [showFilters, setShowFilters] = useState(false);
-
-  const toggleForm = (form) => setSelectedForms(prev => prev.includes(form) ? prev.filter(f => f !== form) : [...prev, form]);
-  const toggleBenefit = (b) => setSelectedBenefits(prev => prev.includes(b) ? prev.filter(x => x !== b) : [...prev, b]);
-  const clearFilters = () => { setSelectedForms([]); setSelectedBenefits([]); setSortBy('popularity'); };
-  const activeFilterCount = selectedForms.length + selectedBenefits.length + (sortBy !== 'popularity' ? 1 : 0);
-
-  const filteredProducts = useMemo(() => {
-    if (!activeCategory) return [];
-    let products = allProducts.filter(product => product.category === activeCategory);
-
-    if (selectedForms.length > 0) {
-      products = products.filter(p => selectedForms.includes(p.form));
-    }
-
-    if (selectedBenefits.length > 0) {
-      products = products.filter(p => {
-        const text = [...p.benefits, p.description, p.promise, p.subtitle].join(' ').toLowerCase();
-        return selectedBenefits.some(label => {
-          const bucket = BENEFIT_FILTERS.find(b => b.label === label);
-          return bucket?.keywords.some(kw => text.includes(kw.toLowerCase()));
-        });
-      });
-    }
-
-    if (sortBy === 'price_asc') products = [...products].sort((a, b) => a.price - b.price);
-    else if (sortBy === 'price_desc') products = [...products].sort((a, b) => b.price - a.price);
-    else products = [...products].sort((a, b) => parseCustomers(b.customers) - parseCustomers(a.customers));
-
-    return products;
-  }, [activeCategory, selectedForms, selectedBenefits, sortBy]);
+  const [waterQty, setWaterQty] = useState(1);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
 
-      {/* ── FDA Compliance Banner ─────────────────────────────────────────── */}
+      {/* ── Compliance Banner ───────────────────────────────────────────── */}
       <div className="bg-[#1a1a1a] text-white/60 text-xs text-center py-2.5 px-4 leading-relaxed">
-        <span className="font-semibold text-white/80">Important:</span> All treatments require a physician consultation and valid prescription. Products are compounded at licensed 503A/503B pharmacies. These statements have not been evaluated by the FDA. Not for human use without a valid prescription from a licensed provider. Individual results vary.
+        <span className="font-semibold text-white/80">Notice:</span> MedRevolve.com supplies ancillary pharmaceutical-grade products.
+        Prescription treatments are available exclusively through licensed merchant partner sites.
+        All Rx compounds require physician consultation and valid prescription from a licensed provider.
       </div>
 
-      {/* Hero Section */}
-      <section className="pt-10 pb-12 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl mx-auto mb-12 text-center"
-          >
-            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#4A6741] mb-3">Prescription Treatments</p>
+      {/* ── Hero ────────────────────────────────────────────────────────── */}
+      <section className="pt-14 pb-10 px-6 lg:px-8 bg-[#FDFBF7]">
+        <div className="max-w-5xl mx-auto text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#4A6741] mb-3">Pharmaceutical Supply</p>
             <h1 className="text-3xl md:text-5xl font-light text-[#1a1a1a] mb-4 tracking-tight">
-              Clinically Proven.<br/><span className="font-semibold">Physician Prescribed.</span>
+              Pharmaceutical-Grade.<br/>
+              <span className="font-semibold">Hospital-Standard Supply.</span>
             </h1>
-            <p className="text-sm md:text-base text-[#666666] max-w-xl mx-auto">
-              All treatments are compounded at licensed 503A/503B pharmacies, prescribed by board-certified providers, and require a valid prescription. Select your category to explore available protocols.
+            <p className="text-sm md:text-base text-[#666666] max-w-2xl mx-auto">
+              MedRevolve supplies USP-grade bacteriostatic water to licensed healthcare facilities, 
+              compounding pharmacies, research institutions, and B2B partners. 
+              All product sourced from FDA-registered manufacturers.
             </p>
-            <div className="flex items-center justify-center gap-4 md:gap-6 mt-6 text-xs text-[#666666]">
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Licensed Providers</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>503A/503B Pharmacy</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Rx Required</span>
-            </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* Category Grid — 7 tiles, 4 per row */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
-            {categories.map((category, index) => (
+      {/* ── Bacteriostatic Water — Main Product ─────────────────────────── */}
+      <section className="py-12 px-6 lg:px-8 bg-white border-t border-gray-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+
+            {/* Visual */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center justify-center bg-[#EEF5F0] rounded-3xl p-12 aspect-square"
+            >
+              <div className="text-center">
+                <div className="w-24 h-24 rounded-full bg-[#4A6741]/10 flex items-center justify-center mx-auto mb-4">
+                  <Droplets className="w-12 h-12 text-[#4A6741]" />
+                </div>
+                <div className="text-sm font-bold text-[#4A6741] uppercase tracking-widest">USP Grade</div>
+                <div className="text-xs text-[#666666] mt-1">0.9% Benzyl Alcohol · Sterile Water for Injection</div>
+                <div className="mt-4 inline-flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-[#4A6741]/20 text-xs text-[#4A6741] font-semibold">
+                  <ShieldCheck className="w-3.5 h-3.5" /> FDA-Registered Manufacturer
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Info */}
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A6741] mb-2">B2B / Wholesale Supply</p>
+              <h2 className="text-2xl md:text-3xl font-semibold text-[#1a1a1a] mb-3">Bacteriostatic Water for Injection</h2>
+              <p className="text-sm text-[#888888] mb-1 font-medium">Sterile Water with 0.9% Benzyl Alcohol (Bacteriostatic)</p>
+              <p className="text-sm text-[#666666] leading-relaxed mb-6">
+                USP-grade bacteriostatic water used for dilution and reconstitution of parenteral medications.
+                Supplied to licensed pharmacies, compounding facilities, and healthcare institutions. 
+                Sourced from FDA-registered manufacturers (equivalent to Hospira/Pfizer-grade specifications).
+              </p>
+
+              <div className="space-y-2.5 mb-6">
+                {[
+                  'USP-grade sterile water with 0.9% benzyl alcohol',
+                  'Supplied in multi-dose vials (30mL)',
+                  'COA (Certificate of Analysis) included with every batch',
+                  'FDA-registered manufacturer, GMP certified',
+                  'National shipping — licensed facilities only',
+                  'Available in case quantities for B2B partners',
+                ].map((b, i) => (
+                  <div key={i} className="flex items-start gap-2.5 text-sm text-[#2D3A2D]">
+                    <div className="w-4 h-4 rounded-full bg-[#D4E5D7] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-[#4A6741] text-[9px] font-bold">✓</span>
+                    </div>
+                    {b}
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-[#F9F7F4] border border-gray-200 rounded-xl p-4 mb-6 text-xs text-[#666666] leading-relaxed">
+                <span className="font-semibold text-[#1a1a1a]">For Licensed Institutions:</span> Pricing available upon verification of facility license, 
+                DEA registration (if applicable), and NPI number. Contact our B2B supply team for wholesale pricing and bulk orders.
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link to={createPageUrl('Contact')}>
+                  <Button className="bg-[#1A2A1A] hover:bg-[#2D3A2D] text-white rounded-sm px-6 font-semibold w-full sm:w-auto">
+                    Request B2B Pricing
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+                <Link to={createPageUrl('ForBusiness')}>
+                  <Button variant="outline" className="border-[#4A6741]/30 text-[#4A6741] hover:bg-[#4A6741] hover:text-white rounded-sm w-full sm:w-auto">
+                    Merchant Partnership Info
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Specs / Compliance ──────────────────────────────────────────── */}
+      <section className="py-12 px-6 lg:px-8 bg-[#F5F0E8]">
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-[#4A6741] mb-6 text-center">Product Specifications & Compliance</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { label: 'USP <797>', desc: 'Meets United States Pharmacopeia compounding standards for sterile preparations', icon: ShieldCheck },
+              { label: 'GMP Certified', desc: 'Manufactured under Current Good Manufacturing Practice regulations (cGMP)', icon: Building2 },
+              { label: 'COA Provided', desc: 'Full Certificate of Analysis with every shipment — identity, purity, and sterility testing', icon: FlaskConical },
+            ].map((spec, i) => (
+              <div key={i} className="bg-white rounded-xl p-5 border border-gray-100">
+                <spec.icon className="w-6 h-6 text-[#4A6741] mb-3" />
+                <div className="font-semibold text-[#1a1a1a] text-sm mb-1">{spec.label}</div>
+                <div className="text-xs text-[#666666] leading-relaxed">{spec.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Merchant White-Label Products — B2B Service Pitch ───────────── */}
+      <section className="py-16 px-6 lg:px-8 bg-[#0A0A0A] text-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#8FB88F] mb-3">For Licensed Merchants</p>
+            <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
+              Full Rx Product Catalog — <span className="font-semibold">Under Your Brand</span>
+            </h2>
+            <p className="text-sm text-white/50 max-w-2xl mx-auto">
+              MedRevolve provides compliant GLP-1 weight management, hormone optimization, and longevity 
+              protocols to licensed B2B merchants through our white-label platform. Each merchant site 
+              operates independently with its own LegitScript certification, payment processing, and 
+              licensed pharmacy integrations.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            {[
+              {
+                title: 'GLP-1 Weight Management',
+                description: 'Compounded Semaglutide and Tirzepatide protocols, prescribed by board-certified physicians, dispensed through licensed 503A/503B pharmacies.',
+                tag: 'Rx Required',
+                tagColor: 'text-green-400',
+                note: 'Available on merchant white-label sites only. Requires LegitScript certification.',
+              },
+              {
+                title: 'Hormone Optimization',
+                description: 'TRT (Testosterone Replacement Therapy), bioidentical HRT (Estradiol/Progesterone), thyroid optimization — all physician-prescribed.',
+                tag: 'Rx Required',
+                tagColor: 'text-blue-400',
+                note: 'Available on merchant white-label sites only. Requires physician consultation.',
+              },
+              {
+                title: 'Men\'s Health Protocols',
+                description: 'Compounded Sildenafil, Tadalafil, and combination protocols — prescribed by licensed providers and dispensed through partner pharmacies.',
+                tag: 'Rx Required',
+                tagColor: 'text-purple-400',
+                note: 'Available on merchant white-label sites only.',
+              },
+              {
+                title: 'Longevity & Wellness',
+                description: 'Physician-prescribed compounded protocols including NAD+, Sermorelin, Glutathione, and B12/MIC — through licensed partner pharmacies.',
+                tag: 'Rx Required',
+                tagColor: 'text-yellow-400',
+                note: 'Available on merchant white-label sites only.',
+              },
+            ].map((item, i) => (
               <motion.div
-                key={category.id}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.07 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="bg-white/[0.04] border border-white/10 rounded-xl p-5"
               >
-                <CategoryCard 
-                  category={category} 
-                  isActive={activeCategory === category.id}
-                  onClick={() => category.available && setActiveCategory(activeCategory === category.id ? null : category.id)}
-                />
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-semibold text-white text-sm">{item.title}</h4>
+                  <span className={`text-[10px] font-bold ${item.tagColor}`}>{item.tag}</span>
+                </div>
+                <p className="text-sm text-white/50 leading-relaxed mb-3">{item.description}</p>
+                <p className="text-[10px] text-white/25 border-t border-white/8 pt-2">{item.note}</p>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Products Section */}
-      <AnimatePresence mode="wait">
-        {activeCategory && (
-          <motion.section
-            key={activeCategory}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="py-16 px-6 lg:px-8 bg-white"
-          >
-            <div className="max-w-7xl mx-auto">
-              {/* Section Header */}
-              <div className="flex items-start justify-between mb-6 gap-4">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A6741] mb-2">
-                    {categories.find(c => c.id === activeCategory)?.description}
-                  </p>
-                  <h2 className="text-2xl md:text-4xl font-light text-[#1a1a1a]">
-                    {categories.find(c => c.id === activeCategory)?.name}
-                    <span className="text-[#666666] text-xl md:text-2xl font-light ml-3">Rx Treatments</span>
-                  </h2>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => setActiveCategory(null)}
-                  className="flex-shrink-0 border-[#2D3A2D]/20 text-[#2D3A2D] hover:bg-[#2D3A2D] hover:text-white rounded-full text-sm"
-                >
-                  All Categories
-                </Button>
-              </div>
-
-              {/* Filter & Sort Bar */}
-              <div className="mb-8">
-                <div className="flex flex-wrap items-center gap-3 mb-3">
-                  {/* Toggle filter panel */}
-                  <button
-                    onClick={() => setShowFilters(v => !v)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${
-                      showFilters || activeFilterCount > 0
-                        ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
-                        : 'bg-white border-gray-200 text-[#2D3A2D] hover:border-[#2D3A2D]'
-                    }`}
-                  >
-                    <SlidersHorizontal className="w-3.5 h-3.5" />
-                    Filters
-                    {activeFilterCount > 0 && (
-                      <span className="bg-white text-[#2D3A2D] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                        {activeFilterCount}
-                      </span>
-                    )}
-                  </button>
-
-                  {/* Sort dropdown */}
-                  <div className="relative">
-                    <select
-                      value={sortBy}
-                      onChange={e => setSortBy(e.target.value)}
-                      className="appearance-none pl-4 pr-8 py-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-[#2D3A2D] cursor-pointer focus:outline-none focus:border-[#2D3A2D] hover:border-[#2D3A2D] transition-colors"
-                    >
-                      {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                    </select>
-                    <ArrowUpDown className="w-3 h-3 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                  </div>
-
-                  {/* Active filter chips */}
-                  {selectedForms.map(f => (
-                    <button key={f} onClick={() => toggleForm(f)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#4A6741]/10 text-[#4A6741] text-xs font-medium border border-[#4A6741]/20 hover:bg-[#4A6741]/20 transition-colors">
-                      {f} <X className="w-3 h-3" />
-                    </button>
-                  ))}
-                  {selectedBenefits.map(b => (
-                    <button key={b} onClick={() => toggleBenefit(b)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#4A6741]/10 text-[#4A6741] text-xs font-medium border border-[#4A6741]/20 hover:bg-[#4A6741]/20 transition-colors">
-                      {b} <X className="w-3 h-3" />
-                    </button>
-                  ))}
-                  {activeFilterCount > 0 && (
-                    <button onClick={clearFilters} className="text-xs text-[#8A9A8A] hover:text-[#2D3A2D] underline underline-offset-2 transition-colors">
-                      Clear all
-                    </button>
-                  )}
-                </div>
-
-                {/* Expandable filter panel */}
-                <AnimatePresence>
-                  {showFilters && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="bg-[#F9F7F4] rounded-2xl p-5 border border-gray-100 grid sm:grid-cols-2 gap-6">
-                        {/* Form filter */}
-                        <div>
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#4A6741] mb-3">Delivery Form</p>
-                          <div className="flex flex-wrap gap-2">
-                            {ALL_FORMS.map(form => (
-                              <button
-                                key={form}
-                                onClick={() => toggleForm(form)}
-                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                                  selectedForms.includes(form)
-                                    ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
-                                    : 'bg-white text-[#2D3A2D] border-gray-200 hover:border-[#2D3A2D]'
-                                }`}
-                              >
-                                {form}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        {/* Benefit filter */}
-                        <div>
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#4A6741] mb-3">Goal / Benefit</p>
-                          <div className="flex flex-wrap gap-2">
-                            {BENEFIT_FILTERS.map(bf => (
-                              <button
-                                key={bf.label}
-                                onClick={() => toggleBenefit(bf.label)}
-                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                                  selectedBenefits.includes(bf.label)
-                                    ? 'bg-[#2D3A2D] text-white border-[#2D3A2D]'
-                                    : 'bg-white text-[#2D3A2D] border-gray-200 hover:border-[#2D3A2D]'
-                                }`}
-                              >
-                                {bf.label}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <p className="text-[#666666] text-sm mt-3">
-                  <span className="font-semibold text-[#1a1a1a]">{filteredProducts.length}</span> treatment{filteredProducts.length !== 1 ? 's' : ''} · Compounded at licensed pharmacy
-                </p>
-              </div>
-
-              {/* Products Grid */}
-              <AnimatePresence mode="popLayout">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
-                    <motion.div
-                      key={product.id}
-                      layout
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: index * 0.06 }}
-                    >
-                      <ProductCard product={product} />
-                    </motion.div>
-                  )) : (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="col-span-3 text-center py-16"
-                    >
-                      <p className="text-[#8A9A8A] text-lg mb-3">No treatments match your filters.</p>
-                      <button onClick={clearFilters} className="text-[#4A6741] font-semibold underline underline-offset-2">Clear filters</button>
-                    </motion.div>
-                  )}
-                </div>
-              </AnimatePresence>
-            </div>
-          </motion.section>
-        )}
-      </AnimatePresence>
-
-      {/* No Category Selected State */}
-      {!activeCategory && (
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="py-20 px-6 lg:px-8"
-        >
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="w-20 h-20 rounded-full bg-[#D4E5D7] flex items-center justify-center mx-auto mb-6">
-              <Leaf className="w-10 h-10 text-[#4A6741]" />
-            </div>
-            <h2 className="text-2xl md:text-3xl font-light text-[#1a1a1a] mb-4">
-              Choose Your Wellness Journey
-            </h2>
-            <p className="text-[#666666] mb-6">
-              Select a category above to explore treatments designed for your specific goals. 
-              Every journey is unique—let's find yours.
+          <div className="text-center">
+            <p className="text-xs text-white/30 mb-4">
+              All Rx products are exclusively available through licensed merchant partner sites — not directly on medrevolve.com.
+              Each merchant undergoes compliance verification before accessing the product catalog.
             </p>
-            <div className="mb-8">
-              <Link to={createPageUrl('CustomerIntake')}>
-                <Button 
-                  size="lg"
-                  className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-full px-8"
-                >
-                  Get Started - Complete Your Intake
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3">
-              {categories.filter(c => c.available).map(category => (
-                <Button
-                  key={category.id}
-                  variant="outline"
-                  onClick={() => setActiveCategory(category.id)}
-                  className="rounded-full border-[#4A6741]/30 text-[#4A6741] hover:bg-[#4A6741] hover:text-white"
-                >
-                  {category.name}
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              ))}
-            </div>
+            <Link to={createPageUrl('MerchantOnboarding')}>
+              <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-8 font-bold">
+                Become a Licensed Merchant Partner
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
           </div>
-        </motion.section>
-      )}
+        </div>
+      </section>
 
-      {/* Trust Section */}
-      <section className="py-16 px-6 lg:px-8 bg-[#F5F0E8]">
+      {/* ── RUO Separation Notice ────────────────────────────────────────── */}
+      <section className="py-10 px-6 lg:px-8 bg-[#111] border-t border-white/8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
+          <div className="bg-amber-500/8 border border-amber-500/20 rounded-xl p-5 flex gap-4 items-start">
+            <FlaskConical className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">503A/503B</div>
-              <p className="text-[#666666] text-sm md:text-base">Licensed Compounding Pharmacies</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Board-Certified</div>
-              <p className="text-[#666666] text-sm md:text-base">Prescribing Providers</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Rx Required</div>
-              <p className="text-[#666666] text-sm md:text-base">Prescription for All Products</p>
+              <div className="text-sm font-semibold text-amber-300 mb-1">Research Use Only (RUO) Products</div>
+              <p className="text-xs text-white/40 leading-relaxed">
+                Research-use-only peptides and compounds (BPC-157, CJC-1295, TB-500, GHK-Cu, etc.) are 
+                <strong className="text-white/60"> not listed on this site</strong> and are maintained on a 
+                completely separate domain in full compliance with FDA guidelines. These products are labeled 
+                "For Research Use Only — Not for Human or Veterinary Use" and are sold exclusively to 
+                licensed research facilities. MedRevolve strictly enforces separation between RUO and 
+                consumer/Rx product sites.
+              </p>
+              <p className="text-[10px] text-white/25 mt-2">
+                Per FDA guidance and LegitScript requirements: RUO compounds must never appear on the same domain 
+                as consumer-facing or prescription products.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
     </div>
-  );
-}
-
-function CategoryCard({ category, isActive, onClick }) {
-  return (
-    <motion.div
-      onClick={onClick}
-      className={`relative rounded-2xl overflow-hidden cursor-pointer group border-2 transition-all duration-300
-        ${isActive ? 'border-[#2D3A2D] shadow-xl scale-[1.01]' : 'border-transparent'}
-        ${!category.available ? 'opacity-50 cursor-default' : 'hover:border-[#2D3A2D]/30 hover:shadow-lg'}
-        bg-white`}
-      whileHover={category.available ? { y: -3 } : {}}
-      whileTap={category.available ? { scale: 0.98 } : {}}
-    >
-      {/* Category image — pharmacy/wellness aesthetic */}
-      <div className={`aspect-[4/3] relative overflow-hidden ${category.bg || 'bg-gray-100'}`}>
-        {category.svgVisual ? (
-          <div className={`w-full h-full flex items-center justify-center ${category.bg}`} style={{ background: category.bgGradient }}>
-            <motion.div
-              animate={category.available ? { y: [0, -5, 0] } : {}}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              {category.svgVisual()}
-            </motion.div>
-          </div>
-        ) : (
-          <img
-            src={category.image}
-            alt={category.name}
-            className={`w-full h-full object-cover object-center transition-transform duration-700 ${
-              category.available ? 'group-hover:scale-105' : ''
-            }`}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-        {/* Coming Soon overlay */}
-        {!category.available && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px]">
-            <div className="bg-white rounded-full px-4 py-1.5 flex items-center gap-1.5 shadow-md border border-gray-200">
-              <Lock className="w-3.5 h-3.5 text-[#4A6741]" />
-              <span className="text-xs font-semibold text-[#2D3A2D]">Coming Soon</span>
-            </div>
-          </div>
-        )}
-
-        {/* Active indicator */}
-        {isActive && (
-          <div className="absolute top-2 right-2">
-            <span className="bg-[#2D3A2D] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Selected</span>
-          </div>
-        )}
-      </div>
-
-      {/* Label */}
-      <div className="px-4 py-3">
-        <h3 className="font-semibold text-[#1a1a1a] text-sm">{category.name}</h3>
-        {category.available && (
-          <p className="text-xs text-[#666666] mt-0.5">{category.description}</p>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-function ProductCard({ product }) {
-  const [aiImage, setAiImage] = useState(null);
-  const [imageLoading, setImageLoading] = useState(false);
-  const cacheKey = `mr_img_${product.id}`;
-
-  useEffect(() => {
-    // Check session cache first
-    const cached = sessionStorage.getItem(cacheKey);
-    if (cached) { setAiImage(cached); return; }
-
-    const generateImage = async () => {
-      setImageLoading(true);
-      try {
-        const response = await base44.functions.invoke('generateProductVisual', {
-          productName: product.name,
-          form: product.form,
-          category: product.category,
-        });
-        if (response.data?.imageUrl) {
-          sessionStorage.setItem(cacheKey, response.data.imageUrl);
-          setAiImage(response.data.imageUrl);
-        }
-      } catch (err) {
-        console.error('Failed to generate product image:', err);
-      }
-      setImageLoading(false);
-    };
-    generateImage();
-  }, [product.id]);
-
-  // Priority: AI generated → lifestyle photo → SVG fallback
-  const showAI = aiImage && !imageLoading;
-  const showLifestyle = !showAI && product.lifestyle;
-  const showSVG = !showAI && !showLifestyle;
-
-  return (
-    <motion.div
-      className="bg-white rounded-2xl overflow-hidden group h-full flex flex-col hover:shadow-xl transition-all duration-300 border border-gray-100"
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25 }}
-    >
-      <Link to={createPageUrl(`ProductDetail?id=${product.id}`)} className="flex-1 flex flex-col">
-        {/* Product visual area */}
-        <div className={`relative aspect-[4/3] overflow-hidden flex items-center justify-center ${product.productBg || 'bg-[#F5F2EE]'}`}>
-          
-          {/* AI Generated image */}
-          {showAI && (
-            <img
-              src={aiImage}
-              alt={product.name}
-              className="w-full h-full object-cover object-center transition-opacity duration-500"
-            />
-          )}
-
-          {/* Lifestyle fallback */}
-          {showLifestyle && (
-            <img
-              src={product.lifestyle}
-              alt={product.name}
-              className="w-full h-full object-cover object-center"
-            />
-          )}
-
-          {/* SVG fallback */}
-          {showSVG && !imageLoading && (
-            <RxProductVisual product={product} size="md" autoPlay={false} className="w-full h-full" />
-          )}
-
-          {/* Loading shimmer */}
-          {imageLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3"
-              style={{ background: product.productBg || '#F5F2EE' }}>
-              <RxProductVisual product={product} size="md" autoPlay={false} className="w-full h-full opacity-40" />
-              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#4A6741] animate-bounce" style={{ animationDelay: '300ms' }} />
-              </div>
-            </div>
-          )}
-
-
-          {/* Top badges row — always on top */}
-          <div className="absolute top-3 left-3 right-3 flex items-start justify-between z-10 pointer-events-none">
-            {product.rx && (
-              <span className="bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase backdrop-blur-sm">
-                Rx
-              </span>
-            )}
-            {product.tag && (
-              <span className={`${product.tagColor} text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow ml-auto`}>
-                {product.tag}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Product Info */}
-        <div className="p-5 flex-1 flex flex-col">
-          <div className="flex items-center gap-2 mb-1">
-            <p className="text-[10px] font-bold text-[#4A6741] uppercase tracking-[0.15em]">{product.subtitle}</p>
-            {product.form && (
-              <span className="text-[9px] font-medium text-[#666666] bg-[#F0EDE8] px-2 py-0.5 rounded-full">{product.form}</span>
-            )}
-          </div>
-          <h3 className="text-base md:text-lg font-semibold text-[#1a1a1a] leading-snug mb-2 group-hover:text-[#2D3A2D] transition-colors">
-            {product.name}
-          </h3>
-          <p className="text-sm text-[#666666] mb-4 leading-relaxed">{product.promise}</p>
-
-          {/* Benefits */}
-          <div className="space-y-1.5 mb-4">
-            {product.benefits.slice(0, 3).map((b, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-[#2D3A2D]">
-                <div className="w-4 h-4 rounded-full bg-[#D4E5D7] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-[#4A6741] text-[9px] font-bold">✓</span>
-                </div>
-                {b}
-              </div>
-            ))}
-          </div>
-
-          <div className="flex-1" />
-          <p className="text-[11px] text-[#666666]">Rx required · Licensed pharmacy</p>
-        </div>
-      </Link>
-
-      {/* Price + CTA */}
-      <div className="px-5 pb-5 pt-3 border-t border-gray-100">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-xs text-[#666666] mr-0.5">from</span>
-              <span className="text-xl md:text-2xl font-bold text-[#1a1a1a]">${product.price}</span>
-              <span className="text-sm text-[#666666]">/mo</span>
-            </div>
-            <p className="text-[10px] text-[#4A6741] font-medium">Consult + Rx + Shipping</p>
-          </div>
-          <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
-            <Button
-              size="sm"
-              className="bg-[#1A2A1A] hover:bg-[#2D3A2D] text-white rounded-full px-5 text-sm font-semibold"
-            >
-              Learn More
-              <ArrowRight className="w-3.5 h-3.5 ml-1" />
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </motion.div>
   );
 }
