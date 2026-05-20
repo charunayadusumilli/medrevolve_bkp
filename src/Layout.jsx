@@ -123,8 +123,8 @@ export default function Layout({ children }) {
               <Link to={createPageUrl('ForBusiness')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 For Business
               </Link>
-              <Link to={createPageUrl('Consultations')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                Consultations
+              <Link to={createPageUrl('BookAppointment')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                Book a Visit
               </Link>
 
               {/* Admin only */}
@@ -232,7 +232,7 @@ export default function Layout({ children }) {
                       <Link to={createPageUrl('Products')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Products</Link>
                       <Link to={createPageUrl('TelehealthPlatform')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Telehealth</Link>
                       <Link to={createPageUrl('ForBusiness')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>For Business</Link>
-                      <Link to={createPageUrl('Consultations')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Consultations</Link>
+                      <Link to={createPageUrl('BookAppointment')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Book a Visit</Link>
 
                       {user && (
                         <div className="pt-4 border-t border-white/10 mt-2">
