@@ -241,13 +241,13 @@ export default function MerchantOnboarding() {
 
       console.log('✅ Admin email sent');
 
-      // Merchant welcome email
-      console.log('Sending merchant welcome email...');
-      await base44.integrations.Core.SendEmail({
-        from_name: 'MedRevolve',
-        to: form.email,
-        subject: `Your MedRevolve platform is LIVE — you're launched!`,
-        body: `
+      // Merchant welcome email — best effort (may fail if user not yet registered)
+      try {
+        await base44.integrations.Core.SendEmail({
+          from_name: 'MedRevolve',
+          to: form.email,
+          subject: `Your MedRevolve platform is LIVE — you're launched!`,
+          body: `
 <h2>You're Live, ${form.contactName}! 🚀</h2>
 <p>Your <strong>${form.businessName}</strong> platform is launching right now — instantly. Here's what's been activated:</p>
 <h3>What's live for you:</h3>
@@ -264,10 +264,13 @@ export default function MerchantOnboarding() {
 <p>$${monthlyTotal}/month after 7-day free trial. ${totalToday > 0 ? `LLC formation: $${totalToday} (one-time, already charged).` : ''}</p>
 <p><a href="https://app.medrevolve.com/MerchantDashboard">Access your dashboard →</a></p>
 <p>Your onboarding manager will contact you within 24 hours.<br/>— The MedRevolve Team</p>
-        `.trim(),
-      });
-
-      console.log('✅ Welcome email sent');
+          `.trim(),
+        });
+        console.log('✅ Welcome email sent');
+      } catch (emailErr) {
+        // Non-fatal — admin email already sent, onboarding still completes
+        console.warn('Welcome email skipped (user not yet registered in app):', emailErr?.message);
+      }
 
       trackDigestEvent('merchant_onboarding', {
         business_name: form.businessName, contact_name: form.contactName,
