@@ -155,23 +155,7 @@ export default function Platform() {
         </div>
       </section>
 
-      {/* ── Tab Bar ── */}
-      <div className="sticky top-16 z-40 bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="flex overflow-x-auto scrollbar-hide">
-            {TABS.map(tab => (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`flex-shrink-0 px-6 py-4 text-sm font-bold tracking-wide transition-all border-b-2 ${
-                  activeTab === tab.id
-                    ? 'text-white border-[#A8C99B]'
-                    : 'text-white/35 border-transparent hover:text-white/60'
-                }`}>
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+
 
       {/* ── Tab Content ── */}
       <AnimatePresence mode="wait">
