@@ -148,6 +148,8 @@ export default function Layout({ children }) {
                     <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem asChild><Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Partner Program</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Creator Program</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📥 Inbox</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               }
