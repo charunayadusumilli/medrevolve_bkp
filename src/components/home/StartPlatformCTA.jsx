@@ -18,7 +18,7 @@ export default function StartPlatformCTA() {
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
   return (
-    <section className="relative py-24 px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] via-[#111D30] to-[#0A0A0A] overflow-hidden">
+    <section className="relative py-12 lg:py-24 px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] via-[#111D30] to-[#0A0A0A] overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#4A6741]/30 rounded-full filter blur-3xl" />
@@ -31,39 +31,39 @@ export default function StartPlatformCTA() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-[#4A6741]/30 rounded-full px-4 py-2 mb-6">
-            <Zap className="w-4 h-4 text-[#A8C99B]" />
-            <span className="text-[#A8C99B] text-xs font-bold uppercase tracking-widest">Launch in Days</span>
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 lg:mb-16">
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-[#4A6741]/30 rounded-full px-3 py-1.5 mb-3 lg:mb-6">
+            <Zap className="w-3 h-3 lg:w-4 lg:h-4 text-[#A8C99B]" />
+            <span className="text-[#A8C99B] text-[10px] lg:text-xs font-bold uppercase tracking-widest">Launch in Days</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 leading-none" style={{ letterSpacing: '-0.03em' }}>
+          <h2 className="text-3xl lg:text-6xl font-black text-white mb-2 lg:mb-4 leading-tight" style={{ letterSpacing: '-0.03em' }}>
             Start Your <span className="text-[#A8C99B]">Platform</span>
           </h2>
-          <p className="text-xl text-white/50 max-w-2xl mx-auto mb-8">
-            Everything you need to launch a telehealth, GLP-1, or wellness business. Compliant. Branded. Profitable.
+          <p className="text-sm lg:text-xl text-white/50 max-w-2xl mx-auto mb-4 lg:mb-8">
+            Complete platform to launch telehealth, GLP-1, or wellness business.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to={createPageUrl('MerchantOnboarding')}>
-              <Button size="lg" className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-lg px-8 font-bold">
-                Get Started <ArrowRight className="ml-2 w-5 h-5" />
+              <Button size="sm" className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-lg px-6 lg:px-8 font-bold text-xs lg:text-base lg:h-auto h-9">
+                Get Started <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
             <Link to={'/Platform?tab=book'}>
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 rounded-lg px-8 font-bold">
-                Book a Demo
+              <Button size="sm" variant="outline" className="border-white/20 text-white hover:bg-white/10 rounded-lg px-6 lg:px-8 font-bold text-xs lg:text-base lg:h-auto h-9">
+                Book Demo
               </Button>
             </Link>
           </div>
         </motion.div>
 
-        {/* Features Grid with scroll animation */}
+        {/* Features Grid with scroll animation — 2 cols on mobile, 3 on lg */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
           <AnimatePresence>
             {FEATURES.map((feature, i) => {
               const Icon = feature.icon;
@@ -81,11 +81,11 @@ export default function StartPlatformCTA() {
                   <div className={`absolute inset-0 bg-gradient-to-br from-[#4A6741]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
                   <div className="relative">
-                    <div className="w-10 h-10 rounded-lg bg-[#4A6741]/20 flex items-center justify-center mb-4 group-hover:bg-[#4A6741]/40 transition-colors">
-                      <Icon className="w-5 h-5 text-[#A8C99B]" />
+                    <div className="w-7 lg:w-10 h-7 lg:h-10 rounded-lg bg-[#4A6741]/20 flex items-center justify-center mb-2 lg:mb-4 group-hover:bg-[#4A6741]/40 transition-colors">
+                      <Icon className="w-3.5 lg:w-5 h-3.5 lg:h-5 text-[#A8C99B]" />
                     </div>
-                    <h3 className="text-white font-bold mb-1">{feature.label}</h3>
-                    <p className="text-white/50 text-sm">{feature.desc}</p>
+                    <h3 className="text-white font-bold mb-0.5 lg:mb-1 text-xs lg:text-base">{feature.label}</h3>
+                    <p className="text-white/50 text-[10px] lg:text-sm">{feature.desc}</p>
                   </div>
                 </motion.div>
               );
@@ -93,13 +93,13 @@ export default function StartPlatformCTA() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Highlight stats */}
+        {/* Highlight stats — hidden on mobile to save space */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-20 grid md:grid-cols-4 gap-6 text-center">
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="hidden lg:grid mt-12 lg:mt-20 grid-cols-4 gap-6 text-center">
           {[
             { num: '7-30', label: 'Days to Launch' },
             { num: '200+', label: 'Providers' },

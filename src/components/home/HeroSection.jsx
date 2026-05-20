@@ -28,7 +28,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#0A0A0A] min-h-screen flex flex-col justify-center overflow-hidden">
+    <section className="relative bg-[#0A0A0A] lg:min-h-screen flex flex-col justify-center overflow-hidden" style={{ minHeight: 'clamp(400px, 80vh, 100vh)' }}>
 
       {/* Subtle grid */}
       <div className="absolute inset-0 opacity-[0.025]"
@@ -43,7 +43,7 @@ export default function HeroSection() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-[0.08]"
         style={{ background: 'radial-gradient(circle, #4A6741 0%, transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-24 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-12 lg:py-24 w-full">
         <div className="max-w-3xl">
 
           {/* Badge */}
@@ -61,8 +61,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}>
-            <h1 className="font-black text-white leading-[0.95] tracking-[-0.03em] mb-6"
-              style={{ fontSize: 'clamp(3rem, 7vw, 6.5rem)' }}>
+            <h1 className="font-black text-white leading-[0.95] tracking-[-0.03em] mb-4 lg:mb-6"
+              style={{ fontSize: 'clamp(2.25rem, 6vw, 6.5rem)' }}>
               Your{' '}
               <span className="relative inline-block">
                 <motion.span
@@ -85,17 +85,16 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/45 text-lg leading-relaxed mb-8 max-w-xl font-light">
-            MedRevolve is the complete platform to launch and grow a compliant telehealth or wellness business —
-            website, telehealth, marketing, compliance, and university support — all under your brand.
+            className="text-white/45 text-base lg:text-lg leading-relaxed mb-6 lg:mb-8 max-w-xl font-light">
+            MedRevolve is the complete platform to launch and grow a compliant telehealth or wellness business.
           </motion.p>
 
-          {/* Feature checklist */}
+          {/* Feature checklist — hidden on mobile to save space */}
           <motion.ul
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-10">
+            className="hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-2 mb-10">
             {features.map((f, i) => (
               <li key={i} className="flex items-center gap-2.5">
                 <CheckCircle className="w-4 h-4 text-[#6B8F5E] flex-shrink-0" />
@@ -124,12 +123,12 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Stats row */}
+        {/* Stats row — hidden on mobile to save space */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-20 pt-8 border-t border-white/8 flex flex-wrap gap-x-12 gap-y-6">
+          className="hidden lg:flex mt-20 pt-8 border-t border-white/8 flex-wrap gap-x-12 gap-y-6">
           {stats.map((s, i) => (
             <div key={i}>
               <p className="text-white text-2xl font-black">{s.v}</p>
