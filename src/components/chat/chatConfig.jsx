@@ -348,6 +348,17 @@ export const PAGE_CONTEXTS = {
     ],
   },
 
+  MerchantDemo: {
+    personaKey: 'partner_manager',
+    greeting: "You're looking at a live demo of what your white-label merchant site looks like! 🎨 Toggle between **GLP/Rx mode** (physician-gated consumer health) and **RUO mode** (research compounds, age-gated). Ready to get your own version live in 24 hours?",
+    placeholder: "Ask about GLP vs RUO sites, compliance, or pricing...",
+    suggestedPrompts: [
+      "What's the difference between GLP and RUO mode?",
+      "How do I get my own site like this?",
+      "What compliance is required for each track?",
+    ],
+  },
+
   // ── Merchant pages ─────────────────────────────────────────────────────────
   MerchantOnboarding: {
     personaKey: 'partner_manager',
@@ -1238,7 +1249,7 @@ export function buildSystemPrompt(pageName, pageProduct) {
   const ctx = getPageContext(pageName);
 
   // Determine if this is a B2B/merchant page or a consumer/patient page
-  const isMerchantPage = ['MerchantOnboarding','MerchantDashboard','MerchantInventoryPage','PartnerProgram','PartnerPortal','PartnerSignup','ForBusiness','BusinessInquiry','PartnershipHub','AdminDashboard','ComplianceDashboard','ProviderOutreach'].includes(pageName);
+  const isMerchantPage = ['MerchantOnboarding','MerchantDashboard','MerchantInventoryPage','PartnerProgram','PartnerPortal','PartnerSignup','ForBusiness','BusinessInquiry','PartnershipHub','AdminDashboard','ComplianceDashboard','ProviderOutreach','MerchantDemo'].includes(pageName);
   const isProviderPage = ['ProviderIntake','ProviderDashboard','ProviderContracts'].includes(pageName);
   const isPharmacyPage = ['PharmacyIntake','PharmacyContracts'].includes(pageName);
   const isCreatorPage = ['ForCreators','CreatorApplication'].includes(pageName);

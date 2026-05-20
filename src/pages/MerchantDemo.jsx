@@ -10,6 +10,7 @@ import {
   Info, Eye
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ThemePreviewBuilder from '@/components/merchant/ThemePreviewBuilder';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MERCHANT DEMO PAGE
@@ -470,6 +471,18 @@ export default function MerchantDemo() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Theme Preview Builder ────────────────────────────────────── */}
+      <section className="py-14 px-6 lg:px-8 bg-[#060606] border-t border-white/8">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[#6B8F5E] text-xs font-bold uppercase tracking-widest mb-2">Live Theme Preview</p>
+            <h2 className="text-2xl font-bold text-white mb-2">See it in your brand colors</h2>
+            <p className="text-white/40 text-sm">Enter your brand name and pick a color — see your site theme instantly.</p>
+          </div>
+          <ThemePreviewBuilder mode={mode} />
+        </div>
+      </section>
 
       {/* ── CTA to Get Your Own Site ─────────────────────────────────── */}
       <section className="py-14 px-6 lg:px-8 bg-[#0A0A0A] border-t border-white/8">

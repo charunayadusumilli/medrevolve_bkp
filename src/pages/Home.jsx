@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
+import JourneySelector from '@/components/home/JourneySelector';
 import BrandJourney from '@/components/home/BrandJourney';
 import PillarsSection from '@/components/home/PillarsSection';
 import EducationHub from '@/components/home/EducationHub';
@@ -15,7 +16,10 @@ export default function Home() {
       {/* 1. Hero — rotating pillars, cinematic dark */}
       <HeroSection />
 
-      {/* 2. Brand Journey — MedRevolve's own story, built for ourselves first */}
+      {/* 2. Journey Selector — 5 distinct entry paths */}
+      <JourneySelector />
+
+      {/* 3. Brand Journey — MedRevolve's own story, built for ourselves first */}
       <BrandJourney />
 
       {/* 3. Pillars — Products, Telehealth, Services */}

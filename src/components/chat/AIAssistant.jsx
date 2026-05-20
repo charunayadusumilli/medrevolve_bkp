@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall, Zap } from 'lucide-react';
+import { X, Send, Sparkles, ChevronDown, RotateCcw, PhoneCall, Zap, HeadphonesIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import { getPageContext, FAQ_BY_AUDIENCE, buildSystemPrompt, getPersonaVisuals } from './chatConfig';
@@ -45,6 +45,7 @@ export default function AIAssistant() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [faqOpen, setFaqOpen] = useState(true);
+  const [showEscalate, setShowEscalate] = useState(false);
 
   // Voice
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
@@ -176,6 +177,8 @@ export default function AIAssistant() {
     if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'assistant', content: replyText }]);
     setLoading(false);
     if (messages.length <= 2) setFaqOpen(true);
+    // Show live agent escalation after 4+ exchanges
+    if (messages.length >= 6) setShowEscalate(true);
 
     try {
       let userEmail = null;
@@ -379,6 +382,27 @@ export default function AIAssistant() {
                           </motion.div>
                         )}
                       </AnimatePresence>
+                    </div>
+                  )}
+
+                  {/* ── Live Agent Escalation ── */}
+                  {showEscalate && (
+                    <div className="flex-shrink-0 px-3 py-2 bg-amber-50 border-t border-amber-200">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <HeadphonesIcon className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                          <span className="text-[11px] text-amber-800 font-medium">Need a human?</span>
+                        </div>
+                        <a
+                          href="mailto:rned@medrevolve.com?subject=Live Support Request"
+                          className="text-[11px] bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full font-bold transition-colors"
+                        >
+                          Talk to Team →
+                        </a>
+                        <button onClick={() => setShowEscalate(false)} className="text-amber-400 hover:text-amber-600">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
                     </div>
                   )}
 
