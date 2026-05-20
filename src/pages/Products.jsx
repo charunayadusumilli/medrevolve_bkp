@@ -171,9 +171,9 @@ const allProducts = [
     id: 1,
     name: 'Semaglutide',
     category: 'weight',
-    subtitle: 'GLP-1 Weekly Injection',
-    form: 'Auto-Injector Pen',
-    promise: 'Lose up to 15% body weight',
+    subtitle: 'GLP-1 Weekly Injectable',
+    form: 'Injectable Vial',
+    promise: 'Support healthy weight management',
     lifestyle: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=90',
     productBg: 'bg-[#F5F2EE]',
     tag: 'Most Popular',
@@ -182,34 +182,34 @@ const allProducts = [
     customers: '12,400+',
     rx: true,
     gradient: ['#2D3A2D', '#4A6741'],
-    benefits: ['Clinically proven GLP-1 agonist', 'Once weekly subcutaneous injection', 'Curbs cravings & appetite naturally', 'Compounded at licensed pharmacy'],
-    description: 'Our compounded Semaglutide program mirrors the active ingredient in Ozempic® & Wegovy®. Physician-prescribed, pharmacy-compounded, and shipped discreetly to your door.',
+    benefits: ['GLP-1 receptor agonist compound', 'Once weekly subcutaneous injection', 'Physician-prescribed protocol', 'Compounded at licensed 503A pharmacy'],
+    description: 'Compounded Semaglutide is a GLP-1 receptor agonist prescribed by a licensed physician and dispensed through a licensed compounding pharmacy. Requires medical consultation and prescription.',
   },
   {
     id: 2,
     name: 'Tirzepatide',
     category: 'weight',
-    subtitle: 'Dual GIP/GLP-1 Injection',
-    form: 'Auto-Injector Pen',
-    promise: 'Up to 22% weight loss — strongest available',
+    subtitle: 'Dual GIP/GLP-1 Compound',
+    form: 'Injectable Vial',
+    promise: 'Dual-receptor weight management support',
     lifestyle: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=90',
     productBg: 'bg-[#F0EDF5]',
-    tag: 'Strongest Results',
+    tag: 'Advanced Formula',
     tagColor: 'bg-[#4C3D6B]',
     price: 399,
     customers: '8,200+',
     rx: true,
     gradient: ['#4C3D6B', '#6B4D8B'],
-    benefits: ['Dual GIP + GLP-1 mechanism', 'Mirrors Mounjaro® & Zepbound® ingredient', 'Best-in-class clinical outcomes', 'Once weekly injection'],
-    description: 'The most powerful weight loss medication available. Tirzepatide activates both GIP and GLP-1 receptors — the same mechanism as Mounjaro® — compounded at our partner pharmacy.',
+    benefits: ['Dual GIP + GLP-1 receptor mechanism', 'Physician-managed compounded protocol', 'Best-in-class clinical outcomes', 'Once weekly injection'],
+    description: 'Compounded Tirzepatide is a dual GIP and GLP-1 receptor agonist, prescribed by licensed physicians and dispensed through our partner 503A/503B compounding pharmacies. Prescription required.',
   },
   {
     id: 3,
-    name: 'Semaglutide Oral Drops',
+    name: 'Semaglutide Sublingual Drops',
     category: 'weight',
-    subtitle: 'Sublingual — No Needles',
+    subtitle: 'Oral Sublingual Formula',
     form: 'Oral Drops',
-    promise: 'All the results. Zero injections.',
+    promise: 'GLP-1 support without injections',
     lifestyle: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=800&q=90',
     productBg: 'bg-[#EEF5F0]',
     tag: 'Needle-Free',
@@ -217,25 +217,25 @@ const allProducts = [
     price: 249,
     customers: '6,800+',
     rx: true,
-    benefits: ['Sublingual daily drops', 'No needles or syringes', 'Travel-friendly dropper bottle', 'Gentle GLP-1 effect'],
-    description: 'Oral sublingual Semaglutide for patients who prefer to avoid injections. Same proven GLP-1 mechanism in a convenient daily drop format.',
+    benefits: ['Sublingual daily drops', 'Non-injectable delivery method', 'Travel-friendly dropper bottle', 'GLP-1 receptor agonist compound'],
+    description: 'Oral sublingual compounded Semaglutide for patients prescribed an alternative to injectable protocols. Same active compound class in a daily sublingual drop format. Prescription required.',
   },
   {
     id: 4,
-    name: 'Tirzepatide + B12 Blend',
+    name: 'Tirzepatide + B12 Compound',
     category: 'weight',
     subtitle: 'Enhanced Energy Formula',
     form: 'Injectable Vial',
-    promise: 'Lose weight without the fatigue',
+    promise: 'Weight management with energy support',
     lifestyle: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=90',
     productBg: 'bg-[#F5EEE8]',
-    tag: 'Energy Boost',
+    tag: 'Energy Support',
     tagColor: 'bg-[#B45309]',
     price: 449,
     customers: '3,100+',
     rx: true,
-    benefits: ['Tirzepatide + Vitamin B12 blend', 'Combats GLP-1 fatigue side effects', 'Compounded at licensed Rx', 'Weekly injection'],
-    description: 'Our signature Tirzepatide + B12 compound adds energy support to the world\'s strongest weight loss injection — perfect for patients experiencing fatigue on standard protocols.',
+    benefits: ['Tirzepatide + Vitamin B12 compound', 'Energy support during weight management', 'Compounded at licensed pharmacy', 'Physician-managed weekly protocol'],
+    description: 'A compounded combination of Tirzepatide and Vitamin B12, prescribed to support both weight management and energy levels. Available through physician consultation and prescription only.',
   },
   {
     id: 5,
@@ -252,7 +252,7 @@ const allProducts = [
     customers: '9,400+',
     rx: true,
     benefits: ['Methionine, Inositol & Choline (MIC)', 'B12 energy support', 'Enhances fat metabolism', 'Great as GLP-1 add-on'],
-    description: 'MIC Lipotropic injections combine Methionine, Inositol, Choline, and B12 to enhance your body\'s ability to break down and remove fat — ideal alongside any GLP-1 program.',
+    description: 'MIC Lipotropic injections combine Methionine, Inositol, Choline, and B12 to support fat metabolism. Physician-prescribed and dispensed through licensed pharmacies. Individual results vary.',
   },
 
   // ─── LONGEVITY ──────────────────────────────────────────────────────────────
@@ -260,9 +260,9 @@ const allProducts = [
     id: 6,
     name: 'Sermorelin',
     category: 'longevity',
-    subtitle: 'Growth Hormone Peptide',
+    subtitle: 'Growth Hormone-Releasing Peptide',
     form: 'Injectable Vial',
-    promise: 'Deep sleep, rapid recovery, youthful energy',
+    promise: 'Support sleep, recovery, and energy',
     lifestyle: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=800&q=90',
     productBg: 'bg-[#F5EEEE]',
     tag: 'Anti-Aging',
@@ -271,7 +271,7 @@ const allProducts = [
     customers: '7,300+',
     rx: true,
     benefits: ['Stimulates natural GH release', 'Deep restorative sleep', 'Faster muscle recovery', 'Subcutaneous nightly injection'],
-    description: 'Sermorelin is a growth hormone-releasing peptide that stimulates your pituitary to produce more HGH naturally — without synthetic HGH. Ideal for patients seeking anti-aging and recovery benefits.',
+    description: 'Sermorelin is a compounded growth hormone-releasing peptide prescribed to support natural GH release. Requires physician evaluation and prescription. Dispensed through licensed compounding pharmacies.',
   },
 
   {
@@ -400,28 +400,28 @@ const allProducts = [
   // ─── MEN'S HEALTH ───────────────────────────────────────────────────────────
   {
     id: 15,
-    name: 'Sildenafil (ED)',
+    name: 'Sildenafil',
     category: 'mens',
-    subtitle: 'Erectile Dysfunction Rx',
+    subtitle: 'PDE5 Inhibitor — Physician Prescribed',
     form: 'Oral Tablet',
-    promise: 'Confidence when it counts',
+    promise: 'Physician-prescribed ED support',
     lifestyle: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=90',
     productBg: 'bg-[#EEF0F5]',
-    tag: 'ED Treatment',
+    tag: 'Rx Required',
     tagColor: 'bg-[#1A3A6B]',
     price: 89,
     customers: '14,600+',
     rx: true,
-    benefits: ['Generic Viagra® active ingredient', 'Works in 30–60 minutes', 'Discreet shipping always', 'Physician-prescribed'],
-    description: 'Compounded Sildenafil, the same active ingredient as Viagra®, prescribed by our licensed physicians and delivered discreetly. Available in tablets and custom dosage blends.',
+    benefits: ['Compounded Sildenafil tablet', 'Works in 30–60 minutes', 'Discreet shipping', 'Physician-prescribed protocol'],
+    description: 'Compounded Sildenafil is a PDE5 inhibitor prescribed by licensed physicians for erectile dysfunction. Available in tablets and custom dosage blends. Prescription and medical consultation required.',
   },
   {
     id: 16,
-    name: 'Tadalafil Daily (ED)',
+    name: 'Tadalafil Daily',
     category: 'mens',
-    subtitle: 'Daily Cialis® Alternative',
+    subtitle: 'Daily PDE5 Inhibitor',
     form: 'Oral Tablet',
-    promise: 'Always ready — no timing required',
+    promise: 'Daily ED support — physician managed',
     lifestyle: 'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800&q=90',
     productBg: 'bg-[#F5F0EE]',
     tag: 'Daily Rx',
@@ -429,8 +429,8 @@ const allProducts = [
     price: 79,
     customers: '11,200+',
     rx: true,
-    benefits: ['Generic Cialis® active ingredient', 'Take once daily, always ready', 'Also treats BPH symptoms', '36-hour window'],
-    description: 'Daily Tadalafil maintains a steady-state concentration in your system, so you don\'t have to plan around intimacy. The discreet, long-acting alternative to Cialis®.',
+    benefits: ['Compounded Tadalafil tablet', 'Once daily dosing option', 'Also indicated for BPH symptoms', 'Extended duration formula'],
+    description: 'Compounded daily Tadalafil is a long-acting PDE5 inhibitor prescribed for erectile dysfunction and BPH. Physician consultation and prescription required for dispensing.',
   },
   {
     id: 17,
@@ -464,7 +464,7 @@ const allProducts = [
     customers: '3,600+',
     rx: true,
     benefits: ['TRT + GLP-1 combination protocol', 'Fat loss with muscle preservation', 'Improved body composition', 'Full physician management'],
-    description: 'The ultimate men\'s body recomposition stack — Testosterone Replacement Therapy combined with Semaglutide GLP-1. Lose fat while building and preserving lean muscle mass.',
+    description: 'A physician-managed protocol combining compounded Testosterone and Semaglutide GLP-1, designed for body recomposition. Both compounds require prescription and are dispensed through licensed pharmacies.',
   },
 
   // ─── WOMEN'S HEALTH ─────────────────────────────────────────────────────────
@@ -619,6 +619,12 @@ export default function Products() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+
+      {/* ── FDA Compliance Banner ─────────────────────────────────────────── */}
+      <div className="bg-[#1a1a1a] text-white/60 text-xs text-center py-2.5 px-4 leading-relaxed">
+        <span className="font-semibold text-white/80">Important:</span> All treatments require a physician consultation and valid prescription. Products are compounded at licensed 503A/503B pharmacies. These statements have not been evaluated by the FDA. Not for human use without a valid prescription from a licensed provider. Individual results vary.
+      </div>
+
       {/* Hero Section */}
       <section className="pt-10 pb-12 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -632,12 +638,12 @@ export default function Products() {
               Clinically Proven.<br/><span className="font-semibold">Physician Prescribed.</span>
             </h1>
             <p className="text-sm md:text-base text-[#666666] max-w-xl mx-auto">
-              Every treatment is compounded at a licensed Rx pharmacy, prescribed by a board-certified provider, and shipped discreetly to your door. Select your category to explore.
+              All treatments are compounded at licensed 503A/503B pharmacies, prescribed by board-certified providers, and require a valid prescription. Select your category to explore available protocols.
             </p>
             <div className="flex items-center justify-center gap-4 md:gap-6 mt-6 text-xs text-[#666666]">
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Licensed Providers</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Compounding Pharmacy</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Discreet Shipping</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>503A/503B Pharmacy</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#4A6741] inline-block"/>Rx Required</span>
             </div>
           </motion.div>
 
@@ -887,16 +893,16 @@ export default function Products() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">50,000+</div>
-              <p className="text-[#666666] text-sm md:text-base">Happy Customers</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">503A/503B</div>
+              <p className="text-[#666666] text-sm md:text-base">Licensed Compounding Pharmacies</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Licensed</div>
-              <p className="text-[#666666] text-sm md:text-base">Medical Providers</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Board-Certified</div>
+              <p className="text-[#666666] text-sm md:text-base">Prescribing Providers</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">24-48 hrs</div>
-              <p className="text-[#666666] text-sm md:text-base">Discreet Delivery</p>
+              <div className="text-3xl md:text-4xl font-light text-[#4A6741] mb-2">Rx Required</div>
+              <p className="text-[#666666] text-sm md:text-base">Prescription for All Products</p>
             </div>
           </div>
         </div>
@@ -1090,7 +1096,7 @@ function ProductCard({ product }) {
           </div>
 
           <div className="flex-1" />
-          <p className="text-[11px] text-[#666666]">{product.customers} patients treated</p>
+          <p className="text-[11px] text-[#666666]">Rx required · Licensed pharmacy</p>
         </div>
       </Link>
 

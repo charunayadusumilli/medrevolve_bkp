@@ -123,6 +123,11 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+      {/* Compliance Notice */}
+      <div className="bg-[#1a1a1a] text-white/60 text-xs text-center py-2.5 px-4">
+        <span className="font-semibold text-white/80">Rx Only:</span> All products require a physician consultation and valid prescription. Compounded at licensed 503A/503B pharmacies. Prescription required for dispensing.
+      </div>
+
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
         <nav className="flex items-center gap-2 text-sm">
@@ -244,15 +249,15 @@ export default function ProductDetail() {
             <div className="grid grid-cols-3 gap-4">
               <div className="flex items-center gap-2 text-sm text-[#5A6B5A]">
                 <Shield className="w-5 h-5 text-[#4A6741]" />
-                <span>NABP Certified</span>
+                <span>Licensed Pharmacy</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-[#5A6B5A]">
                 <Truck className="w-5 h-5 text-[#4A6741]" />
-                <span>Free Shipping</span>
+                <span>Discreet Shipping</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-[#5A6B5A]">
                 <Clock className="w-5 h-5 text-[#4A6741]" />
-                <span>3-5 Days</span>
+                <span>Rx Required</span>
               </div>
             </div>
           </motion.div>

@@ -7,8 +7,8 @@ import { createPageUrl } from '@/utils';
 const stats = [
   { v: '200+', l: 'Merchant Partners' },
   { v: '50K+', l: 'Patients Served' },
-  { v: 'Now', l: 'Launch Today' },
   { v: 'HIPAA', l: 'Compliant' },
+  { v: '503A/B', l: 'Licensed Pharmacies' },
 ];
 
 const features = [
