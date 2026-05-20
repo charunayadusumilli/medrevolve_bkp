@@ -114,17 +114,8 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — simple 4 links */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/Platform?tab=telehealth" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+              <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Platform
-              </Link>
-              <Link to="/Platform?tab=business" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                For Business
-              </Link>
-              <Link to="/Platform?tab=how" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                How It Works
-              </Link>
-              <Link to="/Platform?tab=book" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                Book a Call
               </Link>
 
               {/* Admin only */}
@@ -232,9 +223,6 @@ export default function Layout({ children }) {
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
                       <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Platform</Link>
-                      <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>For Business</Link>
-                      <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>How It Works</Link>
-                      <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Book a Call</Link>
 
                       {user && (
                         <div className="pt-4 border-t border-white/10 mt-2">
