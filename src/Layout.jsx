@@ -114,17 +114,17 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — simple 4 links */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to={createPageUrl('Products')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                Products
-              </Link>
               <Link to={createPageUrl('TelehealthPlatform')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Telehealth
               </Link>
               <Link to={createPageUrl('ForBusiness')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 For Business
               </Link>
+              <Link to={createPageUrl('HowItWorks')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                How It Works
+              </Link>
               <Link to={createPageUrl('BookAppointment')} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                Book a Visit
+                Book a Call
               </Link>
 
               {/* Admin only */}
@@ -231,10 +231,10 @@ export default function Layout({ children }) {
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                      <Link to={createPageUrl('Products')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Products</Link>
                       <Link to={createPageUrl('TelehealthPlatform')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Telehealth</Link>
                       <Link to={createPageUrl('ForBusiness')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>For Business</Link>
-                      <Link to={createPageUrl('BookAppointment')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Book a Visit</Link>
+                      <Link to={createPageUrl('HowItWorks')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>How It Works</Link>
+                      <Link to={createPageUrl('BookAppointment')} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Book a Call</Link>
 
                       {user && (
                         <div className="pt-4 border-t border-white/10 mt-2">
@@ -291,7 +291,7 @@ export default function Layout({ children }) {
                 <span className="text-base font-bold text-white">MedRevolve</span>
               </div>
               <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-xs">
-                The operating system for modern wellness merchants. Products, telehealth, compliance, payments — all under your brand.
+                The complete platform to launch a compliant telehealth, GLP-1, or RUO business — website, marketing, compliance, and university support under your brand.
               </p>
               <div className="flex gap-3">
                 <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Instagram className="w-3.5 h-3.5 text-white/50" /></a>
@@ -304,11 +304,11 @@ export default function Layout({ children }) {
             <div>
               <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Platform</h4>
               <ul className="space-y-3">
-                <li><Link to={createPageUrl('Products')} className="text-white/45 hover:text-white text-sm transition-colors">Products Catalog</Link></li>
                 <li><Link to={createPageUrl('TelehealthPlatform')} className="text-white/45 hover:text-white text-sm transition-colors">Telehealth</Link></li>
-                <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Merchant Onboarding</Link></li>
-                <li><Link to={createPageUrl('Consultations')} className="text-white/45 hover:text-white text-sm transition-colors">Consultations</Link></li>
-                <li><Link to={createPageUrl('Programs')} className="text-white/45 hover:text-white text-sm transition-colors">Health Programs</Link></li>
+                <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
+                <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
+                <li><Link to={createPageUrl('BookAppointment')} className="text-white/45 hover:text-white text-sm transition-colors">Book a Consultation</Link></li>
+                <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
               </ul>
             </div>
 

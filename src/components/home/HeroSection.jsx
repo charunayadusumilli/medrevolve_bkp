@@ -8,19 +8,19 @@ const stats = [
   { v: '200+', l: 'Merchant Partners' },
   { v: 'LegitScript', l: 'Certification Ready' },
   { v: 'HIPAA', l: 'Compliant' },
-  { v: '503A/B', l: 'Licensed Pharmacies' },
+  { v: '7 Days', l: 'Avg. Launch Time' },
 ];
 
 const features = [
-  'White-label GLP & telehealth platform',
+  'White-label telehealth platform under your brand',
   'LegitScript-ready compliance stack',
-  'Payment processing + merchant accounts',
-  'Bacteriostatic water — direct supply',
+  'Integrated marketing & website builder',
+  'MedRevolve University — ongoing training',
 ];
 
 export default function HeroSection() {
   const [wordIdx, setWordIdx] = useState(0);
-  const words = ['Telehealth', 'Wellness', 'Peptide', 'Med Spa'];
+  const words = ['Telehealth', 'Wellness', 'Clinical', 'Med Spa'];
 
   useEffect(() => {
     const t = setInterval(() => setWordIdx(i => (i + 1) % words.length), 2800);
@@ -86,8 +86,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-white/45 text-lg leading-relaxed mb-8 max-w-xl font-light">
-            MedRevolve gives you everything to run a compliant wellness business —
-            products, telehealth, payments, and compliance — under your brand.
+            MedRevolve is the complete platform to launch and grow a compliant telehealth or wellness business —
+            website, telehealth, marketing, compliance, and university support — all under your brand.
           </motion.p>
 
           {/* Feature checklist */}
@@ -116,9 +116,9 @@ export default function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <Link to={createPageUrl('MerchantDemo')}>
+            <Link to={createPageUrl('TelehealthPlatform')}>
               <button className="flex items-center gap-3 border border-white/20 text-white/70 px-8 py-4 text-sm font-medium tracking-widest uppercase hover:bg-white/5 hover:text-white hover:border-white/40 transition-all rounded-sm">
-                See Demo Site
+                See How It Works
               </button>
             </Link>
           </motion.div>

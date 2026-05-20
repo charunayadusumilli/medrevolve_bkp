@@ -1,41 +1,41 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Package, Stethoscope, GraduationCap, CreditCard, Shield, Rocket } from 'lucide-react';
+import { ArrowUpRight, Stethoscope, GraduationCap, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 const pillars = [
   {
     index: '01',
-    category: 'SUPPLY',
-    title: 'Bacteriostatic Water + B2B Supply',
-    description: 'USP-grade pharmaceutical supply direct to consumers and licensed institutions. FDA-registered manufacturer. COA with every batch. B2B bulk pricing for merchant partners.',
-    items: ['Bacteriostatic Water (USP Grade)', 'B2B / Wholesale Bulk Pricing', 'FDA-Registered Manufacturer', 'COA Every Batch', 'Merchant Catalog Access'],
-    icon: Package,
-    href: 'Products',
+    category: 'TELEHEALTH',
+    title: 'White-Label Clinical Platform',
+    description: 'Full telehealth infrastructure under your brand. Credentialed providers, e-prescribing, async/sync consultations, patient management, and 503A/B pharmacy integrations — for GLP-1, RUO, hormones, or any clinical vertical.',
+    items: ['Provider Credentialing', 'Async + Video Consultations', 'E-Prescribe Engine', 'Patient CRM', 'Licensed Pharmacy Network'],
+    icon: Stethoscope,
+    href: 'TelehealthPlatform',
     bg: '#0F1A0F',
     accent: '#4A6741',
     light: '#A8C99B',
   },
   {
     index: '02',
-    category: 'TELEHEALTH',
-    title: 'White-Label Clinical OS',
-    description: 'Full telehealth infrastructure under your brand. Credentialed providers, e-prescribing, async/sync consultations, patient management, and 503A/B pharmacy integrations.',
-    items: ['Provider Credentialing', 'Async + Video Consultations', 'E-Prescribe Engine', 'Patient CRM', 'Licensed Pharmacy Network'],
-    icon: Stethoscope,
-    href: 'TelehealthPlatform',
+    category: 'WEBSITE & MARKETING',
+    title: 'Integrated Website Builder & Marketing',
+    description: 'Done-for-you white-label website, SEO, email campaigns, CRM, and funnel automation — purpose-built for GLP-1, RUO, and wellness brands with built-in compliance controls.',
+    items: ['White-Label Domain + Website', 'Email & SMS Marketing Automation', 'CRM & Lead Capture', 'SEO & Ad Campaign Ready', 'Compliant Content Templates'],
+    icon: Rocket,
+    href: 'ForBusiness',
     bg: '#0F140F',
     accent: '#5A7A5A',
     light: '#8FB88F',
   },
   {
     index: '03',
-    category: 'COMPLIANCE',
-    title: 'LegitScript-Ready. Launch-Ready.',
-    description: 'End-to-end merchant compliance. From LLC formation and LegitScript certification to payment processing, domain hosting, and MedRevolve University training.',
-    items: ['LegitScript Certification', 'Payment Processing + Merchant Acct', 'LLC Formation', 'White-Label Domain + Site', 'Compliance Dashboard'],
-    icon: Rocket,
+    category: 'COMPLIANCE & UNIVERSITY',
+    title: 'LegitScript-Ready + Ongoing Support',
+    description: 'End-to-end merchant compliance from LLC formation and LegitScript certification to payment processing. MedRevolve University gives your team ongoing training, SOPs, and support to stay compliant and grow.',
+    items: ['LegitScript Certification', 'Payment Processing + Merchant Acct', 'LLC Formation', 'MedRevolve University Access', 'Dedicated Compliance Dashboard'],
+    icon: GraduationCap,
     href: 'ForBusiness',
     bg: '#130F0F',
     accent: '#7A5A45',
@@ -52,12 +52,12 @@ export default function PillarsSection() {
           <div>
             <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 mb-4 font-medium">Platform Architecture</p>
             <h2 className="text-4xl lg:text-6xl font-black text-white leading-[0.95] tracking-tight">
-              Three pillars.<br />
-              <span className="text-white/30">One platform.</span>
+              Build. Launch.<br />
+              <span className="text-white/30">Stay Compliant.</span>
             </h2>
           </div>
           <p className="text-white/35 text-base max-w-sm leading-relaxed lg:text-right">
-            MedRevolve is the operating system for merchants selling in the modern wellness economy.
+            MedRevolve is the complete operating platform for telehealth, GLP-1, RUO, and wellness businesses — from day one to scale.
           </p>
         </div>
       </div>
