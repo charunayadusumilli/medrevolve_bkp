@@ -9,6 +9,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import InboxDashboard from './pages/InboxDashboard';
 import Platform from './pages/Platform';
+import BrandingAssets from './pages/BrandingAssets';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -62,6 +63,7 @@ const AuthenticatedApp = () => {
       ))}
       <Route path="/InboxDashboard" element={<LayoutWrapper currentPageName="InboxDashboard"><InboxDashboard /></LayoutWrapper>} />
       <Route path="/Platform" element={<LayoutWrapper currentPageName="Platform"><Platform /></LayoutWrapper>} />
+      <Route path="/BrandingAssets" element={<LayoutWrapper currentPageName="BrandingAssets"><BrandingAssets /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
