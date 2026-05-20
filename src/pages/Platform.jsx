@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import ContactRequestForm from '@/components/platform/ContactRequestForm';
 import {
   ArrowRight, CheckCircle, Shield, Zap, Users, ClipboardList,
   Video, Pill, Truck, Lock, Globe, Star,
@@ -123,6 +124,24 @@ export default function Platform() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
+
+      {/* ── Sticky Mobile Tab Bar ── */}
+      <div className="sticky top-16 lg:hidden z-40 bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="flex overflow-x-auto scrollbar-hide px-4">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-shrink-0 px-4 py-3 text-sm font-semibold transition-colors border-b-2 ${
+                activeTab === tab.id
+                  ? 'text-[#A8C99B] border-b-[#A8C99B]'
+                  : 'text-white/50 border-b-transparent hover:text-white/70'
+              }`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* ── Hero ── */}
       <section className="relative pt-20 pb-16 px-6 lg:px-8 overflow-hidden">
@@ -572,13 +591,20 @@ export default function Platform() {
                     })}
                   </div>
 
-                  {/* Direct contact info */}
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
-                    <h3 className="text-white font-bold text-lg mb-2">Prefer Email?</h3>
-                    <p className="text-white/40 text-sm mb-4">Our team responds to all inquiries within 24 hours, usually sooner.</p>
-                    <a href="mailto:rned@medrevolve.com" className="inline-flex items-center gap-2 text-[#A8C99B] font-bold hover:text-white transition-colors text-lg">
-                      rned@medrevolve.com <ArrowRight className="w-5 h-5" />
-                    </a>
+                  {/* Contact Request Form */}
+                          <div className="bg-gradient-to-br from-[#4A6741]/20 to-[#2D6A9F]/20 border border-white/10 rounded-2xl p-8">
+                            <h3 className="text-white font-bold text-lg mb-2 text-center">Quick Contact Request</h3>
+                            <p className="text-white/40 text-sm mb-6 text-center">Submit a request below and our team will respond within 24 hours.</p>
+                            <ContactRequestForm onSuccess={() => setActiveTab('telehealth')} />
+                          </div>
+
+                          {/* Direct contact info */}
+                          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center mt-8">
+                            <h3 className="text-white font-bold text-lg mb-2">Prefer Email?</h3>
+                            <p className="text-white/40 text-sm mb-4">Or reach out directly:</p>
+                            <a href="mailto:rned@medrevolve.com" className="inline-flex items-center gap-2 text-[#A8C99B] font-bold hover:text-white transition-colors text-lg">
+                              rned@medrevolve.com <ArrowRight className="w-5 h-5" />
+                            </a>
                     <div className="flex flex-wrap justify-center gap-6 mt-8">
                       {[
                         { label: 'Patient Support', href: 'BookAppointment' },
