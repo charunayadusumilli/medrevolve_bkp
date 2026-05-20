@@ -8,8 +8,8 @@ const tracks = [
   {
     icon: BookOpen,
     category: 'SCIENCE',
-    title: 'GLP-1 & Peptide Fundamentals',
-    description: 'Mechanism of action, receptor pathways, clinical evidence, and contraindication frameworks for semaglutide, tirzepatide, BPC-157, TB-500, and NAD+.',
+    title: 'Telehealth & Clinical Foundations',
+    description: 'Clinical best practices, therapeutic protocols, regulatory frameworks for different medication classes, contraindication management, and evidence-based prescribing.',
     modules: 5,
     duration: '3.5 hrs',
     level: 'Foundational',
@@ -71,13 +71,13 @@ export default function EducationHub() {
                 <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 font-medium">MedRevolve University</p>
               </div>
               <h2 className="text-4xl lg:text-6xl font-black text-white leading-[0.95] tracking-tight">
-                Know what you sell.<br />
-                <span className="text-white/25">Own how you operate.</span>
+                Own your business.<br />
+                <span className="text-white/25">Operate with confidence.</span>
               </h2>
             </div>
             <div className="lg:text-right">
               <p className="text-white/35 text-sm max-w-xs leading-relaxed mb-6">
-                Every MedRevolve merchant completes certification before going live. Not just for compliance — for confidence.
+                Our university ensures your team is trained on clinical, operational, and compliance fundamentals before launch. You'll graduate as a certified operator.
               </p>
               <div className="flex lg:justify-end gap-6">
                 {[

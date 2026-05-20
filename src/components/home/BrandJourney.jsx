@@ -8,40 +8,40 @@ const milestones = [
   {
     year: '2021',
     tag: 'THE ORIGIN',
-    title: 'We were the merchant.',
-    body: 'MedRevolve started as a direct-to-consumer wellness brand — selling GLP-1 protocols, peptide stacks, and hormone therapies to patients across the US. We lived every pain point: confusing compliance, unreliable pharmacies, broken payment rails.',
+    title: 'We built a telehealth platform.',
+    body: 'MedRevolve started as a direct-to-consumer wellness business, operating our own telehealth platform and fulfillment network. We lived every pain point: confusing compliance, unreliable providers, broken payment rails. We built the infrastructure to solve it.',
     img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
-    stat: { v: '1st', l: 'GLP-1 Protocol Sold' },
+    stat: { v: '1st', l: 'Telehealth Platform' },
   },
   {
     year: '2022',
     tag: 'THE PIVOT',
-    title: 'Built the infrastructure we wished existed.',
-    body: 'After scaling our own storefront to 5,000+ patients, we reverse-engineered everything into a reusable platform. Provider credentialing, pharmacy contracts, compliance docs, inventory management — all productized from our own battle scars.',
+    title: 'We productized our infrastructure.',
+    body: 'After scaling our own platform to 5,000+ patients, we reverse-engineered everything into a reusable OS. Provider credentialing, pharmacy contracts, compliance docs, website builder, CRM — all built from our own battle scars.',
     img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-    stat: { v: '5K+', l: 'Patients on our own platform' },
+    stat: { v: '5K+', l: 'Patients across our network' },
   },
   {
     year: '2023',
     tag: 'THE PLATFORM',
-    title: 'First merchants. Proven model.',
-    body: 'We opened the infrastructure to other wellness entrepreneurs. Med spas, fitness coaches, longevity clinics — they plugged into our OS and went from idea to compliant storefront in under 30 days. What took us 18 months took them 4 weeks.',
+    title: 'First partners. Proven model.',
+    body: 'We opened the infrastructure to other entrepreneurs. Telehealth clinics, wellness merchants, lifestyle brands — they plugged into our platform and went from idea to live in under 30 days. What took us 18 months took them 4 weeks.',
     img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
     stat: { v: '50+', l: 'Early merchant partners' },
   },
   {
     year: '2024–Now',
     tag: 'THE SCALE',
-    title: 'The operating system for wellness commerce.',
-    body: 'Today, MedRevolve powers 200+ active merchants across GLP, peptides, hormone therapy, longevity, and mens/womens health. Every product line we sell as a brand, you can white-label as a merchant. Same infrastructure. Your brand.',
+    title: 'The complete telehealth platform.',
+    body: 'Today, MedRevolve powers 200+ active merchants — telehealth clinics, GLP-1 platforms, RUO businesses, wellness brands, and more. Every infrastructure component we use to run our own business, you get to white-label. Same platform. Your brand.',
     img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80',
-    stat: { v: '200+', l: 'Active merchant storefronts' },
+    stat: { v: '200+', l: 'Active partner platforms' },
   },
 ];
 
 const proofPoints = [
-  { icon: Package, label: 'Same GLP-1 catalog we use for our own patients' },
-  { icon: Stethoscope, label: 'Same provider network we built for our own telehealth' },
+  { icon: Stethoscope, label: 'Same telehealth infrastructure we use to run our own platform' },
+  { icon: Package, label: 'Same provider network and credentialing we built for our own patients' },
   { icon: CheckCircle2, label: 'Same compliance framework we used to get licensed in 50 states' },
   { icon: TrendingUp, label: 'Same payment rails we battle-tested for high-risk wellness' },
 ];
@@ -64,7 +64,7 @@ export default function BrandJourney() {
             </h2>
           </div>
           <p className="text-white/35 text-sm max-w-sm leading-relaxed lg:text-right">
-            Every tool in this platform was forged by MedRevolve operating as a real wellness merchant — selling GLP-1s, peptides, and telehealth services to real patients.
+            Every tool in this platform was built by us operating as a real telehealth business. We know what works because we're still using it every day.
           </p>
         </div>
       </div>
@@ -134,7 +134,7 @@ export default function BrandJourney() {
       {/* Proof strip */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-8 lg:px-16 py-12">
-          <p className="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-8 font-medium">When you join MedRevolve, you get exactly what we built for ourselves</p>
+          <p className="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-8 font-medium">When you join MedRevolve, you get the exact infrastructure we use to run our own business</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {proofPoints.map((pt, i) => {
               const Icon = pt.icon;
