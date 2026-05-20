@@ -3,509 +3,486 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Building2, Users, Zap, Shield, TrendingUp, CheckCircle, 
-  Sparkles, Package, Stethoscope, Award, Globe, Clock,
-  ArrowRight, Pill, HeartPulse, DollarSign
+import {
+  ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
+  Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
+  CreditCard, Lock, Truck, FlaskConical, Video, FileText,
+  Megaphone, Star, Store, Layers, Link2, ShieldCheck
 } from 'lucide-react';
-import { trackEvent } from '@/components/analytics/AnalyticsTracker';
+
+// ── Section data ─────────────────────────────────────────────────────────────
+
+const PRODUCT_TRACKS = [
+  {
+    id: 'glp',
+    label: 'GLP-1 & Rx Telehealth',
+    tag: 'Prescription Required',
+    tagColor: '#B85C38',
+    icon: Stethoscope,
+    color: '#2D6A9F',
+    light: '#D0E8F5',
+    headline: 'Full Prescription Commerce Stack',
+    body: 'Sell physician-supervised GLP-1s, hormones, and Rx compounds through a fully compliant telehealth funnel. Every order flows through a licensed provider visit, then routes to a 503A/B pharmacy.',
+    products: ['Semaglutide (GLP-1)', 'Tirzepatide', 'Testosterone Cypionate', 'BHRT / HRT', 'Sermorelin / GHRPs', 'Custom Compound Protocols'],
+    requirements: ['Licensed provider on platform', '503A or 503B pharmacy partner', 'HIPAA-compliant checkout', 'State-by-state Rx laws covered'],
+    cta: 'Start GLP-1 Platform',
+    link: 'MerchantOnboarding',
+  },
+  {
+    id: 'ruo',
+    label: 'Research-Use Only (RUO)',
+    tag: 'No Rx Required',
+    tagColor: '#7B5EA7',
+    icon: FlaskConical,
+    color: '#7B5EA7',
+    light: '#EDE8F5',
+    headline: 'Institutional & Research Commerce',
+    body: 'Sell HPLC-certified peptides and research compounds to licensed researchers and institutions. Age-gated, COA-required, with mandatory RUO disclaimers and institutional ordering workflows.',
+    products: ['BPC-157', 'TB-500', 'PT-141', 'CJC-1295', 'NAD+ (research grade)', 'Epithalon'],
+    requirements: ['Age verification gate (18+)', 'COA documentation per batch', '"Research Use Only" labeling', 'Institutional ordering forms'],
+    cta: 'Start RUO Platform',
+    link: 'MerchantOnboarding',
+  },
+  {
+    id: 'wellness',
+    label: 'Supplements & Wellness',
+    tag: 'OTC — No Rx',
+    tagColor: '#4A6741',
+    icon: Package,
+    color: '#4A6741',
+    light: '#D4E5D7',
+    headline: 'Direct-to-Consumer Wellness Products',
+    body: 'Launch a branded supplement and wellness storefront. Standard e-commerce checkout, no compliance hurdles. Ideal for gyms, nutrition practices, and health coaches.',
+    products: ['Protein supplements', 'Vitamins & minerals', 'Weight management OTC', 'Sleep & recovery', 'Pre/post-workout', 'Adaptogens & nootropics'],
+    requirements: ['Standard e-commerce checkout', 'FDA-compliant labeling', 'No prescription required', 'Standard merchant processing'],
+    cta: 'Start Wellness Store',
+    link: 'MerchantOnboarding',
+  },
+];
+
+const STOREFRONT_MODES = [
+  {
+    icon: Globe,
+    title: 'Online-First Storefront',
+    desc: 'A fully hosted, SEO-optimized storefront under your domain. Product pages, intake flows, checkout, and patient portal — all live in days.',
+    features: ['Custom domain (yourname.com)', 'SEO-optimized product pages', 'Mobile-first checkout', 'Integrated patient portal', 'Subscription & one-time billing'],
+  },
+  {
+    icon: Store,
+    title: 'Embedded In-Clinic Kiosk',
+    desc: 'Embed the storefront into your existing clinic or spa website as an iframe or native integration. Patients order without leaving your ecosystem.',
+    features: ['White-label iframe embed', 'Match your brand exactly', 'QR code intake flows', 'In-person + online unified', 'Staff ordering dashboard'],
+  },
+  {
+    icon: Megaphone,
+    title: 'Creator & Affiliate Funnel',
+    desc: 'Give creators and medical reps unique referral links tied to your storefront. Every sale is tracked, attributed, and auto-comped.',
+    features: ['Unique affiliate links', 'Auto commission payouts', 'Creator dashboard', 'Conversion analytics', 'SMS + email drip sequences'],
+  },
+];
+
+const PROVIDER_INTEGRATIONS = [
+  {
+    icon: Stethoscope,
+    role: 'MDs & NPs',
+    desc: 'Board-certified physicians and nurse practitioners who prescribe, supervise, and manage patient protocols within your white-label brand.',
+    integrations: ['EMR access', 'E-prescribing', 'Video consults', 'Async messaging'],
+    color: '#2D6A9F',
+  },
+  {
+    icon: Users,
+    role: 'Medical Representatives',
+    desc: 'Territory reps who onboard clinics, demo the platform, and drive B2B account acquisition for your merchant network.',
+    integrations: ['CRM sync (HubSpot/Zoho)', 'Commission tracking', 'Demo account access', 'Branded sales collateral'],
+    color: '#4A6741',
+  },
+  {
+    icon: Star,
+    role: 'Creators & Influencers',
+    desc: 'Content creators who promote your brand and products to their audience via unique affiliate links with tracked conversions.',
+    integrations: ['Unique storefront links', 'Real-time analytics', 'Auto payouts', 'Creator media kit'],
+    color: '#7B5EA7',
+  },
+  {
+    icon: Shield,
+    role: 'Compliance Officers',
+    desc: 'Embedded compliance monitoring via PEPMD — automated audits, documentation management, and state-law alerts.',
+    integrations: ['PEPMD integration', 'State Rx law alerts', 'Audit trail logs', 'Document vault'],
+    color: '#B85C38',
+  },
+];
+
+const PHARMACY_B2B = [
+  {
+    icon: Building2,
+    title: '503A Compounding Pharmacies',
+    desc: 'Patient-specific compounding partners who fulfill individual Rx orders. Ideal for GLP-1, hormone, and peptide protocols.',
+    tags: ['Individual Rx fulfillment', 'Custom compound formulations', 'State-licensed', 'PCAB accredited'],
+  },
+  {
+    icon: Package,
+    title: '503B Outsourcing Facilities',
+    desc: 'FDA-registered outsourcing facilities for bulk non-patient-specific compounding. Required for B2B wholesale and pre-made kits.',
+    tags: ['Bulk production', 'FDA-registered', 'cGMP compliant', 'Nationwide distribution'],
+  },
+  {
+    icon: Truck,
+    title: 'Logistics & Cold Chain',
+    desc: 'Temperature-controlled shipping, batch-level COA documentation, customs compliance, and branded last-mile delivery.',
+    tags: ['Cold-chain certified', 'COA per batch', 'Branded packaging', '2–5 day delivery'],
+  },
+  {
+    icon: BarChart3,
+    title: 'Inventory & Auto-Reorder',
+    desc: 'Real-time inventory tracking with auto-reorder triggers, supplier management, and multi-pharmacy routing for backup fulfillment.',
+    tags: ['Low-stock alerts', 'Auto-reorder rules', 'Multi-pharmacy routing', 'Supplier dashboard'],
+  },
+];
+
+const TECH_INTEGRATIONS = [
+  { name: 'Stripe', cat: 'Payments', icon: CreditCard, desc: 'PCI-compliant checkout, subscriptions, refunds, and split payouts' },
+  { name: 'HubSpot', cat: 'CRM', icon: BarChart3, desc: 'Auto-sync leads, contacts, and deals from every form submission' },
+  { name: 'Zoho CRM', cat: 'CRM', icon: Users, desc: 'Workflow automation and B2B account management' },
+  { name: 'Twilio', cat: 'Communications', icon: Zap, desc: 'SMS, voice, and WhatsApp patient communications' },
+  { name: 'Google Calendar', cat: 'Scheduling', icon: Video, desc: 'Provider availability and appointment sync' },
+  { name: 'Zapier', cat: 'Automation', icon: Link2, desc: '5,000+ app integrations via webhook automation' },
+  { name: 'Qualiphy', cat: 'eConsent', icon: FileText, desc: 'Digital consent forms and identity verification' },
+  { name: 'Google Drive', cat: 'Documents', icon: Layers, desc: 'Compliance document storage and intake form archiving' },
+];
+
+// ── Sub-components ─────────────────────────────────────────────────────────
+
+function SectionHeader({ tag, title, sub }) {
+  return (
+    <div className="text-center mb-16">
+      {tag && <p className="text-xs font-bold uppercase tracking-widest text-[#4A6741] mb-3">{tag}</p>}
+      <h2 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">{title}</h2>
+      {sub && <p className="text-[#5A6B5A] text-lg max-w-2xl mx-auto">{sub}</p>}
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────
 
 export default function ForBusiness() {
-  const [selectedSolution, setSelectedSolution] = useState('white-label');
-
-  const solutions = [
-    {
-      id: 'white-label',
-      name: 'White Label Platform',
-      icon: Sparkles,
-      tagline: 'Your Brand, Our Infrastructure',
-      description: 'Launch your own branded telehealth platform in days, not months',
-      price: '$2,999/mo',
-      features: [
-        'Full platform customization with your branding',
-        'Custom domain (yourcompany.com)',
-        'Your logo, colors, and styling throughout',
-        'Licensed providers in all 50 states',
-        'Partner pharmacy network',
-        'Payment processing included',
-        'HIPAA-compliant infrastructure',
-        'Dedicated account manager'
-      ],
-      idealFor: ['Med Spas', 'Wellness Centers', 'Clinics', 'Health Coaches']
-    },
-    {
-      id: 'wholesale',
-      name: 'Wholesale Partnership',
-      icon: Package,
-      tagline: 'Bulk Pricing, Your Distribution',
-      description: 'Purchase products at wholesale rates for your existing practice',
-      price: '30-40% off retail',
-      features: [
-        'Wholesale pricing on all products',
-        'Bulk order discounts',
-        'Fast fulfillment (3-5 days)',
-        'Quality guarantee',
-        'Provider consultation included',
-        'Flexible payment terms',
-        'Marketing materials provided',
-        'Ongoing product training'
-      ],
-      idealFor: ['Medical Practices', 'Pharmacies', 'Health Retailers', 'Distributors']
-    },
-    {
-      id: 'corporate',
-      name: 'Corporate Wellness',
-      icon: Building2,
-      tagline: 'Employee Health Benefits',
-      description: 'Comprehensive wellness program for your team',
-      price: 'Custom pricing',
-      features: [
-        'Employee telehealth access',
-        'Preventive care programs',
-        'Weight management solutions',
-        'Mental health support',
-        'Nutrition counseling',
-        'Usage analytics dashboard',
-        'Flexible benefits integration',
-        'Dedicated support team'
-      ],
-      idealFor: ['Corporations', 'HR Departments', 'Insurance Providers', 'Benefits Consultants']
-    }
-  ];
-
-  const benefits = [
-    {
-      icon: Zap,
-      title: 'Fast Setup',
-      description: 'Launch in 7-14 days with turnkey solution'
-    },
-    {
-      icon: Shield,
-      title: 'Fully Compliant',
-      description: 'HIPAA, state licensing, and pharmacy regulations covered'
-    },
-    {
-      icon: Users,
-      title: 'Scalable',
-      description: 'Grow from 10 to 10,000 patients seamlessly'
-    },
-    {
-      icon: DollarSign,
-      title: 'Revenue Share',
-      description: 'Flexible pricing models that grow with you'
-    }
-  ];
-
-  const integrations = [
-    { name: 'Stripe', logo: '💳', category: 'Payments', featured: true },
-    { name: 'Twilio', logo: '📞', category: 'Communications' },
-    { name: 'Zoom', logo: '📹', category: 'Video Calls' },
-    { name: 'Google Calendar', logo: '📅', category: 'Scheduling' },
-    { name: 'Zapier', logo: '⚡', category: 'Automation' },
-    { name: 'HubSpot', logo: '🎯', category: 'CRM' }
-  ];
-
-  const paymentFeatures = [
-    { label: 'Instant Checkout', desc: 'Frictionless payment flow for patients' },
-    { label: 'Subscriptions', desc: 'Recurring billing for ongoing programs' },
-    { label: 'Split Payouts', desc: 'Automatic revenue share to partners' },
-    { label: 'Refunds & Disputes', desc: 'Handled automatically via Stripe' },
-    { label: 'Multi-currency', desc: 'Accept payments in 135+ currencies' },
-    { label: 'PCI Compliant', desc: 'Bank-level security, no PCI burden on you' }
-  ];
-
-  const caseStudies = [
-    {
-      company: 'Elite Wellness Spa',
-      industry: 'Med Spa',
-      results: {
-        revenue: '+$45K/mo',
-        patients: '200+',
-        retention: '94%'
-      },
-      quote: 'MedRevolve white-label platform let us launch telehealth without the overhead. We\'re now generating $45K/month in additional revenue.'
-    },
-    {
-      company: 'FitLife Corporate',
-      industry: 'Corporate Wellness',
-      results: {
-        revenue: '$120K saved',
-        patients: '1,200 employees',
-        retention: '88%'
-      },
-      quote: 'Our employees love the convenience. We\'ve seen a 40% increase in preventive care visits.'
-    }
-  ];
-
-  const currentSolution = solutions.find(s => s.id === selectedSolution);
-  const Icon = currentSolution?.icon;
+  const [activeTrack, setActiveTrack] = useState('glp');
+  const track = PRODUCT_TRACKS.find(t => t.id === activeTrack);
+  const TrackIcon = track.icon;
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-20 pb-32 px-6 lg:px-8">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#4A6741]/5 via-transparent to-[#6B8F5E]/5" />
-        
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center max-w-4xl mx-auto mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <Badge className="mb-6 bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] text-white border-none">
-                <Building2 className="w-4 h-4 mr-2" />
-                Enterprise Solutions
-              </Badge>
-              
-              <h1 className="text-5xl lg:text-6xl font-bold text-[#2D3A2D] mb-6 leading-tight">
-                Launch Your Telehealth Business
-                <span className="block bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] bg-clip-text text-transparent">
-                  In 7 Days, Not 7 Months
-                </span>
-              </h1>
-              
-              <p className="text-xl text-[#5A6B5A] mb-8 leading-relaxed">
-                White-label platform, wholesale partnerships, or corporate wellness programs. 
-                We provide the infrastructure, you provide the vision.
-              </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to={createPageUrl('BusinessInquiry')}>
-                  <Button 
-                    size="lg"
-                    className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] hover:opacity-90 text-white rounded-full px-8 shadow-lg"
-                    onClick={() => trackEvent('Schedule Demo', 'ForBusiness', { location: 'hero' })}
-                  >
-                    Schedule Demo
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                <Button 
-                  size="lg"
-                  variant="outline"
-                  className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-full px-8"
-                  onClick={() => document.getElementById('solutions').scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Explore Solutions
+      {/* ── Hero ── */}
+      <section className="relative bg-[#060606] pt-20 pb-28 px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.06]"
+          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1600&q=40)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#060606]/70 to-[#060606]" />
+        <div className="relative max-w-5xl mx-auto text-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-8">
+              <Building2 className="w-3.5 h-3.5 text-[#A8C99B]" />
+              <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">B2B Platform for Wellness Merchants</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-none" style={{ letterSpacing: '-0.03em' }}>
+              Build. Sell. Comply.<br />
+              <span className="text-[#A8C99B]">Under Your Brand.</span>
+            </h1>
+            <p className="text-xl text-white/45 max-w-2xl mx-auto mb-10">
+              MedRevolve is the operating system for wellness merchants — products, telehealth, pharmacy, compliance, and payments, all white-labeled as yours.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to={createPageUrl('MerchantOnboarding')}>
+                <Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">
+                  Launch Your Platform <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto"
-          >
-            {[
-              { value: '50+', label: 'Business Partners' },
-              { value: '99.9%', label: 'Uptime SLA' },
-              { value: '7 days', label: 'Avg. Launch Time' },
-              { value: '$2M+', label: 'Partner Revenue' }
-            ].map((stat, idx) => (
-              <div key={idx} className="text-center">
-                <p className="text-4xl font-bold text-[#4A6741] mb-2">{stat.value}</p>
-                <p className="text-sm text-[#5A6B5A]">{stat.label}</p>
-              </div>
-            ))}
+              </Link>
+              <Link to={createPageUrl('Contact')}>
+                <Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">
+                  Talk to Sales
+                </Button>
+              </Link>
+            </div>
+            <div className="flex flex-wrap justify-center gap-10 mt-14">
+              {[
+                { v: 'Day 1', l: 'Live in days' },
+                { v: '503A/B', l: 'Pharmacy ready' },
+                { v: '50 States', l: 'Covered' },
+                { v: 'White-Label', l: 'Your brand' },
+              ].map(s => (
+                <div key={s.l} className="text-center">
+                  <p className="text-xl font-black text-white">{s.v}</p>
+                  <p className="text-white/30 text-xs mt-0.5">{s.l}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Solutions */}
-      <section id="solutions" className="py-20 px-6 lg:px-8 bg-white">
+      {/* ── Section 1: Products & Classification ── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-4">
-              Choose Your Business Model
-            </h2>
-            <p className="text-lg text-[#5A6B5A]">
-              Flexible solutions designed for different business needs
-            </p>
-          </div>
+          <SectionHeader
+            tag="Products & Classification"
+            title={<>What You Sell — <span className="font-semibold text-[#4A6741]">And How It Works</span></>}
+            sub="Three distinct product tracks. Each has its own compliance rules, checkout flow, and fulfillment path. Pick your model."
+          />
 
-          <Tabs value={selectedSolution} onValueChange={setSelectedSolution} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 max-w-3xl mx-auto mb-12">
-              {solutions.map(solution => (
-                <TabsTrigger key={solution.id} value={solution.id}>
-                  {solution.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            {solutions.map(solution => {
-              const SolutionIcon = solution.icon;
+          {/* Track Selector */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {PRODUCT_TRACKS.map(t => {
+              const Icon = t.icon;
               return (
-                <TabsContent key={solution.id} value={solution.id}>
-                  <Card className="border-2 border-[#4A6741]">
-                    <CardHeader>
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center">
-                          <SolutionIcon className="w-8 h-8 text-white" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-3xl">{solution.name}</CardTitle>
-                          <p className="text-[#5A6B5A]">{solution.tagline}</p>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid lg:grid-cols-2 gap-8">
-                        <div>
-                          <p className="text-lg text-[#5A6B5A] mb-6">{solution.description}</p>
-                          <div className="bg-[#F5F0E8] rounded-xl p-6 mb-6">
-                            <p className="text-sm text-[#5A6B5A] mb-2">Plans from</p>
-                            <p className="text-4xl font-bold text-[#4A6741]">{solution.price}</p>
-                          </div>
-                          <div className="flex flex-wrap gap-2 mb-6">
-                            {solution.idealFor.map(type => (
-                              <Badge key={type} variant="secondary">
-                                {type}
-                              </Badge>
-                            ))}
-                          </div>
-                          <Link to={createPageUrl('BusinessInquiry')}>
-                            <Button 
-                              className="w-full bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] text-white"
-                              onClick={() => trackEvent('Get Started', 'ForBusiness', { solution: solution.id })}
-                            >
-                              Get Started
-                              <ArrowRight className="ml-2 w-4 h-4" />
-                            </Button>
-                          </Link>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-[#2D3A2D] mb-4">What's Included</h4>
-                          <div className="space-y-3">
-                            {solution.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start gap-3">
-                                <CheckCircle className="w-5 h-5 text-[#4A6741] flex-shrink-0 mt-0.5" />
-                                <span className="text-[#5A6B5A]">{feature}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              );
-            })}
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="py-20 px-6 lg:px-8 bg-[#F5F0E8]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, idx) => {
-              const BenefitIcon = benefit.icon;
-              return (
-                <motion.div
-                  key={benefit.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <Card>
-                    <CardContent className="pt-6 text-center">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#4A6741] to-[#6B8F5E] flex items-center justify-center mx-auto mb-4">
-                        <BenefitIcon className="w-7 h-7 text-white" />
-                      </div>
-                      <h3 className="font-semibold text-[#2D3A2D] mb-2">{benefit.title}</h3>
-                      <p className="text-sm text-[#5A6B5A]">{benefit.description}</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                <button key={t.id} onClick={() => setActiveTrack(t.id)}
+                  className={`flex items-center gap-2.5 px-5 py-3 rounded-full border text-sm font-semibold transition-all ${
+                    activeTrack === t.id
+                      ? 'text-white border-transparent shadow-lg'
+                      : 'text-[#5A6B5A] border-[#E8E0D5] bg-white hover:border-[#4A6741]/40'
+                  }`}
+                  style={{ background: activeTrack === t.id ? t.color : undefined }}>
+                  <Icon className="w-4 h-4" />
+                  {t.label}
+                </button>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* Integrated Payments */}
-      <section className="py-20 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <Badge className="mb-4 bg-[#4A6741]/10 text-[#4A6741] border-none text-sm px-4 py-1">
-              💳 Powered by Stripe
-            </Badge>
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-4">
-              Integrated Payments, Out of the Box
-            </h2>
-            <p className="text-lg text-[#5A6B5A] max-w-2xl mx-auto">
-              Every plan includes fully integrated Stripe payments — no merchant account setup, no PCI headaches. Just plug in and start earning.
-            </p>
-          </div>
+          {/* Active Track Detail */}
+          <motion.div
+            key={activeTrack}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="grid lg:grid-cols-2 gap-12 items-start"
+          >
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xs font-bold px-3 py-1 rounded-full text-white" style={{ background: track.tagColor }}>
+                  {track.tag}
+                </span>
+              </div>
+              <h3 className="text-3xl font-light text-[#2D3A2D] mb-4">{track.headline}</h3>
+              <p className="text-[#5A6B5A] leading-relaxed mb-8">{track.body}</p>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-            {/* Payment Features */}
-            <div className="grid grid-cols-2 gap-4">
-              {paymentFeatures.map((feat, idx) => (
-                <motion.div
-                  key={feat.label}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.07 }}
-                  className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E0D5] hover:shadow-md transition-shadow"
-                >
-                  <CheckCircle className="w-5 h-5 text-[#4A6741] mb-2" />
-                  <p className="font-semibold text-[#2D3A2D] text-sm mb-1">{feat.label}</p>
-                  <p className="text-xs text-[#5A6B5A]">{feat.desc}</p>
-                </motion.div>
-              ))}
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#5A6B5A] mb-3">Compliance Requirements</p>
+                <ul className="space-y-2">
+                  {track.requirements.map(r => (
+                    <li key={r} className="flex items-center gap-2.5 text-sm text-[#2D3A2D]">
+                      <ShieldCheck className="w-4 h-4 flex-shrink-0" style={{ color: track.color }} />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <Link to={createPageUrl(track.link)}>
+                <Button className="rounded-none text-white px-8 font-bold" style={{ background: track.color }}>
+                  {track.cta} <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
             </div>
 
-            {/* Visual */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-[#2D3A2D] to-[#1A2A1A] rounded-3xl p-8 text-white"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl">💳</div>
-                <div>
-                  <p className="font-semibold">Stripe Checkout</p>
-                  <p className="text-xs text-white/60">Embedded in your platform</p>
-                </div>
-                <Badge className="ml-auto bg-green-500/20 text-green-400 border-none text-xs">Live</Badge>
-              </div>
-              <div className="space-y-3">
-                {[
-                  { label: 'Monthly Subscription', amount: '$299.00', status: 'paid' },
-                  { label: 'One-time Consultation', amount: '$89.00', status: 'paid' },
-                  { label: 'Prescription Refill', amount: '$149.00', status: 'pending' }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
-                    <div>
-                      <p className="text-sm font-medium">{item.label}</p>
-                      <p className="text-xs text-white/50">{item.status === 'paid' ? '✓ Collected' : '⏳ Processing'}</p>
-                    </div>
-                    <span className={`text-sm font-bold ${item.status === 'paid' ? 'text-green-400' : 'text-yellow-400'}`}>{item.amount}</span>
+            <div className="bg-white rounded-2xl border border-[#E8E0D5] p-6 shadow-sm">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#5A6B5A] mb-4">Products In This Category</p>
+              <div className="grid grid-cols-2 gap-2">
+                {track.products.map(p => (
+                  <div key={p} className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[#E8E0D5] bg-[#FDFBF7] text-sm text-[#2D3A2D]">
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: track.color }} />
+                    {p}
                   </div>
                 ))}
               </div>
-              <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center">
-                <p className="text-xs text-white/40">Auto-reconciled daily</p>
-                <p className="text-sm font-bold text-green-400">$537.00 collected</p>
+              <div className="mt-6 pt-5 border-t border-[#E8E0D5] flex items-center gap-3">
+                <TrackIcon className="w-5 h-5" style={{ color: track.color }} />
+                <p className="text-xs text-[#5A6B5A]">Full product catalog available in your merchant dashboard after onboarding.</p>
               </div>
-            </motion.div>
-          </div>
-
-          {/* Other Integrations */}
-          <div className="text-center mb-8">
-            <p className="text-sm font-semibold uppercase tracking-widest text-[#5A6B5A]">Also integrates with</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {integrations.filter(i => !i.featured).map((integration, idx) => (
-              <motion.div
-                key={integration.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
-              >
-                <Card className="text-center hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-5 pb-4">
-                    <div className="text-3xl mb-2">{integration.logo}</div>
-                    <p className="font-medium text-[#2D3A2D] text-sm">{integration.name}</p>
-                    <p className="text-xs text-[#5A6B5A]">{integration.category}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies */}
-      <section className="py-20 px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-4">
-              Success Stories
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {caseStudies.map((study, idx) => (
-              <motion.div
-                key={study.company}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="h-full">
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-[#4A6741] text-white flex items-center justify-center font-bold text-xl">
-                        {study.company[0]}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-[#2D3A2D]">{study.company}</h3>
-                        <p className="text-sm text-[#5A6B5A]">{study.industry}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      {Object.entries(study.results).map(([key, value]) => (
-                        <div key={key}>
-                          <p className="text-2xl font-bold text-[#4A6741]">{value}</p>
-                          <p className="text-xs text-[#5A6B5A] capitalize">{key}</p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <p className="text-[#5A6B5A] italic">"{study.quote}"</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] to-[#3D5636]">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-xl text-white/80 mb-8">
-              Schedule a demo and see how MedRevolve can power your telehealth vision
-            </p>
-            <Link to={createPageUrl('BusinessInquiry')}>
-              <Button 
-                size="lg"
-                className="bg-white text-[#4A6741] hover:bg-white/90 rounded-full px-10 text-lg"
-                onClick={() => trackEvent('CTA Schedule Demo', 'ForBusiness', { location: 'bottom' })}
-              >
-                Schedule Your Demo
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <p className="text-white/60 text-sm mt-4">
-              <Clock className="w-4 h-4 inline mr-1" />
-              30-minute consultation • No obligation • Expert guidance
-            </p>
+            </div>
           </motion.div>
         </div>
       </section>
+
+      {/* ── Section 2: Storefront Guidelines ── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#F5F0E8]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader
+            tag="Storefront & Online Guidelines"
+            title={<>Your Store, Your Rules — <span className="font-semibold text-[#4A6741]">Three Ways to Sell</span></>}
+            sub="Whether you're pure online, embedded in a clinic, or running a creator-powered funnel — each mode has dedicated tools and guidelines."
+          />
+          <div className="grid md:grid-cols-3 gap-6">
+            {STOREFRONT_MODES.map((mode, i) => {
+              const Icon = mode.icon;
+              return (
+                <motion.div key={mode.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  className="bg-white rounded-2xl p-7 border border-[#E8E0D5] shadow-sm hover:shadow-xl transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-[#D4E5D7] flex items-center justify-center mb-5">
+                    <Icon className="w-6 h-6 text-[#4A6741]" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-[#2D3A2D] mb-3">{mode.title}</h3>
+                  <p className="text-[#5A6B5A] text-sm leading-relaxed mb-6">{mode.desc}</p>
+                  <ul className="space-y-2">
+                    {mode.features.map(f => (
+                      <li key={f} className="flex items-center gap-2 text-xs text-[#2D3A2D]">
+                        <CheckCircle className="w-3.5 h-3.5 text-[#4A6741] flex-shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to={createPageUrl('MerchantDemo')}>
+              <Button variant="outline" className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/5 rounded-none px-10">
+                See Live Demo <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 3: Provider Integrations ── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#FDFBF7]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader
+            tag="Provider Ecosystem"
+            title={<>Everyone Who Touches <span className="font-semibold text-[#4A6741]">Your Platform</span></>}
+            sub="MedRevolve integrates every type of partner — from prescribing physicians to content creators — into one unified operator dashboard."
+          />
+          <div className="grid md:grid-cols-2 gap-6">
+            {PROVIDER_INTEGRATIONS.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <motion.div key={p.role} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                  className="bg-white rounded-2xl p-7 border border-[#E8E0D5] hover:shadow-lg transition-all flex gap-5">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: p.color + '18' }}>
+                    <Icon className="w-6 h-6" style={{ color: p.color }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-[#2D3A2D] mb-2">{p.role}</h3>
+                    <p className="text-[#5A6B5A] text-sm leading-relaxed mb-4">{p.desc}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {p.integrations.map(tag => (
+                        <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-full border" style={{ color: p.color, borderColor: p.color + '40', background: p.color + '0D' }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <Link to={createPageUrl('ProviderIntake')}>
+              <Button className="bg-[#2D6A9F] hover:bg-[#245980] text-white rounded-none px-8">Join as Provider</Button>
+            </Link>
+            <Link to={createPageUrl('ForCreators')}>
+              <Button variant="outline" className="border-[#7B5EA7] text-[#7B5EA7] hover:bg-[#7B5EA7]/5 rounded-none px-8">Become a Creator</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 4: Pharmacy B2B ── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#0A1628]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#A8C99B] mb-3">Pharmacy & Logistics</p>
+            <h2 className="text-4xl font-light text-white mb-4">
+              The B2B Fulfillment <span className="font-semibold text-[#A8C99B]">Backbone</span>
+            </h2>
+            <p className="text-white/45 text-lg max-w-2xl mx-auto">
+              From compounding to cold-chain delivery — MedRevolve connects your merchant storefront directly to verified pharmacy infrastructure.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-5">
+            {PHARMACY_B2B.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                  className="bg-white/5 border border-white/10 rounded-2xl p-7 hover:border-white/25 transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-white/8 flex items-center justify-center mb-5">
+                    <Icon className="w-6 h-6 text-[#A8C99B]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.title}</h3>
+                  <p className="text-white/45 text-sm leading-relaxed mb-5">{item.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.tags.map(tag => (
+                      <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/8 border border-white/10 text-white/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to={createPageUrl('PharmacyIntake')}>
+              <Button className="bg-[#A8C99B] text-[#0A1628] hover:bg-[#8FB88F] rounded-none px-10 font-bold">
+                Partner as a Pharmacy <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 5: Tech Integrations ── */}
+      <section className="py-24 px-6 lg:px-8 bg-[#F5F0E8]">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            tag="Tech Stack"
+            title={<>Pre-Built <span className="font-semibold text-[#4A6741]">Integrations</span></>}
+            sub="Every tool your operation needs — already connected. No dev work required."
+          />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {TECH_INTEGRATIONS.map((t, i) => {
+              const Icon = t.icon;
+              return (
+                <motion.div key={t.name} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                  className="bg-white rounded-2xl p-5 border border-[#E8E0D5] hover:shadow-md transition-all text-center group">
+                  <div className="w-10 h-10 rounded-xl bg-[#D4E5D7] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#4A6741] transition-colors">
+                    <Icon className="w-5 h-5 text-[#4A6741] group-hover:text-white transition-colors" />
+                  </div>
+                  <p className="font-semibold text-[#2D3A2D] text-sm">{t.name}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#4A6741] mt-0.5">{t.cat}</p>
+                  <p className="text-[#5A6B5A] text-xs mt-2 leading-snug">{t.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Final CTA ── */}
+      <section className="py-24 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] via-[#3D5636] to-[#2D3A2D]">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-[#A8C99B] text-xs font-bold uppercase tracking-widest mb-4">You're One Step Away</p>
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-5">
+            Launch Your<br /><span className="font-semibold">Wellness Empire Today</span>
+          </h2>
+          <p className="text-white/55 text-lg mb-10 max-w-2xl mx-auto">
+            Everything above — products, providers, pharmacy, payments, compliance — available on Day 1.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to={createPageUrl('MerchantOnboarding')}>
+              <Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base shadow-xl">
+                Launch My Platform <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Link to={createPageUrl('Contact')}>
+              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">
+                Talk to Sales
+              </Button>
+            </Link>
+          </div>
+          <p className="text-white/30 text-xs mt-6">No setup fees · 7-day free trial · Cancel anytime</p>
+        </div>
+      </section>
+
     </div>
   );
 }
