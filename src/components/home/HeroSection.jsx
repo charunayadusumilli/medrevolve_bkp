@@ -6,16 +6,16 @@ import { createPageUrl } from '@/utils';
 
 const stats = [
   { v: '200+', l: 'Merchant Partners' },
-  { v: '50K+', l: 'Patients Served' },
+  { v: 'LegitScript', l: 'Certification Ready' },
   { v: 'HIPAA', l: 'Compliant' },
   { v: '503A/B', l: 'Licensed Pharmacies' },
 ];
 
 const features = [
-  'White-label telehealth platform',
-  'GLP-1 & peptide product catalog',
-  'Built-in compliance & licensing',
-  'Payment processing included',
+  'White-label GLP & telehealth platform',
+  'LegitScript-ready compliance stack',
+  'Payment processing + merchant accounts',
+  'Bacteriostatic water — direct supply',
 ];
 
 export default function HeroSection() {
@@ -116,9 +116,9 @@ export default function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <Link to={createPageUrl('Consultations')}>
+            <Link to={createPageUrl('MerchantDemo')}>
               <button className="flex items-center gap-3 border border-white/20 text-white/70 px-8 py-4 text-sm font-medium tracking-widest uppercase hover:bg-white/5 hover:text-white hover:border-white/40 transition-all rounded-sm">
-                Book a Consultation
+                See Demo Site
               </button>
             </Link>
           </motion.div>
