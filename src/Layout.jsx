@@ -114,16 +114,16 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — simple 4 links */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+              <Link to="/Platform?tab=telehealth" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Platform
               </Link>
-              <Link to="/Platform#business" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+              <Link to="/Platform?tab=business" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 For Business
               </Link>
-              <Link to="/Platform#how" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+              <Link to="/Platform?tab=how" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 How It Works
               </Link>
-              <Link to="/Platform#book" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+              <Link to="/Platform?tab=book" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Book a Call
               </Link>
 

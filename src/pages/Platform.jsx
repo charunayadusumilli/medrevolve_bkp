@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -97,7 +97,15 @@ const FAQS = [
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function Platform() {
-  const [activeTab, setActiveTab] = useState('telehealth');
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTab = urlParams.get('tab') || 'telehealth';
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab) setActiveTab(tab);
+  }, [window.location.search]);
   const [activeJourneyStep, setActiveJourneyStep] = useState(0);
   const [activeTrack, setActiveTrack] = useState('glp');
   const [activeFaq, setActiveFaq] = useState(null);
