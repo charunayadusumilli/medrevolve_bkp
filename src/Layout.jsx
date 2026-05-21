@@ -320,7 +320,8 @@ export default function Layout({ children }) {
                 <li><Link to={createPageUrl('Contact')} className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
                 <li><Link to={createPageUrl('Privacy')} className="text-white/45 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
                 <li><Link to={createPageUrl('Terms')} className="text-white/45 hover:text-white text-sm transition-colors">Terms of Service</Link></li>
-                <li><a href="mailto:rned@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">rned@medrevolve.com</a></li>
+                <li><a href="mailto:support@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">support@medrevolve.com</a></li>
+                <li><a href="mailto:info@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">info@medrevolve.com</a></li>
               </ul>
             </div>
           </div>

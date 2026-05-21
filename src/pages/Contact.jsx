@@ -7,21 +7,22 @@ import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
 import { 
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
-  HelpCircle, Package, ArrowRight
+  HelpCircle, Package, ArrowRight, Users, Building2,
+  CreditCard, Shield, Stethoscope, Pill, Sparkles, HeartPulse
 } from 'lucide-react';
 
 const contactMethods = [
   {
     icon: Mail,
-    title: 'Email Us',
-    description: 'Send us a message anytime',
+    title: 'General Support',
+    description: 'Questions & general inquiries',
     value: 'support@medrevolve.com',
     action: 'mailto:support@medrevolve.com'
   },
   {
     icon: Phone,
     title: 'Call Us',
-    description: 'Mon-Fri from 8am to 6pm',
+    description: 'Mon-Fri from 8am to 6pm ET',
     value: '1-800-MED-REVO',
     action: 'tel:1-800-633-7386'
   },
@@ -32,6 +33,72 @@ const contactMethods = [
     value: 'Start a conversation',
     action: '#'
   }
+];
+
+const departmentEmails = [
+  {
+    icon: HeartPulse,
+    dept: 'General Support',
+    desc: 'General questions, account help, platform issues',
+    email: 'support@medrevolve.com',
+    color: '#4A6741',
+  },
+  {
+    icon: Mail,
+    dept: 'General Info',
+    desc: 'Learn about MedRevolve, new inquiries',
+    email: 'info@medrevolve.com',
+    color: '#4A6741',
+  },
+  {
+    icon: Building2,
+    dept: 'Partnerships & B2B',
+    desc: 'White-label, merchant onboarding, B2B deals',
+    email: 'partnerships@medrevolve.com',
+    color: '#2D6A9F',
+  },
+  {
+    icon: Users,
+    dept: 'Merchants',
+    desc: 'Merchant accounts, platform setup, modules',
+    email: 'merchants@medrevolve.com',
+    color: '#2D6A9F',
+  },
+  {
+    icon: CreditCard,
+    dept: 'Payments & Billing',
+    desc: 'Invoices, charges, refunds, subscriptions',
+    email: 'payments@medrevolve.com',
+    color: '#dc2626',
+  },
+  {
+    icon: Stethoscope,
+    dept: 'Provider Network',
+    desc: 'Provider applications, credentialing, scheduling',
+    email: 'providers@medrevolve.com',
+    color: '#0891b2',
+  },
+  {
+    icon: Pill,
+    dept: 'Pharmacy Network',
+    desc: 'Pharmacy partnerships, Rx routing, compounding',
+    email: 'pharmacy@medrevolve.com',
+    color: '#be185d',
+  },
+  {
+    icon: Shield,
+    dept: 'Compliance & Legal',
+    desc: 'Regulatory questions, audits, legal notices',
+    email: 'compliance@medrevolve.com',
+    color: '#7c3aed',
+  },
+  {
+    icon: Sparkles,
+    dept: 'Creator Program',
+    desc: 'Influencer applications, affiliate links, commissions',
+    email: 'creators@medrevolve.com',
+    color: '#db2777',
+  },
 ];
 
 const quickLinks = [
@@ -115,6 +182,42 @@ export default function Contact() {
               );
             })}
           </div>
+
+          {/* Department Email Directory */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="mb-16"
+          >
+            <h2 className="text-2xl font-medium text-[#2D3A2D] mb-2 text-center">Contact the Right Team</h2>
+            <p className="text-sm text-[#5A6B5A] text-center mb-8">For faster responses, reach out directly to the relevant department.</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {departmentEmails.map((d, i) => {
+                const Icon = d.icon;
+                return (
+                  <motion.a
+                    key={d.dept}
+                    href={`mailto:${d.email}`}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * i }}
+                    className="bg-white rounded-2xl p-5 border border-[#E8E0D5] hover:shadow-lg hover:border-[#4A6741]/30 transition-all group flex gap-4 items-start"
+                  >
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
+                      style={{ background: d.color + '15' }}>
+                      <Icon className="w-5 h-5" style={{ color: d.color }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-semibold text-[#2D3A2D] text-sm">{d.dept}</p>
+                      <p className="text-xs text-[#5A6B5A] mt-0.5 mb-1.5 leading-snug">{d.desc}</p>
+                      <p className="text-xs font-medium truncate" style={{ color: d.color }}>{d.email}</p>
+                    </div>
+                  </motion.a>
+                );
+              })}
+            </div>
+          </motion.div>
 
           {/* Form and Info */}
           <div className="grid lg:grid-cols-5 gap-12">
