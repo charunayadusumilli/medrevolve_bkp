@@ -160,7 +160,7 @@ export default function AIAssistant() {
     let replyText = 'Sorry, I had a hiccup! Try again in a moment.';
     try {
       const response = await base44.integrations.Core.InvokeLLM({
-        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (be warm, genuinely helpful, connect their question to their wellness journey and naturally guide toward MedRevolve solutions. End with a question or clear next step):`,
+        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (be warm and genuinely helpful. IMPORTANT: Never recommend a specific product or treatment to this user — that is a licensed provider's job. Instead, educate about options and guide them toward booking a consultation or starting an intake. End with a question or clear next step):`,
         add_context_from_internet: false,
       });
       if (typeof response === 'string') {
