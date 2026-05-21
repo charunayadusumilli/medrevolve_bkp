@@ -18,24 +18,23 @@ import {
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 
-const SETUP_FEE = 5000;          // one-time: website, integrations, merchant account, analytics
-const PLATFORM_MONTHLY_BASE = 2500; // monthly base for marketing & scaling + support
+const SETUP_FEE = 5000;          // one-time setup
+const PLATFORM_MONTHLY_BASE = 2500; // monthly base
+
 const STOREFRONT_TEMPLATES = [
-  { id: 'peptide_pro', label: 'Peptide Pro', niche: 'Peptides & Research', color: '#1A2A1A', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80' },
-  { id: 'glp_clinic',  label: 'GLP-1 Clinic', niche: 'Weight Management', color: '#0F1F2A', img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80' },
-  { id: 'longevity',   label: 'Longevity Labs', niche: 'Anti-Aging / Hormones', color: '#1F1A0A', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80' },
-  { id: 'wellness_co', label: 'Wellness Co.', niche: 'Holistic Wellness', color: '#1A1A2A', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80' },
+  { id: 'wellness',    label: 'Wellness Store',   desc: 'Health products & services', color: '#1A2A1A', img: 'https://images.unsplash.com/photo-1557804506-669714d2e9d8?w=400&q=80' },
+  { id: 'clinic',      label: 'Medical Clinic',   desc: 'Telehealth + products', color: '#0F1F2A', img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80' },
+  { id: 'fitness',     label: 'Fitness & Wellness', desc: 'Performance & health', color: '#1F1A0A', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80' },
+  { id: 'longevity',   label: 'Longevity Clinic', desc: 'Age optimization', color: '#1A1A2A', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80' },
 ];
 
 const MODULE_OPTIONS = [
-  { key: 'telehealth',    label: 'Telehealth Platform',     desc: 'Patient consultations & Rx',               price: 0, icon: Stethoscope, popular: true  },
-  { key: 'pharmacy',      label: 'Pharmacy Integration',    desc: 'Direct pharmacy routing & fulfillment',    price: 0,  icon: Pill,         popular: false },
-  { key: 'compliance',    label: 'Compliance / PEPMD',      desc: 'Automated compliance monitoring',          price: 0,  icon: ShieldCheck,  popular: true  },
-  { key: 'inventory',     label: 'Inventory Management',    desc: 'Track stock, alerts, auto-reorders',       price: 0,  icon: Package,      popular: false },
-  { key: 'marketing',     label: 'Marketing & Scaling',     desc: 'SEO, paid ads, analytics, drip sequences', price: 0,  icon: Megaphone,    popular: false },
-  { key: 'card_processing', label: 'Merchant Card Processing', desc: 'High-risk card processing included',   price: 0,   icon: CreditCard,   popular: true  },
-  { key: 'lms',           label: 'Peptide University',      desc: 'Staff training & certifications',          price: 0,  icon: Star,         popular: false },
-  { key: 'website_builder', label: 'Website Builder',       desc: '25 themes + 5 checkout themes + hosting',  price: 0,  icon: Globe,        popular: false },
+  { key: 'telehealth',     label: 'Provider Consultations', desc: 'Patient video calls & prescriptions',        price: 0, icon: Stethoscope, popular: true  },
+  { key: 'payments',       label: 'Payment Processing',     desc: 'Secure checkout & merchant account',        price: 0, icon: CreditCard,   popular: true  },
+  { key: 'inventory',      label: 'Inventory & Orders',     desc: 'Stock management & fulfillment',            price: 0, icon: Package,      popular: false },
+  { key: 'marketing',      label: 'Marketing Tools',        desc: 'Email, ads, SEO, analytics',                price: 0, icon: Megaphone,    popular: true  },
+  { key: 'pharmacy',       label: 'Pharmacy Integration',   desc: 'Automated prescription routing',            price: 0, icon: Pill,         popular: false },
+  { key: 'compliance',     label: 'Compliance Tools',       desc: 'Built-in legal framework',                  price: 0, icon: ShieldCheck,  popular: false },
 ];
 
 const JOURNEY_STEPS = [
@@ -350,10 +349,10 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 mb-4 text-white/50 text-xs tracking-widest uppercase">
-           <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> $5K Setup + $2–3K/mo + 5% Revenue
+           <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> $5,000 Setup
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Launch Your White-Label Telehealth Business</h1>
-          <p className="text-white/40 text-sm">Complete platform with website, integrations, merchant account, analytics & support. Live in days.</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Wellness Business in Days</h1>
+          <p className="text-white/40 text-sm">Complete infrastructure. Storefront, payments, providers, compliance, support — everything you need to sell.</p>
         </div>
 
         {/* Progress */}
@@ -384,8 +383,8 @@ export default function MerchantOnboarding() {
                 {step === 1 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Business Information</h2>
-                      <p className="text-white/40 text-sm mt-1">Tell us about your business. Setup: $5,000 one-time. Monthly: $2,500–$3,000 + 5% of your revenue.</p>
+                      <h2 className="text-xl font-bold">Tell Us About Your Business</h2>
+                      <p className="text-white/40 text-sm mt-1">We'll set everything up for you. One platform, everything included.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
@@ -438,8 +437,8 @@ export default function MerchantOnboarding() {
                 {step === 2 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Legal Entity & Compliance</h2>
-                      <p className="text-white/40 text-sm mt-1">Required to open merchant accounts and process payments legally.</p>
+                      <h2 className="text-xl font-bold">Legal & Banking Setup</h2>
+                      <p className="text-white/40 text-sm mt-1">We handle the compliance. You focus on your business.</p>
                     </div>
 
                     {/* Do they have an LLC? */}
@@ -518,9 +517,9 @@ export default function MerchantOnboarding() {
                     {/* Product categories — shown once LLC Q is answered */}
                     {form.hasLLC !== null && (
                       <div>
-                        <Label className="text-white/60 text-xs uppercase tracking-widest mb-3 block">Products You'll Sell</Label>
+                        <Label className="text-white/60 text-xs uppercase tracking-widest mb-3 block">What You'll Offer (optional)</Label>
                         <div className="grid grid-cols-2 gap-2">
-                          {['GLP-1 (Semaglutide/Tirzepatide)', 'Peptides (RUO)', 'Hormones', "Men's Health", "Women's Health", 'Longevity / Anti-Aging', 'Weight Loss', 'Hair & Skin'].map(cat => (
+                          {['Weight Loss', 'Hormones', 'Longevity', "Men's Health", "Women's Health", 'Hair & Skin', 'Performance', 'Wellness'].map(cat => (
                             <button key={cat} type="button" onClick={() => toggleCategory(cat)}
                               className={`px-3 py-2 rounded-lg text-xs font-medium border text-left transition-all
                                 ${form.productCategories.includes(cat) ? 'bg-[#4A6741] border-[#4A6741] text-white' : 'bg-white/5 border-white/15 text-white/50 hover:border-white/30'}`}>
@@ -618,36 +617,28 @@ export default function MerchantOnboarding() {
                 {step === 5 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Platform Modules</h2>
-                      <p className="text-white/40 text-sm mt-1">Select the services you need. Add or remove anytime.</p>
+                      <h2 className="text-xl font-bold">Choose Your Tools</h2>
+                      <p className="text-white/40 text-sm mt-1">Everything is included. Customize what you want now, add or change anytime.</p>
                     </div>
-                    <div className="grid gap-2">
+                    <div className="grid gap-3">
                       {MODULE_OPTIONS.map(mod => (
                         <button key={mod.key} type="button" onClick={() => toggleModule(mod.key)}
                           className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all w-full
                             ${form.selectedModules.includes(mod.key) ? 'bg-[#4A6741]/20 border-[#4A6741]' : 'bg-white/5 border-white/15 hover:border-white/30'}`}>
-                          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0
+                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
                             ${form.selectedModules.includes(mod.key) ? 'bg-[#4A6741]' : 'bg-white/10'}`}>
-                            <mod.icon className="w-4 h-4 text-white" />
+                            <mod.icon className="w-5 h-5 text-white" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <p className="text-white font-medium text-sm">{mod.label}</p>
-                              {mod.popular && <Badge className="bg-[#4A6741]/40 text-green-300 border-[#4A6741] text-[10px]">Popular</Badge>}
+                              {mod.popular && <Badge className="bg-[#6B8F5E] text-white text-[10px]">Popular</Badge>}
                             </div>
                             <p className="text-white/40 text-xs">{mod.desc}</p>
                           </div>
-                          <p className="text-white font-bold text-sm flex-shrink-0">{mod.price === 0 ? 'Custom' : `$${mod.price}/mo`}</p>
-                          {form.selectedModules.includes(mod.key) && <Check className="w-4 h-4 text-[#6B8F5E] flex-shrink-0" />}
+                          {form.selectedModules.includes(mod.key) && <Check className="w-5 h-5 text-[#6B8F5E] flex-shrink-0" />}
                         </button>
                       ))}
-                    </div>
-                    <div className="bg-white/8 rounded-xl p-4 flex items-center justify-between">
-                      <div>
-                        <p className="text-white/50 text-sm">Base + {form.selectedModules.length} module{form.selectedModules.length !== 1 ? 's' : ''}</p>
-                        <p className="text-white/30 text-xs">7-day free trial, then billed monthly</p>
-                      </div>
-                      <p className="text-2xl font-bold text-white">${monthlyTotal}<span className="text-sm text-white/40 font-normal">/mo</span></p>
                     </div>
                   </>
                 )}
@@ -656,66 +647,36 @@ export default function MerchantOnboarding() {
                 {step === 6 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Activate Your Platform</h2>
-                      <p className="text-white/40 text-sm mt-1">Review your order and confirm to launch.</p>
+                      <h2 className="text-xl font-bold">Ready to Launch</h2>
+                      <p className="text-white/40 text-sm mt-1">Confirm your setup fee. You're done — we handle the rest.</p>
                     </div>
 
-                    {/* Order summary */}
-                     <div className="bg-white/8 rounded-xl p-4 space-y-3">
-                       <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">Order Summary</p>
-                       <div className="space-y-2 text-sm">
-                         <div className="flex justify-between">
-                           <span className="text-white/60">Platform Setup Fee</span>
-                           <span className="text-white font-medium">${SETUP_FEE}</span>
-                         </div>
-                         <div className="flex justify-between text-white/40 text-xs">
-                           <span>Website · Integrations · Merchant Account · Analytics & Reporting</span>
-                         </div>
-                         <div className="flex justify-between border-t border-white/10 pt-2 mt-1">
-                           <span className="text-white/60">Monthly Support & Scaling</span>
-                           <span className="text-white font-medium">${PLATFORM_MONTHLY_BASE}–$3,000</span>
-                         </div>
-                         <div className="flex justify-between text-white/40 text-xs">
-                           <span>Marketing, support, 24/7 ops</span>
-                         </div>
-                         <div className="flex justify-between text-white/40 text-xs">
-                           <span>Plus 5% of your revenue (after first 30 days)</span>
-                         </div>
-                         <div className="flex justify-between border-t border-white/10 pt-2 font-bold">
-                           <span className="text-white">Due Today (Setup)</span>
-                           <span className="text-white">${SETUP_FEE}</span>
-                         </div>
-                       </div>
-                     </div>
+                     {/* Order summary */}
+                      <div className="bg-white/8 rounded-xl p-5 space-y-4">
+                        <div className="flex justify-between items-baseline">
+                          <span className="text-white/60 text-sm">Platform Setup</span>
+                          <span className="text-3xl font-bold text-white">${SETUP_FEE}</span>
+                        </div>
+                        <div className="text-white/40 text-xs space-y-1">
+                          <p>✓ Website & storefront</p>
+                          <p>✓ Payment processing</p>
+                          <p>✓ Provider network</p>
+                          <p>✓ Compliance framework</p>
+                          <p>✓ Analytics & reporting</p>
+                          <p>✓ Dedicated onboarding team</p>
+                        </div>
+                        <div className="border-t border-white/10 pt-3 mt-3">
+                          <p className="text-white text-xs">Monthly: Starts at $2,500 after 30-day trial</p>
+                        </div>
+                      </div>
 
                     {/* Stripe Checkout notice */}
-                     <div className="bg-[#4A6741]/10 border border-[#4A6741]/30 rounded-lg p-4 flex items-start gap-3">
-                       <Lock className="w-4 h-4 text-[#6B8F5E] flex-shrink-0 mt-0.5" />
-                       <div>
-                         <p className="text-white/80 text-sm font-medium">Secure Payment via Stripe</p>
-                         <p className="text-white/40 text-xs mt-0.5">Clicking "Pay $5,000 & Launch" will redirect you to Stripe's secure checkout page to complete your payment. Your card details are never stored on our servers.</p>
-                       </div>
-                     </div>
+                      <div className="bg-[#4A6741]/10 border border-[#4A6741]/30 rounded-lg p-4 flex items-start gap-3">
+                        <Lock className="w-4 h-4 text-[#6B8F5E] flex-shrink-0 mt-0.5" />
+                        <p className="text-white/60 text-xs">Secure payment via Stripe. Your card details never leave Stripe's servers.</p>
+                      </div>
 
-                    {/* What's included */}
-                     <div className="space-y-2">
-                       <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">Your Launch Includes</p>
-                       {[
-                         `${STOREFRONT_TEMPLATES.find(t=>t.id===form.templateId)?.label} white-label storefront`,
-                         `${form.domainName}${form.domainChoice==='subdomain'?'.medrevolve.co':''} domain & SSL provisioned`,
-                         '10–15 pre-loaded products (your selected categories)',
-                         'Merchant card processing setup',
-                         'Provider & pharmacy network access',
-                         'HIPAA-compliant infrastructure',
-                         'Analytics & reporting dashboard',
-                         'Dedicated onboarding & support team',
-                         'Marketing & compliance toolkit',
-                       ].map((item, i) => (
-                         <div key={i} className="flex items-center gap-2.5 text-sm text-white/60">
-                           <CheckCircle2 className="w-3.5 h-3.5 text-[#6B8F5E] flex-shrink-0" /> {item}
-                         </div>
-                       ))}
-                     </div>
+                    {/* What's included — simplified */}
 
                     {error && (
                       <div className="bg-red-500/15 border border-red-500/30 rounded-lg p-3 text-red-300 text-sm flex gap-2">
@@ -740,14 +701,14 @@ export default function MerchantOnboarding() {
                         (step === 2 && form.hasLLC === null)
                       }
                       className="bg-white text-black hover:bg-white/90 px-6 font-bold rounded-sm">
-                      Continue <ArrowRight className="ml-1.5 w-4 h-4" />
+                      Next <ArrowRight className="ml-1.5 w-4 h-4" />
                     </Button>
                   ) : (
                     <Button onClick={handleSubmit} disabled={loading}
                      className="bg-white text-black hover:bg-white/90 px-8 font-bold rounded-sm text-base">
                      {loading
-                       ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</>
-                       : <><Zap className="w-4 h-4 mr-2" /> Pay $${SETUP_FEE} & Launch</>
+                       ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Launching...</>
+                       : <>Launch Now — ${SETUP_FEE}</>
                      }
                     </Button>
                   )}
