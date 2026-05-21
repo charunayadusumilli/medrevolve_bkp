@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const ADMIN_EMAIL = 'rned@batterywall.com';
+const ADMIN_EMAIL = 'rned@medrevolve.com';
 const ADMIN_NAME = 'MedRevolve Team';
 
 async function sendCalendarInvite(base44, { senderName, senderEmail, subject, messageSnippet }) {

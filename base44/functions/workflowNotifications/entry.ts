@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 // Entity automation handler — triggers Gmail notifications for all major workflow events
 // Receives: { event: { type, entity_name, entity_id }, data, old_data }
 
-const ADMIN_EMAIL = 'rned@batterywall.com';
+const ADMIN_EMAIL = 'rned@medrevolve.com';
 
 // Shared branded email wrapper
 function brandedEmail({ icon, title, subtitle, rows, actionUrl, actionLabel, footerNote }) {
