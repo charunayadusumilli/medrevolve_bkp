@@ -17,6 +17,7 @@ import TelephonyDashboard from './pages/TelephonyDashboard';
 import PhoneIntake from './pages/PhoneIntake';
 import SocialMediaDashboard from './pages/SocialMediaDashboard';
 import GodModeAds from './pages/GodModeAds';
+import GrowthDashboard from './pages/GrowthDashboard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -75,6 +76,7 @@ const AuthenticatedApp = () => {
       <Route path="/PhoneIntake" element={<LayoutWrapper currentPageName="PhoneIntake"><PhoneIntake /></LayoutWrapper>} />
       <Route path="/SocialMediaDashboard" element={<LayoutWrapper currentPageName="SocialMediaDashboard"><SocialMediaDashboard /></LayoutWrapper>} />
       <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><GodModeAds /></LayoutWrapper>} />
+      <Route path="/GrowthDashboard" element={<LayoutWrapper currentPageName="GrowthDashboard"><GrowthDashboard /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

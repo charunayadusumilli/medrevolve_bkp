@@ -30,6 +30,93 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://medrevolve.com/" />
+
+    <!-- Google Site Verification (replace with your actual token from Search Console) -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" /> -->
+
+    <!-- JSON-LD Structured Data — helps Google understand MedRevolve as a medical organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MedicalOrganization",
+          "@id": "https://medrevolve.com/#organization",
+          "name": "MedRevolve",
+          "url": "https://medrevolve.com",
+          "logo": "https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png",
+          "description": "MedRevolve is the complete B2B platform to launch a compliant telehealth, GLP-1, or wellness business — website, compliance, pharmacy, and marketing under your brand.",
+          "medicalSpecialty": ["Weight Management", "Primary Care", "Endocrinology"],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "info@medrevolve.com",
+            "contactType": "customer support",
+            "availableLanguage": "English"
+          },
+          "sameAs": [
+            "https://www.instagram.com/medrevolve",
+            "https://www.facebook.com/medrevolve"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://medrevolve.com/#website",
+          "url": "https://medrevolve.com",
+          "name": "MedRevolve",
+          "publisher": { "@id": "https://medrevolve.com/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://medrevolve.com/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://medrevolve.com/#telehealth-service",
+          "serviceType": "Telehealth Platform",
+          "provider": { "@id": "https://medrevolve.com/#organization" },
+          "description": "White-label telehealth platform for GLP-1, wellness, and healthcare businesses.",
+          "areaServed": "US",
+          "offers": {
+            "@type": "Offer",
+            "url": "https://medrevolve.com/MerchantOnboarding"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is GLP-1 weight loss treatment?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "GLP-1 (glucagon-like peptide-1) receptor agonists like semaglutide and tirzepatide are FDA-approved medications that help manage weight by reducing appetite and improving blood sugar control. MedRevolve connects patients with licensed providers who can prescribe these treatments via telehealth."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I start a telehealth business with MedRevolve?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "MedRevolve provides a complete white-label telehealth platform including website, compliance, pharmacy integrations, and marketing tools. Businesses can launch in days. Visit medrevolve.com/MerchantOnboarding to get started."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is MedRevolve telehealth available nationwide?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. MedRevolve partners with licensed providers across all 50 US states to provide compliant telehealth consultations for weight loss, hormone therapy, and wellness treatments."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <!-- Facebook Pixel -->
     <script>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -37,6 +124,7 @@
       n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
       t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
       document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      // TODO: Replace YOUR_PIXEL_ID with your actual Facebook Pixel ID from business.facebook.com
       fbq('init', 'YOUR_PIXEL_ID');
       fbq('track', 'PageView');
     </script>
