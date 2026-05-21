@@ -1,5 +1,63 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
+const ADMIN_EMAIL = 'rned@batterywall.com';
+const ADMIN_NAME = 'MedRevolve Team';
+
+async function sendCalendarInvite(base44, { senderName, senderEmail, subject, messageSnippet }) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlecalendar');
+
+    // Schedule a discovery call 24 hours from now
+    const start = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const end = new Date(start.getTime() + 30 * 60 * 1000); // 30 min
+
+    const event = {
+      summary: `Discovery Call: ${senderName || senderEmail}`,
+      description: `Incoming inquiry from ${senderName || senderEmail} <${senderEmail}>\n\nSubject: ${subject}\n\nMessage preview:\n${messageSnippet}\n\nPlease confirm or reschedule this call.`,
+      start: { dateTime: start.toISOString(), timeZone: 'America/New_York' },
+      end: { dateTime: end.toISOString(), timeZone: 'America/New_York' },
+      attendees: [
+        { email: ADMIN_EMAIL, displayName: ADMIN_NAME },
+        { email: senderEmail, displayName: senderName || senderEmail },
+      ],
+      conferenceData: {
+        createRequest: {
+          requestId: `inbox-${Date.now()}`,
+          conferenceSolutionKey: { type: 'hangoutsMeet' },
+        },
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 15 },
+        ],
+      },
+    };
+
+    const res = await fetch(
+      'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all',
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(event),
+      }
+    );
+    const result = await res.json();
+    if (!res.ok) {
+      console.error('Calendar invite error:', result);
+      return null;
+    }
+
+    const meetLink = result.conferenceData?.entryPoints?.find(e => e.entryPointType === 'video')?.uri || null;
+    console.log(`✅ Calendar invite sent to ${senderEmail} — Meet: ${meetLink}`);
+    return { meetLink, calLink: result.htmlLink, eventId: result.id };
+  } catch (e) {
+    console.error('Calendar invite failed (non-blocking):', e.message);
+    return null;
+  }
+}
+
 Deno.serve(async (req) => {
   try {
     const body = await req.json();
@@ -28,12 +86,17 @@ Deno.serve(async (req) => {
 
       const from = getHeader('From');
       const subject = getHeader('Subject');
-      const date = getHeader('Date');
 
       // Extract email address from "Name <email>" format
       const emailMatch = from.match(/<(.+?)>/) || [null, from];
       const senderEmail = emailMatch[1].trim();
       const senderName = from.includes('<') ? from.split('<')[0].trim().replace(/"/g, '') : from;
+
+      // Skip our own outgoing emails coming back
+      if (senderEmail === ADMIN_EMAIL || senderEmail === 'rned@medrevolve.com') {
+        console.log(`Skipping own email from ${senderEmail}`);
+        continue;
+      }
 
       // Extract plain text body
       let bodyText = '';
@@ -46,7 +109,7 @@ Deno.serve(async (req) => {
       };
       extractBody(message.payload);
 
-      // Skip if already saved (deduplicate by gmail message ID in subject prefix)
+      // Deduplicate by gmail message ID
       const allRecent = await base44.asServiceRole.entities.ContactRequest.filter({});
       const alreadySaved = allRecent.some(r => r.subject && r.subject.includes(`[Gmail:${messageId}]`));
       if (alreadySaved) {
@@ -54,17 +117,28 @@ Deno.serve(async (req) => {
         continue;
       }
 
+      // Send Google Calendar invite to sender + admin
+      const calData = await sendCalendarInvite(base44, {
+        senderName,
+        senderEmail,
+        subject,
+        messageSnippet: bodyText.substring(0, 300),
+      });
+
       // Save as ContactRequest
-      await base44.asServiceRole.entities.ContactRequest.create({
+      const contact = await base44.asServiceRole.entities.ContactRequest.create({
         name: senderName || senderEmail,
         email: senderEmail,
         subject: `[Gmail:${messageId}] ${subject}`.substring(0, 250),
         message: bodyText.substring(0, 5000),
+        source: 'gmail_inbox',
         status: 'new',
+        meeting_booked: !!calData?.meetLink,
+        meeting_link: calData?.meetLink || '',
       });
 
       processed++;
-      console.log(`Saved email from ${senderEmail}: ${subject}`);
+      console.log(`✅ Saved email from ${senderEmail}: ${subject} | Calendar invite: ${calData?.meetLink || 'none'}`);
     }
 
     return Response.json({ processed });

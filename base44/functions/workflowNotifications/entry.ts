@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 // Entity automation handler — triggers Gmail notifications for all major workflow events
 // Receives: { event: { type, entity_name, entity_id }, data, old_data }
 
-const ADMIN_EMAIL = 'rned@medrevolve.com';
+const ADMIN_EMAIL = 'rned@batterywall.com';
 
 // Shared branded email wrapper
 function brandedEmail({ icon, title, subtitle, rows, actionUrl, actionLabel, footerNote }) {
@@ -307,21 +307,7 @@ const templates = {
     }),
   }),
 
-  // ── Contact Requests ──────────────────────────────────────────
-  ContactRequest_create: (d) => ({
-    to: ADMIN_EMAIL,
-    subject: `📬 Contact Request — ${d.subject || 'General Inquiry'} · ${d.name}`,
-    html: brandedEmail({
-      icon: '📬', title: 'New Contact Request',
-      rows: [
-        ['From', `${d.name} — <a href="mailto:${d.email}" style="color:#4A6741;">${d.email}</a>`, true],
-        ['Subject', d.subject],
-        ['Message', d.message],
-      ],
-      actionUrl: `mailto:${d.email}`,
-      actionLabel: `Reply to ${d.name} →`,
-    }),
-  }),
+  // ContactRequest_create intentionally omitted — handled by submitContactRequest function directly
 
   // ── Consultation Bookings ─────────────────────────────────────
   ConsultationBooking_create: (d) => ({

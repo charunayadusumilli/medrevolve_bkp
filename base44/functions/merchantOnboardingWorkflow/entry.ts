@@ -9,7 +9,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
  * - Triggers analytics tracking
  */
 
-const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'rned@medrevolve.com';
+const ADMIN_EMAIL = 'rned@batterywall.com';
 
 Deno.serve(async (req) => {
   try {

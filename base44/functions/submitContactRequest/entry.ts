@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const ADMIN_EMAIL = 'rned@medrevolve.com';
+const ADMIN_EMAIL = 'rned@batterywall.com'; // Your actual calendar & inbox
 const ADMIN_PHONE = '5302006352';
 
 async function sendSMS(to, body) {
@@ -50,7 +50,8 @@ async function createCalendarMeeting(base44, { summary, description, startISO, d
     const start = new Date(startISO);
     const end = new Date(start.getTime() + durationMinutes * 60000);
     const attendees = [
-      { email: ADMIN_EMAIL },
+      { email: ADMIN_EMAIL }, // rned@batterywall.com gets calendar invite
+      { email: 'rned@medrevolve.com' }, // also cc medrevolve inbox
       ...(attendeeEmail ? [{ email: attendeeEmail }] : []),
     ];
     const event = {
