@@ -98,6 +98,7 @@ All assets follow the format: `[platform]-[type]-[dimensions].[ext]`
 - Keep MedRevolve logotype consistent
 - Use moss green for compliance status (OK)
 - Use rust brown for accents and italic text
+- Display key metrics: 200+ merchants, 50 states, 7-day launch
 
 ### Don'ts ✗
 - Don't stretch or distort logos
@@ -106,6 +107,7 @@ All assets follow the format: `[platform]-[type]-[dimensions].[ext]`
 - Don't use consumer language (we're B2B)
 - Don't edit SVG files without design knowledge
 - Don't publish without verifying compliance messaging
+- Don't use "peptide-only" language (we're broader: telehealth, GLP-1, RUO, supplements)
 
 ---
 
@@ -180,6 +182,12 @@ May 2026
 ---
 
 ## Version notes
+
+v2.0 — Updated positioning to white-label telehealth platform (broader than peptide/GLP)
+- Updated all copy to reflect: telehealth, GLP-1, RUO, supplements
+- Added MedRevolve University certification messaging
+- Emphasized 200+ merchants, 200+ providers, 50 states, 7-day launch
+- Removed peptide-only language
 
 v1.0 — Initial launch kit (Facebook, Instagram, LinkedIn, YouTube, Twitter/X)
 - 4 logo variants

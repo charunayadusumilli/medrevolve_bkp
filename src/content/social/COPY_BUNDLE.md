@@ -17,67 +17,73 @@
 *Software · Healthcare service · B2B service*
 
 ### Short description (255 chars)
-> Compliant infrastructure for the peptide and GLP economy. Twenty founding
-> operators. Twenty-five storefronts. One stack — payments, fulfillment,
-> compliance, telehealth — issued as modules. B2B platform. Not a consumer
-> service.
+> White-label telehealth platform for wellness merchants. Launch your compliant
+> GLP-1, RUO, or supplement business in days. 200+ merchants. 50 states.
+> Complete stack: storefront, providers, pharmacy, payments, compliance.
 
 ### About / company overview (long)
-> MedRevolve is a B2B platform for operators selling in the peptide and GLP
-> economy. We don't sell to patients — we build the rails the operator
-> sells on.
+> MedRevolve is the complete operating system for wellness merchants — white-label
+> telehealth infrastructure sold to operators, not consumers.
 >
-> Every operator gets a controlled storefront, an approved-product catalog
-> they cannot deviate from, a payment processor that already understands
-> what they're doing, and a compliance ledger that's always live.
+> Every merchant gets:
+> — Custom branded storefront (your domain, your brand)
+> — Pre-loaded product catalog (GLP-1, RUO, supplements)
+> — Licensed provider network (200+ MDs, NPs, PAs)
+> — 503A/B pharmacy fulfillment
+> — Payment processing that understands telehealth
+> — LegitScript-ready compliance stack
+> — MedRevolve University certification
 >
-> Twenty founding operators. Twenty-five storefronts. Fifteen platform
-> modules. All shipped compliant.
+> Launch in days, not months. 200+ merchants. 50 states. Zero compliance flags.
 
 ### Website field
 `medrevolve.com/forbusiness`
 
 ### Posts (templates)
 
-#### Post Type A: Module Launch
+#### Post Type A: Platform Launch
 ```
-Twenty storefronts. Twenty founding operators. One stack.
+Your telehealth business. Live in days.
 
-We just shipped [module name]. Here's what it does:
-[benefit 1]
-[benefit 2]
-[benefit 3]
+MedRevolve is the complete white-label platform for wellness merchants:
+→ Custom storefront under your brand
+→ 200+ credentialed providers ready
+→ 503A/B pharmacy fulfillment
+→ Payment processing + LegitScript
+→ 50-state compliance built-in
 
-No compliance surprises. No bolted-on features. Built in from day one.
+No dev work. No compliance guesswork. Just infrastructure.
 
 medrevolve.com/forbusiness
 ```
 
-#### Post Type B: Operator Spotlight
+#### Post Type B: Merchant Story
 ```
-Meet [operator name]. They run [business type].
+Meet [merchant name]. They run [med spa / wellness clinic / fitness brand].
 
-In the first 30 days on MedRevolve, they:
-— [metric 1]
-— [metric 2]
-— [metric 3]
+In 7 days with MedRevolve, they:
+— Launched a branded telehealth storefront
+— Onboarded 3 licensed providers
+— Processed first 50 patient consultations
+— Got LegitScript-ready
 
-No middle-man. No guesswork. Just infrastructure.
+No middle-man. No 6-month build. Just platform.
 
 Learn their story: medrevolve.com/forbusiness
 ```
 
 #### Post Type C: Compliance Anchor
 ```
-Compliance isn't optional. It's infrastructure.
+LegitScript-ready. HIPAA-compliant. 50-state coverage.
 
-At MedRevolve, every operator gets:
+At MedRevolve, every merchant gets:
 ✓ Live compliance ledger
-✓ Approved catalog gate
-✓ Payment processor that understands telehealth
+✓ Provider credentialing & licensing
+✓ 503A/B pharmacy network
+✓ Payment processor for telehealth
 ✓ Built-in audit trail
 
-Twenty founding operators. Fifteen modules. Zero compliance flags.
+200+ merchants. 50 states. Zero flags.
 
 medrevolve.com/forbusiness
 ```
@@ -88,8 +94,8 @@ medrevolve.com/forbusiness
 
 ### Bio (150 chars max)
 ```
-B2B platform for the peptide and GLP economy.
-Twenty operators. Twenty-five storefronts.
+White-label telehealth platform for wellness merchants.
+Launch GLP-1, RUO, or supplement business in days.
 medrevolve.com/forbusiness
 ```
 
@@ -98,50 +104,59 @@ medrevolve.com/forbusiness
 
 ### Posts (templates)
 
-#### Post Type A: Compliance Card (Carousel)
-Slide 1: "COMPLIANCE LEDGER · LIVE"
-Slide 2: Checklist visual (Crawler DK, Catalog gate OK, Page diff 1 flag, Card brand OK, Domain isolation OK)
-Slide 3: "Zero surprises. Every module ships audit-ready."
+#### Post Type A: Platform Overview (Carousel)
+Slide 1: "YOUR TELEHEALTH BUSINESS. LIVE IN DAYS."
+Slide 2: Checklist (Storefront OK, Providers OK, Pharmacy OK, Payments OK, Compliance OK)
+Slide 3: "200+ merchants. 50 states. Zero compliance flags."
 
 Caption:
 ```
-Compliance isn't bolted on. It's woven in.
+Complete wellness commerce OS.
 
-Every operator on MedRevolve gets a live compliance ledger.
-No hidden flags. No last-minute surprises.
+Every merchant gets:
+→ White-label storefront
+→ 200+ licensed providers
+→ 503A/B pharmacy fulfillment
+→ Payment processing
+→ LegitScript-ready compliance
 
-Twenty founding operators. Fifteen modules. Zero compliance issues.
+Launch in days. Not months.
 
-Link in bio for more.
+Link in bio.
 ```
 
-#### Post Type B: Founding Cohort
-```
-Caption:
-Twenty founding operators. Twenty-five storefronts. One compliant stack.
-
-We're building infrastructure for the peptide and GLP economy—not a consumer app.
-
-If you're an operator, a founder, or running a clinic, let's talk.
-
-#MedRevolve #Peptides #GLP #B2B
-```
-
-#### Post Type C: Module Spotlight
+#### Post Type B: Three Tracks
 ```
 Caption:
-New module: [Module Name]
+Three ways to sell on MedRevolve:
 
-What it does:
-→ [Benefit 1]
-→ [Benefit 2]
-→ [Benefit 3]
+1. GLP-1 Telehealth — Rx commerce stack
+2. RUO Research — Non-Rx website + marketing
+3. Supplements — Wellness products + subscriptions
 
-No middle-man. No compliance headaches. Just infrastructure.
+Same infrastructure. Different compliance paths.
+
+If you're a med spa, clinic, or wellness brand — let's talk.
+
+#MedRevolve #Telehealth #GLP1 #WellnessBusiness
+```
+
+#### Post Type C: MedRevolve University
+```
+Caption:
+MedRevolve University is included.
+
+26 modules. 4 certification tracks:
+→ Telehealth & Clinical Foundations
+→ Regulatory & Licensing Mastery
+→ Merchant Operations
+→ Patient Acquisition
+
+Graduate as a certified operator.
 
 medrevolve.com/forbusiness
 
-#B2B #Compliance #Peptides
+#Telehealth #Compliance #Wellness
 ```
 
 ---
@@ -150,38 +165,44 @@ medrevolve.com/forbusiness
 
 ### Headline (120 chars max)
 ```
-B2B infrastructure for the peptide and GLP economy | Twenty operators, 25 storefronts, 15 modules, zero compromise
+White-label telehealth platform | 200+ merchants, 50 states, complete wellness commerce OS
 ```
 
 ### About section (2,000 chars)
 ```
-MedRevolve is a B2B platform built for operators in the peptide and GLP economy.
+MedRevolve is the operating system for wellness merchants — white-label telehealth infrastructure for operators selling GLP-1, RUO, and supplement products.
 
-We don't sell to patients. We build the rails operators sell on.
+We don't sell to patients. We build the platform merchants sell on.
 
-What you get:
-— Controlled storefront (no deviations)
-— Approved product catalog (pre-vetted)
-— Compliance-aware payment processor
-— Live compliance ledger (always audit-ready)
-— Telehealth integration
-— Modular architecture (use what you need)
+What every merchant gets:
+— Custom branded storefront (your domain, your brand)
+— Pre-loaded product catalog (GLP-1, RUO, supplements)
+— 200+ licensed provider network (MDs, NPs, PAs)
+— 503A/B pharmacy fulfillment (40+ partners)
+— Payment processing that understands telehealth
+— LegitScript-ready compliance stack
+— MedRevolve University certification (included)
 
-The cohort:
-Twenty founding operators. Twenty-five storefronts running simultaneously. Fifteen platform modules. Zero compliance issues.
+The numbers:
+200+ merchants
+200+ providers
+40+ pharmacies
+50 states covered
+7-day average launch time
 
-Two distinct tracks:
-1. GLP (consumer wellness)
-2. RUO (research-use-only products)
+Three product tracks:
+1. GLP-1 Telehealth — Full Rx commerce with provider consultations
+2. RUO Research — Non-Rx website with integrated marketing
+3. Supplements & Wellness — Product subscriptions + one-time sales
 
-Why operators choose MedRevolve:
-✓ Compliance baked in, not bolted on
-✓ No surprises. No last-minute flag discoveries.
-✓ Audit-ready infrastructure
-✓ Founder-first support
-✓ Exclusive cohort model
+Why merchants choose MedRevolve:
+✓ Complete stack — telehealth, products, pharmacy, payments, compliance
+✓ White-label — your brand on everything
+✓ Launch in days — LLC, storefront, inventory, compliance in one session
+✓ Built by operators — we run our own telehealth business on this
+✓ 50-state coverage — all licensing, all pharmacy networks
 
-For founders, operators, and clinic leaders: medrevolve.com/forbusiness
+For founders, med spa owners, clinic operators, and wellness entrepreneurs: medrevolve.com/forbusiness
 ```
 
 ### Posts (templates)
@@ -191,40 +212,44 @@ For founders, operators, and clinic leaders: medrevolve.com/forbusiness
 Title: "Why we built MedRevolve"
 
 Content:
-We started this because operators told us the same story:
+We started this because merchants told us the same story:
 
-"I built a great business. Then compliance happened."
+"I want to launch a telehealth business. But compliance, providers, pharmacy, payments — it's overwhelming."
 
-Overnight audits. Bolted-on solutions. Last-minute feature cuts.
+6-month dev timelines. Bolted-on compliance. Last-minute feature cuts.
 
 So we decided to flip it.
 
-At MedRevolve, compliance isn't an afterthought—it's the foundation.
+At MedRevolve, everything is built-in from day one:
+— Storefront (your brand)
+— Providers (200+ licensed)
+— Pharmacy (40+ partners)
+— Payments (telehealth-ready)
+— Compliance (LegitScript-ready)
 
-Every module ships audit-ready. Every operator runs a live compliance ledger. No surprises.
+200+ merchants. 50 states. 7-day launch.
 
-Twenty founding operators. Twenty-five storefronts. Zero compliance issues.
+If you're launching a wellness business, let's talk.
 
-If you're an operator or founder in the peptide/GLP space, let's talk.
-
-#B2B #Compliance #Entrepreneurship
+#Telehealth #Entrepreneurship #Healthcare
 ```
 
-#### Post Type B: Operator Story
+#### Post Type B: Merchant Case Study
 ```
-Title: "[Operator Name]: From side project to $[X] in 90 days"
+Title: "[Merchant name]: From idea to $[X] in 30 days"
 
 Content:
 [Story excerpt from case study]
 
 What MedRevolve gave them:
-→ [Metric 1]
-→ [Metric 2]
-→ [Metric 3]
+→ Branded storefront live in 7 days
+→ 3 providers onboarded same week
+→ First 50 consultations completed
+→ LegitScript certification in progress
 
 Read the full story: [Link]
 
-#Entrepreneurship #Compliance #B2B
+#Telehealth #Entrepreneurship #Healthcare
 ```
 
 #### Post Type C: Compliance Deep-Dive
@@ -234,18 +259,18 @@ Title: "The compliance cost nobody talks about"
 Content:
 Most platforms charge you for features.
 
-We charge you upfront for compliance.
+We include compliance in the base stack.
 
 Here's why:
-[Explanation of compliance model]
+[Explanation of LegitScript, HIPAA, 50-state licensing]
 
-At MedRevolve, every operator knows what they're getting into. Live ledger. Audit-ready. No surprises.
+At MedRevolve, every merchant is audit-ready from day one.
 
-Twenty operators. Fifteen modules. Zero flags.
+200 merchants. 50 states. Zero flags.
 
 medrevolve.com/forbusiness
 
-#Compliance #B2B #Founders
+#Compliance #Telehealth #Healthcare
 ```
 
 ---
@@ -254,46 +279,48 @@ medrevolve.com/forbusiness
 
 ### Bio (160 chars max)
 ```
-B2B platform for peptide/GLP operators.
-Twenty founding operators. Twenty-five storefronts.
-Compliance infrastructure. No compromise.
+White-label telehealth platform for wellness merchants.
+200+ merchants. 50 states. 7-day launch.
+Complete stack: storefront, providers, pharmacy, payments, compliance.
 ```
 
 ### Tweet templates
 
-#### Type A: Product launch (280 chars)
+#### Type A: Platform launch (280 chars)
 ```
-shipped: [module name]
+your telehealth business. live in days.
 
-what it does:
-→ [benefit 1]
-→ [benefit 2]
+→ white-label storefront
+→ 200+ licensed providers
+→ 503A/B pharmacy fulfillment
+→ payments + LegitScript
+→ 50-state compliance
 
-no compliance guesswork. built in from day one.
+no dev work. no compliance guesswork.
 
 medrevolve.com/forbusiness
 ```
 
 #### Type B: Compliance hot take (280 chars)
 ```
-take: most "compliance" platforms are just audit trails bolted onto a consumer app.
+take: most "telehealth platforms" are just video calls bolted onto a Shopify store.
 
-at medrevolve, compliance is infrastructure.
+at medrevolve, telehealth is infrastructure.
 
-every operator gets a live ledger. audit-ready. no surprises.
+every merchant gets providers, pharmacy, payments, compliance — built in.
 
-twenty operators. zero flags.
+200 merchants. 50 states. zero flags.
 ```
 
-#### Type B: Founder note (280 chars)
+#### Type C: Founder note (280 chars)
 ```
 why we built medrevolve:
 
-operators kept telling us the same story:
+merchants kept telling us the same story:
 
-"i built something great. then compliance audits hit and everything changed overnight."
+"i want to launch a telehealth business. but providers, pharmacy, compliance, payments — it's overwhelming."
 
-we decided to flip it. compliance first. everything else second.
+we built the complete stack. launch in days.
 
 medrevolve.com/forbusiness
 ```
@@ -307,18 +334,18 @@ medrevolve.com/forbusiness
 
 ### Channel description
 ```
-Documentary-style education for operators in the peptide and GLP economy.
+Documentary-style education for wellness merchants and telehealth operators.
 
-We run MedRevolve—a B2B platform built on compliance infrastructure.
+We run MedRevolve—a white-label telehealth platform built on complete infrastructure.
 
 On this channel:
 — Founder notes & behind-the-scenes
-— Compliance deep-dives
-— Operator stories & case studies
-— Peptide University (education)
-— Product releases & module demos
+— Compliance deep-dives (LegitScript, HIPAA, 50-state)
+— Merchant stories & case studies
+— MedRevolve University (certification tracks)
+— Platform demos & module releases
 
-For founders and operators. Not a consumer app.
+For merchants, operators, and clinic owners. Not a consumer channel.
 
 medrevolve.com/forbusiness
 ```
@@ -331,7 +358,7 @@ Title: "Why we built [module name]"
 
 Structure:
 0:00 – Intro
-0:30 – The problem operators faced
+0:30 – The problem merchants faced
 2:00 – How we solved it
 4:00 – Demo of the module
 6:00 – Why compliance matters here
@@ -342,11 +369,11 @@ Thumbnail: MedRevolve logo + module name
 
 #### Type B: Compliance Deep-Dive (8–12 min)
 ```
-Title: "[Compliance topic]: A founder's guide"
+Title: "[Compliance topic]: A merchant's guide"
 
 Structure:
-0:00 – Intro (hook with a relatable operator problem)
-1:00 – The regulation explained
+0:00 – Intro (hook with a relatable merchant problem)
+1:00 – The regulation explained (LegitScript, HIPAA, DEA)
 3:00 – Common mistakes
 5:00 – How MedRevolve handles it
 8:00 – Q&A
@@ -355,19 +382,19 @@ Structure:
 Thumbnail: Compliance card visual + title
 ```
 
-#### Type C: Operator Story (6–10 min)
+#### Type C: Merchant Story (6–10 min)
 ```
-Title: "[Operator name]: How they built [business] in 90 days"
+Title: "[Merchant name]: How they launched in 7 days"
 
 Structure:
 0:00 – Who they are & their background
 1:00 – The problem they faced
 2:30 – How they found MedRevolve
-4:00 – First 30 days (metrics)
-6:00 – Lessons learned
-9:00 – Next steps & advice for founders
+4:00 — First 7 days (LLC, storefront, providers)
+6:00 – First 30 days (metrics)
+9:00 – Lessons learned & advice
 
-Thumbnail: Operator photo + "90 days" text
+Thumbnail: Merchant photo + "7 days" text
 ```
 
 ---
@@ -377,9 +404,9 @@ Thumbnail: Operator photo + "90 days" text
 ✓ **Professional, not corporate.** We sound like founders, not marketing.
 ✓ **Direct, not clever.** Say what we mean. No wordplay.
 ✓ **Transparent about compliance.** It's our differentiator.
-✓ **Operator-first.** We talk to them, not about them.
-✓ **B2B only.** No consumer pitches. No affiliate language.
-✓ **Data-backed.** Numbers, not adjectives.
+✓ **Merchant-first.** We talk to operators, not about them.
+✓ **B2B only.** No consumer pitches. No patient language.
+✓ **Data-backed.** Numbers, not adjectives. 200+ merchants, 7 days, 50 states.
 
 ---
 
@@ -391,4 +418,5 @@ Thumbnail: Operator photo + "90 days" text
 ✗ Affiliate links or referral code spam
 ✗ Content that implies we sell to consumers
 ✗ Compliance advice (we defer to legal counsel)
-✗ Unvetted operator data or metrics
+✗ Unvetted merchant data or metrics
+✗ Peptide-only language (we're broader: telehealth, GLP-1, RUO, supplements)

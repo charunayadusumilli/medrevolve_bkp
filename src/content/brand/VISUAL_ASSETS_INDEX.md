@@ -10,7 +10,8 @@ Inventory of all approved brand assets for social media and web use.
 - **Profile picture:** `png/facebook/profile-320x320.png` (1:1, 320×320px)
 - **Cover photo:** `png/facebook/cover-1640x856.png` (1.91:1, 1640×856px)
   - Mobile-safe zone: center 820×312px
-  - Safe for: "Twenty founding operators" headline and stats
+ 312px
+  - Safe for: "Build. Sell. Comply." headline and stats
 
 ### Instagram
 - **Profile picture:** `png/instagram/profile-320x320.png` (1:1, 320×320px)
@@ -75,18 +76,22 @@ Inventory of all approved brand assets for social media and web use.
 
 ## Approved imagery themes
 
+✓ Telehealth platform dashboards
+✓ Provider network visuals
+✓ Pharmacy fulfillment workflows
 ✓ Compliance cards and ledgers
-✓ Operator workspaces
-✓ Clean product photography
+✓ Merchant workspaces
+✓ Clean product photography (GLP-1, RUO, supplements)
 ✓ Founders and team
 ✓ Live data/dashboards
-✓ Peptide/GLP related (clinical, not "wellness sparkle")
+✓ MedRevolve University certification
 
-✗ Stock photos of smiling people
+✗ Stock photos of smiling patients
 ✗ Bright gradient backgrounds
 ✗ Supplement bottles or typical "bro" fitness imagery
-✗ Patient-facing content
+✗ Consumer-facing content
 ✗ Unvetted testimonials
+✗ Peptide-only imagery (we're broader: telehealth, wellness)
 
 ---
 
@@ -113,6 +118,17 @@ All files are stored in:
 
 ---
 
+## Key metrics to display
+
+✓ 200+ merchants
+✓ 200+ providers
+✓ 40+ pharmacies
+✓ 50 states covered
+✓ 7-day launch time
+✓ $0 setup fee
+
+---
+
 ## Last updated
 May 21, 2026
 
@@ -126,3 +142,4 @@ When refreshing brand assets:
 3. Maintain sage green and warm brown as accent colors
 4. Test all images on mobile (especially Facebook & Instagram)
 5. Update this index when new assets are added
+6. Use "white-label telehealth platform" language, not "peptide/GLP" only
