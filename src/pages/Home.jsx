@@ -10,6 +10,7 @@ import PartnershipsSection from '@/components/home/PartnershipsSection';
 import WorkflowTimeline from '@/components/home/WorkflowTimeline';
 import MarketingSection from '@/components/home/MarketingSection';
 import SocialProofStrip from '@/components/home/SocialProofStrip';
+import PhoneCTA from '@/components/home/PhoneCTA';
 
 export default function Home() {
   return (
@@ -19,6 +20,9 @@ export default function Home() {
 
       {/* 1.5. Start Your Platform — prominent CTA with dynamic scroll */}
       <StartPlatformCTA />
+
+      {/* 1.6. Phone CTA — direct call scheduling */}
+      <PhoneCTA />
 
       {/* 2. Journey Selector — 5 distinct entry paths */}
       <JourneySelector />

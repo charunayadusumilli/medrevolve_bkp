@@ -349,10 +349,10 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 mb-4 text-white/50 text-xs tracking-widest uppercase">
-           <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> $5,000 Setup
+           <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> Launch in 7 Days
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Wellness Business in Days</h1>
-          <p className="text-white/40 text-sm">Complete infrastructure. Storefront, payments, providers, compliance, support — everything you need to sell.</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Wellness Business</h1>
+          <p className="text-white/40 text-sm">Complete platform. Website, payments, providers, compliance — everything included.</p>
         </div>
 
         {/* Progress */}
@@ -383,8 +383,8 @@ export default function MerchantOnboarding() {
                 {step === 1 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Tell Us About Your Business</h2>
-                      <p className="text-white/40 text-sm mt-1">We'll set everything up for you. One platform, everything included.</p>
+                      <h2 className="text-xl font-bold">Let's Get Started</h2>
+                      <p className="text-white/40 text-sm mt-1">First, tell us about your business. This takes 2 minutes.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
@@ -537,8 +537,8 @@ export default function MerchantOnboarding() {
                 {step === 3 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Choose Your Storefront</h2>
-                      <p className="text-white/40 text-sm mt-1">We'll pre-load it with products matching your niche. Fully customizable after launch.</p>
+                      <h2 className="text-xl font-bold">Pick Your Style</h2>
+                      <p className="text-white/40 text-sm mt-1">Choose a template. We'll customize it with your brand and products.</p>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {STOREFRONT_TEMPLATES.map(t => (
@@ -576,8 +576,8 @@ export default function MerchantOnboarding() {
                 {step === 4 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Your Domain</h2>
-                      <p className="text-white/40 text-sm mt-1">Where customers will find your store.</p>
+                      <h2 className="text-xl font-bold">Choose Your Web Address</h2>
+                      <p className="text-white/40 text-sm mt-1">Pick a domain — we'll handle the setup.</p>
                     </div>
                     <div className="grid gap-3">
                       {[
@@ -617,8 +617,8 @@ export default function MerchantOnboarding() {
                 {step === 5 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Choose Your Tools</h2>
-                      <p className="text-white/40 text-sm mt-1">Everything is included. Customize what you want now, add or change anytime.</p>
+                      <h2 className="text-xl font-bold">Select Your Features</h2>
+                      <p className="text-white/40 text-sm mt-1">All included. Pick what you need now, add more later.</p>
                     </div>
                     <div className="grid gap-3">
                       {MODULE_OPTIONS.map(mod => (
@@ -647,8 +647,8 @@ export default function MerchantOnboarding() {
                 {step === 6 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold">Ready to Launch</h2>
-                      <p className="text-white/40 text-sm mt-1">Confirm your setup fee. You're done — we handle the rest.</p>
+                      <h2 className="text-xl font-bold">Almost Done!</h2>
+                      <p className="text-white/40 text-sm mt-1">Review and submit. We'll launch your platform in 7 days.</p>
                     </div>
 
                      {/* Order summary */}
