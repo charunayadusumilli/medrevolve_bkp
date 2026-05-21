@@ -14,16 +14,15 @@ export default function TelephonyDashboard() {
   const { data: contactRequests, isLoading, refetch } = useQuery({
     queryKey: ['ctm-contacts', filter, refreshKey],
     queryFn: async () => {
-      const all = await base44.entities.ContactRequest.list('-created_date', 100);
-      return all.filter(r => ['ctm_call', 'ctm_form', 'ctm_text'].includes(r.source));
+      return await base44.entities.ContactRequest.list('-created_date', 200);
     },
   });
 
   const stats = {
     total: contactRequests?.length || 0,
     calls: contactRequests?.filter(r => r.source === 'ctm_call').length || 0,
-    forms: contactRequests?.filter(r => r.source === 'ctm_form').length || 0,
-    texts: contactRequests?.filter(r => r.source === 'ctm_text').length || 0,
+    callbacks: contactRequests?.filter(r => ['website_form', 'direct'].includes(r.source)).length || 0,
+    texts: contactRequests?.filter(r => ['ctm_text', 'twilio_sms'].includes(r.source)).length || 0,
     avgDuration: (() => {
       const calls = contactRequests?.filter(r => r.source === 'ctm_call' && r.call_duration_seconds) || [];
       if (!calls.length) return 0;
@@ -34,7 +33,10 @@ export default function TelephonyDashboard() {
 
   const filteredData = contactRequests?.filter(r => {
     if (filter === 'all') return true;
-    return r.source === `ctm_${filter}`;
+    if (filter === 'callbacks') return ['website_form', 'direct'].includes(r.source);
+    if (filter === 'texts') return ['ctm_text', 'twilio_sms'].includes(r.source);
+    if (filter === 'calls') return r.source === 'ctm_call';
+    return true;
   }) || [];
 
   const getSourceIcon = (source) => {
@@ -48,9 +50,12 @@ export default function TelephonyDashboard() {
 
   const getSourceBadge = (source) => {
     const config = {
-      ctm_call: { label: 'Call', color: 'bg-blue-500/10 text-blue-600' },
-      ctm_form: { label: 'Form', color: 'bg-green-500/10 text-green-600' },
-      ctm_text: { label: 'Text', color: 'bg-purple-500/10 text-purple-600' },
+      ctm_call: { label: 'CTM Call', color: 'bg-blue-500/10 text-blue-600' },
+      ctm_form: { label: 'CTM Form', color: 'bg-cyan-500/10 text-cyan-600' },
+      ctm_text: { label: 'CTM Text', color: 'bg-purple-500/10 text-purple-600' },
+      twilio_sms: { label: 'SMS', color: 'bg-purple-500/10 text-purple-600' },
+      website_form: { label: 'Callback Request', color: 'bg-green-500/10 text-green-600' },
+      direct: { label: 'Direct', color: 'bg-orange-500/10 text-orange-600' },
     };
     const c = config[source] || { label: source, color: 'bg-gray-500/10 text-gray-600' };
     return <Badge className={c.color}>{c.label}</Badge>;
@@ -63,7 +68,7 @@ export default function TelephonyDashboard() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-[#2D3A2D] mb-2">Telephony Dashboard</h1>
-            <p className="text-[#5A6B5A]/70">CTM call tracking, forms, and SMS lead capture</p>
+            <p className="text-[#5A6B5A]/70">Google Voice intake line (704) 426-3311 · CTM · SMS lead capture</p>
           </div>
           <Button onClick={() => { setRefreshKey(k => k + 1); refetch(); }} variant="outline" className="gap-2">
             <RefreshCw className="w-4 h-4" /> Refresh
@@ -71,35 +76,34 @@ export default function TelephonyDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mb-8">
+        <div className="mb-4 p-3 bg-[#4A6741]/10 border border-[#4A6741]/20 rounded-lg flex items-center gap-2 text-sm text-[#2D3A2D]">
+          <Phone className="w-4 h-4 text-[#4A6741]" />
+          <span>Google Voice Intake Line: <strong>(704) 426-3311</strong> — All callback form submissions are tracked below.</span>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
           <Card className="border-[#4A6741]/20">
             <CardHeader className="pb-3">
-              <CardDescription>Total Leads</CardDescription>
+              <CardDescription>Total Intakes</CardDescription>
               <CardTitle className="text-3xl">{stats.total}</CardTitle>
             </CardHeader>
           </Card>
           <Card className="border-[#4A6741]/20">
             <CardHeader className="pb-3">
-              <CardDescription>Calls</CardDescription>
+              <CardDescription>CTM Calls</CardDescription>
               <CardTitle className="text-3xl text-blue-600">{stats.calls}</CardTitle>
             </CardHeader>
           </Card>
           <Card className="border-[#4A6741]/20">
             <CardHeader className="pb-3">
-              <CardDescription>Forms</CardDescription>
-              <CardTitle className="text-3xl text-green-600">{stats.forms}</CardTitle>
+              <CardDescription>Callback Requests</CardDescription>
+              <CardTitle className="text-3xl text-green-600">{stats.callbacks}</CardTitle>
             </CardHeader>
           </Card>
           <Card className="border-[#4A6741]/20">
             <CardHeader className="pb-3">
-              <CardDescription>Texts</CardDescription>
+              <CardDescription>Texts / SMS</CardDescription>
               <CardTitle className="text-3xl text-purple-600">{stats.texts}</CardTitle>
-            </CardHeader>
-          </Card>
-          <Card className="border-[#4A6741]/20">
-            <CardHeader className="pb-3">
-              <CardDescription>Avg Call Duration</CardDescription>
-              <CardTitle className="text-3xl">{Math.floor(stats.avgDuration / 60)}m {stats.avgDuration % 60}s</CardTitle>
             </CardHeader>
           </Card>
         </div>
@@ -110,10 +114,10 @@ export default function TelephonyDashboard() {
             All
           </Button>
           <Button variant={filter === 'calls' ? 'default' : 'outline'} onClick={() => setFilter('calls')} className="text-xs gap-1">
-            <PhoneIncoming className="w-3 h-3" /> Calls
+            <PhoneIncoming className="w-3 h-3" /> CTM Calls
           </Button>
-          <Button variant={filter === 'forms' ? 'default' : 'outline'} onClick={() => setFilter('forms')} className="text-xs gap-1">
-            <Phone className="w-3 h-3" /> Forms
+          <Button variant={filter === 'callbacks' ? 'default' : 'outline'} onClick={() => setFilter('callbacks')} className="text-xs gap-1">
+            <Phone className="w-3 h-3" /> Callbacks
           </Button>
           <Button variant={filter === 'texts' ? 'default' : 'outline'} onClick={() => setFilter('texts')} className="text-xs gap-1">
             <PhoneOutgoing className="w-3 h-3" /> Texts
@@ -124,7 +128,7 @@ export default function TelephonyDashboard() {
         <Card className="border-[#4A6741]/20">
           <CardHeader>
             <CardTitle className="text-[#2D3A2D]">Recent Leads</CardTitle>
-            <CardDescription>Real-time leads from CTM call tracking</CardDescription>
+            <CardDescription>All intake submissions — callback requests, CTM calls, and SMS leads</CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading ? (
