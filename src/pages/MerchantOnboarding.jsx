@@ -275,8 +275,8 @@ export default function MerchantOnboarding() {
   <li>✅ Provider & pharmacy network access</li>
   <li>✅ A dedicated 10-person onboarding team assigned to your account</li>
 </ul>
-<h3>Your plan:</h3>
-<p>$${monthlyTotal}/month after 7-day free trial. ${totalToday > 0 ? `LLC formation: $${totalToday} (one-time, already charged).` : ''}</p>
+<h3>Your investment:</h3>
+<p>Setup fee: <strong>$5,000</strong> (just paid). Monthly: <strong>$2,500–$3,000 + 5% revenue share</strong> starting after your first 30 days.</p>
 <p><a href="https://app.medrevolve.com/MerchantDashboard">Access your dashboard →</a></p>
 <p>Your onboarding manager will contact you within 24 hours.<br/>— The MedRevolve Team</p>
           `.trim(),
