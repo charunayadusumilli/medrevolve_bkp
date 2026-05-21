@@ -1,0 +1,83 @@
+{
+  "name": "SocialPost",
+  "type": "object",
+  "properties": {
+    "platform": {
+      "type": "string",
+      "enum": [
+        "instagram",
+        "facebook"
+      ],
+      "description": "Social media platform"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Post caption text"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Image URL for the post"
+    },
+    "post_id": {
+      "type": "string",
+      "description": "Platform post ID (Instagram/Facebook)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scheduled",
+        "published",
+        "failed"
+      ],
+      "default": "draft",
+      "description": "Post status"
+    },
+    "scheduled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled publish time"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Actual publish time"
+    },
+    "engagement_likes": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of likes"
+    },
+    "engagement_comments": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of comments"
+    },
+    "engagement_shares": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of shares"
+    },
+    "reach": {
+      "type": "integer",
+      "default": 0,
+      "description": "Post reach"
+    },
+    "hashtags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Hashtags used in post"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes"
+    }
+  },
+  "required": [
+    "platform",
+    "caption",
+    "image_url"
+  ]
+}
