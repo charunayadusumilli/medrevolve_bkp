@@ -149,33 +149,60 @@ Deno.serve(async (req) => {
       
       // Facebook
       try {
-        const facebookToken = await base44.asServiceRole.connectors.getConnection('instagram'); // Instagram connector includes Facebook pages
+        const instagramToken = await base44.asServiceRole.connectors.getConnection('instagram');
+        
+        // Get user's Facebook pages
         const pagesRes = await fetch(
-          `https://graph.facebook.com/v18.0/me/accounts?access_token=${facebookToken.accessToken}`
+          `https://graph.facebook.com/me/accounts?fields=id,name,access_token&access_token=${instagramToken.accessToken}`
         );
         const pagesData = await pagesRes.json();
+        console.log('[DEBUG] Facebook pages response:', JSON.stringify(pagesData));
         
         if (pagesData.data && pagesData.data.length > 0) {
-          const page = pagesData.data[0];
-          const pageAccessToken = page.access_token;
-          const pageId = page.id;
-          
-          const fbPublishRes = await fetch(
-            `https://graph.facebook.com/v18.0/${pageId}/photos?url=${encodeURIComponent(generatedPost.imageUrl)}&published=true&message=${encodeURIComponent(fullCaption)}&access_token=${pageAccessToken}`,
-            { method: 'POST' }
-          );
-          const fbPublishData = await fbPublishRes.json();
-          
-          if (fbPublishData.id) {
-            await base44.entities.SocialPost.update(generatedPost.socialPostId, {
-              status: "published",
-              post_id: fbPublishData.id,
-              published_at: new Date().toISOString(),
-              platform: "facebook"
-            });
-            facebookCount++;
-            console.log(`[INFO] Published to Facebook: ${fbPublishData.id}`);
+          for (const page of pagesData.data) {
+            try {
+              const pageAccessToken = page.access_token;
+              const pageId = page.id;
+              
+              console.log(`[DEBUG] Publishing to Facebook page: ${page.name} (${pageId})`);
+              
+              // Fetch the image first
+              const imgBuffer = await fetch(generatedPost.imageUrl).then(r => r.arrayBuffer());
+              
+              // Create form data for multipart upload
+              const formData = new FormData();
+              formData.append('source', new Blob([imgBuffer], { type: 'image/jpeg' }), 'post.jpg');
+              formData.append('message', fullCaption);
+              formData.append('published', 'true');
+              
+              const fbPublishRes = await fetch(
+                `https://graph.facebook.com/v18.0/${pageId}/photos?access_token=${pageAccessToken}`,
+                { method: 'POST', body: formData }
+              );
+              const fbPublishData = await fbPublishRes.json();
+              console.log('[DEBUG] Facebook publish response:', JSON.stringify(fbPublishData));
+              
+              if (fbPublishData.id) {
+                await base44.entities.SocialPost.create({
+                  platform: "facebook",
+                  caption: fullCaption,
+                  image_url: generatedPost.imageUrl,
+                  status: "published",
+                  post_id: fbPublishData.id,
+                  published_at: new Date().toISOString(),
+                  notes: `Published to: ${page.name}`
+                });
+                facebookCount++;
+                console.log(`[INFO] Published to Facebook (${page.name}): ${fbPublishData.id}`);
+              } else if (fbPublishData.error) {
+                console.error(`[ERROR] Facebook error for ${page.name}:`, fbPublishData.error.message);
+              }
+            } catch (pageError) {
+              console.error(`[ERROR] Failed to publish to page ${page.name}:`, pageError.message);
+            }
           }
+        } else if (pagesData.error) {
+          console.error('[ERROR] Failed to fetch Facebook pages:', pagesData.error.message);
         }
       } catch (error) {
         console.error('[ERROR] Facebook publishing failed:', error.message);
