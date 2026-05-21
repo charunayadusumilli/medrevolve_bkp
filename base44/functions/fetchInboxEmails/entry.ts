@@ -1,11 +1,36 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
 const ADMIN_EMAIL = 'rned@medrevolve.com';
-const ADMIN_NAME = 'MedRevolve Team';
 
-// Calendar invites are ONLY sent when a user requests a meeting via the website contact form.
-// They are NOT sent automatically when emails arrive in the inbox.
-// See: functions/submitContactRequest for the calendar invite logic.
+// Detect workflow path and service category from email subject + body
+function detectWorkflow(subject, body) {
+  const text = (subject + ' ' + body).toLowerCase();
+
+  if (/incorporat|llc|formation|business entity|registered agent/i.test(text))
+    return { path: 'Legal / Business Formation', category: 'LLC & Incorporation', icon: '🏛️', priority: 'HIGH' };
+  if (/white.?label|merchant|b2b|clinic setup|launch.*platform|platform.*launch/i.test(text))
+    return { path: 'Merchant Onboarding', category: 'White Label Platform', icon: '🏢', priority: 'HIGH' };
+  if (/wholesale|bulk.*order|product.*supply|supply.*product/i.test(text))
+    return { path: 'Wholesale / Supply', category: 'Product Wholesale', icon: '📦', priority: 'HIGH' };
+  if (/provider|physician|md|np|pa|license|credentail|specialty|join.*as.*provider/i.test(text))
+    return { path: 'Provider Network', category: 'Provider Application', icon: '👨‍⚕️', priority: 'HIGH' };
+  if (/pharmac|compounding|dispensing|rx.*partner|pharmacy.*partner/i.test(text))
+    return { path: 'Pharmacy Network', category: 'Pharmacy Partnership', icon: '💊', priority: 'HIGH' };
+  if (/partner|affiliate|referral|gym|spa|wellness center|fitness/i.test(text))
+    return { path: 'Partner Program', category: 'Affiliate / Referral', icon: '🤝', priority: 'MEDIUM' };
+  if (/creator|influencer|instagram|tiktok|youtube|ugc/i.test(text))
+    return { path: 'Creator Program', category: 'Influencer Partnership', icon: '🎨', priority: 'MEDIUM' };
+  if (/glp|semaglutide|tirzepatide|weight loss|consultation|patient|intake/i.test(text))
+    return { path: 'Patient / Telehealth', category: 'Patient Inquiry', icon: '🏥', priority: 'MEDIUM' };
+  if (/payment|invoice|billing|charge|refund|subscription/i.test(text))
+    return { path: 'Billing / Payments', category: 'Payment Issue', icon: '💳', priority: 'HIGH' };
+  if (/compliance|fda|dea|legal|audit|flagged|violation/i.test(text))
+    return { path: 'Compliance', category: 'Compliance / Legal', icon: '⚠️', priority: 'HIGH' };
+  if (/competitor|peptide.*vendor|alternative.*platform/i.test(text))
+    return { path: 'Competitor Intelligence', category: 'Market Research', icon: '🔬', priority: 'LOW' };
+
+  return { path: 'General Inquiry', category: 'Unclassified', icon: '📬', priority: 'MEDIUM' };
+}
 
 Deno.serve(async (req) => {
   try {
@@ -36,14 +61,13 @@ Deno.serve(async (req) => {
       const from = getHeader('From');
       const subject = getHeader('Subject');
 
-      // Extract email address from "Name <email>" format
       const emailMatch = from.match(/<(.+?)>/) || [null, from];
       const senderEmail = emailMatch[1].trim();
       const senderName = from.includes('<') ? from.split('<')[0].trim().replace(/"/g, '') : from;
 
-      // Skip our own outgoing emails coming back
-      if (senderEmail === ADMIN_EMAIL || senderEmail === 'rned@medrevolve.com') {
-        console.log(`Skipping own email from ${senderEmail}`);
+      // Skip own outgoing / system emails
+      if (senderEmail === ADMIN_EMAIL || /mailer-daemon|no-reply@|noreply@|postmaster@/i.test(senderEmail)) {
+        console.log(`Skipping system/own email from ${senderEmail}`);
         continue;
       }
 
@@ -58,28 +82,32 @@ Deno.serve(async (req) => {
       };
       extractBody(message.payload);
 
-      // Deduplicate by gmail message ID
+      // Deduplicate
       const allRecent = await base44.asServiceRole.entities.ContactRequest.filter({});
-      const alreadySaved = allRecent.some(r => r.subject && r.subject.includes(`[Gmail:${messageId}]`));
+      const alreadySaved = allRecent.some(r => r.notes && r.notes.includes(`gmail_id:${messageId}`));
       if (alreadySaved) {
         console.log(`Skipping duplicate messageId: ${messageId}`);
         continue;
       }
 
-      // Save as ContactRequest — NO calendar invite (only sent via website form)
+      // Detect workflow
+      const workflow = detectWorkflow(subject, bodyText);
+
+      // Store clean subject (no Gmail ID prefix), stash gmail_id in notes
       await base44.asServiceRole.entities.ContactRequest.create({
         name: senderName || senderEmail,
         email: senderEmail,
-        subject: `[Gmail:${messageId}] ${subject}`.substring(0, 250),
+        subject: subject.substring(0, 250),
         message: bodyText.substring(0, 5000),
         source: 'gmail_inbox',
         status: 'new',
         meeting_booked: false,
         meeting_link: '',
+        notes: `gmail_id:${messageId} | workflow:${workflow.path} | category:${workflow.category} | priority:${workflow.priority}`,
       });
 
       processed++;
-      console.log(`✅ Saved email from ${senderEmail}: ${subject} (no auto calendar invite)`);
+      console.log(`✅ Saved [${workflow.path}] from ${senderEmail}: "${subject}"`);
     }
 
     return Response.json({ processed });

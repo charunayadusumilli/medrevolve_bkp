@@ -102,6 +102,53 @@ Deno.serve(async (req) => {
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
     const firstName = data.name.split(' ')[0];
 
+    // Detect workflow path from subject + message
+    const textForDetection = ((data.subject || '') + ' ' + (data.message || '')).toLowerCase();
+    let workflowPath = 'General Inquiry';
+    let workflowCategory = 'Unclassified';
+    let workflowIcon = '📬';
+    let workflowPriority = 'MEDIUM';
+    let workflowActions = 'Reply within 24 hours · Qualify the lead · Book discovery call';
+    let workflowColor = '#3b82f6';
+
+    if (/incorporat|llc|formation|business entity|registered agent/i.test(textForDetection)) {
+      workflowPath = 'Legal / Business Formation'; workflowCategory = 'LLC & Incorporation';
+      workflowIcon = '🏛️'; workflowPriority = 'HIGH'; workflowColor = '#7c3aed';
+      workflowActions = '1. Identify state & entity type needed · 2. Send LLC formation checklist · 3. Schedule consultation call';
+    } else if (/white.?label|merchant|b2b|clinic setup|launch.*platform|platform.*launch/i.test(textForDetection)) {
+      workflowPath = 'Merchant Onboarding'; workflowCategory = 'White Label Platform';
+      workflowIcon = '🏢'; workflowPriority = 'HIGH'; workflowColor = '#059669';
+      workflowActions = '1. Send platform deck & pricing · 2. Book live demo · 3. Create HubSpot deal';
+    } else if (/wholesale|bulk.*order|supply/i.test(textForDetection)) {
+      workflowPath = 'Wholesale / Supply'; workflowCategory = 'Product Wholesale';
+      workflowIcon = '📦'; workflowPriority = 'HIGH'; workflowColor = '#d97706';
+      workflowActions = '1. Confirm product categories · 2. Send wholesale pricing sheet · 3. Verify licensing';
+    } else if (/provider|physician|md|np|pa|license|specialty/i.test(textForDetection)) {
+      workflowPath = 'Provider Network'; workflowCategory = 'Provider Application';
+      workflowIcon = '👨‍⚕️'; workflowPriority = 'HIGH'; workflowColor = '#0891b2';
+      workflowActions = '1. Review license & credentials · 2. Send Qualiphy exam link · 3. Schedule onboarding call';
+    } else if (/pharmac|compounding|dispensing/i.test(textForDetection)) {
+      workflowPath = 'Pharmacy Network'; workflowCategory = 'Pharmacy Partnership';
+      workflowIcon = '💊'; workflowPriority = 'HIGH'; workflowColor = '#be185d';
+      workflowActions = '1. Verify pharmacy license & NPI · 2. Confirm shipping capabilities · 3. Schedule partnership call';
+    } else if (/partner|affiliate|referral|gym|spa|fitness/i.test(textForDetection)) {
+      workflowPath = 'Partner Program'; workflowCategory = 'Affiliate / Referral';
+      workflowIcon = '🤝'; workflowPriority = 'MEDIUM'; workflowColor = '#7c3aed';
+      workflowActions = '1. Send partner program overview · 2. Qualify fit · 3. Set up referral code';
+    } else if (/creator|influencer|instagram|tiktok|youtube/i.test(textForDetection)) {
+      workflowPath = 'Creator Program'; workflowCategory = 'Influencer Partnership';
+      workflowIcon = '🎨'; workflowPriority = 'MEDIUM'; workflowColor = '#db2777';
+      workflowActions = '1. Review platform & follower metrics · 2. Send creator agreement · 3. Assign referral code';
+    } else if (/glp|semaglutide|tirzepatide|weight loss|consultation|patient/i.test(textForDetection)) {
+      workflowPath = 'Patient / Telehealth'; workflowCategory = 'Patient Inquiry';
+      workflowIcon = '🏥'; workflowPriority = 'MEDIUM'; workflowColor = '#059669';
+      workflowActions = '1. Send intake questionnaire · 2. Assign to provider · 3. Book consultation';
+    } else if (/payment|billing|invoice|refund|charge/i.test(textForDetection)) {
+      workflowPath = 'Billing / Payments'; workflowCategory = 'Payment Issue';
+      workflowIcon = '💳'; workflowPriority = 'HIGH'; workflowColor = '#dc2626';
+      workflowActions = '1. Pull Stripe record · 2. Verify charge/refund status · 3. Respond with resolution';
+    }
+
     // Create a Google Calendar follow-up reminder in 24 hours
     const followUpTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
     const calData = await createCalendarMeeting(base44, {
@@ -158,16 +205,43 @@ Deno.serve(async (req) => {
     const adminHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"/></head>
 <body style="margin:0;padding:0;background:#f1f5f1;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f1;padding:24px 16px;"><tr><td align="center">
-<table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
+<table width="580" cellpadding="0" cellspacing="0" style="max-width:580px;width:100%;">
   <tr><td style="background:linear-gradient(135deg,#1a2a1a,#2D3A2D);border-radius:14px 14px 0 0;padding:20px 28px;">
     <table width="100%"><tr>
-      <td><span style="color:#fff;font-size:17px;font-weight:700;">🌿 MedRevolve Admin</span><br/><span style="color:rgba(255,255,255,0.45);font-size:12px;">New Contact — ${submittedAt} ET</span></td>
-      <td align="right"><span style="background:#3b82f6;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;">📬 CONTACT</span></td>
+      <td><span style="color:#fff;font-size:17px;font-weight:700;">🌿 MedRevolve — New Service Request</span><br/><span style="color:rgba(255,255,255,0.45);font-size:12px;">${submittedAt} ET · Website Form</span></td>
+      <td align="right"><span style="background:${workflowColor};color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;">${workflowIcon} ${workflowPriority}</span></td>
     </tr></table>
   </td></tr>
   <tr><td style="background:#fff;padding:22px 28px;">
+
+    <!-- WORKFLOW PATH BANNER -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:${workflowColor}15;border:2px solid ${workflowColor}40;border-radius:12px;margin-bottom:18px;overflow:hidden;">
+      <tr><td style="background:${workflowColor};padding:10px 16px;">
+        <span style="color:#fff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">⚡ WORKFLOW TRIGGERED</span>
+      </td></tr>
+      <tr><td style="padding:14px 16px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="50%" style="padding:4px 0;">
+              <div style="font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:3px;">Path</div>
+              <div style="font-size:15px;font-weight:800;color:#111827;">${workflowIcon} ${workflowPath}</div>
+            </td>
+            <td width="50%" style="padding:4px 0;">
+              <div style="font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;margin-bottom:3px;">Service Category</div>
+              <div style="font-size:14px;font-weight:700;color:#374151;">${workflowCategory}</div>
+            </td>
+          </tr>
+        </table>
+        <div style="margin-top:12px;background:#fff;border-radius:8px;padding:10px 14px;border:1px solid ${workflowColor}30;">
+          <div style="font-size:11px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:5px;">📋 Recommended Actions</div>
+          <div style="font-size:13px;color:#374151;line-height:1.8;">${workflowActions}</div>
+        </div>
+      </td></tr>
+    </table>
+
+    <!-- CONTACT INFO -->
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:16px;overflow:hidden;">
-      <tr><td style="background:#1e293b;padding:9px 16px;"><span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;">👤 From</span></td></tr>
+      <tr><td style="background:#1e293b;padding:9px 16px;"><span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;">👤 Contact Details</span></td></tr>
       <tr><td style="padding:14px 16px;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr><td width="30%" style="font-size:12px;color:#94a3b8;font-weight:600;padding:4px 0;">Name</td><td style="font-size:13px;font-weight:600;padding:4px 0;">${data.name}</td></tr>
@@ -178,18 +252,21 @@ Deno.serve(async (req) => {
         </table>
       </td></tr>
     </table>
+
+    <!-- MESSAGE -->
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:16px;overflow:hidden;">
       <tr><td style="background:#4A6741;padding:9px 16px;"><span style="color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;">💬 Message</span></td></tr>
-      <tr><td style="padding:16px;font-size:13px;color:#374151;line-height:1.7;">${data.message.replace(/\n/g, '<br/>')}</td></tr>
+      <tr><td style="padding:16px;font-size:13px;color:#374151;line-height:1.8;">${data.message.replace(/\n/g, '<br/>')}</td></tr>
     </table>
+
     <div style="margin-top:12px;">
       <a href="mailto:${data.email}?subject=Re: ${encodeURIComponent(data.subject || 'Your MedRevolve Inquiry')}" style="display:inline-block;background:#3b82f6;color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;text-decoration:none;margin-right:8px;">Reply to ${firstName} →</a>
       <a href="https://medrevolve.base44.app/AdminDashboard" style="display:inline-block;background:#2D3A2D;color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;text-decoration:none;">Admin Dashboard →</a>
     </div>
-    <div style="margin-top:12px;font-size:11px;color:#94a3b8;">Ref: ${contactRequest.id} · ${submittedAt} ET</div>
+    <div style="margin-top:12px;font-size:11px;color:#94a3b8;">Ref: ${contactRequest.id} · Source: Website Form · ${submittedAt} ET</div>
   </td></tr>
   <tr><td style="background:#1a2a1a;border-radius:0 0 14px 14px;padding:14px 28px;text-align:center;">
-    <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:0;">Sent from rned@medrevolve.com — MedRevolve</p>
+    <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:0;">MedRevolve CRM · rned@medrevolve.com</p>
   </td></tr>
 </table>
 </td></tr></table>
@@ -197,13 +274,13 @@ Deno.serve(async (req) => {
 
     await Promise.allSettled([
       sendEmail(base44, { to: data.email, subject: `✅ We got your message, ${firstName}! We'll respond within 24 hours`, html: patientHtml }),
-      sendEmail(base44, { to: ADMIN_EMAIL, subject: `📬 New Contact — "${data.subject || 'No Subject'}" from ${data.name}`, html: adminHtml }),
+      sendEmail(base44, { to: ADMIN_EMAIL, subject: `${workflowIcon} [${workflowPath}] ${data.name} — ${data.subject || 'No Subject'}`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('syncToHubspot', { source: 'contact_request', data })
         .catch(e => console.error('HubSpot sync failed (non-blocking):', e.message)),
     ]);
 
     // SMS to admin
-    await sendSMS(ADMIN_PHONE, `CONTACT: ${data.name} | ${data.phone || 'no phone'} | ${data.email} | ${data.subject || 'No subject'} | ${data.message.substring(0, 80)}`);
+    await sendSMS(ADMIN_PHONE, `[${workflowPath}] ${workflowPriority} | ${data.name} | ${data.phone || 'no phone'} | ${data.email} | ${data.subject || 'No subject'} | ${data.message.substring(0, 60)}`);
 
     return Response.json({ success: true, request_id: contactRequest.id });
 
