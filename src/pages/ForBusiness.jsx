@@ -479,7 +479,7 @@ export default function ForBusiness() {
               </Button>
             </Link>
           </div>
-          <p className="text-white/30 text-xs mt-6">No setup fees · 7-day free trial · Cancel anytime</p>
+          <p className="text-white/30 text-xs mt-6">$5K setup + $2.5–3K/month + 5% revenue share · 7-day free trial</p>
         </div>
       </section>
 

@@ -18,8 +18,8 @@ import {
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 
-const LLC_FORMATION_FEE = 297;   // one-time
-const PLATFORM_BASE_FEE = 99;    // monthly
+const SETUP_FEE = 5000;          // one-time: website, integrations, merchant account, analytics
+const PLATFORM_MONTHLY_BASE = 2500; // monthly base for marketing & scaling + support
 const STOREFRONT_TEMPLATES = [
   { id: 'peptide_pro', label: 'Peptide Pro', niche: 'Peptides & Research', color: '#1A2A1A', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80' },
   { id: 'glp_clinic',  label: 'GLP-1 Clinic', niche: 'Weight Management', color: '#0F1F2A', img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80' },
@@ -28,14 +28,14 @@ const STOREFRONT_TEMPLATES = [
 ];
 
 const MODULE_OPTIONS = [
-  { key: 'telehealth',    label: 'Telehealth Platform',     desc: 'Patient consultations & Rx',               price: 149, icon: Stethoscope, popular: true  },
-  { key: 'pharmacy',      label: 'Pharmacy Integration',    desc: 'Direct pharmacy routing & fulfillment',    price: 79,  icon: Pill,         popular: false },
-  { key: 'compliance',    label: 'Compliance / PEPMD',      desc: 'Automated compliance monitoring',          price: 99,  icon: ShieldCheck,  popular: true  },
-  { key: 'inventory',     label: 'Inventory Management',    desc: 'Track stock, alerts, auto-reorders',       price: 49,  icon: Package,      popular: false },
-  { key: 'marketing',     label: 'Marketing Module',        desc: 'SEO, paid ads, analytics, funnels',        price: 69,  icon: Megaphone,    popular: false },
+  { key: 'telehealth',    label: 'Telehealth Platform',     desc: 'Patient consultations & Rx',               price: 0, icon: Stethoscope, popular: true  },
+  { key: 'pharmacy',      label: 'Pharmacy Integration',    desc: 'Direct pharmacy routing & fulfillment',    price: 0,  icon: Pill,         popular: false },
+  { key: 'compliance',    label: 'Compliance / PEPMD',      desc: 'Automated compliance monitoring',          price: 0,  icon: ShieldCheck,  popular: true  },
+  { key: 'inventory',     label: 'Inventory Management',    desc: 'Track stock, alerts, auto-reorders',       price: 0,  icon: Package,      popular: false },
+  { key: 'marketing',     label: 'Marketing & Scaling',     desc: 'SEO, paid ads, analytics, drip sequences', price: 0,  icon: Megaphone,    popular: false },
   { key: 'card_processing', label: 'Merchant Card Processing', desc: 'High-risk card processing included',   price: 0,   icon: CreditCard,   popular: true  },
-  { key: 'lms',           label: 'Peptide University',      desc: 'Staff training & certifications',          price: 39,  icon: Star,         popular: false },
-  { key: 'website_builder', label: 'Website Builder',       desc: '25 themes + 5 checkout themes',            price: 59,  icon: Globe,        popular: false },
+  { key: 'lms',           label: 'Peptide University',      desc: 'Staff training & certifications',          price: 0,  icon: Star,         popular: false },
+  { key: 'website_builder', label: 'Website Builder',       desc: '25 themes + 5 checkout themes + hosting',  price: 0,  icon: Globe,        popular: false },
 ];
 
 const JOURNEY_STEPS = [
@@ -108,11 +108,9 @@ export default function MerchantOnboarding() {
         : [...prev.productCategories, cat],
     }));
 
-  const monthlyTotal = MODULE_OPTIONS
-    .filter(m => form.selectedModules.includes(m.key))
-    .reduce((sum, m) => sum + m.price, 0) + PLATFORM_BASE_FEE;
+  const monthlyTotal = PLATFORM_MONTHLY_BASE + 250; // Base + 5% revenue share (estimated ~$250/mo starting)
 
-  const totalToday = form.wantLLCFormation ? LLC_FORMATION_FEE : 0;
+  const totalToday = SETUP_FEE;
 
   // ── Activation sequence (simulated while backend processes) ──
   const runActivationSequence = async (pId) => {
@@ -217,21 +215,21 @@ export default function MerchantOnboarding() {
       await base44.integrations.Core.SendEmail({
         from_name: 'MedRevolve Platform',
         to: 'rned@medrevolve.com',
-        subject: `🚀 New Merchant — ${form.businessName} | $${totalToday > 0 ? totalToday + ' paid today + ' : ''}$${monthlyTotal}/mo`,
+        subject: `🚀 New Merchant — ${form.businessName} | $${SETUP_FEE} setup + $${PLATFORM_MONTHLY_BASE}–$3,000/mo + 5% revenue`,
         body: `
 <h2>New Merchant Onboarding</h2>
 <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px;">
   <tr><td style="padding:8px;color:#666;width:180px;"><b>Business</b></td><td style="padding:8px;">${form.businessName}</td></tr>
   <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Contact</b></td><td style="padding:8px;">${form.contactName} · ${form.email} · ${form.phone}</td></tr>
-  <tr><td style="padding:8px;color:#666;"><b>LLC Status</b></td><td style="padding:8px;">${form.hasLLC ? 'Has LLC: ' + form.llcName : 'No LLC — formation requested: ' + (form.wantLLCFormation ? 'YES ($' + LLC_FORMATION_FEE + ')' : 'Skipped')}</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>LLC Status</b></td><td style="padding:8px;">${form.hasLLC ? 'Has LLC: ' + form.llcName : 'No LLC'}</td></tr>
   <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>EIN</b></td><td style="padding:8px;">${form.ein || 'N/A'}</td></tr>
   <tr><td style="padding:8px;color:#666;"><b>State of Inc.</b></td><td style="padding:8px;">${form.stateOfIncorporation || 'N/A'}</td></tr>
   <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Storefront Template</b></td><td style="padding:8px;">${form.templateId} / Brand: ${form.brandName || form.businessName}</td></tr>
   <tr><td style="padding:8px;color:#666;"><b>Domain</b></td><td style="padding:8px;">${form.domainName}${form.domainChoice === 'subdomain' ? '.medrevolve.co' : ''} (${form.domainChoice})</td></tr>
   <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Products</b></td><td style="padding:8px;">${form.productCategories.join(', ') || 'All'}</td></tr>
   <tr><td style="padding:8px;color:#666;"><b>Modules</b></td><td style="padding:8px;">${form.selectedModules.join(', ')}</td></tr>
-  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Monthly Revenue</b></td><td style="padding:8px;font-weight:bold;color:#2d7a2d;">$${monthlyTotal}/month</td></tr>
-  ${totalToday > 0 ? `<tr><td style="padding:8px;color:#666;"><b>Charged Today</b></td><td style="padding:8px;font-weight:bold;color:#c00;">$${totalToday} (LLC Formation)</td></tr>` : ''}
+  <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Monthly Cost</b></td><td style="padding:8px;font-weight:bold;color:#2d7a2d;">$${PLATFORM_MONTHLY_BASE}–$3,000 + 5% of revenue</td></tr>
+  <tr><td style="padding:8px;color:#666;"><b>Charged Today</b></td><td style="padding:8px;font-weight:bold;color:#c00;">$${SETUP_FEE} (setup fee)</td></tr>
   <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;"><b>Partner Code</b></td><td style="padding:8px;font-family:monospace;">${partnerCode}</td></tr>
   <tr><td style="padding:8px;color:#666;"><b>Submitted</b></td><td style="padding:8px;">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</td></tr>
 </table>
@@ -339,10 +337,10 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 mb-4 text-white/50 text-xs tracking-widest uppercase">
-            <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> Launch Now — Instantly
+           <Zap className="w-3.5 h-3.5 text-[#6B8F5E]" /> $5K Setup + $2–3K/mo + 5% Revenue
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Wellness Platform Now</h1>
-          <p className="text-white/40 text-sm">Everything automated — LLC, storefront, products, team, compliance. Live today.</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Launch Your White-Label Telehealth Business</h1>
+          <p className="text-white/40 text-sm">Complete platform with website, integrations, merchant account, analytics & support. Live in days.</p>
         </div>
 
         {/* Progress */}
@@ -374,7 +372,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold">Business Information</h2>
-                      <p className="text-white/40 text-sm mt-1">Tell us about your business — we'll have your platform live by the end of this form.</p>
+                      <p className="text-white/40 text-sm mt-1">Tell us about your business. Setup: $5,000 one-time. Monthly: $2,500–$3,000 + 5% of your revenue.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
@@ -432,23 +430,23 @@ export default function MerchantOnboarding() {
                     </div>
 
                     {/* Do they have an LLC? */}
-                    {form.hasLLC === null && (
-                      <div className="space-y-3">
-                        <p className="text-white/70 text-sm font-medium">Do you already have an LLC or legal business entity?</p>
-                        <div className="grid grid-cols-2 gap-3">
-                          {[
-                            { val: true,  label: 'Yes, I have an LLC',      sub: 'I have my EIN and state registration' },
-                            { val: false, label: "No, I don't have one yet", sub: 'We can form one for you instantly'    },
-                          ].map(opt => (
-                            <button key={String(opt.val)} type="button" onClick={() => set('hasLLC', opt.val)}
-                              className="flex flex-col gap-1 p-4 rounded-xl border border-white/20 bg-white/5 hover:border-[#4A6741] hover:bg-[#4A6741]/10 text-left transition-all">
-                              <span className="text-white font-semibold text-sm">{opt.label}</span>
-                              <span className="text-white/40 text-xs">{opt.sub}</span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                     {form.hasLLC === null && (
+                       <div className="space-y-3">
+                         <p className="text-white/70 text-sm font-medium">Do you already have an LLC or legal business entity?</p>
+                         <div className="grid grid-cols-2 gap-3">
+                           {[
+                             { val: true,  label: 'Yes, I have an LLC',      sub: 'I have my EIN and state registration' },
+                             { val: false, label: "No, I don't have one yet", sub: 'You can add one later via dashboard'    },
+                           ].map(opt => (
+                             <button key={String(opt.val)} type="button" onClick={() => set('hasLLC', opt.val)}
+                               className="flex flex-col gap-1 p-4 rounded-xl border border-white/20 bg-white/5 hover:border-[#4A6741] hover:bg-[#4A6741]/10 text-left transition-all">
+                               <span className="text-white font-semibold text-sm">{opt.label}</span>
+                               <span className="text-white/40 text-xs">{opt.sub}</span>
+                             </button>
+                           ))}
+                         </div>
+                       </div>
+                     )}
 
                     {/* Has LLC → collect info */}
                     {form.hasLLC === true && (
@@ -491,53 +489,18 @@ export default function MerchantOnboarding() {
                       </div>
                     )}
 
-                    {/* No LLC → offer formation */}
-                    {form.hasLLC === false && (
-                      <div className="space-y-4">
-                        <div className={`rounded-xl border p-5 transition-all cursor-pointer
-                          ${form.wantLLCFormation ? 'border-[#4A6741] bg-[#4A6741]/15' : 'border-white/20 bg-white/5 hover:border-white/40'}`}
-                          onClick={() => set('wantLLCFormation', !form.wantLLCFormation)}>
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <Building2 className="w-4 h-4 text-[#6B8F5E]" />
-                                <span className="text-white font-semibold">LLC Formation — $297 one-time</span>
-                                <Badge className="bg-[#4A6741]/40 text-green-300 border-[#4A6741] text-[10px]">Instant</Badge>
-                              </div>
-                              <p className="text-white/50 text-sm">We file your LLC, get your EIN, and set up your registered agent. Done within 3–5 business days. Recommended state: Wyoming or Delaware.</p>
-                              <ul className="mt-3 space-y-1">
-                                {['State filing fee included','EIN / Tax ID acquisition','Registered agent (1 year)','Operating agreement template','Digital document delivery'].map(i => (
-                                  <li key={i} className="flex items-center gap-2 text-xs text-white/60">
-                                    <Check className="w-3 h-3 text-[#6B8F5E]" /> {i}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mt-1 flex items-center justify-center
-                              ${form.wantLLCFormation ? 'border-[#4A6741] bg-[#4A6741]' : 'border-white/30'}`}>
-                              {form.wantLLCFormation && <Check className="w-3 h-3 text-white" />}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="text-center">
-                          <p className="text-white/30 text-xs">— or —</p>
-                          <p className="text-white/40 text-xs mt-1">You can proceed without an LLC and add one later from your dashboard.</p>
-                        </div>
-
-                        <div>
-                          <Label className="text-white/60 text-xs uppercase tracking-widest">Desired Business Name *</Label>
-                          <Input value={form.llcName} onChange={e => set('llcName', e.target.value)}
-                            placeholder="Elite Peptide Solutions" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
-                          <p className="text-xs text-white/30 mt-1">We'll check availability and file "{form.llcName || 'your name'} LLC"</p>
-                        </div>
-
-                        <button type="button" onClick={() => set('hasLLC', null)}
-                          className="text-xs text-white/30 hover:text-white/60 underline underline-offset-2 transition-colors">
-                          ← Change answer
-                        </button>
-                      </div>
-                    )}
+                    {/* No LLC → skip or add later */}
+                     {form.hasLLC === false && (
+                       <div className="space-y-4">
+                         <div className="bg-white/8 rounded-xl border border-white/10 p-4">
+                           <p className="text-white/70 text-sm">No problem! You can add an LLC later from your merchant dashboard, or we can help set one up. For now, let's continue with your platform setup.</p>
+                         </div>
+                         <button type="button" onClick={() => set('hasLLC', null)}
+                           className="text-xs text-white/30 hover:text-white/60 underline underline-offset-2 transition-colors">
+                           ← Change answer
+                         </button>
+                       </div>
+                     )}
 
                     {/* Product categories — shown once LLC Q is answered */}
                     {form.hasLLC !== null && (
@@ -685,39 +648,35 @@ export default function MerchantOnboarding() {
                     </div>
 
                     {/* Order summary */}
-                    <div className="bg-white/8 rounded-xl p-4 space-y-3">
-                      <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">Order Summary</p>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-white/60">Platform base + modules</span>
-                          <span className="text-white font-medium">${monthlyTotal}/mo</span>
-                        </div>
-                        <div className="flex justify-between text-white/40 text-xs">
-                          <span>7-day free trial — no charge today unless LLC</span>
-                        </div>
-                        {form.wantLLCFormation && (
-                          <div className="flex justify-between border-t border-white/10 pt-2 mt-1">
-                            <span className="text-white/60">LLC Formation (one-time)</span>
-                            <span className="text-white font-bold">${LLC_FORMATION_FEE}</span>
-                          </div>
-                        )}
-                        {totalToday > 0 && (
-                          <div className="flex justify-between border-t border-white/10 pt-2 font-bold">
-                            <span className="text-white">Due Today</span>
-                            <span className="text-white">${totalToday}</span>
-                          </div>
-                        )}
-                        {totalToday === 0 && (
-                          <div className="flex justify-between border-t border-white/10 pt-2 font-bold">
-                            <span className="text-white">Due Today</span>
-                            <span className="text-[#6B8F5E]">$0 — free trial</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                     <div className="bg-white/8 rounded-xl p-4 space-y-3">
+                       <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">Order Summary</p>
+                       <div className="space-y-2 text-sm">
+                         <div className="flex justify-between">
+                           <span className="text-white/60">Platform Setup Fee</span>
+                           <span className="text-white font-medium">${SETUP_FEE}</span>
+                         </div>
+                         <div className="flex justify-between text-white/40 text-xs">
+                           <span>Website · Integrations · Merchant Account · Analytics & Reporting</span>
+                         </div>
+                         <div className="flex justify-between border-t border-white/10 pt-2 mt-1">
+                           <span className="text-white/60">Monthly Support & Scaling</span>
+                           <span className="text-white font-medium">${PLATFORM_MONTHLY_BASE}–$3,000</span>
+                         </div>
+                         <div className="flex justify-between text-white/40 text-xs">
+                           <span>Marketing, support, 24/7 ops</span>
+                         </div>
+                         <div className="flex justify-between text-white/40 text-xs">
+                           <span>Plus 5% of your revenue (after first 30 days)</span>
+                         </div>
+                         <div className="flex justify-between border-t border-white/10 pt-2 font-bold">
+                           <span className="text-white">Due Today (Setup)</span>
+                           <span className="text-white">${SETUP_FEE}</span>
+                         </div>
+                       </div>
+                     </div>
 
                     {/* Card input */}
-                    {totalToday > 0 && (
+                    {(
                       <div className="space-y-3">
                         <p className="text-white/60 text-sm font-medium flex items-center gap-2">
                           <CreditCard className="w-4 h-4" /> Payment Information
@@ -752,23 +711,24 @@ export default function MerchantOnboarding() {
                     )}
 
                     {/* What's included */}
-                    <div className="space-y-2">
-                      <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">What Gets Built For You</p>
-                      {[
-                        `${STOREFRONT_TEMPLATES.find(t=>t.id===form.templateId)?.label} branded storefront`,
-                        `${form.domainName}${form.domainChoice==='subdomain'?'.medrevolve.co':''} domain provisioned`,
-                        '10–15 pre-loaded products (your selected categories)',
-                        '10-person dedicated onboarding team assigned',
-                        'Merchant card processing application submitted',
-                        'Provider & pharmacy network access unlocked',
-                        'Marketing & compliance stack activated',
-                        form.wantLLCFormation ? 'LLC formation filed (3–5 business days)' : null,
-                      ].filter(Boolean).map((item, i) => (
-                        <div key={i} className="flex items-center gap-2.5 text-sm text-white/60">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#6B8F5E] flex-shrink-0" /> {item}
-                        </div>
-                      ))}
-                    </div>
+                     <div className="space-y-2">
+                       <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">Your Launch Includes</p>
+                       {[
+                         `${STOREFRONT_TEMPLATES.find(t=>t.id===form.templateId)?.label} white-label storefront`,
+                         `${form.domainName}${form.domainChoice==='subdomain'?'.medrevolve.co':''} domain & SSL provisioned`,
+                         '10–15 pre-loaded products (your selected categories)',
+                         'Merchant card processing setup',
+                         'Provider & pharmacy network access',
+                         'HIPAA-compliant infrastructure',
+                         'Analytics & reporting dashboard',
+                         'Dedicated onboarding & support team',
+                         'Marketing & compliance toolkit',
+                       ].map((item, i) => (
+                         <div key={i} className="flex items-center gap-2.5 text-sm text-white/60">
+                           <CheckCircle2 className="w-3.5 h-3.5 text-[#6B8F5E] flex-shrink-0" /> {item}
+                         </div>
+                       ))}
+                     </div>
 
                     {error && (
                       <div className="bg-red-500/15 border border-red-500/30 rounded-lg p-3 text-red-300 text-sm flex gap-2">
@@ -797,11 +757,11 @@ export default function MerchantOnboarding() {
                     </Button>
                   ) : (
                     <Button onClick={handleSubmit} disabled={loading}
-                      className="bg-white text-black hover:bg-white/90 px-8 font-bold rounded-sm text-base">
-                      {loading
-                        ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</>
-                        : <><Zap className="w-4 h-4 mr-2" /> {totalToday > 0 ? `Pay $${totalToday} & Launch` : 'Launch My Platform'}</>
-                      }
+                     className="bg-white text-black hover:bg-white/90 px-8 font-bold rounded-sm text-base">
+                     {loading
+                       ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</>
+                       : <><Zap className="w-4 h-4 mr-2" /> Pay $${SETUP_FEE} & Launch</>
+                     }
                     </Button>
                   )}
                 </div>
