@@ -104,20 +104,20 @@ Deno.serve(async (req) => {
     }
 
     // Step 3: Auto-publish to Instagram & Facebook
-    let publishedCount = 0;
+    let instagramCount = 0;
+    let facebookCount = 0;
+    
     for (const generatedPost of generatedPosts) {
+      const fullCaption = `${generatedPost.post.hook}\n\n${generatedPost.post.body}\n\n${generatedPost.post.cta}\n\n${generatedPost.post.hashtags.join(' ')}`;
+      
+      // Instagram
       try {
         const instagramToken = await base44.asServiceRole.connectors.getConnection('instagram');
-        
-        // Get Instagram Business User ID
         const userRes = await fetch(
           `https://graph.instagram.com/me?fields=id,username&access_token=${instagramToken.accessToken}`
         );
         const userData = await userRes.json();
         const userId = userData.id;
-        
-        // Create media container on Instagram
-        const fullCaption = `${generatedPost.post.hook}\n\n${generatedPost.post.body}\n\n${generatedPost.post.cta}\n\n${generatedPost.post.hashtags.join(' ')}`;
         
         const containerRes = await fetch(
           `https://graph.instagram.com/${userId}/media?image_url=${encodeURIComponent(generatedPost.imageUrl)}&caption=${encodeURIComponent(fullCaption)}&access_token=${instagramToken.accessToken}`,
@@ -126,7 +126,6 @@ Deno.serve(async (req) => {
         const containerData = await containerRes.json();
         
         if (containerData.id) {
-          // Publish the post
           const publishRes = await fetch(
             `https://graph.instagram.com/${userId}/media_publish?creation_id=${containerData.id}&access_token=${instagramToken.accessToken}`,
             { method: 'POST' }
@@ -134,34 +133,67 @@ Deno.serve(async (req) => {
           const publishData = await publishRes.json();
           
           if (publishData.id) {
-            // Update SocialPost record
             await base44.entities.SocialPost.update(generatedPost.socialPostId, {
               status: "published",
               post_id: publishData.id,
               published_at: new Date().toISOString(),
               platform: "instagram"
             });
-            
-            publishedCount++;
+            instagramCount++;
             console.log(`[INFO] Published to Instagram: ${publishData.id}`);
           }
         }
       } catch (error) {
         console.error('[ERROR] Instagram publishing failed:', error.message);
       }
+      
+      // Facebook
+      try {
+        const facebookToken = await base44.asServiceRole.connectors.getConnection('instagram'); // Instagram connector includes Facebook pages
+        const pagesRes = await fetch(
+          `https://graph.facebook.com/v18.0/me/accounts?access_token=${facebookToken.accessToken}`
+        );
+        const pagesData = await pagesRes.json();
+        
+        if (pagesData.data && pagesData.data.length > 0) {
+          const page = pagesData.data[0];
+          const pageAccessToken = page.access_token;
+          const pageId = page.id;
+          
+          const fbPublishRes = await fetch(
+            `https://graph.facebook.com/v18.0/${pageId}/photos?url=${encodeURIComponent(generatedPost.imageUrl)}&published=true&message=${encodeURIComponent(fullCaption)}&access_token=${pageAccessToken}`,
+            { method: 'POST' }
+          );
+          const fbPublishData = await fbPublishRes.json();
+          
+          if (fbPublishData.id) {
+            await base44.entities.SocialPost.update(generatedPost.socialPostId, {
+              status: "published",
+              post_id: fbPublishData.id,
+              published_at: new Date().toISOString(),
+              platform: "facebook"
+            });
+            facebookCount++;
+            console.log(`[INFO] Published to Facebook: ${fbPublishData.id}`);
+          }
+        }
+      } catch (error) {
+        console.error('[ERROR] Facebook publishing failed:', error.message);
+      }
     }
 
     // Step 4: Log summary
-    console.log(`[SUCCESS] Generated ${generatedPosts.length} posts, published: ${publishedCount}`);
+    console.log(`[SUCCESS] Generated ${generatedPosts.length} posts, Instagram: ${instagramCount}, Facebook: ${facebookCount}`);
 
     return Response.json({
       success: true,
       generated: generatedPosts.length,
-      published: publishedCount,
+      instagram_posts: instagramCount,
+      facebook_posts: facebookCount,
       posts: generatedPosts.map(p => ({
         caption: p.post.hook,
         imageUrl: p.imageUrl,
-        status: p.socialPostId ? 'published' : 'draft'
+        platform: p.socialPostId ? 'instagram+facebook' : 'draft'
       }))
     });
 
