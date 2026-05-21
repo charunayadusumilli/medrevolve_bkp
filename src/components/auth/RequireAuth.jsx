@@ -11,8 +11,17 @@ import { Leaf, Lock } from 'lucide-react';
 export default function RequireAuth({ children, portalName = 'Portal', requiredRole = null }) {
   const { data: user, isLoading } = useQuery({
     queryKey: ['currentUser'],
-    queryFn: () => base44.auth.me(),
+    queryFn: async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (!isAuth) return null;
+        return await base44.auth.me();
+      } catch {
+        return null;
+      }
+    },
     retry: false,
+    staleTime: 30000,
   });
 
   if (isLoading) {
