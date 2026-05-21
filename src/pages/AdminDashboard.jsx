@@ -13,6 +13,9 @@ import {
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from '@/components/analytics/AnalyticsDashboard';
 import AutoRxAdminTab from '@/components/admin/AutoRxAdminTab';
+import AdminProviderTab from '@/components/admin/AdminProviderTab';
+import AdminPharmacyTab from '@/components/admin/AdminPharmacyTab';
+import AdminContactTab from '@/components/admin/AdminContactTab';
 import { Link } from 'react-router-dom';
 import RequireAuth from '@/components/auth/RequireAuth';
 
@@ -99,7 +102,12 @@ function AdminDashboardInner() {
           <div className="flex gap-2">
             <Link to={createPageUrl('BelugaIntegration')}>
               <Button variant="outline" size="sm" className="rounded-full border-blue-300 text-blue-700 hover:bg-blue-50">
-                🔗 Beluga Integration
+                🔗 Beluga
+              </Button>
+            </Link>
+            <Link to="/QualiphyIntegration">
+              <Button variant="outline" size="sm" className="rounded-full border-violet-300 text-violet-700 hover:bg-violet-50">
+                🧪 Qualiphy
               </Button>
             </Link>
             <Button onClick={refetchAll} variant="outline" size="sm">
@@ -178,40 +186,12 @@ function AdminDashboardInner() {
                 ))}
               </TabsContent>
 
-              <TabsContent value="providers" className="space-y-4">
-                {providers?.map(p => (
-                  <Card key={p.id}><CardContent className="pt-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-semibold">{p.full_name}</h3>
-                        <p className="text-sm text-muted-foreground">{p.email}</p>
-                        <p className="text-sm mt-2"><strong>License:</strong> {p.license_number}</p>
-                        <p className="text-sm"><strong>Specialty:</strong> {p.specialty}</p>
-                        <p className="text-sm"><strong>States:</strong> {p.states_licensed?.join(', ') || 'N/A'}</p>
-                      </div>
-                      <Badge>{p.status}</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-4">Submitted: {new Date(p.created_date).toLocaleString()}</p>
-                  </CardContent></Card>
-                ))}
+              <TabsContent value="providers">
+                <AdminProviderTab providers={providers || []} onRefetch={refetchProviders} />
               </TabsContent>
 
-              <TabsContent value="pharmacies" className="space-y-4">
-                {pharmacies?.map(ph => (
-                  <Card key={ph.id}><CardContent className="pt-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-semibold">{ph.pharmacy_name}</h3>
-                        <p className="text-sm text-muted-foreground">{ph.email}</p>
-                        <p className="text-sm mt-2"><strong>Type:</strong> {ph.pharmacy_type}</p>
-                        <p className="text-sm"><strong>License:</strong> {ph.license_number}</p>
-                        <p className="text-sm"><strong>Location:</strong> {ph.city}, {ph.state}</p>
-                      </div>
-                      <Badge>{ph.status}</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-4">Submitted: {new Date(ph.created_date).toLocaleString()}</p>
-                  </CardContent></Card>
-                ))}
+              <TabsContent value="pharmacies">
+                <AdminPharmacyTab pharmacies={pharmacies || []} onRefetch={refetchPharmacies} />
               </TabsContent>
 
               <TabsContent value="businesses" className="space-y-4">
@@ -279,20 +259,8 @@ function AdminDashboardInner() {
                 ))}
               </TabsContent>
 
-              <TabsContent value="contacts" className="space-y-4">
-                {contacts?.map(c => (
-                  <Card key={c.id}><CardContent className="pt-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-semibold">{c.name}</h3>
-                        <p className="text-sm text-muted-foreground">{c.email}</p>
-                        <p className="text-sm mt-2"><strong>Message:</strong> {c.message}</p>
-                      </div>
-                      <Badge>{c.status}</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-4">Submitted: {new Date(c.created_date).toLocaleString()}</p>
-                  </CardContent></Card>
-                ))}
+              <TabsContent value="contacts">
+                <AdminContactTab contacts={contacts || []} onRefetch={refetchContacts} />
               </TabsContent>
 
               <TabsContent value="partners" className="space-y-4">

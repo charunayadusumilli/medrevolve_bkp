@@ -11,6 +11,7 @@ import InboxDashboard from './pages/InboxDashboard';
 import Platform from './pages/Platform';
 import BrandingAssets from './pages/BrandingAssets';
 import CompetitorIntelligence from './pages/CompetitorIntelligence';
+import QualiphyIntegration from './pages/QualiphyIntegration';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -66,6 +67,7 @@ const AuthenticatedApp = () => {
       <Route path="/Platform" element={<LayoutWrapper currentPageName="Platform"><Platform /></LayoutWrapper>} />
       <Route path="/BrandingAssets" element={<LayoutWrapper currentPageName="BrandingAssets"><BrandingAssets /></LayoutWrapper>} />
       <Route path="/CompetitorIntelligence" element={<LayoutWrapper currentPageName="CompetitorIntelligence"><CompetitorIntelligence /></LayoutWrapper>} />
+      <Route path="/QualiphyIntegration" element={<LayoutWrapper currentPageName="QualiphyIntegration"><QualiphyIntegration /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
