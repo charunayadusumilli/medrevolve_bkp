@@ -630,20 +630,21 @@ export const FAQ_BY_AUDIENCE = {
     { label: 'Min followers',     q: 'What is the minimum follower count to be accepted as a creator?' },
   ],
   [AUDIENCES.PARTNER]: [
-    { label: '💰 My margin?',              q: 'What is my margin as a merchant? Give me a real example with numbers.' },
-    { label: '🚀 How fast can I launch?',  q: 'How fast can I go live as a merchant on MedRevolve?' },
-    { label: '⚕️ Do I need a med license?', q: 'Do I need a medical license to sell GLP-1 or peptide products through MedRevolve?' },
-    { label: '🛡️ Compliance handled?',     q: 'How does MedRevolve handle compliance — LegitScript, HIPAA, payment processors?' },
-    { label: '💊 GLP vs. RUO tracks',      q: 'What is the difference between the GLP consumer track and the RUO research track?' },
-    { label: '🏥 Telehealth integration',  q: 'How does the telehealth module work and what does it cost?' },
-    { label: '💳 Payment processing',      q: 'How does payment processing work for wellness merchants — is it hard to get approved?' },
-    { label: '📦 What modules do I need?', q: 'What modules should I activate as a new merchant launching a GLP-1 business?' },
-    { label: '🔬 RUO peptide products',    q: 'Can I sell research peptides and what do I need to unlock that track?' },
-    { label: '🏢 Full cost breakdown',     q: 'Give me the full cost breakdown of running on MedRevolve including all modules.' },
-    { label: '⚖️ CPOM safe model',        q: 'Explain how MedRevolve is CPOM-safe and why that matters for my business.' },
-    { label: '🎓 MedRevolve University',   q: 'What is MedRevolve University and do I need it?' },
-    { label: '⚔️ vs. DIY / competitors',   q: 'How does MedRevolve compare in price and features to building this myself or using other platforms?' },
-    { label: '💬 Pricing objections',       q: 'How do I handle the "too expensive" or "I can build it cheaper" objection when talking about MedRevolve?' },
+    { label: '💰 My margin?',                q: 'What is my margin as a merchant? Give me a real example with numbers.' },
+    { label: '🚀 How fast can I launch?',    q: 'How fast can I go live as a merchant on MedRevolve?' },
+    { label: '⚕️ Do I need a med license?',  q: 'Do I need a medical license to sell GLP-1 or peptide products through MedRevolve?' },
+    { label: '🛡️ Compliance built-in?',      q: 'How does MedRevolve handle compliance — LegitScript, HIPAA, payment processors? Why is it better than getting a certificate?' },
+    { label: '💳 Payment processing solved', q: 'How does MedRevolve solve payment processing for wellness merchants? Why is this so hard to do alone?' },
+    { label: '💊 GLP vs. RUO tracks',        q: 'What is the difference between the GLP consumer track and the RUO research track?' },
+    { label: '🏥 Telehealth module',         q: 'How does the telehealth module work, what does it cost, and how does it connect providers, pharmacy, and patients?' },
+    { label: '🎓 GLP + Peptide University',  q: 'Tell me everything about MedRevolve University — GLP University, Peptide University, what certifications I get and why they matter.' },
+    { label: '🔬 RUO peptide unlock',        q: 'Can I sell research peptides and what certification do I need to unlock that track?' },
+    { label: '💊 Pharmacy network access',   q: 'How does MedRevolve give me access to verified pharmacy partners and why is that so hard to do on your own?' },
+    { label: '📦 All modules explained',     q: 'Walk me through all 12 MedRevolve modules and what each one does.' },
+    { label: '🏢 Full cost breakdown',       q: 'Give me the full cost breakdown of running on MedRevolve including all modules.' },
+    { label: '⚖️ Why MedRevolve is best',    q: 'Why is MedRevolve the best platform for launching a GLP or peptide wellness business? What makes it better than all alternatives?' },
+    { label: '⚔️ vs. DIY / competitors',     q: 'How does MedRevolve compare in price and features to building this myself or using other platforms?' },
+    { label: '🔧 Minute details handled',    q: 'What are all the operational details MedRevolve handles for me so I don\'t have to worry about them?' },
   ],
   [AUDIENCES.PROVIDER]: [
     { label: 'Compensation',          q: 'How are providers compensated — per consultation, retainer, or revenue share?' },
@@ -1278,6 +1279,37 @@ TONE FOR THIS PAGE:
 ${ctx.tone}
 
 ═══════════════════════════════════════════
+WHY MEDREVOLVE IS THE BEST — LEAD WITH THIS
+═══════════════════════════════════════════
+When any user asks why MedRevolve, why us, how we compare, or whether they should use us — lean into these core differentiators CONFIDENTLY:
+
+1. ALL-IN-ONE PLATFORM: No one else combines website builder + telehealth + licensed providers + pharmacy network + payment processing + compliance + inventory + marketing + university certifications under one roof. Competitors do ONE thing. MedRevolve does everything.
+
+2. PAYMENT PROCESSING — WE SOLVED THE HARDEST PROBLEM: Getting a payment processor to approve GLP-1 or peptide transactions is one of the most notoriously difficult challenges in this industry. Processors flag wellness/compound/Rx merchants instantly. MedRevolve has pre-established processor relationships specifically vetted for this space. Merchants skip 3-9 months of rejection and reapplication. This alone is worth the platform fee.
+
+3. COMPLIANCE BUILT-IN — NOT A CERTIFICATE, AN ARCHITECTURE: LegitScript gives you a certificate. MedRevolve gives you a compliance-controlled operating environment: central product control, GLP/RUO track separation enforced architecturally, pre-vetted pharmacy partners, HIPAA controls, CPOM-safe structure, claims review. You can't accidentally go out of compliance — the platform prevents it.
+
+4. MEDREVOLVE UNIVERSITY — CERTIFICATION THAT UNLOCKS BUSINESS: Not just training. MedRevolve University is the certification gate that unlocks RUO peptide products and strengthens processor and regulatory relationships. Courses include: GLP-1 Science & Clinical Protocols, Peptide Research Fundamentals, Compliance & Legal Claims, HIPAA & PHI Handling, Business Operations for Wellness Commerce. Operators who complete certification can demonstrate documented competency to payment processors — a real business advantage.
+
+5. GLP UNIVERSITY + PEPTIDE UNIVERSITY: Separate certification tracks for each product type. GLP University covers semaglutide, tirzepatide, clinical protocols, contraindications, dosing science. Peptide University covers BPC-157, TB-500, CJC-1295, Ipamorelin, PT-141, Selank, Semax — mechanism, research basis, compliance framing, claims rules. Completing these makes operators more knowledgeable than 95% of competitors in this space.
+
+6. PHARMACY NETWORK ACCESS — RELATIONSHIPS THAT TAKE YEARS TO BUILD: Compounding pharmacies that work with new operators are rare. MedRevolve has pre-contracted pharmacy partners with verified credentials, LegitScript, NABP registration, and DEA registration. A new operator gets access to these relationships on day one instead of spending 3-9 months hunting for a willing pharmacy.
+
+7. LICENSED PROVIDERS IN ALL 50 STATES: Recruiting, credentialing, and managing telehealth providers is expensive and slow. MedRevolve's provider network is already live — operators activate the telehealth module and immediately have access to credentialed MDs, DOs, NPs, and PAs. No recruiting, no credentialing overhead.
+
+8. MINUTE DETAILS WE HANDLE SO YOU DON'T HAVE TO:
+• DNS configuration and SSL for custom domains
+• PCI-compliant payment infrastructure
+• HIPAA-compliant patient data storage (AES-256 encryption)
+• Prescription routing and pharmacy order management
+• Rx tracking from provider approval to patient door
+• Subscription billing and recurring payment management
+• Inventory alerts and backup product routing
+• Multi-state provider licensing management
+• Tax compliance for wellness commerce
+• BAA (Business Associate Agreement) with all partners
+
+═══════════════════════════════════════════
 YOUR SUPERPOWER — MULTI-JOURNEY FLUENCY
 ═══════════════════════════════════════════
 You can handle ANY question from ANY angle. Here is how you bridge every type of question back to MedRevolve value:
@@ -1291,6 +1323,8 @@ MERCHANT/OPERATOR QUESTIONS — lead with business:
 • "How does telehealth integrate with my business?" → Activate the $199/mo telehealth module. Your customers get branded intake → MedRevolve provider reviews → Rx written → pharmacy ships → you earn margin. Break-even: 1-4 patients.
 • "What does it cost?" → Base: $99/mo. Full stack with telehealth+pharmacy+compliance: ~$526-$1,400/mo depending on modules. Replaces 8-10 separate vendor relationships.
 • "How fast can I go live?" → 24-48 hours for basic setup. 30 days for full buildout with telehealth + pharmacy active.
+• "Why MedRevolve over building it myself?" → Payment processing alone takes 3-9 months to figure out for this space and most get rejected. Pharmacy relationships take just as long. Compliance without a structured platform gets operators shut down. MedRevolve solves all of this on day one.
+• "What about the university?" → MedRevolve University is mandatory for RUO unlock and strongly recommended for all operators. GLP University and Peptide University are separate certification tracks. Completing them gives you documented competency — which matters to processors, regulators, and your own customers.
 
 CONSUMER/PATIENT QUESTIONS — lead with wellness:
 • Weight loss → GLP-1 science, Sema vs. Tirzepatide, protocol, consultation next step
