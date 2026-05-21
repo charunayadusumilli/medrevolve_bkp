@@ -1,13 +1,29 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
+/**
+ * setupDriveFolders — Creates complete Google Drive folder structure
+ * Run once to set up: MedRevolve root + all subfolders (Providers, Pharmacies, Patients, etc.)
+ */
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+
+const SUBFOLDER_NAMES = [
+  'Providers',
+  'Pharmacies',
+  'Patients',
+  'Products',
+  'Prescriptions',
+  'Contracts',
+  'Compliance',
+  'Applications',
+  'Merchants',
+  'Competitors',
+  'Leads',
+  'Payments',
+  'Partners',
+  'Creators',
+];
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (user?.role !== 'admin') {
-      return Response.json({ error: 'Forbidden: Admin access required' }, { status: 403 });
-    }
-
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
 
     const createFolder = async (name, parentId = null) => {
@@ -30,42 +46,26 @@ Deno.serve(async (req) => {
       return data.id;
     };
 
-    // Check if MedRevolve root already exists
-    const existing = await base44.asServiceRole.entities.DriveFolder.filter({ name: 'MedRevolve', parent_id: null });
-    let rootId;
-
-    if (existing.length > 0) {
-      rootId = existing[0].folder_id;
-      console.log('MedRevolve root folder already exists:', rootId);
-    } else {
-      rootId = await createFolder('MedRevolve');
-      await base44.asServiceRole.entities.DriveFolder.create({
-        name: 'MedRevolve',
-        folder_id: rootId,
-        parent_id: null,
-        path: 'MedRevolve',
-      });
-      console.log('Created MedRevolve root:', rootId);
+    // Clear old records
+    const existing = await base44.asServiceRole.entities.DriveFolder.filter({});
+    for (const rec of existing) {
+      await base44.asServiceRole.entities.DriveFolder.delete(rec.id);
     }
+    console.log(`Cleared ${existing.length} old Drive folder records`);
 
-    const subfolders = [
-      'Providers',
-      'Pharmacies',
-      'Patients',
-      'Products',
-      'Prescriptions',
-      'Contracts',
-      'Compliance',
-      'Applications',
-    ];
+    // Create root
+    const rootId = await createFolder('MedRevolve');
+    await base44.asServiceRole.entities.DriveFolder.create({
+      name: 'MedRevolve',
+      folder_id: rootId,
+      parent_id: null,
+      path: 'MedRevolve',
+    });
+    console.log('✅ Created MedRevolve root:', rootId);
 
+    // Create subfolders
     const created = [];
-    for (const name of subfolders) {
-      const alreadyExists = await base44.asServiceRole.entities.DriveFolder.filter({ name, parent_id: rootId });
-      if (alreadyExists.length > 0) {
-        created.push({ name, folder_id: alreadyExists[0].folder_id, status: 'existing' });
-        continue;
-      }
+    for (const name of SUBFOLDER_NAMES) {
       const folderId = await createFolder(name, rootId);
       await base44.asServiceRole.entities.DriveFolder.create({
         name,
@@ -73,14 +73,15 @@ Deno.serve(async (req) => {
         parent_id: rootId,
         path: `MedRevolve/${name}`,
       });
-      created.push({ name, folder_id: folderId, status: 'created' });
-      console.log(`Created subfolder ${name}:`, folderId);
+      created.push({ name, folder_id: folderId });
+      console.log(`✅ Created subfolder: MedRevolve/${name} → ${folderId}`);
     }
 
     return Response.json({
       success: true,
       root: { name: 'MedRevolve', folder_id: rootId },
       subfolders: created,
+      message: `Created root + ${created.length} subfolders`,
     });
   } catch (error) {
     console.error('setupDriveFolders error:', error.message);
