@@ -13,6 +13,7 @@ import BrandingAssets from './pages/BrandingAssets';
 import CompetitorIntelligence from './pages/CompetitorIntelligence';
 import QualiphyIntegration from './pages/QualiphyIntegration';
 import EmailSignature from './pages/EmailSignature';
+import TelephonyDashboard from './pages/TelephonyDashboard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -70,6 +71,7 @@ const AuthenticatedApp = () => {
       <Route path="/CompetitorIntelligence" element={<LayoutWrapper currentPageName="CompetitorIntelligence"><CompetitorIntelligence /></LayoutWrapper>} />
       <Route path="/QualiphyIntegration" element={<LayoutWrapper currentPageName="QualiphyIntegration"><QualiphyIntegration /></LayoutWrapper>} />
       <Route path="/EmailSignature" element={<LayoutWrapper currentPageName="EmailSignature"><EmailSignature /></LayoutWrapper>} />
+      <Route path="/TelephonyDashboard" element={<LayoutWrapper currentPageName="TelephonyDashboard"><TelephonyDashboard /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
