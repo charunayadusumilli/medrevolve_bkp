@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,19 +14,24 @@ export default function SocialMediaDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [postContent, setPostContent] = useState({ caption: '', imageUrl: '' });
   const [selectedPlatform, setSelectedPlatform] = useState('instagram');
+  const [isConnected, setIsConnected] = useState(false);
+  const [instagramUser, setInstagramUser] = useState(null);
 
-  // Check if connectors are authorized
-  const { data: connectors, isLoading } = useQuery({
-    queryKey: ['connectors'],
-    queryFn: async () => {
+  // Check if Instagram connector is authorized
+  useEffect(() => {
+    const checkConnection = async () => {
       try {
-        // This will fail if not authorized, which is expected
-        return { instagram: false, facebook: false };
-      } catch {
-        return { instagram: false, facebook: false };
+        const response = await base44.functions.invoke('checkInstagramConnection', {});
+        if (response.data.connected) {
+          setIsConnected(true);
+          setInstagramUser(response.data.user);
+        }
+      } catch (error) {
+        setIsConnected(false);
       }
-    }
-  });
+    };
+    checkConnection();
+  }, []);
 
   const createPostMutation = useMutation({
     mutationFn: async (postData) => {
@@ -59,34 +64,27 @@ export default function SocialMediaDashboard() {
           <p className="text-[#0A0A0A]/60">Manage Instagram & Facebook posts, analytics, and automation</p>
         </div>
 
-        {/* Setup Alert */}
-        {!connectors?.instagram && (
+        {/* Connected Alert */}
+        {isConnected && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <Card className="bg-[#FFF3CD] border-[#FFC107]">
-              <CardContent className="flex items-start gap-4 p-4">
-                <AlertCircle className="w-5 h-5 text-[#FFC107] mt-0.5" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-[#856404] mb-1">Connect Your Social Media Accounts</h3>
-                  <p className="text-sm text-[#856404] mb-3">
-                    To post and manage content, you need to connect your Instagram Business and Facebook Page.
-                  </p>
-                  <div className="space-y-2 text-sm text-[#856404]">
-                    <p><strong>Requirements:</strong></p>
-                    <ul className="list-disc list-inside space-y-1 ml-2">
-                      <li>Convert Instagram to Business Account (free in Instagram settings)</li>
-                      <li>Connect Instagram to a Facebook Page</li>
-                      <li>Have admin access to the Facebook Page</li>
-                    </ul>
+            <Card className="bg-[#D4EDDA] border-[#28A745]">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#28A745] rounded-full flex items-center justify-center">
+                    <Instagram className="w-4 h-4 text-white" />
                   </div>
-                  <Button className="mt-3 bg-[#4A6741] hover:bg-[#3D5636]">
-                    <LinkIcon className="w-4 h-4 mr-2" />
-                    Connect Instagram & Facebook
-                  </Button>
+                  <div>
+                    <h3 className="font-semibold text-[#155724]">Instagram Connected</h3>
+                    <p className="text-sm text-[#155724]">
+                      {instagramUser?.username ? `@${instagramUser.username}` : 'Business Account'}
+                    </p>
+                  </div>
                 </div>
+                <Badge className="bg-[#28A745] text-white">Active</Badge>
               </CardContent>
             </Card>
           </motion.div>
@@ -241,6 +239,26 @@ export default function SocialMediaDashboard() {
                 </Button>
               </CardContent>
             </Card>
+
+            {!isConnected && (
+              <Card className="bg-[#FFF3CD] border-[#FFC107]">
+                <CardContent className="p-4">
+                  <p className="text-sm text-[#856404] mb-3">
+                    You need to connect your Instagram Business account first.
+                  </p>
+                  <Button 
+                    onClick={async () => {
+                      // Trigger OAuth flow
+                      window.location.href = '/dashboard/integrations';
+                    }}
+                    className="bg-[#4A6741] hover:bg-[#3D5636]"
+                  >
+                    <LinkIcon className="w-4 h-4 mr-2" />
+                    Connect Instagram Now
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           <TabsContent value="schedule" className="space-y-6">
@@ -268,7 +286,7 @@ export default function SocialMediaDashboard() {
           <TabsContent value="settings" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
+                <CardTitle>Connected Accounts</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -276,20 +294,28 @@ export default function SocialMediaDashboard() {
                     <Instagram className="w-5 h-5" />
                     <div>
                       <p className="font-medium">Instagram Business</p>
-                      <p className="text-sm text-muted-foreground">Not connected</p>
+                      <p className="text-sm text-muted-foreground">
+                        {isConnected ? instagramUser?.username : 'Not connected'}
+                      </p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">Connect</Button>
+                  {isConnected ? (
+                    <Badge className="bg-[#28A745] text-white">Connected</Badge>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => window.location.href = '/dashboard/integrations'}
+                    >
+                      Connect
+                    </Button>
+                  )}
                 </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Facebook className="w-5 h-5" />
-                    <div>
-                      <p className="font-medium">Facebook Page</p>
-                      <p className="text-sm text-muted-foreground">Not connected</p>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm">Connect</Button>
+                <div className="p-4 border rounded-lg bg-muted/50">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Note:</strong> Facebook posting is available through your Instagram Business connection.
+                    Make sure your Instagram is linked to a Facebook Page.
+                  </p>
                 </div>
               </CardContent>
             </Card>
