@@ -6,9 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Instagram, Facebook, BarChart3, Calendar, Upload, Link as LinkIcon, AlertCircle } from 'lucide-react';
+import { Instagram, Facebook, BarChart3, Calendar, Upload, Link as LinkIcon, AlertCircle, Sparkles, Copy, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import ContentGenerator from '@/components/social/ContentGenerator';
+import AutoPostScheduler from '@/components/social/AutoPostScheduler';
+import { toast } from 'sonner';
 
 export default function SocialMediaDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -16,6 +19,8 @@ export default function SocialMediaDashboard() {
   const [selectedPlatform, setSelectedPlatform] = useState('instagram');
   const [isConnected, setIsConnected] = useState(false);
   const [instagramUser, setInstagramUser] = useState(null);
+  const [generatedCaption, setGeneratedCaption] = useState('');
+  const [autoPostEnabled, setAutoPostEnabled] = useState(false);
 
   // Check if Instagram connector is authorized
   useEffect(() => {
@@ -40,19 +45,38 @@ export default function SocialMediaDashboard() {
     },
     onSuccess: () => {
       setPostContent({ caption: '', imageUrl: '' });
-      alert('Post created successfully!');
+      setGeneratedCaption('');
+      toast.success('Post published successfully!');
     },
     onError: (error) => {
-      alert('Error creating post: ' + error.message);
+      toast.error('Error: ' + error.message);
+    }
+  });
+
+  const bulkPostMutation = useMutation({
+    mutationFn: async (posts) => {
+      const response = await base44.functions.invoke('bulkPostToSocial', { posts });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success(`Posted ${data.successful}/${data.total} successfully!`);
+    },
+    onError: (error) => {
+      toast.error('Bulk post failed: ' + error.message);
     }
   });
 
   const handleCreatePost = () => {
     createPostMutation.mutate({
       platform: selectedPlatform,
-      caption: postContent.caption,
+      caption: generatedCaption || postContent.caption,
       image_url: postContent.imageUrl
     });
+  };
+
+  const handleContentGenerated = (content) => {
+    setGeneratedCaption(content.caption);
+    // Auto-generate image prompt could be added here
   };
 
   return (
@@ -139,7 +163,7 @@ export default function SocialMediaDashboard() {
           <TabsList className="bg-white border border-[#0A0A0A]/10">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="create">Create Post</TabsTrigger>
-            <TabsTrigger value="schedule">Schedule</TabsTrigger>
+            <TabsTrigger value="schedule">Auto-Post</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
@@ -180,13 +204,20 @@ export default function SocialMediaDashboard() {
           </TabsContent>
 
           <TabsContent value="create" className="space-y-6">
+            {/* Content Generator */}
+            <ContentGenerator onContentGenerated={handleContentGenerated} />
+
+            {/* Manual Post Form */}
             <Card>
               <CardHeader>
-                <CardTitle>Create New Post</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5" />
+                  Or Create Manual Post
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Select Platform</label>
+                  <label className="text-sm font-medium">Platform</label>
                   <div className="flex gap-3">
                     <Button
                       variant={selectedPlatform === 'instagram' ? 'default' : 'outline'}
@@ -210,66 +241,67 @@ export default function SocialMediaDashboard() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Image URL</label>
                   <Input
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://images.unsplash.com/photo-..."
                     value={postContent.imageUrl}
                     onChange={(e) => setPostContent({ ...postContent, imageUrl: e.target.value })}
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Use Unsplash, your CDN, or upload to Google Drive
+                  </p>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Caption</label>
                   <Textarea
-                    placeholder="Write your caption here..."
+                    placeholder="Write your caption or use generated content above..."
                     rows={5}
-                    value={postContent.caption}
-                    onChange={(e) => setPostContent({ ...postContent, caption: e.target.value })}
+                    value={generatedCaption || postContent.caption}
+                    onChange={(e) => {
+                      setPostContent({ ...postContent, caption: e.target.value });
+                      setGeneratedCaption(e.target.value);
+                    }}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    {postContent.caption.length} characters
-                  </p>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">
+                      {(generatedCaption || postContent.caption).length} characters
+                    </span>
+                    {generatedCaption && (
+                      <span className="text-[#4A6741] flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3" /> Generated
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <Button
                   onClick={handleCreatePost}
-                  disabled={!postContent.caption || !postContent.imageUrl}
+                  disabled={!isConnected || !(generatedCaption || postContent.caption) || !postContent.imageUrl}
                   className="w-full bg-[#4A6741] hover:bg-[#3D5636]"
                 >
                   <Upload className="w-4 h-4 mr-2" />
-                  Publish Post
+                  Publish to {selectedPlatform === 'instagram' ? 'Instagram' : 'Facebook'}
                 </Button>
+
+                {!isConnected && (
+                  <div className="p-4 bg-[#FFF3CD] border border-[#FFC107] rounded-lg">
+                    <p className="text-sm text-[#856404] mb-3">
+                      Connect your Instagram Business account to start posting.
+                    </p>
+                    <Button 
+                      onClick={() => window.location.href = '/dashboard/integrations'}
+                      className="bg-[#4A6741] hover:bg-[#3D5636] w-full"
+                    >
+                      <LinkIcon className="w-4 h-4 mr-2" />
+                      Connect Instagram
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
-
-            {!isConnected && (
-              <Card className="bg-[#FFF3CD] border-[#FFC107]">
-                <CardContent className="p-4">
-                  <p className="text-sm text-[#856404] mb-3">
-                    You need to connect your Instagram Business account first.
-                  </p>
-                  <Button 
-                    onClick={async () => {
-                      // Trigger OAuth flow
-                      window.location.href = '/dashboard/integrations';
-                    }}
-                    className="bg-[#4A6741] hover:bg-[#3D5636]"
-                  >
-                    <LinkIcon className="w-4 h-4 mr-2" />
-                    Connect Instagram Now
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
           </TabsContent>
 
           <TabsContent value="schedule" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Scheduled Posts</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm">No scheduled posts yet.</p>
-              </CardContent>
-            </Card>
+            <AutoPostScheduler />
           </TabsContent>
 
           <TabsContent value="analytics" className="space-y-6">
