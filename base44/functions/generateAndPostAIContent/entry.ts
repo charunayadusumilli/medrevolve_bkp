@@ -174,7 +174,11 @@ Deno.serve(async (req) => {
           continue;
         }
         
-        // Step 3: Publish the container
+        // Step 3: Wait 2 seconds for Instagram to process the image
+        console.log('[INFO] Waiting 2s for Instagram to process image...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Step 4: Publish the container
         const publishRes = await fetch(
           `https://graph.instagram.com/${userId}/media_publish`,
           {
