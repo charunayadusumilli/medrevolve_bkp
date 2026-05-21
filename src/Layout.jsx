@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
-  Menu, ChevronDown,
+  Menu, ChevronDown, Phone,
   Instagram, Twitter, Facebook, Youtube,
   User, LogOut, Settings, LayoutDashboard } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -116,6 +116,10 @@ export default function Layout({ children }) {
             <nav className="hidden lg:flex items-center gap-8">
               <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                 Platform
+              </Link>
+              <Link to="/PhoneIntake" onClick={() => handleNavClick()} className="text-sm text-[#4A6741] hover:text-[#6B8F5E] transition-colors flex items-center gap-1">
+                <Phone className="w-3 h-3" />
+                Call Now
               </Link>
 
               {/* Admin only */}

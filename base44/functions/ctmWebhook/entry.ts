@@ -79,6 +79,15 @@ Deno.serve(async (req) => {
 
     console.log(`✅ CTM ${source} saved: ${contact.id} from ${callerPhone}`);
 
+    // Check if caller exists in system (phone verification)
+    let existingContact = null;
+    if (callerPhone && callerPhone !== 'unknown') {
+      const contacts = await base44.entities.ContactRequest.filter({ 
+        phone: callerPhone 
+      }, '-created_date', 1);
+      existingContact = contacts[0] || null;
+    }
+
     // Sync to HubSpot
     await base44.asServiceRole.functions.invoke('syncToHubspot', {
       source: 'contact_request',
@@ -91,7 +100,35 @@ Deno.serve(async (req) => {
       message: `📞 CTM ${source.toUpperCase()}: ${callerName} | ${callerPhone} | ${subject.substring(0, 60)}`
     }).catch(e => console.error('SMS notify failed:', e.message));
 
-    return Response.json({ success: true, contact_id: contact.id });
+    // Send follow-up to caller based on verification status
+    if (existingContact) {
+      // Returning patient - send portal link
+      if (callerPhone && callerPhone !== 'unknown') {
+        await base44.asServiceRole.functions.invoke('sendSMS', {
+          to: callerPhone.replace(/\D/g, ''),
+          message: `Welcome back ${callerName?.split(' ')[0] || 'there'}! Access your patient portal: https://medrevolve.com/PatientPortal or complete intake: https://medrevolve.com/CustomerIntake`
+        }).catch(e => console.error('Welcome SMS failed:', e.message));
+      }
+    } else {
+      // New patient - send intake link
+      if (callerPhone && callerPhone !== 'unknown') {
+        await base44.asServiceRole.functions.invoke('sendSMS', {
+          to: callerPhone.replace(/\D/g, ''),
+          message: `Thanks for calling MedRevolve! Start your intake: https://medrevolve.com/CustomerIntake or book consult: https://medrevolve.com/BookAppointment. Questions? Call back anytime.`
+        }).catch(e => console.error('New patient SMS failed:', e.message));
+      }
+    }
+
+    // For form submissions - send email with intake link
+    if (eventType === 'form_submitted' && callerEmail && !callerEmail.includes('@ctm.noemail')) {
+      await base44.asServiceRole.functions.invoke('sendGmailNotification', {
+        to: callerEmail,
+        subject: 'Continue Your Intake - MedRevolve',
+        body: `<p>Hi ${callerName || 'there'},</p><p>Thank you for your interest! Complete your intake: <a href="https://medrevolve.com/CustomerIntake">Click Here</a></p><p>Or book directly: <a href="https://medrevolve.com/BookAppointment">Book Now</a></p><br/><p>Questions? Call (234) 567-890</p><p>MedRevolve Team</p>`
+      }).catch(e => console.error('Intake email failed:', e.message));
+    }
+
+    return Response.json({ success: true, contact_id: contact.id, verified: !!existingContact });
 
   } catch (error) {
     console.error('CTM webhook error:', error.message);

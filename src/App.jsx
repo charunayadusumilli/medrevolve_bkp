@@ -14,6 +14,7 @@ import CompetitorIntelligence from './pages/CompetitorIntelligence';
 import QualiphyIntegration from './pages/QualiphyIntegration';
 import EmailSignature from './pages/EmailSignature';
 import TelephonyDashboard from './pages/TelephonyDashboard';
+import PhoneIntake from './pages/PhoneIntake';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
       <Route path="/QualiphyIntegration" element={<LayoutWrapper currentPageName="QualiphyIntegration"><QualiphyIntegration /></LayoutWrapper>} />
       <Route path="/EmailSignature" element={<LayoutWrapper currentPageName="EmailSignature"><EmailSignature /></LayoutWrapper>} />
       <Route path="/TelephonyDashboard" element={<LayoutWrapper currentPageName="TelephonyDashboard"><TelephonyDashboard /></LayoutWrapper>} />
+      <Route path="/PhoneIntake" element={<LayoutWrapper currentPageName="PhoneIntake"><PhoneIntake /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
