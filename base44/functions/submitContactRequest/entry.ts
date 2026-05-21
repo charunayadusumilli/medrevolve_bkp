@@ -193,9 +193,34 @@ Deno.serve(async (req) => {
       </td></tr>
     </table>
   </td></tr>
-  <tr><td style="background:#1f2d1f;border-radius:0 0 16px 16px;padding:20px 40px;text-align:center;">
-    <div style="color:#fff;font-size:13px;font-weight:700;">🌿 MedRevolve</div>
-    <div style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:4px;">rned@medrevolve.com · medrevolve.com</div>
+  <tr><td style="background:#1f2d1f;border-radius:0 0 16px 16px;padding:24px 40px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr><td align="center" style="padding-bottom:12px;">
+        <img src="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/74d6bc580_generated_image.png" alt="MedRevolve" style="height:36px;width:auto;" />
+      </td></tr>
+      <tr><td align="center" style="padding-bottom:8px;">
+        <span style="color:#fff;font-size:14px;font-weight:700;">Raj Nedunuri</span><br/>
+        <span style="color:#86efac;font-size:12px;">President & CEO</span><br/>
+        <span style="color:rgba(255,255,255,0.4);font-size:12px;">MedRevolve Corporation</span>
+      </td></tr>
+      <tr><td align="center" style="padding-bottom:12px;">
+        <span style="color:rgba(255,255,255,0.5);font-size:11px;">📞 (234) 567-890 | ✉️ rned@medrevolve.com</span>
+      </td></tr>
+      <tr><td align="center" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:12px;padding-bottom:8px;">
+        <table cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding:0 6px;"><a href="https://instagram.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="Instagram" style="width:16px;height:16px;opacity:0.7;" /></a></td>
+            <td style="padding:0 6px;"><a href="https://twitter.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" style="width:16px;height:16px;opacity:0.7;" /></a></td>
+            <td style="padding:0 6px;"><a href="https://facebook.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174848.png" alt="Facebook" style="width:16px;height:16px;opacity:0.7;" /></a></td>
+            <td style="padding:0 6px;"><a href="https://youtube.com/@medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174860.png" alt="YouTube" style="width:16px;height:16px;opacity:0.7;" /></a></td>
+            <td style="padding:0 6px;"><a href="https://linkedin.com/company/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="LinkedIn" style="width:16px;height:16px;opacity:0.7;" /></a></td>
+          </tr>
+        </table>
+      </td></tr>
+      <tr><td align="center" style="padding-top:8px;">
+        <span style="color:rgba(255,255,255,0.25);font-size:10px;">MedRevolve Corporation | Launch a compliant telehealth, GLP-1, or RUO business under your own brand</span>
+      </td></tr>
+    </table>
   </td></tr>
 </table>
 </td></tr></table>
@@ -265,8 +290,34 @@ Deno.serve(async (req) => {
     </div>
     <div style="margin-top:12px;font-size:11px;color:#94a3b8;">Ref: ${contactRequest.id} · Source: Website Form · ${submittedAt} ET</div>
   </td></tr>
-  <tr><td style="background:#1a2a1a;border-radius:0 0 14px 14px;padding:14px 28px;text-align:center;">
-    <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:0;">MedRevolve CRM · rned@medrevolve.com</p>
+  <tr><td style="background:#1a2a1a;border-radius:0 0 14px 14px;padding:20px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr><td align="center" style="padding-bottom:10px;">
+        <img src="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/74d6bc580_generated_image.png" alt="MedRevolve" style="height:32px;width:auto;" />
+      </td></tr>
+      <tr><td align="center" style="padding-bottom:6px;">
+        <span style="color:#fff;font-size:13px;font-weight:700;">Raj Nedunuri</span><br/>
+        <span style="color:#86efac;font-size:11px;">President & CEO</span><br/>
+        <span style="color:rgba(255,255,255,0.35);font-size:11px;">MedRevolve Corporation</span>
+      </td></tr>
+      <tr><td align="center" style="padding-bottom:10px;">
+        <span style="color:rgba(255,255,255,0.45);font-size:10px;">📞 (234) 567-890 | ✉️ rned@medrevolve.com</span>
+      </td></tr>
+      <tr><td align="center" style="border-top:1px solid rgba(255,255,255,0.12);padding-top:10px;padding-bottom:6px;">
+        <table cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding:0 5px;"><a href="https://instagram.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="Instagram" style="width:14px;height:14px;opacity:0.65;" /></a></td>
+            <td style="padding:0 5px;"><a href="https://twitter.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" style="width:14px;height:14px;opacity:0.65;" /></a></td>
+            <td style="padding:0 5px;"><a href="https://facebook.com/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174848.png" alt="Facebook" style="width:14px;height:14px;opacity:0.65;" /></a></td>
+            <td style="padding:0 5px;"><a href="https://youtube.com/@medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174860.png" alt="YouTube" style="width:14px;height:14px;opacity:0.65;" /></a></td>
+            <td style="padding:0 5px;"><a href="https://linkedin.com/company/medrevolve" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="LinkedIn" style="width:14px;height:14px;opacity:0.65;" /></a></td>
+          </tr>
+        </table>
+      </td></tr>
+      <tr><td align="center" style="padding-top:6px;">
+        <span style="color:rgba(255,255,255,0.2);font-size:9px;">MedRevolve Corporation | Launch a compliant telehealth, GLP-1, or RUO business under your own brand</span>
+      </td></tr>
+    </table>
   </td></tr>
 </table>
 </td></tr></table>
