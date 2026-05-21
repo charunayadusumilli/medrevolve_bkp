@@ -210,6 +210,23 @@ export default function MerchantOnboarding() {
 
       console.log('✅ BusinessInquiry created');
 
+      // ── Stripe Checkout for $5,000 setup fee ──
+      console.log('Creating Stripe checkout for $5,000 setup fee...');
+      const checkoutRes = await base44.functions.invoke('merchantSetupCheckout', {
+        businessName: form.businessName,
+        contactName: form.contactName,
+        email: form.email,
+        partnerCode,
+        successUrl: `${window.location.origin}/MerchantDashboard?setup=success&partner=${partner.id}`,
+        cancelUrl: `${window.location.origin}/MerchantOnboarding?canceled=1`,
+      });
+
+      if (!checkoutRes?.data?.url) {
+        throw new Error('Failed to create payment session. Please try again.');
+      }
+
+      console.log('✅ Stripe checkout created, redirecting...');
+
       // Admin notification
       console.log('Sending admin notification email...');
       await base44.integrations.Core.SendEmail({
@@ -278,13 +295,9 @@ export default function MerchantOnboarding() {
 
       console.log('✅ Tracking event logged');
 
-      // Run the visual activation sequence, then redirect
-      console.log('Running activation sequence...');
-      await runActivationSequence(partner.id);
-      console.log('✅ Activation complete, navigating to dashboard...');
-      setTimeout(() => {
-        navigate(createPageUrl('MerchantDashboard'));
-      }, 500);
+      // Redirect to Stripe Checkout
+      console.log('Redirecting to Stripe Checkout...');
+      window.location.href = checkoutRes.data.url;
     } catch (e) {
       const errorMessage = e.message || 'Unknown error occurred';
       console.error('Merchant onboarding error:', e);
@@ -675,40 +688,14 @@ export default function MerchantOnboarding() {
                        </div>
                      </div>
 
-                    {/* Card input */}
-                    {(
-                      <div className="space-y-3">
-                        <p className="text-white/60 text-sm font-medium flex items-center gap-2">
-                          <CreditCard className="w-4 h-4" /> Payment Information
-                          <Lock className="w-3 h-3 text-white/30" />
-                        </p>
-                        <div>
-                          <Label className="text-white/50 text-xs">Name on Card</Label>
-                          <Input value={form.cardName} onChange={e => set('cardName', e.target.value)}
-                            placeholder="John Doe" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
-                        </div>
-                        <div>
-                          <Label className="text-white/50 text-xs">Card Number</Label>
-                          <Input value={form.cardNumber} onChange={e => set('cardNumber', e.target.value.replace(/\D/g,'').slice(0,16))}
-                            placeholder="4242 4242 4242 4242" className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741] font-mono" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <Label className="text-white/50 text-xs">Expiry</Label>
-                            <Input value={form.cardExpiry} onChange={e => set('cardExpiry', e.target.value)}
-                              placeholder="MM/YY" maxLength={5} className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
-                          </div>
-                          <div>
-                            <Label className="text-white/50 text-xs">CVC</Label>
-                            <Input value={form.cardCvc} onChange={e => set('cardCvc', e.target.value.slice(0,4))}
-                              placeholder="123" maxLength={4} className="mt-1 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]" />
-                          </div>
-                        </div>
-                        <p className="text-white/25 text-xs flex items-center gap-1.5">
-                          <Lock className="w-3 h-3" /> 256-bit SSL encrypted. Card stored securely for monthly billing.
-                        </p>
-                      </div>
-                    )}
+                    {/* Stripe Checkout notice */}
+                     <div className="bg-[#4A6741]/10 border border-[#4A6741]/30 rounded-lg p-4 flex items-start gap-3">
+                       <Lock className="w-4 h-4 text-[#6B8F5E] flex-shrink-0 mt-0.5" />
+                       <div>
+                         <p className="text-white/80 text-sm font-medium">Secure Payment via Stripe</p>
+                         <p className="text-white/40 text-xs mt-0.5">Clicking "Pay $5,000 & Launch" will redirect you to Stripe's secure checkout page to complete your payment. Your card details are never stored on our servers.</p>
+                       </div>
+                     </div>
 
                     {/* What's included */}
                      <div className="space-y-2">
