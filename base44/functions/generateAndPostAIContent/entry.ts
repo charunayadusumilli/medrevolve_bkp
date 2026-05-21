@@ -67,160 +67,156 @@ Deno.serve(async (req) => {
         
         console.log(`[INFO] Generated image: ${imageResponse.url}`);
         
-        // Upload generated image to Google Drive using simple upload
-        const driveResponse = await fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=media`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${googleDriveToken.accessToken}`,
-            'Content-Type': 'image/jpeg'
-          },
-          body: await fetch(imageResponse.url).then(r => r.arrayBuffer())
-        });
+        // Use the Base44 image URL directly (Instagram requires direct image URLs)
+        const imageUrl = imageResponse.url;
+        console.log(`[INFO] Using Base44 image URL: ${imageUrl}`);
         
-        const driveData = await driveResponse.json();
-        const imageUrl = driveData.webContentLink || `https://drive.google.com/uc?id=${driveData.id}`;
-        
-        console.log(`[INFO] Uploaded to Drive: ${imageUrl}`);
-        
-        // Create SocialPost record
-        const socialPost = await base44.entities.SocialPost.create({
-          platform: "instagram",
-          caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
-          image_url: imageUrl,
-          status: "draft",
-          notes: `AI-generated content. Drive file ID: ${driveData.id}`
-        });
-        
-        generatedPosts.push({
-          post,
-          imageUrl,
-          driveId: driveData.id,
-          socialPostId: socialPost.id
-        });
+        // Upload to Google Drive for backup storage
+        try {
+          const driveResponse = await fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=media`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${googleDriveToken.accessToken}`,
+              'Content-Type': 'image/jpeg'
+            },
+            body: await fetch(imageUrl).then(r => r.arrayBuffer())
+          });
+          
+          const driveData = await driveResponse.json();
+          console.log(`[INFO] Backup uploaded to Drive: ${driveData.id}`);
+          
+          // Create SocialPost record
+          const socialPost = await base44.entities.SocialPost.create({
+            platform: "instagram",
+            caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
+            image_url: imageUrl,
+            status: "draft",
+            notes: `AI-generated content. Drive backup ID: ${driveData.id}`
+          });
+          
+          generatedPosts.push({
+            post,
+            imageUrl,
+            driveId: driveData.id,
+            socialPostId: socialPost.id
+          });
+        } catch (driveError) {
+          console.error('[WARN] Drive upload failed, continuing with Base44 URL:', driveError.message);
+          
+          // Still create the post record even if Drive fails
+          const socialPost = await base44.entities.SocialPost.create({
+            platform: "instagram",
+            caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
+            image_url: imageUrl,
+            status: "draft",
+            notes: `AI-generated content (Drive upload failed)`
+          });
+          
+          generatedPosts.push({
+            post,
+            imageUrl,
+            socialPostId: socialPost.id
+          });
+        }
         
       } catch (error) {
         console.error('[ERROR] Failed to generate post:', error.message);
       }
     }
 
-    // Step 3: Auto-publish to Instagram & Facebook
+    // Step 3: Auto-publish to Instagram ONLY (Facebook requires separate connector)
     let instagramCount = 0;
-    let facebookCount = 0;
     
     for (const generatedPost of generatedPosts) {
       const fullCaption = `${generatedPost.post.hook}\n\n${generatedPost.post.body}\n\n${generatedPost.post.cta}\n\n${generatedPost.post.hashtags.join(' ')}`;
       
-      // Instagram
+      // Instagram - use correct Graph API flow
       try {
         const instagramToken = await base44.asServiceRole.connectors.getConnection('instagram');
+        
+        // Step 1: Get Instagram Business Account ID
         const userRes = await fetch(
           `https://graph.instagram.com/me?fields=id,username&access_token=${instagramToken.accessToken}`
         );
         const userData = await userRes.json();
-        const userId = userData.id;
         
+        if (!userData.id) {
+          console.error('[ERROR] No Instagram user ID found:', userData);
+          continue;
+        }
+        
+        const userId = userData.id;
+        console.log(`[INFO] Instagram Business Account ID: ${userId}`);
+        
+        // Step 2: Create media container
         const containerRes = await fetch(
-          `https://graph.instagram.com/${userId}/media?image_url=${encodeURIComponent(generatedPost.imageUrl)}&caption=${encodeURIComponent(fullCaption)}&access_token=${instagramToken.accessToken}`,
-          { method: 'POST' }
+          `https://graph.instagram.com/${userId}/media`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              image_url: generatedPost.imageUrl,
+              caption: fullCaption,
+              access_token: instagramToken.accessToken
+            })
+          }
         );
         const containerData = await containerRes.json();
+        console.log('[DEBUG] Container response:', JSON.stringify(containerData));
         
-        if (containerData.id) {
-          const publishRes = await fetch(
-            `https://graph.instagram.com/${userId}/media_publish?creation_id=${containerData.id}&access_token=${instagramToken.accessToken}`,
-            { method: 'POST' }
-          );
-          const publishData = await publishRes.json();
-          
-          if (publishData.id) {
-            await base44.entities.SocialPost.update(generatedPost.socialPostId, {
-              status: "published",
-              post_id: publishData.id,
-              published_at: new Date().toISOString(),
-              platform: "instagram"
-            });
-            instagramCount++;
-            console.log(`[INFO] Published to Instagram: ${publishData.id}`);
+        if (containerData.error) {
+          console.error('[ERROR] Container creation failed:', containerData.error.message);
+          continue;
+        }
+        
+        if (!containerData.id) {
+          console.error('[ERROR] No container ID returned');
+          continue;
+        }
+        
+        // Step 3: Publish the container
+        const publishRes = await fetch(
+          `https://graph.instagram.com/${userId}/media_publish`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              creation_id: containerData.id,
+              access_token: instagramToken.accessToken
+            })
           }
+        );
+        const publishData = await publishRes.json();
+        console.log('[DEBUG] Publish response:', JSON.stringify(publishData));
+        
+        if (publishData.id) {
+          await base44.entities.SocialPost.update(generatedPost.socialPostId, {
+            status: "published",
+            post_id: publishData.id,
+            published_at: new Date().toISOString(),
+            platform: "instagram"
+          });
+          instagramCount++;
+          console.log(`[INFO] ✅ Published to Instagram: ${publishData.id}`);
+        } else if (publishData.error) {
+          console.error('[ERROR] Publish failed:', publishData.error.message);
         }
       } catch (error) {
         console.error('[ERROR] Instagram publishing failed:', error.message);
       }
-      
-      // Facebook
-      try {
-        const instagramToken = await base44.asServiceRole.connectors.getConnection('instagram');
-        
-        // Get user's Facebook pages
-        const pagesRes = await fetch(
-          `https://graph.facebook.com/me/accounts?fields=id,name,access_token&access_token=${instagramToken.accessToken}`
-        );
-        const pagesData = await pagesRes.json();
-        console.log('[DEBUG] Facebook pages response:', JSON.stringify(pagesData));
-        
-        if (pagesData.data && pagesData.data.length > 0) {
-          for (const page of pagesData.data) {
-            try {
-              const pageAccessToken = page.access_token;
-              const pageId = page.id;
-              
-              console.log(`[DEBUG] Publishing to Facebook page: ${page.name} (${pageId})`);
-              
-              // Fetch the image first
-              const imgBuffer = await fetch(generatedPost.imageUrl).then(r => r.arrayBuffer());
-              
-              // Create form data for multipart upload
-              const formData = new FormData();
-              formData.append('source', new Blob([imgBuffer], { type: 'image/jpeg' }), 'post.jpg');
-              formData.append('message', fullCaption);
-              formData.append('published', 'true');
-              
-              const fbPublishRes = await fetch(
-                `https://graph.facebook.com/v18.0/${pageId}/photos?access_token=${pageAccessToken}`,
-                { method: 'POST', body: formData }
-              );
-              const fbPublishData = await fbPublishRes.json();
-              console.log('[DEBUG] Facebook publish response:', JSON.stringify(fbPublishData));
-              
-              if (fbPublishData.id) {
-                await base44.entities.SocialPost.create({
-                  platform: "facebook",
-                  caption: fullCaption,
-                  image_url: generatedPost.imageUrl,
-                  status: "published",
-                  post_id: fbPublishData.id,
-                  published_at: new Date().toISOString(),
-                  notes: `Published to: ${page.name}`
-                });
-                facebookCount++;
-                console.log(`[INFO] Published to Facebook (${page.name}): ${fbPublishData.id}`);
-              } else if (fbPublishData.error) {
-                console.error(`[ERROR] Facebook error for ${page.name}:`, fbPublishData.error.message);
-              }
-            } catch (pageError) {
-              console.error(`[ERROR] Failed to publish to page ${page.name}:`, pageError.message);
-            }
-          }
-        } else if (pagesData.error) {
-          console.error('[ERROR] Failed to fetch Facebook pages:', pagesData.error.message);
-        }
-      } catch (error) {
-        console.error('[ERROR] Facebook publishing failed:', error.message);
-      }
     }
 
     // Step 4: Log summary
-    console.log(`[SUCCESS] Generated ${generatedPosts.length} posts, Instagram: ${instagramCount}, Facebook: ${facebookCount}`);
+    console.log(`[SUCCESS] Generated ${generatedPosts.length} posts, Instagram: ${instagramCount}`);
 
     return Response.json({
       success: true,
       generated: generatedPosts.length,
       instagram_posts: instagramCount,
-      facebook_posts: facebookCount,
       posts: generatedPosts.map(p => ({
         caption: p.post.hook,
         imageUrl: p.imageUrl,
-        platform: p.socialPostId ? 'instagram+facebook' : 'draft'
+        platform: 'instagram'
       }))
     });
 
