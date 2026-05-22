@@ -18,6 +18,10 @@ import PhoneIntake from './pages/PhoneIntake';
 import SocialMediaDashboard from './pages/SocialMediaDashboard';
 import GodModeAds from './pages/GodModeAds';
 import GrowthDashboard from './pages/GrowthDashboard';
+import HIPAANotice from './pages/HIPAANotice';
+import TelehealthConsent from './pages/TelehealthConsent';
+import MedicalDisclaimer from './pages/MedicalDisclaimer';
+import CookiePolicy from './pages/CookiePolicy';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -77,6 +81,10 @@ const AuthenticatedApp = () => {
       <Route path="/SocialMediaDashboard" element={<LayoutWrapper currentPageName="SocialMediaDashboard"><SocialMediaDashboard /></LayoutWrapper>} />
       <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><GodModeAds /></LayoutWrapper>} />
       <Route path="/GrowthDashboard" element={<LayoutWrapper currentPageName="GrowthDashboard"><GrowthDashboard /></LayoutWrapper>} />
+      <Route path="/HIPAANotice" element={<LayoutWrapper currentPageName="HIPAANotice"><HIPAANotice /></LayoutWrapper>} />
+      <Route path="/TelehealthConsent" element={<LayoutWrapper currentPageName="TelehealthConsent"><TelehealthConsent /></LayoutWrapper>} />
+      <Route path="/MedicalDisclaimer" element={<LayoutWrapper currentPageName="MedicalDisclaimer"><MedicalDisclaimer /></LayoutWrapper>} />
+      <Route path="/CookiePolicy" element={<LayoutWrapper currentPageName="CookiePolicy"><CookiePolicy /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

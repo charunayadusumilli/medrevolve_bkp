@@ -36,7 +36,7 @@ const CONSULT_TYPES = [
 
 const COMPLIANCE_BADGES = [
   { label: 'HIPAA Compliant', icon: Shield },
-  { label: 'LegitScript Certified', icon: CheckCircle },
+  { label: 'LegitScript Certification Pending', icon: CheckCircle },
   { label: 'Surescripts Integrated', icon: FileText },
   { label: 'SOC 2 Type II', icon: Lock },
   { label: 'DEA Compliant', icon: Shield },

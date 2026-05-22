@@ -329,8 +329,13 @@ export default function Layout({ children }) {
                 <li><Link to={createPageUrl('Contact')} className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
                 <li><Link to={createPageUrl('Privacy')} className="text-white/45 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
                 <li><Link to={createPageUrl('Terms')} className="text-white/45 hover:text-white text-sm transition-colors">Terms of Service</Link></li>
+                <li><Link to="/HIPAANotice" className="text-white/45 hover:text-white text-sm transition-colors">HIPAA Notice of Privacy Practices</Link></li>
+                <li><Link to="/TelehealthConsent" className="text-white/45 hover:text-white text-sm transition-colors">Telehealth Informed Consent</Link></li>
+                <li><Link to="/MedicalDisclaimer" className="text-white/45 hover:text-white text-sm transition-colors">Medical Disclaimer</Link></li>
+                <li><Link to="/CookiePolicy" className="text-white/45 hover:text-white text-sm transition-colors">Cookie Policy</Link></li>
                 <li><a href="mailto:support@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">support@medrevolve.com</a></li>
                 <li><a href="mailto:info@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">info@medrevolve.com</a></li>
+                <li><a href="tel:+17044263311" className="text-white/45 hover:text-white text-sm transition-colors">(704) 426-3311</a></li>
               </ul>
             </div>
           </div>

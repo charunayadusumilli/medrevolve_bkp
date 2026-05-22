@@ -23,8 +23,8 @@ const contactMethods = [
     icon: Phone,
     title: 'Call Us',
     description: 'Mon-Fri from 8am to 6pm ET',
-    value: '1-800-MED-REVO',
-    action: 'tel:1-800-633-7386'
+    value: '(704) 426-3311',
+    action: 'tel:+17044263311'
   },
   {
     icon: MessageCircle,
@@ -349,11 +349,11 @@ export default function Contact() {
                 <div className="space-y-2 text-sm text-white/80">
                   <div className="flex justify-between">
                     <span>Monday - Friday</span>
-                    <span>8:00 AM - 6:00 PM PST</span>
+                    <span>8:00 AM - 6:00 PM ET</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Saturday</span>
-                    <span>9:00 AM - 2:00 PM PST</span>
+                    <span>9:00 AM - 2:00 PM ET</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Sunday</span>
@@ -369,8 +369,9 @@ export default function Contact() {
                   <h3 className="font-medium text-[#2D3A2D]">Our Location</h3>
                 </div>
                 <p className="text-[#5A6B5A]">
-                  Los Angeles, California<br />
-                  United States
+                  Charlotte, North Carolina<br />
+                  United States<br />
+                  <span className="text-xs">(704) 426-3311</span>
                 </p>
               </div>
             </motion.div>
