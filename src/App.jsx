@@ -22,6 +22,8 @@ import HIPAANotice from './pages/HIPAANotice';
 import TelehealthConsent from './pages/TelehealthConsent';
 import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import CookiePolicy from './pages/CookiePolicy';
+import SystemArchitecture from './pages/SystemArchitecture';
+import WaterHome from './pages/WaterHome';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -85,6 +87,8 @@ const AuthenticatedApp = () => {
       <Route path="/TelehealthConsent" element={<LayoutWrapper currentPageName="TelehealthConsent"><TelehealthConsent /></LayoutWrapper>} />
       <Route path="/MedicalDisclaimer" element={<LayoutWrapper currentPageName="MedicalDisclaimer"><MedicalDisclaimer /></LayoutWrapper>} />
       <Route path="/CookiePolicy" element={<LayoutWrapper currentPageName="CookiePolicy"><CookiePolicy /></LayoutWrapper>} />
+      <Route path="/SystemArchitecture" element={<LayoutWrapper currentPageName="SystemArchitecture"><SystemArchitecture /></LayoutWrapper>} />
+      <Route path="/WaterHome" element={<LayoutWrapper currentPageName="WaterHome"><WaterHome /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
