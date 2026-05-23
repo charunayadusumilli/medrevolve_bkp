@@ -13,8 +13,9 @@ import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
 import {
   Globe, Database, Code2, Bot, Zap, CheckCircle2, Clock,
-  AlertTriangle, ArrowRight, Package, Shield, BarChart3, RefreshCw
+  AlertTriangle, ArrowRight, Package, Shield, BarChart3, RefreshCw, Rocket
 } from 'lucide-react';
+import DomainDeployPanel from '@/components/admin/DomainDeployPanel';
 
 const DOMAIN_COLORS = {
   B2C:   { bg: 'bg-green-500/15',  text: 'text-green-400',  border: 'border-green-500/30' },
@@ -80,7 +81,7 @@ function DomainCard({ key: dk, domain, data }) {
 }
 
 function SystemArchitectureInner() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('deploy');
 
   const pagesByDomain = Object.entries(SNAPSHOT.pages).reduce((acc, [name, data]) => {
     const d = data.domain;
@@ -129,8 +130,11 @@ function SystemArchitectureInner() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="bg-white/5 border border-white/10 rounded-xl p-1 mb-6 flex-wrap h-auto gap-1">
+            <TabsTrigger value="deploy" className="rounded-lg text-xs text-white/50 data-[state=active]:text-white data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-300">
+              <Rocket className="w-3.5 h-3.5 mr-1" />Deploy Domains
+            </TabsTrigger>
             <TabsTrigger value="overview" className="rounded-lg text-xs text-white/50 data-[state=active]:text-white data-[state=active]:bg-white/10">
-              <Globe className="w-3.5 h-3.5 mr-1" />Domains
+              <Globe className="w-3.5 h-3.5 mr-1" />Architecture
             </TabsTrigger>
             <TabsTrigger value="pages" className="rounded-lg text-xs text-white/50 data-[state=active]:text-white data-[state=active]:bg-white/10">
               <Code2 className="w-3.5 h-3.5 mr-1" />Pages
@@ -151,6 +155,11 @@ function SystemArchitectureInner() {
               <AlertTriangle className="w-3.5 h-3.5 mr-1" />Action Items
             </TabsTrigger>
           </TabsList>
+
+          {/* DEPLOY TAB */}
+          <TabsContent value="deploy">
+            <DomainDeployPanel />
+          </TabsContent>
 
           {/* DOMAINS TAB */}
           <TabsContent value="overview" className="space-y-4">

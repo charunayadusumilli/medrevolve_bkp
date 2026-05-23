@@ -16,17 +16,19 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
 "@/components/ui/dropdown-menu";
 
-// Domain-aware home redirect
+// Domain-aware home redirect — only fires on LIVE published domains, never in DEV/preview
 function DomainHomeRedirect() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     const domain = detectDomain();
+    // Only redirect on actual live domains — never in Base44 preview/dev
+    if (domain === 'DEV') return;
     const DOMAIN_HOME = { B2C: '/', B2B: '/ForBusiness', RUO: '/ResearchProducts', WATER: '/WaterHome' };
-    if (domain !== 'DEV' && location.pathname === '/' && DOMAIN_HOME[domain] && DOMAIN_HOME[domain] !== '/') {
+    if (location.pathname === '/' && DOMAIN_HOME[domain] && DOMAIN_HOME[domain] !== '/') {
       navigate(DOMAIN_HOME[domain], { replace: true });
     }
-  }, []);
+  }, [location.pathname]);
   return null;
 }
 
