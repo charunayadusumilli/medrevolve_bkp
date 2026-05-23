@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEOHead from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
@@ -171,6 +172,10 @@ export default function ForBusiness() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+      <SEOHead
+        title="White-Label Telehealth Platform for Wellness Merchants | MedRevolve B2B"
+        description="Launch your own GLP-1, RUO, or supplement brand in days. Full platform: website, telehealth, pharmacy, compliance, and payments."
+      />
 
       {/* ── Hero ── */}
       <section className="relative bg-[#060606] pt-20 pb-28 px-6 lg:px-8 overflow-hidden">

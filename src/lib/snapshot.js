@@ -11,16 +11,16 @@
  */
 
 export const SNAPSHOT = {
-  version: '1.0.0',
-  snapshot_date: '2026-05-22',
-  build_phase: 'God Mode Separation',
+  version: '2.0.0',
+  snapshot_date: '2026-05-23',
+  build_phase: 'God Mode — Full Deploy',
 
   // ── DOMAINS ──────────────────────────────────────────────────────────────
   domains: {
-    B2C:    { url: 'medrevolve.com',          status: 'pending_domain', priority: 1, compliance: 'LegitScript_Required' },
-    B2B:    { url: 'medrevolveb2b.com',        status: 'pending_domain', priority: 2, compliance: 'Standard_B2B' },
-    RUO:    { url: 'medrevolveruo.com',        status: 'pending_domain', priority: 3, compliance: 'RUO_FDA_Disclaimer' },
-    WATER:  { url: 'medrevolvewater.com',      status: 'pending_domain', priority: 4, compliance: 'Standard_Ecommerce' },
+    B2C:    { url: 'medrevolve.com',          status: 'pending', priority: 1, compliance: 'LegitScript_Required', stripe_product: 'prod_UZHDOgZoLCgqwb', stripe_price: 'price_1Ta8fTElLZoWknW5PY6Ef5NA', note: 'Domains configured — awaiting DNS propagation' },
+    B2B:    { url: 'medrevolveb2b.com',        status: 'pending', priority: 2, compliance: 'Standard_B2B', stripe_product: 'prod_UZHDKsaaYMWlIh', stripe_price: 'price_1Ta8fTElLZoWknW5wwHbV69f', note: 'Domains configured — awaiting DNS propagation' },
+    RUO:    { url: 'medrevolveruo.com',        status: 'pending', priority: 3, compliance: 'RUO_FDA_Disclaimer', note: 'Domains configured — awaiting DNS propagation' },
+    WATER:  { url: 'medrevolvewater.com',      status: 'pending', priority: 4, compliance: 'Standard_Ecommerce', note: 'Domains configured — awaiting DNS propagation' },
     DEV:    { url: 'base44.app (current)',     status: 'live',           priority: 0, compliance: 'ALL' },
   },
 
@@ -65,8 +65,8 @@ export const SNAPSHOT = {
     // RUO Pages
     ResearchProducts:     { domain: 'RUO', status: 'built', file: 'pages/ResearchProducts.jsx', priority: 'critical' },
 
-    // WATER Pages (Planned)
-    WaterHome:            { domain: 'WATER', status: 'planned', file: 'pages/WaterHome.jsx', priority: 'medium' },
+    // WATER Pages
+    WaterHome:            { domain: 'WATER', status: 'built', file: 'pages/WaterHome.jsx', priority: 'critical' },
     WaterProducts:        { domain: 'WATER', status: 'planned', file: 'pages/WaterProducts.jsx', priority: 'medium' },
 
     // Admin/Dev Only
@@ -164,9 +164,9 @@ export const SNAPSHOT = {
     merchant_success:      { domain: 'B2B',   status: 'built', file: 'agents/merchant_success.json' },
     compliance_advisor:    { domain: 'ADMIN', status: 'built', file: 'agents/compliance_advisor.json' },
     partnership_outreach:  { domain: 'B2B',   status: 'built', file: 'agents/partnership_outreach.json' },
-    // Planned agents
-    ruo_research_assistant:{ domain: 'RUO',   status: 'planned', file: 'agents/ruo_research_assistant.json' },
-    water_wellness_guide:  { domain: 'WATER', status: 'planned', file: 'agents/water_wellness_guide.json' },
+    // Deployed agents
+    ruo_research_assistant:{ domain: 'RUO',   status: 'built', file: 'agents/ruo_research_assistant.json' },
+    water_wellness_guide:  { domain: 'WATER', status: 'built', file: 'agents/water_wellness_guide.json' },
   },
 
   // ── INTEGRATIONS / CONNECTORS ────────────────────────────────────────────
@@ -187,16 +187,16 @@ export const SNAPSHOT = {
 
   // ── PENDING ACTION ITEMS ─────────────────────────────────────────────────
   action_items: [
-    { priority: 1, item: 'Acquire domains: medrevolve.com, medrevolveb2b.com, medrevolveruo.com, medrevolvewater.com' },
-    { priority: 2, item: 'Configure GoDaddy DNS to point domains to Base44 published URLs' },
-    { priority: 3, item: 'Obtain PURERX_API_KEY from Karthik and build PureRx integration functions' },
-    { priority: 4, item: 'Submit medrevolve.com for LegitScript certification' },
-    { priority: 5, item: 'Build WaterHome and WaterProducts pages for medrevolvewater.com' },
-    { priority: 6, item: 'Build RUO research_assistant agent with institutional ordering workflow' },
-    { priority: 7, item: 'Set Facebook Pixel ID in index.html' },
-    { priority: 8, item: 'Submit sitemap to Google Search Console for each domain' },
-    { priority: 9, item: 'Implement Stripe products/prices for GLP consultation tiers' },
-    { priority: 10, item: 'Set BELUGA_API_KEY and BELUGA_PARTNER_ID when Beluga account is provisioned' },
+    { priority: 1, item: 'GoDaddy DNS: Point medrevolve.com, medrevolveb2b.com, medrevolveruo.com, medrevolvewater.com CNAME/A records to Base44 published app URL' },
+    { priority: 2, item: 'Submit medrevolve.com for LegitScript certification (required before GLP-1 Google/Meta ads)' },
+    { priority: 3, item: 'Obtain PURERX_API_KEY + PURERX_SECRET from Karthik at purerx.org — needed to activate syncPureRxProducts, submitPureRxOrder, pureRxWebhook functions' },
+    { priority: 4, item: 'Set BELUGA_API_KEY and BELUGA_PARTNER_ID when Beluga telehealth account is provisioned' },
+    { priority: 5, item: 'Build WaterProducts page for medrevolvewater.com e-commerce catalog' },
+    { priority: 6, item: 'Set Facebook Pixel ID in index.html for Meta ad tracking' },
+    { priority: 7, item: 'Submit XML sitemap to Google Search Console for each domain after DNS confirmed' },
+    { priority: 8, item: 'Set CTM (Call Tracking Metrics) phone numbers per domain for call attribution' },
+    { priority: 9, item: 'Confirm Stripe consultation prices with medical team — current: $199 consult, $399/mo subscription, $2,999/mo B2B' },
+    { priority: 10, item: 'Add Google Tag Manager container IDs per domain for conversion tracking' },
   ],
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEOHead from '@/components/SEOHead';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, FlaskConical, ShieldAlert, X, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -214,6 +215,10 @@ export default function ResearchProducts() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-white">
+      <SEOHead
+        title="Research Compound Catalog | MedRevolve Research (RUO)"
+        description="HPLC-certified peptides and research compounds for licensed institutions. COA provided. For research use only — not for human use."
+      />
 
       {/* ── RUO Compliance Banner — REQUIRED ────────────────────────────── */}
       <div className="bg-red-900/70 border-b border-red-700/50 text-red-200 text-xs text-center py-3 px-4 leading-relaxed">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { detectDomain, NAV_CONFIG, BRAND } from '@/lib/domainConfig';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,20 @@ import AIAssistant from '@/components/chat/AIAssistant';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
 "@/components/ui/dropdown-menu";
+
+// Domain-aware home redirect
+function DomainHomeRedirect() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const domain = detectDomain();
+    const DOMAIN_HOME = { B2C: '/', B2B: '/ForBusiness', RUO: '/ResearchProducts', WATER: '/WaterHome' };
+    if (domain !== 'DEV' && location.pathname === '/' && DOMAIN_HOME[domain] && DOMAIN_HOME[domain] !== '/') {
+      navigate(DOMAIN_HOME[domain], { replace: true });
+    }
+  }, []);
+  return null;
+}
 
 export default function Layout({ children }) {
   useEffect(() => {
@@ -58,6 +73,9 @@ export default function Layout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
+  const domain = detectDomain();
+  const brand = BRAND[domain] || BRAND.DEV;
+  const domainNav = NAV_CONFIG[domain] || [];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -90,6 +108,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
+      <DomainHomeRedirect />
       <AnalyticsTracker />
       <AIAssistant />
 
@@ -112,11 +131,18 @@ export default function Layout({ children }) {
               <span className="text-base font-bold text-white tracking-tight">MedRevolve</span>
             </Link>
 
-            {/* Desktop Nav — simple 4 links */}
+            {/* Desktop Nav — domain-aware */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                Platform
-              </Link>
+              {domain === 'DEV' || domain === 'B2C' ? (
+                <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                  Platform
+                </Link>
+              ) : null}
+              {domainNav.slice(0, 4).map(item => (
+                <Link key={item.path} to={item.path} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+                  {item.label}
+                </Link>
+              ))}
               <a href="tel:+17044263311" className="text-sm text-[#4A6741] hover:text-[#6B8F5E] transition-colors flex items-center gap-1">
                 <Phone className="w-3 h-3" />
                 (704) 426-3311

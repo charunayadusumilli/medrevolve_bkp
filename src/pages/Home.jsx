@@ -1,4 +1,5 @@
 import React from 'react';
+import SEOHead from '@/components/SEOHead';
 import HeroSection from '@/components/home/HeroSection';
 import StartPlatformCTA from '@/components/home/StartPlatformCTA';
 import JourneySelector from '@/components/home/JourneySelector';
@@ -15,6 +16,10 @@ import PhoneCTA from '@/components/home/PhoneCTA';
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#080808]">
+      <SEOHead
+        title="MedRevolve — GLP-1 Telehealth & Weight Loss Platform"
+        description="Access physician-supervised GLP-1 programs, hormone therapy, and personalized telehealth — all from home. Licensed providers, compliant pharmacy."
+      />
       {/* 1. Hero — rotating pillars, cinematic dark */}
       <HeroSection />
 

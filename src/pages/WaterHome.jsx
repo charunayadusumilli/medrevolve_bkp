@@ -4,6 +4,7 @@
  * Compliance: Standard E-Commerce only — NO medical claims
  */
 import React from 'react';
+import SEOHead from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -44,6 +45,10 @@ const PRODUCTS = [
 export default function WaterHome() {
   return (
     <div className="min-h-screen bg-[#060F1A] text-white">
+      <SEOHead
+        title="Pure Wellness Hydration Products | MedRevolve Wellness"
+        description="Premium water enhancement and hydration products. Clean formulas, third-party tested, science-backed. No compromises."
+      />
 
       {/* Top compliance bar */}
       <div className="bg-[#0A1628] border-b border-white/5 text-center py-2 px-4">

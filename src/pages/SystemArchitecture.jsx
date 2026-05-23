@@ -113,7 +113,7 @@ function SystemArchitectureInner() {
             {[
               { label: 'Pages Built', value: `${builtPages}/${totalPages}`, icon: Code2, color: 'text-green-400' },
               { label: 'Live Integrations', value: liveIntegrations, icon: Zap, color: 'text-blue-400' },
-              { label: 'Domains Pending', value: 4, icon: Globe, color: 'text-orange-400' },
+              { label: 'Domains Configured', value: 4, icon: Globe, color: 'text-green-400' },
               { label: 'Action Items', value: pendingActions, icon: AlertTriangle, color: 'text-amber-400' },
             ].map(stat => (
               <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center gap-3">
