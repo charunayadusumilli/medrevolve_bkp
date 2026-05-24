@@ -53,8 +53,13 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No posts generated' }, { status: 500 });
     }
 
-    // Step 2: Generate AI images and upload to Google Drive
-    const googleDriveToken = await base44.asServiceRole.connectors.getConnection('googledrive');
+    // Step 2: Generate AI images (Drive backup is optional)
+    let googleDriveToken = null;
+    try {
+      googleDriveToken = await base44.asServiceRole.connectors.getConnection('googledrive');
+    } catch (e) {
+      console.log('[INFO] Google Drive not connected — skipping Drive backup');
+    }
     
     const generatedPosts = [];
     
@@ -71,53 +76,40 @@ Deno.serve(async (req) => {
         const imageUrl = imageResponse.url;
         console.log(`[INFO] Using Base44 image URL: ${imageUrl}`);
         
-        // Upload to Google Drive for backup storage
-        try {
-          const driveResponse = await fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=media`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${googleDriveToken.accessToken}`,
-              'Content-Type': 'image/jpeg'
-            },
-            body: await fetch(imageUrl).then(r => r.arrayBuffer())
-          });
-          
-          const driveData = await driveResponse.json();
-          console.log(`[INFO] Backup uploaded to Drive: ${driveData.id}`);
-          
-          // Create SocialPost record
-          const socialPost = await base44.entities.SocialPost.create({
-            platform: "instagram",
-            caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
-            image_url: imageUrl,
-            status: "draft",
-            notes: `AI-generated content. Drive backup ID: ${driveData.id}`
-          });
-          
-          generatedPosts.push({
-            post,
-            imageUrl,
-            driveId: driveData.id,
-            socialPostId: socialPost.id
-          });
-        } catch (driveError) {
-          console.error('[WARN] Drive upload failed, continuing with Base44 URL:', driveError.message);
-          
-          // Still create the post record even if Drive fails
-          const socialPost = await base44.entities.SocialPost.create({
-            platform: "instagram",
-            caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
-            image_url: imageUrl,
-            status: "draft",
-            notes: `AI-generated content (Drive upload failed)`
-          });
-          
-          generatedPosts.push({
-            post,
-            imageUrl,
-            socialPostId: socialPost.id
-          });
+        // Upload to Google Drive for backup storage (optional)
+        let driveId = null;
+        if (googleDriveToken) {
+          try {
+            const driveResponse = await fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=media`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${googleDriveToken.accessToken}`,
+                'Content-Type': 'image/jpeg'
+              },
+              body: await fetch(imageUrl).then(r => r.arrayBuffer())
+            });
+            const driveData = await driveResponse.json();
+            driveId = driveData.id;
+            console.log(`[INFO] Backup uploaded to Drive: ${driveId}`);
+          } catch (driveError) {
+            console.warn('[WARN] Drive upload failed:', driveError.message);
+          }
         }
+
+        const socialPost = await base44.entities.SocialPost.create({
+          platform: "instagram",
+          caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
+          image_url: imageUrl,
+          status: "draft",
+          notes: driveId ? `AI-generated content. Drive backup ID: ${driveId}` : `AI-generated content`
+        });
+        
+        generatedPosts.push({
+          post,
+          imageUrl,
+          driveId,
+          socialPostId: socialPost.id
+        });
         
       } catch (error) {
         console.error('[ERROR] Failed to generate post:', error.message);

@@ -96,6 +96,10 @@ Deno.serve(async (req) => {
         throw new Error('Failed to create media container: ' + JSON.stringify(containerData));
       }
 
+      // Wait longer for Instagram to process the image (Instagram requires up to 10s)
+      console.log('[INFO] Waiting 10s for Instagram to process image...');
+      await new Promise(resolve => setTimeout(resolve, 10000));
+
       // Publish the post
       const publishResponse = await fetch(
         `https://graph.instagram.com/${userData.id}/media_publish?creation_id=${containerData.id}&access_token=${accessToken}`,
