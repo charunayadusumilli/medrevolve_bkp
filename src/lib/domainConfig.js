@@ -25,12 +25,14 @@ export const DOMAINS = {
 
 // Detect which domain context we are running on
 export function detectDomain() {
-  const hostname = window.location.hostname;
-  if (hostname.includes('medrevolveruo'))   return 'RUO';
-  if (hostname.includes('medrevolveb2b'))   return 'B2B';
-  if (hostname.includes('medrevolvewater')) return 'WATER';
-  if (hostname.includes('admin.medrevolve')) return 'ADMIN';
-  if (hostname.includes('medrevolve.com') && !hostname.includes('b2b') && !hostname.includes('ruo') && !hostname.includes('water')) return 'B2C';
+  const hostname = window.location.hostname.toLowerCase();
+  // Order matters — check most-specific subdomains first
+  if (hostname.includes('admin.medrevolve'))  return 'ADMIN';
+  if (hostname.includes('medrevolveruo'))     return 'RUO';
+  if (hostname.includes('medrevolvewater'))   return 'WATER';
+  if (hostname.includes('medrevolveb2b'))     return 'B2B';
+  // Only exact medrevolve.com (or www.) — never preview/base44 hosts
+  if (hostname === 'medrevolve.com' || hostname === 'www.medrevolve.com') return 'B2C';
   return 'DEV'; // localhost / base44 preview
 }
 

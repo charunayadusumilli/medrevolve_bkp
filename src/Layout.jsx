@@ -17,6 +17,8 @@ import {
 "@/components/ui/dropdown-menu";
 
 // Domain-aware home redirect — only fires on LIVE published domains, never in DEV/preview
+const DOMAIN_HOME_MAP = { B2C: '/', B2B: '/ForBusiness', RUO: '/ResearchProducts', WATER: '/WaterHome', ADMIN: '/AdminDashboard' };
+
 function DomainHomeRedirect() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,9 +26,9 @@ function DomainHomeRedirect() {
     const domain = detectDomain();
     // Only redirect on actual live domains — never in Base44 preview/dev
     if (domain === 'DEV') return;
-    const DOMAIN_HOME = { B2C: '/', B2B: '/ForBusiness', RUO: '/ResearchProducts', WATER: '/WaterHome' };
-    if (location.pathname === '/' && DOMAIN_HOME[domain] && DOMAIN_HOME[domain] !== '/') {
-      navigate(DOMAIN_HOME[domain], { replace: true });
+    const home = DOMAIN_HOME_MAP[domain];
+    if (home && home !== '/' && location.pathname === '/') {
+      navigate(home, { replace: true });
     }
   }, [location.pathname]);
   return null;
@@ -137,11 +139,11 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-2.5 flex-shrink-0">
+            <Link to={DOMAIN_HOME_MAP[domain] || '/'} className="flex items-center gap-2.5 flex-shrink-0">
               <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
-                <span className="text-black font-black text-[11px] tracking-tight">MR</span>
+                <span className="text-black font-black text-[11px] tracking-tight">{brand.logoText}</span>
               </div>
-              <span className="text-base font-bold text-white tracking-tight">MedRevolve</span>
+              <span className="text-base font-bold text-white tracking-tight">{brand.name}</span>
             </Link>
 
             {/* Desktop Nav — domain-aware */}
@@ -248,9 +250,9 @@ export default function Layout({ children }) {
               </Button>
               }
 
-              <Link to={createPageUrl('MerchantOnboarding')} className="hidden sm:block">
+              <Link to={domain === 'B2B' ? '/ForBusiness' : createPageUrl('MerchantOnboarding')} className="hidden sm:block">
                 <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
-                  Get Started
+                  {domain === 'B2B' ? 'View Platform' : 'Get Started'}
                 </Button>
               </Link>
 
@@ -264,11 +266,11 @@ export default function Layout({ children }) {
                 <SheetContent side="right" className="w-full max-w-sm bg-[#0A0A0A] border-l border-white/10 p-0">
                   <div className="flex flex-col h-full">
                     <div className="flex items-center justify-between p-5 border-b border-white/10">
-                      <Link to={createPageUrl('Home')} className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
+                      <Link to={DOMAIN_HOME_MAP[domain] || '/'} className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
                         <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
-                          <span className="text-black font-black text-[10px]">MR</span>
+                          <span className="text-black font-black text-[10px]">{brand.logoText}</span>
                         </div>
-                        <span className="text-base font-bold text-white">MedRevolve</span>
+                        <span className="text-base font-bold text-white">{brand.name}</span>
                       </Link>
                     </div>
 
@@ -296,9 +298,9 @@ export default function Layout({ children }) {
                             onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          <Link to={createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
+                          <Link to={domain === 'B2B' ? '/ForBusiness' : createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
                             <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                              Get Started
+                              {domain === 'B2B' ? 'View Platform' : 'Get Started'}
                             </Button>
                           </Link>
                         </>
@@ -325,9 +327,9 @@ export default function Layout({ children }) {
             <div className="lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-5">
                 <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
-                  <span className="text-black font-black text-[10px]">MR</span>
+                  <span className="text-black font-black text-[10px]">{brand.logoText}</span>
                 </div>
-                <span className="text-base font-bold text-white">MedRevolve</span>
+                <span className="text-base font-bold text-white">{brand.name}</span>
               </div>
               <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-xs">
                 The complete platform to launch a compliant telehealth, GLP-1, or RUO business — website, marketing, compliance, and university support under your brand.
@@ -343,11 +345,23 @@ export default function Layout({ children }) {
             <div>
               <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Platform</h4>
               <ul className="space-y-3">
-                <li><Link to={createPageUrl('TelehealthPlatform')} className="text-white/45 hover:text-white text-sm transition-colors">Telehealth</Link></li>
-                <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
-                <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
-                <li><Link to={createPageUrl('BookAppointment')} className="text-white/45 hover:text-white text-sm transition-colors">Book a Consultation</Link></li>
-                <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
+                {domain === 'B2B' ? (
+                  <>
+                    <li><Link to="/ForBusiness" className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
+                    <li><Link to="/MerchantOnboarding" className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
+                    <li><Link to="/PartnerProgram" className="text-white/45 hover:text-white text-sm transition-colors">Partner Program</Link></li>
+                    <li><Link to="/ForCreators" className="text-white/45 hover:text-white text-sm transition-colors">Creator Program</Link></li>
+                    <li><Link to="/MerchantDemo" className="text-white/45 hover:text-white text-sm transition-colors">See Demo</Link></li>
+                  </>
+                ) : (
+                  <>
+                    <li><Link to={createPageUrl('TelehealthPlatform')} className="text-white/45 hover:text-white text-sm transition-colors">Telehealth</Link></li>
+                    <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
+                    <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
+                    <li><Link to={createPageUrl('BookAppointment')} className="text-white/45 hover:text-white text-sm transition-colors">Book a Consultation</Link></li>
+                    <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
+                  </>
+                )}
               </ul>
             </div>
 
