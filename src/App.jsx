@@ -24,6 +24,7 @@ import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import CookiePolicy from './pages/CookiePolicy';
 import SystemArchitecture from './pages/SystemArchitecture';
 import WaterHome from './pages/WaterHome';
+import ProjectManagement from './pages/ProjectManagement';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -89,6 +90,7 @@ const AuthenticatedApp = () => {
       <Route path="/CookiePolicy" element={<LayoutWrapper currentPageName="CookiePolicy"><CookiePolicy /></LayoutWrapper>} />
       <Route path="/SystemArchitecture" element={<LayoutWrapper currentPageName="SystemArchitecture"><SystemArchitecture /></LayoutWrapper>} />
       <Route path="/WaterHome" element={<LayoutWrapper currentPageName="WaterHome"><WaterHome /></LayoutWrapper>} />
+      <Route path="/ProjectManagement" element={<LayoutWrapper currentPageName="ProjectManagement"><ProjectManagement /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

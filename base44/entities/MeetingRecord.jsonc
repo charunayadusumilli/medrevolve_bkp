@@ -1,0 +1,109 @@
+{
+  "name": "MeetingRecord",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Meeting title"
+    },
+    "google_event_id": {
+      "type": "string",
+      "description": "Google Calendar event ID"
+    },
+    "meet_link": {
+      "type": "string",
+      "description": "Google Meet URL"
+    },
+    "event_link": {
+      "type": "string",
+      "description": "Google Calendar HTML link"
+    },
+    "organizer_email": {
+      "type": "string",
+      "description": "Organizer email"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of attendee emails"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Meeting start time"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Meeting end time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "scheduled",
+      "description": "Meeting status"
+    },
+    "recording_url": {
+      "type": "string",
+      "description": "URL of the meeting recording (uploaded)"
+    },
+    "transcript_raw": {
+      "type": "string",
+      "description": "Raw transcript text from Whisper"
+    },
+    "transcript_summary": {
+      "type": "string",
+      "description": "AI-generated summary of the transcript"
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "due": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "AI-extracted action items"
+    },
+    "tickets_created": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ticket IDs created from this meeting"
+    },
+    "transcription_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Status of transcription pipeline"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Manual notes"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

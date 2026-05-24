@@ -1,0 +1,117 @@
+{
+  "name": "Ticket",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Ticket title / summary"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full description of the ticket"
+    },
+    "bucket": {
+      "type": "string",
+      "enum": [
+        "support",
+        "engineering",
+        "marketing",
+        "operations",
+        "compliance",
+        "product",
+        "other"
+      ],
+      "default": "support",
+      "description": "Department / bucket this ticket belongs to"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Priority level"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "in_progress",
+        "review",
+        "resolved",
+        "closed"
+      ],
+      "default": "open",
+      "description": "Current status"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Email of the assigned team member"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Display name of assigned team member"
+    },
+    "reporter_email": {
+      "type": "string",
+      "description": "Who reported / created this ticket"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "meeting_transcript",
+        "email",
+        "support_form"
+      ],
+      "default": "manual",
+      "description": "How this ticket was created"
+    },
+    "meeting_id": {
+      "type": "string",
+      "description": "Related MeetingRecord ID (if from a meeting)"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Due date"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for filtering"
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Thread of comments"
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether assignment notification email was sent"
+    }
+  },
+  "required": [
+    "title",
+    "bucket"
+  ]
+}
