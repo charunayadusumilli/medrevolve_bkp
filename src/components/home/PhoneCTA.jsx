@@ -35,8 +35,9 @@ export default function PhoneCTA() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <a href="tel:+18005551234" className="text-white/60 hover:text-white text-sm font-medium transition-colors">
-              Or call us: (800) 555-1234
+            <a href="tel:+17044263311" className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
+              <Phone className="w-4 h-4" />
+              Or call now: (704) 426-3311
             </a>
           </div>
         </motion.div>

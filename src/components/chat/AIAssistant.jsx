@@ -289,12 +289,12 @@ export default function AIAssistant() {
               </div>
               <div>
               <div className="flex items-center gap-2">
-                <p className="font-bold text-white text-sm leading-tight">AI Solutions Architect</p>
-                <span className="px-1.5 py-0.5 bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] rounded-full text-[8px] font-bold text-white uppercase tracking-wider">AI</span>
+                <p className="font-bold text-white text-sm leading-tight">Melinda</p>
+                <span className="px-1.5 py-0.5 bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] rounded-full text-[8px] font-bold text-white uppercase tracking-wider">MedRevolve</span>
               </div>
               <p className="text-[10px] text-white/50 leading-tight flex items-center gap-1">
                 <span className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse" />
-                Online · Powered by AI
+                AI Receptionist · (704) 426-3311
               </p>
               </div>
               </div>
