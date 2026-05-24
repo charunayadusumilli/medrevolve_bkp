@@ -9,6 +9,7 @@ import {
   MessageSquare, RefreshCw, Play, BarChart3, 
   UserCheck, Building2, Zap, ExternalLink, Calendar
 } from 'lucide-react';
+import DailyActiveUsersChart from '@/components/analytics/DailyActiveUsersChart';
 import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
 
@@ -43,12 +44,13 @@ function GrowthDashboardInner() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [socialRes, analyticsRes] = await Promise.all([
+      const [socialRes, analyticsRes, gaRes] = await Promise.all([
         base44.functions.invoke('getSocialAnalytics', {}),
         base44.functions.invoke('getAnalytics', { days: 30 }),
+        base44.functions.invoke('getGoogleAnalyticsData', { days: 7 }).catch(() => ({ data: null })),
       ]);
       setData(socialRes.data);
-      setSiteAnalytics(analyticsRes.data);
+      setSiteAnalytics({ ...analyticsRes.data, gaDailyUsers: gaRes.data?.dailyActiveUsers || null });
     } catch (e) {
       console.error(e);
     }
@@ -153,6 +155,9 @@ function GrowthDashboardInner() {
               </div>
 
               {/* Traffic sources side by side */}
+              {/* Daily Active Users from Google Analytics */}
+              <DailyActiveUsersChart dailyUsers={siteAnalytics?.gaDailyUsers} />
+
               <div className="grid md:grid-cols-2 gap-4">
                 <Card>
                   <CardHeader><CardTitle className="text-sm font-semibold flex items-center gap-2"><Globe className="w-4 h-4" />Website Traffic Sources</CardTitle></CardHeader>
