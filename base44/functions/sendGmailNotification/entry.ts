@@ -18,11 +18,12 @@ Deno.serve(async (req) => {
     const emailLines = [
       `From: MedRevolve <rned@medrevolve.com>`,
       `To: ${to}`,
-      `Subject: ${subject}`,
+      `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=`,
       'MIME-Version: 1.0',
       'Content-Type: text/html; charset=UTF-8',
+      'Content-Transfer-Encoding: base64',
       '',
-      html,
+      btoa(unescape(encodeURIComponent(html))),
     ];
     const raw = btoa(unescape(encodeURIComponent(emailLines.join('\r\n'))))
       .replace(/\+/g, '-')

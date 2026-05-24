@@ -111,14 +111,15 @@ Deno.serve(async (req) => {
       const mimeMessage = [
         `From: ${fromName} <rned@medrevolve.com>`,
         `To: ${to}`,
-        `Subject: ${subject}`,
+        `Subject: =?UTF-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=`,
         `MIME-Version: 1.0`,
         `Content-Type: multipart/alternative; boundary="${boundary}"`,
         ``,
         `--${boundary}`,
         `Content-Type: text/html; charset=UTF-8`,
+        `Content-Transfer-Encoding: base64`,
         ``,
-        htmlBody,
+        btoa(unescape(encodeURIComponent(htmlBody))),
         `--${boundary}--`,
       ].join('\r\n');
 
