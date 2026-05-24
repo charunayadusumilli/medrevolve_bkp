@@ -250,9 +250,9 @@ export default function Layout({ children }) {
               </Button>
               }
 
-              <Link to={domain === 'B2B' ? '/ForBusiness' : createPageUrl('MerchantOnboarding')} className="hidden sm:block">
+              <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('MerchantOnboarding')} className="hidden sm:block">
                 <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
-                  {domain === 'B2B' ? 'View Platform' : 'Get Started'}
+                  {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Get Started'}
                 </Button>
               </Link>
 
@@ -298,9 +298,9 @@ export default function Layout({ children }) {
                             onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          <Link to={domain === 'B2B' ? '/ForBusiness' : createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
+                          <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
                             <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                              {domain === 'B2B' ? 'View Platform' : 'Get Started'}
+                              {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Get Started'}
                             </Button>
                           </Link>
                         </>
@@ -352,6 +352,14 @@ export default function Layout({ children }) {
                     <li><Link to="/PartnerProgram" className="text-white/45 hover:text-white text-sm transition-colors">Partner Program</Link></li>
                     <li><Link to="/ForCreators" className="text-white/45 hover:text-white text-sm transition-colors">Creator Program</Link></li>
                     <li><Link to="/MerchantDemo" className="text-white/45 hover:text-white text-sm transition-colors">See Demo</Link></li>
+                  </>
+                ) : domain === 'WATER' ? (
+                  <>
+                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">5mL Vials</a></li>
+                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">10mL Vials</a></li>
+                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">30mL Vials</a></li>
+                    <li><a href="/WaterHome#bulk" className="text-white/45 hover:text-white text-sm transition-colors">Bulk & Wholesale</a></li>
+                    <li><Link to="/Contact" className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
                   </>
                 ) : (
                   <>

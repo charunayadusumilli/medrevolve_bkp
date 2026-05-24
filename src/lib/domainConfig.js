@@ -26,14 +26,13 @@ export const DOMAINS = {
 // Detect which domain context we are running on
 export function detectDomain() {
   const hostname = window.location.hostname.toLowerCase();
-  // Order matters — check most-specific subdomains first
-  if (hostname.includes('admin.medrevolve'))  return 'ADMIN';
-  if (hostname.includes('medrevolveruo'))     return 'RUO';
-  if (hostname.includes('medrevolvewater'))   return 'WATER';
-  if (hostname.includes('medrevolveb2b'))     return 'B2B';
-  // Only exact medrevolve.com (or www.) — never preview/base44 hosts
-  if (hostname === 'medrevolve.com' || hostname === 'www.medrevolve.com') return 'B2C';
-  return 'DEV'; // localhost / base44 preview
+  // Order matters — most specific first, use exact domain matching to prevent false positives
+  if (hostname === 'admin.medrevolve.com')                                    return 'ADMIN';
+  if (hostname === 'medrevolveruo.com'  || hostname === 'www.medrevolveruo.com')  return 'RUO';
+  if (hostname === 'medrevolvewater.com'|| hostname === 'www.medrevolvewater.com') return 'WATER';
+  if (hostname === 'medrevolveb2b.com'  || hostname === 'www.medrevolveb2b.com')   return 'B2B';
+  if (hostname === 'medrevolve.com'     || hostname === 'www.medrevolve.com')      return 'B2C';
+  return 'DEV'; // localhost / base44 preview — full admin access
 }
 
 // Brand configurations per domain
@@ -75,16 +74,16 @@ export const BRAND = {
     compliance: ['RUO', 'FDA-Disclaimer', 'AgeGated'],
   },
   WATER: {
-    name: 'MedRevolve Wellness',
-    tagline: 'Pure Wellness Products',
-    primaryColor: '#2D9FBF',
-    secondaryColor: '#A8D4E5',
-    bgDark: '#060F1A',
-    bgLight: '#F5FBFF',
+    name: 'MedRevolve Water',
+    tagline: 'Bacteriostatic Water — USP Grade',
+    primaryColor: '#1E6EBF',
+    secondaryColor: '#4AB8D6',
+    bgDark: '#040C14',
+    bgLight: '#F0F7FF',
     logoText: 'MW',
-    accentColor: '#7BC8D6',
-    targetAudience: 'consumer',
-    compliance: ['StandardEcommerce'],
+    accentColor: '#60B8D6',
+    targetAudience: 'both',
+    compliance: ['ResearchUseOnly', 'USP', 'FDA-Registered'],
   },
   DEV: {
     name: 'MedRevolve [DEV]',
@@ -320,8 +319,8 @@ export const NAV_CONFIG = {
     { label: 'Contact', path: '/Contact' },
   ],
   WATER: [
-    { label: 'Products', path: '/WaterProducts' },
-    { label: 'About', path: '/WaterAbout' },
+    { label: 'Vial Products', path: '/WaterHome#products' },
+    { label: 'Bulk & Wholesale', path: '/WaterHome#bulk' },
     { label: 'Contact', path: '/Contact' },
   ],
 };
