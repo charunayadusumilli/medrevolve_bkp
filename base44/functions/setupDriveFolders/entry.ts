@@ -19,6 +19,10 @@ const SUBFOLDER_NAMES = [
   'Payments',
   'Partners',
   'Creators',
+  'Analytics',
+  'SocialMedia',
+  'Invoices',
+  'Intakes',
 ];
 
 Deno.serve(async (req) => {
