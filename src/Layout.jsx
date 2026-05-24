@@ -127,9 +127,19 @@ export default function Layout({ children }) {
       <AnalyticsTracker />
       <AIAssistant />
 
+      {/* Top Phone Bar - Always visible */}
+      <div className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white py-2 px-4 text-center sticky top-0 z-[60]">
+        <a href="tel:+12403875224" className="inline-flex items-center gap-2 text-sm font-bold hover:text-cyan-200 transition-colors">
+          <Phone className="w-4 h-4" />
+          <span className="hidden sm:inline">Talk to our team 24/7: </span>
+          <span className="text-base">240-387-5224</span>
+          <span className="text-[10px] opacity-70 ml-2">(Powered by IONOS AI)</span>
+        </a>
+      </div>
+
       {/* Header */}
       <motion.header
-        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`sticky top-[40px] left-0 right-0 z-50 transition-all duration-300 ${
           scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'
         }`}
         initial={{ y: -100 }}
@@ -158,8 +168,9 @@ export default function Layout({ children }) {
                   {item.label}
                 </Link>
               ))}
-              <a href="tel:+12403875224" className="text-sm text-[#4A6741] hover:text-[#6B8F5E] transition-colors flex items-center gap-1">
-                <Phone className="w-3 h-3" />
+              <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
+                <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden xl:inline">Call Now: </span>
                 240-387-5224
               </a>
 
@@ -286,7 +297,13 @@ export default function Layout({ children }) {
                       )}
                     </nav>
 
-                    <div className="p-5 border-t border-white/10 space-y-2">
+                    <div className="p-5 border-t border-white/10 space-y-3">
+                      {/* Phone CTA - Always visible in mobile */}
+                      <a href="tel:+12403875224" className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white text-center font-bold rounded-sm py-3 transition-colors">
+                        <Phone className="w-4 h-4 inline mr-2 -mt-0.5" />
+                        Call 240-387-5224
+                      </a>
+                      
                       {user ?
                         <Button variant="outline" className="w-full rounded-sm border-red-500/40 text-red-400 hover:bg-red-500/10"
                           onClick={() => {base44.auth.logout('/');setMobileMenuOpen(false);}}>
