@@ -133,7 +133,7 @@ export default function Layout({ children }) {
           <Phone className="w-4 h-4" />
           <span className="hidden sm:inline">Talk to our team 24/7: </span>
           <span className="text-base">240-387-5224</span>
-          <span className="text-[10px] opacity-70 ml-2">(Powered by IONOS AI)</span>
+
         </a>
       </div>
 
