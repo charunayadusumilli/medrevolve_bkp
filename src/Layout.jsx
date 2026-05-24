@@ -127,13 +127,16 @@ export default function Layout({ children }) {
       <AnalyticsTracker />
       <AIAssistant />
 
-      {/* Top Phone Bar - Always visible */}
-      <div className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white py-2 px-4 text-center sticky top-0 z-[60]">
-        <a href="tel:+12403875224" className="inline-flex items-center gap-2 text-sm font-bold hover:text-cyan-200 transition-colors">
-          <Phone className="w-4 h-4" />
-          <span className="hidden sm:inline">Talk to our team 24/7: </span>
-          <span className="text-base">240-387-5224</span>
-
+      {/* Top Phone Bar - Always visible with dynamic CTA */}
+      <div className="bg-gradient-to-r from-cyan-700 via-blue-700 to-cyan-700 text-white py-2.5 px-4 text-center sticky top-0 z-[60] animate-pulse-slow">
+        <a href="tel:+12403875224" className="inline-flex items-center gap-2.5 text-sm font-bold hover:scale-105 transition-all duration-300 group">
+          <div className="relative">
+            <Phone className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping" />
+          </div>
+          <span className="hidden sm:inline text-cyan-100 group-hover:text-white transition-colors">Start Here: </span>
+          <span className="text-lg font-black tracking-wide bg-white/20 px-3 py-0.5 rounded-full group-hover:bg-white/30 transition-all">240-387-5224</span>
+          <span className="hidden md:inline text-xs text-cyan-200 ml-1">← Click to Call Now</span>
         </a>
       </div>
 
@@ -330,6 +333,14 @@ export default function Layout({ children }) {
           </div>
         </div>
       </motion.header>
+
+      {/* Floating Call Button - Appears on scroll */}
+      <a
+        href="tel:+12403875224"
+        className="fixed bottom-6 right-6 z-[70] bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full p-4 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group animate-bounce-slow hidden lg:flex items-center gap-2 overflow-hidden">
+        <Phone className="w-6 h-6 flex-shrink-0 group-hover:rotate-12 transition-transform" />
+        <span className="font-bold text-sm whitespace-nowrap max-w-0 group-hover:max-w-xs transition-all duration-500">Call Now: 240-387-5224</span>
+      </a>
 
       {/* Main Content */}
       <main>
