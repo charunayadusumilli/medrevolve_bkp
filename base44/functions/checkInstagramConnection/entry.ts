@@ -3,13 +3,8 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
 
-    // Get Instagram access token from connector
+    // Get Instagram access token from connector (service role — no auth needed)
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
 
     // Get Instagram user info

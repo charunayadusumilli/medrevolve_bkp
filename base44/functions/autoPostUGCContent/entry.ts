@@ -4,11 +4,7 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     
-    // This is an automated function - use service role
-    const user = await base44.auth.me();
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // This is an automated function - use service role (no user auth needed)
 
     // UGC-style content templates with website links
     const ugcContent = [
@@ -81,8 +77,10 @@ Deno.serve(async (req) => {
       );
       const userData = await userResponse.json();
       
+      console.log('[DEBUG] Instagram me response:', JSON.stringify(userData));
+      
       if (!userData.id) {
-        throw new Error('Failed to get Instagram user ID');
+        throw new Error(`Failed to get Instagram user ID: ${JSON.stringify(userData)}`);
       }
 
       // Create Media Container
@@ -149,13 +147,12 @@ Deno.serve(async (req) => {
     const instagramPostId = await postToInstagram();
     
     // Save Instagram post record
-    await base44.entities.SocialPost.create({
+    await base44.asServiceRole.entities.SocialPost.create({
       platform: 'instagram',
       caption: selectedContent.caption,
       image_url: randomImage,
       post_id: instagramPostId,
       status: 'published',
-      created_by: user.email,
       notes: 'Auto-generated UGC content with medrevolve.com link'
     });
 
@@ -167,13 +164,12 @@ Deno.serve(async (req) => {
       facebookPostId = fbResult.postId;
       facebookPageId = fbResult.pageId;
       
-      await base44.entities.SocialPost.create({
+      await base44.asServiceRole.entities.SocialPost.create({
         platform: 'facebook',
         caption: selectedContent.caption,
         image_url: randomImage,
         post_id: facebookPostId,
         status: 'published',
-        created_by: user.email,
         notes: `Auto-generated UGC content with medrevolve.com link (Page: ${facebookPageId})`
       });
     } catch (fbError) {
