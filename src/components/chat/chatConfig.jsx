@@ -432,7 +432,7 @@ KEY LINKS
 • Book patient consult: [Book Appointment →](/BookAppointment)
 • Partner program: [Partner Program →](/PartnerProgram)
 • Contact / demo: [Contact Us →](/Contact)
-• Call now: [240-387-5224](tel:+17044263311)
+• Call now: [240-387-5224](tel:+12403875224)
 
 ${AI_SOLUTIONS_KNOWLEDGE}`;
 }

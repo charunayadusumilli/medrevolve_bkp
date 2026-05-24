@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 
 export default function PhoneIntakeCTA({ className = '' }) {
-  const trackingNumber = '(704) 426-3311';
+  const trackingNumber = '240-387-5224';
   
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <a 
-        href={`tel:+17044263311`}
+        href={`tel:+12403875224`}
         className="hidden sm:flex items-center gap-2 text-[#4A6741] hover:text-[#3D5636] transition-colors"
       >
         <Phone className="w-4 h-4" />

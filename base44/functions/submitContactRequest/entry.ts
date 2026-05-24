@@ -204,7 +204,7 @@ Deno.serve(async (req) => {
         <span style="color:rgba(255,255,255,0.4);font-size:12px;">MedRevolve Corporation</span>
       </td></tr>
       <tr><td align="center" style="padding-bottom:12px;">
-        <span style="color:rgba(255,255,255,0.5);font-size:11px;">📞 (234) 567-890 | ✉️ rned@medrevolve.com</span>
+        <span style="color:rgba(255,255,255,0.5);font-size:11px;">📞 240-387-5224 | ✉️ rned@medrevolve.com</span>
       </td></tr>
       <tr><td align="center" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:12px;padding-bottom:8px;">
         <table cellpadding="0" cellspacing="0">
@@ -301,7 +301,7 @@ Deno.serve(async (req) => {
         <span style="color:rgba(255,255,255,0.35);font-size:11px;">MedRevolve Corporation</span>
       </td></tr>
       <tr><td align="center" style="padding-bottom:10px;">
-        <span style="color:rgba(255,255,255,0.45);font-size:10px;">📞 (234) 567-890 | ✉️ rned@medrevolve.com</span>
+        <span style="color:rgba(255,255,255,0.45);font-size:10px;">📞 240-387-5224 | ✉️ rned@medrevolve.com</span>
       </td></tr>
       <tr><td align="center" style="border-top:1px solid rgba(255,255,255,0.12);padding-top:10px;padding-bottom:6px;">
         <table cellpadding="0" cellspacing="0">
