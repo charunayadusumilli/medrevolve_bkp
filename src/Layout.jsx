@@ -60,6 +60,17 @@ export default function Layout({ children }) {
       gtag('config', 'G-BZTEFSTDPL');
     }
 
+    // ── IONOS AI Voice Receptionist Web Chat ───────────────
+    if (!document.getElementById('ionos-web-chat')) {
+      const ionosScript = document.createElement('script');
+      ionosScript.id = 'ionos-web-chat';
+      ionosScript.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
+      ionosScript.setAttribute('name', 'web-chat');
+      ionosScript.setAttribute('data-client-secret', 'b7ca0b0f-ecbd-43b6-bddf-0ad67f8f6eb1');
+      ionosScript.defer = true;
+      document.body.appendChild(ionosScript);
+    }
+
     // ── Preconnect hints for fast image/video load ────────
     ['https://images.unsplash.com', 'https://videos.pexels.com'].forEach((href) => {
       if (!document.querySelector(`link[href="${href}"]`)) {
