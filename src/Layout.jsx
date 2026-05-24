@@ -156,9 +156,9 @@ export default function Layout({ children }) {
                   {item.label}
                 </Link>
               ))}
-              <a href="tel:+17044263311" className="text-sm text-[#4A6741] hover:text-[#6B8F5E] transition-colors flex items-center gap-1">
+              <a href="tel:+12403875224" className="text-sm text-[#4A6741] hover:text-[#6B8F5E] transition-colors flex items-center gap-1">
                 <Phone className="w-3 h-3" />
-                (704) 426-3311
+                240-387-5224
               </a>
 
               {/* Admin only */}
@@ -377,7 +377,7 @@ export default function Layout({ children }) {
                 <li><Link to="/CookiePolicy" className="text-white/45 hover:text-white text-sm transition-colors">Cookie Policy</Link></li>
                 <li><a href="mailto:support@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">support@medrevolve.com</a></li>
                 <li><a href="mailto:info@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">info@medrevolve.com</a></li>
-                <li><a href="tel:+17044263311" className="text-white/45 hover:text-white text-sm transition-colors">(704) 426-3311</a></li>
+                <li><a href="tel:+12403875224" className="text-white/45 hover:text-white text-sm transition-colors">240-387-5224</a></li>
               </ul>
             </div>
           </div>

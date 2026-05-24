@@ -35,9 +35,9 @@ export default function PhoneCTA() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <a href="tel:+17044263311" className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
+            <a href="tel:+12403875224" className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              Or call now: (704) 426-3311
+              Or call now: 240-387-5224
             </a>
           </div>
         </motion.div>

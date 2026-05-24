@@ -261,7 +261,7 @@ export const FAQ_BY_AUDIENCE = {
 const AI_SOLUTIONS_KNOWLEDGE = `
 ═══════════════════════════════════════════════════════════════════════════════
 MEDREVOLVE — COMPLETE PLATFORM KNOWLEDGE BASE
-Website: medrevolve.com | Phone: (704) 426-3311 | Email: info@medrevolve.com
+Website: medrevolve.com | Phone: 240-387-5224 | Email: info@medrevolve.com
 ═══════════════════════════════════════════════════════════════════════════════
 
 ▶ WHAT IS MEDREVOLVE?
@@ -345,7 +345,7 @@ WHOLESALE: No monthly fee — buy products at wholesale pricing
 PARTNERSHIP: Free to join — earn referral commissions
 
 ▶ CONTACT & SALES:
-Phone: (704) 426-3311 (AI receptionist answers 24/7, human team available Mon–Fri 9am–6pm ET)
+Phone: 240-387-5224 (AI receptionist answers 24/7, human team available Mon–Fri 9am–6pm ET)
 Email: info@medrevolve.com | support@medrevolve.com
 B2B Inquiries: rned@medrevolve.com
 Book a demo: /MerchantOnboarding
@@ -381,7 +381,7 @@ export function buildSystemPrompt(pageName, pageProduct) {
 
 CURRENT PAGE: ${pageName}${pageProduct ? ` (viewing: ${pageProduct})` : ''}
 PERSONA: ${ctx.persona}
-PHONE: (704) 426-3311
+PHONE: 240-387-5224
 
 ═══════════════════════════════════════
 ADAPT TO WHO YOU'RE TALKING TO
@@ -412,7 +412,7 @@ LAUNCH TIMELINE: 7–14 days for white-label merchants
 
 COMPLIANCE: HIPAA, FDA, FTC compliant. Licensed providers in all 50 states.
 
-PHONE: (704) 426-3311 — AI receptionist 24/7, human team Mon–Fri 9am–6pm ET
+PHONE: 240-387-5224 — AI receptionist 24/7, human team Mon–Fri 9am–6pm ET
 
 ═══════════════════════════════════════
 RESPONSE RULES
@@ -432,7 +432,7 @@ KEY LINKS
 • Book patient consult: [Book Appointment →](/BookAppointment)
 • Partner program: [Partner Program →](/PartnerProgram)
 • Contact / demo: [Contact Us →](/Contact)
-• Call now: [(704) 426-3311](tel:+17044263311)
+• Call now: [240-387-5224](tel:+17044263311)
 
 ${AI_SOLUTIONS_KNOWLEDGE}`;
 }

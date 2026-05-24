@@ -23,8 +23,8 @@ const contactMethods = [
     icon: Phone,
     title: 'Call Us',
     description: 'Mon-Fri from 8am to 6pm ET',
-    value: '(704) 426-3311',
-    action: 'tel:+17044263311'
+    value: '240-387-5224',
+    action: 'tel:+12403875224'
   },
   {
     icon: MessageCircle,
@@ -371,7 +371,7 @@ export default function Contact() {
                 <p className="text-[#5A6B5A]">
                   Charlotte, North Carolina<br />
                   United States<br />
-                  <span className="text-xs">(704) 426-3311</span>
+                  <span className="text-xs">240-387-5224</span>
                 </p>
               </div>
             </motion.div>
