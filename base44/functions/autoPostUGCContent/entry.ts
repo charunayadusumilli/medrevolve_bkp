@@ -54,15 +54,14 @@ Deno.serve(async (req) => {
     const randomIndex = Math.floor(Math.random() * ugcContent.length);
     const selectedContent = ugcContent[randomIndex];
 
-    // IMPORTANT: Replace these with your actual UGC image URLs hosted on your CDN, Google Drive, or image hosting
-    // Instagram requires images to be publicly accessible via direct URL
-    // Example: Upload to your Google Drive (connected) and use signed URLs, or use your CDN
+    // Use Base44-generated images or reliable CDN URLs
+    // Instagram requires HTTPS URLs that allow hotlinking
     const imageUrls = [
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1080&q=80",
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1080&q=80",
-      "https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1080&q=80",
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1080&q=80",
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1080&q=80"
+      "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1080&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1080&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1576091160550-217358c7db81?w=1080&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1551434678-e076c223a69c?w=1080&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1553877615-30c73e63cf53?w=1080&h=1080&fit=crop"
     ];
 
     const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
@@ -113,34 +112,10 @@ Deno.serve(async (req) => {
     };
 
     const postToFacebook = async () => {
-      const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
-      
-      // Get Facebook Page ID
-      const pageResponse = await fetch(
-        `https://graph.facebook.com/v18.0/me/accounts?access_token=${accessToken}`
-      );
-      const pagesData = await pageResponse.json();
-
-      if (!pagesData.data || pagesData.data.length === 0) {
-        throw new Error('No Facebook pages found');
-      }
-
-      const page = pagesData.data[0];
-      const pageAccessToken = page.access_token;
-      const pageId = page.id;
-
-      // Create Facebook post
-      const postResponse = await fetch(
-        `https://graph.facebook.com/v18.0/${pageId}/photos?url=${encodeURIComponent(randomImage)}&message=${encodeURIComponent(selectedContent.caption)}&access_token=${pageAccessToken}`,
-        { method: 'POST' }
-      );
-      const postData = await postResponse.json();
-
-      if (!postData.id) {
-        throw new Error('Failed to create Facebook post: ' + JSON.stringify(postData));
-      }
-
-      return { postId: postData.id, pageId };
+      // Note: Instagram connector token doesn't work for Facebook Graph API
+      // You need to connect Facebook Page separately or use Facebook connector
+      console.log('[INFO] Facebook posting requires separate Facebook Page connection');
+      throw new Error('Facebook not connected - connect Facebook Page in Base44 connectors');
     };
 
     // Post to Instagram (required)
@@ -156,7 +131,7 @@ Deno.serve(async (req) => {
       notes: 'Auto-generated UGC content with medrevolve.com link'
     });
 
-    // Try to post to Facebook (optional - may not have page connected)
+    // Try to post to Facebook (requires separate Facebook connection)
     let facebookPostId = null;
     let facebookPageId = null;
     try {
@@ -170,11 +145,13 @@ Deno.serve(async (req) => {
         image_url: randomImage,
         post_id: facebookPostId,
         status: 'published',
-        notes: `Auto-generated UGC content with medrevolve.com link (Page: ${facebookPageId})`
+        notes: `Auto-generated UGC content (Page: ${facebookPageId})`
       });
+      
+      console.log('[SUCCESS] Posted to Facebook:', facebookPostId);
     } catch (fbError) {
-      console.warn('Facebook posting skipped:', fbError.message);
-      // Continue - Instagram is the primary platform
+      console.log('[INFO] Facebook not posted:', fbError.message);
+      // Don't save Facebook post record if it failed
     }
 
     console.log('UGC content posted successfully!', {
