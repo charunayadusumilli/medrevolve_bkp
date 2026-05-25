@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Phone, Mail, Users, TrendingUp, Calendar, MessageSquare, 
   Play, RefreshCw, CheckCircle, Clock, AlertCircle, BarChart3,
-  Instagram, Facebook, Linkedin, Send
+  Instagram, Facebook, Linkedin, Send, Video
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
@@ -33,6 +33,20 @@ export default function MarketingDashboard() {
   const { data: inquiries = [] } = useQuery({
     queryKey: ['businessInquiries'],
     queryFn: () => base44.entities.BusinessInquiry.list('-created_date', 50),
+  });
+
+  // Fetch TikTok analytics
+  const { data: tiktokData } = useQuery({
+    queryKey: ['tiktokAnalytics'],
+    queryFn: () => base44.entities.TikTokAnalytics.list('-sync_date', 1).then(res => res[0]),
+  });
+
+  // Sync TikTok mutation
+  const syncTikTokMutation = useMutation({
+    mutationFn: () => base44.functions.invoke('syncTikTokAnalytics', {}),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tiktokAnalytics'] });
+    },
   });
 
   // Generate content mutation
@@ -138,12 +152,16 @@ export default function MarketingDashboard() {
             >
               <Card className="bg-white border-[#4A6741]/20 shadow-lg">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-[#6B8F5E]">Active Campaigns</CardTitle>
-                  <BarChart3 className="w-4 h-4 text-[#4A6741]" />
+                  <CardTitle className="text-sm font-medium text-[#6B8F5E]">TikTok Followers</CardTitle>
+                  <Video className="w-4 h-4 text-[#4A6741]" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-[#0A0A0A]">3</div>
-                  <p className="text-xs text-[#6B8F5E] mt-1">B2B, B2C, RUO</p>
+                  <div className="text-3xl font-bold text-[#0A0A0A]">
+                    {tiktokData?.follower_count || 0}
+                  </div>
+                  <p className="text-xs text-[#6B8F5E] mt-1">
+                    {tiktokData?.video_count || 0} videos
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -159,6 +177,10 @@ export default function MarketingDashboard() {
               <TabsTrigger value="social" className="data-[state=active]:bg-[#4A6741] data-[state=active]:text-white">
                 <Instagram className="w-4 h-4 mr-2" />
                 Social Media
+              </TabsTrigger>
+              <TabsTrigger value="tiktok" className="data-[state=active]:bg-[#4A6741] data-[state=active]:text-white">
+                <Video className="w-4 h-4 mr-2" />
+                TikTok
               </TabsTrigger>
               <TabsTrigger value="automation" className="data-[state=active]:bg-[#4A6741] data-[state=active]:text-white">
                 <Play className="w-4 h-4 mr-2" />
@@ -298,6 +320,88 @@ export default function MarketingDashboard() {
                   ))
                 )}
               </div>
+            </TabsContent>
+
+            {/* TikTok Tab */}
+            <TabsContent value="tiktok" className="space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-[#0A0A0A]">TikTok Analytics</h3>
+                <Button 
+                  onClick={() => syncTikTokMutation.mutate()}
+                  disabled={syncTikTokMutation.isPending}
+                  className="bg-[#4A6741] hover:bg-[#6B8F5E] text-white"
+                >
+                  <RefreshCw className={`w-4 h-4 mr-2 ${syncTikTokMutation.isPending ? 'animate-spin' : ''}`} />
+                  {syncTikTokMutation.isPending ? 'Syncing...' : 'Sync Now'}
+                </Button>
+              </div>
+
+              {tiktokData ? (
+                <div className="grid gap-4">
+                  <Card className="bg-white border-[#4A6741]/20">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        {tiktokData.avatar_url && (
+                          <img 
+                            src={tiktokData.avatar_url} 
+                            alt={tiktokData.username}
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                        )}
+                        <div>
+                          <CardTitle className="text-xl">@{tiktokData.username}</CardTitle>
+                          <CardDescription className="flex items-center gap-2">
+                            {tiktokData.nickname}
+                            {tiktokData.verified && (
+                              <CheckCircle className="w-4 h-4 text-blue-500" />
+                            )}
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      {tiktokData.bio && (
+                        <p className="text-sm text-[#6B8F5E] mb-4">{tiktokData.bio}</p>
+                      )}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="text-center p-4 bg-[#FDFBF7] rounded-lg">
+                          <div className="text-2xl font-bold text-[#0A0A0A]">
+                            {tiktokData.follower_count.toLocaleString()}
+                          </div>
+                          <p className="text-xs text-[#6B8F5E] mt-1">Followers</p>
+                        </div>
+                        <div className="text-center p-4 bg-[#FDFBF7] rounded-lg">
+                          <div className="text-2xl font-bold text-[#0A0A0A]">
+                            {tiktokData.following_count.toLocaleString()}
+                          </div>
+                          <p className="text-xs text-[#6B8F5E] mt-1">Following</p>
+                        </div>
+                        <div className="text-center p-4 bg-[#FDFBF7] rounded-lg">
+                          <div className="text-2xl font-bold text-[#0A0A0A]">
+                            {tiktokData.heart_count.toLocaleString()}
+                          </div>
+                          <p className="text-xs text-[#6B8F5E] mt-1">Likes</p>
+                        </div>
+                        <div className="text-center p-4 bg-[#FDFBF7] rounded-lg">
+                          <div className="text-2xl font-bold text-[#0A0A0A]">
+                            {tiktokData.video_count.toLocaleString()}
+                          </div>
+                          <p className="text-xs text-[#6B8F5E] mt-1">Videos</p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-[#6B8F5E] mt-4 text-center">
+                        Last synced: {new Date(tiktokData.sync_date).toLocaleString()}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : (
+                <Card className="bg-white border-[#4A6741]/20">
+                  <CardContent className="py-8 text-center">
+                    <p className="text-[#6B8F5E]">No TikTok data yet. Click "Sync Now" to fetch analytics!</p>
+                  </CardContent>
+                </Card>
+              )}
             </TabsContent>
 
             {/* Automation Tab */}

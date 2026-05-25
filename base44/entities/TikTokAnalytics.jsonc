@@ -1,0 +1,57 @@
+{
+  "name": "TikTokAnalytics",
+  "type": "object",
+  "properties": {
+    "follower_count": {
+      "type": "integer",
+      "description": "Total followers"
+    },
+    "following_count": {
+      "type": "integer",
+      "description": "Total following"
+    },
+    "heart_count": {
+      "type": "integer",
+      "description": "Total likes received"
+    },
+    "video_count": {
+      "type": "integer",
+      "description": "Total videos posted"
+    },
+    "digg_count": {
+      "type": "integer",
+      "description": "Total diggs"
+    },
+    "username": {
+      "type": "string",
+      "description": "TikTok username"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "Profile picture URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Profile bio"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether account is verified"
+    },
+    "sync_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When data was synced"
+    }
+  },
+  "required": [
+    "follower_count",
+    "username",
+    "sync_date"
+  ]
+}
