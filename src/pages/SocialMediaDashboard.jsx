@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Instagram, Facebook, BarChart3, Calendar, Upload, Link as LinkIcon, AlertCircle, Sparkles, Copy, CheckCircle, Image as ImageIcon } from 'lucide-react';
+import { Instagram, Facebook, BarChart3, Calendar, Upload, Link as LinkIcon, AlertCircle, Sparkles, Copy, CheckCircle, Image as ImageIcon, Video } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
 import ContentGenerator from '@/components/social/ContentGenerator';
@@ -21,6 +21,12 @@ export default function SocialMediaDashboard() {
   const [instagramUser, setInstagramUser] = useState(null);
   const [generatedCaption, setGeneratedCaption] = useState('');
   const [autoPostEnabled, setAutoPostEnabled] = useState(false);
+
+  // Fetch recent posts
+  const { data: posts = [], refetch } = useQuery({
+    queryKey: ['socialPosts'],
+    queryFn: () => base44.entities.SocialPost.list('-created_date', 20),
+  });
 
   // Check if Instagram connector is authorized
   useEffect(() => {
@@ -165,6 +171,7 @@ export default function SocialMediaDashboard() {
             <TabsTrigger value="create">Create Post</TabsTrigger>
             <TabsTrigger value="schedule">Auto-Post</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="tiktok">TikTok</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
@@ -176,7 +183,32 @@ export default function SocialMediaDashboard() {
                   <CardTitle>Recent Posts</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-sm">No posts yet. Start by creating your first post!</p>
+                  <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                    {posts.length > 0 ? (
+                      posts.map((post) => (
+                        <div key={post.id} className="p-3 border rounded-lg bg-white">
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {post.platform === 'instagram' && <Instagram className="w-4 h-4 text-pink-600" />}
+                              {post.platform === 'facebook' && <Facebook className="w-4 h-4 text-blue-600" />}
+                              <Badge variant={post.status === 'published' ? 'default' : post.status === 'failed' ? 'destructive' : 'secondary'} className="text-xs">
+                                {post.status}
+                              </Badge>
+                            </div>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(post.created_date).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <p className="text-sm line-clamp-2">{post.caption}</p>
+                          {post.notes && post.status === 'failed' && (
+                            <p className="text-xs text-red-600 mt-1">{post.notes}</p>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-muted-foreground text-sm">No posts yet. Start by creating your first post!</p>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
 
@@ -311,6 +343,40 @@ export default function SocialMediaDashboard() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">Connect your accounts to view analytics.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="tiktok" className="space-y-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-[#0A0A0A]">TikTok Analytics</h3>
+              <Button 
+                onClick={() => {
+                  base44.functions.invoke('syncTikTokAnalytics', {});
+                  toast.success('TikTok sync started!');
+                }}
+                className="bg-[#4A6741] hover:bg-[#3D5636] text-white"
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                Sync Now
+              </Button>
+            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Video className="w-5 h-5" />
+                  TikTok Performance
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-sm mb-4">View your TikTok analytics and engagement metrics.</p>
+                <Button 
+                  onClick={() => window.location.href = '/MarketingDashboard'}
+                  variant="outline"
+                  className="w-full"
+                >
+                  View Full TikTok Dashboard →
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
