@@ -26,6 +26,7 @@ import SystemArchitecture from './pages/SystemArchitecture';
 import WaterHome from './pages/WaterHome';
 import ProjectManagement from './pages/ProjectManagement';
 import MarketingDashboard from './pages/MarketingDashboard';
+import SocialMediaManagement from './pages/SocialMediaManagement';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -93,6 +94,7 @@ const AuthenticatedApp = () => {
       <Route path="/WaterHome" element={<LayoutWrapper currentPageName="WaterHome"><WaterHome /></LayoutWrapper>} />
       <Route path="/ProjectManagement" element={<LayoutWrapper currentPageName="ProjectManagement"><ProjectManagement /></LayoutWrapper>} />
       <Route path="/MarketingDashboard" element={<LayoutWrapper currentPageName="MarketingDashboard"><MarketingDashboard /></LayoutWrapper>} />
+      <Route path="/SocialMediaManagement" element={<LayoutWrapper currentPageName="SocialMediaManagement"><SocialMediaManagement /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

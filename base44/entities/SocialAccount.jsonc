@@ -1,0 +1,67 @@
+{
+  "name": "SocialAccount",
+  "type": "object",
+  "properties": {
+    "platform": {
+      "type": "string",
+      "enum": [
+        "instagram",
+        "facebook",
+        "tiktok",
+        "linkedin"
+      ],
+      "description": "Social media platform"
+    },
+    "handle": {
+      "type": "string",
+      "description": "Account handle (e.g., @medrevolve)"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username"
+    },
+    "follower_count": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of followers"
+    },
+    "account_type": {
+      "type": "string",
+      "enum": [
+        "business",
+        "personal",
+        "creator"
+      ],
+      "default": "business",
+      "description": "Type of account"
+    },
+    "connected": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether account is connected"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "error"
+      ],
+      "default": "active",
+      "description": "Account status"
+    },
+    "last_post_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last post date"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes"
+    }
+  },
+  "required": [
+    "platform",
+    "handle"
+  ]
+}
