@@ -28,6 +28,7 @@ import ProjectManagement from './pages/ProjectManagement';
 import MarketingDashboard from './pages/MarketingDashboard';
 import SocialMediaManagement from './pages/SocialMediaManagement';
 import AppointmentsSyncPage from './pages/AppointmentsSync';
+import ProductsAndServices from './pages/ProductsAndServices';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -97,6 +98,7 @@ const AuthenticatedApp = () => {
       <Route path="/MarketingDashboard" element={<LayoutWrapper currentPageName="MarketingDashboard"><MarketingDashboard /></LayoutWrapper>} />
       <Route path="/SocialMediaManagement" element={<LayoutWrapper currentPageName="SocialMediaManagement"><SocialMediaManagement /></LayoutWrapper>} />
       <Route path="/AppointmentsSync" element={<LayoutWrapper currentPageName="AppointmentsSync"><AppointmentsSyncPage /></LayoutWrapper>} />
+      <Route path="/ProductsAndServices" element={<LayoutWrapper currentPageName="ProductsAndServices"><ProductsAndServices /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

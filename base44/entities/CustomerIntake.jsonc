@@ -1,0 +1,328 @@
+{
+  "name": "CustomerIntake",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Customer's full name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "B2C Patient",
+        "B2B Merchant",
+        "RUO Buyer",
+        "Water/Vials Buyer",
+        "Partner/Creator",
+        "Provider",
+        "Pharmacy",
+        "Other"
+      ],
+      "description": "What type of customer/inquiry this is"
+    },
+    "segment_details": {
+      "type": "string",
+      "description": "Additional notes on customer segment or sub-category"
+    },
+    "primary_interest": {
+      "type": "string",
+      "enum": [
+        "GLP-1 / Weight Loss",
+        "Men's Health / TRT",
+        "Women's Health / BHRT",
+        "Longevity / Peptides",
+        "Hair Health",
+        "Skin Health",
+        "General Wellness",
+        "Launch B2B Platform",
+        "Add GLP-1 to Existing Business",
+        "White Label Telehealth",
+        "RUO Research Products",
+        "Bacteriostatic Water Vials",
+        "Referral / Creator Partnership",
+        "Provider Network",
+        "Pharmacy Partnership",
+        "Other"
+      ],
+      "description": "Primary interest or service of interest"
+    },
+    "main_challenge": {
+      "type": "string",
+      "description": "Customer's main challenge, pain point, or reason for calling"
+    },
+    "products_interested": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "B2B Platform ($2,999/mo)",
+          "Initial Consultation ($199)",
+          "GLP-1 Monthly Plan ($399/mo)",
+          "Men's Health Plan",
+          "Women's Health / BHRT Plan",
+          "Longevity / Peptide Plan",
+          "5mL BAC Water Vials",
+          "10mL BAC Water Vials",
+          "30mL BAC Water Vials",
+          "Bulk Wholesale Water",
+          "RUO Research Products",
+          "Partner / Referral Program",
+          "Custom / Other"
+        ]
+      },
+      "description": "Products or services the customer is interested in"
+    },
+    "estimated_order_size": {
+      "type": "string",
+      "enum": [
+        "Single unit / one-time",
+        "Small bundle (2\u201310 units)",
+        "Wholesale (50+ units)",
+        "Monthly subscription",
+        "Custom / TBD"
+      ],
+      "description": "Estimated purchase size"
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Business name (B2B, RUO, partner inquiries)"
+    },
+    "business_type": {
+      "type": "string",
+      "enum": [
+        "Med Spa",
+        "Wellness Clinic",
+        "Fitness / Gym",
+        "Chiropractic",
+        "Healthcare Provider",
+        "Pharmacy",
+        "Entrepreneur / Startup",
+        "Lab / Research",
+        "Creator / Influencer",
+        "Other"
+      ],
+      "description": "Type of business (B2B inquiries)"
+    },
+    "business_size": {
+      "type": "string",
+      "enum": [
+        "Pre-launch",
+        "Startup (under $10k/mo)",
+        "Growth ($10k\u2013$50k/mo)",
+        "Established ($50k+/mo)",
+        "Enterprise"
+      ],
+      "description": "Current business revenue stage"
+    },
+    "has_llc": {
+      "type": "boolean",
+      "description": "Has LLC or business registration (B2B)"
+    },
+    "launch_timeline": {
+      "type": "string",
+      "enum": [
+        "ASAP",
+        "1\u20133 months",
+        "3\u20136 months",
+        "Just exploring"
+      ],
+      "description": "Timeline for getting started (B2B)"
+    },
+    "address": {
+      "type": "string",
+      "description": "Shipping / mailing address"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "state": {
+      "type": "string",
+      "description": "State (important for B2C provider licensing)"
+    },
+    "zip_code": {
+      "type": "string",
+      "description": "ZIP code"
+    },
+    "current_medications": {
+      "type": "string",
+      "description": "Current medications (B2C safety screening)"
+    },
+    "medical_history_notes": {
+      "type": "string",
+      "description": "Relevant medical history (B2C)"
+    },
+    "tried_glp1_before": {
+      "type": "boolean",
+      "description": "Has patient tried GLP-1 or similar before"
+    },
+    "insurance_situation": {
+      "type": "string",
+      "enum": [
+        "No insurance",
+        "Have insurance but prefer cash-pay",
+        "Has HSA/FSA",
+        "Unknown"
+      ],
+      "description": "Insurance status (B2C)"
+    },
+    "platform_audience": {
+      "type": "string",
+      "description": "Platform and audience size (partners/creators)"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Creator or partner referral code if applicable"
+    },
+    "heard_about_us": {
+      "type": "string",
+      "enum": [
+        "Social Media (Instagram)",
+        "Social Media (TikTok)",
+        "Social Media (Facebook)",
+        "Social Media (YouTube)",
+        "Google / Search",
+        "Friend or Family",
+        "Existing Customer",
+        "Healthcare Provider",
+        "Online Ad",
+        "Creator / Influencer",
+        "Phone Call / IONOS",
+        "CTM / Call Tracking",
+        "Email Campaign",
+        "Trade Show / Event",
+        "Other"
+      ],
+      "description": "How they found MedRevolve"
+    },
+    "preferred_contact_method": {
+      "type": "string",
+      "enum": [
+        "Phone call",
+        "Text / SMS",
+        "Email",
+        "Any"
+      ],
+      "description": "How they prefer to be contacted"
+    },
+    "best_time_to_reach": {
+      "type": "string",
+      "description": "Best time to reach them for follow-up"
+    },
+    "consultation_preference": {
+      "type": "string",
+      "enum": [
+        "ASAP",
+        "Within a week",
+        "Within a month",
+        "Just browsing"
+      ],
+      "description": "When they want to consult or be contacted"
+    },
+    "preferred_next_step": {
+      "type": "string",
+      "enum": [
+        "Book consultation / demo call",
+        "Receive email with info",
+        "Speak with sales team now",
+        "Purchase / checkout now",
+        "Receive product catalog",
+        "Get wholesale pricing",
+        "Apply to partner program",
+        "Other"
+      ],
+      "description": "What the customer wants to happen next"
+    },
+    "call_notes": {
+      "type": "string",
+      "description": "Full notes from the call or intake session (IONOS / sales rep notes)"
+    },
+    "ionos_session_id": {
+      "type": "string",
+      "description": "IONOS call session ID for cross-reference"
+    },
+    "hubspot_contact_id": {
+      "type": "string",
+      "description": "HubSpot contact ID after CRM sync"
+    },
+    "hubspot_deal_id": {
+      "type": "string",
+      "description": "HubSpot deal ID after pipeline entry"
+    },
+    "stripe_checkout_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether a Stripe payment link was sent to this customer"
+    },
+    "stripe_checkout_url": {
+      "type": "string",
+      "description": "Stripe checkout URL sent to customer"
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether follow-up email was sent"
+    },
+    "sms_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether follow-up SMS was sent"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new_lead",
+        "contacted",
+        "info_sent",
+        "demo_scheduled",
+        "consultation_scheduled",
+        "checkout_sent",
+        "paid",
+        "onboarding",
+        "active",
+        "inactive",
+        "lost"
+      ],
+      "default": "new_lead",
+      "description": "Lead / customer status in pipeline"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Team member assigned to follow up"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "hot",
+        "warm",
+        "cold"
+      ],
+      "default": "warm",
+      "description": "Lead priority level"
+    },
+    "internal_notes": {
+      "type": "string",
+      "description": "Internal admin / sales team notes"
+    }
+  },
+  "required": [
+    "full_name",
+    "email",
+    "customer_type",
+    "primary_interest"
+  ]
+}
