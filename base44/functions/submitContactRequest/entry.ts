@@ -331,7 +331,7 @@ Deno.serve(async (req) => {
     ]);
 
     // SMS to admin
-    await sendSMS(ADMIN_PHONE, `[${workflowPath}] ${workflowPriority} | ${data.name} | ${data.phone || 'no phone'} | ${data.email} | ${data.subject || 'No subject'} | ${data.message.substring(0, 60)}`);
+    await sendSMS(ADMIN_PHONE, `[${workflowPath}] ${workflowPriority} | ${data.name} | ${data.phone || 'no phone'} | ${data.email} | ${(data.subject || 'No subject').substring(0, 40)} | ${data.message.substring(0, 60)}`).catch(e => console.error('SMS error (non-fatal):', e.message));
 
     return Response.json({ success: true, request_id: contactRequest.id });
 

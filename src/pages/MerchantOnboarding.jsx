@@ -179,7 +179,12 @@ export default function MerchantOnboarding() {
         status: 'new',
       });
 
-      const checkoutRes = await base44.functions.invoke('createCheckout', {
+      // Block checkout inside iframes (preview/dev)
+      if (window.self !== window.top) {
+        throw new Error('Checkout can only be completed from the published app. Please visit medrevolve.com to complete payment.');
+      }
+
+      const checkoutRes = await base44.functions.invoke('merchantSetupCheckout', {
         businessName: form.businessName,
         contactName: contactName,
         email: form.email,
