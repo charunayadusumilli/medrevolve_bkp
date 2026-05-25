@@ -10,7 +10,7 @@ import Stripe from 'npm:stripe@17.5.0';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { businessName, contactName, email, partnerCode, successUrl, cancelUrl } = await req.json();
+    const { businessName, contactName, email, partnerCode, successUrl, cancelUrl, amount, description } = await req.json();
 
     if (!email || !businessName) {
       return Response.json({ error: 'businessName and email are required' }, { status: 400 });
@@ -23,6 +23,16 @@ Deno.serve(async (req) => {
 
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), { apiVersion: '2024-12-18.acacia' });
 
+    // Support variable amounts: $100 onboarding call OR $5,000 full setup
+    const amountDollars = amount || 5000;
+    const amountCents = amountDollars * 100;
+    const productName = amountDollars === 100
+      ? 'MedRevolve Onboarding Consultation'
+      : 'MedRevolve B2B Platform Setup';
+    const productDesc = description || (amountDollars === 100
+      ? `1-hour live guided platform setup call for ${businessName}. Covers: telehealth setup, bank accounts, compliance, domain, providers & pharmacy network.`
+      : `White-label platform launch for ${businessName}. Includes: branded storefront, domain, provider network, pharmacy, compliance framework, and dedicated onboarding team.`);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -32,11 +42,11 @@ Deno.serve(async (req) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'MedRevolve B2B Platform Setup',
-              description: `White-label platform launch for ${businessName}. Includes: branded storefront, domain setup, provider network access, pharmacy network, compliance framework, marketing stack, and dedicated 10-person onboarding team.`,
+              name: productName,
+              description: productDesc,
               images: ['https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'],
             },
-            unit_amount: 500000, // $5,000 in cents
+            unit_amount: amountCents,
           },
           quantity: 1,
         },
@@ -46,16 +56,17 @@ Deno.serve(async (req) => {
       billing_address_collection: 'required',
       metadata: {
         base44_app_id: Deno.env.get('BASE44_APP_ID'),
-        type: 'merchant_setup',
+        type: amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
         business_name: businessName,
         contact_name: contactName || '',
         email: email,
         partner_code: partnerCode || '',
+        amount: String(amountDollars),
       },
       payment_intent_data: {
         metadata: {
           base44_app_id: Deno.env.get('BASE44_APP_ID'),
-          type: 'merchant_setup',
+          type: amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
           business_name: businessName,
           contact_name: contactName || '',
           partner_code: partnerCode || '',
