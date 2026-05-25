@@ -5,9 +5,10 @@ async function sendEmail(base44, { to, subject, html }) {
   const emailLines = [
     `From: MedRevolve <noreply@medrevolve.com>`,
     `To: ${to}`,
-    `Subject: ${subject}`,
+    `Subject: =?UTF-8?B?${btoa(subject)}?=`,
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: base64',
     '',
     html,
   ];
@@ -163,10 +164,15 @@ Deno.serve(async (req) => {
 </td></tr></table>
 </body></html>`;
 
+    // Send only to customer — admins get email via workflowNotifications automation
+    await sendEmail(base44, { 
+      to: data.email, 
+      subject: `✅ Inquiry Received — MedRevolve is excited to connect with ${data.company_name}`, 
+      html: bizHtml 
+    });
+
+    // Trigger background tasks (non-blocking)
     await Promise.all([
-      sendEmail(base44, { to: data.email, subject: `✅ Inquiry Received — MedRevolve is excited to connect with ${data.company_name}`, html: bizHtml }),
-      sendEmail(base44, { to: adminEmail, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
-      sendEmail(base44, { to: adminEmail2, subject: `🏢 New Business Inquiry — ${data.company_name} [${data.interest_type}]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'business',
         data,
