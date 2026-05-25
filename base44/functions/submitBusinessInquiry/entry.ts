@@ -179,11 +179,24 @@ Deno.serve(async (req) => {
 
     // Zapier webhook (non-blocking)
     try {
-      await fetch('https://hooks.zapier.com/hooks/catch/26459574/uevvvwi/', {
+      const zapierUrl = Deno.env.get('ZAPIER_WEBHOOK_URL') || 'https://hooks.zapier.com/hooks/catch/27716918/4oehsvr/';
+      await fetch(zapierUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: data.contact_name, email: data.email, phone: data.phone || '', company_name: data.company_name, audience_niche: data.industry || '', message: data.message || '', form_type: 'business_inquiry' })
+        body: JSON.stringify({ 
+          form_type: 'business_inquiry',
+          name: data.contact_name, 
+          email: data.email, 
+          phone: data.phone || '', 
+          company_name: data.company_name, 
+          industry: data.industry || '', 
+          interest_type: data.interest_type,
+          company_size: data.company_size || '',
+          message: data.message || '',
+          submitted_at: new Date().toISOString()
+        })
       });
+      console.log('✅ Zapier webhook sent');
     } catch (e) {
       console.warn('Zapier webhook error (non-fatal):', e.message);
     }
