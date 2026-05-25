@@ -6,13 +6,50 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Plus, Edit2, Trash2, Save, X } from 'lucide-react';
+import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Plus, Edit2, Trash2, Save, X, Zap, Image, Video } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function SocialMediaManagement() {
   const [editingAccount, setEditingAccount] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Generate and post content immediately
+  const generateAndPostMutation = useMutation({
+    mutationFn: async () => {
+      const response = await base44.functions.invoke('generateSocialMediaContent', {});
+      return response;
+    },
+    onSuccess: async (data) => {
+      toast.success(`Generated ${data.posts?.length || 0} marketing assets!`);
+      queryClient.invalidateQueries({ queryKey: ['socialPosts'] });
+      // Optionally auto-post after generation
+      await handleQuickPost();
+    },
+    onError: (error) => {
+      toast.error('Failed to generate content: ' + error.message);
+    },
+  });
+
+  // Quick post to all platforms
+  const handleQuickPost = async () => {
+    try {
+      setIsGenerating(true);
+      // Post UGC content
+      await base44.functions.invoke('autoPostUGCContent', {});
+      toast.success('✅ Posted to Instagram & Facebook!');
+      refetchPosts();
+    } catch (error) {
+      toast.error('Posting failed: ' + error.message);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleGenerateContent = async () => {
+    generateAndPostMutation.mutate();
+  };
 
   // Fetch social accounts
   const { data: accounts = [], refetch: refetchAccounts } = useQuery({
@@ -70,10 +107,53 @@ export default function SocialMediaManagement() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header with Quick Actions */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Social Media Management</h1>
-          <p className="text-[#0A0A0A]/60">Manage all social media accounts, track performance, and monitor automated posting</p>
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Social Media Management</h1>
+              <p className="text-[#0A0A0A]/60">Manage all social media accounts, track performance, and monitor automated posting</p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleGenerateContent}
+                disabled={isGenerating}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg"
+              >
+                <Zap className="w-4 h-4 mr-2" />
+                {isGenerating ? 'Generating...' : 'Generate & Post Now'}
+              </Button>
+              <Button
+                onClick={handleQuickPost}
+                disabled={isGenerating}
+                variant="outline"
+                className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741] hover:text-white"
+              >
+                <Image className="w-4 h-4 mr-2" />
+                Quick Post
+              </Button>
+            </div>
+          </div>
+          
+          {/* Marketing Focus Banner */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Facebook className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-bold text-blue-900">📢 Active Marketing Campaign</h3>
+                <p className="text-sm text-blue-800 mt-1">
+                  Generating UGC content, static ads, reels, and video ads for <strong>medrevolve.com</strong> promotion
+                </p>
+                <div className="flex gap-4 mt-2 text-xs text-blue-700">
+                  <span>📞 <strong>240-387-5224</strong></span>
+                  <span>🌐 <strong>medrevolve.com</strong></span>
+                  <span>🎯 <strong>GLP-1, Telehealth, RUO</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Quick Stats */}
@@ -243,10 +323,20 @@ export default function SocialMediaManagement() {
                 </div>
               </div>
 
-              <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636]">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                View Analytics
-              </Button>
+              <div className="space-y-2">
+                <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636]">
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  View Analytics
+                </Button>
+                <Button 
+                  onClick={handleGenerateContent}
+                  disabled={isGenerating}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                >
+                  <Video className="w-4 h-4 mr-2" />
+                  {isGenerating ? 'Generating...' : 'Create New Content'}
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
