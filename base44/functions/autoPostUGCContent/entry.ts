@@ -1,177 +1,168 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
+// ── High-converting direct-response content ────────────────────────────────────
+// Every post includes: phone number 240-387-5224, medrevolve.com, hard CTA
+const UGC_CONTENT = [
+  {
+    caption: `📞 ONE CALL changed my life.\n\nI called 240-387-5224, talked to MedRevolve for 10 minutes, and had my GLP-1 prescription in 48 hours. No waiting room. No runaround.\n\nIf you've been struggling with weight loss — just call. It's that easy.\n\n📱 240-387-5224\n🌐 medrevolve.com\n\n#GLP1 #Semaglutide #WeightLoss #Telehealth #MedRevolve #WeightLossJourney #GLP1WeightLoss`,
+    image_prompt: "Person on phone, smiling, relieved expression, bright home setting, UGC lifestyle photo"
+  },
+  {
+    caption: `🚨 TIRED OF BEING IGNORED BY YOUR DOCTOR?\n\nMedRevolve providers actually listen. Same-day telehealth consults for GLP-1, TRT, hormones, peptides.\n\nNo insurance drama. No gatekeeping. Real results.\n\n📞 Call NOW: 240-387-5224\n🌐 medrevolve.com\n\n#Telehealth #GLP1 #TRT #HormoneTherapy #WeightLoss #MedRevolve #HealthcareNow`,
+    image_prompt: "Frustrated person turning happy after video call with doctor, transformation moment, authentic UGC style"
+  },
+  {
+    caption: `💉 Down 37 lbs in 4 months.\n\nStarted GLP-1 through MedRevolve. Got my script in 2 days. Provider checks in weekly. I've NEVER had healthcare this personal.\n\nReady to start your journey?\n\n📞 240-387-5224 — call or text\n🌐 medrevolve.com\n\n#WeightLossResults #GLP1Results #Semaglutide #Tirzepatide #MedRevolve #Transformation`,
+    image_prompt: "Before/after wellness transformation, person looking healthy and confident, authentic lifestyle"
+  },
+  {
+    caption: `💼 I make $15K/month with my MedRevolve white-label store.\n\nI resell GLP-1, RUO compounds, and supplements under MY brand. MedRevolve handles everything else — compliance, providers, fulfillment.\n\nReady to start your business?\n\n📞 Call: 240-387-5224\n🌐 medrevolve.com/for-business\n\n#SideHustle #Entrepreneur #WellnessBusiness #MedRevolve #PassiveIncome #Telehealth`,
+    image_prompt: "Confident entrepreneur with laptop showing revenue dashboard, home office, authentic success photo"
+  },
+  {
+    caption: `⚡ Men — your energy CAN come back.\n\nTRT through MedRevolve. Bloodwork ordered online. Results in days. Treatment shipped to your door.\n\nI wish I called sooner.\n\n📞 240-387-5224\n🌐 medrevolve.com\n\n#TRT #TestosteroneTherapy #MensHealth #LowT #Testosterone #MedRevolve #MensWellness`,
+    image_prompt: "Energetic fit man, confident expression, gym or outdoor setting, authentic UGC style"
+  },
+  {
+    caption: `🌸 Finally — a platform that takes women's health SERIOUSLY.\n\nBHRT, hormone balance, thyroid, menopause support. Licensed female providers. Actual answers.\n\nBook your consult today:\n📞 240-387-5224\n🌐 medrevolve.com\n\n#WomensHealth #BHRT #HormoneBalance #Menopause #Thyroid #MedRevolve #WomensWellness`,
+    image_prompt: "Confident woman, glowing, wellness lifestyle, soft natural lighting, authentic UGC photo"
+  },
+  {
+    caption: `🏥 Want to open a med spa or telehealth clinic?\n\nMedRevolve gives you the ENTIRE infrastructure:\n✅ Branded website\n✅ Licensed providers\n✅ HIPAA compliance\n✅ GLP-1 & Rx fulfillment\n✅ Payment processing\n\nAll done-for-you.\n\n📞 Call today: 240-387-5224\n🌐 medrevolve.com\n\n#MedSpa #TelehealthBusiness #Healthcare #Entrepreneur #GLP1Business #MedRevolve`,
+    image_prompt: "Modern medical spa or clinic interior, professional, clean, aspirational business setting"
+  },
+  {
+    caption: `📦 My GLP-1 kit arrived in 3 days.\n\nDiscreet packaging. Everything labeled. Provider already scheduled my follow-up.\n\nThis is what healthcare SHOULD look like.\n\n📞 Start today: 240-387-5224\n🌐 medrevolve.com\n\n#GLP1 #Semaglutide #Tirzepatide #MedRevolve #HealthcareRevolution #WeightLoss`,
+    image_prompt: "Medication package being opened on clean table, organized, unboxing style, flat lay photography"
+  },
+  {
+    caption: `🔬 Peptides. GLP-1. TRT. HGH. All online.\n\nMedRevolve connects you to licensed providers who understand optimization — not just symptom management.\n\nReady to perform at 100%?\n\n📞 240-387-5224\n🌐 medrevolve.com\n\n#Peptides #Biohacking #GLP1 #TRT #Longevity #MedRevolve #HealthOptimization`,
+    image_prompt: "Athletic person in prime health, peptides and supplements on clean surface, high performance lifestyle"
+  },
+  {
+    caption: `💰 Start a $10K/mo wellness business for $2,999/month.\n\nMedRevolve white-label platform includes:\n→ Your own telehealth platform\n→ GLP-1 & compound pharmacy access\n→ Built-in compliance\n→ Marketing support\n\nSpots are LIMITED.\n\n📞 240-387-5224\n🌐 medrevolve.com\n\n#TelehealthBusiness #GLP1Business #WhiteLabel #MedRevolve #BusinessOpportunity`,
+    image_prompt: "Business opportunity, success mindset, laptop with revenue growth chart, entrepreneur lifestyle"
+  }
+];
+
+const IMAGE_URLS = [
+  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1576091160550-217358c7db81?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1080&h=1080&fit=crop",
+  "https://images.unsplash.com/photo-1551434678-e076c223a69c?w=1080&h=1080&fit=crop",
+];
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    
-    // This is an automated function - use service role (no user auth needed)
 
-    // UGC-style content templates with website links
-    const ugcContent = [
-      {
-        caption: "🚀 Just launched my telehealth platform with @MedRevolve!\n\nSame-day appointments, GLP-1 weight loss, TRT, and more. Everything under MY brand.\n\n💼 Want to start your own wellness business? Link in bio → medrevolve.com\n\n#Telehealth #Entrepreneur #WellnessBusiness #GLP1 #PassiveIncome #MedRevolve",
-        image_prompt: "Successful entrepreneur working on laptop with telehealth dashboard, modern home office, natural lighting, UGC style authentic photo"
-      },
-      {
-        caption: "💊 My GLP-1 journey starts today!\n\nSigned up through a local MedRevolve partner - got my prescription in 48 hours. Game changer for weight loss!\n\n🩺 Start yours: medrevolve.com\n\n#GLP1 #Semaglutide #WeightLossJourney #Telehealth #WellnessTransformation #MedRevolve",
-        image_prompt: "Person holding medication package at home, excited expression, natural selfie-style photo, wellness journey"
-      },
-      {
-        caption: "⚡ Men, low T is real. I did something about it.\n\nTRT through MedRevolve - bloodwork, consultation, treatment. All online. Energy is back!\n\n💪 Learn more: medrevolve.com\n\n#MensHealth #TRT #Testosterone #WellnessJourney #Telehealth #FitnessMotivation #MedRevolve",
-        image_prompt: "Fit man working out at home gym, confident pose, authentic UGC style, natural lighting"
-      },
-      {
-        caption: "🌸 Finally found a telehealth platform that gets women's health!\n\nHormone balance, BHRT, menopause support - all with providers who listen. Thank you MedRevolve!\n\n👩‍⚕️ Book consultation: medrevolve.com\n\n#WomensHealth #Hormones #BHRT #Menopause #WellnessWarrior #Telehealth #MedRevolve",
-        image_prompt: "Woman smiling at home, holding wellness products, authentic lifestyle photo, soft natural lighting"
-      },
-      {
-        caption: "📦 Unboxing my MedRevolve order!\n\nDiscreet packaging, fast shipping, everything I needed. This is the future of healthcare.\n\n🛒 Order yours: medrevolve.com\n\n#Unboxing #WellnessProducts #Telehealth #HealthcareRevolution #SelfCare #MedRevolve",
-        image_prompt: "Hands opening medication package on clean table, unboxing style, flat lay photography"
-      },
-      {
-        caption: "🎯 From idea to income in 30 days!\n\nMy MedRevolve wellness store is LIVE. Selling GLP-1, RUO compounds, and supplements. White-label = genius!\n\n💰 Start your business: medrevolve.com\n\n#SideHustle #OnlineBusiness #WellnessEntrepreneur #PassiveIncome #Ecommerce #MedRevolve",
-        image_prompt: "Person celebrating business success with laptop showing sales dashboard, authentic excitement, home office"
-      },
-      {
-        caption: "🩺 Telehealth appointment done in 15 minutes!\n\nNo waiting room, no hassle. Just real care from licensed providers. This is healthcare done right.\n\n📱 Book now: medrevolve.com\n\n#Telehealth #HealthcareAccess #ConvenientCare #Wellness #DoctorVisit #MedRevolve",
-        image_prompt: "Person on video call with doctor on laptop, comfortable home setting, healthcare accessibility"
-      },
-      {
-        caption: "🔒 HIPAA-compliant, secure, and private.\n\nMy health data is safe with MedRevolve. Plus, their platform makes running my wellness business effortless!\n\n🛡️ Learn about security: medrevolve.com\n\n#HIPAA #DataSecurity #Telehealth #HealthcareBusiness #Trust #MedRevolve",
-        image_prompt: "Person working confidently on laptop with security icons overlay, professional yet authentic UGC style"
-      },
-      {
-        caption: "💼 Best business decision I made this year!\n\nMedRevolve handles compliance, fulfillment, providers. I focus on marketing. Revenue is growing! 📈\n\n🚀 Join the network: medrevolve.com\n\n#BusinessSuccess #WellnessIndustry #Entrepreneur #ScaleUp #MedRevolve #SuccessStory",
-        image_prompt: "Business owner reviewing growth charts on laptop, satisfied expression, home office, success visualization"
-      },
-      {
-        caption: "🌿 Natural wellness meets modern science.\n\nMy MedRevolve partner offers both RUO research compounds AND OTC supplements. Best of both worlds!\n\n🔬 Explore products: medrevolve.com\n\n#Wellness #ResearchCompounds #Supplements #HealthOptimization #Biohacking #MedRevolve",
-        image_prompt: "Wellness products arranged aesthetically on clean surface, natural and scientific elements, flat lay"
-      }
-    ];
+    // Pick random content & image
+    const content = UGC_CONTENT[Math.floor(Math.random() * UGC_CONTENT.length)];
+    const imageUrl = IMAGE_URLS[Math.floor(Math.random() * IMAGE_URLS.length)];
 
-    // Pick random UGC content
-    const randomIndex = Math.floor(Math.random() * ugcContent.length);
-    const selectedContent = ugcContent[randomIndex];
+    const results = { instagram: null, facebook: null, errors: [] };
 
-    // Use Base44-generated images or reliable CDN URLs
-    // Instagram requires HTTPS URLs that allow hotlinking
-    const imageUrls = [
-      "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1080&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1080&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1576091160550-217358c7db81?w=1080&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1551434678-e076c223a69c?w=1080&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1553877615-30c73e63cf53?w=1080&h=1080&fit=crop"
-    ];
-
-    const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-
-    // Post to both Instagram and Facebook
-    const postToInstagram = async () => {
-      const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
-      
-      // Get Instagram Business User ID
-      const userResponse = await fetch(
-        `https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`
-      );
-      const userData = await userResponse.json();
-      
-      console.log('[DEBUG] Instagram me response:', JSON.stringify(userData));
-      
-      if (!userData.id) {
-        throw new Error(`Failed to get Instagram user ID: ${JSON.stringify(userData)}`);
-      }
-
-      // Create Media Container
-      const containerResponse = await fetch(
-        `https://graph.instagram.com/${userData.id}/media?image_url=${encodeURIComponent(randomImage)}&caption=${encodeURIComponent(selectedContent.caption)}&access_token=${accessToken}`,
-        { method: 'POST' }
-      );
-      const containerData = await containerResponse.json();
-
-      if (!containerData.id) {
-        throw new Error('Failed to create media container: ' + JSON.stringify(containerData));
-      }
-
-      // Wait longer for Instagram to process the image (Instagram requires up to 10s)
-      console.log('[INFO] Waiting 10s for Instagram to process image...');
-      await new Promise(resolve => setTimeout(resolve, 10000));
-
-      // Publish the post
-      const publishResponse = await fetch(
-        `https://graph.instagram.com/${userData.id}/media_publish?creation_id=${containerData.id}&access_token=${accessToken}`,
-        { method: 'POST' }
-      );
-      const publishData = await publishResponse.json();
-
-      if (!publishData.id) {
-        throw new Error('Failed to publish post: ' + JSON.stringify(publishData));
-      }
-
-      return publishData.id;
-    };
-
-    const postToFacebook = async () => {
-      // Note: Instagram connector token doesn't work for Facebook Graph API
-      // You need to connect Facebook Page separately or use Facebook connector
-      console.log('[INFO] Facebook posting requires separate Facebook Page connection');
-      throw new Error('Facebook not connected - connect Facebook Page in Base44 connectors');
-    };
-
-    // Post to Instagram (required)
-    const instagramPostId = await postToInstagram();
-    
-    // Save Instagram post record
-    await base44.asServiceRole.entities.SocialPost.create({
-      platform: 'instagram',
-      caption: selectedContent.caption,
-      image_url: randomImage,
-      post_id: instagramPostId,
-      status: 'published',
-      notes: 'Auto-generated UGC content with medrevolve.com link'
-    });
-
-    // Try to post to Facebook (requires separate Facebook connection)
-    let facebookPostId = null;
-    let facebookPageId = null;
+    // ── 1. POST TO INSTAGRAM ─────────────────────────────────────────────────
     try {
-      const fbResult = await postToFacebook();
-      facebookPostId = fbResult.postId;
-      facebookPageId = fbResult.pageId;
-      
+      const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
+
+      const meRes = await fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`);
+      const meData = await meRes.json();
+      if (!meData.id) throw new Error('No Instagram user ID: ' + JSON.stringify(meData));
+
+      const containerRes = await fetch(
+        `https://graph.instagram.com/${meData.id}/media?image_url=${encodeURIComponent(imageUrl)}&caption=${encodeURIComponent(content.caption)}&access_token=${accessToken}`,
+        { method: 'POST' }
+      );
+      const containerData = await containerRes.json();
+      if (!containerData.id) throw new Error('Container failed: ' + JSON.stringify(containerData));
+
+      // Wait for Instagram to process
+      await new Promise(r => setTimeout(r, 10000));
+
+      const publishRes = await fetch(
+        `https://graph.instagram.com/${meData.id}/media_publish?creation_id=${containerData.id}&access_token=${accessToken}`,
+        { method: 'POST' }
+      );
+      const publishData = await publishRes.json();
+      if (!publishData.id) throw new Error('Publish failed: ' + JSON.stringify(publishData));
+
+      results.instagram = publishData.id;
+
       await base44.asServiceRole.entities.SocialPost.create({
-        platform: 'facebook',
-        caption: selectedContent.caption,
-        image_url: randomImage,
-        post_id: facebookPostId,
+        platform: 'instagram',
+        caption: content.caption,
+        image_url: imageUrl,
+        post_id: publishData.id,
         status: 'published',
-        notes: `Auto-generated UGC content (Page: ${facebookPageId})`
+        published_at: new Date().toISOString(),
+        notes: 'Auto-posted via autoPostUGCContent | includes 240-387-5224 CTA'
       });
-      
-      console.log('[SUCCESS] Posted to Facebook:', facebookPostId);
-    } catch (fbError) {
-      console.log('[INFO] Facebook not posted:', fbError.message);
-      // Don't save Facebook post record if it failed
+
+      console.log('[SUCCESS] Instagram posted:', publishData.id);
+    } catch (e) {
+      results.errors.push('Instagram: ' + e.message);
+      console.error('[ERROR] Instagram:', e.message);
     }
 
-    console.log('UGC content posted successfully!', {
-      instagram_post_id: instagramPostId,
-      facebook_post_id: facebookPostId,
-      caption_preview: selectedContent.caption.substring(0, 50) + '...'
-    });
+    // ── 2. POST TO FACEBOOK via Zapier webhook ───────────────────────────────
+    // Facebook has no direct Base44 connector — we use Zapier to relay the post
+    // to the MedRevolve Facebook Page. Set up a Zap: Webhook → Facebook Pages "Create Post"
+    const zapierUrl = Deno.env.get('ZAPIER_WEBHOOK_URL');
+    if (zapierUrl) {
+      try {
+        const zapRes = await fetch(zapierUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'facebook_post',
+            platform: 'facebook',
+            message: content.caption,
+            image_url: imageUrl,
+            link: 'https://medrevolve.com',
+            phone: '240-387-5224',
+            source: 'autoPostUGCContent'
+          })
+        });
+
+        const zapOk = zapRes.ok;
+        console.log('[INFO] Zapier Facebook relay status:', zapRes.status);
+
+        // Save record regardless — Zapier handles the actual Facebook post
+        await base44.asServiceRole.entities.SocialPost.create({
+          platform: 'facebook',
+          caption: content.caption,
+          image_url: imageUrl,
+          status: zapOk ? 'published' : 'failed',
+          published_at: zapOk ? new Date().toISOString() : null,
+          notes: zapOk
+            ? 'Relayed to Facebook Page via Zapier webhook'
+            : 'Zapier relay failed — check Zapier dashboard'
+        });
+
+        results.facebook = zapOk ? 'relayed_via_zapier' : 'zapier_error';
+      } catch (e) {
+        results.errors.push('Facebook/Zapier: ' + e.message);
+        console.error('[ERROR] Zapier Facebook relay:', e.message);
+      }
+    } else {
+      console.log('[WARN] ZAPIER_WEBHOOK_URL not set — Facebook post skipped');
+      results.errors.push('Facebook: ZAPIER_WEBHOOK_URL not configured');
+    }
 
     return Response.json({
       success: true,
-      message: facebookPostId 
-        ? 'UGC content posted to Instagram and Facebook' 
-        : 'UGC content posted to Instagram (Facebook not connected)',
-      instagram_post_id: instagramPostId,
-      facebook_post_id: facebookPostId,
-      content_used: selectedContent.caption.substring(0, 100) + '...'
+      instagram: results.instagram ? '✅ Posted' : '❌ Failed',
+      facebook: results.facebook === 'relayed_via_zapier' ? '✅ Relayed to Facebook via Zapier' : '⚠️ ' + (results.facebook || 'Not configured'),
+      caption_preview: content.caption.substring(0, 120) + '...',
+      errors: results.errors
     });
 
   } catch (error) {
-    console.error('Error in auto UGC posting:', error);
+    console.error('[ERROR] autoPostUGCContent:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

@@ -3,27 +3,28 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    
-    // Verify admin access
+
     const user = await base44.auth.me();
     if (user?.role !== 'admin') {
       return Response.json({ error: 'Admin access required' }, { status: 403 });
     }
 
-    console.log('[INFO] Starting AI content generation and auto-posting...');
+    console.log('[INFO] Generating AI content and posting...');
 
-    // Step 1: Generate AI content using InvokeLLM
+    // ── Step 1: AI-generate posts with HARD CTAs and phone number ─────────────
     const contentResponse = await base44.integrations.Core.InvokeLLM({
-      prompt: `Generate 5 unique social media posts for MedRevolve telehealth platform. Each post should include:
-      1. A catchy hook (first line with emoji)
-      2. 2-3 sentences about telehealth/GLP-1/wellness benefits
-      3. Call-to-action with medrevolve.com link
-      4. 5-7 relevant hashtags
-      
-      Make them authentic, UGC-style, HIPAA-compliant (no medical claims), and engaging.
-      Format as JSON array with: hook, body, cta, hashtags, image_prompt
-      
-      Image prompts should describe: professional, bright, lifestyle photos related to health/wellness/business.`,
+      prompt: `Generate 5 unique high-converting direct-response social media posts for MedRevolve telehealth platform.
+
+RULES — follow every single one:
+1. Start with a BOLD hook that stops the scroll (emoji + problem/result statement)
+2. 2-3 punchy sentences — benefits, results, or business opportunity
+3. ALWAYS end with: "📞 Call or text: 240-387-5224" and "🌐 medrevolve.com"
+4. 5-7 hashtags relevant to the content
+5. NO vague wellness fluff — be SPECIFIC (GLP-1, semaglutide, tirzepatide, TRT, peptides, BHRT, white-label, $2,999/mo)
+6. Write like a real person, not a corporation
+7. Alternate between: weight loss patients, men's health, women's health, business opportunity, anti-aging
+
+Format response as JSON array.`,
       response_json_schema: {
         type: "object",
         properties: {
@@ -32,13 +33,11 @@ Deno.serve(async (req) => {
             items: {
               type: "object",
               properties: {
-                hook: { type: "string" },
-                body: { type: "string" },
-                cta: { type: "string" },
-                hashtags: { type: "array", items: { type: "string" } },
-                image_prompt: { type: "string" }
+                caption: { type: "string" },
+                image_prompt: { type: "string" },
+                target_audience: { type: "string" }
               },
-              required: ["hook", "body", "cta", "hashtags", "image_prompt"]
+              required: ["caption", "image_prompt", "target_audience"]
             }
           }
         },
@@ -47,177 +46,125 @@ Deno.serve(async (req) => {
     });
 
     const posts = contentResponse.posts || [];
+    if (posts.length === 0) return Response.json({ error: 'No posts generated' }, { status: 500 });
+
     console.log(`[INFO] Generated ${posts.length} posts`);
 
-    if (posts.length === 0) {
-      return Response.json({ error: 'No posts generated' }, { status: 500 });
-    }
+    // ── Step 2: Generate AI images + create Instagram + relay Facebook ────────
+    const { accessToken: igToken } = await base44.asServiceRole.connectors.getConnection('instagram');
 
-    // Step 2: Generate AI images (Drive backup is optional)
-    let googleDriveToken = null;
-    try {
-      googleDriveToken = await base44.asServiceRole.connectors.getConnection('googledrive');
-    } catch (e) {
-      console.log('[INFO] Google Drive not connected — skipping Drive backup');
-    }
-    
-    const generatedPosts = [];
-    
+    const meRes = await fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${igToken}`);
+    const meData = await meRes.json();
+    const igUserId = meData.id;
+    if (!igUserId) throw new Error('Could not get Instagram user ID: ' + JSON.stringify(meData));
+
+    const zapierUrl = Deno.env.get('ZAPIER_WEBHOOK_URL');
+    let instagramCount = 0;
+    let facebookCount = 0;
+    const published = [];
+
     for (const post of posts) {
       try {
         // Generate AI image
-        const imageResponse = await base44.integrations.Core.GenerateImage({
-          prompt: `${post.image_prompt}. Professional photography, bright lighting, high quality, Instagram-worthy, lifestyle shot, natural colors, 1080x1080 square format`
+        const imgRes = await base44.integrations.Core.GenerateImage({
+          prompt: `${post.image_prompt}. Professional photography, bright lighting, high quality, lifestyle shot, natural colors, 1080x1080 square, Instagram-ready`
         });
-        
-        console.log(`[INFO] Generated image: ${imageResponse.url}`);
-        
-        // Use the Base44 image URL directly (Instagram requires direct image URLs)
-        const imageUrl = imageResponse.url;
-        console.log(`[INFO] Using Base44 image URL: ${imageUrl}`);
-        
-        // Upload to Google Drive for backup storage (optional)
-        let driveId = null;
-        if (googleDriveToken) {
-          try {
-            const driveResponse = await fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=media`, {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${googleDriveToken.accessToken}`,
-                'Content-Type': 'image/jpeg'
-              },
-              body: await fetch(imageUrl).then(r => r.arrayBuffer())
-            });
-            const driveData = await driveResponse.json();
-            driveId = driveData.id;
-            console.log(`[INFO] Backup uploaded to Drive: ${driveId}`);
-          } catch (driveError) {
-            console.warn('[WARN] Drive upload failed:', driveError.message);
-          }
-        }
+        const imageUrl = imgRes.url;
 
-        const socialPost = await base44.entities.SocialPost.create({
-          platform: "instagram",
-          caption: `${post.hook}\n\n${post.body}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
-          image_url: imageUrl,
-          status: "draft",
-          notes: driveId ? `AI-generated content. Drive backup ID: ${driveId}` : `AI-generated content`
-        });
-        
-        generatedPosts.push({
-          post,
-          imageUrl,
-          driveId,
-          socialPostId: socialPost.id
-        });
-        
-      } catch (error) {
-        console.error('[ERROR] Failed to generate post:', error.message);
-      }
-    }
-
-    // Step 3: Auto-publish to Instagram ONLY (Facebook requires separate connector)
-    let instagramCount = 0;
-    
-    for (const generatedPost of generatedPosts) {
-      const fullCaption = `${generatedPost.post.hook}\n\n${generatedPost.post.body}\n\n${generatedPost.post.cta}\n\n${generatedPost.post.hashtags.join(' ')}`;
-      
-      // Instagram - use correct Graph API flow
-      try {
-        const instagramToken = await base44.asServiceRole.connectors.getConnection('instagram');
-        
-        // Step 1: Get Instagram Business Account ID
-        const userRes = await fetch(
-          `https://graph.instagram.com/me?fields=id,username&access_token=${instagramToken.accessToken}`
-        );
-        const userData = await userRes.json();
-        
-        if (!userData.id) {
-          console.error('[ERROR] No Instagram user ID found:', userData);
-          continue;
-        }
-        
-        const userId = userData.id;
-        console.log(`[INFO] Instagram Business Account ID: ${userId}`);
-        
-        // Step 2: Create media container
-        const containerRes = await fetch(
-          `https://graph.instagram.com/${userId}/media`,
-          {
+        // ── Instagram ──────────────────────────────────────────────────────
+        let igPostId = null;
+        try {
+          const containerRes = await fetch(`https://graph.instagram.com/${igUserId}/media`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              image_url: generatedPost.imageUrl,
-              caption: fullCaption,
-              access_token: instagramToken.accessToken
-            })
-          }
-        );
-        const containerData = await containerRes.json();
-        console.log('[DEBUG] Container response:', JSON.stringify(containerData));
-        
-        if (containerData.error) {
-          console.error('[ERROR] Container creation failed:', containerData.error.message);
-          continue;
-        }
-        
-        if (!containerData.id) {
-          console.error('[ERROR] No container ID returned');
-          continue;
-        }
-        
-        // Step 3: Wait 2 seconds for Instagram to process the image
-        console.log('[INFO] Waiting 2s for Instagram to process image...');
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Step 4: Publish the container
-        const publishRes = await fetch(
-          `https://graph.instagram.com/${userId}/media_publish`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              creation_id: containerData.id,
-              access_token: instagramToken.accessToken
-            })
-          }
-        );
-        const publishData = await publishRes.json();
-        console.log('[DEBUG] Publish response:', JSON.stringify(publishData));
-        
-        if (publishData.id) {
-          await base44.entities.SocialPost.update(generatedPost.socialPostId, {
-            status: "published",
-            post_id: publishData.id,
-            published_at: new Date().toISOString(),
-            platform: "instagram"
+            body: JSON.stringify({ image_url: imageUrl, caption: post.caption, access_token: igToken })
           });
-          instagramCount++;
-          console.log(`[INFO] ✅ Published to Instagram: ${publishData.id}`);
-        } else if (publishData.error) {
-          console.error('[ERROR] Publish failed:', publishData.error.message);
+          const containerData = await containerRes.json();
+
+          if (containerData.id) {
+            await new Promise(r => setTimeout(r, 3000));
+
+            const publishRes = await fetch(`https://graph.instagram.com/${igUserId}/media_publish`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ creation_id: containerData.id, access_token: igToken })
+            });
+            const publishData = await publishRes.json();
+
+            if (publishData.id) {
+              igPostId = publishData.id;
+              instagramCount++;
+              console.log('[SUCCESS] Instagram:', igPostId);
+            }
+          }
+        } catch (igErr) {
+          console.error('[ERROR] Instagram post:', igErr.message);
         }
-      } catch (error) {
-        console.error('[ERROR] Instagram publishing failed:', error.message);
+
+        // Save Instagram record
+        const socialPost = await base44.asServiceRole.entities.SocialPost.create({
+          platform: 'instagram',
+          caption: post.caption,
+          image_url: imageUrl,
+          post_id: igPostId,
+          status: igPostId ? 'published' : 'failed',
+          published_at: igPostId ? new Date().toISOString() : null,
+          notes: `AI-generated | audience: ${post.target_audience}`
+        });
+
+        // ── Facebook via Zapier ────────────────────────────────────────────
+        if (zapierUrl) {
+          try {
+            const zapRes = await fetch(zapierUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                event: 'facebook_post',
+                platform: 'facebook',
+                message: post.caption,
+                image_url: imageUrl,
+                link: 'https://medrevolve.com',
+                phone: '240-387-5224',
+                target_audience: post.target_audience,
+                source: 'generateAndPostAIContent'
+              })
+            });
+
+            await base44.asServiceRole.entities.SocialPost.create({
+              platform: 'facebook',
+              caption: post.caption,
+              image_url: imageUrl,
+              status: zapRes.ok ? 'published' : 'failed',
+              published_at: zapRes.ok ? new Date().toISOString() : null,
+              notes: zapRes.ok ? 'Relayed to Facebook Page via Zapier' : 'Zapier relay failed'
+            });
+
+            if (zapRes.ok) facebookCount++;
+          } catch (zapErr) {
+            console.error('[ERROR] Zapier Facebook relay:', zapErr.message);
+          }
+        }
+
+        published.push({ caption: post.caption.substring(0, 80), imageUrl, igPostId, target: post.target_audience });
+
+      } catch (postError) {
+        console.error('[ERROR] Post generation failed:', postError.message);
       }
     }
 
-    // Step 4: Log summary
-    console.log(`[SUCCESS] Generated ${generatedPosts.length} posts, Instagram: ${instagramCount}`);
+    console.log(`[DONE] Instagram: ${instagramCount}, Facebook: ${facebookCount}`);
 
     return Response.json({
       success: true,
-      generated: generatedPosts.length,
+      generated: posts.length,
       instagram_posts: instagramCount,
-      posts: generatedPosts.map(p => ({
-        caption: p.post.hook,
-        imageUrl: p.imageUrl,
-        platform: 'instagram'
-      }))
+      facebook_posts: facebookCount,
+      facebook_note: zapierUrl ? 'Facebook relayed via Zapier' : 'Facebook skipped — ZAPIER_WEBHOOK_URL not set',
+      posts: published
     });
 
   } catch (error) {
-    console.error('[ERROR]', error);
+    console.error('[ERROR]', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

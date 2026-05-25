@@ -1,422 +1,218 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Plus, Edit2, Trash2, Save, X, Zap, Image, Video } from 'lucide-react';
+import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Zap, AlertTriangle, CheckCircle2, ExternalLink, Phone, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function SocialMediaManagement() {
-  const [editingAccount, setEditingAccount] = useState(null);
-  const [editForm, setEditForm] = useState({});
+  const [isPosting, setIsPosting] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const queryClient = useQueryClient();
 
-  // Generate and post content immediately
-  const generateAndPostMutation = useMutation({
-    mutationFn: async () => {
-      const response = await base44.functions.invoke('generateSocialMediaContent', {});
-      return response;
-    },
-    onSuccess: async (data) => {
-      toast.success(`Generated ${data.posts?.length || 0} marketing assets!`);
-      queryClient.invalidateQueries({ queryKey: ['socialPosts'] });
-      // Optionally auto-post after generation
-      await handleQuickPost();
-    },
-    onError: (error) => {
-      toast.error('Failed to generate content: ' + error.message);
-    },
+  const { data: posts = [], refetch: refetchPosts } = useQuery({
+    queryKey: ['socialPosts'],
+    queryFn: () => base44.entities.SocialPost.list('-created_date', 100),
   });
 
-  // Quick post to all platforms
-  const handleQuickPost = async () => {
+  const igPosts = posts.filter(p => p.platform === 'instagram');
+  const fbPosts = posts.filter(p => p.platform === 'facebook');
+  const igPublished = igPosts.filter(p => p.status === 'published').length;
+  const fbPublished = fbPosts.filter(p => p.status === 'published').length;
+  const fbDrafts = fbPosts.filter(p => p.status === 'draft').length;
+
+  const handleUGCPost = async () => {
+    setIsPosting(true);
     try {
-      setIsGenerating(true);
-      // Post UGC content
-      await base44.functions.invoke('autoPostUGCContent', {});
-      toast.success('✅ Posted to Instagram & Facebook!');
+      const res = await base44.functions.invoke('autoPostUGCContent', {});
+      if (res?.data?.instagram?.includes('✅')) {
+        toast.success('✅ Posted to Instagram! ' + (res?.data?.facebook?.includes('✅') ? 'Facebook relayed via Zapier.' : 'Facebook: check Zapier setup.'));
+      } else {
+        toast.error('Post failed: ' + (res?.data?.errors?.[0] || 'Unknown error'));
+      }
       refetchPosts();
-    } catch (error) {
-      toast.error('Posting failed: ' + error.message);
+    } catch (e) {
+      toast.error('Error: ' + e.message);
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  const handleGenerateAndPost = async () => {
+    setIsGenerating(true);
+    try {
+      const res = await base44.functions.invoke('generateAndPostAIContent', {});
+      toast.success(`✅ Generated & posted! Instagram: ${res?.data?.instagram_posts || 0}, Facebook: ${res?.data?.facebook_posts || 0}`);
+      refetchPosts();
+    } catch (e) {
+      toast.error('Error: ' + e.message);
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const handleGenerateContent = async () => {
-    generateAndPostMutation.mutate();
-  };
-
-  // Fetch social accounts
-  const { data: accounts = [], refetch: refetchAccounts } = useQuery({
-    queryKey: ['socialAccounts'],
-    queryFn: () => base44.entities.SocialAccount.list(),
-  });
-
-  // Fetch recent posts
-  const { data: posts = [], refetch: refetchPosts } = useQuery({
-    queryKey: ['socialPosts'],
-    queryFn: () => base44.entities.SocialPost.list('-created_date', 50),
-  });
-
-  const queryClient = useQueryClient();
-
-  const updateAccountMutation = useMutation({
-    mutationFn: async ({ id, data }) => {
-      const response = await base44.entities.SocialAccount.update(id, data);
-      return response;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['socialAccounts'] });
-      setEditingAccount(null);
-      toast.success('Account updated successfully!');
-    },
-  });
-
-  const handleEdit = (account) => {
-    setEditingAccount(account.id);
-    setEditForm({
-      handle: account.handle,
-      username: account.username,
-      follower_count: account.follower_count,
-    });
-  };
-
-  const handleSave = (accountId) => {
-    updateAccountMutation.mutate({
-      id: accountId,
-      data: editForm,
-    });
-  };
-
-  const handleCancel = () => {
-    setEditingAccount(null);
-    setEditForm({});
-  };
-
-  // Calculate stats
-  const totalPosts = posts.length;
-  const publishedPosts = posts.filter(p => p.status === 'published').length;
-  const scheduledPosts = posts.filter(p => p.status === 'draft').length;
-  const totalFollowers = accounts.reduce((sum, acc) => sum + (acc.follower_count || 0), 0);
-
   return (
     <div className="min-h-screen bg-[#FDFBF7] p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header with Quick Actions */}
-        <div className="mb-8">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Social Media Management</h1>
-              <p className="text-[#0A0A0A]/60">Manage all social media accounts, track performance, and monitor automated posting</p>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={handleGenerateContent}
-                disabled={isGenerating}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg"
-              >
-                <Zap className="w-4 h-4 mr-2" />
-                {isGenerating ? 'Generating...' : 'Generate & Post Now'}
-              </Button>
-              <Button
-                onClick={handleQuickPost}
-                disabled={isGenerating}
-                variant="outline"
-                className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741] hover:text-white"
-              >
-                <Image className="w-4 h-4 mr-2" />
-                Quick Post
-              </Button>
-            </div>
+      <div className="max-w-7xl mx-auto space-y-6">
+
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-[#0A0A0A] mb-1">Social Media</h1>
+            <p className="text-[#0A0A0A]/60 text-sm flex items-center gap-4">
+              <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> 240-387-5224</span>
+              <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> medrevolve.com</span>
+            </p>
           </div>
-          
-          {/* Marketing Focus Banner */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <Facebook className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-blue-900">📢 Active Marketing Campaign</h3>
-                <p className="text-sm text-blue-800 mt-1">
-                  Generating UGC content, static ads, reels, and video ads for <strong>medrevolve.com</strong> promotion
-                </p>
-                <div className="flex gap-4 mt-2 text-xs text-blue-700">
-                  <span>📞 <strong>240-387-5224</strong></span>
-                  <span>🌐 <strong>medrevolve.com</strong></span>
-                  <span>🎯 <strong>GLP-1, Telehealth, RUO</strong></span>
-                </div>
+          <div className="flex gap-2">
+            <Button onClick={handleUGCPost} disabled={isPosting}
+              className="bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-90 text-white">
+              <Zap className="w-4 h-4 mr-2" />
+              {isPosting ? 'Posting...' : 'Post Now (UGC)'}
+            </Button>
+            <Button onClick={handleGenerateAndPost} disabled={isGenerating}
+              className="bg-[#4A6741] hover:bg-[#3D5636] text-white">
+              <Activity className="w-4 h-4 mr-2" />
+              {isGenerating ? 'Generating...' : 'AI Generate & Post'}
+            </Button>
+          </div>
+        </div>
+
+        {/* ── FACEBOOK WARNING BANNER ── */}
+        <div className="bg-amber-50 border border-amber-300 rounded-xl p-5">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-bold text-amber-900 mb-1">⚠️ Facebook Requires Zapier Setup</h3>
+              <p className="text-amber-800 text-sm mb-3">
+                Facebook has no direct API connector in this platform. Posts are relayed to your Facebook Page via Zapier.
+                <strong> {fbDrafts} Facebook posts are stuck as drafts</strong> and have NEVER been published.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-amber-200 space-y-2 text-sm">
+                <p className="font-bold text-amber-900">📋 To fix Facebook posting — do this once:</p>
+                <ol className="space-y-1 text-amber-800 list-decimal list-inside">
+                  <li>Go to <strong>zapier.com</strong> → Create a new Zap</li>
+                  <li>Trigger: <strong>Webhooks by Zapier → Catch Hook</strong></li>
+                  <li>Action: <strong>Facebook Pages → Create Page Post</strong> (connect your MedRevolve Facebook Page)</li>
+                  <li>Map: <code className="bg-amber-100 px-1 rounded">message</code> → Post message, <code className="bg-amber-100 px-1 rounded">image_url</code> → Photo URL</li>
+                  <li>Copy the Zapier webhook URL → paste it into Base44 Secrets as <code className="bg-amber-100 px-1 rounded">ZAPIER_WEBHOOK_URL</code></li>
+                </ol>
+                <a href="https://zapier.com/app/zaps" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 mt-2 text-amber-700 font-bold hover:underline">
+                  Open Zapier → <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-              <Calendar className="w-4 h-4 text-[#4A6741]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{totalPosts}</div>
-              <p className="text-xs text-muted-foreground">All time</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Published</CardTitle>
-              <Instagram className="w-4 h-4 text-[#4A6741]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{publishedPosts}</div>
-              <p className="text-xs text-muted-foreground">Live posts</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Scheduled</CardTitle>
-              <BarChart3 className="w-4 h-4 text-[#4A6741]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{scheduledPosts}</div>
-              <p className="text-xs text-muted-foreground">In queue</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Reach</CardTitle>
-              <Users className="w-4 h-4 text-[#4A6741]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{totalFollowers.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">Combined followers</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Connected Accounts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Instagram className="w-5 h-5" />
-                Connected Accounts
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {accounts.length > 0 ? (
-                accounts.map((account) => (
-                  <motion.div
-                    key={account.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 border rounded-lg bg-white"
-                  >
-                    {editingAccount === account.id ? (
-                      <div className="space-y-3">
-                        <div>
-                          <label className="text-xs font-medium">Handle</label>
-                          <Input
-                            value={editForm.handle}
-                            onChange={(e) => setEditForm({ ...editForm, handle: e.target.value })}
-                            placeholder="@username"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium">Username</label>
-                          <Input
-                            value={editForm.username}
-                            onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
-                            placeholder="username"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium">Followers</label>
-                          <Input
-                            type="number"
-                            value={editForm.follower_count}
-                            onChange={(e) => setEditForm({ ...editForm, follower_count: parseInt(e.target.value) })}
-                          />
-                        </div>
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            onClick={() => handleSave(account.id)}
-                            className="bg-[#4A6741] hover:bg-[#3D5636]"
-                          >
-                            <Save className="w-3 h-3 mr-1" />
-                            Save
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={handleCancel}>
-                            <X className="w-3 h-3 mr-1" />
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                            <Instagram className="w-5 h-5 text-white" />
-                          </div>
-                          <div>
-                            <p className="font-semibold">{account.handle || '@medrevolve'}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {account.follower_count?.toLocaleString() || 0} followers
-                            </p>
-                            <Badge className="mt-1 bg-[#28A745] text-white">Active</Badge>
-                          </div>
-                        </div>
-                        <Button size="sm" variant="outline" onClick={() => handleEdit(account)}>
-                          <Edit2 className="w-3 h-3 mr-1" />
-                          Edit
-                        </Button>
-                      </div>
-                    )}
-                  </motion.div>
-                ))
-              ) : (
-                <p className="text-muted-foreground text-sm">No accounts connected yet.</p>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Automation Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Activity className="w-5 h-5" />
-                Automation Status
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 bg-[#D4EDDA] border border-[#28A745] rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-[#155724]">Auto-Posting Active</span>
-                  <Badge className="bg-[#28A745] text-white">Running</Badge>
-                </div>
-                <p className="text-sm text-[#155724]">Posts every 30 minutes to Instagram + Facebook</p>
-                <p className="text-xs text-[#155724] mt-1">B2B focused content for MedRevolve</p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 bg-white border rounded-lg">
-                  <span className="text-sm font-medium">Next Post</span>
-                  <span className="text-sm text-muted-foreground">In ~30 minutes</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white border rounded-lg">
-                  <span className="text-sm font-medium">Content Type</span>
-                  <span className="text-sm text-[#4A6741]">B2B Promotional</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white border rounded-lg">
-                  <span className="text-sm font-medium">Platforms</span>
-                  <div className="flex gap-2">
-                    <Instagram className="w-4 h-4 text-pink-600" />
-                    <Facebook className="w-4 h-4 text-blue-600" />
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Instagram Published', value: igPublished, icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50' },
+            { label: 'Facebook Published', value: fbPublished, icon: Facebook, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { label: 'Facebook Drafts (unpublished)', value: fbDrafts, icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50' },
+            { label: 'Total Posts', value: posts.length, icon: BarChart3, color: 'text-[#4A6741]', bg: 'bg-green-50' },
+          ].map(stat => {
+            const Icon = stat.icon;
+            return (
+              <Card key={stat.label}>
+                <CardContent className="pt-5 pb-4">
+                  <div className={`w-9 h-9 ${stat.bg} rounded-lg flex items-center justify-center mb-3`}>
+                    <Icon className={`w-4.5 h-4.5 ${stat.color}`} />
                   </div>
-                </div>
-              </div>
+                  <p className="text-2xl font-bold">{stat.value}</p>
+                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
 
-              <div className="space-y-2">
-                <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636]">
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  View Analytics
-                </Button>
-                <Button 
-                  onClick={handleGenerateContent}
-                  disabled={isGenerating}
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-                >
-                  <Video className="w-4 h-4 mr-2" />
-                  {isGenerating ? 'Generating...' : 'Create New Content'}
-                </Button>
-              </div>
+        {/* Platform Status */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Instagram */}
+          <Card className="border-green-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                  <Instagram className="w-4 h-4 text-white" />
+                </div>
+                Instagram
+                <Badge className="bg-green-500 text-white ml-auto">✅ Connected & Posting</Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+              <p>✅ Connector authorized — auto-posts every 30 min</p>
+              <p>✅ AI-generated images with direct-response captions</p>
+              <p>✅ Phone number 240-387-5224 in every post</p>
+              <p className="font-semibold text-green-700">{igPublished} posts live on Instagram</p>
+            </CardContent>
+          </Card>
+
+          {/* Facebook */}
+          <Card className="border-amber-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <Facebook className="w-4 h-4 text-white" />
+                </div>
+                Facebook
+                <Badge className="bg-amber-500 text-white ml-auto">⚠️ Needs Zapier</Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+              <p>⚠️ No direct Facebook API connector available</p>
+              <p>⚠️ {fbDrafts} posts generated but never published</p>
+              <p>→ Set up Zapier webhook → Facebook Pages (see banner above)</p>
+              <p className="font-semibold text-blue-700">{fbPublished} posts relayed via Zapier so far</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Recent Posts */}
+        {/* Recent Posts Feed */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
               Recent Posts
+              <Badge variant="outline" className="ml-auto">{posts.length} total</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3 max-h-[500px] overflow-y-auto">
-              {posts.length > 0 ? (
-                posts.map((post) => (
-                  <motion.div
-                    key={post.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="p-4 border rounded-lg bg-white"
-                  >
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        {post.platform === 'instagram' && (
-                          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                            <Instagram className="w-4 h-4 text-white" />
-                          </div>
-                        )}
-                        {post.platform === 'facebook' && (
-                          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <Facebook className="w-4 h-4 text-white" />
-                          </div>
-                        )}
-                        <div>
-                          <p className="font-semibold capitalize">{post.platform}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(post.created_date).toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      <Badge
-                        variant={
-                          post.status === 'published'
-                            ? 'default'
-                            : post.status === 'failed'
-                            ? 'destructive'
-                            : 'secondary'
-                        }
-                      >
-                        {post.status}
+            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+              {posts.length === 0 && <p className="text-muted-foreground text-sm text-center py-8">No posts yet. Click "Post Now" above.</p>}
+              {posts.map((post) => (
+                <motion.div key={post.id}
+                  initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                  className="p-4 border rounded-xl bg-white flex gap-4">
+                  {post.image_url && (
+                    <img src={post.image_url} alt="post" className="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      {post.platform === 'instagram'
+                        ? <div className="w-5 h-5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center"><Instagram className="w-3 h-3 text-white" /></div>
+                        : <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center"><Facebook className="w-3 h-3 text-white" /></div>
+                      }
+                      <span className="text-xs font-semibold capitalize">{post.platform}</span>
+                      <Badge variant={post.status === 'published' ? 'default' : post.status === 'failed' ? 'destructive' : 'secondary'} className="text-[10px] ml-auto">
+                        {post.status === 'published' ? '✅ Published' : post.status === 'failed' ? '❌ Failed' : '⏳ Draft'}
                       </Badge>
                     </div>
-                    <p className="text-sm line-clamp-3 mb-2">{post.caption}</p>
-                    {post.hashtags && post.hashtags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-2">
-                        {post.hashtags.slice(0, 5).map((tag, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            #{tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                    {post.notes && post.status === 'failed' && (
-                      <p className="text-xs text-red-600 mt-2">{post.notes}</p>
-                    )}
-                    <div className="flex gap-4 text-xs text-muted-foreground mt-2">
-                      <span>❤️ {post.engagement_likes || 0}</span>
-                      <span>💬 {post.engagement_comments || 0}</span>
-                      <span>🔄 {post.engagement_shares || 0}</span>
-                      <span>👁️ {post.reach || 0}</span>
-                    </div>
-                  </motion.div>
-                ))
-              ) : (
-                <p className="text-muted-foreground text-sm">No posts yet.</p>
-              )}
+                    <p className="text-sm text-gray-700 line-clamp-2 mb-1">{post.caption}</p>
+                    <p className="text-xs text-muted-foreground">{new Date(post.created_date).toLocaleString()}</p>
+                    {post.notes && <p className="text-xs text-gray-400 mt-0.5 italic">{post.notes}</p>}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </CardContent>
         </Card>
+
       </div>
     </div>
   );
