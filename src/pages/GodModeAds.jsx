@@ -17,6 +17,18 @@ const SERVICES = [
   { key: 'ugc_merchant', name: 'Merchant Success UGC', type: 'UGC', emoji: '📈', audience: 'Business owners' },
 ];
 
+const EMAIL_SEGMENTS = [
+  { key: 'glp1', label: '⚖️ GLP-1 Weight Loss', placeholder: 'glp1-contact@example.com' },
+  { key: 'mens_health', label: "💪 Men's Health / TRT", placeholder: 'mens-health@example.com' },
+  { key: 'womens_health', label: "🌸 Women's Health / BHRT", placeholder: 'womens-health@example.com' },
+  { key: 'longevity', label: '⚡ Longevity & Peptides', placeholder: 'longevity@example.com' },
+  { key: 'white_label', label: '🏢 B2B White Label', placeholder: 'b2b-prospect@example.com' },
+  { key: 'glp1_b2b', label: '💼 B2B Add GLP-1', placeholder: 'gym-owner@example.com' },
+  { key: 'creators', label: '🎥 Creators / Influencers', placeholder: 'creator@example.com' },
+  { key: 'provider', label: '👨‍⚕️ Provider Recruitment', placeholder: 'provider@example.com' },
+  { key: 'pharmacy', label: '💊 Pharmacy Partnership', placeholder: 'pharmacy@example.com' },
+];
+
 export default function GodModeAds() {
   const [selected, setSelected] = useState(SERVICES.map(s => s.key));
   const [loading, setLoading] = useState(false);
@@ -26,19 +38,26 @@ export default function GodModeAds() {
   const [emailLoading, setEmailLoading] = useState(false);
   const [emailResult, setEmailResult] = useState(null);
   const [emailError, setEmailError] = useState(null);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [recipients, setRecipients] = useState(() =>
+    Object.fromEntries(EMAIL_SEGMENTS.map(s => [s.key, '']))
+  );
 
   const launchEmailSheets = async () => {
     setEmailLoading(true);
     setEmailError(null);
     setEmailResult(null);
     try {
-      const res = await base44.functions.invoke('godModeEmailSheets', { create_drafts: true });
+      const res = await base44.functions.invoke('godModeEmailSheets', { recipients });
       setEmailResult(res.data);
+      setShowEmailForm(false);
     } catch (e) {
       setEmailError(e.message || 'Email/Sheets launch failed');
     }
     setEmailLoading(false);
   };
+
+  const filledCount = Object.values(recipients).filter(v => v.trim()).length;
 
   const toggle = (key) => setSelected(prev =>
     prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
@@ -154,22 +173,53 @@ export default function GodModeAds() {
               <div className="flex items-center gap-2 mb-1">
                 <Mail className="w-4 h-4 text-green-400" />
                 <FileSpreadsheet className="w-4 h-4 text-blue-400" />
-                <span className="text-white font-bold text-sm">Gmail Drafts + Google Sheets</span>
+                <span className="text-white font-bold text-sm">Send Emails + Google Sheets (4 tabs)</span>
               </div>
               <p className="text-white/50 text-xs max-w-sm">
-                Creates a Google Sheet with all campaign links + UTMs, then generates 9 Gmail draft emails (one per segment) — each with the sheet link embedded. Review & send from Gmail.
+                Sends 9 emails immediately (one per segment) + creates a master Google Sheet with Campaigns, Compliance, Open Requests, and Change Log tabs.
               </p>
             </div>
             <button
-              onClick={launchEmailSheets}
-              disabled={emailLoading}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-40"
-              style={{ background: emailLoading ? '#1a1a1a' : 'linear-gradient(135deg, #0f9d58, #1a73e8)' }}
+              onClick={() => setShowEmailForm(v => !v)}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all"
+              style={{ background: 'linear-gradient(135deg, #0f9d58, #1a73e8)' }}
             >
-              {emailLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 text-yellow-300" />}
-              {emailLoading ? 'Creating Sheet & Drafts...' : '⚡ Launch Email God Mode'}
+              <Zap className="w-4 h-4 text-yellow-300" />
+              {showEmailForm ? 'Hide Form' : '⚡ Set Recipients & Send'}
             </button>
           </div>
+
+          {showEmailForm && (
+            <div className="mt-5 space-y-3">
+              <p className="text-white/60 text-xs mb-3">Enter recipient email for each segment. Leave blank to skip that segment.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {EMAIL_SEGMENTS.map(seg => (
+                  <div key={seg.key}>
+                    <label className="text-white/50 text-xs block mb-1">{seg.label}</label>
+                    <input
+                      type="email"
+                      value={recipients[seg.key]}
+                      onChange={e => setRecipients(prev => ({ ...prev, [seg.key]: e.target.value }))}
+                      placeholder={seg.placeholder}
+                      className="w-full bg-black/40 border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder-white/20 focus:outline-none focus:border-green-500/50"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-white/40 text-xs">{filledCount} of 9 recipients filled</span>
+                <button
+                  onClick={launchEmailSheets}
+                  disabled={emailLoading || filledCount === 0}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-40"
+                  style={{ background: emailLoading ? '#1a1a1a' : 'linear-gradient(135deg, #0f9d58, #1a73e8)' }}
+                >
+                  {emailLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+                  {emailLoading ? `Sending ${filledCount} emails...` : `Send ${filledCount} Email${filledCount !== 1 ? 's' : ''} Now`}
+                </button>
+              </div>
+            </div>
+          )}
 
           {emailError && (
             <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-2">
@@ -182,9 +232,9 @@ export default function GodModeAds() {
             <div className="mt-4 p-4 bg-black/30 rounded-xl space-y-3">
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: 'Campaigns in Sheet', value: emailResult.campaigns_in_sheet, color: 'text-blue-400' },
-                  { label: 'Gmail Drafts Created', value: emailResult.drafts_created, color: 'text-green-400' },
-                  { label: 'Links Logged', value: emailResult.links_in_sheet, color: 'text-yellow-400' },
+                  { label: 'Emails Sent', value: emailResult.emails_sent, color: 'text-green-400' },
+                  { label: 'Skipped', value: emailResult.emails_skipped, color: 'text-yellow-400' },
+                  { label: 'Failed', value: emailResult.emails_failed, color: 'text-red-400' },
                 ].map(({ label, value, color }) => (
                   <div key={label} className="text-center">
                     <div className={`text-2xl font-black ${color}`}>{value}</div>
@@ -199,9 +249,18 @@ export default function GodModeAds() {
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#0f9d58]/20 border border-[#0f9d58]/40 text-green-400 text-sm font-bold hover:bg-[#0f9d58]/30 transition-all"
               >
                 <FileSpreadsheet className="w-4 h-4" />
-                Open Google Sheet →
+                Open Google Sheet (4 tabs) →
               </a>
-              <p className="text-white/40 text-xs text-center">Check your Gmail Drafts folder — {emailResult.drafts_created} emails ready to review & send</p>
+              <div className="space-y-1 max-h-40 overflow-y-auto">
+                {emailResult.send_results?.map((r, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    <span className={r.success ? 'text-green-400' : 'text-red-400'}>{r.success ? '✅' : '❌'}</span>
+                    <span className="text-white/60">{r.segment}</span>
+                    {r.to && <span className="text-white/30">→ {r.to}</span>}
+                    {r.error && <span className="text-red-400/70">{r.error}</span>}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
