@@ -13,7 +13,7 @@ const services = [
     tagline: 'Knowledge infrastructure for modern wellness merchants.',
     description: 'Self-paced and live modules covering product science, compliance frameworks, patient acquisition, provider relationships, and platform operations. Graduate with a certified merchant credential.',
     modules: [
-      'GLP-1 & Peptide Science Fundamentals',
+      'Physician-Supervised Program Science Fundamentals',
       'Regulatory Frameworks (FDA, DEA, State)',
       'Merchant Operations Certification',
       'Patient Acquisition & Retention',
@@ -30,7 +30,7 @@ const services = [
     icon: CreditCard,
     title: 'Payment & Processing',
     tagline: 'High-risk merchant rails. Built for wellness commerce.',
-    description: 'Integrated payment processing for nutraceuticals, compounded medications, and telehealth services. Card, ACH, and crypto rails with built-in chargeback protection and subscription billing.',
+    description: 'Integrated payment processing for nutraceuticals, physician-supervised programs, and telehealth services through licensed high-risk healthcare merchant accounts. Card, ACH, and crypto rails with built-in chargeback protection and subscription billing.',
     modules: [
       'Card Processing (High-Risk Approved)',
       'ACH & Bank Transfer Rails',

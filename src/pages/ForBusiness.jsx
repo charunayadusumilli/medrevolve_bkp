@@ -65,8 +65,8 @@ const STOREFRONT_MODES = [
   {
     icon: Globe,
     title: 'Online-First Storefront',
-    desc: 'A fully hosted, SEO-optimized storefront under your domain. Product pages, intake flows, checkout, and patient portal — all live in days.',
-    features: ['Custom domain (yourname.com)', 'SEO-optimized product pages', 'Mobile-first checkout', 'Integrated patient portal', 'Subscription & one-time billing'],
+    desc: 'A fully hosted, SEO-optimized storefront under your domain. Program pages, intake flows, checkout, and patient portal — live within 7 business days.',
+    features: ['Custom domain (yourname.com)', 'SEO-optimized program pages', 'Mobile-first checkout', 'Integrated patient portal', 'Subscription & one-time billing'],
   },
   {
     icon: Store,
