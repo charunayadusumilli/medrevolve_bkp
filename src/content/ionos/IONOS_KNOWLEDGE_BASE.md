@@ -37,7 +37,7 @@ A complete turnkey system to launch and run a compliant telehealth or GLP-1 busi
 ### Core Package — $2,999/month
 **Everything included:**
 - Custom branded website (domain included or bring your own)
-- Stripe-powered payment processing setup
+- Licensed high-risk healthcare merchant account setup
 - Inventory management system
 - Patient portal + booking/scheduling system
 - Licensed provider network access (MDs, NPs, PAs — all 50 states)
@@ -60,7 +60,7 @@ A complete turnkey system to launch and run a compliant telehealth or GLP-1 busi
 - Dedicated compliance officer
 
 ### Pricing & Payment
-- **Monthly:** $2,999/month (recurring Stripe subscription)
+- **Monthly:** $2,999/month (recurring subscription)
 - **Setup/Onboarding Fee:** Quote-based (typically $997–$4,997 depending on complexity)
 - **Free Demo:** Available — book at medrevolve.com/MerchantOnboarding
 - **Payment Link:** medrevolve.com/MerchantOnboarding (Stripe checkout)
@@ -110,18 +110,19 @@ Licensed telehealth consultations with board-certified providers (MDs, NPs, PAs)
 ### Service Menu
 
 #### Weight Loss / GLP-1
-- **Semaglutide (Ozempic/Wegovy equivalent)** — injectable weekly
-- **Tirzepatide (Mounjaro/Zepbound equivalent)** — injectable weekly
+- Physician-supervised GLP-1 weight management programs (injectable)
+- Physician-supervised GLP-1 programs (dual-action)
+- Physician-supervised GLP-1 programs (oral/sublingual)
 - Initial consultation + prescription evaluation + follow-up protocol
-- Monthly medication plans with provider oversight
+- Monthly physician-supervised plans with provider oversight
 - Dosage adjustment visits included
 
 #### Men's Health
-- Testosterone Replacement Therapy (TRT)
-- Erectile Dysfunction (ED) treatment
-- Hair loss (finasteride/minoxidil)
-- General men's hormone optimization
-- Peptide therapy for performance/recovery
+- Testosterone optimization programs (physician-supervised)
+- Men's sexual health programs (physician-prescribed)
+- Hair restoration programs (physician-supervised)
+- Men's hormone optimization protocols
+- Men's performance & recovery programs
 
 #### Women's Health
 - Bioidentical Hormone Replacement Therapy (BHRT)
@@ -131,11 +132,11 @@ Licensed telehealth consultations with board-certified providers (MDs, NPs, PAs)
 - Women's weight management
 
 #### Longevity & Optimization
-- Peptide therapy (BPC-157, TB-500, Ipamorelin, CJC-1295, etc.)
-- Growth hormone secretagogues
-- NAD+ therapy
-- Cognitive enhancement
-- Anti-aging protocols
+- Physician-supervised longevity & wellness programs
+- Growth hormone secretagogue programs (physician-prescribed)
+- NAD+ optimization programs
+- Cognitive wellness protocols
+- Physician-directed anti-aging programs
 
 #### General Wellness
 - Vitamin/supplement programs
@@ -146,13 +147,15 @@ Licensed telehealth consultations with board-certified providers (MDs, NPs, PAs)
 ### B2C Pricing
 | Service | Price |
 |---|---|
-| Initial Consultation | $199 (one-time, Stripe) |
-| GLP-1 Monthly Plan (medication + support) | $399/month (Stripe subscription) |
-| Men's Health Monthly Plan | Starting $299/month |
-| Women's Health / BHRT Monthly | Starting $349/month |
-| Peptide / Longevity Programs | $399–$599/month (varies) |
-| Follow-up Appointments | Included in membership |
-| Prescription Refills | Included in plan |
+| Initial Physician Consultation | $199 (one-time) |
+| GLP-1 Physician-Supervised Monthly Program | From $399/month |
+| Men's Health Monthly Program | Contact for current pricing |
+| Women's Health / BHRT Monthly Program | Contact for current pricing |
+| Longevity & Wellness Programs | Contact for current pricing |
+| Follow-up Provider Visits | Included in active program |
+| Prescription Management | Handled by prescribing physician |
+
+*All programs require a valid prescription from a licensed physician. Pricing subject to change. Results may vary.*
 
 **Payment methods:** All major credit cards, HSA/FSA cards  
 **Insurance:** NOT accepted — cash-pay only  
@@ -186,7 +189,7 @@ Licensed telehealth consultations with board-certified providers (MDs, NPs, PAs)
 ### B2C Common Questions
 - **"Is this safe?"** → "All consultations are with licensed, board-certified providers. All medications are from certified US compounding pharmacies. Your safety is our #1 priority."
 - **"How does it work?"** → "Book online, complete intake forms, video consult with a provider, receive prescription, medications shipped to your door in 3–5 business days."
-- **"Will it actually work for me?"** → "Results vary per individual, but GLP-1 patients typically see 15–20% body weight reduction over 3–6 months with adherence. Your provider will guide your protocol."
+- **"Will it actually work for me?"** → "Results vary per individual. Your licensed provider will evaluate whether a program is appropriate for you and guide your protocol. We cannot guarantee specific outcomes."
 - **"What if I have side effects?"** → "Your provider monitors your progress and adjusts dosage. Side effects are manageable. You always have direct access to your care team."
 - **"Is this legal?"** → "100%. We are fully compliant with all federal and state telehealth regulations. All providers are licensed in your state."
 - **"Do I need insurance?"** → "No insurance needed. We're cash-pay. Many patients use HSA/FSA funds."
@@ -223,12 +226,12 @@ Pharmaceutical-grade research reagents and lab supplies sold for research use on
 | Research-grade diluents | Various | Contact for catalog |
 | Bulk wholesale kits | Custom | Min order applies |
 
-### RUO Pricing (All via Stripe until merchant accounts loaded)
-- **5mL vials:** Contact for current pricing (typically $8–$15/unit retail)
-- **10mL vials:** Contact for current pricing (typically $12–$20/unit retail)
-- **30mL vials:** Contact for current pricing (typically $18–$30/unit retail)
-- **Bulk/Wholesale:** Significant discounts at 50+ unit orders
-- **Payment:** Stripe checkout — medrevolve.com/ResearchProducts
+### RUO Pricing
+- **5mL vials:** Contact for current pricing
+- **10mL vials:** Contact for current pricing
+- **30mL vials:** Contact for current pricing
+- **Bulk/Wholesale:** Discounts available at qualifying order volumes
+- **Payment:** medrevolve.com/ResearchProducts — institutional orders only
 
 ### RUO Compliance Disclaimer (ALWAYS state this)
 "Our RUO products are sold strictly for research purposes only. They are not intended for human use, consumption, or injection. All sales require acknowledgment of this RUO designation."

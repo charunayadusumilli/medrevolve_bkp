@@ -83,24 +83,7 @@ const medications = {
   ],
 };
 
-const pricing = [
-  { med: 'GLP-1 Weight Management Program (injectable)', price: '$174' },
-  { med: 'GLP-1 Weight Management Program (dual-action)', price: '$299' },
-  { med: 'GLP-1 Microdose + Micronutrient Program', price: '$124' },
-  { med: 'GLP-1 Dual-Action Microdose Program', price: '$149' },
-  { med: 'GLP-1 Oral/Sublingual Program', price: '$99' },
-  { med: 'Lipotropic (Lipo-C) Protocol', price: '$99' },
-  { med: 'Lipotropic (Lipo-B) Protocol', price: '$99' },
-  { med: 'NAD+ Optimization Program (injectable)', price: '$174' },
-  { med: 'NAD+ Optimization Program (nasal)', price: '$99' },
-  { med: 'Glutathione Wellness Protocol', price: '$99' },
-  { med: 'Growth Hormone Secretagogue Program', price: '$174' },
-  { med: 'Hair Restoration Program (oral)', price: '$74' },
-  { med: 'Hair Restoration Program (DHT-blocker)', price: '$74' },
-  { med: 'Male Hormone Optimization Program', price: '$124' },
-  { med: "Men's Sexual Health Program", price: '$74' },
-  { med: "Men's Sexual Health Program (extended)", price: '$74' },
-];
+// Pricing details are internal and provided during partner onboarding only
 
 const whyUs = [
   'Among the highest payout compensation in telehealth',
@@ -142,11 +125,11 @@ const faqs = [
 ];
 
 const steps = [
-  { n: '1', text: 'Pick your plan below' },
+  { n: '1', text: 'Submit your partner application' },
   { n: '2', text: 'Account reviewed and provisioned by onboarding team' },
   { n: '3', text: 'Receive your links, portal access & training materials' },
   { n: '4', text: 'Compliance review completed — typically within 7 business days' },
-  { n: '5', text: 'Payment onboarding finalized and you begin earning' },
+  { n: '5', text: 'Onboarding finalized and you begin referring qualified clients' },
 ];
 
 // ─── FAQ ITEM ────────────────────────────────────────────────────────────────
@@ -353,35 +336,7 @@ export default function PartnerProgram() {
         </div>
       </section>
 
-      {/* ── MINIMUM PRICING ── */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...FADE_UP} className="text-center mb-14">
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-3">Minimum Medication Pricing</h2>
-            <p className="text-[#5A6B5A]">Set your own price above these minimums. You keep the difference. <span className="text-xs">*Subject to change</span></p>
-          </motion.div>
-          <motion.div {...FADE_UP}>
-            <div className="overflow-x-auto rounded-2xl shadow-lg">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-[#4A6741] text-white">
-                    <th className="px-6 py-4 text-left font-semibold">Medication</th>
-                    <th className="px-6 py-4 text-right font-semibold">Monthly Minimum</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pricing.map((row, i) => (
-                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#F5F0E8]'}>
-                      <td className="px-6 py-3 text-[#2D3A2D]">{row.med}</td>
-                      <td className="px-6 py-3 text-right font-bold text-[#4A6741]">{row.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Pricing details provided during onboarding — not shown publicly */}
 
       {/* ── WHY MEDREVOLVE ── */}
       <section className="py-20 px-6 bg-[#2D3A2D]">
@@ -426,59 +381,38 @@ export default function PartnerProgram() {
       <section className="py-20 px-6 bg-[#F5F0E8]">
         <div className="max-w-4xl mx-auto">
           <motion.div {...FADE_UP} className="text-center mb-14">
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-3">What Does It Cost?</h2>
-            <p className="text-[#5A6B5A]">Simple, transparent pricing. Cancel anytime.</p>
+            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-3">Ready to Get Started?</h2>
+            <p className="text-[#5A6B5A]">Contact our partnerships team to discuss onboarding, platform access, and program details.</p>
           </motion.div>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {/* Annual */}
-            <motion.div {...FADE_UP}>
-              <Card className="border-2 border-[#4A6741] relative overflow-hidden">
-                <div className="absolute top-4 right-4">
-                  <Badge className="bg-[#4A6741] text-white">Best Value</Badge>
+          <motion.div {...FADE_UP}>
+            <Card className="border-2 border-[#4A6741]">
+              <CardContent className="pt-8 pb-8 text-center">
+                <p className="text-sm font-semibold text-[#4A6741] uppercase tracking-widest mb-4">Partner Program</p>
+                <p className="text-[#2D3A2D] text-lg font-medium mb-6 max-w-xl mx-auto">
+                  Pricing is based on your business type, volume, and onboarding requirements. Speak with our team for a tailored quote.
+                </p>
+                <ul className="space-y-3 mb-8 text-left max-w-sm mx-auto">
+                  {['Setup Within 7 Business Days', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant'].map((f, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-[#4A6741]" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to={createPageUrl('PartnerSignup')}>
+                    <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-xl px-8">
+                      Apply to Partner Program <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                  <Link to={createPageUrl('Contact')}>
+                    <Button variant="outline" className="border-[#4A6741] text-[#4A6741] rounded-xl px-8">
+                      Talk to Our Team
+                    </Button>
+                  </Link>
                 </div>
-                <CardContent className="pt-8 pb-8">
-                  <p className="text-sm font-semibold text-[#4A6741] uppercase tracking-widest mb-2">Annual Plan</p>
-                  <p className="text-5xl font-extrabold text-[#2D3A2D] mb-1">$167<span className="text-xl font-normal text-[#5A6B5A]">/mo</span></p>
-                  <p className="text-sm text-[#5A6B5A] mb-6">Billed annually · Save $384/year</p>
-                  <ul className="space-y-3 mb-8">
-                    {['Setup Within 7 Business Days', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant', 'Free iPad & Kiosk Stand Included'].map((f, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="w-4 h-4 text-[#4A6741]" /> {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to={createPageUrl('PartnerSignup')}>
-                    <Button className="w-full bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-xl">
-                      Get Started — Annual
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </motion.div>
-            {/* Monthly */}
-            <motion.div {...FADE_UP} transition={{ delay: 0.1 }}>
-              <Card className="border border-gray-200">
-                <CardContent className="pt-8 pb-8">
-                  <p className="text-sm font-semibold text-[#5A6B5A] uppercase tracking-widest mb-2">Monthly Plan</p>
-                  <p className="text-5xl font-extrabold text-[#2D3A2D] mb-1">$199<span className="text-xl font-normal text-[#5A6B5A]">/mo</span></p>
-                  <p className="text-sm text-[#5A6B5A] mb-6">Month-to-month · Cancel anytime</p>
-                  <ul className="space-y-3 mb-8">
-                    {['Setup Within 7 Business Days', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant'].map((f, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="w-4 h-4 text-[#4A6741]" /> {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to={createPageUrl('PartnerSignup')}>
-                    <Button variant="outline" className="w-full border-[#4A6741] text-[#4A6741] rounded-xl">
-                      Get Started — Monthly
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-          <p className="text-center text-sm text-[#5A6B5A] mt-6">Financing available. No long-term contracts. Cancel before next billing period.</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </section>
 
@@ -495,10 +429,9 @@ export default function PartnerProgram() {
                 </div>
               ))}
             </div>
-            <p className="text-white/60 text-sm mb-8">⏳ Limited time: Free iPad & Kiosk Stand on all annual plans</p>
             <Link to={createPageUrl('PartnerSignup')}>
               <Button size="lg" className="bg-white text-[#4A6741] hover:bg-white/90 font-bold rounded-full px-12">
-                Join Now — It's Free to Start <ArrowRight className="ml-2 w-5 h-5" />
+                Apply Now <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
           </motion.div>
