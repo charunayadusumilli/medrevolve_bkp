@@ -279,30 +279,39 @@ Deno.serve(async (req) => {
           const subject = campaign.subject;
 
           // Build RFC 2822 MIME message
-          const boundary = `boundary_${Math.random().toString(36).slice(2)}`;
-          const mimeMessage = [
-            `To: ${to}`,
-            `Subject: ${subject}`,
-            `MIME-Version: 1.0`,
-            `Content-Type: multipart/alternative; boundary="${boundary}"`,
-            ``,
-            `--${boundary}`,
-            `Content-Type: text/plain; charset=UTF-8`,
-            ``,
-            `${campaign.segment} — ${campaign.link}`,
-            ``,
-            `Book / Apply: ${campaign.booking_link}`,
-            `Google Sheets Campaign Tracker: ${sheetUrl}`,
-            `Phone: 240-387-5224`,
-            ``,
-            `--${boundary}`,
-            `Content-Type: text/html; charset=UTF-8`,
-            ``,
-            htmlBody,
-            `--${boundary}--`,
-          ].join('\r\n');
+          const boundary = `b44_${Math.random().toString(36).slice(2)}`;
+          const plainText = `${campaign.segment}\r\n\r\nCampaign Link: ${campaign.link}\r\nBook / Apply: ${campaign.booking_link}\r\nGoogle Sheets: ${sheetUrl}\r\nPhone: 240-387-5224\r\nWebsite: https://medrevolve.com`;
 
-          const encoded = btoa(unescape(encodeURIComponent(mimeMessage)))
+          const mimeMessage =
+            `To: ${to}\r\n` +
+            `Subject: ${subject}\r\n` +
+            `MIME-Version: 1.0\r\n` +
+            `Content-Type: multipart/alternative; boundary="${boundary}"\r\n` +
+            `\r\n` +
+            `--${boundary}\r\n` +
+            `Content-Type: text/plain; charset=UTF-8\r\n` +
+            `Content-Transfer-Encoding: quoted-printable\r\n` +
+            `\r\n` +
+            plainText + `\r\n` +
+            `\r\n--${boundary}\r\n` +
+            `Content-Type: text/html; charset=UTF-8\r\n` +
+            `Content-Transfer-Encoding: base64\r\n` +
+            `\r\n` +
+            // encode HTML body as base64, split into 76-char lines per RFC 2045
+            (() => {
+              const bytes = new TextEncoder().encode(htmlBody);
+              let binary = '';
+              bytes.forEach(b => binary += String.fromCharCode(b));
+              const b64 = btoa(binary);
+              return b64.match(/.{1,76}/g).join('\r\n');
+            })() + `\r\n` +
+            `\r\n--${boundary}--`;
+
+          // encode full MIME envelope as base64url
+          const envelopeBytes = new TextEncoder().encode(mimeMessage);
+          let envelopeBinary = '';
+          envelopeBytes.forEach(b => envelopeBinary += String.fromCharCode(b));
+          const encoded = btoa(envelopeBinary)
             .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
           const draftRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
