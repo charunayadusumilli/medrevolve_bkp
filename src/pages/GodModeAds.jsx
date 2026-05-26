@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Zap, Target, TrendingUp, CheckCircle2, XCircle, Loader2, Instagram, ExternalLink } from 'lucide-react';
+import { Zap, Target, TrendingUp, CheckCircle2, XCircle, Loader2, Instagram, Mail, FileSpreadsheet, ExternalLink } from 'lucide-react';
 
 const SERVICES = [
   { key: 'telehealth', name: 'Telehealth Platform', type: 'Static', emoji: '🩺', audience: 'Patients seeking virtual care' },
@@ -23,6 +23,22 @@ export default function GodModeAds() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
   const [postToIG, setPostToIG] = useState(true);
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [emailResult, setEmailResult] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+
+  const launchEmailSheets = async () => {
+    setEmailLoading(true);
+    setEmailError(null);
+    setEmailResult(null);
+    try {
+      const res = await base44.functions.invoke('godModeEmailSheets', { create_drafts: true });
+      setEmailResult(res.data);
+    } catch (e) {
+      setEmailError(e.message || 'Email/Sheets launch failed');
+    }
+    setEmailLoading(false);
+  };
 
   const toggle = (key) => setSelected(prev =>
     prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
@@ -129,6 +145,65 @@ export default function GodModeAds() {
           >
             <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${postToIG ? 'left-7' : 'left-1'}`} />
           </button>
+        </div>
+
+        {/* Email + Sheets God Mode */}
+        <div className="mb-8 p-5 bg-gradient-to-r from-green-900/30 to-blue-900/20 border border-green-500/30 rounded-2xl">
+          <div className="flex items-start justify-between flex-wrap gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Mail className="w-4 h-4 text-green-400" />
+                <FileSpreadsheet className="w-4 h-4 text-blue-400" />
+                <span className="text-white font-bold text-sm">Gmail Drafts + Google Sheets</span>
+              </div>
+              <p className="text-white/50 text-xs max-w-sm">
+                Creates a Google Sheet with all campaign links + UTMs, then generates 9 Gmail draft emails (one per segment) — each with the sheet link embedded. Review & send from Gmail.
+              </p>
+            </div>
+            <button
+              onClick={launchEmailSheets}
+              disabled={emailLoading}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-40"
+              style={{ background: emailLoading ? '#1a1a1a' : 'linear-gradient(135deg, #0f9d58, #1a73e8)' }}
+            >
+              {emailLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 text-yellow-300" />}
+              {emailLoading ? 'Creating Sheet & Drafts...' : '⚡ Launch Email God Mode'}
+            </button>
+          </div>
+
+          {emailError && (
+            <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-2">
+              <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+              <p className="text-red-400 text-xs">{emailError}</p>
+            </div>
+          )}
+
+          {emailResult && (
+            <div className="mt-4 p-4 bg-black/30 rounded-xl space-y-3">
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: 'Campaigns in Sheet', value: emailResult.campaigns_in_sheet, color: 'text-blue-400' },
+                  { label: 'Gmail Drafts Created', value: emailResult.drafts_created, color: 'text-green-400' },
+                  { label: 'Links Logged', value: emailResult.links_in_sheet, color: 'text-yellow-400' },
+                ].map(({ label, value, color }) => (
+                  <div key={label} className="text-center">
+                    <div className={`text-2xl font-black ${color}`}>{value}</div>
+                    <div className="text-white/40 text-xs">{label}</div>
+                  </div>
+                ))}
+              </div>
+              <a
+                href={emailResult.spreadsheet_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#0f9d58]/20 border border-[#0f9d58]/40 text-green-400 text-sm font-bold hover:bg-[#0f9d58]/30 transition-all"
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                Open Google Sheet →
+              </a>
+              <p className="text-white/40 text-xs text-center">Check your Gmail Drafts folder — {emailResult.drafts_created} emails ready to review & send</p>
+            </div>
+          )}
         </div>
 
         {/* UTM info */}
