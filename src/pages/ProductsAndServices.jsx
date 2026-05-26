@@ -23,7 +23,7 @@ const SEGMENTS = [
     targetAudience: ['Med spa owners', 'Wellness clinic owners', 'Fitness centers / gyms', 'Healthcare providers', 'Entrepreneurs', 'Pharmacies', 'Chiropractors / nutritionists'],
     products: [
       { name: 'Custom Branded Website', desc: 'Domain included or bring your own', included: true },
-      { name: 'Payment Processing Setup', desc: 'Stripe-powered, fully configured', included: true },
+      { name: 'Payment Processing Setup', desc: 'Licensed high-risk healthcare merchant account, fully configured', included: true },
       { name: 'Patient Portal + Booking', desc: 'Scheduling, intake, telehealth rooms', included: true },
       { name: 'Licensed Provider Network', desc: 'MDs, NPs, PAs — all 50 states', included: true },
       { name: 'Pharmacy Fulfillment', desc: 'Discreet shipping under your brand', included: true },
@@ -57,13 +57,13 @@ const SEGMENTS = [
     paymentLink: '/BookAppointment',
     targetAudience: ['Adults 25–65 seeking weight loss', 'Men seeking TRT/ED treatment', 'Women seeking BHRT/menopause care', 'Biohackers & longevity enthusiasts', 'People without insurance or preferring privacy'],
     products: [
-      { name: 'GLP-1 / Semaglutide Program', desc: '$399/mo — weekly injectable, provider oversight', included: true },
-      { name: 'GLP-1 / Tirzepatide Program', desc: '$399/mo — weekly injectable, dosage adjustments', included: true },
-      { name: 'Men\'s Health / TRT', desc: 'From $299/mo — testosterone, ED, hair loss', included: true },
-      { name: 'Women\'s Health / BHRT', desc: 'From $349/mo — hormones, menopause, thyroid', included: true },
-      { name: 'Longevity / Peptide Therapy', desc: '$399–$599/mo — BPC-157, NAD+, growth hormones', included: true },
-      { name: 'Initial Consultation', desc: '$199 one-time — board-certified provider, video call', included: true },
-      { name: 'Follow-up Appointments', desc: 'Included in all monthly plans', included: true },
+      { name: 'GLP-1 Weight Management Program (injectable)', desc: 'From $399/mo — weekly injectable, physician-supervised', included: true },
+      { name: 'GLP-1 Weight Management Program (dual-action)', desc: 'From $399/mo — weekly injectable, dosage adjustments', included: true },
+      { name: "Men's Hormone Optimization Program", desc: 'Contact for pricing — physician-supervised', included: true },
+      { name: "Women's Health / Hormone Program", desc: 'Contact for pricing — physician-supervised', included: true },
+      { name: 'Longevity & Wellness Programs', desc: 'Contact for pricing — physician-supervised', included: true },
+      { name: 'Initial Physician Consultation', desc: '$199 one-time — licensed provider, video call', included: true },
+      { name: 'Follow-up Provider Visits', desc: 'Included in active programs', included: true },
       { name: 'Prescription Fulfillment', desc: 'Ships to door in 3–5 business days', included: true },
     ],
     intakeFields: [
@@ -73,10 +73,10 @@ const SEGMENTS = [
     ],
     objections: [
       { q: '"Is this safe?"', a: 'All consultations with licensed, board-certified providers. All medications from certified US compounding pharmacies.' },
-      { q: '"Will it work for me?"', a: 'GLP-1 patients typically see 15–20% body weight reduction over 3–6 months with adherence. Your provider guides your protocol.' },
+      { q: '"Will it work for me?"', a: 'Results vary by individual. Your licensed provider will evaluate whether a program is appropriate and guide your protocol.' },
       { q: '"Do I need insurance?"', a: 'No insurance needed. We\'re cash-pay. Many patients use HSA/FSA funds.' },
     ],
-    callScript: 'We offer telehealth consultations with licensed providers for weight loss, men\'s health, women\'s health, and wellness programs. Our initial consultation is $199, and monthly plans start at $399 including medications and ongoing support. All consultations are virtual, medications shipped directly to you. Would you like to book a consultation?',
+    callScript: 'We offer telehealth consultations with licensed providers for weight loss, men\'s health, women\'s health, and physician-supervised wellness programs. Our initial consultation is $199, and physician-supervised monthly programs start from $399. All consultations are virtual, with prescriptions handled by your provider and shipped directly to you. Would you like to book a consultation?',
   },
   {
     id: 'ruo',
@@ -282,7 +282,7 @@ export default function ProductsAndServices() {
           <div className="flex flex-wrap items-center gap-3 mt-4">
             <div className="flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1.5">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-green-300 text-xs font-medium">All payments via Stripe</span>
+              <span className="text-green-300 text-xs font-medium">Licensed healthcare payment processing</span>
             </div>
             <a href="tel:+12403875224" className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5 text-white/70 text-xs hover:text-white transition-colors">
               <Phone className="w-3.5 h-3.5 text-cyan-400" />

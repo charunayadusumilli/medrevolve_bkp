@@ -210,6 +210,7 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to="/ProductsAndServices" className="cursor-pointer rounded-lg px-3 py-2 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 text-sm font-bold">📦 Products & Services</Link></DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem asChild><Link to="/SystemArchitecture" className="cursor-pointer rounded-lg px-3 py-2 text-white/90 hover:text-white hover:bg-white/5 text-sm font-bold border border-white/10">⚙️ System Architecture</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/ComplianceAuditReport" className="cursor-pointer rounded-lg px-3 py-2 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 text-sm font-bold">📋 Compliance Audit Report</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               }
