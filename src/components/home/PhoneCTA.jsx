@@ -2,8 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { detectDomain } from '@/lib/domainConfig';
 
 export default function PhoneCTA() {
+  const domain = detectDomain();
+  const isB2C = domain === 'B2C';
+
   return (
     <section className="relative py-16 lg:py-24 px-6 lg:px-8 bg-[#0A0A0A] border-t border-white/10">
       <div className="max-w-4xl mx-auto text-center">
@@ -15,23 +19,30 @@ export default function PhoneCTA() {
           
           <div className="inline-flex items-center gap-2 bg-[#4A6741]/20 border border-[#4A6741]/30 rounded-full px-4 py-2 mb-6">
             <Phone className="w-4 h-4 text-[#6B8F5E]" />
-            <span className="text-[#6B8F5E] text-xs font-bold uppercase tracking-widest">Talk to Our Team</span>
+            <span className="text-[#6B8F5E] text-xs font-bold uppercase tracking-widest">
+              {isB2C ? 'Speak With Our Patient Team' : 'Talk to Our Team'}
+            </span>
           </div>
           
           <h2 className="text-3xl lg:text-5xl font-black text-white mb-4 leading-tight">
-            Ready to Launch?<br/>
-            <span className="text-[#6B8F5E]">Let's Talk</span>
+            {isB2C ? (
+              <>Have questions?<br /><span className="text-[#6B8F5E]">We're here for you.</span></>
+            ) : (
+              <>Ready to Launch?<br /><span className="text-[#6B8F5E]">Let's Talk</span></>
+            )}
           </h2>
           
           <p className="text-white/50 text-base lg:text-lg mb-8 max-w-xl mx-auto">
-            Speak with our platform specialists. Get answers, see demos, and start your journey.
+            {isB2C
+              ? 'Speak with our patient support team about programs, eligibility, and what to expect from your consultation.'
+              : 'Speak with our platform specialists. Get answers, see demos, and start your journey.'}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/PhoneIntake">
               <button className="flex items-center gap-3 bg-[#4A6741] hover:bg-[#3D5636] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase transition-colors rounded-lg">
                 <Phone className="w-4 h-4" />
-                Schedule a Call
+                {isB2C ? 'Call Patient Support' : 'Schedule a Call'}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
@@ -40,6 +51,12 @@ export default function PhoneCTA() {
               Or call now: 240-387-5224
             </a>
           </div>
+
+          {isB2C && (
+            <p className="text-white/20 text-xs mt-6 max-w-sm mx-auto leading-relaxed">
+              Our team does not provide medical advice. All clinical decisions are made by your assigned licensed physician.
+            </p>
+          )}
         </motion.div>
       </div>
     </section>
