@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 const steps = [
-  { n: '01', title: 'Apply & Onboard',    body: 'Submit your merchant application. Your dedicated onboarding team instantly provisions your account, domain, compliance setup, and inventory.', tag: 'Instant' },
-  { n: '02', title: 'LLC & Legal Entity', body: 'No LLC? We form one for you on the spot — EIN, registered agent, operating agreement. Everything filed and delivered digitally, same session.', tag: 'Same Day' },
-  { n: '03', title: 'Storefront Goes Live', body: 'Your branded storefront launches immediately with a pre-loaded product catalog — GLP-1s, peptides, hormones — ready to sell from day one.', tag: 'Instant' },
-  { n: '04', title: 'Telehealth Activated', body: 'Provider network connected. Consultation types, prescription workflows, and patient intake forms configured for your branded telehealth portal.', tag: 'Same Day' },
-  { n: '05', title: 'Payments Connected',  body: 'High-risk merchant account, card, ACH, crypto, and subscription billing configured and live with your storefront and pharmacy pipeline.', tag: 'Same Day' },
-  { n: '06', title: 'Scale & Grow',        body: 'Real-time analytics, provider oversight, inventory monitoring, compliance, and your dedicated partner support team — all live immediately.', tag: 'Now' },
+  { n: '01', title: 'Apply & Onboard',    body: 'Submit your merchant application. Your dedicated onboarding team reviews your account and begins provisioning your domain, compliance setup, and platform configuration.', tag: '~Day 1–2' },
+  { n: '02', title: 'LLC & Legal Entity', body: 'No LLC? We assist with formation — EIN, registered agent, operating agreement. Everything filed and delivered digitally through our legal partners.', tag: '~Day 2–3' },
+  { n: '03', title: 'Storefront Goes Live', body: 'Your branded storefront launches with a physician-supervised program catalog — weight management, hormones, wellness — configured for compliant selling.', tag: '~Day 3–5' },
+  { n: '04', title: 'Telehealth Activated', body: 'Provider network connected. Consultation types, prescription workflows, and patient intake forms configured for your branded telehealth portal.', tag: '~Day 4–6' },
+  { n: '05', title: 'Payments Connected',  body: 'Licensed high-risk healthcare merchant account, card, ACH, and subscription billing configured and connected to your storefront and pharmacy pipeline.', tag: '~Day 5–7' },
+  { n: '06', title: 'Scale & Grow',        body: 'Real-time analytics, provider oversight, inventory monitoring, compliance, and your dedicated partner support team — fully operational.', tag: 'Day 7+' },
 ];
 
 export default function WorkflowTimeline() {

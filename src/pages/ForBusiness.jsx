@@ -24,7 +24,7 @@ const PRODUCT_TRACKS = [
     light: '#D0E8F5',
     headline: 'Full Prescription Commerce Stack',
     body: 'Sell physician-supervised GLP-1s, hormones, and Rx compounds through a fully compliant telehealth funnel. Every order flows through a licensed provider visit, then routes to a 503A/B pharmacy.',
-    products: ['Semaglutide (GLP-1)', 'Tirzepatide', 'Testosterone Cypionate', 'BHRT / HRT', 'Sermorelin / GHRPs', 'Custom Compound Protocols'],
+    products: ['Physician-Supervised GLP-1 Programs', 'Dual-Action GLP-1 Protocols', 'Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs', 'Growth Hormone Secretagogue Programs', 'Custom Physician-Directed Protocols'],
     requirements: ['Licensed provider on platform', '503A or 503B pharmacy partner', 'HIPAA-compliant checkout', 'State-by-state Rx laws covered'],
     cta: 'Start GLP-1 Platform',
     link: 'MerchantOnboarding',
@@ -39,7 +39,7 @@ const PRODUCT_TRACKS = [
     light: '#EDE8F5',
     headline: 'Institutional & Research Commerce',
     body: 'Sell HPLC-certified peptides and research compounds to licensed researchers and institutions. Age-gated, COA-required, with mandatory RUO disclaimers and institutional ordering workflows.',
-    products: ['BPC-157', 'TB-500', 'PT-141', 'CJC-1295', 'NAD+ (research grade)', 'Epithalon'],
+    products: ['Research Peptide Compounds (RUO)', 'Growth Factor Research Compounds', 'NAD+ Research Grade', 'Longevity Research Compounds', 'Regenerative Research Compounds', 'Specialty Research Compounds'],
     requirements: ['Age verification gate (18+)', 'COA documentation per batch', '"Research Use Only" labeling', 'Institutional ordering forms'],
     cta: 'Start RUO Platform',
     link: 'MerchantOnboarding',
@@ -123,7 +123,7 @@ const PHARMACY_B2B = [
   {
     icon: Package,
     title: '503B Outsourcing Facilities',
-    desc: 'FDA-registered outsourcing facilities for bulk non-patient-specific compounding. Required for B2B wholesale and pre-made kits.',
+    desc: 'FDA-registered outsourcing facilities for bulk non-patient-specific compounding. Available for qualified B2B wholesale merchants with verified compliance.',
     tags: ['Bulk production', 'FDA-registered', 'cGMP compliant', 'Nationwide distribution'],
   },
   {
@@ -141,7 +141,7 @@ const PHARMACY_B2B = [
 ];
 
 const TECH_INTEGRATIONS = [
-  { name: 'Stripe', cat: 'Payments', icon: CreditCard, desc: 'PCI-compliant checkout, subscriptions, refunds, and split payouts' },
+  { name: 'Secure Payments', cat: 'Payments', icon: CreditCard, desc: 'Secure payment processing through licensed high-risk healthcare merchant accounts with PCI-compliant checkout, subscriptions, and split payouts' },
   { name: 'HubSpot', cat: 'CRM', icon: BarChart3, desc: 'Auto-sync leads, contacts, and deals from every form submission' },
   { name: 'Zoho CRM', cat: 'CRM', icon: Users, desc: 'Workflow automation and B2B account management' },
   { name: 'Twilio', cat: 'Communications', icon: Zap, desc: 'SMS, voice, and WhatsApp patient communications' },
@@ -209,7 +209,7 @@ export default function ForBusiness() {
             </div>
             <div className="flex flex-wrap justify-center gap-10 mt-14">
               {[
-                { v: 'Day 1', l: 'Live in days' },
+                { v: '7 Days', l: 'Avg. setup time' },
                 { v: '503A/B', l: 'Pharmacy ready' },
                 { v: '50 States', l: 'Covered' },
                 { v: 'White-Label', l: 'Your brand' },
@@ -470,7 +470,7 @@ export default function ForBusiness() {
             Launch Your<br /><span className="font-semibold">Wellness Empire Today</span>
           </h2>
           <p className="text-white/55 text-lg mb-10 max-w-2xl mx-auto">
-            Everything above — products, providers, pharmacy, payments, compliance — available on Day 1.
+            Everything above — products, providers, pharmacy, payments, compliance — available typically within 7 business days.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to={createPageUrl('MerchantOnboarding')}>
@@ -484,7 +484,7 @@ export default function ForBusiness() {
               </Button>
             </Link>
           </div>
-          <p className="text-white/30 text-xs mt-6">$5K setup + $2.5–3K/month + 5% revenue share · 7-day free trial</p>
+          <p className="text-white/30 text-xs mt-6">$5K setup + $2.5–3K/month + 5% revenue share · Setup typically within 7 business days</p>
         </div>
       </section>
 

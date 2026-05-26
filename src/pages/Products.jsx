@@ -59,28 +59,28 @@ const B2B_CATALOG = [
     category: 'GLP-1 Weight Management',
     tag: 'Rx Required · 503A/503B Pharmacy',
     tagColor: '#4A6741',
-    items: ['Compounded Semaglutide (injectable)', 'Compounded Tirzepatide (injectable)', 'Oral Semaglutide Troches'],
+    items: ['Physician-Supervised GLP-1 Programs (injectable)', 'Physician-Supervised GLP-1 Programs (dual-action)', 'Physician-Supervised GLP-1 Programs (oral/sublingual)'],
     note: 'Requires LegitScript certification + physician network on your merchant site',
   },
   {
     category: 'Hormone Optimization',
     tag: 'Rx Required · Licensed Pharmacy',
     tagColor: '#3B82F6',
-    items: ['Testosterone Cypionate (TRT)', 'Bioidentical Estradiol / Progesterone', 'Thyroid (T3/T4) Compounded'],
+    items: ['Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs', 'Thyroid Optimization Programs'],
     note: 'Available to merchant sites with verified prescriber network',
   },
   {
     category: "Men's Health",
     tag: 'Rx Required',
     tagColor: '#7C3AED',
-    items: ['Sildenafil / Tadalafil Compound', 'Combination ED/PE Protocols', 'PT-141 (Rx peptide protocols)'],
+    items: ["Physician-Supervised Men's Sexual Health Programs", 'Combination Protocol Programs', "Men's Health Peptide Protocols (Rx)"],
     note: 'Prescription-only. Physician consult via your telehealth integration required',
   },
   {
     category: 'Longevity & Wellness',
     tag: 'Rx Required · Physician Order',
     tagColor: '#D97706',
-    items: ['NAD+ IV / Subcutaneous', 'Sermorelin / Ipamorelin (GH secretagogues)', 'Glutathione / B12 MIC injections'],
+    items: ['NAD+ Optimization Programs', 'Growth Hormone Secretagogue Programs', 'Glutathione & Micronutrient Protocols'],
     note: 'Physician-prescribed via merchant telehealth. COA + pharmacy dispensing included',
   },
 ];
@@ -359,7 +359,7 @@ export default function Products() {
             <div>
               <div className="text-sm font-semibold text-amber-300 mb-1">Research Use Only (RUO) Products — Separate Domain</div>
               <p className="text-xs text-white/40 leading-relaxed">
-                RUO peptide compounds (BPC-157, CJC-1295, TB-500, GHK-Cu, etc.) are{' '}
+                Research Use Only (RUO) peptide compounds are{' '}
                 <strong className="text-white/60">not sold on this site</strong>. Per FDA guidance and LegitScript
                 requirements, RUO compounds are maintained on a completely separate domain with mandatory age-gate,
                 institutional verification, and "Not for Human or Veterinary Use" disclaimers at every product level.

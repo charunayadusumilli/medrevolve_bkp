@@ -434,9 +434,14 @@ export default function Layout({ children }) {
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-white/8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/20 text-xs">© 2025 MedRevolve. All rights reserved.</p>
-            <p className="text-white/15 text-xs">Telehealth services provided by licensed providers through affiliated medical groups.</p>
+          <div className="mt-12 pt-8 border-t border-white/8 flex flex-col items-center gap-4">
+            <p className="text-white/25 text-xs text-center max-w-4xl leading-relaxed">
+              These statements have not been evaluated by the FDA. All programs require a valid prescription from a licensed physician. Results may vary. Telehealth services provided by licensed providers through affiliated medical groups.
+            </p>
+            <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2">
+              <p className="text-white/20 text-xs">© 2025 MedRevolve. All rights reserved.</p>
+              <p className="text-white/15 text-xs">Not intended to diagnose, treat, cure, or prevent any disease.</p>
+            </div>
           </div>
         </div>
       </footer>

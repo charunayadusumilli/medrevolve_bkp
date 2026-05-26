@@ -25,7 +25,7 @@ const perks = [
   'Marketing Guides, Training & Resources',
   'No Inventory. No Medical Liability.',
   'HIPAA-Compliant Infrastructure',
-  'Fast Setup — Go Live Same Day',
+  'Typical Setup — Live Within 7 Business Days',
 ];
 
 const technology = [
@@ -62,43 +62,44 @@ const idealFor = [
 
 const medications = {
   'Weight Loss': [
-    'Injectable Semaglutide with Additives', 'Injectable Tirzepatide with Additives',
-    'Sublingual Semaglutide', 'Microdose Semaglutide with B12',
-    'Lipo-C Injections', 'Lipo-B Injections', 'Ozempic®', 'Wegovy®', 'Mounjaro®', 'Zepbound®'
+    'Physician-Supervised GLP-1 Programs (injectable)', 'Physician-Supervised GLP-1 Programs (oral/sublingual)',
+    'Lipotropic Injection Protocols', 'Medically Supervised Weight Management Programs',
+    'Metabolic Health Programs', 'Appetite Regulation Protocols'
   ],
   'Peptides & Wellness': [
-    'Injectable NAD+', 'NAD+ Nasal Spray', 'NAD+ Cream',
-    'Injectable Glutathione', 'Injectable Sermorelin', 'Injectable B-12',
-    'Ipamorelin + CJC-1295'
+    'NAD+ Optimization Programs (injectable)', 'NAD+ Optimization Programs (nasal/topical)',
+    'Glutathione Wellness Protocols', 'Growth Hormone Secretagogue Programs',
+    'B-12 & Micronutrient Protocols', 'Anti-Aging & Longevity Programs'
   ],
   'Hair & Esthetics': [
-    'Minoxidil Tablets', 'Finasteride Tablets',
-    'Minoxidil / Finasteride / Retinoic Acid Topical Solution'
+    'Physician-Supervised Hair Restoration Programs (oral)',
+    'Physician-Supervised Hair Restoration Programs (topical)',
+    'Combination Hair Health Protocols'
   ],
   "Men's & Women's Health": [
-    'Enclomiphene Tablets', 'Progesterone Capsules', 'Estradiol Cream',
-    'Estradiol Patches', 'Estradiol Tablets', 'Estradiol Gel',
-    'Sildenafil Tablets', 'Tadalafil Tablets', 'Cialis®', 'Viagra®'
+    'Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs (Women)',
+    'Estrogen & Progesterone Protocols', 'Men\'s Sexual Health Programs',
+    'Women\'s Sexual Health Programs', 'Hormone Balance & Wellness Protocols'
   ],
 };
 
 const pricing = [
-  { med: 'Injectable Semaglutide w/ Additives', price: '$174' },
-  { med: 'Injectable Tirzepatide w/ Additives', price: '$299' },
-  { med: 'Microdose Semaglutide w/ B12', price: '$124' },
-  { med: 'Microdose Tirzepatide w/ B12', price: '$149' },
-  { med: 'Sublingual Semaglutide', price: '$99' },
-  { med: 'Lipo-C Injections', price: '$99' },
-  { med: 'Lipo-B Injections', price: '$99' },
-  { med: 'Injectable NAD+', price: '$174' },
-  { med: 'NAD+ Nasal Spray', price: '$99' },
-  { med: 'Injectable Glutathione', price: '$99' },
-  { med: 'Injectable Sermorelin', price: '$174' },
-  { med: 'Minoxidil Tablets', price: '$74' },
-  { med: 'Finasteride Tablets', price: '$74' },
-  { med: 'Enclomiphene', price: '$124' },
-  { med: 'Sildenafil Tablets', price: '$74' },
-  { med: 'Tadalafil Tablets', price: '$74' },
+  { med: 'GLP-1 Weight Management Program (injectable)', price: '$174' },
+  { med: 'GLP-1 Weight Management Program (dual-action)', price: '$299' },
+  { med: 'GLP-1 Microdose + Micronutrient Program', price: '$124' },
+  { med: 'GLP-1 Dual-Action Microdose Program', price: '$149' },
+  { med: 'GLP-1 Oral/Sublingual Program', price: '$99' },
+  { med: 'Lipotropic (Lipo-C) Protocol', price: '$99' },
+  { med: 'Lipotropic (Lipo-B) Protocol', price: '$99' },
+  { med: 'NAD+ Optimization Program (injectable)', price: '$174' },
+  { med: 'NAD+ Optimization Program (nasal)', price: '$99' },
+  { med: 'Glutathione Wellness Protocol', price: '$99' },
+  { med: 'Growth Hormone Secretagogue Program', price: '$174' },
+  { med: 'Hair Restoration Program (oral)', price: '$74' },
+  { med: 'Hair Restoration Program (DHT-blocker)', price: '$74' },
+  { med: 'Male Hormone Optimization Program', price: '$124' },
+  { med: "Men's Sexual Health Program", price: '$74' },
+  { med: "Men's Sexual Health Program (extended)", price: '$74' },
 ];
 
 const whyUs = [
@@ -106,7 +107,7 @@ const whyUs = [
   'No inventory to purchase or manage',
   'Zero medical liability for your business',
   'White-label app and managed website included',
-  'Instant same-day setup',
+  'Typical setup within 7 business days',
   'Fully HIPAA-compliant model',
   'No paying for medications upfront',
   'Access to 25+ high-demand prescription products',
@@ -124,7 +125,7 @@ const compliancePoints = [
   'MedRevolve\'s affiliated physicians are responsible for all medical treatment',
   'Platform is LegitScript Certified for online telehealth',
   'SOC 2 Type II compliant infrastructure (via Zoho)',
-  'PCI DSS compliant payment processing via Stripe',
+  'PCI DSS compliant payment processing via licensed high-risk healthcare merchant accounts',
   'GDPR & CCPA data privacy compliance',
   'PCAB-accredited compounding pharmacy partners',
   'ISO 27001-aligned security practices',
@@ -136,16 +137,16 @@ const faqs = [
   { q: 'How do I get paid?', a: 'We set you up with our payment partner to pay via direct ACH or your preferred method.' },
   { q: 'Who handles the physician side?', a: "MedRevolve's network of affiliated licensed physicians through separate clinical entities." },
   { q: 'Do I need to buy inventory?', a: 'Absolutely not. No upfront medication costs ever.' },
-  { q: 'How fast can I go live?', a: 'Minutes. Self-register, get your links, and start sharing the same day.' },
+  { q: 'How fast can I go live?', a: 'Typically within 7 business days. After registration, our onboarding team provisions your account, verifies compliance requirements, and gets you fully set up.' },
   { q: 'Is there a contract?', a: 'No long-term contracts. Cancel any time before your next billing period.' },
 ];
 
 const steps = [
   { n: '1', text: 'Pick your plan below' },
-  { n: '2', text: 'Account activated instantly' },
-  { n: '3', text: 'Get your links, portal access & training right away' },
-  { n: '4', text: 'Start sharing and earning same day' },
-  { n: '5', text: 'Receive payment onboarding within 48 hours' },
+  { n: '2', text: 'Account reviewed and provisioned by onboarding team' },
+  { n: '3', text: 'Receive your links, portal access & training materials' },
+  { n: '4', text: 'Compliance review completed — typically within 7 business days' },
+  { n: '5', text: 'Payment onboarding finalized and you begin earning' },
 ];
 
 // ─── FAQ ITEM ────────────────────────────────────────────────────────────────
@@ -440,7 +441,7 @@ export default function PartnerProgram() {
                   <p className="text-5xl font-extrabold text-[#2D3A2D] mb-1">$167<span className="text-xl font-normal text-[#5A6B5A]">/mo</span></p>
                   <p className="text-sm text-[#5A6B5A] mb-6">Billed annually · Save $384/year</p>
                   <ul className="space-y-3 mb-8">
-                    {['Go Live in Minutes', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant', 'Free iPad & Kiosk Stand Included'].map((f, i) => (
+                    {['Setup Within 7 Business Days', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant', 'Free iPad & Kiosk Stand Included'].map((f, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm">
                         <CheckCircle className="w-4 h-4 text-[#4A6741]" /> {f}
                       </li>
@@ -462,7 +463,7 @@ export default function PartnerProgram() {
                   <p className="text-5xl font-extrabold text-[#2D3A2D] mb-1">$199<span className="text-xl font-normal text-[#5A6B5A]">/mo</span></p>
                   <p className="text-sm text-[#5A6B5A] mb-6">Month-to-month · Cancel anytime</p>
                   <ul className="space-y-3 mb-8">
-                    {['Go Live in Minutes', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant'].map((f, i) => (
+                    {['Setup Within 7 Business Days', 'Branded Product Links', 'White-Label App & Website', 'Training & Marketing Guides', 'Sell Online or In-Person', 'HIPAA Compliant'].map((f, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm">
                         <CheckCircle className="w-4 h-4 text-[#4A6741]" /> {f}
                       </li>
