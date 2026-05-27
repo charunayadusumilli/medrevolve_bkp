@@ -87,11 +87,14 @@ export default function Layout({ children }) {
 
   const closeMenu = () => { setMobileOpen(false); window.scrollTo({ top: 0 }); };
 
-  // Completely block Water + RUO domains
+  // All non-medrevolve.com domains — show nothing, no branding, no links
   if (domain === 'DOWN') {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-white/20 text-xs tracking-widest uppercase select-none">Coming Soon</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-300 text-6xl font-black mb-3">404</p>
+          <p className="text-gray-300 text-sm">Not Found</p>
+        </div>
       </div>
     );
   }

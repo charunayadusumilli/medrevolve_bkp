@@ -13,11 +13,15 @@
 
 export function detectDomain() {
   const h = window.location.hostname.toLowerCase();
-  if (h === 'medrevolvewater.com' || h === 'www.medrevolvewater.com') return 'DOWN';
-  if (h === 'medrevolveruo.com'   || h === 'www.medrevolveruo.com')   return 'DOWN';
-  if (h === 'admin.medrevolve.com')                                    return 'ADMIN';
-  // Both primary domains → same B2C experience
-  return 'B2C';
+  // Only medrevolve.com (and www.) is active — all other domains are DOWN
+  if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'B2C';
+  if (h === 'admin.medrevolve.com')                          return 'ADMIN';
+  // Everything else — medrevolveb2b.com, medrevolvewater.com, medrevolveruo.com,
+  // any other hostname — shows nothing.
+  // Exception: Base44 preview/dev environment (localhost / base44 domains) stays active.
+  const isDevEnv = h === 'localhost' || h.includes('base44') || h.includes('127.0.0.1');
+  if (isDevEnv) return 'B2C';
+  return 'DOWN';
 }
 
 export const BRAND = {
