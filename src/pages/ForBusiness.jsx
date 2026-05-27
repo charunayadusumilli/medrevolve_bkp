@@ -144,8 +144,8 @@ export default function ForBusiness() {
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
       <SEOHead
-        title="White-Label Telehealth Platform for Wellness Merchants | MedRevolve B2B"
-        description="Launch your own GLP-1, RUO, or supplement brand in days. Full platform: website, telehealth, pharmacy, compliance, and payments."
+        title="B2B Telehealth Services | Launch Your Telehealth Business | MedRevolve"
+        description="MedRevolve builds compliant telehealth businesses for wellness operators. Website, providers, pharmacy integration, merchant accounts, and compliance — end to end."
       />
 
       {/* ── Hero ── */}
@@ -157,14 +157,14 @@ export default function ForBusiness() {
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-8">
               <Building2 className="w-3.5 h-3.5 text-[#A8C99B]" />
-              <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">B2B Platform for Wellness Merchants</span>
+              <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">Full-Service Telehealth Business Infrastructure</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-none" style={{ letterSpacing: '-0.03em' }}>
-              Build. Sell. Comply.<br />
-              <span className="text-[#A8C99B]">Under Your Brand.</span>
+              We Build Your Business.<br />
+              <span className="text-[#A8C99B]">You Own the Brand.</span>
             </h1>
             <p className="text-xl text-white/45 max-w-2xl mx-auto mb-10">
-              MedRevolve is the operating system for wellness merchants — products, telehealth, pharmacy, compliance, and payments, all white-labeled as yours.
+              MedRevolve is a B2B services company. We build compliant telehealth platforms for wellness operators — website, provider integration, pharmacy network, merchant accounts, and compliance, all set up under your brand.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to={createPageUrl('MerchantOnboarding')}>
@@ -199,9 +199,9 @@ export default function ForBusiness() {
       <section className="py-24 px-6 lg:px-8 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto">
           <SectionHeader
-            tag="Products & Classification"
-            title={<>What You Sell — <span className="font-semibold text-[#4A6741]">And How It Works</span></>}
-            sub="Three distinct product tracks. Each has its own compliance rules, checkout flow, and fulfillment path. Pick your model."
+            tag="Platform Types We Build"
+            title={<>The Service We Deliver — <span className="font-semibold text-[#4A6741]">Your Telehealth Platform</span></>}
+            sub="We specialize in building GLP-1 and physician-supervised telehealth platforms — with every compliance, provider, and pharmacy integration included."
           />
 
           {/* Track Selector */}
@@ -438,10 +438,10 @@ export default function ForBusiness() {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[#A8C99B] text-xs font-bold uppercase tracking-widest mb-4">You're One Step Away</p>
           <h2 className="text-4xl md:text-5xl font-light text-white mb-5">
-            Launch Your<br /><span className="font-semibold">Wellness Empire Today</span>
+            Ready to Launch Your<br /><span className="font-semibold">Telehealth Business?</span>
           </h2>
           <p className="text-white/55 text-lg mb-10 max-w-2xl mx-auto">
-            Everything above — products, providers, pharmacy, payments, compliance — available typically within 7 business days.
+            We handle everything — website, providers, pharmacy connections, merchant account, compliance, and ongoing operations — so you can focus on growing your brand.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to={createPageUrl('MerchantOnboarding')}>
@@ -455,7 +455,7 @@ export default function ForBusiness() {
               </Button>
             </Link>
           </div>
-          <p className="text-white/30 text-xs mt-6">Setup fee + monthly platform fee + revenue share · Pricing provided during onboarding consultation · Setup typically within 7 business days</p>
+          <p className="text-white/30 text-xs mt-6">MedRevolve is a services company. We do not sell pharmaceutical products. All clinical services are provided by licensed independent providers and pharmacies.</p>
         </div>
       </section>
 
