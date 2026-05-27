@@ -363,7 +363,7 @@ export default function Layout({ children }) {
                 <span className="text-base font-bold text-white">{brand.name}</span>
               </div>
               <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-xs">
-                The complete platform to launch a compliant telehealth, GLP-1, or RUO business — website, marketing, compliance, and university support under your brand.
+                Physician-supervised telehealth programs available in all 50 states. Licensed providers. Licensed pharmacies. All programs require a valid prescription.
               </p>
               <div className="flex gap-3">
                 <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Instagram className="w-3.5 h-3.5 text-white/50" /></a>

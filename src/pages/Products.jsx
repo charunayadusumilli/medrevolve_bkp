@@ -57,14 +57,14 @@ const WATER_PRODUCTS = [
 const B2B_CATALOG = [
   {
     category: 'GLP-1 Weight Management',
-    tag: 'Rx Required · 503A/503B Pharmacy',
+    tag: 'Rx Required · 503A Compounding Pharmacy',
     tagColor: '#4A6741',
-    items: ['Physician-Supervised GLP-1 Programs (injectable)', 'Physician-Supervised GLP-1 Programs (dual-action)', 'Physician-Supervised GLP-1 Programs (oral/sublingual)'],
+    items: ['Physician-Supervised GLP-1 Programs (injectable)', 'Physician-Supervised GLP-1 Programs (oral/sublingual)'],
     note: 'Requires LegitScript certification + physician network on your merchant site',
   },
   {
     category: 'Hormone Optimization',
-    tag: 'Rx Required · Licensed Pharmacy',
+    tag: 'Rx Required · 503A Compounding Pharmacy',
     tagColor: '#3B82F6',
     items: ['Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs', 'Thyroid Optimization Programs'],
     note: 'Available to merchant sites with verified prescriber network',
@@ -141,7 +141,7 @@ export default function Products() {
               </div>
               <h1 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] mb-4 leading-tight tracking-tight">
                 USP-Grade Supplies.<br />
-                <span className="text-[#4A6741]">Hospital Standard.</span>
+                <span className="text-[#4A6741]">Pharmaceutical-Grade.</span>
               </h1>
               <p className="text-[#666] text-base leading-relaxed mb-6 max-w-lg">
                 MedRevolve supplies pharmaceutical-grade bacteriostatic water direct to licensed healthcare
@@ -183,7 +183,7 @@ export default function Products() {
       <section className="py-14 px-6 lg:px-8 bg-[#F9F7F4]">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold text-[#1a1a1a] mb-2">Shop Bacteriostatic Water</h2>
-          <p className="text-[#888] text-sm mb-8">No prescription required. Available to everyone. B2B bulk pricing for institutions.</p>
+          <p className="text-[#888] text-sm mb-8">No prescription required. Available for individual and licensed facility purchase.</p>
 
           <div className="grid md:grid-cols-3 gap-5 mb-8">
             {WATER_PRODUCTS.map(product => (
