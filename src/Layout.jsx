@@ -1,413 +1,344 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { detectDomain, NAV_CONFIG, BRAND } from '@/lib/domainConfig';
+import { Link, useLocation } from 'react-router-dom';
+import { detectDomain } from '@/lib/domainConfig';
+// domainConfig simplified — BRAND/NAV_CONFIG no longer exported separately
 import { createPageUrl } from '@/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import {
-  Menu, ChevronDown, Phone,
-  Instagram, Twitter, Facebook, Youtube,
-  User, LogOut, Settings, LayoutDashboard } from 'lucide-react';
+import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AIAssistant from '@/components/chat/AIAssistant';
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
-"@/components/ui/dropdown-menu";
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuSeparator, DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
-// Both medrevolve.com and medrevolveb2b.com resolve to B2C → same home '/'
-const DOMAIN_HOME_MAP = { B2C: '/', ADMIN: '/AdminDashboard' };
-
-function DomainHomeRedirect() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  useEffect(() => {
-    const domain = detectDomain();
-    // Only redirect on actual live domains — never in Base44 preview/dev
-    if (domain === 'DEV') return;
-    const home = DOMAIN_HOME_MAP[domain];
-    if (home && home !== '/' && location.pathname === '/') {
-      navigate(home, { replace: true });
-    }
-  }, [location.pathname]);
-  return null;
-}
+const NAV_LINKS = [
+  { label: 'How It Works',      path: '/HowItWorks' },
+  { label: 'Telehealth',        path: '/TelehealthPlatform' },
+  { label: 'For Business',      path: '/ForBusiness' },
+  { label: 'Partner Program',   path: '/PartnerProgram' },
+  { label: 'Contact',           path: '/Contact' },
+];
 
 export default function Layout({ children }) {
+  const [scrolled, setScrolled]       = useState(false);
+  const [mobileOpen, setMobileOpen]   = useState(false);
+  const [user, setUser]               = useState(null);
+  const location                      = useLocation();
+  const domain                        = detectDomain();
+
   useEffect(() => {
-    // ── Cookiebot consent ──────────────────────────────────
+    // Cookiebot
     if (!document.getElementById('Cookiebot')) {
-      const script = document.createElement('script');
-      script.id = 'Cookiebot';
-      script.src = 'https://consent.cookiebot.com/uc.js';
-      script.setAttribute('data-cbid', 'f872245e-106f-4258-bb1a-084567404e79');
-      script.type = 'text/javascript';
-      script.async = true;
-      document.head.insertBefore(script, document.head.firstChild);
+      const s = document.createElement('script');
+      s.id = 'Cookiebot';
+      s.src = 'https://consent.cookiebot.com/uc.js';
+      s.setAttribute('data-cbid', 'f872245e-106f-4258-bb1a-084567404e79');
+      s.type = 'text/javascript';
+      s.async = true;
+      document.head.insertBefore(s, document.head.firstChild);
     }
-
-    // ── Google Analytics (gtag) ───────────────────────────
+    // Google Analytics
     if (!document.getElementById('gtag-script')) {
-      const gtagScript = document.createElement('script');
-      gtagScript.id = 'gtag-script';
-      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
-      gtagScript.async = true;
-      document.head.appendChild(gtagScript);
-
+      const g = document.createElement('script');
+      g.id = 'gtag-script';
+      g.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
+      g.async = true;
+      document.head.appendChild(g);
       window.dataLayer = window.dataLayer || [];
-      function gtag() {window.dataLayer.push(arguments);}
+      function gtag() { window.dataLayer.push(arguments); }
       window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', 'G-BZTEFSTDPL');
     }
-
-    // ── IONOS AI Voice Receptionist ───────────────────────────────────────
-    const _domain = detectDomain();
+    // IONOS
     if (!document.getElementById('ionos-web-chat')) {
-      const ionosScript = document.createElement('script');
-      ionosScript.id = 'ionos-web-chat';
-      ionosScript.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
-      ionosScript.setAttribute('name', 'web-chat');
-      ionosScript.setAttribute('data-client-secret', 'b7ca0b0f-ecbd-43b6-bddf-0ad67f8f6eb1');
-      ionosScript.defer = true;
-      document.body.appendChild(ionosScript);
+      const i = document.createElement('script');
+      i.id = 'ionos-web-chat';
+      i.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
+      i.setAttribute('name', 'web-chat');
+      i.setAttribute('data-client-secret', 'b7ca0b0f-ecbd-43b6-bddf-0ad67f8f6eb1');
+      i.defer = true;
+      document.body.appendChild(i);
     }
-
-    // ── Preconnect hints for fast image/video load ────────
-    ['https://images.unsplash.com', 'https://videos.pexels.com'].forEach((href) => {
-      if (!document.querySelector(`link[href="${href}"]`)) {
-        const l = document.createElement('link');
-        l.rel = 'preconnect';
-        l.href = href;
-        l.crossOrigin = '';
-        document.head.appendChild(l);
-      }
-    });
   }, []);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const location = useLocation();
-  const domain = detectDomain();
-  const brand = BRAND[domain] || BRAND.DEV;
-  const domainNav = NAV_CONFIG[domain] || [];
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     let cancelled = false;
-    const checkUser = async () => {
+    (async () => {
       try {
-        const isAuth = await base44.auth.isAuthenticated();
-        if (!isAuth) {if (!cancelled) setUser(null);return;}
-        const currentUser = await base44.auth.me();
-        if (!cancelled) setUser(currentUser);
-      } catch {
-        if (!cancelled) setUser(null);
-      }
-    };
-    checkUser();
-    return () => {cancelled = true;};
+        const ok = await base44.auth.isAuthenticated();
+        if (!ok || cancelled) return;
+        const me = await base44.auth.me();
+        if (!cancelled) setUser(me);
+      } catch { if (!cancelled) setUser(null); }
+    })();
+    return () => { cancelled = true; };
   }, [location.pathname]);
 
-  // Scroll to top & close menus on nav click
-  const handleNavClick = (callback) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setMobileMenuOpen(false);
-    if (callback) callback();
-  };
+  const closeMenu = () => { setMobileOpen(false); window.scrollTo({ top: 0 }); };
 
-  // Domains that are taken down — show nothing but a blank placeholder
+  // Completely block Water + RUO domains
   if (domain === 'DOWN') {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-white/30 text-sm tracking-widest uppercase">Coming Soon</p>
+        <p className="text-white/20 text-xs tracking-widest uppercase select-none">Coming Soon</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
-      <DomainHomeRedirect />
+    <div className="min-h-screen bg-white">
       <AnalyticsTracker />
       <AIAssistant />
 
-      {/* Top Bar */}
-      <div className="bg-gradient-to-r from-cyan-700 via-blue-700 to-cyan-700 text-white py-2.5 px-4 text-center sticky top-0 z-[60] animate-pulse-slow">
-        <a href="tel:+12403875224" className="inline-flex items-center gap-2.5 text-sm font-bold hover:scale-105 transition-all duration-300 group">
-          <div className="relative">
-            <Phone className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping" />
-          </div>
-          <span className="hidden sm:inline text-cyan-100 group-hover:text-white transition-colors">Start Here: </span>
-          <span className="text-lg font-black tracking-wide bg-white/20 px-3 py-0.5 rounded-full group-hover:bg-white/30 transition-all">240-387-5224</span>
-          <span className="hidden md:inline text-xs text-cyan-200 ml-1">← Click to Call Now</span>
+      {/* Top announcement bar */}
+      <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
+        <a href="tel:+12403875224"
+          className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
+          <Phone className="w-3.5 h-3.5 text-green-400" />
+          <span className="text-white/60">Speak with a specialist:</span>
+          <span className="font-bold tracking-wide">240-387-5224</span>
         </a>
       </div>
 
       {/* Header */}
       <motion.header
-        className={`sticky top-[40px] left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'}`}
-        initial={{ y: -100 }}
+        className={`sticky top-[37px] left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100' : 'bg-white border-b border-gray-100'
+        }`}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.4 }}>
+        transition={{ duration: 0.35 }}>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
+
             {/* Logo */}
-            <Link to={DOMAIN_HOME_MAP[domain] || '/'} className="flex items-center gap-2.5 flex-shrink-0">
-              <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
-                <span className="text-black font-black text-[11px] tracking-tight">{brand.logoText}</span>
+            <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
+              <div className="w-8 h-8 bg-[#0A0A0A] flex items-center justify-center rounded-sm">
+                <span className="text-white font-black text-[11px] tracking-tight">MR</span>
               </div>
-              <span className="text-base font-bold text-white tracking-tight">{brand.name}</span>
+              <span className="text-base font-bold text-[#0A0A0A] tracking-tight">MedRevolve</span>
             </Link>
 
-            {/* Desktop Nav — domain-aware */}
-            <nav className="hidden lg:flex items-center gap-8">
-
-              {domainNav.slice(0, 4).map(item => (
-                <Link key={item.path} to={item.path} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-7">
+              {NAV_LINKS.map(item => (
+                <Link key={item.path} to={item.path}
+                  className={`text-sm font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'text-[#0A0A0A]'
+                      : 'text-gray-500 hover:text-[#0A0A0A]'
+                  }`}>
                   {item.label}
                 </Link>
               ))}
-              <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
-                <Phone className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="hidden xl:inline">Call Now: </span>
-                240-387-5224
-              </a>
 
-              {/* Admin only */}
-              {user?.role === 'admin' &&
-              <DropdownMenu>
+              {/* Admin dropdown — only visible to logged-in admins */}
+              {user?.role === 'admin' && (
+                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-1 text-sm text-[#6B8F5E] hover:text-[#8FB88F] transition-colors">
+                    <button className="flex items-center gap-1 text-sm font-medium text-green-700 hover:text-green-800 transition-colors">
                       Admin <ChevronDown className="w-3 h-3" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-[#111] border border-white/10 rounded-xl shadow-2xl p-2 min-w-[220px]">
-                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Overview</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">🚀 Merchant Onboarding</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📊 Merchant Dashboard</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantInventoryPage')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📦 Inventory</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Compliance</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Partnerships</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Payments</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnerProgram')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Partner Program</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ForCreators')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">Creator Program</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📥 Inbox</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to="/SocialMediaDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm">📱 Social Media</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/GodModeAds" className="cursor-pointer rounded-lg px-3 py-2 text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10 text-sm font-bold">⚡ God Mode Ads</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to="/GrowthDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-green-400 hover:text-green-300 hover:bg-green-500/10 text-sm font-bold">📈 Growth & Analytics</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/ProjectManagement" className="cursor-pointer rounded-lg px-3 py-2 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 text-sm font-bold">🎫 Project Management</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to="/ProductsAndServices" className="cursor-pointer rounded-lg px-3 py-2 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 text-sm font-bold">📦 Products & Services</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem asChild><Link to="/SystemArchitecture" className="cursor-pointer rounded-lg px-3 py-2 text-white/90 hover:text-white hover:bg-white/5 text-sm font-bold border border-white/10">⚙️ System Architecture</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/ComplianceAuditReport" className="cursor-pointer rounded-lg px-3 py-2 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 text-sm font-bold">📋 Compliance Audit Report</Link></DropdownMenuItem>
+                  <DropdownMenuContent className="bg-white border border-gray-200 rounded-xl shadow-xl p-2 min-w-[220px]" align="end">
+                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Overview</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-100" />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">🚀 Merchant Onboarding</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📊 Merchant Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-100" />
+                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Compliance</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Partnerships</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Payments</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-100" />
+                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📥 Inbox</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/GrowthDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📈 Growth & Analytics</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/GodModeAds" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-bold text-yellow-700 hover:bg-yellow-50">⚡ God Mode Ads</Link></DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-100" />
+                    <DropdownMenuItem asChild><Link to="/SystemArchitecture" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">⚙️ System Architecture</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/ComplianceAuditReport" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-50">📋 Compliance Audit</Link></DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              }
+              )}
             </nav>
 
-            {/* Right Actions */}
+            {/* Right actions */}
             <div className="flex items-center gap-3">
-              {user ?
-              <DropdownMenu>
+              {user ? (
+                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full px-3" aria-label="Account">
-                      <div className="w-7 h-7 rounded-full bg-[#4A6741] flex items-center justify-center text-white text-xs font-bold">
-                        {(user.display_name || user.full_name)?.[0] || user.email?.[0] || 'U'}
+                    <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2 text-gray-600 hover:text-gray-900">
+                      <div className="w-7 h-7 rounded-full bg-gray-900 flex items-center justify-center text-white text-xs font-bold">
+                        {(user.full_name || user.email)?.[0]?.toUpperCase() || 'U'}
                       </div>
-                      <ChevronDown className="w-3.5 h-3.5" />
+                      <ChevronDown className="w-3 h-3" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-[#111] border border-white/10 rounded-xl shadow-2xl p-2 min-w-[200px]" align="end">
+                  <DropdownMenuContent className="bg-white border border-gray-200 rounded-xl shadow-xl p-2 min-w-[190px]" align="end">
                     <div className="px-3 py-2 mb-1">
-                      <p className="text-white text-sm font-semibold">{user.display_name || user.full_name}</p>
-                      <p className="text-xs text-white/40 truncate">{user.email}</p>
+                      <p className="text-sm font-semibold text-gray-900">{user.full_name}</p>
+                      <p className="text-xs text-gray-400 truncate">{user.email}</p>
                     </div>
-                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
-                        <LayoutDashboard className="w-4 h-4" /><span>My Portal</span>
+                      <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                        <LayoutDashboard className="w-4 h-4" /> My Portal
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
-                        <User className="w-4 h-4" /><span>Settings</span>
+                      <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                        <User className="w-4 h-4" /> Settings
                       </Link>
                     </DropdownMenuItem>
-                    {user.role === 'admin' &&
-                      <DropdownMenuItem asChild>
-                        <Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 text-sm flex items-center gap-2">
-                          <Settings className="w-4 h-4" /><span>Admin</span>
-                        </Link>
-                      </DropdownMenuItem>
-                    }
-                    <DropdownMenuSeparator className="bg-white/10" />
+                    <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem
-                      className="cursor-pointer rounded-lg px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 text-sm flex items-center gap-2"
+                      className="cursor-pointer rounded-lg px-3 py-2 text-sm text-red-500 hover:bg-red-50 flex items-center gap-2"
                       onClick={() => base44.auth.logout('/')}>
-                      <LogOut className="w-4 h-4" /><span>Sign Out</span>
+                      <LogOut className="w-4 h-4" /> Sign Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              :
-              <Button variant="ghost"
-                className="hidden sm:flex text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-full items-center gap-1.5"
-                onClick={() => base44.auth.redirectToLogin(window.location.href)}>
-                <User className="w-4 h-4" /> Sign In
-              </Button>
-              }
+              ) : (
+                <Button variant="ghost" size="sm"
+                  className="hidden sm:flex text-sm text-gray-500 hover:text-gray-900"
+                  onClick={() => base44.auth.redirectToLogin(window.location.href)}>
+                  <User className="w-4 h-4 mr-1" /> Sign In
+                </Button>
+              )}
 
               <Link to={createPageUrl('BookAppointment')} className="hidden sm:block">
-                <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
+                <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white rounded-sm px-5 text-sm font-semibold">
                   Book Consultation
                 </Button>
               </Link>
 
-              {/* Mobile Menu */}
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              {/* Mobile menu */}
+              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                 <SheetTrigger asChild className="lg:hidden">
-                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                  <Button variant="ghost" size="icon" className="text-gray-700">
                     <Menu className="w-5 h-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-full max-w-sm bg-[#0A0A0A] border-l border-white/10 p-0">
+                <SheetContent side="right" className="w-full max-w-sm bg-white border-l border-gray-100 p-0">
                   <div className="flex flex-col h-full">
-                    <div className="flex items-center justify-between p-5 border-b border-white/10">
-                      <Link to={DOMAIN_HOME_MAP[domain] || '/'} className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
-                        <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
-                          <span className="text-black font-black text-[10px]">{brand.logoText}</span>
+                    <div className="flex items-center p-5 border-b border-gray-100">
+                      <Link to="/" className="flex items-center gap-2.5" onClick={closeMenu}>
+                        <div className="w-7 h-7 bg-[#0A0A0A] flex items-center justify-center rounded-sm">
+                          <span className="text-white font-black text-[10px]">MR</span>
                         </div>
-                        <span className="text-base font-bold text-white">{brand.name}</span>
+                        <span className="font-bold text-[#0A0A0A]">MedRevolve</span>
                       </Link>
                     </div>
-
-                    <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-
-                      {/* Domain nav items */}
-                      {domainNav.map(item => (
-                        <Link key={item.path} to={item.path} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>{item.label}</Link>
+                    <nav className="flex-1 p-5 space-y-1">
+                      {NAV_LINKS.map(item => (
+                        <Link key={item.path} to={item.path}
+                          className="block py-3 px-3 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                          onClick={closeMenu}>
+                          {item.label}
+                        </Link>
                       ))}
-
                       {user && (
-                        <div className="pt-4 border-t border-white/10 mt-2">
-                          <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-2 px-3">My Account</p>
-                          <Link to={createPageUrl('PatientPortal')} className="block py-3 px-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>My Portal</Link>
-                          {user.role === 'admin' && <Link to={createPageUrl('AdminDashboard')} className="block py-3 px-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Admin Dashboard</Link>}
+                        <div className="pt-4 border-t border-gray-100 mt-2 space-y-1">
+                          <Link to={createPageUrl('PatientPortal')} className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</Link>
+                          {user.role === 'admin' && <Link to={createPageUrl('AdminDashboard')} className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>Admin</Link>}
                         </div>
                       )}
                     </nav>
-
-                    <div className="p-5 border-t border-white/10 space-y-3">
-                      <a href="tel:+12403875224" className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white text-center font-bold rounded-sm py-3 transition-colors">
-                        <Phone className="w-4 h-4 inline mr-2 -mt-0.5" />
-                        Call 240-387-5224
+                    <div className="p-5 border-t border-gray-100 space-y-3">
+                      <a href="tel:+12403875224"
+                        className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white font-semibold rounded-sm py-3 text-sm">
+                        <Phone className="w-4 h-4" /> 240-387-5224
                       </a>
-                      
-                      {user ?
-                        <Button variant="outline" className="w-full rounded-sm border-red-500/40 text-red-400 hover:bg-red-500/10"
-                          onClick={() => {base44.auth.logout('/');setMobileMenuOpen(false);}}>
-                          Sign Out
-                        </Button>
-                      :
+                      {user ? (
+                        <Button variant="outline" className="w-full rounded-sm border-red-200 text-red-500"
+                          onClick={() => { base44.auth.logout('/'); closeMenu(); }}>Sign Out</Button>
+                      ) : (
                         <>
-                          <Button variant="outline" className="w-full rounded-sm border-white/20 text-white hover:bg-white/10"
-                            onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
-                            Sign In
-                          </Button>
-                          <Link to={createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
-                            <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                              Book Consultation
-                            </Button>
+                          <Button variant="outline" className="w-full rounded-sm"
+                            onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
+                          <Link to={createPageUrl('BookAppointment')} onClick={closeMenu}>
+                            <Button className="w-full bg-[#0A0A0A] text-white rounded-sm font-semibold">Book Consultation</Button>
                           </Link>
                         </>
-                      }
+                      )}
                     </div>
                   </div>
                 </SheetContent>
               </Sheet>
             </div>
+
           </div>
         </div>
       </motion.header>
 
-      {/* Floating Call Button */}
-      <a
-        href="tel:+12403875224"
-        className="fixed bottom-6 right-6 z-[70] bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full p-4 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group animate-bounce-slow hidden lg:flex items-center gap-2 overflow-hidden">
-        <Phone className="w-6 h-6 flex-shrink-0 group-hover:rotate-12 transition-transform" />
-        <span className="font-bold text-sm whitespace-nowrap max-w-0 group-hover:max-w-xs transition-all duration-500">Call Now: 240-387-5224</span>
-      </a>
-
-      {/* Main Content */}
-      <main>
-        {children}
-      </main>
+      {/* Page content */}
+      <main>{children}</main>
 
       {/* Footer */}
-      <footer className="bg-[#060606] border-t border-white/10 text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            <div className="md:col-span-2">
+      <footer className="bg-[#0A0A0A] text-white border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 py-14">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+
+            {/* Brand */}
+            <div>
               <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
-                  <span className="text-black font-black text-[11px]">MR</span>
+                <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
+                  <span className="text-black font-black text-[10px]">MR</span>
                 </div>
-                <span className="text-lg font-bold text-white">MedRevolve</span>
+                <span className="font-bold text-white">MedRevolve</span>
               </div>
-              <p className="text-white/50 text-sm leading-relaxed max-w-sm">
-                Physician-supervised telehealth for weight management, hormone therapy, and personalized wellness. Licensed providers. Licensed 503A pharmacies. All 50 states.
+              <p className="text-sm text-white/40 leading-relaxed">
+                Physician-supervised telehealth. Licensed providers. Licensed 503A pharmacies. All 50 states.
               </p>
-              <div className="flex items-center gap-4 mt-5">
-                <a href="https://instagram.com/medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Instagram className="w-4 h-4" /></a>
-                <a href="https://facebook.com/medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Facebook className="w-4 h-4" /></a>
-                <a href="https://youtube.com/@medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Youtube className="w-4 h-4" /></a>
-              </div>
             </div>
+
+            {/* Platform links */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-4">Platform</p>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">Platform</p>
               <ul className="space-y-2.5">
-                <li><Link to="/HowItWorks" className="text-sm text-white/50 hover:text-white transition-colors">How It Works</Link></li>
-                <li><Link to="/TelehealthPlatform" className="text-sm text-white/50 hover:text-white transition-colors">Telehealth</Link></li>
-                <li><Link to="/BookAppointment" className="text-sm text-white/50 hover:text-white transition-colors">Book Consultation</Link></li>
-                <li><Link to="/ForBusiness" className="text-sm text-white/50 hover:text-white transition-colors">For Business</Link></li>
-                <li><Link to="/PartnerProgram" className="text-sm text-white/50 hover:text-white transition-colors">Partner Program</Link></li>
-                <li><Link to="/ForCreators" className="text-sm text-white/50 hover:text-white transition-colors">For Creators</Link></li>
+                <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
+                <li><Link to="/TelehealthPlatform" className="text-sm text-white/40 hover:text-white transition-colors">Telehealth Services</Link></li>
+                <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
+                <li><Link to="/PartnerProgram" className="text-sm text-white/40 hover:text-white transition-colors">Partner Program</Link></li>
+                <li><Link to="/BookAppointment" className="text-sm text-white/40 hover:text-white transition-colors">Book Consultation</Link></li>
+                <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
+
+            {/* Legal links */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-4">Legal</p>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">Legal & Compliance</p>
               <ul className="space-y-2.5">
-                <li><Link to="/Privacy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/Terms" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/HIPAANotice" className="text-sm text-white/50 hover:text-white transition-colors">HIPAA Notice</Link></li>
-                <li><Link to="/TelehealthConsent" className="text-sm text-white/50 hover:text-white transition-colors">Telehealth Consent</Link></li>
-                <li><Link to="/MedicalDisclaimer" className="text-sm text-white/50 hover:text-white transition-colors">Medical Disclaimer</Link></li>
-                <li><Link to="/Contact" className="text-sm text-white/50 hover:text-white transition-colors">Contact Us</Link></li>
+                <li><Link to="/Privacy" className="text-sm text-white/40 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/Terms" className="text-sm text-white/40 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/HIPAANotice" className="text-sm text-white/40 hover:text-white transition-colors">HIPAA Notice</Link></li>
+                <li><Link to="/TelehealthConsent" className="text-sm text-white/40 hover:text-white transition-colors">Telehealth Consent</Link></li>
+                <li><Link to="/MedicalDisclaimer" className="text-sm text-white/40 hover:text-white transition-colors">Medical Disclaimer</Link></li>
+                <li><Link to="/CookiePolicy" className="text-sm text-white/40 hover:text-white transition-colors">Cookie Policy</Link></li>
               </ul>
             </div>
+
           </div>
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-white/30">© {new Date().getFullYear()} MedRevolve. All rights reserved. This site is intended for US residents only.</p>
-            <p className="text-xs text-white/20 text-center md:text-right max-w-md">
-              These statements have not been evaluated by the FDA. Prescription medications require a valid provider-patient relationship and clinical evaluation. Not a substitute for professional medical advice.
+
+          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-start justify-between gap-4">
+            <p className="text-xs text-white/20">© {new Date().getFullYear()} MedRevolve. All rights reserved. US residents only.</p>
+            <p className="text-xs text-white/15 max-w-md md:text-right">
+              Prescription medications require a valid provider-patient relationship and clinical evaluation. Not a substitute for professional medical advice. These statements have not been evaluated by the FDA.
             </p>
           </div>
         </div>
       </footer>
-    </div>);
-
+    </div>
+  );
 }
