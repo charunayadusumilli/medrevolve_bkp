@@ -9,7 +9,7 @@ const STEPS = [
     n: '01',
     icon: CalendarCheck,
     title: 'Book Your Consultation',
-    body: 'Schedule online in minutes. No insurance required. Your consultation is conducted via secure HIPAA-compliant telehealth with a licensed provider.',
+    body: 'Schedule online in minutes. No insurance required. Your consultation is conducted via secure HIPAA-compliant video visit with a licensed provider.',
     color: '#4A9B6F',
   },
   {

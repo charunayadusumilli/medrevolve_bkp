@@ -7,8 +7,6 @@ import { createPageUrl } from '@/utils';
 const PROGRAMS = [
   { label: 'GLP-1 Weight Loss', color: '#4A9B6F' },
   { label: 'Hormone Therapy', color: '#6B5EA7' },
-  { label: 'Men\'s Health', color: '#2D6A9F' },
-  { label: 'Women\'s Wellness', color: '#B85C7A' },
 ];
 
 const TRUST_BADGES = [
@@ -57,7 +55,7 @@ export default function B2CHeroSection() {
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />)}
               </div>
-              <span className="text-white/60 text-xs font-medium">Trusted by 50,000+ patients</span>
+              <span className="text-white/60 text-xs font-medium">Trusted by patients nationwide</span>
             </motion.div>
 
             {/* Headline */}

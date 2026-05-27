@@ -27,7 +27,7 @@ const BADGES = [
   { icon: Shield, label: 'HIPAA Compliant', sub: 'Your data is fully protected' },
   { icon: Lock, label: 'Licensed Providers', sub: 'Board-certified physicians' },
   { icon: Award, label: 'LegitScript Ready', sub: 'Pharmacy-grade compliance' },
-  { icon: Star, label: '50,000+ Patients', sub: 'Across all programs' },
+  { icon: Star, label: 'Patients Nationwide', sub: 'Across all programs' },
 ];
 
 export default function B2CSocialProof() {

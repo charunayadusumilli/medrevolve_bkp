@@ -29,36 +29,7 @@ const PRODUCT_TRACKS = [
     cta: 'Start GLP-1 Platform',
     link: 'MerchantOnboarding',
   },
-  {
-    id: 'ruo',
-    label: 'Research-Use Only (RUO)',
-    tag: 'No Rx Required',
-    tagColor: '#7B5EA7',
-    icon: FlaskConical,
-    color: '#7B5EA7',
-    light: '#EDE8F5',
-    headline: 'Institutional & Research Commerce',
-    body: 'Sell HPLC-certified peptides and research compounds to licensed researchers and institutions. Age-gated, COA-required, with mandatory RUO disclaimers and institutional ordering workflows.',
-    products: ['Research Peptide Compounds (RUO)', 'Growth Factor Research Compounds', 'NAD+ Research Grade', 'Longevity Research Compounds', 'Regenerative Research Compounds', 'Specialty Research Compounds'],
-    requirements: ['Age verification gate (18+)', 'COA documentation per batch', '"Research Use Only" labeling', 'Institutional ordering forms'],
-    cta: 'Start RUO Platform',
-    link: 'MerchantOnboarding',
-  },
-  {
-    id: 'wellness',
-    label: 'Supplements & Wellness',
-    tag: 'OTC — No Rx',
-    tagColor: '#4A6741',
-    icon: Package,
-    color: '#4A6741',
-    light: '#D4E5D7',
-    headline: 'Direct-to-Consumer Wellness Products',
-    body: 'Launch a branded supplement and wellness storefront. Standard e-commerce checkout, no compliance hurdles. Ideal for gyms, nutrition practices, and health coaches.',
-    products: ['Protein supplements', 'Vitamins & minerals', 'Weight management OTC', 'Sleep & recovery', 'Pre/post-workout', 'Adaptogens & nootropics'],
-    requirements: ['Standard e-commerce checkout', 'FDA-compliant labeling', 'No prescription required', 'Standard merchant processing'],
-    cta: 'Start Wellness Store',
-    link: 'MerchantOnboarding',
-  },
+
 ];
 
 const STOREFRONT_MODES = [

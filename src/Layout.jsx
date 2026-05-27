@@ -404,17 +404,7 @@ export default function Layout({ children }) {
               </ul>
             </div>
 
-            {/* Partners */}
-            <div>
-              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Partners</h4>
-              <ul className="space-y-3">
-                <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
-                <li><Link to={createPageUrl('PartnerProgram')} className="text-white/45 hover:text-white text-sm transition-colors">Partner Program</Link></li>
-                <li><Link to={createPageUrl('ForCreators')} className="text-white/45 hover:text-white text-sm transition-colors">Creator Program</Link></li>
-                <li><Link to={createPageUrl('ProviderIntake')} className="text-white/45 hover:text-white text-sm transition-colors">Join as Provider</Link></li>
-                <li><Link to={createPageUrl('PharmacyIntake')} className="text-white/45 hover:text-white text-sm transition-colors">Join as Pharmacy</Link></li>
-              </ul>
-            </div>
+
 
             {/* Company */}
             <div>
