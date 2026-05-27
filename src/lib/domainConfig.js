@@ -62,16 +62,19 @@ export const BRAND = {
     compliance: ['B2B', 'WhiteLabel', 'PEPMD'],
   },
   RUO: {
-    name: 'MedRevolve RUO — For Research Use Only',
-    tagline: 'Research Compound Catalog',
+    // NOTE: Brand name deliberately does NOT use 'MedRevolve' in display
+    // to maintain domain separation for LegitScript / payment processor review.
+    // The URL domain is medrevolveruo.com but the visible brand is 'Research Compounds Only'
+    name: 'Research Compounds — For Research Use Only',
+    tagline: 'Institutional Research Compound Catalog',
     primaryColor: '#7B5EA7',
     secondaryColor: '#4A6741',
     bgDark: '#080808',
     bgLight: '#F8F6FF',
-    logoText: 'MR',
+    logoText: 'RC',
     accentColor: '#B89FD8',
     targetAudience: 'researcher',
-    compliance: ['RUO', 'FDA-Disclaimer', 'AgeGated'],
+    compliance: ['RUO', 'FDA-Disclaimer', 'AgeGated', 'InstitutionalOnly'],
   },
   WATER: {
     name: 'MedRevolve Water',
@@ -131,6 +134,8 @@ export const PAGE_DOMAIN_MAP = {
   'CookiePolicy':         ['B2C', 'B2B', 'RUO', 'WATER', 'DEV'],
 
   // ── B2B: medrevolveb2b.com ───────────────────────────────────────────────
+  // B2B pages: NOT accessible from medrevolve.com (B2C certified site)
+  // to prevent LegitScript from seeing B2B merchant recruitment on the cert domain.
   'ForBusiness':          ['B2B', 'DEV'],
   'MerchantOnboarding':   ['B2B', 'DEV'],
   'MerchantDashboard':    ['B2B', 'DEV'],
@@ -154,6 +159,7 @@ export const PAGE_DOMAIN_MAP = {
   'Programs':             ['B2B', 'B2C', 'DEV'],
 
   // ── RUO: medrevolveruo.com ───────────────────────────────────────────────
+  // ResearchProducts is RUO-only. NOT accessible on B2C, B2B, or WATER domains.
   'ResearchProducts':     ['RUO', 'DEV'],
 
   // ── WATER: medrevolvewater.com ───────────────────────────────────────────
@@ -313,10 +319,10 @@ export const NAV_CONFIG = {
     { label: 'Pricing', path: '/MerchantOnboarding' },
     { label: 'Talk to Sales', path: '/Contact' },
   ],
+  // RUO nav: NO cross-links to medrevolve.com pages, NO shared contact page.
+  // Institutional inquiry via email only (research@medrevolveruo.com shown in Layout header).
   RUO: [
     { label: 'Research Catalog', path: '/ResearchProducts' },
-    { label: 'About RUO', path: '/ResearchAbout' },
-    { label: 'Contact', path: '/Contact' },
   ],
   WATER: [
     { label: 'Vial Products', path: '/WaterHome#products' },

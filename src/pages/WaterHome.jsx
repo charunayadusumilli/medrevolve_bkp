@@ -401,9 +401,9 @@ export default function WaterHome() {
                   Apply for Wholesale Account
                 </Button>
               </Link>
-              <a href="tel:+12403875224">
+              <a href="mailto:orders@medrevolvewater.com">
                 <Button variant="ghost" className="border border-white/20 text-white hover:bg-white/10 rounded-sm px-8">
-                  Call 240-387-5224
+                  Contact for Wholesale
                 </Button>
               </a>
             </div>
@@ -524,10 +524,9 @@ export default function WaterHome() {
               <div>
                 <p className="text-white/25 font-bold uppercase tracking-widest mb-3">Company</p>
                 <ul className="space-y-2 text-white/40">
-                  <li><Link to="/Contact" className="hover:text-white transition-colors">Contact</Link></li>
+                  <li><a href="mailto:orders@medrevolvewater.com" className="hover:text-white transition-colors">orders@medrevolvewater.com</a></li>
                   <li><Link to="/Privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                   <li><Link to="/Terms" className="hover:text-white transition-colors">Terms</Link></li>
-                  <li><a href="tel:+12403875224" className="hover:text-white transition-colors">240-387-5224</a></li>
                 </ul>
               </div>
             </div>

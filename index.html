@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- SEO -->
-    <title>MedRevolve – Launch Your Telehealth Business Today</title>
-    <meta name="description" content="MedRevolve is the complete B2B platform to launch a compliant telehealth, GLP-1, or wellness business — website, compliance, pharmacy, and marketing under your brand." />
-    <meta name="keywords" content="telehealth platform, GLP-1 business, white label telehealth, wellness platform, medrevolve" />
+    <!-- SEO — Base defaults; per-page overrides are injected by SEOHead at runtime -->
+    <title>MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness</title>
+    <meta name="description" content="Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies." />
+    <meta name="keywords" content="telehealth, online doctor, weight loss medication, GLP-1, semaglutide, tirzepatide, TRT, ED treatment, hair loss treatment, licensed pharmacy, FDA-approved" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook — generic MedRevolve B2C -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://medrevolve.com/" />
-    <meta property="og:title" content="MedRevolve – Launch Your Telehealth Business Today" />
-    <meta property="og:description" content="The complete platform to launch a compliant telehealth, GLP-1, or wellness business. Website, compliance, pharmacy, and marketing — all under your brand. Live in days." />
+    <meta property="og:title" content="MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness" />
+    <meta property="og:description" content="Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies." />
     <meta property="og:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -23,20 +23,17 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MedRevolve – Launch Your Telehealth Business Today" />
-    <meta name="twitter:description" content="The complete platform to launch a compliant telehealth, GLP-1, or wellness business. Live in days." />
+    <meta name="twitter:title" content="MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness" />
+    <meta name="twitter:description" content="Licensed US telehealth platform. Board-certified physicians. Licensed pharmacies. All 50 states." />
     <meta name="twitter:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
 
-    <!-- Canonical URL -->
+    <!-- Canonical URL — overridden per page by SEOHead -->
     <link rel="canonical" href="https://medrevolve.com/" />
 
-    <!-- Google Site Verification (replace with your actual token from Search Console) -->
-    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" /> -->
-
-    <!-- JSON-LD Structured Data — helps Google understand MedRevolve as a medical organization -->
+    <!-- JSON-LD Structured Data — Licensed Telehealth MedicalOrganization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -47,10 +44,11 @@
           "name": "MedRevolve",
           "url": "https://medrevolve.com",
           "logo": "https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png",
-          "description": "MedRevolve is the complete B2B platform to launch a compliant telehealth, GLP-1, or wellness business — website, compliance, pharmacy, and marketing under your brand.",
+          "description": "Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies.",
           "medicalSpecialty": ["Weight Management", "Primary Care", "Endocrinology"],
           "contactPoint": {
             "@type": "ContactPoint",
+            "telephone": "+1-240-387-5224",
             "email": "info@medrevolve.com",
             "contactType": "customer support",
             "availableLanguage": "English"
@@ -65,24 +63,15 @@
           "@id": "https://medrevolve.com/#website",
           "url": "https://medrevolve.com",
           "name": "MedRevolve",
-          "publisher": { "@id": "https://medrevolve.com/#organization" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://medrevolve.com/?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
+          "publisher": { "@id": "https://medrevolve.com/#organization" }
         },
         {
-          "@type": "Service",
+          "@type": "MedicalWebPage",
           "@id": "https://medrevolve.com/#telehealth-service",
-          "serviceType": "Telehealth Platform",
+          "name": "Licensed Telehealth Platform",
           "provider": { "@id": "https://medrevolve.com/#organization" },
-          "description": "White-label telehealth platform for GLP-1, wellness, and healthcare businesses.",
-          "areaServed": "US",
-          "offers": {
-            "@type": "Offer",
-            "url": "https://medrevolve.com/MerchantOnboarding"
-          }
+          "description": "Physician-supervised telehealth programs for weight management, hormone therapy, and men's and women's health. Requires valid prescription. Available in all 50 US states.",
+          "areaServed": "US"
         },
         {
           "@type": "FAQPage",
@@ -92,15 +81,15 @@
               "name": "What is GLP-1 weight loss treatment?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "GLP-1 (glucagon-like peptide-1) receptor agonists like semaglutide and tirzepatide are FDA-approved medications that help manage weight by reducing appetite and improving blood sugar control. MedRevolve connects patients with licensed providers who can prescribe these treatments via telehealth."
+                "text": "GLP-1 receptor agonists like semaglutide and tirzepatide are FDA-approved prescription medications for chronic weight management. MedRevolve connects patients with licensed physicians who evaluate and prescribe these treatments via telehealth. A valid prescription is required."
               }
             },
             {
               "@type": "Question",
-              "name": "How do I start a telehealth business with MedRevolve?",
+              "name": "Is a prescription required for MedRevolve programs?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "MedRevolve provides a complete white-label telehealth platform including website, compliance, pharmacy integrations, and marketing tools. Businesses can launch in days. Visit medrevolve.com/MerchantOnboarding to get started."
+                "text": "Yes. All medications dispensed through MedRevolve require a physician evaluation and a valid prescription. Medications are dispensed by licensed 503A compounding pharmacies and shipped to your door."
               }
             },
             {
@@ -124,17 +113,16 @@
       n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
       t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
       document,'script','https://connect.facebook.net/en_US/fbevents.js');
-      // IMPORTANT: Replace 0000000000000 with your actual Facebook Pixel ID from business.facebook.com/events/manager
-      // fbq('init', '0000000000000'); // ← Uncomment and replace after getting real Pixel ID
+      // IMPORTANT: Replace 0000000000000 with your actual Facebook Pixel ID
+      // fbq('init', '0000000000000');
       // fbq('track', 'PageView');
     </script>
 
-
-    <!-- Preconnect to external image CDNs (saves 200–400ms on first image load) -->
+    <!-- Preconnect to external CDNs -->
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
     <link rel="preconnect" href="https://i.pravatar.cc" crossorigin />
 
-    <!-- Preload the LCP hero image (first slide, mobile-optimised width) -->
+    <!-- Preload LCP hero image -->
     <link
       rel="preload"
       as="image"

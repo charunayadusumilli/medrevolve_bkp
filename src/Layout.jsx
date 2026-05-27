@@ -144,9 +144,9 @@ export default function Layout({ children }) {
 
       {/* Header */}
       <motion.header
-        className={`sticky top-[40px] left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'
-        }`}
+        className={`sticky left-0 right-0 z-50 transition-all duration-300 ${
+          domain === 'RUO' ? 'top-0' : 'top-[40px]'
+        } ${scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.4 }}>
@@ -163,7 +163,8 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — domain-aware */}
             <nav className="hidden lg:flex items-center gap-8">
-              {domain === 'DEV' || domain === 'B2C' ? (
+              {/* Platform link — B2C and DEV only. NOT on B2B, WATER, or RUO (cross-domain link risk) */}
+              {(domain === 'DEV' || domain === 'B2C') ? (
                 <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                   Platform
                 </Link>
@@ -275,11 +276,14 @@ export default function Layout({ children }) {
               </Button>
               }
 
-              <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('MerchantOnboarding')} className="hidden sm:block">
-                <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
-                  {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Get Started'}
-                </Button>
-              </Link>
+              {/* CTA button — hidden on RUO domain (institutional email only, no consumer CTA) */}
+              {domain !== 'RUO' && (
+                <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} className="hidden sm:block">
+                  <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
+                    {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                  </Button>
+                </Link>
+              )}
 
               {/* Mobile Menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -300,7 +304,14 @@ export default function Layout({ children }) {
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                      <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Platform</Link>
+                      {/* Platform link — B2C/DEV only in mobile menu */}
+                      {(domain === 'DEV' || domain === 'B2C') && (
+                        <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Platform</Link>
+                      )}
+                      {/* Domain nav items */}
+                      {domainNav.map(item => (
+                        <Link key={item.path} to={item.path} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>{item.label}</Link>
+                      ))}
 
                       {user && (
                         <div className="pt-4 border-t border-white/10 mt-2">
@@ -331,11 +342,20 @@ export default function Layout({ children }) {
                             onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('MerchantOnboarding')} onClick={() => setMobileMenuOpen(false)}>
-                            <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                              {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Get Started'}
-                            </Button>
-                          </Link>
+                          {domain !== 'RUO' && (
+                            <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
+                              <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
+                                {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                              </Button>
+                            </Link>
+                          )}
+                          {domain === 'RUO' && (
+                            <a href="mailto:research@medrevolveruo.com">
+                              <Button className="w-full bg-purple-700 hover:bg-purple-600 text-white rounded-sm font-bold text-xs px-3">
+                                research@medrevolveruo.com
+                              </Button>
+                            </a>
+                          )}
                         </>
                       }
                     </div>

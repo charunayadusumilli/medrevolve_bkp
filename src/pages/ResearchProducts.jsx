@@ -216,8 +216,8 @@ export default function ResearchProducts() {
   return (
     <div className="min-h-screen bg-[#080808] text-white">
       <SEOHead
-        title="Research Compound Catalog | MedRevolve Research (RUO)"
-        description="HPLC-certified peptides and research compounds for licensed institutions. COA provided. For research use only — not for human use."
+        title="Research Compound Catalog | For Research Use Only — Institutional Orders"
+        description="HPLC-certified peptides and research compounds for licensed institutions, universities, and CROs. COA provided. For research use only — not for human or veterinary use."
       />
 
       {/* ── RUO Compliance Banner — REQUIRED ────────────────────────────── */}
@@ -251,7 +251,7 @@ export default function ResearchProducts() {
               <strong className="text-amber-300">Important Notice:</strong> All compounds on this page are sold exclusively 
               as research chemicals to licensed institutions. They are <strong className="text-white/70">not intended for human consumption, 
               self-administration, or any therapeutic purpose</strong>. By viewing this catalog, you have confirmed 
-              your status as an authorized researcher or institutional buyer. MedRevolve reserves the right 
+              your status as an authorized researcher or institutional buyer. We reserve the right 
               to verify institutional credentials before fulfilling any order.
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function ResearchProducts() {
           <p className="text-sm text-white/50 leading-relaxed mb-4">
             Orders are fulfilled exclusively to verified research institutions, universities, licensed 
             compounding facilities, and CROs (Contract Research Organizations). 
-            Please contact our B2B research supply team with your institution name, address, 
+            Please contact our institutional research supply team with your institution name, address, 
             DEA/NPI or institutional ID, and intended research purpose.
           </p>
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/40">
@@ -311,7 +311,7 @@ export default function ResearchProducts() {
             <p className="text-[10px] text-white/25 mb-3">
               Contact our institutional sales team for pricing, availability, and verification process.
             </p>
-            <a href="mailto:research@medrevolve.com">
+            <a href="mailto:research@medrevolveruo.com">
               <button className="bg-white/8 hover:bg-white/12 border border-white/15 text-white text-sm font-medium px-6 py-2.5 rounded-sm transition-colors">
                 Contact Research Supply Team →
               </button>
@@ -324,12 +324,12 @@ export default function ResearchProducts() {
           <p className="text-[10px] text-white/20 leading-relaxed max-w-3xl mx-auto">
             All research compounds are for laboratory and preclinical research use only. 
             Not for human use, self-experimentation, or veterinary use. 
-            MedRevolve strictly prohibits the sale of these compounds for any purpose other than legitimate scientific research. 
+            This catalog strictly prohibits the sale of these compounds for any purpose other than legitimate scientific research. 
             Purchasers assume full responsibility for ensuring use in compliance with all federal, state, and local laws. 
             These statements have not been evaluated by the FDA. These products are not drugs or medical devices.
           </p>
           <p className="text-[10px] text-white/15 mt-2">
-            © 2025 MedRevolve · Research Supply Division · research@medrevolve.com
+            © 2025 Research Compounds · Institutional Supply Division · research@medrevolveruo.com
           </p>
         </div>
       </div>
