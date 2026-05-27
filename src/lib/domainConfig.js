@@ -62,7 +62,7 @@ export const BRAND = {
     compliance: ['B2B', 'WhiteLabel', 'PEPMD'],
   },
   RUO: {
-    name: 'MedRevolve Research',
+    name: 'MedRevolve RUO — For Research Use Only',
     tagline: 'Research Compound Catalog',
     primaryColor: '#7B5EA7',
     secondaryColor: '#4A6741',

@@ -85,7 +85,7 @@ const WHO_BUYS = [
   {
     icon: User,
     label: 'Individuals / Researchers',
-    description: 'Order individual vials for personal research or reconstitution needs. Discreet shipping.',
+    description: 'Order individual vials for reconstitution and licensed facility use. Discreet, secure shipping.',
     cta: 'Shop Retail',
     link: '#products',
     color: 'from-blue-500/10 to-cyan-500/10 border-blue-500/20',

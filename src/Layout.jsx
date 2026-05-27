@@ -127,7 +127,8 @@ export default function Layout({ children }) {
       <AnalyticsTracker />
       <AIAssistant />
 
-      {/* Top Phone Bar - Always visible with dynamic CTA */}
+      {/* Top Bar - hidden on RUO domain; shows email contact instead of phone */}
+      {domain !== 'RUO' && (
       <div className="bg-gradient-to-r from-cyan-700 via-blue-700 to-cyan-700 text-white py-2.5 px-4 text-center sticky top-0 z-[60] animate-pulse-slow">
         <a href="tel:+12403875224" className="inline-flex items-center gap-2.5 text-sm font-bold hover:scale-105 transition-all duration-300 group">
           <div className="relative">
@@ -139,6 +140,7 @@ export default function Layout({ children }) {
           <span className="hidden md:inline text-xs text-cyan-200 ml-1">← Click to Call Now</span>
         </a>
       </div>
+      )}
 
       {/* Header */}
       <motion.header
@@ -171,11 +173,17 @@ export default function Layout({ children }) {
                   {item.label}
                 </Link>
               ))}
-              <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
-                <Phone className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="hidden xl:inline">Call Now: </span>
-                240-387-5224
-              </a>
+              {domain === 'RUO' ? (
+                <a href="mailto:research@medrevolveruo.com" className="text-sm text-white font-bold hover:text-purple-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
+                  research@medrevolveruo.com
+                </a>
+              ) : (
+                <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
+                  <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="hidden xl:inline">Call Now: </span>
+                  240-387-5224
+                </a>
+              )}
 
               {/* Admin only */}
               {user?.role === 'admin' &&
@@ -304,11 +312,13 @@ export default function Layout({ children }) {
                     </nav>
 
                     <div className="p-5 border-t border-white/10 space-y-3">
-                      {/* Phone CTA - Always visible in mobile */}
+                      {/* Phone CTA - hidden on RUO domain */}
+                      {domain !== 'RUO' && (
                       <a href="tel:+12403875224" className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white text-center font-bold rounded-sm py-3 transition-colors">
                         <Phone className="w-4 h-4 inline mr-2 -mt-0.5" />
                         Call 240-387-5224
                       </a>
+                      )}
                       
                       {user ?
                         <Button variant="outline" className="w-full rounded-sm border-red-500/40 text-red-400 hover:bg-red-500/10"
@@ -337,105 +347,27 @@ export default function Layout({ children }) {
         </div>
       </motion.header>
 
-      {/* Floating Call Button - Appears on scroll */}
-      <a
+      {/* Floating Call Button - hidden on RUO domain */}
+      {domain !== 'RUO' && <a
         href="tel:+12403875224"
         className="fixed bottom-6 right-6 z-[70] bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full p-4 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group animate-bounce-slow hidden lg:flex items-center gap-2 overflow-hidden">
         <Phone className="w-6 h-6 flex-shrink-0 group-hover:rotate-12 transition-transform" />
         <span className="font-bold text-sm whitespace-nowrap max-w-0 group-hover:max-w-xs transition-all duration-500">Call Now: 240-387-5224</span>
-      </a>
+      </a>}
 
       {/* Main Content */}
       <main>
         {children}
       </main>
 
-      {/* Footer */}
+      {/* Footer — suppressed on WATER and RUO domains (they have their own inline footers) */}
+      {(domain !== 'WATER' && domain !== 'RUO') && (
       <footer className="bg-[#060606] border-t border-white/8 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {/* Brand */}
-            <div className="lg:col-span-1">
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-7 h-7 bg-white flex items-center justify-center rounded-sm">
-                  <span className="text-black font-black text-[10px]">{brand.logoText}</span>
-                </div>
-                <span className="text-base font-bold text-white">{brand.name}</span>
-              </div>
-              <p className="text-white/35 text-sm leading-relaxed mb-6 max-w-xs">
-                Physician-supervised telehealth programs available in all 50 states. Licensed providers. Licensed pharmacies. All programs require a valid prescription.
-              </p>
-              <div className="flex gap-3">
-                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Instagram className="w-3.5 h-3.5 text-white/50" /></a>
-                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Twitter className="w-3.5 h-3.5 text-white/50" /></a>
-                <a href="#" className="w-8 h-8 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors rounded-sm"><Youtube className="w-3.5 h-3.5 text-white/50" /></a>
-              </div>
-            </div>
-
-            {/* Platform */}
-            <div>
-              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Platform</h4>
-              <ul className="space-y-3">
-                {domain === 'B2B' ? (
-                  <>
-                    <li><Link to="/ForBusiness" className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
-                    <li><Link to="/MerchantOnboarding" className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
-                    <li><Link to="/PartnerProgram" className="text-white/45 hover:text-white text-sm transition-colors">Partner Program</Link></li>
-                    <li><Link to="/ForCreators" className="text-white/45 hover:text-white text-sm transition-colors">Creator Program</Link></li>
-                    <li><Link to="/MerchantDemo" className="text-white/45 hover:text-white text-sm transition-colors">See Demo</Link></li>
-                  </>
-                ) : domain === 'WATER' ? (
-                  <>
-                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">5mL Vials</a></li>
-                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">10mL Vials</a></li>
-                    <li><a href="/WaterHome#products" className="text-white/45 hover:text-white text-sm transition-colors">30mL Vials</a></li>
-                    <li><a href="/WaterHome#bulk" className="text-white/45 hover:text-white text-sm transition-colors">Bulk & Wholesale</a></li>
-                    <li><Link to="/Contact" className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
-                  </>
-                ) : (
-                  <>
-                    <li><Link to={createPageUrl('TelehealthPlatform')} className="text-white/45 hover:text-white text-sm transition-colors">Telehealth</Link></li>
-                    <li><Link to={createPageUrl('ForBusiness')} className="text-white/45 hover:text-white text-sm transition-colors">For Business</Link></li>
-                    <li><Link to={createPageUrl('MerchantOnboarding')} className="text-white/45 hover:text-white text-sm transition-colors">Get Started</Link></li>
-                    <li><Link to={createPageUrl('BookAppointment')} className="text-white/45 hover:text-white text-sm transition-colors">Book a Consultation</Link></li>
-                    <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
-                  </>
-                )}
-              </ul>
-            </div>
-
-
-
-            {/* Company */}
-            <div>
-              <h4 className="font-semibold mb-5 text-xs uppercase tracking-widest text-white/25">Company</h4>
-              <ul className="space-y-3">
-                <li><Link to={createPageUrl('HowItWorks')} className="text-white/45 hover:text-white text-sm transition-colors">How It Works</Link></li>
-                <li><Link to={createPageUrl('Contact')} className="text-white/45 hover:text-white text-sm transition-colors">Contact</Link></li>
-                <li><Link to={createPageUrl('Privacy')} className="text-white/45 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
-                <li><Link to={createPageUrl('Terms')} className="text-white/45 hover:text-white text-sm transition-colors">Terms of Service</Link></li>
-                <li><Link to="/HIPAANotice" className="text-white/45 hover:text-white text-sm transition-colors">HIPAA Notice of Privacy Practices</Link></li>
-                <li><Link to="/TelehealthConsent" className="text-white/45 hover:text-white text-sm transition-colors">Telehealth Informed Consent</Link></li>
-                <li><Link to="/MedicalDisclaimer" className="text-white/45 hover:text-white text-sm transition-colors">Medical Disclaimer</Link></li>
-                <li><Link to="/CookiePolicy" className="text-white/45 hover:text-white text-sm transition-colors">Cookie Policy</Link></li>
-                <li><a href="mailto:support@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">support@medrevolve.com</a></li>
-                <li><a href="mailto:info@medrevolve.com" className="text-white/45 hover:text-white text-sm transition-colors">info@medrevolve.com</a></li>
-                <li><a href="tel:+12403875224" className="text-white/45 hover:text-white text-sm transition-colors">240-387-5224</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-white/8 flex flex-col items-center gap-4">
-            <p className="text-white/25 text-xs text-center max-w-4xl leading-relaxed">
-              These statements have not been evaluated by the FDA. All programs require a valid prescription from a licensed physician. Results may vary. Telehealth services provided by licensed providers through affiliated medical groups.
-            </p>
-            <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2">
-              <p className="text-white/20 text-xs">© 2025 MedRevolve. All rights reserved.</p>
-              <p className="text-white/15 text-xs">Not intended to diagnose, treat, cure, or prevent any disease.</p>
-            </div>
-          </div>
+...
         </div>
       </footer>
+      )}
     </div>);
 
 }
