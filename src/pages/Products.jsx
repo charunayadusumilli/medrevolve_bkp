@@ -37,7 +37,7 @@ const WATER_PRODUCTS = [
     price: 119.99,
     unit: '10-pack',
     description: 'Case of 10 × 30mL vials. Best value for clinics and compounding facilities. Same-batch COA.',
-    specs: ['10 × 30mL vials', 'Same-batch COA', 'Bulk institutional pricing', 'Tamper-evident seal'],
+    specs: ['10 × 30mL vials', 'Same-batch COA', 'Volume pricing for licensed facilities', 'Tamper-evident seal'],
     badge: 'Best Value',
     inStock: true,
   },

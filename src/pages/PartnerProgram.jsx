@@ -21,7 +21,7 @@ const perks = [
   'Access to 25+ High-Demand Products',
   'Nationwide Licensed Physician Network',
   'Nationwide Compounding Pharmacy Network',
-  'Affiliate Referral Structure',
+  'Referral Compensation Program (physician-supervised programs only)',
   'Marketing Guides, Training & Resources',
   'No Inventory. No Medical Liability.',
   'HIPAA-Compliant Infrastructure',
@@ -200,8 +200,11 @@ export default function PartnerProgram() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+          <p className="text-xs text-[#5A6B5A] text-center mt-6 italic">
+            Referral compensation applies to physician-supervised telehealth programs only. RUO compounds excluded from all referral structures.
+          </p>
+          </div>
+          </section>
 
       {/* ── AVAILABLE TECHNOLOGY ── */}
       <section className="py-20 px-6 bg-[#2D3A2D]">
@@ -254,7 +257,7 @@ export default function PartnerProgram() {
       <section id="earnings" className="py-20 px-6 bg-[#F5F0E8]">
         <div className="max-w-5xl mx-auto">
           <motion.div {...FADE_UP} className="text-center mb-14">
-            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-3">How Much Can You Earn?</h2>
+            <h2 className="text-4xl font-bold text-[#2D3A2D] mb-3">Estimated Partner Earnings</h2>
             <p className="text-[#5A6B5A] max-w-2xl mx-auto">
               Partners set their own program pricing above MedRevolve's established minimums. Earnings are based on pricing strategy, client volume, and retention — earned for completed, qualified intakes.
             </p>

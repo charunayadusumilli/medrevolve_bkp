@@ -9,7 +9,7 @@ const pillars = [
     index: '01',
     category: 'TELEHEALTH',
     title: 'White-Label Clinical Platform',
-    description: 'Full telehealth infrastructure under your brand. Credentialed providers, e-prescribing, async/sync consultations, patient management, and 503A/B pharmacy integrations — for GLP-1, RUO, hormones, or any clinical vertical.',
+    description: 'Full telehealth infrastructure under your brand. Credentialed providers, e-prescribing, async/sync consultations, patient management, and 503A pharmacy integrations — for GLP-1, RUO, hormones, or any clinical vertical.',
     items: ['Provider Credentialing', 'Async + Video Consultations', 'E-Prescribe Engine', 'Patient CRM', 'Licensed Pharmacy Network'],
     icon: Stethoscope,
     href: 'TelehealthPlatform',
