@@ -349,9 +349,54 @@ export default function Layout({ children }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#060606] border-t border-white/8 text-white">
+      <footer className="bg-[#060606] border-t border-white/10 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
-...
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
+                  <span className="text-black font-black text-[11px]">MR</span>
+                </div>
+                <span className="text-lg font-bold text-white">MedRevolve</span>
+              </div>
+              <p className="text-white/50 text-sm leading-relaxed max-w-sm">
+                Physician-supervised telehealth for weight management, hormone therapy, and personalized wellness. Licensed providers. Licensed 503A pharmacies. All 50 states.
+              </p>
+              <div className="flex items-center gap-4 mt-5">
+                <a href="https://instagram.com/medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Instagram className="w-4 h-4" /></a>
+                <a href="https://facebook.com/medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Facebook className="w-4 h-4" /></a>
+                <a href="https://youtube.com/@medrevolve" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors"><Youtube className="w-4 h-4" /></a>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-4">Platform</p>
+              <ul className="space-y-2.5">
+                <li><Link to="/HowItWorks" className="text-sm text-white/50 hover:text-white transition-colors">How It Works</Link></li>
+                <li><Link to="/TelehealthPlatform" className="text-sm text-white/50 hover:text-white transition-colors">Telehealth</Link></li>
+                <li><Link to="/BookAppointment" className="text-sm text-white/50 hover:text-white transition-colors">Book Consultation</Link></li>
+                <li><Link to="/ForBusiness" className="text-sm text-white/50 hover:text-white transition-colors">For Business</Link></li>
+                <li><Link to="/PartnerProgram" className="text-sm text-white/50 hover:text-white transition-colors">Partner Program</Link></li>
+                <li><Link to="/ForCreators" className="text-sm text-white/50 hover:text-white transition-colors">For Creators</Link></li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-white/25 mb-4">Legal</p>
+              <ul className="space-y-2.5">
+                <li><Link to="/Privacy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/Terms" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/HIPAANotice" className="text-sm text-white/50 hover:text-white transition-colors">HIPAA Notice</Link></li>
+                <li><Link to="/TelehealthConsent" className="text-sm text-white/50 hover:text-white transition-colors">Telehealth Consent</Link></li>
+                <li><Link to="/MedicalDisclaimer" className="text-sm text-white/50 hover:text-white transition-colors">Medical Disclaimer</Link></li>
+                <li><Link to="/Contact" className="text-sm text-white/50 hover:text-white transition-colors">Contact Us</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-white/30">© {new Date().getFullYear()} MedRevolve. All rights reserved. This site is intended for US residents only.</p>
+            <p className="text-xs text-white/20 text-center md:text-right max-w-md">
+              These statements have not been evaluated by the FDA. Prescription medications require a valid provider-patient relationship and clinical evaluation. Not a substitute for professional medical advice.
+            </p>
+          </div>
         </div>
       </footer>
     </div>);

@@ -1,32 +1,27 @@
 /**
  * DomainRouter — reads the hostname and redirects/renders the correct
- * landing page and nav for each published domain.
- * 
- * Works both in Base44 DEV preview (all pages visible) and on live domains
- * (only that domain's pages are served).
+ * landing page for each published domain.
+ *
+ * Active domains:
+ *   medrevolve.com      → B2C → homepage: '/'
+ *   medrevolveb2b.com   → B2C → homepage: '/' (same unified site)
+ *   [DEV / preview]     → DEV → all pages visible
+ *
+ * Disabled domains (WATER, RUO) are not routed here.
  */
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { detectDomain, NAV_CONFIG } from '@/lib/domainConfig';
 
-// Map each domain key to its canonical homepage path
+// Both active domains land on the same homepage
 const DOMAIN_HOME = {
   B2C:   '/',
-  B2B:   '/ForBusiness',
-  RUO:   '/ResearchProducts',
-  WATER: '/WaterHome',
   ADMIN: '/AdminDashboard',
   DEV:   '/',
 };
 
-// Pages that are ONLY valid on a specific domain — redirect away if wrong domain
-const DOMAIN_EXCLUSIVE = {
-  '/WaterHome':        'WATER',
-  '/ResearchProducts': 'RUO',
-  '/ForBusiness':      'B2B',
-  '/MerchantOnboarding': 'B2B',
-  '/MerchantDashboard':  'B2B',
-};
+// No domain-exclusive page restrictions — all pages accessible on both domains
+const DOMAIN_EXCLUSIVE = {};
 
 export function useDomainRouter() {
   const domain = detectDomain();
@@ -34,12 +29,11 @@ export function useDomainRouter() {
   const location = useLocation();
 
   useEffect(() => {
-    // On a specific live domain, enforce correct homepage
-    if (domain !== 'DEV' && location.pathname === '/') {
-      const home = DOMAIN_HOME[domain];
-      if (home && home !== '/') {
-        navigate(home, { replace: true });
-      }
+    // Only redirect if on a live domain and the page is restricted
+    if (domain === 'DEV') return;
+    const exclusiveDomain = DOMAIN_EXCLUSIVE[location.pathname];
+    if (exclusiveDomain && domain !== exclusiveDomain) {
+      navigate(DOMAIN_HOME[domain] || '/', { replace: true });
     }
   }, [domain, location.pathname]);
 
