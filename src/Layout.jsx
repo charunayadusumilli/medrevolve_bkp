@@ -17,7 +17,8 @@ import {
 "@/components/ui/dropdown-menu";
 
 // Domain-aware home redirect — only fires on LIVE published domains, never in DEV/preview
-const DOMAIN_HOME_MAP = { B2C: '/', B2B: '/ForBusiness', RUO: '/ResearchProducts', WATER: '/WaterHome', ADMIN: '/AdminDashboard' };
+// 3 active domains: B2C → '/', B2B → '/ForBusiness', WATER → '/WaterHome'
+const DOMAIN_HOME_MAP = { B2C: '/', B2B: '/ForBusiness', WATER: '/WaterHome', ADMIN: '/AdminDashboard' };
 
 function DomainHomeRedirect() {
   const navigate = useNavigate();
@@ -62,8 +63,9 @@ export default function Layout({ children }) {
       gtag('config', 'G-BZTEFSTDPL');
     }
 
-    // ── IONOS AI Voice Receptionist Web Chat ───────────────
-    if (!document.getElementById('ionos-web-chat')) {
+    // ── IONOS AI Voice Receptionist — B2C and B2B only (not on WATER) ─────
+    const _domain = detectDomain();
+    if ((_domain === 'B2C' || _domain === 'B2B' || _domain === 'DEV') && !document.getElementById('ionos-web-chat')) {
       const ionosScript = document.createElement('script');
       ionosScript.id = 'ionos-web-chat';
       ionosScript.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
@@ -125,10 +127,11 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
       <DomainHomeRedirect />
       <AnalyticsTracker />
-      <AIAssistant />
+      {/* AIAssistant — B2C and B2B only; not on WATER (different product domain) */}
+      {(domain === 'B2C' || domain === 'B2B' || domain === 'DEV') && <AIAssistant />}
 
-      {/* Top Bar - hidden on RUO domain; shows email contact instead of phone */}
-      {domain !== 'RUO' && (
+      {/* Top Bar — shown on B2C, B2B, DEV. Hidden on WATER (separate product brand) */}
+      {(domain === 'B2C' || domain === 'B2B' || domain === 'DEV') && (
       <div className="bg-gradient-to-r from-cyan-700 via-blue-700 to-cyan-700 text-white py-2.5 px-4 text-center sticky top-0 z-[60] animate-pulse-slow">
         <a href="tel:+12403875224" className="inline-flex items-center gap-2.5 text-sm font-bold hover:scale-105 transition-all duration-300 group">
           <div className="relative">
@@ -142,10 +145,10 @@ export default function Layout({ children }) {
       </div>
       )}
 
-      {/* Header */}
+      {/* Header — top-0 on WATER (no top bar); top-[40px] on B2C/B2B/DEV (top bar present) */}
       <motion.header
         className={`sticky left-0 right-0 z-50 transition-all duration-300 ${
-          domain === 'RUO' ? 'top-0' : 'top-[40px]'
+          domain === 'WATER' ? 'top-0' : 'top-[40px]'
         } ${scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -163,7 +166,7 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — domain-aware */}
             <nav className="hidden lg:flex items-center gap-8">
-              {/* Platform link — B2C and DEV only. NOT on B2B, WATER, or RUO (cross-domain link risk) */}
+              {/* Platform link — B2C and DEV only. NOT on B2B or WATER (cross-domain link risk) */}
               {(domain === 'DEV' || domain === 'B2C') ? (
                 <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                   Platform
@@ -174,9 +177,9 @@ export default function Layout({ children }) {
                   {item.label}
                 </Link>
               ))}
-              {domain === 'RUO' ? (
-                <a href="mailto:research@medrevolveruo.com" className="text-sm text-white font-bold hover:text-purple-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
-                  research@medrevolveruo.com
+              {domain === 'WATER' ? (
+                <a href="mailto:orders@medrevolvewater.com" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
+                  orders@medrevolvewater.com
                 </a>
               ) : (
                 <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
@@ -276,14 +279,11 @@ export default function Layout({ children }) {
               </Button>
               }
 
-              {/* CTA button — hidden on RUO domain (institutional email only, no consumer CTA) */}
-              {domain !== 'RUO' && (
-                <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} className="hidden sm:block">
-                  <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
-                    {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
-                  </Button>
-                </Link>
-              )}
+              <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} className="hidden sm:block">
+                <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
+                  {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                </Button>
+              </Link>
 
               {/* Mobile Menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -323,8 +323,8 @@ export default function Layout({ children }) {
                     </nav>
 
                     <div className="p-5 border-t border-white/10 space-y-3">
-                      {/* Phone CTA - hidden on RUO domain */}
-                      {domain !== 'RUO' && (
+                      {/* Phone CTA — hidden on WATER domain */}
+                      {domain !== 'WATER' && (
                       <a href="tel:+12403875224" className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white text-center font-bold rounded-sm py-3 transition-colors">
                         <Phone className="w-4 h-4 inline mr-2 -mt-0.5" />
                         Call 240-387-5224
@@ -342,20 +342,11 @@ export default function Layout({ children }) {
                             onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          {domain !== 'RUO' && (
-                            <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
-                              <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                                {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
-                              </Button>
-                            </Link>
-                          )}
-                          {domain === 'RUO' && (
-                            <a href="mailto:research@medrevolveruo.com">
-                              <Button className="w-full bg-purple-700 hover:bg-purple-600 text-white rounded-sm font-bold text-xs px-3">
-                                research@medrevolveruo.com
-                              </Button>
-                            </a>
-                          )}
+                          <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
+                            <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
+                              {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                            </Button>
+                          </Link>
                         </>
                       }
                     </div>
@@ -367,8 +358,8 @@ export default function Layout({ children }) {
         </div>
       </motion.header>
 
-      {/* Floating Call Button - hidden on RUO domain */}
-      {domain !== 'RUO' && <a
+      {/* Floating Call Button — B2C, B2B, DEV only (not on WATER) */}
+      {domain !== 'WATER' && <a
         href="tel:+12403875224"
         className="fixed bottom-6 right-6 z-[70] bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full p-4 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group animate-bounce-slow hidden lg:flex items-center gap-2 overflow-hidden">
         <Phone className="w-6 h-6 flex-shrink-0 group-hover:rotate-12 transition-transform" />
@@ -380,8 +371,8 @@ export default function Layout({ children }) {
         {children}
       </main>
 
-      {/* Footer — suppressed on WATER and RUO domains (they have their own inline footers) */}
-      {(domain !== 'WATER' && domain !== 'RUO') && (
+      {/* Footer — suppressed on WATER domain (has its own inline footer) */}
+      {domain !== 'WATER' && (
       <footer className="bg-[#060606] border-t border-white/8 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
 ...

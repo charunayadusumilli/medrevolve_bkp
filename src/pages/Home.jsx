@@ -25,6 +25,11 @@ import SocialProofStrip from '@/components/home/SocialProofStrip';
 export default function Home() {
   const domain = detectDomain();
   const isB2C = domain === 'B2C';
+  const isWater = domain === 'WATER';
+
+  // ── WATER: redirect handled by DomainHomeRedirect in layout ───────────────
+  // Home page should never render on WATER domain — layout redirects to /WaterHome
+  if (isWater) return null;
 
   // ── B2C: medrevolve.com — Patient-facing telehealth consumer platform ─────
   if (isB2C) {

@@ -6,7 +6,7 @@
  *  - medrevolve.com   → patient-facing telehealth keywords only
  *  - medrevolveb2b.com → B2B platform, clinics, licensed merchants only
  *  - medrevolvewater.com → bacteriostatic water, pharmaceutical/lab context
- *  - medrevolveruo.com → research-only, no consumer or telehealth keywords
+ *  NOTE: medrevolveruo.com (RUO) removed from pilot deployment.
  */
 
 // ── Per-page meta (domain-agnostic, overrideable) ──────────────────────────
@@ -86,16 +86,6 @@ const META_MAP = {
     robots: 'index, follow',
   },
 
-  // ── RUO: medrevolveruo.com — NO consumer or telehealth keywords ────────────
-  '/ResearchProducts': {
-    title: 'Research Compound Catalog | For Research Use Only — Institutional Orders',
-    description: 'HPLC-certified research peptides for licensed research institutions, universities, and CROs. COA provided. For research use only — not for human or veterinary use. Institutional orders only.',
-    keywords: 'research peptides, RUO compounds, lyophilized peptides, research chemicals, institutional peptide supply, COA peptides',
-    // Explicitly NO MedRevolve brand association in meta for separation
-    canonical: 'https://medrevolveruo.com/ResearchProducts',
-    robots: 'noindex, nofollow',  // Keep RUO out of search index during cert application
-  },
-
   // ── Shared legal pages ─────────────────────────────────────────────────────
   '/Privacy':       { title: 'Privacy Policy | MedRevolve', description: 'MedRevolve privacy policy and HIPAA data practices.' },
   '/Terms':         { title: 'Terms of Service | MedRevolve', description: 'MedRevolve terms of service and user agreement.' },
@@ -119,10 +109,6 @@ const DOMAIN_META = {
   WATER: {
     site_name: 'MedRevolve Water',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
-  },
-  RUO: {
-    site_name: 'Research Products Catalog',
-    robots: 'noindex, nofollow',
   },
 };
 

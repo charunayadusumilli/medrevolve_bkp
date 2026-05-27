@@ -1,24 +1,22 @@
 /**
  * MedRevolve Domain Configuration
  * ─────────────────────────────────────────────────────────────────────────────
- * SNAPSHOT VERSION: 2026-05-22
+ * SNAPSHOT VERSION: 2026-05-27 (PILOT DEPLOYMENT)
  * 
- * This is the single source of truth for all domain routing, branding,
- * and page categorization across the MedRevolve ecosystem.
- * 
- * DOMAINS:
+ * THREE ACTIVE DOMAINS:
  *   medrevolve.com          → B2C GLP-1 Telehealth Consumer Platform
  *   medrevolveb2b.com       → B2B White-Label Merchant Platform
- *   medrevolveruo.com       → Research Use Only (RUO) Compound Catalog
- *   medrevolvewater.com     → Consumer Wellness & Water Products
+ *   medrevolvewater.com     → Bacteriostatic Water (Wholesale & Retail)
  *   [current/dev]           → Full platform (admin + all portals)
+ * 
+ * NOTE: medrevolveruo.com (RUO) has been REMOVED from pilot deployment.
+ * RUO domain will be re-enabled in a future release after LegitScript cert.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 export const DOMAINS = {
   B2C:    'medrevolve.com',
   B2B:    'medrevolveb2b.com',
-  RUO:    'medrevolveruo.com',
   WATER:  'medrevolvewater.com',
   ADMIN:  'admin.medrevolve.com',
 };
@@ -28,7 +26,6 @@ export function detectDomain() {
   const hostname = window.location.hostname.toLowerCase();
   // Order matters — most specific first, use exact domain matching to prevent false positives
   if (hostname === 'admin.medrevolve.com')                                    return 'ADMIN';
-  if (hostname === 'medrevolveruo.com'  || hostname === 'www.medrevolveruo.com')  return 'RUO';
   if (hostname === 'medrevolvewater.com'|| hostname === 'www.medrevolvewater.com') return 'WATER';
   if (hostname === 'medrevolveb2b.com'  || hostname === 'www.medrevolveb2b.com')   return 'B2B';
   if (hostname === 'medrevolve.com'     || hostname === 'www.medrevolve.com')      return 'B2C';
@@ -60,21 +57,6 @@ export const BRAND = {
     accentColor: '#6BB5D6',
     targetAudience: 'merchant',
     compliance: ['B2B', 'WhiteLabel', 'PEPMD'],
-  },
-  RUO: {
-    // NOTE: Brand name deliberately does NOT use 'MedRevolve' in display
-    // to maintain domain separation for LegitScript / payment processor review.
-    // The URL domain is medrevolveruo.com but the visible brand is 'Research Compounds Only'
-    name: 'Research Compounds — For Research Use Only',
-    tagline: 'Institutional Research Compound Catalog',
-    primaryColor: '#7B5EA7',
-    secondaryColor: '#4A6741',
-    bgDark: '#080808',
-    bgLight: '#F8F6FF',
-    logoText: 'RC',
-    accentColor: '#B89FD8',
-    targetAudience: 'researcher',
-    compliance: ['RUO', 'FDA-Disclaimer', 'AgeGated', 'InstitutionalOnly'],
   },
   WATER: {
     name: 'MedRevolve Water',
@@ -126,12 +108,12 @@ export const PAGE_DOMAIN_MAP = {
   'PatientOnboarding':    ['B2C', 'DEV'],
   'AccountSettings':      ['B2C', 'DEV'],
   'Contact':              ['B2C', 'B2B', 'DEV'],
-  'Privacy':              ['B2C', 'B2B', 'RUO', 'WATER', 'DEV'],
-  'Terms':                ['B2C', 'B2B', 'RUO', 'WATER', 'DEV'],
+  'Privacy':              ['B2C', 'B2B', 'WATER', 'DEV'],
+  'Terms':                ['B2C', 'B2B', 'WATER', 'DEV'],
   'HIPAANotice':          ['B2C', 'DEV'],
   'TelehealthConsent':    ['B2C', 'DEV'],
   'MedicalDisclaimer':    ['B2C', 'DEV'],
-  'CookiePolicy':         ['B2C', 'B2B', 'RUO', 'WATER', 'DEV'],
+  'CookiePolicy':         ['B2C', 'B2B', 'WATER', 'DEV'],
 
   // ── B2B: medrevolveb2b.com ───────────────────────────────────────────────
   // B2B pages: NOT accessible from medrevolve.com (B2C certified site)
@@ -159,8 +141,8 @@ export const PAGE_DOMAIN_MAP = {
   'Programs':             ['B2B', 'B2C', 'DEV'],
 
   // ── RUO: medrevolveruo.com ───────────────────────────────────────────────
-  // ResearchProducts is RUO-only. NOT accessible on B2C, B2B, or WATER domains.
-  'ResearchProducts':     ['RUO', 'DEV'],
+  // RUO domain REMOVED from pilot. Page accessible in DEV only.
+  'ResearchProducts':     ['DEV'],
 
   // ── WATER: medrevolvewater.com ───────────────────────────────────────────
   // (Future pages to be created)
@@ -244,13 +226,6 @@ export const FUNCTION_DOMAIN_MAP = {
     'sendAutoRxFollowupReminders',
     'submitAutoRxFollowup',
   ],
-  // ── RUO Functions ────────────────────────────────────────────────────────
-  RUO: [
-    'generateProductContent',
-    'generateProductVisual',
-    'generatePharmaceuticalImage',
-    'generateInvoice',
-  ],
   // ── ADMIN / Cross-Domain Functions ───────────────────────────────────────
   ADMIN: [
     'qualiphyGetExams',
@@ -319,16 +294,19 @@ export const NAV_CONFIG = {
     { label: 'Pricing', path: '/MerchantOnboarding' },
     { label: 'Talk to Sales', path: '/Contact' },
   ],
-  // RUO nav: NO cross-links to medrevolve.com pages, NO shared contact page.
-  // Institutional inquiry via email only (research@medrevolveruo.com shown in Layout header).
-  RUO: [
-    { label: 'Research Catalog', path: '/ResearchProducts' },
-  ],
+  // WATER nav: no cross-links to B2C telehealth pages, contact via email only
   WATER: [
     { label: 'Vial Products', path: '/WaterHome#products' },
     { label: 'Bulk & Wholesale', path: '/WaterHome#bulk' },
-    { label: 'Contact', path: '/Contact' },
   ],
 };
 
 export default { DOMAINS, detectDomain, BRAND, PAGE_DOMAIN_MAP, FUNCTION_DOMAIN_MAP, NAV_CONFIG };
+
+// DEPLOYMENT CHECKLIST — 3 Active Domains (Pilot)
+// ─────────────────────────────────────────────────────────────────────────────
+// medrevolve.com    → B2C  → consumer telehealth, GLP-1, hormone, wellness
+// medrevolveb2b.com → B2B  → merchant platform, white-label, onboarding
+// medrevolvewater.com → WATER → bacteriostatic water, wholesale, compounding
+// RUO (medrevolveruo.com) → DISABLED pending LegitScript cert phase 2
+// ─────────────────────────────────────────────────────────────────────────────

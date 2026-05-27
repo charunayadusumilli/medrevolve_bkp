@@ -487,11 +487,11 @@ export default function WaterHome() {
                 Shop Now
               </Button>
             </a>
-            <Link to="/Contact">
+            <a href="mailto:orders@medrevolvewater.com">
               <Button size="lg" variant="ghost" className="border border-white/20 text-white hover:bg-white/10 rounded-sm px-12 text-base">
                 Contact for Wholesale
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>
