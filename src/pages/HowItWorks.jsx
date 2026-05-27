@@ -185,12 +185,12 @@ export default function HowItWorks() {
             <p className="text-white/80 text-lg mb-8">
               Take the first step towards better health today. Our process is simple, secure, and designed with your wellness in mind.
             </p>
-            <Link to={createPageUrl('Products')}>
+            <Link to={createPageUrl('MerchantOnboarding')}>
               <Button 
                 size="lg"
                 className="bg-white text-[#4A6741] hover:bg-white/90 rounded-full px-10 py-6 text-base font-medium group"
               >
-                Get Started Now
+                Start Your Business Setup
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

@@ -302,7 +302,7 @@ export default function Layout({ children }) {
                 <span className="font-bold text-white">MedRevolve</span>
               </div>
               <p className="text-sm text-white/40 leading-relaxed">
-                Physician-supervised telehealth. Licensed providers. Licensed 503A pharmacies. All 50 states.
+                Full-service B2B telehealth infrastructure. Website setup, provider integration, pharmacy network, compliance, and payments — all under your brand.
               </p>
             </div>
 

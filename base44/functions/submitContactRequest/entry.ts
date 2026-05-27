@@ -218,7 +218,7 @@ Deno.serve(async (req) => {
         </table>
       </td></tr>
       <tr><td align="center" style="padding-top:8px;">
-        <span style="color:rgba(255,255,255,0.25);font-size:10px;">MedRevolve Corporation | Launch a compliant telehealth, GLP-1, or RUO business under your own brand</span>
+        <span style="color:rgba(255,255,255,0.25);font-size:10px;">MedRevolve Corporation | B2B Telehealth Services — Website, Providers, Pharmacy, Compliance & Payments</span>
       </td></tr>
     </table>
   </td></tr>
@@ -315,7 +315,7 @@ Deno.serve(async (req) => {
         </table>
       </td></tr>
       <tr><td align="center" style="padding-top:6px;">
-        <span style="color:rgba(255,255,255,0.2);font-size:9px;">MedRevolve Corporation | Launch a compliant telehealth, GLP-1, or RUO business under your own brand</span>
+        <span style="color:rgba(255,255,255,0.2);font-size:9px;">MedRevolve Corporation | B2B Telehealth Services — Website, Providers, Pharmacy, Compliance & Payments</span>
       </td></tr>
     </table>
   </td></tr>
