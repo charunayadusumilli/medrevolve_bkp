@@ -23,8 +23,8 @@ const PRODUCT_TRACKS = [
     color: '#2D6A9F',
     light: '#D0E8F5',
     headline: 'Full Prescription Commerce Stack',
-    body: 'Sell physician-supervised GLP-1s, hormones, and Rx compounds through a fully compliant telehealth funnel. Every order flows through a licensed provider visit, then routes to a 503A/B pharmacy.',
-    products: ['Physician-Supervised GLP-1 Programs', 'Dual-Action GLP-1 Protocols', 'Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs', 'Growth Hormone Secretagogue Programs', 'Custom Physician-Directed Protocols'],
+    body: 'Sell physician-supervised GLP-1s, hormones, and Rx compounds through a fully compliant telehealth funnel. Every order flows through a licensed provider visit, then routes to a licensed 503A compounding pharmacy.',
+    products: ['Physician-Supervised GLP-1 Programs', 'Combination Weight Management Protocols', 'Testosterone Optimization Programs', 'Bioidentical Hormone Replacement Programs', 'Growth Hormone Secretagogue Programs', 'Custom Physician-Directed Protocols'],
     requirements: ['Licensed provider on platform', '503A or 503B pharmacy partner', 'HIPAA-compliant checkout', 'State-by-state Rx laws covered'],
     cta: 'Start GLP-1 Platform',
     link: 'MerchantOnboarding',
@@ -93,9 +93,9 @@ const PHARMACY_B2B = [
   },
   {
     icon: Package,
-    title: '503B Outsourcing Facilities',
-    desc: 'FDA-registered outsourcing facilities for bulk non-patient-specific compounding. Available for qualified B2B wholesale merchants with verified compliance.',
-    tags: ['Bulk production', 'FDA-registered', 'cGMP compliant', 'Nationwide distribution'],
+    title: 'Licensed Pharmacy Network',
+    desc: 'Our network of NABP-verified, state-licensed pharmacies fulfills patient-specific compounded prescriptions issued by licensed providers on the platform.',
+    tags: ['Patient-specific Rx only', 'State-licensed', 'NABP-verified', 'Licensed provider required'],
   },
   {
     icon: Truck,
@@ -181,7 +181,7 @@ export default function ForBusiness() {
             <div className="flex flex-wrap justify-center gap-10 mt-14">
               {[
                 { v: '7 Days', l: 'Avg. setup time' },
-                { v: '503A/B', l: 'Pharmacy ready' },
+                { v: '503A', l: 'Compounding pharmacy' },
                 { v: '50 States', l: 'Covered' },
                 { v: 'White-Label', l: 'Your brand' },
               ].map(s => (
@@ -455,7 +455,7 @@ export default function ForBusiness() {
               </Button>
             </Link>
           </div>
-          <p className="text-white/30 text-xs mt-6">$5K setup + $2.5–3K/month + 5% revenue share · Setup typically within 7 business days</p>
+          <p className="text-white/30 text-xs mt-6">Setup fee + monthly platform fee + revenue share · Pricing provided during onboarding consultation · Setup typically within 7 business days</p>
         </div>
       </section>
 

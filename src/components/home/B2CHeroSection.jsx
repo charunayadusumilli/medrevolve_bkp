@@ -55,7 +55,7 @@ export default function B2CHeroSection() {
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />)}
               </div>
-              <span className="text-white/60 text-xs font-medium">Trusted by patients nationwide</span>
+              <span className="text-white/60 text-xs font-medium">Licensed physicians. Licensed pharmacies. All 50 states.</span>
             </motion.div>
 
             {/* Headline */}
