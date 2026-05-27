@@ -122,6 +122,15 @@ export default function Layout({ children }) {
     if (callback) callback();
   };
 
+  // Domains that are taken down — show nothing but a blank placeholder
+  if (domain === 'DOWN') {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white/30 text-sm tracking-widest uppercase">Coming Soon</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
       <DomainHomeRedirect />
