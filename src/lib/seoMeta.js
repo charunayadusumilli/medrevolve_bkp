@@ -3,10 +3,9 @@
  * Open Graph, canonical URL, and robots directives per page/domain at runtime.
  *
  * Domain separation rules (LegitScript / payment processor compliance):
- *  - medrevolve.com   → patient-facing telehealth keywords only
- *  - medrevolveb2b.com → B2B platform, clinics, licensed merchants only
- *  - medrevolvewater.com → bacteriostatic water, pharmaceutical/lab context
- *  NOTE: medrevolveruo.com (RUO) removed from pilot deployment.
+ *  - medrevolve.com       → unified telehealth platform (patient + business services)
+ *  - medrevolveb2b.com    → same platform, same content, alternate entry point
+ *  NOTE: WATER and RUO domains are masked/disabled in this deployment.
  */
 
 // ── Per-page meta (domain-agnostic, overrideable) ──────────────────────────
@@ -30,12 +29,7 @@ const META_MAP = {
     description: 'Schedule your telehealth consultation with a licensed provider in minutes. Prescription required. GLP-1, hormone therapy, and more.',
     canonical: 'https://medrevolve.com/BookAppointment',
   },
-  '/Products': {
-    title: 'Physician-Prescribed Medications | MedRevolve',
-    description: 'Browse FDA-approved and physician-prescribed GLP-1 medications, hormone therapies, and wellness treatments. Prescription required for all Rx products.',
-    keywords: 'GLP-1 medication, semaglutide, tirzepatide, hormone therapy, prescription medication, licensed pharmacy',
-    canonical: 'https://medrevolve.com/Products',
-  },
+
   '/HowItWorks': {
     title: 'How MedRevolve Telehealth Works | MedRevolve',
     description: 'See how MedRevolve connects you with licensed physicians, licensed 503A compounding pharmacies, and ongoing care — all from home.',
@@ -49,11 +43,11 @@ const META_MAP = {
 
   // ── B2B: medrevolveb2b.com ─────────────────────────────────────────────────
   '/ForBusiness': {
-    title: 'White-Label Telehealth Infrastructure for Clinics & Med Spas | MedRevolve B2B',
+    title: 'Launch a Licensed Telehealth Platform | For Clinics, Med Spas & Wellness Practices | MedRevolve',
     description: 'Launch your licensed telehealth platform for clinics, med spas, and healthcare practices. Full infrastructure: physician network, licensed 503A pharmacy, compliance, and payments.',
-    keywords: 'white label telehealth, telehealth for clinics, med spa platform, GLP-1 clinic, licensed telehealth infrastructure',
+    keywords: 'white label telehealth, telehealth for clinics, med spa platform, licensed telehealth infrastructure',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
-    canonical: 'https://medrevolveb2b.com/ForBusiness',
+    canonical: 'https://medrevolve.com/ForBusiness',
   },
   '/MerchantOnboarding': {
     title: 'Launch Your Telehealth Platform | MedRevolve B2B',
@@ -76,16 +70,6 @@ const META_MAP = {
     canonical: 'https://medrevolveb2b.com/BusinessInquiry',
   },
 
-  // ── WATER: medrevolvewater.com ─────────────────────────────────────────────
-  '/WaterHome': {
-    title: 'Bacteriostatic Water Vials — 5mL, 10mL, 30mL | MedRevolve Water',
-    description: 'Pharmaceutical-grade bacteriostatic water in 5mL, 10mL, and 30mL sterile flip-top vials. USP-grade, endotoxin tested, COA included. For research, compounding, and licensed facility use.',
-    keywords: 'bacteriostatic water, USP grade water, sterile vials, compounding water, research reagent, pharmaceutical water',
-    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
-    canonical: 'https://medrevolvewater.com/',
-    robots: 'index, follow',
-  },
-
   // ── Shared legal pages ─────────────────────────────────────────────────────
   '/Privacy':       { title: 'Privacy Policy | MedRevolve', description: 'MedRevolve privacy policy and HIPAA data practices.' },
   '/Terms':         { title: 'Terms of Service | MedRevolve', description: 'MedRevolve terms of service and user agreement.' },
@@ -104,10 +88,6 @@ const DOMAIN_META = {
   },
   B2B: {
     site_name: 'MedRevolve B2B Platform',
-    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
-  },
-  WATER: {
-    site_name: 'MedRevolve Water',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
   },
 };
@@ -135,7 +115,7 @@ export function injectSEO(pathname, overrides = {}, domain = null) {
   setMeta('description', meta.description);
   if (meta.keywords) setMeta('keywords', meta.keywords);
 
-  // Robots directive (noindex RUO during cert process)
+  // Robots directive
   if (meta.robots) setMeta('robots', meta.robots);
 
   // Open Graph

@@ -16,9 +16,8 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from
 "@/components/ui/dropdown-menu";
 
-// Domain-aware home redirect — only fires on LIVE published domains, never in DEV/preview
-// 3 active domains: B2C → '/', B2B → '/ForBusiness', WATER → '/WaterHome'
-const DOMAIN_HOME_MAP = { B2C: '/', B2B: '/ForBusiness', WATER: '/WaterHome', ADMIN: '/AdminDashboard' };
+// Both medrevolve.com and medrevolveb2b.com resolve to B2C → same home '/'
+const DOMAIN_HOME_MAP = { B2C: '/', ADMIN: '/AdminDashboard' };
 
 function DomainHomeRedirect() {
   const navigate = useNavigate();
@@ -63,9 +62,9 @@ export default function Layout({ children }) {
       gtag('config', 'G-BZTEFSTDPL');
     }
 
-    // ── IONOS AI Voice Receptionist — B2C and B2B only (not on WATER) ─────
+    // ── IONOS AI Voice Receptionist ───────────────────────────────────────
     const _domain = detectDomain();
-    if ((_domain === 'B2C' || _domain === 'B2B' || _domain === 'DEV') && !document.getElementById('ionos-web-chat')) {
+    if (!document.getElementById('ionos-web-chat')) {
       const ionosScript = document.createElement('script');
       ionosScript.id = 'ionos-web-chat';
       ionosScript.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
@@ -127,11 +126,9 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-[#FDFBF7]" style={{ scrollBehavior: 'smooth' }}>
       <DomainHomeRedirect />
       <AnalyticsTracker />
-      {/* AIAssistant — B2C and B2B only; not on WATER (different product domain) */}
-      {(domain === 'B2C' || domain === 'B2B' || domain === 'DEV') && <AIAssistant />}
+      <AIAssistant />
 
-      {/* Top Bar — shown on B2C, B2B, DEV. Hidden on WATER (separate product brand) */}
-      {(domain === 'B2C' || domain === 'B2B' || domain === 'DEV') && (
+      {/* Top Bar */}
       <div className="bg-gradient-to-r from-cyan-700 via-blue-700 to-cyan-700 text-white py-2.5 px-4 text-center sticky top-0 z-[60] animate-pulse-slow">
         <a href="tel:+12403875224" className="inline-flex items-center gap-2.5 text-sm font-bold hover:scale-105 transition-all duration-300 group">
           <div className="relative">
@@ -143,13 +140,10 @@ export default function Layout({ children }) {
           <span className="hidden md:inline text-xs text-cyan-200 ml-1">← Click to Call Now</span>
         </a>
       </div>
-      )}
 
-      {/* Header — top-0 on WATER (no top bar); top-[40px] on B2C/B2B/DEV (top bar present) */}
+      {/* Header */}
       <motion.header
-        className={`sticky left-0 right-0 z-50 transition-all duration-300 ${
-          domain === 'WATER' ? 'top-0' : 'top-[40px]'
-        } ${scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'}`}
+        className={`sticky top-[40px] left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10' : 'bg-[#0A0A0A]'}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.4 }}>
@@ -166,28 +160,17 @@ export default function Layout({ children }) {
 
             {/* Desktop Nav — domain-aware */}
             <nav className="hidden lg:flex items-center gap-8">
-              {/* Platform link — B2C and DEV only. NOT on B2B or WATER (cross-domain link risk) */}
-              {(domain === 'DEV' || domain === 'B2C') ? (
-                <Link to="/Platform" onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
-                  Platform
-                </Link>
-              ) : null}
+
               {domainNav.slice(0, 4).map(item => (
                 <Link key={item.path} to={item.path} onClick={() => handleNavClick()} className="text-sm text-white/60 hover:text-white transition-colors">
                   {item.label}
                 </Link>
               ))}
-              {domain === 'WATER' ? (
-                <a href="mailto:orders@medrevolvewater.com" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
-                  orders@medrevolvewater.com
-                </a>
-              ) : (
-                <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
-                  <Phone className="w-3.5 h-3.5 text-cyan-400" />
-                  <span className="hidden xl:inline">Call Now: </span>
-                  240-387-5224
-                </a>
-              )}
+              <a href="tel:+12403875224" className="text-sm text-white font-bold hover:text-cyan-400 transition-colors flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5">
+                <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden xl:inline">Call Now: </span>
+                240-387-5224
+              </a>
 
               {/* Admin only */}
               {user?.role === 'admin' &&
@@ -279,9 +262,9 @@ export default function Layout({ children }) {
               </Button>
               }
 
-              <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} className="hidden sm:block">
+              <Link to={createPageUrl('BookAppointment')} className="hidden sm:block">
                 <Button className="bg-white text-black hover:bg-white/90 rounded-sm px-5 text-sm font-bold tracking-wide">
-                  {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                  Book Consultation
                 </Button>
               </Link>
 
@@ -304,10 +287,7 @@ export default function Layout({ children }) {
                     </div>
 
                     <nav className="flex-1 overflow-y-auto p-5 space-y-1">
-                      {/* Platform link — B2C/DEV only in mobile menu */}
-                      {(domain === 'DEV' || domain === 'B2C') && (
-                        <Link to="/Platform" className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>Platform</Link>
-                      )}
+
                       {/* Domain nav items */}
                       {domainNav.map(item => (
                         <Link key={item.path} to={item.path} className="block py-3 px-3 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/5" onClick={() => {setMobileMenuOpen(false);window.scrollTo({top:0});}}>{item.label}</Link>
@@ -323,13 +303,10 @@ export default function Layout({ children }) {
                     </nav>
 
                     <div className="p-5 border-t border-white/10 space-y-3">
-                      {/* Phone CTA — hidden on WATER domain */}
-                      {domain !== 'WATER' && (
                       <a href="tel:+12403875224" className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white text-center font-bold rounded-sm py-3 transition-colors">
                         <Phone className="w-4 h-4 inline mr-2 -mt-0.5" />
                         Call 240-387-5224
                       </a>
-                      )}
                       
                       {user ?
                         <Button variant="outline" className="w-full rounded-sm border-red-500/40 text-red-400 hover:bg-red-500/10"
@@ -342,9 +319,9 @@ export default function Layout({ children }) {
                             onClick={() => {base44.auth.redirectToLogin(window.location.href);setMobileMenuOpen(false);}}>
                             Sign In
                           </Button>
-                          <Link to={domain === 'B2B' ? '/ForBusiness' : domain === 'WATER' ? '/WaterHome#products' : createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
+                          <Link to={createPageUrl('BookAppointment')} onClick={() => setMobileMenuOpen(false)}>
                             <Button className="w-full bg-white text-black hover:bg-white/90 rounded-sm font-bold">
-                              {domain === 'B2B' ? 'View Platform' : domain === 'WATER' ? 'Shop Vials' : 'Book Consultation'}
+                              Book Consultation
                             </Button>
                           </Link>
                         </>
@@ -358,27 +335,25 @@ export default function Layout({ children }) {
         </div>
       </motion.header>
 
-      {/* Floating Call Button — B2C, B2B, DEV only (not on WATER) */}
-      {domain !== 'WATER' && <a
+      {/* Floating Call Button */}
+      <a
         href="tel:+12403875224"
         className="fixed bottom-6 right-6 z-[70] bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full p-4 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group animate-bounce-slow hidden lg:flex items-center gap-2 overflow-hidden">
         <Phone className="w-6 h-6 flex-shrink-0 group-hover:rotate-12 transition-transform" />
         <span className="font-bold text-sm whitespace-nowrap max-w-0 group-hover:max-w-xs transition-all duration-500">Call Now: 240-387-5224</span>
-      </a>}
+      </a>
 
       {/* Main Content */}
       <main>
         {children}
       </main>
 
-      {/* Footer — suppressed on WATER domain (has its own inline footer) */}
-      {domain !== 'WATER' && (
+      {/* Footer */}
       <footer className="bg-[#060606] border-t border-white/8 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
 ...
         </div>
       </footer>
-      )}
     </div>);
 
 }
