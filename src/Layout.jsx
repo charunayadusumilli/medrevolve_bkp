@@ -16,11 +16,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const NAV_LINKS = [
-  { label: 'How It Works',      path: '/HowItWorks' },
-  { label: 'Telehealth',        path: '/TelehealthPlatform' },
-  { label: 'For Business',      path: '/ForBusiness' },
-  { label: 'Partner Program',   path: '/PartnerProgram' },
-  { label: 'Contact',           path: '/Contact' },
+  { label: 'Services',        path: '/Services' },
+  { label: 'How It Works',   path: '/HowItWorks' },
+  { label: 'For Business',   path: '/ForBusiness' },
+  { label: 'University',     path: '/University' },
+  { label: 'Contact',        path: '/Contact' },
 ];
 
 export default function Layout({ children }) {
@@ -220,9 +220,10 @@ export default function Layout({ children }) {
                 </Button>
               )}
 
-              <Link to={createPageUrl('BookAppointment')} className="hidden sm:block">
-                <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white rounded-sm px-5 text-sm font-semibold">
-                  Book Consultation
+              <Link to="/CustomerIntake" className="hidden sm:block">
+                <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
+                  style={{ backgroundColor: '#A66B3C' }}>
+                  Start Free Intake
                 </Button>
               </Link>
 
@@ -270,8 +271,8 @@ export default function Layout({ children }) {
                         <>
                           <Button variant="outline" className="w-full rounded-sm"
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
-                          <Link to={createPageUrl('BookAppointment')} onClick={closeMenu}>
-                            <Button className="w-full bg-[#0A0A0A] text-white rounded-sm font-semibold">Book Consultation</Button>
+                          <Link to="/CustomerIntake" onClick={closeMenu}>
+                            <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: '#A66B3C' }}>Start Free Intake</Button>
                           </Link>
                         </>
                       )}
@@ -310,11 +311,12 @@ export default function Layout({ children }) {
             <div>
               <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">Platform</p>
               <ul className="space-y-2.5">
+                <li><Link to="/Services" className="text-sm text-white/40 hover:text-white transition-colors">Services</Link></li>
                 <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
-                <li><Link to="/TelehealthPlatform" className="text-sm text-white/40 hover:text-white transition-colors">Telehealth Services</Link></li>
                 <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
-                <li><Link to="/PartnerProgram" className="text-sm text-white/40 hover:text-white transition-colors">Partner Program</Link></li>
-                <li><Link to="/BookAppointment" className="text-sm text-white/40 hover:text-white transition-colors">Book Consultation</Link></li>
+                <li><Link to="/University" className="text-sm text-white/40 hover:text-white transition-colors">MedRevolve University</Link></li>
+                <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Start Free Intake</Link></li>
+                <li><a href="tel:+12403875224" className="text-sm text-white/40 hover:text-white transition-colors">(240) 387-5224</a></li>
                 <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
@@ -334,10 +336,10 @@ export default function Layout({ children }) {
 
           </div>
 
-          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-start justify-between gap-4">
-            <p className="text-xs text-white/20">© {new Date().getFullYear()} MedRevolve. All rights reserved. US residents only.</p>
-            <p className="text-xs text-white/15 max-w-md md:text-right">
-              Prescription medications require a valid provider-patient relationship and clinical evaluation. Not a substitute for professional medical advice. These statements have not been evaluated by the FDA.
+          <div className="border-t border-white/5 pt-8 flex flex-col gap-3">
+            <p className="text-xs text-white/20">© {new Date().getFullYear()} MedRevolve Corporation. All rights reserved. US residents only.</p>
+            <p className="text-xs text-white/15 max-w-3xl leading-relaxed">
+              MedRevolve Corporation connects patients with independently licensed healthcare providers. All treatments require a physician consultation and valid prescription. MedRevolve is not a pharmacy and does not dispense medications. These statements have not been evaluated by the FDA. Not a substitute for professional medical advice, diagnosis, or treatment.
             </p>
           </div>
         </div>

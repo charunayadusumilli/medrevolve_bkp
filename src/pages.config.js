@@ -104,6 +104,8 @@ import MerchantDomainPage from './pages/MerchantDomainPage';
 import StrategyIntelligence from './pages/StrategyIntelligence';
 import ResearchProducts from './pages/ResearchProducts';
 import MerchantDemo from './pages/MerchantDemo';
+import Services from './pages/Services';
+import University from './pages/University';
 import __Layout from './Layout.jsx';
 
 
@@ -165,6 +167,8 @@ export const PAGES = {
     "StrategyIntelligence": StrategyIntelligence,
     "ResearchProducts": ResearchProducts,
     "MerchantDemo": MerchantDemo,
+    "Services": Services,
+    "University": University,
 }
 
 export const pagesConfig = {
