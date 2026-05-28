@@ -1,174 +1,68 @@
 /**
  * pages.config.js - Page routing configuration
  * 
- * This file is AUTO-GENERATED. Do not add imports or modify PAGES manually.
- * Pages are auto-registered when you create files in the ./pages/ folder.
+ * PUBLIC routes only — no consumer pages, no admin-only tools, no internal dashboards.
+ * All admin/internal routes are handled explicitly in App.jsx behind RequireAuth.
  * 
- * THE ONLY EDITABLE VALUE: mainPage
- * This controls which page is the landing page (shown when users visit the app).
- * 
- * Example file structure:
- * 
- *   import HomePage from './pages/HomePage';
- *   import Dashboard from './pages/Dashboard';
- *   import Settings from './pages/Settings';
- *   
- *   export const PAGES = {
- *       "HomePage": HomePage,
- *       "Dashboard": Dashboard,
- *       "Settings": Settings,
- *   }
- *   
- *   export const pagesConfig = {
- *       mainPage: "HomePage",
- *       Pages: PAGES,
- *   };
- * 
- * Example with Layout (wraps all pages):
- *
- *   import Home from './pages/Home';
- *   import Settings from './pages/Settings';
- *   import __Layout from './Layout.jsx';
- *
- *   export const PAGES = {
- *       "Home": Home,
- *       "Settings": Settings,
- *   }
- *
- *   export const pagesConfig = {
- *       mainPage: "Home",
- *       Pages: PAGES,
- *       Layout: __Layout,
- *   };
- *
- * To change the main page from HomePage to Dashboard, use find_replace:
- *   Old: mainPage: "HomePage",
- *   New: mainPage: "Dashboard",
- *
- * The mainPage value must match a key in the PAGES object exactly.
+ * LegitScript Compliance: This file defines what is publicly crawlable.
+ * Only B2B platform marketing pages + auth-required portals belong here.
  */
-import AccountSettings from './pages/AccountSettings';
-import AdminDashboard from './pages/AdminDashboard';
-import AutoRxFollowup from './pages/AutoRxFollowup';
-import BelugaIntegration from './pages/BelugaIntegration';
-import BookAppointment from './pages/BookAppointment';
-import BusinessInquiry from './pages/BusinessInquiry';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import ComplianceDashboard from './pages/ComplianceDashboard';
-import Consultations from './pages/Consultations';
-import Contact from './pages/Contact';
-import CreatorApplication from './pages/CreatorApplication';
-import CustomerIntake from './pages/CustomerIntake';
-import EmailAudit from './pages/EmailAudit';
-import ForBusiness from './pages/ForBusiness';
-import ForCreators from './pages/ForCreators';
+
+// ── PUBLIC B2B PAGES ─────────────────────────────────────────────────────────
 import Home from './pages/Home';
-import HowItWorks from './pages/HowItWorks';
-import IntegrationsDashboard from './pages/IntegrationsDashboard';
-import MDIntegrationsDashboard from './pages/MDIntegrationsDashboard';
-import Messages from './pages/Messages';
-import MyAppointments from './pages/MyAppointments';
-import OrderSuccess from './pages/OrderSuccess';
-import PartnerCompliance from './pages/PartnerCompliance';
-import PartnerPortal from './pages/PartnerPortal';
-import PartnerProgram from './pages/PartnerProgram';
-import PartnerSignup from './pages/PartnerSignup';
-import PartnershipHub from './pages/PartnershipHub';
-import PatientOnboarding from './pages/PatientOnboarding';
-import PatientPortal from './pages/PatientPortal';
-import PaymentsDashboard from './pages/PaymentsDashboard';
-import PharmacyContracts from './pages/PharmacyContracts';
-import PharmacyIntake from './pages/PharmacyIntake';
-import Privacy from './pages/Privacy';
-import ProductDetail from './pages/ProductDetail';
-import Products from './pages/Products';
-import Programs from './pages/Programs';
-import ProviderContracts from './pages/ProviderContracts';
-import ProviderDashboard from './pages/ProviderDashboard';
-import ProviderIntake from './pages/ProviderIntake';
-import ProviderOnboarding from './pages/ProviderOnboarding';
-import ProviderOutreach from './pages/ProviderOutreach';
-import ProviderProfile from './pages/ProviderProfile';
-import QualiphyConsult from './pages/QualiphyConsult';
-import Questionnaire from './pages/Questionnaire';
-import TelehealthPlatform from './pages/TelehealthPlatform';
-import Terms from './pages/Terms';
-import VideoCall from './pages/VideoCall';
-import VisitTypeSelector from './pages/VisitTypeSelector';
-import WaitingRoom from './pages/WaitingRoom';
-import MerchantOnboarding from './pages/MerchantOnboarding';
-import MerchantDashboard from './pages/MerchantDashboard';
-import MerchantInventoryPage from './pages/MerchantInventoryPage';
-import MerchantDomainPage from './pages/MerchantDomainPage';
-import StrategyIntelligence from './pages/StrategyIntelligence';
-import ResearchProducts from './pages/ResearchProducts';
-import MerchantDemo from './pages/MerchantDemo';
 import Services from './pages/Services';
+import HowItWorks from './pages/HowItWorks';
+import ForBusiness from './pages/ForBusiness';
 import University from './pages/University';
+import Contact from './pages/Contact';
+import MerchantOnboarding from './pages/MerchantOnboarding';
+import MerchantDemo from './pages/MerchantDemo';
+import BusinessInquiry from './pages/BusinessInquiry';
+import ForCreators from './pages/ForCreators';
+import CreatorApplication from './pages/CreatorApplication';
+
+// ── LEGAL PAGES ───────────────────────────────────────────────────────────────
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import HIPAANotice from './pages/HIPAANotice';
+import TelehealthConsent from './pages/TelehealthConsent';
+import MedicalDisclaimer from './pages/MedicalDisclaimer';
+import CookiePolicy from './pages/CookiePolicy';
+
+// ── AUTH-GATED PORTALS (require login — handled by the pages themselves) ──────
+import PatientPortal from './pages/PatientPortal';
+import AccountSettings from './pages/AccountSettings';
+import MerchantDashboard from './pages/MerchantDashboard';
+
+// ── LAYOUT ────────────────────────────────────────────────────────────────────
 import __Layout from './Layout.jsx';
 
-
 export const PAGES = {
-    "AccountSettings": AccountSettings,
-    "AdminDashboard": AdminDashboard,
-    "AutoRxFollowup": AutoRxFollowup,
-    "BelugaIntegration": BelugaIntegration,
-    "BookAppointment": BookAppointment,
-    "BusinessInquiry": BusinessInquiry,
-    "Cart": Cart,
-    "Checkout": Checkout,
-    "ComplianceDashboard": ComplianceDashboard,
-    "Consultations": Consultations,
-    "Contact": Contact,
-    "CreatorApplication": CreatorApplication,
-    "CustomerIntake": CustomerIntake,
-    "EmailAudit": EmailAudit,
-    "ForBusiness": ForBusiness,
-    "ForCreators": ForCreators,
+    // Public B2B Marketing
     "Home": Home,
-    "HowItWorks": HowItWorks,
-    "IntegrationsDashboard": IntegrationsDashboard,
-    "MDIntegrationsDashboard": MDIntegrationsDashboard,
-    "Messages": Messages,
-    "MyAppointments": MyAppointments,
-    "OrderSuccess": OrderSuccess,
-    "PartnerCompliance": PartnerCompliance,
-    "PartnerPortal": PartnerPortal,
-    "PartnerProgram": PartnerProgram,
-    "PartnerSignup": PartnerSignup,
-    "PartnershipHub": PartnershipHub,
-    "PatientOnboarding": PatientOnboarding,
-    "PatientPortal": PatientPortal,
-    "PaymentsDashboard": PaymentsDashboard,
-    "PharmacyContracts": PharmacyContracts,
-    "PharmacyIntake": PharmacyIntake,
-    "Privacy": Privacy,
-    "ProductDetail": ProductDetail,
-    "Products": Products,
-    "Programs": Programs,
-    "ProviderContracts": ProviderContracts,
-    "ProviderDashboard": ProviderDashboard,
-    "ProviderIntake": ProviderIntake,
-    "ProviderOnboarding": ProviderOnboarding,
-    "ProviderOutreach": ProviderOutreach,
-    "ProviderProfile": ProviderProfile,
-    "QualiphyConsult": QualiphyConsult,
-    "Questionnaire": Questionnaire,
-    "TelehealthPlatform": TelehealthPlatform,
-    "Terms": Terms,
-    "VideoCall": VideoCall,
-    "VisitTypeSelector": VisitTypeSelector,
-    "WaitingRoom": WaitingRoom,
-    "MerchantOnboarding": MerchantOnboarding,
-    "MerchantDashboard": MerchantDashboard,
-    "MerchantInventoryPage": MerchantInventoryPage,
-    "MerchantDomainPage": MerchantDomainPage,
-    "StrategyIntelligence": StrategyIntelligence,
-    "ResearchProducts": ResearchProducts,
-    "MerchantDemo": MerchantDemo,
     "Services": Services,
+    "HowItWorks": HowItWorks,
+    "ForBusiness": ForBusiness,
     "University": University,
+    "Contact": Contact,
+    "MerchantOnboarding": MerchantOnboarding,
+    "MerchantDemo": MerchantDemo,
+    "BusinessInquiry": BusinessInquiry,
+    "ForCreators": ForCreators,
+    "CreatorApplication": CreatorApplication,
+
+    // Legal
+    "Privacy": Privacy,
+    "Terms": Terms,
+    "HIPAANotice": HIPAANotice,
+    "TelehealthConsent": TelehealthConsent,
+    "MedicalDisclaimer": MedicalDisclaimer,
+    "CookiePolicy": CookiePolicy,
+
+    // Auth-gated portals
+    "PatientPortal": PatientPortal,
+    "AccountSettings": AccountSettings,
+    "MerchantDashboard": MerchantDashboard,
 }
 
 export const pagesConfig = {

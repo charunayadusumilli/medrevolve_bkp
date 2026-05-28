@@ -7,29 +7,53 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+// ── ADMIN-ONLY INTERNAL TOOLS (auth-gated) ────────────────────────────────────
+import AdminDashboard from './pages/AdminDashboard';
+import ComplianceDashboard from './pages/ComplianceDashboard';
+import PartnershipHub from './pages/PartnershipHub';
+import PaymentsDashboard from './pages/PaymentsDashboard';
 import InboxDashboard from './pages/InboxDashboard';
-import Platform from './pages/Platform';
-import BrandingAssets from './pages/BrandingAssets';
-import CompetitorIntelligence from './pages/CompetitorIntelligence';
-import QualiphyIntegration from './pages/QualiphyIntegration';
-import EmailSignature from './pages/EmailSignature';
-import TelephonyDashboard from './pages/TelephonyDashboard';
-import PhoneIntake from './pages/PhoneIntake';
-import SocialMediaDashboard from './pages/SocialMediaDashboard';
-import GodModeAds from './pages/GodModeAds';
 import GrowthDashboard from './pages/GrowthDashboard';
-import HIPAANotice from './pages/HIPAANotice';
-import TelehealthConsent from './pages/TelehealthConsent';
-import MedicalDisclaimer from './pages/MedicalDisclaimer';
-import CookiePolicy from './pages/CookiePolicy';
+import GodModeAds from './pages/GodModeAds';
 import SystemArchitecture from './pages/SystemArchitecture';
-import WaterHome from './pages/WaterHome';
+import ComplianceAuditReport from './pages/ComplianceAuditReport';
 import ProjectManagement from './pages/ProjectManagement';
 import MarketingDashboard from './pages/MarketingDashboard';
+import SocialMediaDashboard from './pages/SocialMediaDashboard';
 import SocialMediaManagement from './pages/SocialMediaManagement';
-import AppointmentsSyncPage from './pages/AppointmentsSync';
-import ProductsAndServices from './pages/ProductsAndServices';
-import ComplianceAuditReport from './pages/ComplianceAuditReport';
+import TelephonyDashboard from './pages/TelephonyDashboard';
+import PhoneIntake from './pages/PhoneIntake';
+import MerchantInventoryPage from './pages/MerchantInventoryPage';
+import MerchantDomainPage from './pages/MerchantDomainPage';
+import ProviderDashboard from './pages/ProviderDashboard';
+import ProviderContracts from './pages/ProviderContracts';
+import PharmacyContracts from './pages/PharmacyContracts';
+import ProviderOutreach from './pages/ProviderOutreach';
+import PartnerPortal from './pages/PartnerPortal';
+import PartnerCompliance from './pages/PartnerCompliance';
+import PartnerProgram from './pages/PartnerProgram';
+import PartnerSignup from './pages/PartnerSignup';
+import EmailAudit from './pages/EmailAudit';
+import IntegrationsDashboard from './pages/IntegrationsDashboard';
+import MDIntegrationsDashboard from './pages/MDIntegrationsDashboard';
+import BelugaIntegration from './pages/BelugaIntegration';
+// ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
+import BookAppointment from './pages/BookAppointment';
+import MyAppointments from './pages/MyAppointments';
+import Messages from './pages/Messages';
+import Consultations from './pages/Consultations';
+import VideoCall from './pages/VideoCall';
+import WaitingRoom from './pages/WaitingRoom';
+import QualiphyConsult from './pages/QualiphyConsult';
+import VisitTypeSelector from './pages/VisitTypeSelector';
+import PatientOnboarding from './pages/PatientOnboarding';
+import AutoRxFollowup from './pages/AutoRxFollowup';
+import Questionnaire from './pages/Questionnaire';
+import ProviderProfile from './pages/ProviderProfile';
+import ProviderIntake from './pages/ProviderIntake';
+import ProviderOnboarding from './pages/ProviderOnboarding';
+import PharmacyIntake from './pages/PharmacyIntake';
+import CustomerIntake from './pages/CustomerIntake';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -78,29 +102,56 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      {/* ── ADMIN-ONLY INTERNAL TOOLS ─────────────────────────────────────────── */}
+      <Route path="/AdminDashboard" element={<LayoutWrapper currentPageName="AdminDashboard"><AdminDashboard /></LayoutWrapper>} />
+      <Route path="/ComplianceDashboard" element={<LayoutWrapper currentPageName="ComplianceDashboard"><ComplianceDashboard /></LayoutWrapper>} />
+      <Route path="/PartnershipHub" element={<LayoutWrapper currentPageName="PartnershipHub"><PartnershipHub /></LayoutWrapper>} />
+      <Route path="/PaymentsDashboard" element={<LayoutWrapper currentPageName="PaymentsDashboard"><PaymentsDashboard /></LayoutWrapper>} />
       <Route path="/InboxDashboard" element={<LayoutWrapper currentPageName="InboxDashboard"><InboxDashboard /></LayoutWrapper>} />
-      <Route path="/Platform" element={<LayoutWrapper currentPageName="Platform"><Platform /></LayoutWrapper>} />
-      <Route path="/BrandingAssets" element={<LayoutWrapper currentPageName="BrandingAssets"><BrandingAssets /></LayoutWrapper>} />
-      <Route path="/CompetitorIntelligence" element={<LayoutWrapper currentPageName="CompetitorIntelligence"><CompetitorIntelligence /></LayoutWrapper>} />
-      <Route path="/QualiphyIntegration" element={<LayoutWrapper currentPageName="QualiphyIntegration"><QualiphyIntegration /></LayoutWrapper>} />
-      <Route path="/EmailSignature" element={<LayoutWrapper currentPageName="EmailSignature"><EmailSignature /></LayoutWrapper>} />
-      <Route path="/TelephonyDashboard" element={<LayoutWrapper currentPageName="TelephonyDashboard"><TelephonyDashboard /></LayoutWrapper>} />
-      <Route path="/PhoneIntake" element={<LayoutWrapper currentPageName="PhoneIntake"><PhoneIntake /></LayoutWrapper>} />
-      <Route path="/SocialMediaDashboard" element={<LayoutWrapper currentPageName="SocialMediaDashboard"><SocialMediaDashboard /></LayoutWrapper>} />
-      <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><GodModeAds /></LayoutWrapper>} />
       <Route path="/GrowthDashboard" element={<LayoutWrapper currentPageName="GrowthDashboard"><GrowthDashboard /></LayoutWrapper>} />
-      <Route path="/HIPAANotice" element={<LayoutWrapper currentPageName="HIPAANotice"><HIPAANotice /></LayoutWrapper>} />
-      <Route path="/TelehealthConsent" element={<LayoutWrapper currentPageName="TelehealthConsent"><TelehealthConsent /></LayoutWrapper>} />
-      <Route path="/MedicalDisclaimer" element={<LayoutWrapper currentPageName="MedicalDisclaimer"><MedicalDisclaimer /></LayoutWrapper>} />
-      <Route path="/CookiePolicy" element={<LayoutWrapper currentPageName="CookiePolicy"><CookiePolicy /></LayoutWrapper>} />
+      <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><GodModeAds /></LayoutWrapper>} />
       <Route path="/SystemArchitecture" element={<LayoutWrapper currentPageName="SystemArchitecture"><SystemArchitecture /></LayoutWrapper>} />
-      <Route path="/WaterHome" element={<LayoutWrapper currentPageName="WaterHome"><WaterHome /></LayoutWrapper>} />
+      <Route path="/ComplianceAuditReport" element={<LayoutWrapper currentPageName="ComplianceAuditReport"><ComplianceAuditReport /></LayoutWrapper>} />
       <Route path="/ProjectManagement" element={<LayoutWrapper currentPageName="ProjectManagement"><ProjectManagement /></LayoutWrapper>} />
       <Route path="/MarketingDashboard" element={<LayoutWrapper currentPageName="MarketingDashboard"><MarketingDashboard /></LayoutWrapper>} />
+      <Route path="/SocialMediaDashboard" element={<LayoutWrapper currentPageName="SocialMediaDashboard"><SocialMediaDashboard /></LayoutWrapper>} />
       <Route path="/SocialMediaManagement" element={<LayoutWrapper currentPageName="SocialMediaManagement"><SocialMediaManagement /></LayoutWrapper>} />
-      <Route path="/AppointmentsSync" element={<LayoutWrapper currentPageName="AppointmentsSync"><AppointmentsSyncPage /></LayoutWrapper>} />
-      <Route path="/ProductsAndServices" element={<LayoutWrapper currentPageName="ProductsAndServices"><ProductsAndServices /></LayoutWrapper>} />
-      <Route path="/ComplianceAuditReport" element={<LayoutWrapper currentPageName="ComplianceAuditReport"><ComplianceAuditReport /></LayoutWrapper>} />
+      <Route path="/TelephonyDashboard" element={<LayoutWrapper currentPageName="TelephonyDashboard"><TelephonyDashboard /></LayoutWrapper>} />
+      <Route path="/PhoneIntake" element={<LayoutWrapper currentPageName="PhoneIntake"><PhoneIntake /></LayoutWrapper>} />
+      <Route path="/MerchantInventoryPage" element={<LayoutWrapper currentPageName="MerchantInventoryPage"><MerchantInventoryPage /></LayoutWrapper>} />
+      <Route path="/MerchantDomainPage" element={<LayoutWrapper currentPageName="MerchantDomainPage"><MerchantDomainPage /></LayoutWrapper>} />
+      <Route path="/ProviderDashboard" element={<LayoutWrapper currentPageName="ProviderDashboard"><ProviderDashboard /></LayoutWrapper>} />
+      <Route path="/ProviderContracts" element={<LayoutWrapper currentPageName="ProviderContracts"><ProviderContracts /></LayoutWrapper>} />
+      <Route path="/PharmacyContracts" element={<LayoutWrapper currentPageName="PharmacyContracts"><PharmacyContracts /></LayoutWrapper>} />
+      <Route path="/ProviderOutreach" element={<LayoutWrapper currentPageName="ProviderOutreach"><ProviderOutreach /></LayoutWrapper>} />
+      <Route path="/PartnerPortal" element={<LayoutWrapper currentPageName="PartnerPortal"><PartnerPortal /></LayoutWrapper>} />
+      <Route path="/PartnerCompliance" element={<LayoutWrapper currentPageName="PartnerCompliance"><PartnerCompliance /></LayoutWrapper>} />
+      <Route path="/PartnerProgram" element={<LayoutWrapper currentPageName="PartnerProgram"><PartnerProgram /></LayoutWrapper>} />
+      <Route path="/PartnerSignup" element={<LayoutWrapper currentPageName="PartnerSignup"><PartnerSignup /></LayoutWrapper>} />
+      <Route path="/EmailAudit" element={<LayoutWrapper currentPageName="EmailAudit"><EmailAudit /></LayoutWrapper>} />
+      <Route path="/IntegrationsDashboard" element={<LayoutWrapper currentPageName="IntegrationsDashboard"><IntegrationsDashboard /></LayoutWrapper>} />
+      <Route path="/MDIntegrationsDashboard" element={<LayoutWrapper currentPageName="MDIntegrationsDashboard"><MDIntegrationsDashboard /></LayoutWrapper>} />
+      <Route path="/BelugaIntegration" element={<LayoutWrapper currentPageName="BelugaIntegration"><BelugaIntegration /></LayoutWrapper>} />
+
+      {/* ── PROVIDER / PATIENT FLOWS (auth-gated by the pages themselves) ───── */}
+      <Route path="/BookAppointment" element={<LayoutWrapper currentPageName="BookAppointment"><BookAppointment /></LayoutWrapper>} />
+      <Route path="/MyAppointments" element={<LayoutWrapper currentPageName="MyAppointments"><MyAppointments /></LayoutWrapper>} />
+      <Route path="/Messages" element={<LayoutWrapper currentPageName="Messages"><Messages /></LayoutWrapper>} />
+      <Route path="/Consultations" element={<LayoutWrapper currentPageName="Consultations"><Consultations /></LayoutWrapper>} />
+      <Route path="/VideoCall" element={<LayoutWrapper currentPageName="VideoCall"><VideoCall /></LayoutWrapper>} />
+      <Route path="/WaitingRoom" element={<LayoutWrapper currentPageName="WaitingRoom"><WaitingRoom /></LayoutWrapper>} />
+      <Route path="/QualiphyConsult" element={<LayoutWrapper currentPageName="QualiphyConsult"><QualiphyConsult /></LayoutWrapper>} />
+      <Route path="/VisitTypeSelector" element={<LayoutWrapper currentPageName="VisitTypeSelector"><VisitTypeSelector /></LayoutWrapper>} />
+      <Route path="/PatientOnboarding" element={<LayoutWrapper currentPageName="PatientOnboarding"><PatientOnboarding /></LayoutWrapper>} />
+      <Route path="/AutoRxFollowup" element={<LayoutWrapper currentPageName="AutoRxFollowup"><AutoRxFollowup /></LayoutWrapper>} />
+      <Route path="/Questionnaire" element={<LayoutWrapper currentPageName="Questionnaire"><Questionnaire /></LayoutWrapper>} />
+      <Route path="/ProviderProfile" element={<LayoutWrapper currentPageName="ProviderProfile"><ProviderProfile /></LayoutWrapper>} />
+      <Route path="/ProviderIntake" element={<LayoutWrapper currentPageName="ProviderIntake"><ProviderIntake /></LayoutWrapper>} />
+      <Route path="/ProviderOnboarding" element={<LayoutWrapper currentPageName="ProviderOnboarding"><ProviderOnboarding /></LayoutWrapper>} />
+      <Route path="/PharmacyIntake" element={<LayoutWrapper currentPageName="PharmacyIntake"><PharmacyIntake /></LayoutWrapper>} />
+      <Route path="/CustomerIntake" element={<LayoutWrapper currentPageName="CustomerIntake"><CustomerIntake /></LayoutWrapper>} />
+
+      {/* ── CATCH-ALL — removed/consumer pages → 404 ──────────────────────── */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

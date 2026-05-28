@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- SEO — Base defaults; per-page overrides are injected by SEOHead at runtime -->
-    <title>MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness</title>
-    <meta name="description" content="Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies." />
-    <meta name="keywords" content="telehealth, online doctor, weight loss medication, GLP-1, semaglutide, tirzepatide, TRT, ED treatment, hair loss treatment, licensed pharmacy, FDA-approved" />
+    <!-- SEO — B2B Platform Meta -->
+    <title>MedRevolve | White-Label Telehealth Platform for Clinics & Med Spas</title>
+    <meta name="description" content="The white-label telehealth platform for clinics, med spas, and licensed pharmacies. Launch a compliant, branded telehealth offering with integrated Rx workflow, provider network, and full compliance framework." />
+    <meta name="keywords" content="white-label telehealth, telehealth platform, clinic SaaS, multi-state telehealth infrastructure, telehealth for med spas, telehealth for clinics, healthcare technology platform" />
 
-    <!-- Open Graph / Facebook — generic MedRevolve B2C -->
+    <!-- Open Graph / Facebook — B2B Platform -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://medrevolve.com/" />
-    <meta property="og:title" content="MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness" />
-    <meta property="og:description" content="Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies." />
+    <meta property="og:title" content="MedRevolve | White-Label Telehealth Platform for Clinics & Med Spas" />
+    <meta property="og:description" content="The white-label telehealth platform for clinics, med spas, and licensed pharmacies. Launch a compliant, branded telehealth offering with integrated Rx workflow." />
     <meta property="og:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -23,40 +23,54 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MedRevolve — Licensed Telehealth | GLP-1, Hormone & Wellness" />
-    <meta name="twitter:description" content="Licensed US telehealth platform. Board-certified physicians. Licensed pharmacies. All 50 states." />
+    <meta name="twitter:title" content="MedRevolve | White-Label Telehealth Platform for Clinics" />
+    <meta name="twitter:description" content="Launch a compliant, white-label telehealth business. Provider network, pharmacy, compliance, and payments — all under your brand." />
     <meta name="twitter:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
 
-    <!-- Canonical URL — overridden per page by SEOHead -->
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://medrevolve.com/" />
 
-    <!-- JSON-LD Structured Data — Licensed Telehealth MedicalOrganization -->
+    <!-- JSON-LD Structured Data — B2B SoftwareApplication / Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "MedicalOrganization",
+          "@type": "Organization",
           "@id": "https://medrevolve.com/#organization",
           "name": "MedRevolve",
           "url": "https://medrevolve.com",
           "logo": "https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png",
-          "description": "Licensed US telehealth platform offering FDA-approved medications for weight management, hormone health, and sexual wellness, prescribed by board-certified physicians and dispensed by licensed pharmacies.",
-          "medicalSpecialty": ["Weight Management", "Primary Care", "Endocrinology"],
+          "description": "MedRevolve provides white-label telehealth infrastructure for clinics, med spas, and licensed pharmacies. We deliver the technology, compliance framework, provider network, and pharmacy integrations so medical businesses can launch a compliant, branded telehealth offering.",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+1-240-387-5224",
             "email": "info@medrevolve.com",
-            "contactType": "customer support",
+            "contactType": "sales",
             "availableLanguage": "English"
           },
           "sameAs": [
             "https://www.instagram.com/medrevolve",
             "https://www.facebook.com/medrevolve"
           ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://medrevolve.com/#platform",
+          "name": "MedRevolve White-Label Telehealth Platform",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "Web",
+          "provider": { "@id": "https://medrevolve.com/#organization" },
+          "description": "Full-stack B2B telehealth infrastructure: white-label website, provider network (all 50 states), 503A pharmacy integration, compliance framework, and payment processing. Built for clinics, med spas, and licensed pharmacies.",
+          "offers": {
+            "@type": "Offer",
+            "name": "B2B Platform Setup",
+            "price": "5000",
+            "priceCurrency": "USD"
+          }
         },
         {
           "@type": "WebSite",
@@ -66,38 +80,30 @@
           "publisher": { "@id": "https://medrevolve.com/#organization" }
         },
         {
-          "@type": "MedicalWebPage",
-          "@id": "https://medrevolve.com/#telehealth-service",
-          "name": "Licensed Telehealth Platform",
-          "provider": { "@id": "https://medrevolve.com/#organization" },
-          "description": "Physician-supervised telehealth programs for weight management, hormone therapy, and men's and women's health. Requires valid prescription. Available in all 50 US states.",
-          "areaServed": "US"
-        },
-        {
           "@type": "FAQPage",
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What is GLP-1 weight loss treatment?",
+              "name": "What does MedRevolve provide for clinics and med spas?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "GLP-1 receptor agonists like semaglutide and tirzepatide are FDA-approved prescription medications for chronic weight management. MedRevolve connects patients with licensed physicians who evaluate and prescribe these treatments via telehealth. A valid prescription is required."
+                "text": "MedRevolve provides a complete white-label telehealth infrastructure: branded website, multi-state provider network, 503A pharmacy integration, compliance framework (HIPAA, LegitScript), and payment processing. Medical businesses launch under their own brand in as little as 7 days."
               }
             },
             {
               "@type": "Question",
-              "name": "Is a prescription required for MedRevolve programs?",
+              "name": "Is MedRevolve a consumer telehealth service?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. All medications dispensed through MedRevolve require a physician evaluation and a valid prescription. Medications are dispensed by licensed 503A compounding pharmacies and shipped to your door."
+                "text": "No. MedRevolve is a B2B technology platform. We serve licensed medical clinics, med spas, and pharmacies — not individual consumers. All client businesses must be licensed, credentialed medical operators."
               }
             },
             {
               "@type": "Question",
-              "name": "Is MedRevolve telehealth available nationwide?",
+              "name": "Which states does MedRevolve cover?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. MedRevolve partners with licensed providers across all 50 US states to provide compliant telehealth consultations for weight loss, hormone therapy, and wellness treatments."
+                "text": "MedRevolve's provider network covers all 50 US states, enabling our clinic and med spa clients to offer telehealth services nationwide."
               }
             }
           ]
@@ -106,27 +112,14 @@
     }
     </script>
 
-    <!-- Facebook Pixel -->
-    <script>
-      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-      document,'script','https://connect.facebook.net/en_US/fbevents.js');
-      // IMPORTANT: Replace 0000000000000 with your actual Facebook Pixel ID
-      // fbq('init', '0000000000000');
-      // fbq('track', 'PageView');
-    </script>
-
     <!-- Preconnect to external CDNs -->
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-    <link rel="preconnect" href="https://i.pravatar.cc" crossorigin />
 
     <!-- Preload LCP hero image -->
     <link
       rel="preload"
       as="image"
-      href="https://images.unsplash.com/photo-1549476464-37392f717541?w=800&q=75&fm=webp"
+      href="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=75&fm=webp"
       fetchpriority="high"
     />
   </head>
