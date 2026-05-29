@@ -63,6 +63,9 @@ const DRIP_EMAILS = [
       <p style="font-size:14px;color:#374151;line-height:1.8;">
         This is exactly what's possible when you have the right infrastructure behind you.
       </p>
+      <p style="font-size:11px;color:#9ca3af;line-height:1.6;font-style:italic;">
+        * Results shown are from an individual partner and are not typical. Revenue outcomes depend on your market, pricing, patient volume, and business execution. MedRevolve makes no guarantee of specific earnings.
+      </p>
       <div style="margin:24px 0;">
         <a href="${CALENDLY_LINK}" style="background:#0A0A0A;color:#fff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14px;">See If This Works for Your Business →</a>
       </div>
@@ -107,7 +110,7 @@ const DRIP_EMAILS = [
         Not as a sales tactic — but because our white-glove setup process requires real attention. We build your brand, configure your platform, handle your compliance filings, and connect you to our pharmacy network. That takes hands-on time from our team.
       </p>
       <p style="font-size:14px;color:#374151;line-height:1.8;">
-        Right now we have <strong>3 spots open</strong> for June. Once those fill, the next cohort is July.
+        Right now we have limited spots available for our June onboarding cohort. Once those fill, the next cohort starts in July.
       </p>
       <p style="font-size:14px;color:#374151;line-height:1.8;">
         If you're still on the fence, I'd love to just get on a 20-minute call — no pitch, no pressure. I'll walk you through the numbers for your specific business type and you can decide if it makes sense.
@@ -143,27 +146,60 @@ const DRIP_EMAILS = [
   }
 ];
 
+const PHYSICAL_ADDRESS = 'MedRevolve Corporation · 8 The Green, Suite A · Dover, DE 19901';
+
 const buildEmail = (from, to, subject, bodyHtml) => {
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"/></head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="padding:32px 16px;"><tr><td align="center">
-<table width="580" cellpadding="0" cellspacing="0" style="max-width:580px;width:100%;">
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MedRevolve</title>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:32px 16px;background:#f1f5f9;"><tr><td align="center">
+<table width="580" cellpadding="0" cellspacing="0" role="presentation" style="max-width:580px;width:100%;">
+
+  <!-- Header -->
   <tr><td style="background:#0A0A0A;border-radius:12px 12px 0 0;padding:28px 40px;text-align:center;">
-    <div style="color:#fff;font-size:22px;font-weight:800;letter-spacing:-0.5px;">MedRevolve</div>
-    <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:3px;">White-Label Telehealth Infrastructure</div>
+    <div style="color:#ffffff;font-size:22px;font-weight:800;letter-spacing:-0.5px;font-family:Arial,sans-serif;">MedRevolve</div>
+    <div style="color:rgba(255,255,255,0.45);font-size:12px;margin-top:4px;font-family:Arial,sans-serif;">White-Label Telehealth Infrastructure</div>
   </td></tr>
-  <tr><td style="background:#fff;padding:36px 40px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+
+  <!-- Body -->
+  <tr><td style="background:#ffffff;padding:36px 40px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;font-family:Arial,sans-serif;">
     ${bodyHtml}
   </td></tr>
-  <tr><td style="background:#0A0A0A;border-radius:0 0 12px 12px;padding:20px 40px;text-align:center;">
-    <p style="color:rgba(255,255,255,0.5);font-size:11px;margin:0;">${ADMIN_EMAIL} · medrevolve.com · (240) 387-5224</p>
-    <p style="color:rgba(255,255,255,0.3);font-size:10px;margin:6px 0 0;">You're receiving this because you expressed interest in MedRevolve. Reply STOP to unsubscribe.</p>
+
+  <!-- Divider -->
+  <tr><td style="background:#ffffff;padding:0 40px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:0;"/>
   </td></tr>
+
+  <!-- Legal footer — CAN-SPAM compliant -->
+  <tr><td style="background:#0A0A0A;border-radius:0 0 12px 12px;padding:24px 40px;text-align:center;">
+    <p style="color:rgba(255,255,255,0.6);font-size:12px;margin:0 0 6px;font-family:Arial,sans-serif;">
+      <strong style="color:rgba(255,255,255,0.9);">r ned</strong> · MedRevolve Corporation<br/>
+      <a href="mailto:${ADMIN_EMAIL}" style="color:rgba(255,255,255,0.5);text-decoration:none;">${ADMIN_EMAIL}</a> &nbsp;·&nbsp;
+      <a href="tel:+12403875224" style="color:rgba(255,255,255,0.5);text-decoration:none;">(240) 387-5224</a> &nbsp;·&nbsp;
+      <a href="https://medrevolve.com" style="color:rgba(255,255,255,0.5);text-decoration:none;">medrevolve.com</a>
+    </p>
+    <p style="color:rgba(255,255,255,0.3);font-size:10px;margin:10px 0 0;line-height:1.6;font-family:Arial,sans-serif;">
+      ${PHYSICAL_ADDRESS}<br/>
+      You received this email because you submitted an inquiry or interest form on medrevolve.com.<br/>
+      To unsubscribe from future emails, reply with the word <strong>UNSUBSCRIBE</strong> in the subject line.<br/>
+      This communication is intended for the individual it is addressed to and may contain confidential business information.
+    </p>
+    <p style="color:rgba(255,255,255,0.2);font-size:10px;margin:8px 0 0;line-height:1.5;font-family:Arial,sans-serif;">
+      MedRevolve connects business clients with licensed healthcare infrastructure. MedRevolve does not provide medical advice, diagnosis, or treatment.
+      All clinical services are provided by independently licensed healthcare professionals.
+      Results referenced in our communications represent individual outcomes and are not guaranteed.
+      Platform is intended for B2B business operators only.
+    </p>
+  </td></tr>
+
 </table></td></tr></table>
 </body></html>`;
 
   const lines = [
-    `From: r ned at MedRevolve <${from}>`,
+    `From: R. Ned — MedRevolve <${from}>`,
     `To: ${to}`,
     `Subject: ${subject}`,
     'MIME-Version: 1.0',
