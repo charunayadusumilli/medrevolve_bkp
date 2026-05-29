@@ -12,9 +12,9 @@
 const META_MAP = {
   // ── B2C: medrevolve.com ────────────────────────────────────────────────────
   '/': {
-    title: 'Licensed Telehealth | FDA-Approved Weight Loss, Hormone & Wellness | MedRevolve',
-    description: 'Access physician-supervised GLP-1 programs, hormone therapy, and personalized telehealth — all from home. Licensed providers, licensed 503A pharmacies. All 50 states.',
-    keywords: 'telehealth, online doctor, weight loss medication, GLP-1, semaglutide, tirzepatide, TRT, hormone therapy, ED treatment, licensed pharmacy, FDA-approved',
+    title: 'White-Label Telehealth Platform | Launch in 7 Days | MedRevolve',
+    description: 'MedRevolve is the complete white-label telehealth platform for clinics, med spas, and wellness businesses. Licensed physicians (all 50 states), 503A pharmacy network, HIPAA compliance, and payments — launch under your brand in 7 days.',
+    keywords: 'white-label telehealth, telehealth platform for clinics, med spa telehealth, launch telehealth business, telehealth infrastructure, GLP-1 platform, physician network',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
     canonical: 'https://medrevolve.com/',
   },
@@ -121,6 +121,35 @@ const META_MAP = {
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
   },
 
+  // ── Admin / internal pages — noindex to protect crawl budget ─────────────
+  '/AdminDashboard':         { title: 'Admin Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/ComplianceDashboard':    { title: 'Compliance Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/PartnershipHub':         { title: 'Partnership Hub | MedRevolve', robots: 'noindex, nofollow' },
+  '/PaymentsDashboard':      { title: 'Payments Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/InboxDashboard':         { title: 'Inbox | MedRevolve', robots: 'noindex, nofollow' },
+  '/GrowthDashboard':        { title: 'Growth Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/GodModeAds':             { title: 'Ad Manager | MedRevolve', robots: 'noindex, nofollow' },
+  '/SystemArchitecture':     { title: 'System Architecture | MedRevolve', robots: 'noindex, nofollow' },
+  '/ComplianceAuditReport':  { title: 'Compliance Audit | MedRevolve', robots: 'noindex, nofollow' },
+  '/ProjectManagement':      { title: 'Project Management | MedRevolve', robots: 'noindex, nofollow' },
+  '/MarketingDashboard':     { title: 'Marketing Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/SocialMediaDashboard':   { title: 'Social Media Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/SocialMediaManagement':  { title: 'Social Media Management | MedRevolve', robots: 'noindex, nofollow' },
+  '/TelephonyDashboard':     { title: 'Telephony Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/PhoneIntake':            { title: 'Phone Intake | MedRevolve', robots: 'noindex, nofollow' },
+  '/MerchantInventoryPage':  { title: 'Merchant Inventory | MedRevolve', robots: 'noindex, nofollow' },
+  '/MerchantDomainPage':     { title: 'Merchant Domains | MedRevolve', robots: 'noindex, nofollow' },
+  '/ProviderDashboard':      { title: 'Provider Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/ProviderContracts':      { title: 'Provider Contracts | MedRevolve', robots: 'noindex, nofollow' },
+  '/PharmacyContracts':      { title: 'Pharmacy Contracts | MedRevolve', robots: 'noindex, nofollow' },
+  '/ProviderOutreach':       { title: 'Provider Outreach | MedRevolve', robots: 'noindex, nofollow' },
+  '/EmailAudit':             { title: 'Email Audit | MedRevolve', robots: 'noindex, nofollow' },
+  '/IntegrationsDashboard':  { title: 'Integrations | MedRevolve', robots: 'noindex, nofollow' },
+  '/MDIntegrationsDashboard':{ title: 'MD Integrations | MedRevolve', robots: 'noindex, nofollow' },
+  '/BelugaIntegration':      { title: 'Beluga Integration | MedRevolve', robots: 'noindex, nofollow' },
+  '/MerchantDashboard':      { title: 'Merchant Dashboard | MedRevolve', robots: 'noindex, nofollow' },
+  '/MerchantOnboarding':     { title: 'Launch Your Telehealth Platform | MedRevolve B2B', description: 'Onboard your clinic or wellness practice and launch a fully compliant telehealth platform under your own brand.', robots: 'noindex, nofollow' },
+
   // ── Shared legal pages ─────────────────────────────────────────────────────
   '/Privacy':       { title: 'Privacy Policy | MedRevolve', description: 'MedRevolve privacy policy and HIPAA data practices.' },
   '/Terms':         { title: 'Terms of Service | MedRevolve', description: 'MedRevolve terms of service and user agreement.' },
@@ -166,8 +195,8 @@ export function injectSEO(pathname, overrides = {}, domain = null) {
   setMeta('description', meta.description);
   if (meta.keywords) setMeta('keywords', meta.keywords);
 
-  // Robots directive
-  if (meta.robots) setMeta('robots', meta.robots);
+  // Robots directive — always write so navigating away from noindex clears it
+  setMeta('robots', meta.robots || 'index, follow');
 
   // Open Graph
   setMeta('og:title', meta.title, 'property');
