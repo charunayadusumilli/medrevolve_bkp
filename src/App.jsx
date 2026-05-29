@@ -54,6 +54,14 @@ import ProviderIntake from './pages/ProviderIntake';
 import ProviderOnboarding from './pages/ProviderOnboarding';
 import PharmacyIntake from './pages/PharmacyIntake';
 import CustomerIntake from './pages/CustomerIntake';
+// ── SEO LANDING PAGES ─────────────────────────────────────────────────────────
+import ForMedSpas from './pages/ForMedSpas';
+import TRTClinicPlatform from './pages/TRTClinicPlatform';
+import WeightLossClinicPlatform from './pages/WeightLossClinicPlatform';
+import OpenLoopAlternative from './pages/OpenLoopAlternative';
+import MyTelemedicineAlternative from './pages/MyTelemedicineAlternative';
+import TelehealthFranchise from './pages/TelehealthFranchise';
+import IVTherapyClinicPlatform from './pages/IVTherapyClinicPlatform';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -150,6 +158,15 @@ const AuthenticatedApp = () => {
       <Route path="/ProviderOnboarding" element={<LayoutWrapper currentPageName="ProviderOnboarding"><ProviderOnboarding /></LayoutWrapper>} />
       <Route path="/PharmacyIntake" element={<LayoutWrapper currentPageName="PharmacyIntake"><PharmacyIntake /></LayoutWrapper>} />
       <Route path="/CustomerIntake" element={<LayoutWrapper currentPageName="CustomerIntake"><CustomerIntake /></LayoutWrapper>} />
+
+      {/* ── SEO LANDING PAGES ─────────────────────────────────────────────── */}
+      <Route path="/for-med-spas" element={<LayoutWrapper currentPageName="ForMedSpas"><ForMedSpas /></LayoutWrapper>} />
+      <Route path="/trt-clinic-platform" element={<LayoutWrapper currentPageName="TRTClinicPlatform"><TRTClinicPlatform /></LayoutWrapper>} />
+      <Route path="/weight-loss-clinic-platform" element={<LayoutWrapper currentPageName="WeightLossClinicPlatform"><WeightLossClinicPlatform /></LayoutWrapper>} />
+      <Route path="/openloop-alternative" element={<LayoutWrapper currentPageName="OpenLoopAlternative"><OpenLoopAlternative /></LayoutWrapper>} />
+      <Route path="/mytelemedicine-alternative" element={<LayoutWrapper currentPageName="MyTelemedicineAlternative"><MyTelemedicineAlternative /></LayoutWrapper>} />
+      <Route path="/telehealth-franchise" element={<LayoutWrapper currentPageName="TelehealthFranchise"><TelehealthFranchise /></LayoutWrapper>} />
+      <Route path="/iv-therapy-clinic-platform" element={<LayoutWrapper currentPageName="IVTherapyClinicPlatform"><IVTherapyClinicPlatform /></LayoutWrapper>} />
 
       {/* ── CATCH-ALL — removed/consumer pages → 404 ──────────────────────── */}
       <Route path="*" element={<PageNotFound />} />
