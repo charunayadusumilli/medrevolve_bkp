@@ -11,7 +11,7 @@ import {
   Check, ArrowRight, ArrowLeft, Loader2, Zap, Lock, AlertCircle,
   Phone, Mail, Building, Globe2, User, Heart, Activity, Clock,
   ShoppingBag, Stethoscope, CreditCard, ShieldCheck, CheckCircle2,
-  Calendar, DollarSign, Star, Sparkles
+  Calendar, DollarSign, Star, Sparkles, ExternalLink, Monitor
 } from 'lucide-react';
 
 // ── Steps ──────────────────────────────────────────────────────────────────────
@@ -19,6 +19,7 @@ const STEPS = [
   { id: 1, label: 'About You' },
   { id: 2, label: 'Your Business' },
   { id: 3, label: 'Your Goals' },
+  { id: 3.5, label: 'See Your Site' },
   { id: 4, label: 'Confirm & Pay' },
 ];
 
@@ -62,10 +63,36 @@ const CALL_INCLUDES = [
   'Marketing & growth strategy for your niche',
 ];
 
+// Primary niche for demo — first selected interest
+const NICHE_MAP = {
+  weight_loss: 'weight_loss',
+  hormones: 'hormones',
+  mens_health: 'mens_health',
+  womens_health: 'womens_health',
+  longevity: 'longevity',
+  peptides: 'peptides',
+  telehealth: 'weight_loss',
+  supplements: 'weight_loss',
+};
+
+// Color options for brand preview
+const BRAND_COLORS = [
+  { hex: '4A6741', label: 'Forest' },
+  { hex: '1A3A6A', label: 'Navy' },
+  { hex: '8B2252', label: 'Plum' },
+  { hex: '2D6A9F', label: 'Ocean' },
+  { hex: '6B3A2A', label: 'Copper' },
+  { hex: '1A5C5C', label: 'Teal' },
+  { hex: '4A3580', label: 'Purple' },
+  { hex: '8B6914', label: 'Gold' },
+];
+
 export default function MerchantOnboarding() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [demoOpened, setDemoOpened] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('4A6741');
 
   const [form, setForm] = useState({
     // Step 1 – About You
@@ -103,10 +130,38 @@ export default function MerchantOnboarding() {
     });
   }, []);
 
+  // ── Demo URL builder ────────────────────────────────────────────────────
+  const buildDemoUrl = () => {
+    const primaryNiche = NICHE_MAP[form.productInterests[0]] || 'weight_loss';
+    const domainSlug = form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20);
+    const params = new URLSearchParams({
+      biz: form.businessName,
+      niche: primaryNiche,
+      color: selectedColor,
+      domain: domainSlug,
+    });
+    return `${window.location.origin}/PersonalizedDemo?${params.toString()}`;
+  };
+
+  const openDemo = () => {
+    const url = buildDemoUrl();
+    const popup = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+    setDemoOpened(true);
+    // Listen for demo completion message
+    const handler = (e) => {
+      if (e.data?.type === 'DEMO_COMPLETE') {
+        setStep(4);
+        window.removeEventListener('message', handler);
+      }
+    };
+    window.addEventListener('message', handler);
+  };
+
   const canProceed = () => {
     if (step === 1) return form.firstName && form.lastName && form.email && form.phone;
     if (step === 2) return form.businessName && form.businessType && form.hasLLC !== '';
     if (step === 3) return form.productInterests.length > 0 && form.currentRevenue;
+    if (step === 3.5) return demoOpened; // must open demo before proceeding
     return true;
   };
 
@@ -197,19 +252,25 @@ export default function MerchantOnboarding() {
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between mb-3">
-            {STEPS.map((s) => (
-              <div key={s.id} className="flex flex-col items-center gap-1 flex-1">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all mx-auto
-                  ${step > s.id ? 'bg-[#4A6741] text-white' : step === s.id ? 'bg-white text-black shadow-lg' : 'bg-white/10 text-white/30'}`}>
-                  {step > s.id ? <Check className="w-4 h-4" /> : s.id}
+            {STEPS.map((s) => {
+              const stepIndex = STEPS.findIndex(x => x.id === s.id);
+              const currentIndex = STEPS.findIndex(x => x.id === step);
+              const isDone = currentIndex > stepIndex;
+              const isCurrent = step === s.id;
+              return (
+                <div key={s.id} className="flex flex-col items-center gap-1 flex-1">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all mx-auto
+                    ${isDone ? 'bg-[#4A6741] text-white' : isCurrent ? 'bg-white text-black shadow-lg' : 'bg-white/10 text-white/30'}`}>
+                    {isDone ? <Check className="w-4 h-4" /> : s.id === 3.5 ? <Monitor className="w-3.5 h-3.5" /> : stepIndex + 1}
+                  </div>
+                  <span className={`text-[9px] hidden sm:block text-center ${isCurrent ? 'text-[#6B8F5E] font-semibold' : 'text-white/25'}`}>{s.label}</span>
                 </div>
-                <span className={`text-[9px] hidden sm:block text-center ${step === s.id ? 'text-[#6B8F5E] font-semibold' : 'text-white/25'}`}>{s.label}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="relative h-1 bg-white/10 rounded-full">
             <div className="absolute h-full bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] rounded-full transition-all duration-500"
-              style={{ width: `${((step - 1) / 3) * 100}%` }} />
+              style={{ width: `${(STEPS.findIndex(x => x.id === step) / (STEPS.length - 1)) * 100}%` }} />
           </div>
         </div>
 
@@ -373,6 +434,68 @@ export default function MerchantOnboarding() {
                   </>
                 )}
 
+                {/* ─── STEP 3.5: See Your Site ─── */}
+                {step === 3.5 && (
+                  <>
+                    <div>
+                      <h2 className="text-xl font-bold mb-1">👀 See Your Site Before You Pay</h2>
+                      <p className="text-white/50 text-sm">We've built a personalized preview of <span className="text-white font-semibold">{form.businessName}</span> based on your selections. Pick your brand color and launch the demo.</p>
+                    </div>
+
+                    {/* Brand color picker */}
+                    <div>
+                      <p className="text-[#6B8F5E] text-xs uppercase font-semibold mb-3">Pick Your Brand Color</p>
+                      <div className="flex flex-wrap gap-3">
+                        {BRAND_COLORS.map(c => (
+                          <button key={c.hex} type="button" onClick={() => setSelectedColor(c.hex)}
+                            className={`flex flex-col items-center gap-1.5 transition-all`}>
+                            <div className={`w-10 h-10 rounded-xl border-2 transition-all ${selectedColor === c.hex ? 'border-white scale-110 shadow-lg' : 'border-transparent hover:border-white/30'}`}
+                              style={{ backgroundColor: `#${c.hex}` }} />
+                            <span className={`text-[9px] ${selectedColor === c.hex ? 'text-white' : 'text-white/30'}`}>{c.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Demo preview card */}
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-5 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-sm flex items-center justify-center text-white font-black text-sm flex-shrink-0"
+                          style={{ backgroundColor: `#${selectedColor}` }}>
+                          {form.businessName.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="text-white font-bold">{form.businessName}</p>
+                          <p className="text-white/40 text-xs font-mono">
+                            {form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20)}.com
+                          </p>
+                        </div>
+                        <div className="ml-auto text-xs text-white/30 text-right hidden sm:block">
+                          Focus: <span className="text-white/60 capitalize">{(form.productInterests[0] || 'weight_loss').replace('_', ' ')}</span>
+                        </div>
+                      </div>
+                      <div className="text-xs text-white/40 space-y-1.5">
+                        <p>✓ Full branded homepage with hero, products, and how-it-works</p>
+                        <p>✓ Personalized to your niche ({form.productInterests.slice(0, 2).map(i => i.replace('_', ' ')).join(', ')})</p>
+                        <p>✓ Your brand color <span className="font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: `#${selectedColor}20`, color: `#${selectedColor}` }}>#{selectedColor}</span> throughout</p>
+                        <p>✓ Legal pages, trust badges, HIPAA compliance included</p>
+                      </div>
+                      <button
+                        onClick={openDemo}
+                        className="w-full py-3.5 rounded-sm font-bold text-white flex items-center justify-center gap-2 text-sm transition-opacity hover:opacity-90"
+                        style={{ backgroundColor: `#${selectedColor}` }}>
+                        <ExternalLink className="w-4 h-4" />
+                        {demoOpened ? 'Reopen My Site Preview' : 'Launch My Personalized Demo →'}
+                      </button>
+                      {demoOpened && (
+                        <p className="text-center text-xs text-[#6B8F5E]">
+                          ✅ Demo opened! Explore your site, then continue below to lock it in.
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
+
                 {/* ─── STEP 4: Confirm & Pay ─── */}
                 {step === 4 && (
                   <>
@@ -450,15 +573,26 @@ export default function MerchantOnboarding() {
         {/* Navigation */}
         <div className="flex justify-between mt-6">
           {step > 1 ? (
-            <Button variant="ghost" onClick={() => { setStep(s => s - 1); setError(''); }} className="text-white/50 hover:text-white">
+            <Button variant="ghost"
+              onClick={() => {
+                const currentIndex = STEPS.findIndex(x => x.id === step);
+                setStep(STEPS[currentIndex - 1].id);
+                setError('');
+              }}
+              className="text-white/50 hover:text-white">
               <ArrowLeft className="w-4 h-4 mr-2" /> Back
             </Button>
           ) : <div />}
 
-          {step < 4 ? (
-            <Button onClick={() => setStep(s => s + 1)} disabled={!canProceed()}
+          {step !== 4 ? (
+            <Button
+              onClick={() => {
+                const currentIndex = STEPS.findIndex(x => x.id === step);
+                setStep(STEPS[currentIndex + 1].id);
+              }}
+              disabled={!canProceed()}
               className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] hover:opacity-90 text-white px-8 font-bold rounded-sm shadow-lg disabled:opacity-40">
-              Continue <ArrowRight className="ml-2 w-4 h-4" />
+              {step === 3.5 ? (demoOpened ? 'Continue to Payment' : 'Open Demo First') : 'Continue'} <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           ) : (
             <Button onClick={handleSubmit} disabled={loading}

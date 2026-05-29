@@ -54,6 +54,8 @@ import ProviderIntake from './pages/ProviderIntake';
 import ProviderOnboarding from './pages/ProviderOnboarding';
 import PharmacyIntake from './pages/PharmacyIntake';
 import CustomerIntake from './pages/CustomerIntake';
+// ── PERSONALIZED DEMO ─────────────────────────────────────────────────────────
+import PersonalizedDemo from './pages/PersonalizedDemo';
 // ── SEO LANDING PAGES ─────────────────────────────────────────────────────────
 import ForMedSpas from './pages/ForMedSpas';
 import TRTClinicPlatform from './pages/TRTClinicPlatform';
@@ -158,6 +160,9 @@ const AuthenticatedApp = () => {
       <Route path="/ProviderOnboarding" element={<LayoutWrapper currentPageName="ProviderOnboarding"><ProviderOnboarding /></LayoutWrapper>} />
       <Route path="/PharmacyIntake" element={<LayoutWrapper currentPageName="PharmacyIntake"><PharmacyIntake /></LayoutWrapper>} />
       <Route path="/CustomerIntake" element={<LayoutWrapper currentPageName="CustomerIntake"><CustomerIntake /></LayoutWrapper>} />
+
+      {/* ── PERSONALIZED DEMO (no layout — standalone branded page) ────────── */}
+      <Route path="/PersonalizedDemo" element={<PersonalizedDemo />} />
 
       {/* ── SEO LANDING PAGES ─────────────────────────────────────────────── */}
       <Route path="/for-med-spas" element={<LayoutWrapper currentPageName="ForMedSpas"><ForMedSpas /></LayoutWrapper>} />
