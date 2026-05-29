@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, ArrowRight, Star } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -32,7 +33,7 @@ const STATS = [
 export default function ForMedSpas() {
   return (
     <div className="bg-white">
-      {/* Meta is handled by index.html SEO defaults; per-page SEO via SEOHead if needed */}
+      <SEOHead />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">

@@ -70,6 +70,57 @@ const META_MAP = {
     canonical: 'https://medrevolveb2b.com/BusinessInquiry',
   },
 
+  // ── SEO Landing Pages ─────────────────────────────────────────────────────
+  '/for-med-spas': {
+    title: 'Add a GLP-1 Weight Loss Program to Your Med Spa in 7 Days | MedRevolve',
+    description: 'MedRevolve gives med spas a complete, white-label physician-supervised GLP-1 weight loss program. HIPAA compliant, licensed pharmacy included. Launch in 7 days.',
+    keywords: 'med spa weight loss program, telehealth for med spas, add glp-1 to med spa, med spa telehealth platform',
+    canonical: 'https://medrevolve.com/for-med-spas',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/trt-clinic-platform': {
+    title: 'Start a TRT Telehealth Company Without Building the Infrastructure | MedRevolve',
+    description: 'Launch a compliant TRT clinic in 7 days. White-label testosterone replacement therapy platform with licensed physicians, 503A pharmacy, and HIPAA compliance included.',
+    keywords: 'how to start a TRT company, TRT telehealth platform, testosterone clinic startup, mens health telehealth platform',
+    canonical: 'https://medrevolve.com/trt-clinic-platform',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/weight-loss-clinic-platform': {
+    title: 'Start a Medical Weight Loss Clinic Without Hiring a Doctor | MedRevolve',
+    description: 'Launch a medical weight loss clinic in 7 days. GLP-1 programs, licensed physicians, 503A pharmacy, and HIPAA compliance — all included in your white-label platform.',
+    keywords: 'start medical weight loss clinic, how to open a weight loss clinic, weight loss clinic startup, glp-1 clinic platform',
+    canonical: 'https://medrevolve.com/weight-loss-clinic-platform',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/openloop-alternative': {
+    title: 'OpenLoop Alternative: MedRevolve Includes More — For Less | MedRevolve',
+    description: 'Switching from OpenLoop? MedRevolve is the full-stack telehealth platform alternative with white-label branding, built-in pharmacy, compliance, and payments.',
+    keywords: 'openloop alternative, openloop telehealth competitor, telehealth platform alternative',
+    canonical: 'https://medrevolve.com/openloop-alternative',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/mytelemedicine-alternative': {
+    title: 'MyTelemedicine Alternative: Full-Stack Platform for Clinic Owners | MedRevolve',
+    description: 'Looking for a MyTelemedicine alternative? MedRevolve is the complete white-label telehealth infrastructure — physicians, pharmacy, compliance, and payments in one platform.',
+    keywords: 'mytelemedicine alternative, mytelemedicine competitor, telehealth platform comparison',
+    canonical: 'https://medrevolve.com/mytelemedicine-alternative',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/telehealth-franchise': {
+    title: 'Launch a Telehealth Business Without Buying a Franchise | MedRevolve',
+    description: 'Skip the franchise fees. MedRevolve gives you a complete white-label telehealth business — licensed physicians, pharmacy, compliance, and brand — from $2,999/month.',
+    keywords: 'telehealth franchise, telehealth business franchise, health clinic franchise alternative',
+    canonical: 'https://medrevolve.com/telehealth-franchise',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+  '/iv-therapy-clinic-platform': {
+    title: 'Add Telehealth to Your IV Therapy Clinic in 7 Days | MedRevolve',
+    description: 'IV therapy clinics are adding $20K/month with white-label telehealth programs. GLP-1, hormone therapy, and wellness — all physician-supervised and pharmacy-fulfilled.',
+    keywords: 'iv therapy clinic telehealth, add telehealth to iv clinic, iv clinic platform',
+    canonical: 'https://medrevolve.com/iv-therapy-clinic-platform',
+    og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
+  },
+
   // ── Shared legal pages ─────────────────────────────────────────────────────
   '/Privacy':       { title: 'Privacy Policy | MedRevolve', description: 'MedRevolve privacy policy and HIPAA data practices.' },
   '/Terms':         { title: 'Terms of Service | MedRevolve', description: 'MedRevolve terms of service and user agreement.' },

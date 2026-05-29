@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, ArrowRight } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -34,6 +35,7 @@ const INCLUDED = [
 export default function IVTherapyClinicPlatform() {
   return (
     <div className="bg-white">
+      <SEOHead />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">
