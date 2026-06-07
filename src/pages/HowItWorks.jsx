@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
@@ -185,15 +184,26 @@ export default function HowItWorks() {
             <p className="text-white/80 text-lg mb-8">
               Take the first step towards better health today. Our process is simple, secure, and designed with your wellness in mind.
             </p>
-            <Link to={createPageUrl('MerchantOnboarding')}>
-              <Button 
-                size="lg"
-                className="bg-white text-[#4A6741] hover:bg-white/90 rounded-full px-10 py-6 text-base font-medium group"
-              >
-                Start Your Business Setup
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/CustomerIntake">
+                <Button 
+                  size="lg"
+                  className="bg-white text-[#4A6741] hover:bg-white/90 rounded-full px-10 py-6 text-base font-medium group"
+                >
+                  Start Your Health Journey
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/MerchantOnboarding">
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="border-white/50 text-white hover:bg-white/10 rounded-full px-10 py-6 text-base font-medium"
+                >
+                  Launch Your Business
+                </Button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
