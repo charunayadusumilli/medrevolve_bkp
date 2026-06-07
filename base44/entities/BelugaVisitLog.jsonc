@@ -1,0 +1,76 @@
+{
+  "name": "BelugaVisitLog",
+  "type": "object",
+  "properties": {
+    "patient_email": {
+      "type": "string",
+      "description": "Patient email"
+    },
+    "visit_type_key": {
+      "type": "string",
+      "description": "Visit type key submitted"
+    },
+    "beluga_visit_type": {
+      "type": "string",
+      "description": "Beluga visit type label"
+    },
+    "submission_mode": {
+      "type": "string",
+      "enum": [
+        "beluga",
+        "whitelabel"
+      ],
+      "description": "Whether submitted via Beluga API or whitelabel"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "submitted",
+        "approved",
+        "rejected",
+        "error"
+      ],
+      "default": "pending",
+      "description": "Submission status"
+    },
+    "beluga_patient_id": {
+      "type": "string",
+      "description": "Beluga's patient ID if returned"
+    },
+    "beluga_visit_id": {
+      "type": "string",
+      "description": "Beluga's visit ID if returned"
+    },
+    "prescription_id": {
+      "type": "string",
+      "description": "Related Prescription entity ID"
+    },
+    "appointment_id": {
+      "type": "string",
+      "description": "Related Appointment entity ID"
+    },
+    "intake_answers": {
+      "type": "object",
+      "description": "Answers submitted for this visit"
+    },
+    "response_payload": {
+      "type": "object",
+      "description": "Raw API response from Beluga"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message if submission failed"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the visit was submitted"
+    }
+  },
+  "required": [
+    "patient_email",
+    "visit_type_key",
+    "submission_mode"
+  ]
+}

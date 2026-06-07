@@ -1,0 +1,117 @@
+{
+  "name": "ConsultationBooking",
+  "type": "object",
+  "properties": {
+    "patient_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Patient email"
+    },
+    "provider_id": {
+      "type": "string",
+      "description": "Selected provider ID"
+    },
+    "consultation_type": {
+      "type": "string",
+      "enum": [
+        "video",
+        "phone",
+        "chat",
+        "in_person"
+      ],
+      "description": "Type of consultation"
+    },
+    "preferred_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Preferred consultation date"
+    },
+    "preferred_time": {
+      "type": "string",
+      "description": "Preferred time slot"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for consultation"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed",
+        "refunded"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "payment_amount": {
+      "type": "number",
+      "description": "Amount paid for consultation"
+    },
+    "stripe_payment_intent": {
+      "type": "string",
+      "description": "Stripe payment intent ID"
+    },
+    "booking_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Booking status"
+    },
+    "appointment_id": {
+      "type": "string",
+      "description": "Created appointment ID"
+    },
+    "communication_platform": {
+      "type": "string",
+      "enum": [
+        "twilio_video",
+        "twilio_voice",
+        "chat",
+        "in_person"
+      ],
+      "description": "Platform used for communication"
+    },
+    "session_url": {
+      "type": "string",
+      "description": "URL for video/voice session"
+    },
+    "participant_state": {
+      "type": "string",
+      "description": "Patient's state for compliance checking"
+    },
+    "provider_state": {
+      "type": "string",
+      "description": "Provider's state for license verification"
+    },
+    "compliance_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether geographic compliance is verified"
+    },
+    "compliance_notes": {
+      "type": "string",
+      "description": "Notes about compliance verification"
+    },
+    "recording_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Patient consent to record consultation"
+    },
+    "recording_url": {
+      "type": "string",
+      "description": "URL to recorded consultation (if applicable)"
+    }
+  },
+  "required": [
+    "patient_email",
+    "consultation_type",
+    "reason"
+  ]
+}

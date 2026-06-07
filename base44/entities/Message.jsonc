@@ -1,0 +1,50 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "appointment_id": {
+      "type": "string",
+      "description": "Related appointment ID (optional)"
+    },
+    "provider_id": {
+      "type": "string",
+      "description": "Provider ID"
+    },
+    "patient_email": {
+      "type": "string",
+      "description": "Patient email"
+    },
+    "sender_type": {
+      "type": "string",
+      "enum": [
+        "patient",
+        "provider"
+      ],
+      "description": "Who sent the message"
+    },
+    "message_text": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "attachment_url": {
+      "type": "string",
+      "description": "Optional file attachment URL"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether message has been read"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was read"
+    }
+  },
+  "required": [
+    "provider_id",
+    "patient_email",
+    "sender_type",
+    "message_text"
+  ]
+}

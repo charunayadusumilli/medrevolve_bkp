@@ -1,0 +1,76 @@
+{
+  "name": "ConsultationPayment",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string",
+      "description": "ConsultationBooking ID"
+    },
+    "patient_email": {
+      "type": "string",
+      "format": "email"
+    },
+    "provider_id": {
+      "type": "string"
+    },
+    "provider_name": {
+      "type": "string"
+    },
+    "consultation_type": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Amount in dollars"
+    },
+    "currency": {
+      "type": "string",
+      "default": "usd"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed",
+        "refunded",
+        "waived"
+      ],
+      "default": "pending"
+    },
+    "payment_timing": {
+      "type": "string",
+      "enum": [
+        "before",
+        "after"
+      ],
+      "default": "before",
+      "description": "Whether patient pays before or after appointment"
+    },
+    "stripe_session_id": {
+      "type": "string"
+    },
+    "stripe_payment_intent": {
+      "type": "string"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "paid_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "appointment_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "patient_email",
+    "amount",
+    "consultation_type"
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "name": "AutoRxPlan",
+  "type": "object",
+  "properties": {
+    "patient_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Patient email address"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "Patient full name"
+    },
+    "prescription_id": {
+      "type": "string",
+      "description": "Related Prescription entity ID"
+    },
+    "medication_name": {
+      "type": "string",
+      "description": "Name of the medication (e.g. Semaglutide)"
+    },
+    "dosage": {
+      "type": "string",
+      "description": "Current dosage (e.g. 0.5mg/mL)"
+    },
+    "beluga_visit_id": {
+      "type": "string",
+      "description": "Beluga visitId from the initial intake submission"
+    },
+    "beluga_med_id": {
+      "type": "string",
+      "description": "Beluga medId for this medication"
+    },
+    "pharmacy_id": {
+      "type": "string",
+      "description": "Beluga pharmacy ID for fulfillment"
+    },
+    "stripe_subscription_id": {
+      "type": "string",
+      "description": "Stripe subscription ID for recurring billing"
+    },
+    "stripe_customer_id": {
+      "type": "string",
+      "description": "Stripe customer ID"
+    },
+    "plan_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the 6-month plan started"
+    },
+    "plan_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the 6-month plan ends"
+    },
+    "total_months": {
+      "type": "integer",
+      "default": 6,
+      "description": "Total months in the plan"
+    },
+    "current_month": {
+      "type": "integer",
+      "default": 1,
+      "description": "Current month number (1-6)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "completed",
+        "cancelled",
+        "failed"
+      ],
+      "default": "active",
+      "description": "Overall plan status"
+    },
+    "next_followup_due": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when next monthly follow-up is due"
+    },
+    "followup_reminder_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the reminder email for the current month was sent"
+    },
+    "followup_reminder_sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the reminder was sent"
+    },
+    "cycles": {
+      "type": "array",
+      "description": "Monthly cycle history",
+      "items": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "integer"
+          },
+          "due_date": {
+            "type": "string"
+          },
+          "submitted_at": {
+            "type": "string"
+          },
+          "beluga_response_status": {
+            "type": "string"
+          },
+          "prescription_renewed": {
+            "type": "boolean"
+          },
+          "shipment_triggered": {
+            "type": "boolean"
+          },
+          "billing_triggered": {
+            "type": "boolean"
+          },
+          "patient_responses": {
+            "type": "object"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pause_reason": {
+      "type": "string",
+      "description": "Reason the plan was paused (e.g. adverse event flagged)"
+    },
+    "cancel_reason": {
+      "type": "string",
+      "description": "Reason for cancellation"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal admin notes"
+    }
+  },
+  "required": [
+    "patient_email",
+    "medication_name",
+    "plan_start_date"
+  ]
+}

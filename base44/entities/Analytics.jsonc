@@ -1,0 +1,49 @@
+{
+  "name": "Analytics",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "button_click",
+        "form_submit",
+        "signup",
+        "booking"
+      ],
+      "description": "Type of analytics event"
+    },
+    "page_name": {
+      "type": "string",
+      "description": "Name of the page or component"
+    },
+    "action": {
+      "type": "string",
+      "description": "Specific action taken"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User email if authenticated"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Browser session ID"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "Traffic source/referrer"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "Browser user agent"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional event data"
+    }
+  },
+  "required": [
+    "event_type",
+    "page_name"
+  ]
+}

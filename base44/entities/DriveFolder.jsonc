@@ -1,0 +1,26 @@
+{
+  "name": "DriveFolder",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Folder name"
+    },
+    "folder_id": {
+      "type": "string",
+      "description": "Google Drive folder ID"
+    },
+    "parent_id": {
+      "type": "string",
+      "description": "Parent folder ID (null for root)"
+    },
+    "path": {
+      "type": "string",
+      "description": "Human-readable path, e.g. MedRevolve/Providers"
+    }
+  },
+  "required": [
+    "name",
+    "folder_id"
+  ]
+}

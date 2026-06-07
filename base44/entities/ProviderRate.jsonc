@@ -1,0 +1,51 @@
+{
+  "name": "ProviderRate",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "description": "Provider entity ID"
+    },
+    "provider_name": {
+      "type": "string"
+    },
+    "video_rate": {
+      "type": "number",
+      "default": 99,
+      "description": "Video consultation rate in USD"
+    },
+    "phone_rate": {
+      "type": "number",
+      "default": 79,
+      "description": "Phone consultation rate in USD"
+    },
+    "chat_rate": {
+      "type": "number",
+      "default": 49,
+      "description": "Chat consultation rate in USD"
+    },
+    "in_person_rate": {
+      "type": "number",
+      "default": 149,
+      "description": "In-person consultation rate in USD"
+    },
+    "payment_timing": {
+      "type": "string",
+      "enum": [
+        "before",
+        "after",
+        "either"
+      ],
+      "default": "before",
+      "description": "When patients pay"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "provider_id",
+    "provider_name"
+  ]
+}

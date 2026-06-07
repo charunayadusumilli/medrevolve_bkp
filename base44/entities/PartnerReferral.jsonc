@@ -1,0 +1,54 @@
+{
+  "name": "PartnerReferral",
+  "type": "object",
+  "properties": {
+    "partner_id": {
+      "type": "string",
+      "description": "Partner ID"
+    },
+    "customer_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Referred customer email"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Product purchased"
+    },
+    "order_value": {
+      "type": "number",
+      "description": "Total order value"
+    },
+    "partner_earnings": {
+      "type": "number",
+      "description": "Partner earnings from this referral"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "qualified",
+        "paid",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Referral status"
+    },
+    "qualified_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When referral qualified"
+    },
+    "paid_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When partner was paid"
+    }
+  },
+  "required": [
+    "partner_id",
+    "customer_email",
+    "product_id",
+    "order_value"
+  ]
+}

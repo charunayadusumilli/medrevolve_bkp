@@ -1,0 +1,103 @@
+{
+  "name": "ProviderContract",
+  "type": "object",
+  "properties": {
+    "provider_name": {
+      "type": "string",
+      "description": "Provider or practice name"
+    },
+    "contact_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary contact email"
+    },
+    "contact_phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "license_number": {
+      "type": "string",
+      "description": "Medical license number"
+    },
+    "states_licensed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "States where licensed to practice"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Medical specialties"
+    },
+    "contract_type": {
+      "type": "string",
+      "enum": [
+        "per_consultation",
+        "monthly_retainer",
+        "revenue_share"
+      ],
+      "description": "Type of compensation model"
+    },
+    "rate_per_consultation": {
+      "type": "number",
+      "description": "Payment per consultation (if applicable)"
+    },
+    "monthly_retainer": {
+      "type": "number",
+      "description": "Monthly retainer fee (if applicable)"
+    },
+    "revenue_share_percentage": {
+      "type": "number",
+      "description": "Revenue share percentage (if applicable)"
+    },
+    "contract_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Contract effective date"
+    },
+    "contract_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Contract expiration date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "suspended",
+        "terminated",
+        "expired"
+      ],
+      "default": "draft",
+      "description": "Contract status"
+    },
+    "services_provided": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Services provider will handle"
+    },
+    "total_consultations": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total consultations completed"
+    },
+    "total_compensation_paid": {
+      "type": "number",
+      "default": 0,
+      "description": "Total compensation paid to date"
+    }
+  },
+  "required": [
+    "provider_name",
+    "contact_email",
+    "license_number",
+    "contract_type"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "name": "ProviderIntake",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Provider's full name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Professional email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "title": {
+      "type": "string",
+      "enum": [
+        "MD",
+        "DO",
+        "NP",
+        "PA",
+        "PharmD",
+        "RN",
+        "Other"
+      ],
+      "description": "Medical title"
+    },
+    "specialty": {
+      "type": "string",
+      "description": "Medical specialty"
+    },
+    "license_number": {
+      "type": "string",
+      "description": "Medical license number"
+    },
+    "states_licensed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "States where licensed"
+    },
+    "years_experience": {
+      "type": "integer",
+      "description": "Years of practice"
+    },
+    "practice_type": {
+      "type": "string",
+      "enum": [
+        "Telehealth",
+        "In-Person",
+        "Both"
+      ],
+      "description": "Type of practice"
+    },
+    "availability": {
+      "type": "string",
+      "description": "Weekly availability description"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Professional biography"
+    },
+    "education": {
+      "type": "string",
+      "description": "Educational background"
+    },
+    "certifications": {
+      "type": "string",
+      "description": "Additional certifications"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Application status"
+    }
+  },
+  "required": [
+    "full_name",
+    "email",
+    "title",
+    "specialty",
+    "license_number"
+  ]
+}

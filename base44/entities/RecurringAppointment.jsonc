@@ -1,0 +1,67 @@
+{
+  "name": "RecurringAppointment",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "description": "Provider ID"
+    },
+    "patient_email": {
+      "type": "string",
+      "description": "Patient email"
+    },
+    "appointment_type": {
+      "type": "string",
+      "enum": [
+        "initial_consultation",
+        "follow_up",
+        "dosage_adjustment",
+        "general_inquiry"
+      ],
+      "description": "Type of recurring appointment"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "biweekly",
+        "monthly"
+      ],
+      "description": "How often appointments recur"
+    },
+    "day_of_week": {
+      "type": "integer",
+      "description": "Preferred day (0=Sunday, 6=Saturday)"
+    },
+    "preferred_time": {
+      "type": "string",
+      "description": "Preferred time (HH:MM format)"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When recurring series starts"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When recurring series ends (optional)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether series is still active"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes about recurring appointments"
+    }
+  },
+  "required": [
+    "provider_id",
+    "patient_email",
+    "appointment_type",
+    "frequency",
+    "start_date"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "name": "Partner",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string",
+      "description": "Partner business name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact person"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Partner email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "business_type": {
+      "type": "string",
+      "enum": [
+        "Gym",
+        "Spa",
+        "Wellness Center",
+        "Clinic",
+        "Fitness Studio",
+        "Chiropractic",
+        "Nutrition Practice",
+        "Other"
+      ],
+      "description": "Type of business"
+    },
+    "partner_code": {
+      "type": "string",
+      "description": "Unique partner referral code"
+    },
+    "subscription_status": {
+      "type": "string",
+      "enum": [
+        "trial",
+        "active",
+        "cancelled",
+        "past_due"
+      ],
+      "default": "trial",
+      "description": "Subscription status"
+    },
+    "branding_logo_url": {
+      "type": "string",
+      "description": "Partner logo URL"
+    },
+    "branding_primary_color": {
+      "type": "string",
+      "default": "#4A6741",
+      "description": "Primary brand color"
+    },
+    "branding_secondary_color": {
+      "type": "string",
+      "default": "#6B8F5E",
+      "description": "Secondary brand color"
+    },
+    "enabled_products": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of enabled product IDs"
+    },
+    "pricing_markup_percentage": {
+      "type": "number",
+      "default": 30,
+      "description": "Markup percentage above minimum pricing"
+    },
+    "total_referrals": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total customer referrals"
+    },
+    "total_earnings": {
+      "type": "number",
+      "default": 0,
+      "description": "Total earnings accumulated"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "default": 299,
+      "description": "Monthly subscription fee"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "suspended",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Partner account status"
+    }
+  },
+  "required": [
+    "business_name",
+    "contact_name",
+    "email",
+    "partner_code"
+  ]
+}

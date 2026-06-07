@@ -1,0 +1,108 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "customer_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Customer email"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Customer full name"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "Product ID"
+          },
+          "product_name": {
+            "type": "string",
+            "description": "Product name"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per unit"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity ordered"
+          }
+        }
+      },
+      "description": "Order items"
+    },
+    "shipping_address": {
+      "type": "string",
+      "description": "Full shipping address"
+    },
+    "shipping_city": {
+      "type": "string",
+      "description": "City"
+    },
+    "shipping_state": {
+      "type": "string",
+      "description": "State"
+    },
+    "shipping_zip": {
+      "type": "string",
+      "description": "ZIP code"
+    },
+    "shipping_phone": {
+      "type": "string",
+      "description": "Shipping phone"
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Subtotal amount"
+    },
+    "tax": {
+      "type": "number",
+      "description": "Tax amount"
+    },
+    "total": {
+      "type": "number",
+      "description": "Total amount"
+    },
+    "stripe_session_id": {
+      "type": "string",
+      "description": "Stripe checkout session ID"
+    },
+    "stripe_payment_intent": {
+      "type": "string",
+      "description": "Stripe payment intent ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Order status"
+    },
+    "tracking_number": {
+      "type": "string",
+      "description": "Shipping tracking number"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Admin notes"
+    }
+  },
+  "required": [
+    "customer_email",
+    "customer_name",
+    "items",
+    "shipping_address",
+    "total"
+  ]
+}

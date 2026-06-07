@@ -1,0 +1,104 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Unique product identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "weight_loss",
+        "mens_health",
+        "womens_health",
+        "hair_loss",
+        "longevity",
+        "hormone",
+        "peptides"
+      ],
+      "description": "Product category"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Short subtitle"
+    },
+    "minimum_price": {
+      "type": "number",
+      "description": "Minimum price (covers clinical + pharmacy + platform)"
+    },
+    "suggested_retail_price": {
+      "type": "number",
+      "description": "Suggested retail price"
+    },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key benefits"
+    },
+    "how_it_works": {
+      "type": "string",
+      "description": "Mechanism of action"
+    },
+    "dosage_info": {
+      "type": "string",
+      "description": "Dosage information"
+    },
+    "side_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Common side effects"
+    },
+    "form": {
+      "type": "string",
+      "enum": [
+        "tablet",
+        "capsule",
+        "injection",
+        "topical",
+        "patch",
+        "cream",
+        "gel",
+        "nasal_spray"
+      ],
+      "description": "Product form"
+    },
+    "prescription_required": {
+      "type": "boolean",
+      "default": true,
+      "description": "Requires prescription"
+    },
+    "available": {
+      "type": "boolean",
+      "default": true,
+      "description": "Currently available"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "requires_lab_work": {
+      "type": "boolean",
+      "default": false,
+      "description": "Requires lab work before prescribing"
+    }
+  },
+  "required": [
+    "product_id",
+    "name",
+    "category",
+    "minimum_price"
+  ]
+}

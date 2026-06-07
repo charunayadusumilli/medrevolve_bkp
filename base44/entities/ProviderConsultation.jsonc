@@ -1,0 +1,76 @@
+{
+  "name": "ProviderConsultation",
+  "type": "object",
+  "properties": {
+    "provider_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Provider's email address"
+    },
+    "provider_name": {
+      "type": "string",
+      "description": "Provider's full name"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Scheduled consultation date"
+    },
+    "scheduled_time": {
+      "type": "string",
+      "description": "Scheduled consultation time (e.g. 10:00 AM)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "completed",
+        "rescheduled",
+        "no_show",
+        "cancelled"
+      ],
+      "default": "scheduled",
+      "description": "Consultation status"
+    },
+    "meeting_link": {
+      "type": "string",
+      "description": "Video call/meeting link URL"
+    },
+    "consultation_type": {
+      "type": "string",
+      "enum": [
+        "initial_credentialing",
+        "follow_up",
+        "contract_review"
+      ],
+      "description": "Type of consultation"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Admin notes from consultation"
+    },
+    "approval_recommendation": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "deny",
+        "needs_review",
+        "pending"
+      ],
+      "default": "pending",
+      "description": "Recommendation from credentialing call"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When consultation was completed"
+    }
+  },
+  "required": [
+    "provider_email",
+    "provider_name",
+    "scheduled_date",
+    "scheduled_time",
+    "consultation_type"
+  ]
+}

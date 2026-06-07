@@ -1,0 +1,38 @@
+{
+  "name": "ProviderSchedule",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "description": "Provider ID"
+    },
+    "day_of_week": {
+      "type": "integer",
+      "description": "Day of week (0=Sunday, 6=Saturday)"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Start time (HH:MM format)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "End time (HH:MM format)"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this slot is available"
+    },
+    "slot_duration_minutes": {
+      "type": "integer",
+      "default": 30,
+      "description": "Duration of each appointment slot"
+    }
+  },
+  "required": [
+    "provider_id",
+    "day_of_week",
+    "start_time",
+    "end_time"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Provider",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Provider's full name"
+    },
+    "title": {
+      "type": "string",
+      "description": "Medical title (MD, NP, PA, etc.)"
+    },
+    "specialty": {
+      "type": "string",
+      "description": "Medical specialty"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short bio"
+    },
+    "philosophy": {
+      "type": "string",
+      "description": "Detailed practice philosophy or 'About Me'"
+    },
+    "photo": {
+      "type": "string",
+      "description": "Professional headshot URL"
+    },
+    "license_number": {
+      "type": "string",
+      "description": "Medical license number"
+    },
+    "states_licensed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "States where provider is licensed"
+    },
+    "areas_of_expertise": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific conditions and treatment areas"
+    },
+    "availability": {
+      "type": "object",
+      "description": "Weekly availability schedule"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating"
+    },
+    "total_consultations": {
+      "type": "integer",
+      "description": "Total number of consultations"
+    },
+    "years_experience": {
+      "type": "integer",
+      "description": "Years of medical experience"
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Educational background"
+    },
+    "testimonials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "patient_initials": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Patient testimonials and reviews"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether provider is currently accepting patients"
+    }
+  },
+  "required": [
+    "name",
+    "title",
+    "specialty"
+  ]
+}

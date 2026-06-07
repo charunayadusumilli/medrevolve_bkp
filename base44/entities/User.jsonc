@@ -1,0 +1,31 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user",
+        "provider",
+        "pharmacy",
+        "partner",
+        "creator"
+      ],
+      "default": "user",
+      "description": "User role"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "User's preferred display name (editable)"
+    },
+    "phone": {
+      "type": "string",
+      "description": "User's phone number"
+    }
+  },
+  "required": [
+    "display_name",
+    "phone"
+  ]
+}

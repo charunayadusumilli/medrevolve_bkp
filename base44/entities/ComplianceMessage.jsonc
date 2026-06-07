@@ -1,0 +1,58 @@
+{
+  "name": "ComplianceMessage",
+  "type": "object",
+  "properties": {
+    "compliance_id": {
+      "type": "string",
+      "description": "Related ComplianceRecord ID"
+    },
+    "partner_id": {
+      "type": "string",
+      "description": "Partner ID"
+    },
+    "sender_email": {
+      "type": "string",
+      "description": "Email of the sender"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Display name of the sender"
+    },
+    "sender_role": {
+      "type": "string",
+      "enum": [
+        "partner",
+        "admin"
+      ],
+      "description": "Role of the sender"
+    },
+    "message": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "attachment_url": {
+      "type": "string",
+      "description": "Optional file attachment URL"
+    },
+    "attachment_name": {
+      "type": "string",
+      "description": "Attachment filename"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether recipient has read this message"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "compliance_id",
+    "partner_id",
+    "sender_email",
+    "sender_role",
+    "message"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "name": "CreatorMetrics",
+  "type": "object",
+  "properties": {
+    "creator_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the creator (links to User entity)"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Unique referral code for the creator"
+    },
+    "total_clicks": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total clicks on referral links"
+    },
+    "total_conversions": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total number of successful conversions"
+    },
+    "total_revenue_generated": {
+      "type": "number",
+      "default": 0,
+      "description": "Total revenue generated from referrals"
+    },
+    "total_commission_earned": {
+      "type": "number",
+      "default": 0,
+      "description": "Total commission earned"
+    },
+    "current_tier": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum"
+      ],
+      "default": "bronze",
+      "description": "Current commission tier"
+    },
+    "monthly_clicks": {
+      "type": "integer",
+      "default": 0,
+      "description": "Clicks this month"
+    },
+    "monthly_conversions": {
+      "type": "integer",
+      "default": 0,
+      "description": "Conversions this month"
+    },
+    "monthly_revenue": {
+      "type": "number",
+      "default": 0,
+      "description": "Revenue generated this month"
+    },
+    "monthly_commission": {
+      "type": "number",
+      "default": 0,
+      "description": "Commission earned this month"
+    },
+    "top_products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_name": {
+            "type": "string"
+          },
+          "conversions": {
+            "type": "integer"
+          },
+          "revenue": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Top performing products"
+    }
+  },
+  "required": [
+    "creator_email",
+    "referral_code"
+  ]
+}

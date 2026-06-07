@@ -1,0 +1,127 @@
+{
+  "name": "BelugaVisitType",
+  "type": "object",
+  "properties": {
+    "visit_type_key": {
+      "type": "string",
+      "description": "Unique key for the visit type (e.g. 'weight_loss_semaglutide')"
+    },
+    "beluga_visit_type": {
+      "type": "string",
+      "description": "Exact Beluga Health visit type slug (e.g. 'Individualized Weight Loss')"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Patient-facing display name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Weight Loss",
+        "Hormonal Support",
+        "Longevity",
+        "Sexual Health",
+        "Skin Care",
+        "Chronic Care",
+        "Preventative Care",
+        "Behavioral Health",
+        "Urgent Care Visit Types",
+        "Specialty Visits",
+        "Hardware (Individualized per company)"
+      ],
+      "description": "Beluga category"
+    },
+    "description": {
+      "type": "string",
+      "description": "Visit type description for patients"
+    },
+    "product_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Linked Product entity IDs that map to this visit type"
+    },
+    "requires_lab": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether lab results are required before visit"
+    },
+    "requires_photo": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether photo upload is required"
+    },
+    "follow_up_months": {
+      "type": "integer",
+      "default": 3,
+      "description": "Standard follow-up interval in months"
+    },
+    "whitelabel_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Available as whitelabel (independent) visit"
+    },
+    "beluga_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Route through Beluga Health API"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this visit type is currently offered"
+    },
+    "intake_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "string"
+          },
+          "question_text": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "yesno",
+              "select",
+              "multiselect",
+              "number"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Custom intake questions for this visit type"
+    },
+    "contraindications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Conditions that disqualify this visit type"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 100,
+      "description": "Display order"
+    }
+  },
+  "required": [
+    "visit_type_key",
+    "display_name",
+    "category"
+  ]
+}

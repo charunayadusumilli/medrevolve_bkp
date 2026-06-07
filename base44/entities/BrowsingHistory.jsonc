@@ -1,0 +1,34 @@
+{
+  "name": "BrowsingHistory",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the user browsing"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "ID of the product viewed"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Name of the product viewed"
+    },
+    "product_category": {
+      "type": "string",
+      "description": "Category of the product viewed"
+    },
+    "view_count": {
+      "type": "integer",
+      "default": 1,
+      "description": "Number of times viewed"
+    }
+  },
+  "required": [
+    "user_email",
+    "product_id",
+    "product_name",
+    "product_category"
+  ]
+}

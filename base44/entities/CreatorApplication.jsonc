@@ -1,0 +1,81 @@
+{
+  "name": "CreatorApplication",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Applicant's full name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "Instagram",
+        "TikTok",
+        "YouTube",
+        "Blog",
+        "Podcast",
+        "Other"
+      ],
+      "description": "Primary platform"
+    },
+    "platform_handle": {
+      "type": "string",
+      "description": "Username or handle"
+    },
+    "followers_count": {
+      "type": "string",
+      "description": "Approximate follower count"
+    },
+    "audience_niche": {
+      "type": "string",
+      "description": "Audience niche (fitness, wellness, lifestyle, etc.)"
+    },
+    "why_partner": {
+      "type": "string",
+      "description": "Why they want to partner"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Application status"
+    },
+    "zapier_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "pending"
+      ],
+      "description": "Zapier webhook delivery status"
+    },
+    "zapier_error": {
+      "type": "string",
+      "description": "Error message if webhook failed"
+    },
+    "zapier_sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When webhook was sent"
+    }
+  },
+  "required": [
+    "full_name",
+    "email",
+    "platform",
+    "followers_count"
+  ]
+}

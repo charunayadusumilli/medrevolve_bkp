@@ -1,0 +1,54 @@
+{
+  "name": "ConsultationSummary",
+  "type": "object",
+  "properties": {
+    "appointment_id": {
+      "type": "string",
+      "description": "Related appointment ID"
+    },
+    "patient_email": {
+      "type": "string",
+      "description": "Patient email"
+    },
+    "provider_id": {
+      "type": "string",
+      "description": "Provider ID"
+    },
+    "chief_complaint": {
+      "type": "string",
+      "description": "Primary reason for visit"
+    },
+    "diagnosis": {
+      "type": "string",
+      "description": "Medical diagnosis"
+    },
+    "treatment_plan": {
+      "type": "string",
+      "description": "Recommended treatment plan"
+    },
+    "medications_prescribed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of prescribed medications"
+    },
+    "follow_up_instructions": {
+      "type": "string",
+      "description": "Follow-up care instructions"
+    },
+    "next_appointment_recommended": {
+      "type": "string",
+      "description": "Recommended follow-up timeframe"
+    },
+    "provider_notes": {
+      "type": "string",
+      "description": "Additional clinical notes"
+    }
+  },
+  "required": [
+    "appointment_id",
+    "patient_email",
+    "provider_id"
+  ]
+}

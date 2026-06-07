@@ -1,0 +1,34 @@
+{
+  "name": "BlockedTime",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "description": "Provider ID"
+    },
+    "start_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of blocked time"
+    },
+    "end_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of blocked time"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for blocking (vacation, meeting, etc.)"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this block repeats weekly"
+    }
+  },
+  "required": [
+    "provider_id",
+    "start_datetime",
+    "end_datetime"
+  ]
+}

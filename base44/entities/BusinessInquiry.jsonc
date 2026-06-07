@@ -1,0 +1,71 @@
+{
+  "name": "BusinessInquiry",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Contact person name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Business email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "industry": {
+      "type": "string",
+      "enum": [
+        "Med Spa/Clinic",
+        "Wellness Center",
+        "Telehealth Platform",
+        "Fitness Studio",
+        "Healthcare Provider",
+        "Corporate Wellness",
+        "Other"
+      ],
+      "description": "Industry type"
+    },
+    "interest_type": {
+      "type": "string",
+      "enum": [
+        "White Label",
+        "Wholesale",
+        "Partnership",
+        "General Inquiry"
+      ],
+      "description": "Type of interest"
+    },
+    "company_size": {
+      "type": "string",
+      "description": "Number of employees or locations"
+    },
+    "message": {
+      "type": "string",
+      "description": "Additional details"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "closed"
+      ],
+      "default": "new",
+      "description": "Inquiry status"
+    }
+  },
+  "required": [
+    "company_name",
+    "contact_name",
+    "email",
+    "interest_type"
+  ]
+}

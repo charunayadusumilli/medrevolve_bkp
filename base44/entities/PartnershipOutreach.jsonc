@@ -1,0 +1,110 @@
+{
+  "name": "PartnershipOutreach",
+  "type": "object",
+  "properties": {
+    "partner_name": {
+      "type": "string",
+      "description": "Partner company name"
+    },
+    "partner_type": {
+      "type": "string",
+      "enum": [
+        "pharmacy",
+        "telehealth_platform",
+        "marketing_agency",
+        "payment_processor",
+        "compliance_service",
+        "white_label_provider"
+      ],
+      "description": "Type of partner"
+    },
+    "website": {
+      "type": "string",
+      "description": "Partner website URL"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "Primary contact email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "researching",
+        "outreach_sent",
+        "follow_up",
+        "in_discussion",
+        "agreement_sent",
+        "active",
+        "declined"
+      ],
+      "default": "researching",
+      "description": "Partnership stage"
+    },
+    "core_services": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key services they offer"
+    },
+    "integration_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Potential integration touchpoints"
+    },
+    "api_documentation": {
+      "type": "string",
+      "description": "URL to their API docs"
+    },
+    "outreach_email": {
+      "type": "string",
+      "description": "Generated outreach email content"
+    },
+    "outreach_sent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When outreach was sent"
+    },
+    "last_follow_up": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last follow-up date"
+    },
+    "response_received": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether they responded"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Partnership notes"
+    },
+    "estimated_effort": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "description": "Integration implementation effort"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium",
+      "description": "Partnership priority"
+    }
+  },
+  "required": [
+    "partner_name",
+    "partner_type",
+    "website"
+  ]
+}

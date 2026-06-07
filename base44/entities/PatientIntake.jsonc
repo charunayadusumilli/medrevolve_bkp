@@ -1,0 +1,69 @@
+{
+  "name": "PatientIntake",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Patient email"
+    },
+    "age": {
+      "type": "string",
+      "description": "Patient age"
+    },
+    "weight": {
+      "type": "string",
+      "description": "Current weight"
+    },
+    "height": {
+      "type": "string",
+      "description": "Height"
+    },
+    "goal_weight": {
+      "type": "string",
+      "description": "Goal weight"
+    },
+    "medical_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pre-existing medical conditions"
+    },
+    "medications": {
+      "type": "string",
+      "description": "Current medications"
+    },
+    "allergies": {
+      "type": "string",
+      "description": "Known allergies"
+    },
+    "previous_treatments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Previous weight loss treatments"
+    },
+    "lifestyle_diet": {
+      "type": "string",
+      "description": "Current diet description"
+    },
+    "lifestyle_exercise": {
+      "type": "string",
+      "description": "Exercise frequency"
+    },
+    "primary_goal": {
+      "type": "string",
+      "description": "Primary health goal"
+    },
+    "answers_json": {
+      "type": "string",
+      "description": "Full questionnaire answers as JSON"
+    }
+  },
+  "required": [
+    "answers_json"
+  ],
+  "rls": {}
+}

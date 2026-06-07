@@ -1,0 +1,96 @@
+{
+  "name": "PharmacyIntake",
+  "type": "object",
+  "properties": {
+    "pharmacy_name": {
+      "type": "string",
+      "description": "Pharmacy name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact person"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Pharmacy phone"
+    },
+    "license_number": {
+      "type": "string",
+      "description": "Pharmacy license number"
+    },
+    "npi_number": {
+      "type": "string",
+      "description": "National Provider Identifier"
+    },
+    "address": {
+      "type": "string",
+      "description": "Physical address"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "state": {
+      "type": "string",
+      "description": "State"
+    },
+    "zip_code": {
+      "type": "string",
+      "description": "ZIP code"
+    },
+    "pharmacy_type": {
+      "type": "string",
+      "enum": [
+        "Compounding",
+        "Retail",
+        "Mail Order",
+        "Specialty",
+        "Hospital"
+      ],
+      "description": "Type of pharmacy"
+    },
+    "services_offered": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Services provided"
+    },
+    "shipping_capabilities": {
+      "type": "string",
+      "enum": [
+        "Local Only",
+        "State-Wide",
+        "National"
+      ],
+      "description": "Shipping reach"
+    },
+    "partnership_interest": {
+      "type": "string",
+      "description": "Why they want to partner"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Application status"
+    }
+  },
+  "required": [
+    "pharmacy_name",
+    "contact_name",
+    "email",
+    "license_number",
+    "pharmacy_type"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "name": "PharmacyContract",
+  "type": "object",
+  "properties": {
+    "pharmacy_name": {
+      "type": "string",
+      "description": "Pharmacy business name"
+    },
+    "contact_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary contact email"
+    },
+    "contact_phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "license_number": {
+      "type": "string",
+      "description": "Pharmacy license number"
+    },
+    "npi_number": {
+      "type": "string",
+      "description": "National Provider Identifier"
+    },
+    "address": {
+      "type": "string",
+      "description": "Physical address"
+    },
+    "states_serviced": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "States where pharmacy can fulfill"
+    },
+    "pharmacy_type": {
+      "type": "string",
+      "enum": [
+        "Compounding",
+        "Retail",
+        "Specialty",
+        "Mail Order"
+      ],
+      "description": "Type of pharmacy"
+    },
+    "contract_type": {
+      "type": "string",
+      "enum": [
+        "wholesale_pricing",
+        "per_prescription",
+        "hybrid"
+      ],
+      "description": "Pricing model"
+    },
+    "products_available": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Product IDs available from this pharmacy"
+    },
+    "wholesale_discount_percentage": {
+      "type": "number",
+      "description": "Wholesale discount percentage off retail"
+    },
+    "average_fulfillment_days": {
+      "type": "integer",
+      "default": 3,
+      "description": "Average days to fulfill orders"
+    },
+    "shipping_methods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Available shipping methods"
+    },
+    "contract_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Contract effective date"
+    },
+    "contract_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Contract expiration date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "suspended",
+        "terminated",
+        "expired"
+      ],
+      "default": "draft",
+      "description": "Contract status"
+    },
+    "total_prescriptions_filled": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total prescriptions fulfilled"
+    },
+    "total_revenue": {
+      "type": "number",
+      "default": 0,
+      "description": "Total revenue from partnership"
+    }
+  },
+  "required": [
+    "pharmacy_name",
+    "contact_email",
+    "license_number",
+    "contract_type"
+  ]
+}
