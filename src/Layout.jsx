@@ -54,16 +54,7 @@ export default function Layout({ children }) {
       gtag('js', new Date());
       gtag('config', 'G-BZTEFSTDPL');
     }
-    // IONOS
-    if (!document.getElementById('ionos-web-chat')) {
-      const i = document.createElement('script');
-      i.id = 'ionos-web-chat';
-      i.src = 'https://ionos.ai-voice-receptionist.com/chat-scripts-MqGN74WP/web-chat.js';
-      i.setAttribute('name', 'web-chat');
-      i.setAttribute('data-client-secret', 'b7ca0b0f-ecbd-43b6-bddf-0ad67f8f6eb1');
-      i.defer = true;
-      document.body.appendChild(i);
-    }
+
   }, []);
 
   useEffect(() => {
