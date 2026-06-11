@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,8 +8,8 @@ import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
 import { 
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
-  HelpCircle, Package, ArrowRight, Users, Building2,
-  CreditCard, Shield, Stethoscope, Pill, Sparkles, HeartPulse
+  HelpCircle, ArrowRight, Users, Building2,
+  CreditCard, Shield, Stethoscope, Pill, HeartPulse
 } from 'lucide-react';
 
 const contactMethods = [
@@ -93,17 +94,17 @@ const departmentEmails = [
     color: '#7c3aed',
   },
   {
-    icon: Sparkles,
-    dept: 'Creator Program',
-    desc: 'Influencer applications, affiliate links, commissions',
-    email: 'creators@medrevolve.com',
+    icon: Users,
+    dept: 'Operator Partnerships',
+    desc: 'Referral programs, affiliate operator deals, co-branded launches',
+    email: 'partners@medrevolve.com',
     color: '#db2777',
   },
 ];
 
 const quickLinks = [
-  { icon: HelpCircle, title: 'FAQs', description: 'Find quick answers to common questions' },
-  { icon: Package, title: 'Track Order', description: 'Check the status of your shipment' }
+  { icon: HelpCircle, title: 'FAQs', description: 'Common questions about the platform and launch process', href: '/University' },
+  { icon: Building2, title: 'Book a Demo', description: 'See the platform live — 30-minute walkthrough', href: '/MerchantOnboarding' }
 ];
 
 export default function Contact() {
@@ -152,10 +153,10 @@ export default function Contact() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h1 className="text-4xl md:text-5xl font-light text-[#2D3A2D] mb-4">
-              Get in <span className="font-medium text-[#4A6741]">Touch</span>
+              Talk to a <span className="font-medium text-[#4A6741]">Platform Specialist</span>
             </h1>
             <p className="text-lg text-[#5A6B5A]">
-              Have questions? We're here to help. Reach out through any of the methods below.
+              Whether you're exploring the platform, ready to launch, or have a partnership inquiry — reach the right team directly.
             </p>
           </motion.div>
 
@@ -325,18 +326,20 @@ export default function Contact() {
               {quickLinks.map((link, index) => {
                 const Icon = link.icon;
                 return (
-                  <div 
+                  <Link
                     key={link.title}
-                    className="bg-white rounded-2xl p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer"
+                    to={link.href}
+                    className="bg-white rounded-2xl p-6 flex items-center gap-4 hover:shadow-lg transition-shadow group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-6 h-6 text-[#4A6741]" />
+                    <div className="w-12 h-12 rounded-xl bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#4A6741] transition-colors">
+                      <Icon className="w-6 h-6 text-[#4A6741] group-hover:text-white transition-colors" />
                     </div>
                     <div>
                       <h3 className="font-medium text-[#2D3A2D]">{link.title}</h3>
                       <p className="text-sm text-[#5A6B5A]">{link.description}</p>
                     </div>
-                  </div>
+                    <ArrowRight className="w-4 h-4 text-gray-300 ml-auto group-hover:text-[#4A6741] transition-colors" />
+                  </Link>
                 );
               })}
 

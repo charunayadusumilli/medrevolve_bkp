@@ -15,12 +15,12 @@ const PROOF_POINTS = [
 export default function B2BHero() {
   return (
     <section className="relative bg-[#060606] overflow-hidden">
-      {/* Background image overlay */}
+      {/* Background image overlay — B2B clinic/business environment */}
       <div className="absolute inset-0"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a?w=1800&q=40)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1800&q=40)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center 30%',
+          backgroundPosition: 'center 20%',
         }} />
       <div className="absolute inset-0 bg-gradient-to-r from-[#060606] via-[#060606]/95 to-[#060606]/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#060606] via-transparent to-transparent" />

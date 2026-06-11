@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, GraduationCap, BookOpen, Users, Building2, ChevronDown, ChevronUp, FileText, Video, Zap } from 'lucide-react';
+import { ArrowRight, GraduationCap, BookOpen, Building2, ChevronDown, ChevronUp, FileText, Zap } from 'lucide-react';
 
 const OPERATOR_TRACKS = [
   {
@@ -61,38 +61,7 @@ const OPERATOR_TRACKS = [
   },
 ];
 
-const PATIENT_TOPICS = [
-  {
-    title: 'Understanding Your Care Plan',
-    desc: 'What your physician-directed care plan means and what to expect at each stage.',
-    icon: '📋',
-  },
-  {
-    title: 'Telehealth Consultations — What to Expect',
-    desc: 'How your video or async consultation works and how to prepare.',
-    icon: '💻',
-  },
-  {
-    title: 'Your Prescription & Pharmacy',
-    desc: 'How prescriptions are issued, fulfilled, and delivered through licensed pharmacies.',
-    icon: '📦',
-  },
-  {
-    title: 'Refills, Follow-Ups & Check-Ins',
-    desc: 'How to manage ongoing care, request dosage adjustments, and message your provider.',
-    icon: '🔄',
-  },
-  {
-    title: 'HIPAA & Your Health Privacy',
-    desc: 'Your rights as a patient and how MedRevolve protects your health information.',
-    icon: '🔒',
-  },
-  {
-    title: 'Understanding Medical Disclaimers',
-    desc: 'What it means that MedRevolve is a services platform, not a pharmacy or prescriber.',
-    icon: '⚖️',
-  },
-];
+// Patient topics removed — MedRevolve is B2B only. Education is for operators.
 
 const RESOURCES = [
   { label: 'Privacy Policy', href: '/Privacy', icon: FileText },
@@ -105,32 +74,32 @@ const RESOURCES = [
 
 const FAQS = [
   {
-    q: 'Does MedRevolve sell medications?',
-    a: 'No. MedRevolve is a services company. We connect patients with independently licensed healthcare providers. If a prescription is appropriate, it is issued by a licensed physician and fulfilled by a licensed pharmacy — not by MedRevolve.',
+    q: 'What exactly does MedRevolve build for me?',
+    a: 'MedRevolve delivers a fully white-labeled telehealth platform under your brand — this includes your website, HIPAA-compliant patient intake, a connected provider network (all 50 states), pharmacy routing, Stripe checkout, CRM automation, and compliance documentation. You own the brand; we operate the infrastructure.',
   },
   {
-    q: 'Are MedRevolve\'s providers licensed in my state?',
-    a: 'Yes. All providers in our network are licensed to practice telemedicine in all 50 states. Your intake form helps us match you with the right licensed provider for your state.',
+    q: 'How long does it take to go live?',
+    a: 'For most operators, the platform is live within 7 business days of signing. The foundation phase (LLC, banking, domain) takes 1–3 days. Platform build and integration takes another 3–4 days. We\'ve launched over 50 platforms on this timeline.',
   },
   {
-    q: 'What is a physician-supervised wellness program?',
-    a: 'It means your treatment plan is designed and supervised by a licensed physician. The physician reviews your health history, determines if a treatment is medically appropriate, issues a prescription if warranted, and provides ongoing oversight of your care.',
+    q: 'Do I need to hire any staff or developers?',
+    a: 'No. MedRevolve is a fully managed service. We build it, maintain it, and operate the back-end (provider scheduling, pharmacy routing, compliance monitoring). You focus on sales and brand growth.',
   },
   {
-    q: 'Do I need insurance?',
-    a: 'No. MedRevolve operates on a direct-pay model. You pay for your consultation and care plan directly — no insurance billing. We can provide a superbill for potential out-of-network reimbursement.',
+    q: 'What is LegitScript and do I need it?',
+    a: 'LegitScript is an independent certification body that verifies online healthcare businesses as operating safely and legally. Major ad platforms (Google, Meta) require LegitScript certification to run paid health-related ads. MedRevolve initiates and guides the certification process for every merchant partner.',
   },
   {
-    q: 'What is the difference between a B2B partner and a patient?',
-    a: 'Patients use MedRevolve to access physician-supervised wellness programs for their own health. B2B partners (clinics, wellness operators, entrepreneurs) work with MedRevolve to build their own branded telehealth business using our infrastructure.',
+    q: 'How does the provider network work?',
+    a: 'MedRevolve has a pre-credentialed network of board-certified physicians, NPs, and PAs licensed to practice across all 50 states. They are routed to your platform and see your patients under your brand. Providers use our integrated EMR, e-prescribing, and scheduling system.',
   },
   {
-    q: 'Is MedRevolve a pharmacy?',
-    a: 'No. MedRevolve is not a pharmacy and does not dispense medications. Prescriptions are routed to licensed 503A compounding pharmacies or licensed retail pharmacies that fulfill orders independently.',
+    q: 'What happens to pharmacy fulfillment?',
+    a: 'Once a provider issues a prescription through your platform, it is automatically routed to one of our NABP-verified 503A compounding pharmacy partners. The pharmacy fulfills and ships directly to the patient. No manual work on your end.',
   },
   {
-    q: 'What is LegitScript certification?',
-    a: 'LegitScript is an independent verification service that certifies online healthcare businesses as operating safely and legally. MedRevolve supports LegitScript certification for our B2B merchant partners as part of the onboarding process.',
+    q: 'Is MedRevolve a pharmacy or healthcare provider?',
+    a: 'No. MedRevolve Corporation is a B2B infrastructure and services company. We do not prescribe, dispense, or provide clinical care. All clinical services on operator platforms are delivered by independently licensed providers and NABP-verified pharmacies.',
   },
 ];
 
@@ -173,30 +142,30 @@ export default function University() {
               MedRevolve University
             </span>
             <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight">
-              Education for Operators<br />
-              <span className="text-white/35">and Patients</span>
+              Education for Telehealth<br />
+              <span className="text-white/35">Business Operators</span>
             </h1>
             <p className="text-white/50 text-lg max-w-xl mx-auto mb-8">
-              Free resources for telehealth business operators, wellness entrepreneurs, and patients who want to understand how physician-supervised care works.
+              Free resources for clinic owners, wellness entrepreneurs, and anyone building a telehealth business — from compliance fundamentals to scaling strategy.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a href="#operator">
                 <Button className="bg-white text-[#1F2D27] hover:bg-white/90 rounded-sm px-8 font-bold">
-                  <Building2 className="w-4 h-4 mr-2" /> Operator Education
+                  <Building2 className="w-4 h-4 mr-2" /> Browse Learning Tracks
                 </Button>
               </a>
-              <a href="#patient">
+              <Link to="/MerchantOnboarding">
                 <Button variant="ghost" className="text-white/60 hover:text-white border border-white/10 hover:border-white/30 rounded-sm px-8">
-                  <Users className="w-4 h-4 mr-2" /> Patient Education
+                  <ArrowRight className="w-4 h-4 mr-2" /> Book a Demo
                 </Button>
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Operator Tracks */}
-      <section id="operator" className="py-20 px-6 bg-gray-50">
+      <section id="operator" className="py-20 px-6 bg-gray-50" style={{scrollMarginTop: '100px'}}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">For Business Operators</p>
@@ -267,30 +236,23 @@ export default function University() {
         </div>
       </section>
 
-      {/* Patient Education */}
-      <section id="patient" className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">For Patients</p>
-            <h2 className="text-3xl font-black text-gray-900 mb-3">Understanding Your Care</h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-sm">
-              Clear, honest information about how physician-supervised telehealth works and what to expect as a patient.
-            </p>
+      {/* CTA Banner replacing patient section */}
+      <section className="py-16 px-6 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 bg-[#1F2D27] rounded-2xl p-8">
+          <div className="text-white">
+            <p className="text-xs font-black uppercase tracking-widest text-[#A8C99B] mb-2">Ready to Launch?</p>
+            <h3 className="text-2xl font-black mb-2">Turn Knowledge Into a Platform</h3>
+            <p className="text-white/50 text-sm max-w-md">You've seen the education. Now build the business. MedRevolve handles everything technical, legal, and operational.</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PATIENT_TOPICS.map((topic, i) => (
-              <motion.div key={topic.title} {...fade(i * 0.06)}
-                className="border border-gray-100 rounded-xl p-6 hover:shadow-md hover:border-gray-200 transition-all">
-                <div className="text-3xl mb-3">{topic.icon}</div>
-                <h3 className="font-bold text-gray-900 text-sm mb-2">{topic.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{topic.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link to="/CustomerIntake">
-              <Button className="rounded-sm px-8 font-bold text-white" style={{ backgroundColor: '#A66B3C' }}>
-                Start Your Free Intake <ArrowRight className="w-4 h-4 ml-1" />
+          <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+            <Link to="/MerchantOnboarding">
+              <Button className="bg-white text-[#1F2D27] hover:bg-white/90 rounded-sm px-7 font-bold text-sm">
+                Book a Demo <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </Link>
+            <Link to="/Contact">
+              <Button variant="ghost" className="text-white/60 hover:text-white border border-white/20 hover:border-white/40 rounded-sm px-6 text-sm">
+                Talk to a Specialist
               </Button>
             </Link>
           </div>
