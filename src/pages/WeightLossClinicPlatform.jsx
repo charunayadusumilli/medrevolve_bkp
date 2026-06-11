@@ -33,7 +33,10 @@ const INCLUDED = [
 export default function WeightLossClinicPlatform() {
   return (
     <div className="bg-white">
-      <SEOHead />
+      <SEOHead
+        title="GLP-1 & Weight-Loss Clinic Platform | MedRevolve"
+        description="The GLP-1 and weight-loss clinic platform — provider network, intake, telehealth, and payments in one."
+      />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">
@@ -42,8 +45,8 @@ export default function WeightLossClinicPlatform() {
             Medical Weight Loss Clinic Platform
           </motion.span>
           <motion.h1 {...fade(0.1)} className="text-4xl md:text-5xl font-black leading-tight mb-5">
-            Start a Medical Weight Loss Clinic<br />
-            <span className="text-yellow-400">Without Hiring a Single Doctor</span>
+            The GLP-1 and weight-loss platform<br />
+            <span className="text-yellow-400">that runs your clinic.</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
             2,400 entrepreneurs search "how to start a medical weight loss clinic" every month. MedRevolve is the only platform that gives you the complete infrastructure — physicians, pharmacy, compliance, technology — all in one.

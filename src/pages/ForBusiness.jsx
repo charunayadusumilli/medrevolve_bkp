@@ -160,11 +160,11 @@ export default function ForBusiness() {
               <span className="text-[#A8C99B] text-xs font-bold tracking-widest uppercase">Full-Service Telehealth Business Infrastructure</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-none" style={{ letterSpacing: '-0.03em' }}>
-              We Build Your Business.<br />
-              <span className="text-[#A8C99B]">You Own the Brand.</span>
+              Run your clinic on infrastructure<br />
+              <span className="text-[#A8C99B]">built for it.</span>
             </h1>
             <p className="text-xl text-white/45 max-w-2xl mx-auto mb-10">
-              MedRevolve is a B2B services company. We build compliant telehealth platforms for wellness operators — website, provider integration, pharmacy network, merchant accounts, and compliance, all set up under your brand.
+              MedRevolve is the white-label telehealth platform powering the next generation of med spas, IV clinics, TRT practices, and weight-loss programs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to={createPageUrl('MerchantOnboarding')}>

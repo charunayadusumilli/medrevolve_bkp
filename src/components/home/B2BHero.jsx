@@ -2,14 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle, Phone } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
 const PROOF_POINTS = [
-  'Website + storefront in 7 days',
-  'Licensed providers — all 50 states',
-  'Pharmacy network included',
-  'HIPAA compliant by default',
-  'Full merchant account setup',
+  'White-label, on your domain — patients see your brand, your clinic, your colors',
+  'Provider network, ready to plug in — multi-state credentialed clinicians via Qualiphy',
+  'Compliance built in — HIPAA, BAA, state telehealth laws, payment compliance',
 ];
 
 export default function B2BHero() {
@@ -38,28 +36,28 @@ export default function B2BHero() {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none mb-6"
               style={{ letterSpacing: '-0.03em' }}>
-              The Infrastructure<br />Behind Your<br />
-              <span className="text-[#A8C99B]">Telehealth Brand.</span>
+              The white-label telehealth platform<br />
+              <span className="text-[#A8C99B]">built for clinics that scale.</span>
             </h1>
 
-            <p className="text-lg text-white/45 leading-relaxed mb-4 max-w-lg">
-              MedRevolve gives operators a complete, compliant telehealth platform — under your brand, in your name. No building. No licensing. No compliance guesswork.
+            <p className="text-lg text-white/45 leading-relaxed mb-4 max-w-xl">
+              Med spas, IV clinics, TRT practices, weight-loss programs — launch your branded patient experience on infrastructure built for multi-state compliance, provider workflows, and payments.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link to="/MerchantOnboarding">
+              <Link to="/PersonalizedDemo">
                 <Button size="lg"
                   className="bg-white text-[#060606] hover:bg-white/90 rounded-sm px-10 font-black text-base h-auto py-4">
-                  Book a Free Discovery Call
+                  Book a Demo
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <a href="tel:+12403875224">
+              <Link to="/Platform">
                 <Button size="lg" variant="ghost"
                   className="text-white border border-white/15 hover:bg-white/8 hover:border-white/30 rounded-sm px-8 text-base h-auto py-4">
-                  <Phone className="w-4 h-4 mr-2" /> 240-387-5224
+                  See the Platform
                 </Button>
-              </a>
+              </Link>
             </div>
 
             {/* Proof points */}

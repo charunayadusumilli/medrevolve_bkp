@@ -144,7 +144,7 @@ export default function Layout({ children }) {
                     <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📥 Inbox</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to="/GrowthDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📈 Growth & Analytics</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/GodModeAds" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-bold text-yellow-700 hover:bg-yellow-50">⚡ God Mode Ads</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/AdsManager" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-bold text-yellow-700 hover:bg-yellow-50">⚡ Ads Manager</Link></DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem asChild><Link to="/SystemArchitecture" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">⚙️ System Architecture</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to="/ComplianceAuditReport" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-50">📋 Compliance Audit</Link></DropdownMenuItem>
@@ -172,9 +172,9 @@ export default function Layout({ children }) {
                     </div>
                     <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('PatientPortal')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                      <a href="https://app.medrevolve.com/portal" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
                         <LayoutDashboard className="w-4 h-4" /> My Portal
-                      </Link>
+                      </a>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
@@ -231,8 +231,8 @@ export default function Layout({ children }) {
                       ))}
                       {user && (
                         <div className="pt-4 border-t border-gray-100 mt-2 space-y-1">
-                          <Link to={createPageUrl('PatientPortal')} className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</Link>
-                          {user.role === 'admin' && <Link to={createPageUrl('AdminDashboard')} className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>Admin</Link>}
+                          <a href="https://app.medrevolve.com/portal" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</a>
+                          {user.role === 'admin' && <Link to="/AdminDashboard" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>Admin</Link>}
                         </div>
                       )}
                     </nav>

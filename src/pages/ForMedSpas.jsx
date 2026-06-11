@@ -33,7 +33,10 @@ const STATS = [
 export default function ForMedSpas() {
   return (
     <div className="bg-white">
-      <SEOHead />
+      <SEOHead
+        title="Launch Your Med Spa's Telehealth in 30 Days | MedRevolve"
+        description="Run your med spa with the white-label telehealth platform built for aesthetic medicine. HIPAA-compliant, multi-state, ready to launch."
+      />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">
@@ -42,8 +45,8 @@ export default function ForMedSpas() {
             Med Spa & Aesthetic Clinic Platform
           </motion.span>
           <motion.h1 {...fade(0.1)} className="text-4xl md:text-5xl font-black leading-tight mb-5">
-            Add a GLP-1 Weight Loss Program<br />
-            <span className="text-green-400">to Your Med Spa — in 7 Days</span>
+            Launch your med spa's telehealth<br />
+            <span className="text-green-400">in 30 days.</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
             MedRevolve gives med spas and aesthetic clinics a complete, physician-supervised telehealth weight loss program — fully white-labeled under your brand, HIPAA compliant, and generating recurring monthly revenue from day one.

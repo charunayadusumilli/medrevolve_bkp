@@ -22,6 +22,13 @@ export default function MedicalDisclaimer() {
           <div className="prose prose-slate max-w-none space-y-8">
 
             <section>
+              <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">About MedRevolve — SaaS Platform, Not a Healthcare Provider</h2>
+              <p className="text-[#5A6B5A] leading-relaxed">
+                MedRevolve Corporation is a software-as-a-service (SaaS) platform that provides technology and infrastructure to independent licensed healthcare clinics. MedRevolve is NOT a healthcare provider and does not provide medical advice, diagnosis, or treatment. All medical decisions and patient care are the sole responsibility of the licensed clinicians using the platform.
+              </p>
+            </section>
+
+            <section>
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">Not Medical Advice</h2>
               <p className="text-[#5A6B5A] leading-relaxed">
                 The content on MedRevolve.com — including text, graphics, images, blog posts, case studies, testimonials, educational materials, and any other materials — is provided for <strong>general informational and educational purposes only</strong>. It does not constitute medical advice, diagnosis, treatment recommendation, or a substitute for professional medical consultation from a qualified, licensed healthcare provider who has examined you and has knowledge of your medical history.

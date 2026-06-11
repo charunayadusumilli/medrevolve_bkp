@@ -30,7 +30,6 @@ import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import CookiePolicy from './pages/CookiePolicy';
 
 // ── AUTH-GATED PORTALS (require login — handled by the pages themselves) ──────
-import PatientPortal from './pages/PatientPortal';
 import AccountSettings from './pages/AccountSettings';
 import MerchantDashboard from './pages/MerchantDashboard';
 
@@ -60,7 +59,6 @@ export const PAGES = {
     "CookiePolicy": CookiePolicy,
 
     // Auth-gated portals
-    "PatientPortal": PatientPortal,
     "AccountSettings": AccountSettings,
     "MerchantDashboard": MerchantDashboard,
 }

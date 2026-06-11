@@ -26,7 +26,10 @@ const FEATURES = [
 export default function TRTClinicPlatform() {
   return (
     <div className="bg-white">
-      <SEOHead />
+      <SEOHead
+        title="TRT Clinic Platform for Hormone-Optimization Practices | MedRevolve"
+        description="Launch a TRT practice on the platform built for hormone-optimization clinics. Provider network, compliance, payments, all included."
+      />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">
@@ -35,8 +38,8 @@ export default function TRTClinicPlatform() {
             TRT & Men's Health Clinic Platform
           </motion.span>
           <motion.h1 {...fade(0.1)} className="text-4xl md:text-5xl font-black leading-tight mb-5">
-            Start a TRT Telehealth Company<br />
-            <span className="text-blue-400">Without Building the Infrastructure</span>
+            The TRT clinic platform built for<br />
+            <span className="text-blue-400">hormone-optimization practices.</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
             MedRevolve gives entrepreneurs and clinic owners a complete testosterone replacement therapy telehealth platform — white-labeled, fully compliant, with licensed physicians in all 50 states and pharmacy fulfillment built in.

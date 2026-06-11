@@ -35,7 +35,10 @@ const INCLUDED = [
 export default function IVTherapyClinicPlatform() {
   return (
     <div className="bg-white">
-      <SEOHead />
+      <SEOHead
+        title="IV Therapy Clinic Platform | MedRevolve"
+        description="Power your IV therapy clinic with HIPAA-compliant scheduling, intake, and provider workflows. White-label, multi-state, launch-ready."
+      />
 
       {/* ── HERO ── */}
       <section className="bg-[#0A0A0A] text-white py-20 px-6">
@@ -44,8 +47,8 @@ export default function IVTherapyClinicPlatform() {
             IV Therapy & Wellness Clinic Platform
           </motion.span>
           <motion.h1 {...fade(0.1)} className="text-4xl md:text-5xl font-black leading-tight mb-5">
-            Add Telehealth to Your<br />
-            <span className="text-cyan-400">IV Therapy Clinic — in 7 Days</span>
+            Power your IV therapy clinic<br />
+            <span className="text-cyan-400">with one platform.</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
             IV therapy clinics are the fastest growing category for telehealth add-ons. MedRevolve gives your clinic a full physician-supervised telehealth wing — weight management, hormone optimization, and longevity protocols — all under your existing brand.
