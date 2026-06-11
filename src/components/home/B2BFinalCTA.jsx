@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
 
 const WHAT_YOU_GET = [
-  '14-day free trial — full platform access, no credit card',
-  '1-hour free onboarding call with a MedRevolve specialist',
-  'Full platform architecture walkthrough for your business',
-  'Compliance & legal structure guidance',
-  'Provider & pharmacy network introduction',
-  'Marketing & launch strategy built for your niche',
+  'Try free for 14 days — $0 charged today',
+  '1-on-1 onboarding call with a MedRevolve specialist',
+  'Full branded telehealth platform built for your niche',
+  'Compliance, HIPAA & legal structure included',
+  'Provider & licensed pharmacy network connected',
+  'Cancel anytime before your trial ends',
 ];
 
 export default function B2BFinalCTA() {
@@ -33,7 +33,7 @@ export default function B2BFinalCTA() {
               <span className="text-[#A8C99B]">Business?</span>
             </h2>
             <p className="text-white/40 text-base leading-relaxed mb-8">
-              Start your 14-day free trial. One call. Everything mapped out. Your platform live within days — no credit card required.
+              Try your full telehealth platform free for 14 days. One call, everything set up, live within days. $0 charged today — cancel anytime.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -65,11 +65,11 @@ export default function B2BFinalCTA() {
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <p className="text-white font-black text-2xl">Free Trial</p>
-                  <p className="text-white/30 text-xs">14-Day Full Platform Access</p>
+                  <p className="text-white font-black text-2xl">$0 Today</p>
+                  <p className="text-white/30 text-xs">14-Day Trial · Cancel Anytime</p>
                 </div>
                 <span className="text-[10px] font-black text-green-400 bg-green-400/10 border border-green-400/20 rounded-full px-3 py-1">
-                  NO CREDIT CARD
+                  TRY FREE
                 </span>
               </div>
 
@@ -84,14 +84,14 @@ export default function B2BFinalCTA() {
               </ul>
 
               <div className="border-t border-white/10 pt-5">
-                <p className="text-white/30 text-xs mb-3">After your free trial:</p>
+                <p className="text-white/30 text-xs mb-3">How it works:</p>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/50">A specialist will reach out</span>
+                  <span className="text-white/50">Specialist calls you</span>
                   <span className="text-[#6B8F5E] font-bold">Within 24 hrs</span>
                 </div>
                 <div className="flex items-center justify-between text-sm mt-1">
-                  <span className="text-white/50">No obligation</span>
-                  <span className="text-[#6B8F5E] font-bold">Cancel anytime</span>
+                  <span className="text-white/50">Trial period</span>
+                  <span className="text-[#6B8F5E] font-bold">14 days · Cancel anytime</span>
                 </div>
               </div>
             </div>

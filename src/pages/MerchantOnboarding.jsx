@@ -10,7 +10,7 @@ import { trackDigestEvent } from '@/lib/digestTracker';
 import {
   Check, ArrowRight, ArrowLeft, Loader2, Zap, Lock, AlertCircle,
   Phone, Mail, Building, Globe2, User, Heart, Activity, Clock,
-  ShoppingBag, Stethoscope, ShieldCheck, CheckCircle2,
+  ShoppingBag, Stethoscope, ShieldCheck, CheckCircle2, CreditCard,
   Calendar, Star, Sparkles, ExternalLink, Monitor, PartyPopper
 } from 'lucide-react';
 
@@ -53,13 +53,12 @@ const REVENUE_RANGES = [
 ];
 
 const CALL_INCLUDES = [
-  'Live walkthrough of your complete telehealth platform setup',
-  'Domain, website & storefront configuration',
-  'Provider & pharmacy network onboarding',
-  'Compliance framework & legal structure guidance',
-  'Payment processing & merchant account setup',
-  'Marketing & growth strategy for your niche',
-  '14-day free trial — no credit card required',
+  'Try free for 14 days — $0 charged today',
+  '1-on-1 onboarding call with a MedRevolve specialist',
+  'Full branded telehealth platform built for your business',
+  'Provider & pharmacy network fully connected',
+  'Compliance, payments & marketing infrastructure included',
+  'Cancel anytime before trial ends — no commitment',
 ];
 
 const NICHE_MAP = {
@@ -204,7 +203,24 @@ export default function MerchantOnboarding() {
         phone: form.phone,
       });
 
-      setSubmitted(true);
+      // Create Stripe checkout to collect card on file — $0 charge, trial activation
+      const checkoutRes = await base44.functions.invoke('merchantSetupCheckout', {
+        businessName: form.businessName,
+        contactName: contactName,
+        email: form.email,
+        partnerCode,
+        amount: 0,
+        description: 'MedRevolve 14-Day Trial Activation — Your card is saved to activate your platform. You will not be charged today.',
+        successUrl: `${window.location.origin}/MerchantOnboarding?trial=activated&partner=${partnerCode}`,
+        cancelUrl: `${window.location.origin}/MerchantOnboarding?canceled=1`,
+      });
+
+      if (checkoutRes?.data?.url) {
+        window.location.href = checkoutRes.data.url;
+      } else {
+        // Fallback: just show success if checkout not available
+        setSubmitted(true);
+      }
     } catch (e) {
       setError(e.message);
     } finally {
@@ -221,10 +237,10 @@ export default function MerchantOnboarding() {
           <div className="w-20 h-20 rounded-full bg-[#4A6741]/20 border border-[#4A6741]/40 flex items-center justify-center mx-auto mb-6">
             <PartyPopper className="w-9 h-9 text-[#6B8F5E]" />
           </div>
-          <h1 className="text-3xl font-black text-white mb-3">You're on the List! 🎉</h1>
+          <h1 className="text-3xl font-black text-white mb-3">Trial Activated! 🎉</h1>
           <p className="text-white/50 text-base leading-relaxed mb-8">
-            Thanks, <span className="text-white font-semibold">{form.firstName}</span>! Your 14-day free trial request for <span className="text-white font-semibold">{form.businessName}</span> has been received.
-            A MedRevolve specialist will reach out within <span className="text-[#6B8F5E] font-bold">24 hours</span> to schedule your onboarding call and get your platform live.
+            Welcome, <span className="text-white font-semibold">{form.firstName}</span>! Your 14-day trial for <span className="text-white font-semibold">{form.businessName}</span> is being set up now.
+            A MedRevolve specialist will reach out within <span className="text-[#6B8F5E] font-bold">24 hours</span> to onboard you and get your platform live.
           </p>
 
           <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left space-y-3 mb-8">
@@ -238,11 +254,11 @@ export default function MerchantOnboarding() {
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">2</div>
-                <p>We schedule your <span className="text-white font-semibold">free onboarding strategy call</span> — no credit card needed</p>
+                <p>We schedule your <span className="text-white font-semibold">onboarding strategy call</span> and walk through your platform live</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">3</div>
-                <p>Your <span className="text-white font-semibold">14-day free trial</span> platform goes live — full access, no commitment</p>
+                <p>Your <span className="text-white font-semibold">14-day trial</span> platform goes live — full access, cancel anytime</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">4</div>
@@ -269,11 +285,11 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-4 py-1.5 mb-4 text-[#6B8F5E] text-xs font-bold uppercase tracking-wide">
-            <Sparkles className="w-3 h-3" /> 14-Day Free Trial — No Credit Card Required
+            <Sparkles className="w-3 h-3" /> Try Free for 14 Days — Cancel Anytime
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Launch Your Telehealth Business</h1>
           <p className="text-white/50 text-sm max-w-lg mx-auto">
-            Tell us about your business and we'll reach back to schedule your free onboarding call and activate your trial platform.
+            Get your full telehealth platform live in days. Start your 14-day trial today — a specialist will reach out to get everything activated.
           </p>
         </div>
 
@@ -314,7 +330,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">👋 Hi! Tell us about yourself</h2>
-                      <p className="text-white/50 text-sm">We'll use this to reach out and schedule your free onboarding call.</p>
+                      <p className="text-white/50 text-sm">We'll use this to reach out and activate your 14-day trial platform.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
@@ -344,7 +360,7 @@ export default function MerchantOnboarding() {
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
                           placeholder="(555) 123-4567"
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
-                        <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your free onboarding session</p>
+                        <p className="text-white/30 text-xs mt-1">We'll call or text to activate your trial and walk through your platform setup</p>
                       </div>
                     </div>
                   </>
@@ -355,7 +371,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">🏢 Tell us about your business</h2>
-                      <p className="text-white/50 text-sm">This helps us tailor your free trial platform and onboarding agenda.</p>
+                      <p className="text-white/50 text-sm">This helps us tailor your 14-day trial platform and onboarding agenda.</p>
                     </div>
                     <div className="grid gap-4">
                       <div>
@@ -422,7 +438,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">🎯 What are your goals?</h2>
-                      <p className="text-white/50 text-sm">Pick everything you want to offer on your trial platform.</p>
+                      <p className="text-white/50 text-sm">Pick everything you want to offer. We'll pre-configure your platform around these.</p>
                     </div>
                     <div>
                       <Label className="text-[#6B8F5E] text-xs uppercase font-semibold mb-3 block">Services / Products You Want to Offer *</Label>
@@ -526,19 +542,19 @@ export default function MerchantOnboarding() {
                 {step === 4 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold mb-1">🚀 Start Your Free Trial</h2>
-                      <p className="text-white/50 text-sm">No credit card. No commitment. A specialist will reach out within 24 hours to get you started.</p>
+                      <h2 className="text-xl font-bold mb-1">🚀 Activate Your 14-Day Trial</h2>
+                      <p className="text-white/50 text-sm">Lock in your spot. Your card is saved to activate the platform — you won't be charged during your trial. Cancel anytime.</p>
                     </div>
 
                     {/* Trial summary card */}
                     <div className="bg-white/8 border border-[#4A6741]/40 rounded-xl p-5 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-white font-bold text-lg">14-Day Free Trial</p>
-                          <p className="text-white/50 text-sm">Full platform access · No credit card required</p>
+                          <p className="text-white font-bold text-lg">14-Day Trial — $0 Today</p>
+                          <p className="text-white/50 text-sm">Full platform access · Card saved · Cancel anytime</p>
                         </div>
                         <div className="bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-3 py-1 text-[#6B8F5E] text-xs font-black uppercase tracking-wide flex-shrink-0 ml-2">
-                          FREE
+                          TRIAL
                         </div>
                       </div>
                       <div className="border-t border-white/10 pt-3 space-y-2">
@@ -570,10 +586,10 @@ export default function MerchantOnboarding() {
                         <Calendar className="w-4 h-4" /> What happens after you submit
                       </p>
                       <div className="space-y-2 text-sm text-white/60">
-                        <p>1. A MedRevolve specialist reaches out within 24 hours</p>
-                        <p>2. We schedule your <span className="text-white font-semibold">free onboarding strategy call</span></p>
-                        <p>3. Your trial platform goes live — full access for 14 days</p>
-                        <p>4. You decide if you want to continue — we take it from there</p>
+                        <p>1. Complete checkout — your card is saved, <span className="text-white font-semibold">$0 charged today</span></p>
+                        <p>2. A MedRevolve specialist calls you within 24 hours</p>
+                        <p>3. Your platform goes live — full 14-day trial access</p>
+                        <p>4. After your trial, choose a plan or cancel — no pressure</p>
                       </div>
                     </div>
 
@@ -618,8 +634,8 @@ export default function MerchantOnboarding() {
             <Button onClick={handleSubmit} disabled={loading}
               className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] hover:opacity-90 text-white px-10 font-black text-base rounded-sm shadow-lg shadow-[#4A6741]/30 disabled:opacity-50">
               {loading
-                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</>
-                : <><Sparkles className="w-4 h-4 mr-2" /> Start My Free Trial</>
+                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Activating Trial...</>
+                : <><CreditCard className="w-4 h-4 mr-2" /> Activate My 14-Day Trial</>
               }
             </Button>
           )}
@@ -628,8 +644,8 @@ export default function MerchantOnboarding() {
         {/* Trust signals */}
         <div className="flex items-center justify-center gap-6 mt-8 text-white/20 text-xs">
           <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> HIPAA Compliant</span>
-          <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> No Credit Card</span>
-          <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" /> 14-Day Free Trial</span>
+          <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> Secured by Stripe</span>
+          <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" /> 14-Day Trial · Cancel Anytime</span>
         </div>
       </div>
     </div>
