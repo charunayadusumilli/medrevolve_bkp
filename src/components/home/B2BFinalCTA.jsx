@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
 
 const WHAT_YOU_GET = [
-  '1-hour live guided setup call with a MedRevolve specialist',
+  '14-day free trial — full platform access, no credit card',
+  '1-hour free onboarding call with a MedRevolve specialist',
   'Full platform architecture walkthrough for your business',
   'Compliance & legal structure guidance',
   'Provider & pharmacy network introduction',
-  'Payment processing & merchant account setup plan',
   'Marketing & launch strategy built for your niche',
 ];
 
@@ -33,14 +33,14 @@ export default function B2BFinalCTA() {
               <span className="text-[#A8C99B]">Business?</span>
             </h2>
             <p className="text-white/40 text-base leading-relaxed mb-8">
-              Book your $100 onboarding consultation. One hour. Everything mapped out. Your platform in motion within days.
+              Start your 14-day free trial. One call. Everything mapped out. Your platform live within days — no credit card required.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Link to="/MerchantOnboarding">
                 <Button size="lg"
                   className="bg-white text-[#060606] hover:bg-white/90 rounded-sm font-black text-base px-10 h-auto py-4">
-                  Book $100 Setup Call <ArrowRight className="ml-2 w-5 h-5" />
+                  Start Free Trial <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <a href="tel:+12403875224">
@@ -65,11 +65,11 @@ export default function B2BFinalCTA() {
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <p className="text-white font-black text-2xl">$100</p>
-                  <p className="text-white/30 text-xs">Onboarding Consultation</p>
+                  <p className="text-white font-black text-2xl">Free Trial</p>
+                  <p className="text-white/30 text-xs">14-Day Full Platform Access</p>
                 </div>
                 <span className="text-[10px] font-black text-green-400 bg-green-400/10 border border-green-400/20 rounded-full px-3 py-1">
-                  ONE-TIME
+                  NO CREDIT CARD
                 </span>
               </div>
 
@@ -84,14 +84,14 @@ export default function B2BFinalCTA() {
               </ul>
 
               <div className="border-t border-white/10 pt-5">
-                <p className="text-white/30 text-xs mb-3">After the consultation:</p>
+                <p className="text-white/30 text-xs mb-3">After your free trial:</p>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/50">Platform setup</span>
-                  <span className="text-white font-bold">$5,000 one-time</span>
+                  <span className="text-white/50">A specialist will reach out</span>
+                  <span className="text-[#6B8F5E] font-bold">Within 24 hrs</span>
                 </div>
                 <div className="flex items-center justify-between text-sm mt-1">
-                  <span className="text-white/50">Monthly operations</span>
-                  <span className="text-white font-bold">$2,500 / mo</span>
+                  <span className="text-white/50">No obligation</span>
+                  <span className="text-[#6B8F5E] font-bold">Cancel anytime</span>
                 </div>
               </div>
             </div>
