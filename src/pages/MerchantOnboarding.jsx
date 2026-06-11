@@ -10,8 +10,8 @@ import { trackDigestEvent } from '@/lib/digestTracker';
 import {
   Check, ArrowRight, ArrowLeft, Loader2, Zap, Lock, AlertCircle,
   Phone, Mail, Building, Globe2, User, Heart, Activity, Clock,
-  ShoppingBag, Stethoscope, CreditCard, ShieldCheck, CheckCircle2,
-  Calendar, DollarSign, Star, Sparkles, ExternalLink, Monitor
+  ShoppingBag, Stethoscope, ShieldCheck, CheckCircle2,
+  Calendar, Star, Sparkles, ExternalLink, Monitor, PartyPopper
 } from 'lucide-react';
 
 // ── Steps ──────────────────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@ const STEPS = [
   { id: 2, label: 'Your Business' },
   { id: 3, label: 'Your Goals' },
   { id: 3.5, label: 'See Your Site' },
-  { id: 4, label: 'Confirm & Pay' },
+  { id: 4, label: 'Get Started' },
 ];
 
 const BUSINESS_TYPES = [
@@ -52,18 +52,16 @@ const REVENUE_RANGES = [
   { value: '100k+', label: '$100k+/mo' },
 ];
 
-// ── What's included in the $100 onboarding call ────────────────────────────────
 const CALL_INCLUDES = [
   'Live walkthrough of your complete telehealth platform setup',
-  'How to open your business bank account (Brex/Stripe)',
   'Domain, website & storefront configuration',
   'Provider & pharmacy network onboarding',
   'Compliance framework & legal structure guidance',
   'Payment processing & merchant account setup',
   'Marketing & growth strategy for your niche',
+  '14-day free trial — no credit card required',
 ];
 
-// Primary niche for demo — first selected interest
 const NICHE_MAP = {
   weight_loss: 'weight_loss',
   hormones: 'hormones',
@@ -75,7 +73,6 @@ const NICHE_MAP = {
   supplements: 'weight_loss',
 };
 
-// Color options for brand preview
 const BRAND_COLORS = [
   { hex: '4A6741', label: 'Forest' },
   { hex: '1A3A6A', label: 'Navy' },
@@ -91,16 +88,14 @@ export default function MerchantOnboarding() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const [demoOpened, setDemoOpened] = useState(false);
   const [selectedColor, setSelectedColor] = useState('4A6741');
 
   const [form, setForm] = useState({
-    // Step 1 – About You
     firstName: '', lastName: '', email: '', phone: '',
-    // Step 2 – Business
     businessName: '', businessType: '', website: '',
     hasLLC: '', state: '',
-    // Step 3 – Goals
     productInterests: [], currentRevenue: '', goals: '',
   });
 
@@ -114,7 +109,6 @@ export default function MerchantOnboarding() {
         : [...prev.productInterests, id],
     }));
 
-  // Pre-fill from logged-in user
   useEffect(() => {
     base44.auth.isAuthenticated().then(async (isAuth) => {
       if (!isAuth) return;
@@ -130,7 +124,6 @@ export default function MerchantOnboarding() {
     });
   }, []);
 
-  // ── Demo URL builder ────────────────────────────────────────────────────
   const buildDemoUrl = () => {
     const primaryNiche = NICHE_MAP[form.productInterests[0]] || 'weight_loss';
     const domainSlug = form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20);
@@ -145,23 +138,15 @@ export default function MerchantOnboarding() {
 
   const openDemo = () => {
     const url = buildDemoUrl();
-    const popup = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+    window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
     setDemoOpened(true);
-    // Listen for demo completion message
-    const handler = (e) => {
-      if (e.data?.type === 'DEMO_COMPLETE') {
-        setStep(4);
-        window.removeEventListener('message', handler);
-      }
-    };
-    window.addEventListener('message', handler);
   };
 
   const canProceed = () => {
     if (step === 1) return form.firstName && form.lastName && form.email && form.phone;
     if (step === 2) return form.businessName && form.businessType && form.hasLLC !== '';
     if (step === 3) return form.productInterests.length > 0 && form.currentRevenue;
-    if (step === 3.5) return demoOpened; // must open demo before proceeding
+    if (step === 3.5) return demoOpened;
     return true;
   };
 
@@ -169,18 +154,13 @@ export default function MerchantOnboarding() {
     setLoading(true);
     setError('');
     try {
-      // Block in iframe
-      if (window.self !== window.top) {
-        throw new Error('Please open medrevolve.com directly to complete payment — checkout is blocked inside previews.');
-      }
-
       const contactName = `${form.firstName} ${form.lastName}`.trim();
 
-      // 1. Save partner record
       const partnerCode = form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 10)
         + Math.random().toString(36).substr(2, 4);
 
-      const partner = await base44.entities.Partner.create({
+      // Save partner record as trial
+      await base44.entities.Partner.create({
         business_name: form.businessName,
         contact_name: contactName,
         email: form.email,
@@ -190,10 +170,10 @@ export default function MerchantOnboarding() {
         subscription_status: 'trial',
         status: 'pending',
         enabled_products: form.productInterests,
-        monthly_fee: 0, // set after onboarding call
+        monthly_fee: 0,
       });
 
-      // 2. Save business inquiry with all details
+      // Save full intake / inquiry
       await base44.entities.BusinessInquiry.create({
         company_name: form.businessName,
         contact_name: contactName,
@@ -202,23 +182,20 @@ export default function MerchantOnboarding() {
         industry: form.businessType,
         interest_type: 'White Label',
         company_size: form.currentRevenue,
-        message: `Onboarding call intake. State: ${form.state}. LLC: ${form.hasLLC}. Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. Goals: ${form.goals || 'Not specified'}. Partner ID: ${partner.id}`,
+        message: `Free trial onboarding intake. State: ${form.state}. LLC: ${form.hasLLC}. Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. Goals: ${form.goals || 'Not specified'}.`,
         status: 'new',
       });
 
-      // 3. Create $100 Stripe checkout for onboarding consultation
-      const checkoutRes = await base44.functions.invoke('merchantSetupCheckout', {
-        businessName: form.businessName,
-        contactName: contactName,
+      // Also capture as a contact request so it hits the inbox
+      await base44.entities.ContactRequest.create({
+        name: contactName,
         email: form.email,
-        partnerCode,
-        amount: 100,
-        description: 'MedRevolve Onboarding Consultation — 1-hour guided platform setup call with a MedRevolve specialist.',
-        successUrl: `${window.location.origin}/MerchantDashboard?onboarding=paid&partner=${partner.id}`,
-        cancelUrl: `${window.location.origin}/MerchantOnboarding?canceled=1`,
+        phone: form.phone,
+        subject: `Free Trial Signup — ${form.businessName}`,
+        message: `New free trial request from ${form.businessName} (${form.businessType}). Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. State: ${form.state}. LLC: ${form.hasLLC}. Goals: ${form.goals || 'None specified'}.`,
+        source: 'website_form',
+        status: 'new',
       });
-
-      if (!checkoutRes?.data?.url) throw new Error('Could not create payment. Please try again.');
 
       trackDigestEvent('merchant_onboarding_intake', {
         business_name: form.businessName,
@@ -227,12 +204,63 @@ export default function MerchantOnboarding() {
         phone: form.phone,
       });
 
-      window.location.href = checkoutRes.data.url;
+      setSubmitted(true);
     } catch (e) {
       setError(e.message);
+    } finally {
       setLoading(false);
     }
   };
+
+  // ── Success screen ─────────────────────────────────────────────────────────
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#080808] via-[#0a0f0a] to-[#080808] flex items-center justify-center px-4 py-12">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.35 }}
+          className="max-w-lg w-full text-center">
+          <div className="w-20 h-20 rounded-full bg-[#4A6741]/20 border border-[#4A6741]/40 flex items-center justify-center mx-auto mb-6">
+            <PartyPopper className="w-9 h-9 text-[#6B8F5E]" />
+          </div>
+          <h1 className="text-3xl font-black text-white mb-3">You're on the List! 🎉</h1>
+          <p className="text-white/50 text-base leading-relaxed mb-8">
+            Thanks, <span className="text-white font-semibold">{form.firstName}</span>! Your 14-day free trial request for <span className="text-white font-semibold">{form.businessName}</span> has been received.
+            A MedRevolve specialist will reach out within <span className="text-[#6B8F5E] font-bold">24 hours</span> to schedule your onboarding call and get your platform live.
+          </p>
+
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left space-y-3 mb-8">
+            <p className="text-[#6B8F5E] font-bold text-sm uppercase tracking-wide flex items-center gap-2">
+              <Calendar className="w-4 h-4" /> What happens next
+            </p>
+            <div className="space-y-3 text-sm text-white/60">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">1</div>
+                <p>A MedRevolve specialist contacts you at <span className="text-white">{form.email}</span> or <span className="text-white">{form.phone}</span></p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">2</div>
+                <p>We schedule your <span className="text-white font-semibold">free onboarding strategy call</span> — no credit card needed</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">3</div>
+                <p>Your <span className="text-white font-semibold">14-day free trial</span> platform goes live — full access, no commitment</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[#4A6741]/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6B8F5E] font-bold text-xs">4</div>
+                <p>You decide if you want to continue — we handle everything from there</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="tel:+12403875224">
+            <Button className="w-full bg-[#4A6741] hover:bg-[#4A6741]/90 text-white font-bold rounded-sm h-12 text-base">
+              <Phone className="w-4 h-4 mr-2" /> Call Us Now: 240-387-5224
+            </Button>
+          </a>
+          <p className="text-white/25 text-xs mt-4">Mon–Fri 9am–6pm EST · We'll reach out within 24 hours</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#080808] via-[#0a0f0a] to-[#080808] py-8 px-4">
@@ -241,11 +269,11 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-4 py-1.5 mb-4 text-[#6B8F5E] text-xs font-bold uppercase tracking-wide">
-            <Zap className="w-3 h-3" /> Launch Your Telehealth Business
+            <Sparkles className="w-3 h-3" /> 14-Day Free Trial — No Credit Card Required
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Start with a $100 Onboarding Call</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Launch Your Telehealth Business</h1>
           <p className="text-white/50 text-sm max-w-lg mx-auto">
-            Book your 1-hour guided setup session. We'll walk you through everything — platform, payments, compliance, and launch — live on the call.
+            Tell us about your business and we'll reach back to schedule your free onboarding call and activate your trial platform.
           </p>
         </div>
 
@@ -286,7 +314,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">👋 Hi! Tell us about yourself</h2>
-                      <p className="text-white/50 text-sm">We'll use this to send your calendar invite and onboarding details.</p>
+                      <p className="text-white/50 text-sm">We'll use this to reach out and schedule your free onboarding call.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
@@ -316,7 +344,7 @@ export default function MerchantOnboarding() {
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
                           placeholder="(555) 123-4567"
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
-                        <p className="text-white/30 text-xs mt-1">We'll text your call details and Google Meet link</p>
+                        <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your free onboarding session</p>
                       </div>
                     </div>
                   </>
@@ -327,7 +355,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">🏢 Tell us about your business</h2>
-                      <p className="text-white/50 text-sm">This helps us tailor your onboarding call agenda.</p>
+                      <p className="text-white/50 text-sm">This helps us tailor your free trial platform and onboarding agenda.</p>
                     </div>
                     <div className="grid gap-4">
                       <div>
@@ -394,7 +422,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">🎯 What are your goals?</h2>
-                      <p className="text-white/50 text-sm">Pick everything you want to offer. We'll build your call agenda around this.</p>
+                      <p className="text-white/50 text-sm">Pick everything you want to offer on your trial platform.</p>
                     </div>
                     <div>
                       <Label className="text-[#6B8F5E] text-xs uppercase font-semibold mb-3 block">Services / Products You Want to Offer *</Label>
@@ -438,17 +466,16 @@ export default function MerchantOnboarding() {
                 {step === 3.5 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold mb-1">👀 See Your Site Before You Pay</h2>
+                      <h2 className="text-xl font-bold mb-1">👀 See Your Site Before You Start</h2>
                       <p className="text-white/50 text-sm">We've built a personalized preview of <span className="text-white font-semibold">{form.businessName}</span> based on your selections. Pick your brand color and launch the demo.</p>
                     </div>
 
-                    {/* Brand color picker */}
                     <div>
                       <p className="text-[#6B8F5E] text-xs uppercase font-semibold mb-3">Pick Your Brand Color</p>
                       <div className="flex flex-wrap gap-3">
                         {BRAND_COLORS.map(c => (
                           <button key={c.hex} type="button" onClick={() => setSelectedColor(c.hex)}
-                            className={`flex flex-col items-center gap-1.5 transition-all`}>
+                            className="flex flex-col items-center gap-1.5 transition-all">
                             <div className={`w-10 h-10 rounded-xl border-2 transition-all ${selectedColor === c.hex ? 'border-white scale-110 shadow-lg' : 'border-transparent hover:border-white/30'}`}
                               style={{ backgroundColor: `#${c.hex}` }} />
                             <span className={`text-[9px] ${selectedColor === c.hex ? 'text-white' : 'text-white/30'}`}>{c.label}</span>
@@ -457,7 +484,6 @@ export default function MerchantOnboarding() {
                       </div>
                     </div>
 
-                    {/* Demo preview card */}
                     <div className="bg-white/5 border border-white/10 rounded-xl p-5 space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-sm flex items-center justify-center text-white font-black text-sm flex-shrink-0"
@@ -489,31 +515,30 @@ export default function MerchantOnboarding() {
                       </button>
                       {demoOpened && (
                         <p className="text-center text-xs text-[#6B8F5E]">
-                          ✅ Demo opened! Explore your site, then continue below to lock it in.
+                          ✅ Demo opened! Explore your site, then continue below.
                         </p>
                       )}
                     </div>
                   </>
                 )}
 
-                {/* ─── STEP 4: Confirm & Pay ─── */}
+                {/* ─── STEP 4: Confirm & Get Started (no payment) ─── */}
                 {step === 4 && (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold mb-1">✅ Confirm & Book Your Call</h2>
-                      <p className="text-white/50 text-sm">One payment locks in your onboarding session.</p>
+                      <h2 className="text-xl font-bold mb-1">🚀 Start Your Free Trial</h2>
+                      <p className="text-white/50 text-sm">No credit card. No commitment. A specialist will reach out within 24 hours to get you started.</p>
                     </div>
 
-                    {/* Summary card */}
-                    <div className="bg-white/8 border border-white/10 rounded-xl p-5 space-y-3">
-                      <div className="flex items-center justify-between">
+                    {/* Trial summary card */}
+                    <div className="bg-white/8 border border-[#4A6741]/40 rounded-xl p-5 space-y-3">
+                      <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-white font-bold text-lg">Onboarding Consultation</p>
-                          <p className="text-white/50 text-sm">1-hour live setup session with a MedRevolve specialist</p>
+                          <p className="text-white font-bold text-lg">14-Day Free Trial</p>
+                          <p className="text-white/50 text-sm">Full platform access · No credit card required</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-3xl font-black text-white">$100</p>
-                          <p className="text-white/40 text-xs">one-time</p>
+                        <div className="bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-3 py-1 text-[#6B8F5E] text-xs font-black uppercase tracking-wide flex-shrink-0 ml-2">
+                          FREE
                         </div>
                       </div>
                       <div className="border-t border-white/10 pt-3 space-y-2">
@@ -526,7 +551,7 @@ export default function MerchantOnboarding() {
                       </div>
                     </div>
 
-                    {/* Your submitted info recap */}
+                    {/* Info recap */}
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2 text-sm">
                       <p className="text-white/40 text-xs uppercase font-semibold mb-2">Your Details</p>
                       <div className="flex justify-between"><span className="text-white/50">Name</span><span className="text-white font-medium">{form.firstName} {form.lastName}</span></div>
@@ -539,22 +564,17 @@ export default function MerchantOnboarding() {
                       <div className="flex justify-between"><span className="text-white/50">Interests</span><span className="text-white text-right max-w-[60%]">{form.productInterests.join(', ')}</span></div>
                     </div>
 
-                    {/* What happens after payment */}
+                    {/* What happens next */}
                     <div className="bg-[#4A6741]/10 border border-[#4A6741]/30 rounded-xl p-4 space-y-3">
                       <p className="text-[#6B8F5E] font-bold text-sm flex items-center gap-2">
-                        <Calendar className="w-4 h-4" /> What happens after you pay
+                        <Calendar className="w-4 h-4" /> What happens after you submit
                       </p>
                       <div className="space-y-2 text-sm text-white/60">
-                        <p>1. You'll receive a Google Meet invite within minutes</p>
-                        <p>2. We review your intake form before the call</p>
-                        <p>3. 1-hour live walkthrough of your entire platform setup</p>
-                        <p>4. After the call — full platform launch for $5,000 setup + $2,500/mo</p>
+                        <p>1. A MedRevolve specialist reaches out within 24 hours</p>
+                        <p>2. We schedule your <span className="text-white font-semibold">free onboarding strategy call</span></p>
+                        <p>3. Your trial platform goes live — full access for 14 days</p>
+                        <p>4. You decide if you want to continue — we take it from there</p>
                       </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-white/30 text-xs">
-                      <Lock className="w-3.5 h-3.5" />
-                      Secure payment via Stripe. Your card is never stored on our servers.
                     </div>
 
                     {error && (
@@ -592,14 +612,14 @@ export default function MerchantOnboarding() {
               }}
               disabled={!canProceed()}
               className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] hover:opacity-90 text-white px-8 font-bold rounded-sm shadow-lg disabled:opacity-40">
-              {step === 3.5 ? (demoOpened ? 'Continue to Payment' : 'Open Demo First') : 'Continue'} <ArrowRight className="ml-2 w-4 h-4" />
+              {step === 3.5 ? (demoOpened ? 'Continue' : 'Open Demo First') : 'Continue'} <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           ) : (
             <Button onClick={handleSubmit} disabled={loading}
               className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] hover:opacity-90 text-white px-10 font-black text-base rounded-sm shadow-lg shadow-[#4A6741]/30 disabled:opacity-50">
               {loading
-                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</>
-                : <><CreditCard className="w-4 h-4 mr-2" /> Pay $100 & Book My Call</>
+                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</>
+                : <><Sparkles className="w-4 h-4 mr-2" /> Start My Free Trial</>
               }
             </Button>
           )}
@@ -608,8 +628,8 @@ export default function MerchantOnboarding() {
         {/* Trust signals */}
         <div className="flex items-center justify-center gap-6 mt-8 text-white/20 text-xs">
           <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> HIPAA Compliant</span>
-          <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> Stripe Secured</span>
-          <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" /> 100% Satisfaction</span>
+          <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> No Credit Card</span>
+          <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" /> 14-Day Free Trial</span>
         </div>
       </div>
     </div>
