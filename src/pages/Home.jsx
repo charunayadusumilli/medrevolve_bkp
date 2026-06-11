@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle, GraduationCap } from 'lucide-react';
-import B2BHero from '@/components/home/B2BHero';
+import TelehealthGlobeHero from '@/components/home/TelehealthGlobeHero';
 import PlatformMetrics from '@/components/home/PlatformMetrics';
 import PlatformJourney from '@/components/home/PlatformJourney';
 import PlugAndPlayDemo from '@/components/home/PlugAndPlayDemo';
@@ -39,7 +39,7 @@ export default function Home() {
     <div className="bg-white">
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <B2BHero />
+      <TelehealthGlobeHero />
 
       {/* ── METRICS STRIP ────────────────────────────────────────────────── */}
       <PlatformMetrics />
