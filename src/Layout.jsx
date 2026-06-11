@@ -197,7 +197,7 @@ export default function Layout({ children }) {
                 </Button>
               )}
 
-              <Link to="/CustomerIntake" className="hidden sm:block">
+              <Link to="/MerchantOnboarding" className="hidden sm:block">
                 <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
                   style={{ backgroundColor: '#A66B3C' }}>
                   Book a Demo
@@ -248,7 +248,7 @@ export default function Layout({ children }) {
                         <>
                           <Button variant="outline" className="w-full rounded-sm"
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
-                          <Link to="/CustomerIntake" onClick={closeMenu}>
+                          <Link to="/MerchantOnboarding" onClick={closeMenu}>
                             <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: '#A66B3C' }}>Book a Demo</Button>
                           </Link>
                         </>
@@ -292,7 +292,7 @@ export default function Layout({ children }) {
                 <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
                 <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
                 <li><Link to="/University" className="text-sm text-white/40 hover:text-white transition-colors">MedRevolve University</Link></li>
-                <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Start Free Intake</Link></li>
+                <li><Link to="/MerchantOnboarding" className="text-sm text-white/40 hover:text-white transition-colors">Book a Demo</Link></li>
                 <li><a href="tel:+12403875224" className="text-sm text-white/40 hover:text-white transition-colors">(240) 387-5224</a></li>
                 <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
               </ul>

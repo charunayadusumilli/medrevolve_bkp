@@ -64,6 +64,7 @@ import OpenLoopAlternative from './pages/OpenLoopAlternative';
 import MyTelemedicineAlternative from './pages/MyTelemedicineAlternative';
 import TelehealthFranchise from './pages/TelehealthFranchise';
 import IVTherapyClinicPlatform from './pages/IVTherapyClinicPlatform';
+// B2C commerce pages removed per B2B repositioning cleanup
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
