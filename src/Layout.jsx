@@ -41,20 +41,6 @@ export default function Layout({ children }) {
       s.async = true;
       document.head.insertBefore(s, document.head.firstChild);
     }
-    // Google Analytics
-    if (!document.getElementById('gtag-script')) {
-      const g = document.createElement('script');
-      g.id = 'gtag-script';
-      g.src = 'https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL';
-      g.async = true;
-      document.head.appendChild(g);
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { window.dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'G-BZTEFSTDPL');
-    }
-
   }, []);
 
   useEffect(() => {

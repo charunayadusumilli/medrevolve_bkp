@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- PWA / Theme -->
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="msapplication-TileColor" content="#0A0A0A" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <!-- SEO — B2B Platform Meta -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author" content="MedRevolve" />
     <title>White-Label Telehealth Platform | Launch in 7 Days | MedRevolve</title>
     <meta name="description" content="MedRevolve is the complete white-label telehealth platform for clinics, med spas, and wellness businesses. Licensed physicians (all 50 states), 503A pharmacy network, HIPAA compliance, and payments — launch under your brand in 7 days." />
-    <meta name="keywords" content="white-label telehealth, telehealth platform, clinic SaaS, multi-state telehealth infrastructure, telehealth for med spas, telehealth for clinics, healthcare technology platform" />
+    <meta name="keywords" content="white-label telehealth, telehealth platform, clinic SaaS, multi-state telehealth infrastructure, telehealth for med spas, telehealth for clinics, healthcare technology platform, GLP-1 platform, weight loss telehealth, men's health telehealth" />
 
-    <!-- Open Graph / Facebook — B2B Platform -->
+    <!-- Geo / Local SEO Presence -->
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
+    <meta name="geo.position" content="39.5;-98.35" />
+    <meta name="ICBM" content="39.5, -98.35" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://medrevolve.com/" />
     <meta property="og:title" content="White-Label Telehealth Platform | Launch in 7 Days | MedRevolve" />
@@ -18,17 +32,22 @@
     <meta property="og:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MedRevolve White-Label Telehealth Platform" />
     <meta property="og:site_name" content="MedRevolve" />
     <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card -->
+    <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@medrevolve" />
+    <meta name="twitter:creator" content="@medrevolve" />
     <meta name="twitter:title" content="White-Label Telehealth Platform | Launch in 7 Days | MedRevolve" />
     <meta name="twitter:description" content="MedRevolve gives clinics and med spas a complete white-label telehealth business. Licensed physicians, pharmacy, compliance, and payments — launch in 7 days." />
     <meta name="twitter:image" content="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png" />
 
-    <!-- Favicon -->
+    <!-- Favicon + Apple Touch Icon -->
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
+    <link rel="apple-touch-icon" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
+    <link rel="shortcut icon" href="https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://medrevolve.com/" />
@@ -45,6 +64,12 @@
           "url": "https://medrevolve.com",
           "logo": "https://media.base44.com/images/public/698bb392815cbad420c2ec1a/3929f8269_generated_image.png",
           "description": "MedRevolve provides white-label telehealth infrastructure for clinics, med spas, and licensed pharmacies. We deliver the technology, compliance framework, provider network, and pharmacy integrations so medical businesses can launch a compliant, branded telehealth offering.",
+          "telephone": "+1-240-387-5224",
+          "email": "info@medrevolve.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+1-240-387-5224",
@@ -54,7 +79,8 @@
           },
           "sameAs": [
             "https://www.instagram.com/medrevolve",
-            "https://www.facebook.com/medrevolve"
+            "https://www.facebook.com/medrevolve",
+            "https://www.tiktok.com/@medrevolve"
           ]
         },
         {
@@ -68,8 +94,13 @@
           "offers": {
             "@type": "Offer",
             "name": "B2B Platform Setup",
-            "price": "5000",
-            "priceCurrency": "USD"
+            "price": "2999",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "RecurringCharge",
+              "billingIncrement": 1,
+              "billingPeriod": "month"
+            }
           }
         },
         {
@@ -77,7 +108,12 @@
           "@id": "https://medrevolve.com/#website",
           "url": "https://medrevolve.com",
           "name": "MedRevolve",
-          "publisher": { "@id": "https://medrevolve.com/#organization" }
+          "publisher": { "@id": "https://medrevolve.com/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://medrevolve.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
         },
         {
           "@type": "FAQPage",
@@ -105,6 +141,14 @@
                 "@type": "Answer",
                 "text": "MedRevolve's provider network covers all 50 US states, enabling our clinic and med spa clients to offer telehealth services nationwide."
               }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does it take to launch a telehealth platform with MedRevolve?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most MedRevolve merchant platforms go live within 7 business days, including website setup, provider integration, pharmacy connection, and payment processing."
+              }
             }
           ]
         }
@@ -112,7 +156,12 @@
     }
     </script>
 
-    <!-- Preconnect to external CDNs -->
+    <!-- Preconnect to analytics, CDN, and font domains for performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://analytics.tiktok.com" crossorigin />
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+    <link rel="preconnect" href="https://consent.cookiebot.com" crossorigin />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
     <!-- Preload LCP hero image -->
@@ -123,14 +172,43 @@
       fetchpriority="high"
     />
 
-    <!-- Google Ads (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18231023166"></script>
+    <!-- Google tag (gtag.js) — GA4 (G-BZTEFSTDPL) + Google Ads (AW-18231023166) unified -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZTEFSTDPL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+      gtag('config', 'G-BZTEFSTDPL');
       gtag('config', 'AW-18231023166');
     </script>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TODO — Add when IDs are ready:
+         
+         Meta (Facebook/Instagram) Pixel:
+         <script>
+           !function(f,b,e,v,n,t,s){...}(window,document,'script',
+           'https://connect.facebook.net/en_US/fbevents.js');
+           fbq('init', 'YOUR_META_PIXEL_ID');
+           fbq('track', 'PageView');
+         </script>
+         <noscript><img height="1" width="1" style="display:none"
+           src="https://www.facebook.com/tr?id=YOUR_META_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+
+         TikTok Pixel:
+         <script src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=YOUR_TIKTOK_PIXEL_ID" async></script>
+
+         LinkedIn Insight Tag (B2B recommended):
+         <script type="text/javascript">
+           _linkedin_partner_id = "YOUR_LINKEDIN_PARTNER_ID";
+           window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+           window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+         </script>
+         <script src="https://snap.licdn.com/li.lms-analytics/insight.min.js" async></script>
+
+         Google Search Console verification (replace with your token):
+         <meta name="google-site-verification" content="YOUR_GSC_VERIFICATION_TOKEN" />
+    ═══════════════════════════════════════════════════════════════ -->
   </head>
   <body>
     <div id="root"></div>
