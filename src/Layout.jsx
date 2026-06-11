@@ -200,7 +200,7 @@ export default function Layout({ children }) {
               <Link to="/CustomerIntake" className="hidden sm:block">
                 <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
                   style={{ backgroundColor: '#A66B3C' }}>
-                  Start Free Intake
+                  Book a Demo
                 </Button>
               </Link>
 
@@ -249,7 +249,7 @@ export default function Layout({ children }) {
                           <Button variant="outline" className="w-full rounded-sm"
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
                           <Link to="/CustomerIntake" onClick={closeMenu}>
-                            <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: '#A66B3C' }}>Start Free Intake</Button>
+                            <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: '#A66B3C' }}>Book a Demo</Button>
                           </Link>
                         </>
                       )}
@@ -316,7 +316,7 @@ export default function Layout({ children }) {
           <div className="border-t border-white/5 pt-8 flex flex-col gap-3">
             <p className="text-xs text-white/20">© {new Date().getFullYear()} MedRevolve Corporation. All rights reserved. US residents only.</p>
             <p className="text-xs text-white/15 max-w-3xl leading-relaxed">
-              MedRevolve Corporation connects patients with independently licensed healthcare providers. All treatments require a physician consultation and valid prescription. MedRevolve is not a pharmacy and does not dispense medications. These statements have not been evaluated by the FDA. Not a substitute for professional medical advice, diagnosis, or treatment.
+              MedRevolve is a B2B infrastructure and services company. We build and operate white-label telehealth platforms for licensed business operators. All clinical services on operator platforms are delivered by independently licensed providers and NABP-verified pharmacies.
             </p>
           </div>
         </div>

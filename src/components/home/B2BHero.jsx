@@ -38,23 +38,19 @@ export default function B2BHero() {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none mb-6"
               style={{ letterSpacing: '-0.03em' }}>
-              We Build Your<br />
-              Telehealth<br />
-              <span className="text-[#A8C99B]">Business.</span>
+              The Infrastructure<br />Behind Your<br />
+              <span className="text-[#A8C99B]">Telehealth Brand.</span>
             </h1>
 
             <p className="text-lg text-white/45 leading-relaxed mb-4 max-w-lg">
-              MedRevolve is a B2B services company. We deliver the complete infrastructure for a compliant, operating telehealth platform — under your brand, in your name.
-            </p>
-            <p className="text-sm text-white/25 mb-10 max-w-md">
-              Website. Providers. Pharmacy. Merchant account. Compliance. Marketing engine. Done for you.
+              MedRevolve gives operators a complete, compliant telehealth platform — under your brand, in your name. No building. No licensing. No compliance guesswork.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Link to="/MerchantOnboarding">
                 <Button size="lg"
                   className="bg-white text-[#060606] hover:bg-white/90 rounded-sm px-10 font-black text-base h-auto py-4">
-                  Book Your $100 Setup Call
+                  Book a Free Discovery Call
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
