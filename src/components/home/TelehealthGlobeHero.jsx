@@ -9,78 +9,71 @@ const JOURNEY_STEPS = [
     n: '01',
     tag: 'BUSINESS FOUNDATION',
     headline: 'You have an idea.',
-    sub: 'A wellness clinic. A med spa. A weight-loss brand. You know the market. You just need the infrastructure to make it real.',
-    detail: 'MedRevolve sets up your LLC, merchant account, domain, and brand identity — so your business is real, fundable, and launch-ready from day one.',
-    stat: { val: '48 hrs', label: 'to live brand & legal entity' },
+    sub: 'A wellness clinic. A med spa. A weight-loss brand. You know the market. We give you a US-registered business ready to operate on day one.',
+    detail: 'LLC formation, EIN, merchant account, and your domain — all US-compliant, all handled. No lawyers, no guesswork.',
+    stat: { val: 'All 50', label: 'states — open for business' },
     color: '#4A9B6F',
-    trust: ['LLC formation handled', 'EIN registration', 'Merchant account setup', 'Domain + hosting included'],
+    trust: ['US LLC formation included', 'Federal EIN registration', 'US merchant account ready', 'State-compliant from the start'],
     img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',
-    badge: { icon: '🏛️', text: 'Legal-First Infrastructure' },
+    badge: { icon: '🇺🇸', text: 'US-Registered & Compliant' },
   },
   {
     n: '02',
     tag: 'PLATFORM & STOREFRONT',
     headline: 'Your branded platform goes live.',
-    sub: 'A full telehealth storefront — under your name, on your domain. Patients see your brand, not ours.',
-    detail: 'White-label patient portal, HIPAA-compliant intake forms, Stripe checkout, program pages, and SEO-ready architecture — deployed in 7 days.',
-    stat: { val: '7 days', label: 'to a live, operational platform' },
+    sub: 'A full telehealth storefront under your name, on your domain — built to US federal and state privacy standards from the ground up.',
+    detail: 'White-label patient portal, HIPAA-compliant intake forms, US-licensed Stripe checkout, and SEO-ready architecture — deployed and live.',
+    stat: { val: 'HIPAA', label: 'compliant by architecture' },
     color: '#2D6A9F',
-    trust: ['100% white-label — your brand', 'HIPAA-compliant intake', 'Stripe-powered checkout', 'SEO architecture built-in'],
+    trust: ['HIPAA Title II compliant', 'US-hosted infrastructure', 'Stripe US payment rails', 'State-specific intake forms'],
     img: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80',
     badge: { icon: '🔒', text: 'HIPAA Compliant by Design' },
   },
   {
     n: '03',
     tag: 'PROVIDERS & PHARMACY',
-    headline: 'The clinical backbone is wired in.',
-    sub: 'Board-certified physicians, NPs, and licensed 503A pharmacies — connected to your platform, ready to serve your patients.',
-    detail: 'Multi-state prescribing, e-prescribing, Google Calendar scheduling, automated pharmacy routing — fully integrated and live.',
-    stat: { val: '50 states', label: 'licensed provider coverage' },
+    headline: 'US-licensed clinical network — ready.',
+    sub: 'Board-certified US physicians and NPs, connected to NABP-verified 503A pharmacies. Coverage in every state your patients are in.',
+    detail: 'Multi-state DEA-licensed prescribing, e-prescribing via US-certified EMR, automated routing to US-licensed compounding pharmacies.',
+    stat: { val: '50 States', label: 'US provider coverage' },
     color: '#7B5EA7',
-    trust: ['Board-certified MDs & NPs', 'NABP-verified pharmacies', 'Multi-state prescribing', 'Automated EMR integration'],
+    trust: ['DEA-licensed physicians', 'NABP-verified US pharmacies', 'US 503A compounding network', 'State board compliant prescribing'],
     img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80',
-    badge: { icon: '⚕️', text: 'Licensed Clinical Network' },
+    badge: { icon: '⚕️', text: 'Nationwide US Clinical Network' },
   },
   {
     n: '04',
-    tag: 'MARKETING & REVENUE',
-    headline: 'Patients start flowing in.',
-    sub: 'A full acquisition and retention engine — email, SMS, paid ads, creator affiliates — all compliant, all automated.',
-    detail: 'LegitScript certification, Google & Meta ad structure, HubSpot CRM, Twilio SMS drip sequences, and real-time analytics — built and activated.',
-    stat: { val: '$42.8k', label: 'avg. revenue by month 6' },
+    tag: 'MARKETING & COMPLIANCE',
+    headline: 'Reach patients — the right way.',
+    sub: 'US advertising regulations for telehealth are strict. We navigate every rule — FDA, FTC, state board guidelines — so your marketing is fully clean.',
+    detail: 'LegitScript certification process, US-compliant ad copy, FTC-compliant testimonials, and CAN-SPAM / TCPA-ready SMS and email flows.',
+    stat: { val: 'FTC + FDA', label: 'compliant ad framework' },
     color: '#B85C38',
-    trust: ['LegitScript certified ads', 'HubSpot CRM integrated', 'Twilio SMS automation', 'Creator affiliate network'],
+    trust: ['LegitScript certified', 'FTC-compliant copy standards', 'TCPA-ready SMS flows', 'CAN-SPAM email compliance'],
     img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1200&q=80',
-    badge: { icon: '📈', text: 'Revenue-Engine Activated' },
+    badge: { icon: '📋', text: 'Fully Compliant Marketing' },
   },
   {
     n: '05',
     tag: 'COMPLIANCE & SCALE',
-    headline: 'You scale — fully protected.',
-    sub: 'HIPAA compliance, BAA management, automated audits, and state-by-state prescribing monitoring. Grow without legal exposure.',
-    detail: 'Monthly operations reviews, compliance documentation library, multi-state expansion roadmap, and your dedicated MedRevolve success team on call.',
-    stat: { val: '100%', label: 'HIPAA compliant from day one' },
+    headline: 'Operate in any state — protected.',
+    sub: 'As you expand across the US, compliance scales with you. BAA management, state-by-state prescribing rules, and audit-ready documentation — always current.',
+    detail: 'We monitor state telehealth law changes, update your BAAs, maintain your compliance library, and flag licensing requirements before they become problems.',
+    stat: { val: 'BAA + HIPAA', label: 'audit-ready always' },
     color: '#0B8B7A',
-    trust: ['Monthly compliance audits', 'BAA management included', 'State-by-state monitoring', 'Dedicated success team'],
+    trust: ['Ongoing state law monitoring', 'BAA management included', 'Audit-ready documentation', 'Multi-state expansion support'],
     img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&q=80',
-    badge: { icon: '🛡️', text: 'Fully Protected at Scale' },
+    badge: { icon: '🛡️', text: 'Protected in Every State' },
   },
 ];
 
-const PROOF_BARS = [
-  { val: '200+', label: 'Active Clinics' },
-  { val: '$2.1M+', label: 'Partner Revenue' },
-  { val: '50', label: 'States Covered' },
-  { val: '7 days', label: 'Avg. Launch Time' },
-];
-
-const GLOBAL_TRUST = [
-  { icon: Shield, text: 'HIPAA Compliant' },
-  { icon: Lock, text: 'LegitScript Ready' },
-  { icon: Star, text: 'Licensed Providers' },
-  { icon: CheckCircle2, text: 'NABP Pharmacies' },
-  { icon: Zap, text: 'Stripe Payments' },
-  { icon: Globe, text: 'All 50 States' },
+const US_TRUST_STRIP = [
+  { icon: Shield, text: 'HIPAA Title II Compliant' },
+  { icon: Lock, text: 'LegitScript Certified Process' },
+  { icon: CheckCircle2, text: 'DEA-Licensed Providers' },
+  { icon: Star, text: 'NABP-Verified Pharmacies' },
+  { icon: Zap, text: 'FTC & FDA Ad Compliance' },
+  { icon: Globe, text: 'Operable in All 50 States' },
 ];
 
 // Orbiting data packets animation
@@ -352,16 +345,19 @@ function GlobeVisual({ activeStep, onStepClick }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Floating stat bottom-right */}
+      {/* Floating US signal bottom-right */}
       <AnimatePresence mode="wait">
         <motion.div key={`s-${activeStep}`}
           initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.85 }} transition={{ duration: 0.4 }}
           className="absolute bottom-2 right-2 md:bottom-6 md:right-6 text-right">
-          <p className="font-black text-3xl md:text-4xl leading-none" style={{ color: JOURNEY_STEPS[activeStep].color }}>
-            {JOURNEY_STEPS[activeStep].stat.val}
-          </p>
-          <p className="text-white/25 text-[10px] max-w-[130px] leading-tight mt-0.5">
+          <div className="flex items-center gap-1.5 justify-end mb-0.5">
+            <span className="text-base">{JOURNEY_STEPS[activeStep].badge.icon}</span>
+            <p className="font-black text-sm leading-none" style={{ color: JOURNEY_STEPS[activeStep].color }}>
+              {JOURNEY_STEPS[activeStep].stat.val}
+            </p>
+          </div>
+          <p className="text-white/20 text-[10px] max-w-[140px] leading-tight">
             {JOURNEY_STEPS[activeStep].stat.label}
           </p>
         </motion.div>
@@ -417,17 +413,15 @@ export default function TelehealthGlobeHero() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-12 pt-14 pb-6">
 
-        {/* ── TOP PROOF BAR ── */}
+        {/* ── US CONFIDENCE BAR ── */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-wrap items-center justify-center md:justify-start gap-x-8 gap-y-2 mb-10 py-3 border-b border-white/5">
-          {PROOF_BARS.map((p, i) => (
-            <div key={i} className="flex items-baseline gap-1.5">
-              <span className="text-xl font-black" style={{ color: step.color, transition: 'color 0.6s ease' }}>{p.val}</span>
-              <span className="text-white/25 text-[11px] font-semibold">{p.label}</span>
-            </div>
-          ))}
-          <div className="ml-auto hidden md:flex items-center gap-2">
+          className="flex items-center justify-between mb-10 py-3 border-b border-white/5">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-black uppercase tracking-widest text-white/20">🇺🇸</span>
+            <span className="text-[11px] font-semibold text-white/20">Built for US entrepreneurs — operable in any state, day one.</span>
+          </div>
+          <div className="hidden md:flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Platform Live</span>
           </div>
@@ -441,20 +435,20 @@ export default function TelehealthGlobeHero() {
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/8 rounded-full px-4 py-1.5 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">
-              End-to-End Telehealth Infrastructure for Entrepreneurs
+              🇺🇸 US-Licensed · Federal & State Compliant · Any State, Day One
             </span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-[64px] font-black text-white leading-[1.02] mb-4"
             style={{ letterSpacing: '-0.03em' }}>
-            Everything you need<br />
+            Launch telehealth<br />
             <span style={{ color: step.color, transition: 'color 0.7s ease' }}>
-              to own telehealth.
+              anywhere in the US.
             </span>
           </h1>
 
           <p className="text-white/30 text-base md:text-lg max-w-2xl leading-relaxed">
-            From zero to a HIPAA-compliant, physician-powered, revenue-generating platform — under your brand, in 7 days.
+            We own the vendor relationships — US pharmacies, licensed providers, compliance infrastructure — so you can operate with confidence in any state.
           </p>
         </motion.div>
 
@@ -541,9 +535,9 @@ export default function TelehealthGlobeHero() {
                   <div className="absolute inset-0"
                     style={{ background: `linear-gradient(105deg, ${step.color}50 0%, transparent 55%)` }} />
                   <div className="absolute inset-0 flex items-end p-3.5">
-                    <div>
-                      <span className="text-white font-black text-2xl leading-none">{step.stat.val}</span>
-                      <span className="text-white/40 text-xs ml-2">{step.stat.label}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">{step.badge.icon}</span>
+                      <span className="text-white/70 text-xs font-bold">{step.badge.text}</span>
                     </div>
                   </div>
                   {/* Phase progress dots */}
@@ -577,16 +571,16 @@ export default function TelehealthGlobeHero() {
           </div>
         </div>
 
-        {/* ── GLOBAL TRUST SIGNALS STRIP ── */}
+        {/* ── US TRUST SIGNALS STRIP ── */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.6 }}
           className="mt-12 pt-6 border-t border-white/5">
           <p className="text-[9px] font-black uppercase tracking-widest text-white/15 text-center mb-4">
-            Compliance & Infrastructure Standards
+            US Federal & State Compliance Standards
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-            {GLOBAL_TRUST.map(({ icon: Icon, text }, i) => (
-              <div key={i} className="flex items-center gap-1.5 text-white/20 hover:text-white/40 transition-colors">
-                <Icon className="w-3 h-3 flex-shrink-0" style={{ color: 'rgba(255,255,255,0.3)' }} />
+            {US_TRUST_STRIP.map(({ icon: Icon, text }, i) => (
+              <div key={i} className="flex items-center gap-1.5 text-white/25 hover:text-white/50 transition-colors">
+                <Icon className="w-3 h-3 flex-shrink-0" style={{ color: 'rgba(255,255,255,0.35)' }} />
                 <span className="text-[11px] font-semibold">{text}</span>
               </div>
             ))}
