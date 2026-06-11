@@ -10,8 +10,8 @@
 
 // ── PUBLIC B2B PAGES ─────────────────────────────────────────────────────────
 import Home from './pages/Home';
-import Services from './pages/Services';
-import HowItWorks from './pages/HowItWorks';
+import Services from './pages/Services.jsx';
+import HowItWorks from './pages/HowItWorks.jsx';
 import ForBusiness from './pages/ForBusiness';
 import University from './pages/University';
 import Contact from './pages/Contact';
