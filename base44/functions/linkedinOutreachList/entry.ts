@@ -121,14 +121,18 @@ Generate all 10 now. Make 2 different angle versions per persona.`;
 </table></td></tr></table>
 </body></html>`;
 
+    const subjectText = `Today's LinkedIn Outreach Scripts — ${today}`;
+    const encodedSubject = `=?UTF-8?B?${btoa(unescape(encodeURIComponent(subjectText)))}?=`;
+
     const emailLines = [
       `From: MedRevolve Growth Bot <${ADMIN_EMAIL}>`,
       `To: ${ADMIN_EMAIL}`,
-      `Subject: 🎯 Today's LinkedIn Outreach Scripts — ${today}`,
+      `Subject: ${encodedSubject}`,
       'MIME-Version: 1.0',
       'Content-Type: text/html; charset=UTF-8',
+      'Content-Transfer-Encoding: base64',
       '',
-      emailHtml,
+      btoa(unescape(encodeURIComponent(emailHtml))),
     ];
     const raw = btoa(unescape(encodeURIComponent(emailLines.join('\r\n'))))
       .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');

@@ -184,7 +184,7 @@ const buildEmail = (from, to, subject, bodyHtml) => {
     <p style="color:rgba(255,255,255,0.3);font-size:10px;margin:10px 0 0;line-height:1.6;font-family:Arial,sans-serif;">
       ${PHYSICAL_ADDRESS}<br/>
       You received this email because you submitted an inquiry or interest form on medrevolve.com.<br/>
-      To unsubscribe from future emails, reply with the word <strong>UNSUBSCRIBE</strong> in the subject line.<br/>
+      To unsubscribe from future emails, reply with the word UNSUBSCRIBE in the subject line.<br/>
       This communication is intended for the individual it is addressed to and may contain confidential business information.
     </p>
     <p style="color:rgba(255,255,255,0.2);font-size:10px;margin:8px 0 0;line-height:1.5;font-family:Arial,sans-serif;">
@@ -198,14 +198,18 @@ const buildEmail = (from, to, subject, bodyHtml) => {
 </table></td></tr></table>
 </body></html>`;
 
+  // RFC 2822 encoded-word subject (handles emoji and special chars safely)
+  const encodedSubject = `=?UTF-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=`;
+
   const lines = [
-    `From: R. Ned — MedRevolve <${from}>`,
+    `From: R. Ned - MedRevolve <${from}>`,
     `To: ${to}`,
-    `Subject: ${subject}`,
+    `Subject: ${encodedSubject}`,
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: base64',
     '',
-    html,
+    btoa(unescape(encodeURIComponent(html))),
   ];
   return btoa(unescape(encodeURIComponent(lines.join('\r\n'))))
     .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
