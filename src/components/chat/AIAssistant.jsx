@@ -233,6 +233,13 @@ export default function AIAssistant() {
     } catch (e) {
       console.warn('Lead capture failed:', e);
     }
+    // Backfill all chat logs in this session with the captured email
+    try {
+      await base44.entities.ChatLog.updateMany(
+        { session_id: sessionId.current },
+        { $set: { user_email: email } }
+      );
+    } catch {}
   }, [pageName]);
 
   // ── sendMessage ────────────────────────────────────────────────────────────
@@ -247,13 +254,14 @@ export default function AIAssistant() {
 
     // Capture identity from anonymous visitors (detect email + optional name)
     const v = visitorRef.current;
+    let capturedEmail = null;
     if (v && !v.email) {
       const emailMatch = trimmed.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
       if (emailMatch) {
-        const email = emailMatch[0].toLowerCase();
+        capturedEmail = emailMatch[0].toLowerCase();
         const nameMatch = trimmed.match(/(?:i'm|i am|my name is|this is|it's|its)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
         const name = nameMatch?.[1]?.trim() || '';
-        captureLead(name, email);
+        captureLead(name, capturedEmail);
       }
     }
 
@@ -294,8 +302,7 @@ export default function AIAssistant() {
     if (messages.length >= 6) setShowEscalate(true);
 
     try {
-      let userEmail = null;
-      try { const u = await base44.auth.me(); userEmail = u?.email; } catch {}
+      const userEmail = visitorRef.current?.email || capturedEmail || null;
       await base44.entities.ChatLog.create({
         session_id: sessionId.current, user_email: userEmail,
         page_name: pageName, user_message: trimmed, ai_response: replyText,
