@@ -49,6 +49,7 @@ export default function AIAssistant() {
   const [showQuickStarts, setShowQuickStarts] = useState(true);
   const [activeSuggestion, setActiveSuggestion] = useState(null);
   const [conversationStage, setConversationStage] = useState(0);
+  const [visitor, setVisitor] = useState(null);
 
   // Voice
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
@@ -67,6 +68,7 @@ export default function AIAssistant() {
   const isListeningPausedRef = useRef(false);
   const isSpeakingRef = useRef(false);
   const voiceTurnRef = useRef(0);
+  const visitorRef = useRef(null);
   const sessionId = useRef(`chat-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
   const voiceSupported = typeof window !== 'undefined' &&
@@ -85,6 +87,34 @@ export default function AIAssistant() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
+
+  // Identify the visitor: use logged-in user if available, otherwise mark anonymous
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const ok = await base44.auth.isAuthenticated();
+        if (!ok) {
+          const v = { name: '', email: '', role: '', loggedIn: false, leadId: null };
+          if (!cancelled) { visitorRef.current = v; setVisitor(v); }
+          return;
+        }
+        const u = await base44.auth.me();
+        if (cancelled) return;
+        const v = { name: u?.full_name || '', email: u?.email || '', role: u?.role || 'user', loggedIn: true, leadId: null };
+        visitorRef.current = v;
+        setVisitor(v);
+      } catch {
+        if (!cancelled) {
+          const v = { name: '', email: '', role: '', loggedIn: false, leadId: null };
+          visitorRef.current = v; setVisitor(v);
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => { visitorRef.current = visitor; }, [visitor]);
 
   useEffect(() => {
     if (isOpen && !minimized && !isVoiceOpen) {
@@ -174,6 +204,37 @@ export default function AIAssistant() {
     rec.start();
   }, [voiceSupported]);
 
+  // ── captureLead (identity capture for anonymous visitors) ──────────────────
+  const captureLead = useCallback(async (name, email) => {
+    const existing = visitorRef.current;
+    try {
+      if (existing?.leadId) {
+        await base44.entities.ContactRequest.update(existing.leadId, {
+          ...(name ? { name } : {}),
+          email,
+        });
+      } else {
+        const rec = await base44.entities.ContactRequest.create({
+          name: name || 'Anonymous Visitor',
+          email,
+          source: 'website_form',
+          status: 'new',
+          subject: `Chat lead from ${pageName}`,
+          message: `Captured via AI assistant on ${pageName} page`,
+        });
+        const updated = { ...existing, name: name || existing.name, email, leadId: rec.id };
+        visitorRef.current = updated;
+        setVisitor(updated);
+        return;
+      }
+      const updated = { ...existing, name: name || existing.name, email };
+      visitorRef.current = updated;
+      setVisitor(updated);
+    } catch (e) {
+      console.warn('Lead capture failed:', e);
+    }
+  }, [pageName]);
+
   // ── sendMessage ────────────────────────────────────────────────────────────
   const sendMessage = useCallback(async (text, fromVoice = false) => {
     const trimmed = (text || input).trim();
@@ -184,8 +245,20 @@ export default function AIAssistant() {
     setLoading(true);
     if (fromVoice) setVoiceStatus('thinking');
 
+    // Capture identity from anonymous visitors (detect email + optional name)
+    const v = visitorRef.current;
+    if (v && !v.email) {
+      const emailMatch = trimmed.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+      if (emailMatch) {
+        const email = emailMatch[0].toLowerCase();
+        const nameMatch = trimmed.match(/(?:i'm|i am|my name is|this is|it's|its)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
+        const name = nameMatch?.[1]?.trim() || '';
+        captureLead(name, email);
+      }
+    }
+
     const activeCtx = getPageContext(pageName);
-    const systemPrompt = buildSystemPrompt(pageName, pageProduct, fromVoice);
+    const systemPrompt = buildSystemPrompt(pageName, pageProduct, fromVoice, visitorRef.current);
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'user', content: trimmed }]);
 
@@ -251,7 +324,7 @@ export default function AIAssistant() {
         }, 300);
       }
     }
-  }, [input, loading, messages, pageName, pageProduct, speak, startListeningOnce]);
+  }, [input, loading, messages, pageName, pageProduct, speak, startListeningOnce, captureLead]);
 
   useEffect(() => { sendMessageRef.current = sendMessage; }, [sendMessage]);
 
