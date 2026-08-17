@@ -65,6 +65,8 @@ export default function AIAssistant() {
   const sendMessageRef = useRef(null);
   const voiceLoopRef = useRef(false);
   const isListeningPausedRef = useRef(false);
+  const isSpeakingRef = useRef(false);
+  const voiceTurnRef = useRef(0);
   const sessionId = useRef(`chat-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
   const voiceSupported = typeof window !== 'undefined' &&
@@ -94,13 +96,22 @@ export default function AIAssistant() {
   const speak = useCallback((text) => new Promise((resolve) => {
     if (!window.speechSynthesis) { resolve(); return; }
     window.speechSynthesis.cancel();
-    const clean = text.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1')
-      .replace(/#{1,6}\s/g, '').replace(/`[^`]*`/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-      .replace(/\n+/g, '. ').replace(/•/g, '').trim();
+    const clean = text
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/#{1,6}\s/g, '')
+      .replace(/`[^`]*`/g, '')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/→/g, '')
+      .replace(/\bhttps?:\/\/\S+/g, '')
+      .replace(/\n+/g, '. ')
+      .replace(/•/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
     const utterance = new SpeechSynthesisUtterance(clean);
     utterance.lang = 'en-US';
-    utterance.rate = 0.92;
-    utterance.pitch = 1.1;
+    utterance.rate = 1.05;
+    utterance.pitch = 1.0;
     utterance.volume = 1;
     const voices = window.speechSynthesis.getVoices();
     // Prefer natural-sounding female voices
@@ -114,9 +125,9 @@ export default function AIAssistant() {
       voices.find(v => v.lang === 'en-US' && !v.name.toLowerCase().includes('male')) ||
       voices.find(v => v.lang.startsWith('en'));
     if (femaleVoice) utterance.voice = femaleVoice;
-    utterance.onstart = () => { setIsSpeaking(true); setVoiceStatus('speaking'); };
-    utterance.onend = () => { setIsSpeaking(false); resolve(); };
-    utterance.onerror = () => { setIsSpeaking(false); resolve(); };
+    utterance.onstart = () => { setIsSpeaking(true); isSpeakingRef.current = true; setVoiceStatus('speaking'); };
+    utterance.onend = () => { setIsSpeaking(false); isSpeakingRef.current = false; resolve(); };
+    utterance.onerror = () => { setIsSpeaking(false); isSpeakingRef.current = false; resolve(); };
     window.speechSynthesis.speak(utterance);
   }), []);
 
@@ -125,11 +136,32 @@ export default function AIAssistant() {
     if (!voiceSupported || isListeningPausedRef.current) return;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const rec = new SR();
-    rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
-    rec.onstart = () => { setIsListening(true); setVoiceStatus('listening'); };
+    rec.lang = 'en-US';
+    rec.interimResults = true;
+    rec.continuous = false;
+    rec.maxAlternatives = 1;
+    rec.onstart = () => {
+      setIsListening(true);
+      if (!isSpeakingRef.current) setVoiceStatus('listening');
+    };
     rec.onresult = (e) => {
-      const t = e.results[0]?.[0]?.transcript?.trim();
-      if (t) { setIsListening(false); sendMessageRef.current?.(t, true); }
+      let transcript = '';
+      let isFinal = false;
+      for (let i = 0; i < e.results.length; i++) {
+        transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) isFinal = true;
+      }
+      const t = transcript.trim();
+      // Barge-in: user speaking while AI talks → stop the AI immediately
+      if (t.length > 2 && isSpeakingRef.current) {
+        window.speechSynthesis.cancel();
+        isSpeakingRef.current = false;
+        setIsSpeaking(false);
+      }
+      if (isFinal && t.length > 1) {
+        setIsListening(false);
+        sendMessageRef.current?.(t, true);
+      }
     };
     rec.onend = () => setIsListening(false);
     rec.onerror = (e) => {
@@ -146,13 +178,14 @@ export default function AIAssistant() {
   const sendMessage = useCallback(async (text, fromVoice = false) => {
     const trimmed = (text || input).trim();
     if (!trimmed || loading) return;
+    if (fromVoice) voiceTurnRef.current++;
     setInput('');
     setFaqOpen(false);
     setLoading(true);
     if (fromVoice) setVoiceStatus('thinking');
 
     const activeCtx = getPageContext(pageName);
-    const systemPrompt = buildSystemPrompt(pageName, pageProduct);
+    const systemPrompt = buildSystemPrompt(pageName, pageProduct, fromVoice);
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     if (fromVoice) setVoiceTranscript(prev => [...prev, { role: 'user', content: trimmed }]);
 
@@ -160,10 +193,14 @@ export default function AIAssistant() {
       .map(m => `${m.role === 'user' ? 'User' : activeCtx.persona}: ${m.content}`)
       .join('\n\n');
 
+    const closingInstruction = fromVoice
+      ? `${activeCtx.persona} (VOICE CALL — reply in 1-3 short sentences, conversational, NO markdown or links. Be warm and natural. Never recommend a specific treatment to a consumer — that is a licensed provider's job. Ask one question if appropriate, then wait.):`
+      : `${activeCtx.persona} (be warm, knowledgeable, and genuinely helpful. Guide the user naturally — never pushy. IMPORTANT: Never recommend a specific product or treatment to a consumer — that is a licensed provider's job. Always end your response with ONE relevant action link in markdown format (e.g. [Book a Consultation →](/BookAppointment) or [Get Started →](/MerchantOnboarding)) that matches exactly where this user should go next based on the conversation. Make the link feel like a natural next step, not a sales pitch):`;
+
     let replyText = 'Sorry, I had a hiccup! Try again in a moment.';
     try {
       const response = await base44.integrations.Core.InvokeLLM({
-        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${activeCtx.persona} (be warm, knowledgeable, and genuinely helpful. Guide the user naturally — never pushy. IMPORTANT: Never recommend a specific product or treatment to a consumer — that is a licensed provider's job. Always end your response with ONE relevant action link in markdown format (e.g. [Book a Consultation →](/BookAppointment) or [Get Started →](/MerchantOnboarding)) that matches exactly where this user should go next based on the conversation. Make the link feel like a natural next step, not a sales pitch):`,
+        prompt: `${systemPrompt}\n\n---\nCONVERSATION SO FAR:\n${history}\n\nUser: ${trimmed}\n\n${closingInstruction}`,
         add_context_from_internet: false,
       });
       if (typeof response === 'string') {
@@ -194,11 +231,24 @@ export default function AIAssistant() {
     } catch {}
 
     if (fromVoice && voiceLoopRef.current) {
+      const myTurn = voiceTurnRef.current;
       setVoiceStatus('speaking');
+      // Start barge-in listener shortly after speech begins so the user can interrupt
+      setTimeout(() => {
+        if (voiceLoopRef.current && !isListeningPausedRef.current && voiceTurnRef.current === myTurn) {
+          startListeningOnce();
+        }
+      }, 500);
       await speak(replyText);
+      // If the user barged in, a new turn is driving — don't double-listen
+      if (voiceTurnRef.current !== myTurn) return;
       setVoiceStatus('idle');
       if (voiceLoopRef.current && !isListeningPausedRef.current) {
-        setTimeout(() => startListeningOnce(), 300);
+        setTimeout(() => {
+          if (voiceLoopRef.current && !isListeningPausedRef.current && voiceTurnRef.current === myTurn) {
+            startListeningOnce();
+          }
+        }, 300);
       }
     }
   }, [input, loading, messages, pageName, pageProduct, speak, startListeningOnce]);
@@ -214,30 +264,51 @@ export default function AIAssistant() {
   const startVoiceCall = async () => {
     setIsVoiceOpen(true); voiceLoopRef.current = true;
     isListeningPausedRef.current = false; setIsListeningPaused(false);
+    isSpeakingRef.current = false;
+    voiceTurnRef.current++;
     setVoiceTranscript([]);
     setVoiceStatus('speaking');
     let firstName = '';
     try { const u = await base44.auth.me(); firstName = (u?.full_name || u?.display_name || '').split(' ')[0]; } catch {}
     const nameGreeting = firstName ? `, ${firstName}` : '';
-    const greeting = `Hey${nameGreeting}! I'm Rev, your personal wellness guide at MedRevolve. I'm here to help with anything — treatments, consultations, or just figuring out the best next step for your health journey. What's on your mind?`;
+    const greeting = `Hey${nameGreeting}! I'm Melinda, your personal wellness guide at MedRevolve. I'm here to help with anything — treatments, consultations, or just figuring out the best next step for your health journey. What's on your mind?`;
     setVoiceTranscript([{ role: 'assistant', content: greeting }]);
+    const myTurn = voiceTurnRef.current;
+    setTimeout(() => {
+      if (voiceLoopRef.current && !isListeningPausedRef.current && voiceTurnRef.current === myTurn) startListeningOnce();
+    }, 500);
     await speak(greeting);
+    if (voiceTurnRef.current !== myTurn) return;
     setVoiceStatus('idle');
-    if (voiceLoopRef.current) setTimeout(() => startListeningOnce(), 300);
+    if (voiceLoopRef.current && !isListeningPausedRef.current) {
+      setTimeout(() => {
+        if (voiceLoopRef.current && !isListeningPausedRef.current && voiceTurnRef.current === myTurn) startListeningOnce();
+      }, 300);
+    }
   };
 
   const endVoiceCall = () => {
     voiceLoopRef.current = false;
+    isSpeakingRef.current = false;
     recognitionRef.current?.stop();
     window.speechSynthesis?.cancel();
     setIsVoiceOpen(false); setIsListening(false); setIsSpeaking(false); setVoiceStatus('idle');
   };
 
   const toggleMicPause = () => {
+    // If AI is speaking, the mic button acts as an interrupt: stop the AI and listen
+    if (isSpeakingRef.current) {
+      window.speechSynthesis.cancel();
+      isSpeakingRef.current = false;
+      setIsSpeaking(false);
+      setVoiceStatus('idle');
+      if (!isListeningPausedRef.current) setTimeout(() => startListeningOnce(), 200);
+      return;
+    }
     const pausing = !isListeningPausedRef.current;
     isListeningPausedRef.current = pausing; setIsListeningPaused(pausing);
     if (pausing) { recognitionRef.current?.stop(); }
-    else if (!isSpeaking && !loading) { setTimeout(() => startListeningOnce(), 200); }
+    else if (!loading) { setTimeout(() => startListeningOnce(), 200); }
   };
 
   const faqs = FAQ_BY_AUDIENCE[ctx.audience] || [];

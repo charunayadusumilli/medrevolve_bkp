@@ -370,7 +370,7 @@ MedRevolve also operates a direct-to-patient telehealth platform at medrevolve.c
 `;
 
 // ── 7. System prompt builder ──────────────────────────────────────────────────
-export function buildSystemPrompt(pageName, pageProduct) {
+export function buildSystemPrompt(pageName, pageProduct, voiceMode = false) {
   const ctx = getPageContext(pageName);
 
   const isBusinessPage = ['ForBusiness', 'MerchantOnboarding', 'MerchantDashboard', 'PartnerProgram'].includes(pageName);
@@ -433,6 +433,19 @@ KEY LINKS
 • Partner program: [Partner Program →](/PartnerProgram)
 • Contact / demo: [Contact Us →](/Contact)
 • Call now: [240-387-5224](tel:+12403875224)
+${voiceMode ? `
+
+═══════════════════════════════════════
+VOICE MODE — LIVE PHONE CALL (ACTIVE)
+═══════════════════════════════════════
+You are on a live voice call. The user is LISTENING, not reading.
+- Reply in 1-3 short sentences (max ~40 words). Get to the point fast.
+- NO markdown, NO bullet lists, NO bold/italics, NO headers, NO URLs or link syntax.
+- Speak naturally and conversationally, like a real receptionist on a phone call.
+- Ask ONE question at a time, then wait for the answer.
+- Never lecture. Never list more than two items aloud.
+- If a next step is needed, say it in plain words (e.g., "I can connect you to our team — want me to set that up?").
+` : ''}
 
 ${AI_SOLUTIONS_KNOWLEDGE}`;
 }
