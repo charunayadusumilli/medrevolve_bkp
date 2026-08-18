@@ -140,9 +140,9 @@ export default function AIAssistant() {
       .trim();
     const utterance = new SpeechSynthesisUtterance(clean);
     utterance.lang = 'en-US';
-    utterance.rate = 1.05;
-    utterance.pitch = 1.0;
-    utterance.volume = 1;
+    utterance.rate = 0.9;
+    utterance.pitch = 0.95;
+    utterance.volume = 0.92;
     const voices = window.speechSynthesis.getVoices();
     // Prefer natural-sounding female voices
     const femaleVoice =
@@ -275,7 +275,7 @@ export default function AIAssistant() {
       .join('\n\n');
 
     const closingInstruction = fromVoice
-      ? `${activeCtx.persona} (VOICE CALL — reply in 1-3 short sentences, conversational, NO markdown or links. Be warm and natural. Never recommend a specific treatment to a consumer — that is a licensed provider's job. Ask one question if appropriate, then wait.):`
+      ? `${activeCtx.persona} (VOICE CALL — LISTEN FIRST. Acknowledge what the caller said in a few warm words before answering, so they feel heard. Reply in 1-3 short, soft, conversational sentences. NO markdown or links. Speak gently and naturally, like a calm receptionist. Never recommend a specific treatment to a consumer — that is a licensed provider's job. Ask one question if appropriate, then wait patiently for their reply.):`
       : `${activeCtx.persona} (be warm, knowledgeable, and genuinely helpful. Guide the user naturally — never pushy. IMPORTANT: Never recommend a specific product or treatment to a consumer — that is a licensed provider's job. Always end your response with ONE relevant action link in markdown format (e.g. [Book a Consultation →](/BookAppointment) or [Get Started →](/MerchantOnboarding)) that matches exactly where this user should go next based on the conversation. Make the link feel like a natural next step, not a sales pitch):`;
 
     let replyText = 'Sorry, I had a hiccup! Try again in a moment.';
@@ -313,12 +313,14 @@ export default function AIAssistant() {
     if (fromVoice && voiceLoopRef.current) {
       const myTurn = voiceTurnRef.current;
       setVoiceStatus('speaking');
-      // Start barge-in listener shortly after speech begins so the user can interrupt
+      // Start barge-in listener early so the user can interrupt the moment they speak
       setTimeout(() => {
         if (voiceLoopRef.current && !isListeningPausedRef.current && voiceTurnRef.current === myTurn) {
           startListeningOnce();
         }
-      }, 500);
+      }, 350);
+      // Brief pause before speaking — feels like Melinda is listening and taking a breath
+      await new Promise(r => setTimeout(r, 250));
       await speak(replyText);
       // If the user barged in, a new turn is driving — don't double-listen
       if (voiceTurnRef.current !== myTurn) return;
