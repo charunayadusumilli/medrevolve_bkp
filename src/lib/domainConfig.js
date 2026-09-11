@@ -13,8 +13,9 @@
 
 export function detectDomain() {
   const h = window.location.hostname.toLowerCase();
-  // Only medrevolve.com (and www.) is active — all other domains are DOWN
+  // Active B2C domains — medrevolve.com and medrevolveb2b.com render the full site
   if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'B2C';
+  if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com') return 'B2C';
   if (h === 'admin.medrevolve.com')                          return 'ADMIN';
   // Everything else — medrevolveb2b.com, medrevolvewater.com, medrevolveruo.com,
   // any other hostname — shows nothing.
