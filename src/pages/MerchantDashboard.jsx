@@ -12,7 +12,8 @@ import ModuleCard from '@/components/merchant/ModuleCard';
 import RequireAuth from '@/components/auth/RequireAuth';
 import {
   DollarSign, Users, Package, TrendingUp, AlertCircle,
-  ArrowRight, Globe, ShieldCheck, Zap, CreditCard, BarChart3, BookOpen, Star
+  ArrowRight, Globe, ShieldCheck, Zap, CreditCard, BarChart3, BookOpen, Star,
+  FileText, Receipt
 } from 'lucide-react';
 
 const MODULE_DEFS = [
@@ -23,6 +24,8 @@ const MODULE_DEFS = [
   { key: 'website_builder', label: 'Website Builder', description: '25 themes + 5 checkout themes', price: 59, icon: Globe },
   { key: 'marketing', label: 'Marketing Module', description: 'SEO, ads, analytics', price: 69, icon: BarChart3 },
   { key: 'card_processing', label: 'Card Processing', description: 'Card Group Intl merchant accounts', price: 0, icon: CreditCard, popular: true },
+  { key: 'llc_formation', label: 'LLC Formation', description: 'Form your LLC & business registration', price: 149, icon: FileText },
+  { key: 'billing', label: 'Billing & Subscriptions', description: 'Patient billing, subscriptions & invoicing', price: 49, icon: Receipt },
   { key: 'lms', label: 'Peptide University', description: 'Team training & certifications', price: 39, icon: BookOpen },
 ];
 

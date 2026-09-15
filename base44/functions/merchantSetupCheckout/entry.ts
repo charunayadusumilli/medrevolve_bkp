@@ -23,15 +23,21 @@ Deno.serve(async (req) => {
 
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), { apiVersion: '2024-12-18.acacia' });
 
-    // Support variable amounts: $100 onboarding call OR $5,000 full setup
+    // Support variable amounts: $199 B2B consultation, $100 onboarding call, or $5,000 full setup
     const amountDollars = amount || 5000;
     const amountCents = amountDollars * 100;
-    const productName = amountDollars === 100
-      ? 'MedRevolve Onboarding Consultation'
-      : 'MedRevolve B2B Platform Setup';
-    const productDesc = description || (amountDollars === 100
-      ? `1-hour live guided platform setup call for ${businessName}. Covers: telehealth setup, bank accounts, compliance, domain, providers & pharmacy network.`
-      : `White-label platform launch for ${businessName}. Includes: branded storefront, domain, provider network, pharmacy, compliance framework, and dedicated onboarding team.`);
+    const isConsultation = amountDollars === 199;
+    const isOnboardingCall = amountDollars === 100;
+    const productName = isConsultation
+      ? 'MedRevolve B2B Strategy Consultation'
+      : isOnboardingCall
+        ? 'MedRevolve Onboarding Consultation'
+        : 'MedRevolve B2B Platform Setup';
+    const productDesc = description || (isConsultation
+      ? `1-on-1 B2B strategy consultation for ${businessName}. A MedRevolve specialist walks through your branded telehealth platform, providers, pharmacy, compliance, and payments — and builds your launch roadmap.`
+      : isOnboardingCall
+        ? `1-hour live guided platform setup call for ${businessName}. Covers: telehealth setup, bank accounts, compliance, domain, providers & pharmacy network.`
+        : `White-label platform launch for ${businessName}. Includes: branded storefront, domain, provider network, pharmacy, compliance framework, and dedicated onboarding team.`);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -56,7 +62,7 @@ Deno.serve(async (req) => {
       billing_address_collection: 'required',
       metadata: {
         base44_app_id: Deno.env.get('BASE44_APP_ID'),
-        type: amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
+        type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
         business_name: businessName,
         contact_name: contactName || '',
         email: email,
@@ -66,7 +72,7 @@ Deno.serve(async (req) => {
       payment_intent_data: {
         metadata: {
           base44_app_id: Deno.env.get('BASE44_APP_ID'),
-          type: amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
+          type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
           business_name: businessName,
           contact_name: contactName || '',
           partner_code: partnerCode || '',
