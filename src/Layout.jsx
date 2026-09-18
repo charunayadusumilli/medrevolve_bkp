@@ -6,7 +6,7 @@ import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AIAssistant from '@/components/chat/AIAssistant';
@@ -175,6 +175,11 @@ export default function Layout({ children }) {
                       <a href="https://app.medrevolve.com/portal" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
                         <LayoutDashboard className="w-4 h-4" /> My Portal
                       </a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/MerchantOnboardingIntake" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                        <FileCheck className="w-4 h-4" /> Onboarding & Documents
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to={createPageUrl('AccountSettings')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">

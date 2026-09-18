@@ -1,0 +1,302 @@
+{
+  "name": "MerchantApplication",
+  "type": "object",
+  "properties": {
+    "merchant_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Authenticated merchant email (links to user account)"
+    },
+    "application_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "docs_generated",
+        "partially_signed",
+        "fully_signed",
+        "completed"
+      ],
+      "default": "draft",
+      "description": "Workflow status of this onboarding application"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the merchant submitted the intake"
+    },
+    "legal_business_name": {
+      "type": "string",
+      "description": "Legal entity name"
+    },
+    "dba_name": {
+      "type": "string",
+      "description": "Doing Business As name (if different)"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "LLC",
+        "C-Corporation",
+        "S-Corporation",
+        "Partnership",
+        "Sole Proprietor",
+        "Non-Profit",
+        "Other"
+      ],
+      "description": "Business entity structure"
+    },
+    "state_of_formation": {
+      "type": "string",
+      "description": "US state where entity was formed"
+    },
+    "ein": {
+      "type": "string",
+      "description": "Employer Identification Number (XX-XXXXXXX)"
+    },
+    "business_address": {
+      "type": "string",
+      "description": "Street address"
+    },
+    "business_city": {
+      "type": "string"
+    },
+    "business_state": {
+      "type": "string"
+    },
+    "business_zip": {
+      "type": "string"
+    },
+    "business_phone": {
+      "type": "string"
+    },
+    "business_website": {
+      "type": "string"
+    },
+    "business_description": {
+      "type": "string",
+      "description": "Description of business operations and services"
+    },
+    "industry": {
+      "type": "string",
+      "enum": [
+        "Telehealth Platform",
+        "Med Spa",
+        "Wellness Clinic",
+        "Pharmacy",
+        "Fitness/Health",
+        "Healthcare Provider",
+        "E-commerce",
+        "Other"
+      ],
+      "description": "Primary industry classification"
+    },
+    "expected_monthly_volume": {
+      "type": "number",
+      "description": "Expected monthly card processing volume in USD"
+    },
+    "average_ticket_amount": {
+      "type": "number",
+      "description": "Average transaction amount in USD"
+    },
+    "highest_ticket_amount": {
+      "type": "number",
+      "description": "Highest expected single transaction amount in USD"
+    },
+    "accepted_card_brands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Visa",
+          "Mastercard",
+          "American Express",
+          "Discover",
+          "EBT"
+        ]
+      },
+      "description": "Card brands the merchant wants to accept"
+    },
+    "bank_name": {
+      "type": "string",
+      "description": "Business bank name"
+    },
+    "bank_account_type": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "bank_account_last4": {
+      "type": "string",
+      "description": "Last 4 digits of business bank account (for settlement)"
+    },
+    "bank_routing_number": {
+      "type": "string",
+      "description": "Bank routing number (public, 9 digits)"
+    },
+    "beneficial_owners": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ownership_pct": {
+            "type": "number"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "address": {
+            "type": "string"
+          },
+          "ssn_last4": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Individuals with 25%+ ownership (FINCEN/AML requirement)"
+    },
+    "signing_officer_name": {
+      "type": "string",
+      "description": "Authorized signer full name"
+    },
+    "signing_officer_title": {
+      "type": "string",
+      "description": "Title/role (CEO, Owner, President, etc.)"
+    },
+    "signing_officer_email": {
+      "type": "string",
+      "format": "email"
+    },
+    "signing_officer_phone": {
+      "type": "string"
+    },
+    "signing_officer_dob": {
+      "type": "string",
+      "format": "date"
+    },
+    "signing_officer_ssn_last4": {
+      "type": "string",
+      "description": "Last 4 of signer SSN (identity verification)"
+    },
+    "signing_officer_home_address": {
+      "type": "string",
+      "description": "Signer home address (for personal guarantee)"
+    },
+    "personal_guarantee_accepted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Signer acknowledges personal guarantee"
+    },
+    "selected_services": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "platform",
+          "full_bundle",
+          "marketing",
+          "product",
+          "pharmacy",
+          "payment",
+          "llc_formation",
+          "telehealth",
+          "compliance",
+          "inventory",
+          "website_builder",
+          "domain_hosting"
+        ]
+      },
+      "description": "MedRevolve services/modules selected"
+    },
+    "service_term_months": {
+      "type": "integer",
+      "default": 12,
+      "description": "Service agreement term length"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "description": "Total monthly platform fee"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Desired service start date"
+    },
+    "handles_phi": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether merchant handles Protected Health Information (triggers BAA)"
+    },
+    "phi_services_description": {
+      "type": "string",
+      "description": "Description of services involving PHI"
+    },
+    "mpa_signed": {
+      "type": "boolean",
+      "default": false
+    },
+    "mpa_signed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mpa_signature_name": {
+      "type": "string"
+    },
+    "mpa_signature_ip": {
+      "type": "string"
+    },
+    "service_agreement_signed": {
+      "type": "boolean",
+      "default": false
+    },
+    "service_agreement_signed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "service_agreement_signature_name": {
+      "type": "string"
+    },
+    "service_agreement_signature_ip": {
+      "type": "string"
+    },
+    "baa_signed": {
+      "type": "boolean",
+      "default": false
+    },
+    "baa_signed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "baa_signature_name": {
+      "type": "string"
+    },
+    "baa_signature_ip": {
+      "type": "string"
+    },
+    "docs_email_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "docs_email_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Internal review notes"
+    }
+  },
+  "required": [
+    "merchant_email",
+    "legal_business_name",
+    "entity_type",
+    "signing_officer_name",
+    "signing_officer_email"
+  ]
+}
