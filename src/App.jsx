@@ -41,6 +41,7 @@ import EmailAudit from './pages/EmailAudit';
 import IntegrationsDashboard from './pages/IntegrationsDashboard';
 import MDIntegrationsDashboard from './pages/MDIntegrationsDashboard';
 import BelugaIntegration from './pages/BelugaIntegration';
+import Cart from './pages/Cart';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -198,9 +199,9 @@ const AuthenticatedApp = () => {
       <Route path="/TelehealthConsent" element={<ExternalRedirect to="https://app.medrevolve.com/consent" />} />
       <Route path="/PhoneIntake" element={<ExternalRedirect to="https://app.medrevolve.com/phone-intake" />} />
 
-      {/* ── B2C COMMERCE PAGES — return 404 ──────────────────────────────── */}
-      <Route path="/Cart" element={<PageNotFound />} />
-      <Route path="/Checkout" element={<PageNotFound />} />
+      {/* ── CART + FLEXIBLE CHECKOUT ──────────────────────────────────────── */}
+      <Route path="/Cart" element={<LayoutWrapper currentPageName="Cart"><Cart /></LayoutWrapper>} />
+      <Route path="/Checkout" element={<LayoutWrapper currentPageName="Cart"><Cart /></LayoutWrapper>} />
       <Route path="/OrderSuccess" element={<PageNotFound />} />
       <Route path="/ProductDetail" element={<PageNotFound />} />
       <Route path="/ProductsAndServices" element={<PageNotFound />} />
