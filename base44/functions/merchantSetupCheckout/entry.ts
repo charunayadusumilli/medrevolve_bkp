@@ -10,7 +10,7 @@ import Stripe from 'npm:stripe@17.5.0';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { businessName, contactName, email, partnerCode, successUrl, cancelUrl, amount, description } = await req.json();
+    const { businessName, contactName, email, partnerCode, successUrl, cancelUrl, amount, description, productName } = await req.json();
 
     if (!email || !businessName) {
       return Response.json({ error: 'businessName and email are required' }, { status: 400 });
@@ -28,11 +28,12 @@ Deno.serve(async (req) => {
     const amountCents = amountDollars * 100;
     const isConsultation = amountDollars === 199;
     const isOnboardingCall = amountDollars === 100;
-    const productName = isConsultation
+    const fallbackProductName = isConsultation
       ? 'MedRevolve B2B Strategy Consultation'
       : isOnboardingCall
         ? 'MedRevolve Onboarding Consultation'
         : 'MedRevolve B2B Platform Setup';
+    const resolvedProductName = productName || fallbackProductName;
     const productDesc = description || (isConsultation
       ? `1-on-1 B2B strategy consultation for ${businessName}. A MedRevolve specialist walks through your branded telehealth platform, providers, pharmacy, compliance, and payments — and builds your launch roadmap.`
       : isOnboardingCall
@@ -48,7 +49,7 @@ Deno.serve(async (req) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: productName,
+              name: resolvedProductName,
               description: productDesc,
               images: ['https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'],
             },
@@ -62,7 +63,7 @@ Deno.serve(async (req) => {
       billing_address_collection: 'required',
       metadata: {
         base44_app_id: Deno.env.get('BASE44_APP_ID'),
-        type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
+        type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : amount === 5000 ? 'merchant_setup' : 'merchant_module',
         business_name: businessName,
         contact_name: contactName || '',
         email: email,
@@ -72,7 +73,7 @@ Deno.serve(async (req) => {
       payment_intent_data: {
         metadata: {
           base44_app_id: Deno.env.get('BASE44_APP_ID'),
-          type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : 'merchant_setup',
+          type: amount === 199 ? 'merchant_consultation' : amount === 100 ? 'merchant_onboarding_call' : amount === 5000 ? 'merchant_setup' : 'merchant_module',
           business_name: businessName,
           contact_name: contactName || '',
           partner_code: partnerCode || '',

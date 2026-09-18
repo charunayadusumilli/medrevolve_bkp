@@ -75,7 +75,7 @@ function MerchantDashboardInner() {
     mutationFn: async (moduleKey) => {
       const existing = modules.find(m => m.module_key === moduleKey);
       if (existing) {
-        return base44.entities.MerchantModule.update(existing.id, { is_active: true, status: 'trial', activated_at: new Date().toISOString() });
+        return base44.entities.MerchantModule.update(existing.id, { is_active: true, status: 'active', activated_at: new Date().toISOString() });
       } else {
         const mod = MODULE_DEFS.find(m => m.key === moduleKey);
         return base44.entities.MerchantModule.create({
@@ -83,7 +83,7 @@ function MerchantDashboardInner() {
           merchant_name: partner.business_name,
           module_key: moduleKey,
           is_active: true,
-          status: 'trial',
+          status: 'active',
           monthly_fee: mod?.price || 0,
           activated_at: new Date().toISOString(),
         });
@@ -91,6 +91,60 @@ function MerchantDashboardInner() {
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['merchant-modules'] })
   });
+
+  // Paid module activation → Stripe checkout (card auth + signup). Free modules activate directly.
+  const handleActivate = async (mod) => {
+    if (!partner) return;
+    if (mod.price === 0) {
+      activateModuleMutation.mutate(mod.key);
+      return;
+    }
+    try {
+      const res = await base44.functions.invoke('merchantSetupCheckout', {
+        businessName: partner.business_name,
+        contactName: partner.contact_name,
+        email: partner.email,
+        partnerCode: partner.partner_code,
+        amount: mod.price,
+        productName: mod.label,
+        description: `${mod.label} — ${mod.description} for ${partner.business_name}. Monthly service, cancel anytime.`,
+        successUrl: `${window.location.origin}/MerchantDashboard?activate=${mod.key}`,
+        cancelUrl: `${window.location.origin}/MerchantDashboard`,
+      });
+      if (res?.data?.url) window.location.href = res.data.url;
+    } catch (e) {
+      console.error('Module checkout failed', e);
+    }
+  };
+
+  // After Stripe redirects back with ?activate=<key>, mark the module active (paid).
+  useEffect(() => {
+    if (!partner) return;
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('activate');
+    if (!key) return;
+    window.history.replaceState({}, '', window.location.pathname);
+    const mod = MODULE_DEFS.find(m => m.key === key);
+    (async () => {
+      try {
+        const existing = await base44.entities.MerchantModule.filter({ merchant_id: partner.id, module_key: key });
+        if (existing.length > 0) {
+          await base44.entities.MerchantModule.update(existing[0].id, { is_active: true, status: 'active', activated_at: new Date().toISOString() });
+        } else {
+          await base44.entities.MerchantModule.create({
+            merchant_id: partner.id,
+            merchant_name: partner.business_name,
+            module_key: key,
+            is_active: true,
+            status: 'active',
+            monthly_fee: mod?.price || 0,
+            activated_at: new Date().toISOString(),
+          });
+        }
+        queryClient.invalidateQueries({ queryKey: ['merchant-modules'] });
+      } catch (e) { console.error('Activate after checkout failed', e); }
+    })();
+  }, [partner]);
 
   const activeModuleKeys = modules.filter(m => m.is_active).map(m => m.module_key);
 
@@ -332,7 +386,7 @@ function MerchantDashboardInner() {
                     key={mod.key}
                     module={mod}
                     moduleRecord={record}
-                    onActivate={() => activateModuleMutation.mutate(mod.key)}
+                    onActivate={() => handleActivate(mod)}
                   />
                 );
               })}
