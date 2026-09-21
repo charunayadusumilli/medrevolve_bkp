@@ -4,12 +4,31 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import FAQSection from '@/components/home/FAQSection';
 import {
   ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
   Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
   CreditCard, Lock, Truck, FlaskConical, Video, FileText,
   Megaphone, Star, Store, Layers, Link2, ShieldCheck
 } from 'lucide-react';
+
+const OPERATOR_FAQS = [
+  { question: 'What is MedRevolve?', answer: 'A white-label telehealth platform: intake, licensed physicians across all 50 states, 503A/503B pharmacy fulfillment, EMR, real-time FDA/PCAC compliance monitoring, and payment processing — all under your own brand. You focus on growth and patient care; MedRevolve runs the backend.' },
+  { question: 'What does it cost?', answer: 'LLC Formation $1,500 one-time; Payment Integration $1,000 + $100/mo; Pharmacy Integration $1,000 + $100/mo; Product Integration $750 one-time; Marketing Integration $750 + $150/mo; Full Platform Bundle $4,000 setup + $250/mo. Building the same stack yourself costs $30K-$50K and 6-12 months.' },
+  { question: 'How fast can I launch?', answer: 'Days to weeks, not months — physicians, pharmacy, EMR, compliance, and payments are already built and licensed.' },
+  { question: 'Do I keep my own brand?', answer: 'Yes — your domain, your logo, your pricing, your patient relationships. MedRevolve is the invisible backend.' },
+  { question: 'Which services can I offer?', answer: 'Four service lines on one platform: GLP-1/weight management, peptide therapy, hormone optimization, and NAD+/longevity. Same patient, four revenue streams.' },
+  { question: 'How does compliance work?', answer: 'Real-time monitoring of FDA announcements, PCAC recommendations, and Federal Register notices — operators are alerted within hours with substitution and continuity plans.' },
+  { question: 'How does pharmacy fulfillment work?', answer: '503A/503B licensed compounding pharmacies, COAs on every batch, no grey-market sourcing; prescriptions flow to pharmacy after clinician approval.' },
+  { question: 'What about payment processing?', answer: 'Telehealth is high-risk for mainstream processors. MedRevolve includes payment processing built for high-risk telehealth categories.' },
+  { question: 'Who is this NOT for?', answer: 'Operators who want to prescribe without clinicians, cut corners on pharmacy sourcing, or ignore compliance. MedRevolve is built for legitimate brands that want to last.' },
+  { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or call (240) 387-5224. A specialist will walk you through the platform and your launch plan.' },
+  { question: 'Why is MedRevolve described as an AI-powered platform?', answer: 'Every layer runs on automation: AI intake triage, AI receptionist, an on-site AI answer engine, automated compliance monitoring, and webhook-driven alerts — the LLM-grade infrastructure layer for telehealth.' },
+  { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one — at $4,000 + $250/mo vs Cuvo\'s $997/mo + $9,800 setup.' },
+  { question: 'Which states are covered?', answer: 'MedRevolve\'s physician network is licensed across all 50 states, so your patients can be seen and prescribed for wherever they live.' },
+  { question: 'Can I use my existing website?', answer: 'Yes. You can run the platform on your own domain with your branding, or embed the storefront into your existing clinic or spa site as an iframe or native integration.' },
+  { question: 'What integrations are included?', answer: 'Secure high-risk payments, HubSpot and Zoho CRM, Twilio SMS/voice, Google Calendar scheduling, Qualiphy eConsent, Google Drive document storage, and Zapier for 5,000+ app connections — all pre-built, no dev work required.' },
+];
 
 // ── Section data ─────────────────────────────────────────────────────────────
 
@@ -147,6 +166,18 @@ export default function ForBusiness() {
         title="B2B Telehealth Services | Launch Your Telehealth Business | MedRevolve"
         description="MedRevolve builds compliant telehealth businesses for wellness operators. Website, providers, pharmacy integration, merchant accounts, and compliance — end to end."
       />
+
+      {/* ── AI Engine Tagline ── */}
+      <section className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] py-3 px-6 text-center">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-white font-bold text-sm md:text-base tracking-tight">
+            The AI engine that powers telehealth
+          </p>
+          <p className="text-white/80 text-xs md:text-sm mt-0.5">
+            Intake, physicians, pharmacy, EMR, compliance, and payments — automated, white-labeled, yours.
+          </p>
+        </div>
+      </section>
 
       {/* ── Hero ── */}
       <section className="relative bg-[#060606] pt-20 pb-28 px-6 lg:px-8 overflow-hidden">
@@ -432,6 +463,15 @@ export default function ForBusiness() {
           </div>
         </div>
       </section>
+
+      {/* ── Operator FAQ with Schema ── */}
+      <FAQSection
+        tag="Operator FAQ"
+        title={<>Questions, <span className="font-semibold text-[#4A6741]">Answered</span></>}
+        subtitle="Everything operators need to know about launching a white-label telehealth platform with MedRevolve."
+        faqs={OPERATOR_FAQS}
+        bg="bg-[#F5F0E8]"
+      />
 
       {/* ── Final CTA ── */}
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] via-[#3D5636] to-[#2D3A2D]">

@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
-import AIAssistant from '@/components/chat/AIAssistant';
+import AnswerEngine from '@/components/chat/AnswerEngine';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuSeparator, DropdownMenuTrigger
@@ -79,7 +79,7 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen bg-white">
       <AnalyticsTracker />
-      <AIAssistant />
+      <AnswerEngine />
 
       {/* Top announcement bar */}
       <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">

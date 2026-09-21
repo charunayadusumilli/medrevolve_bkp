@@ -44,6 +44,7 @@ import BelugaIntegration from './pages/BelugaIntegration';
 import Cart from './pages/Cart';
 import MerchantOnboardingIntake from './pages/MerchantOnboardingIntake';
 import MerchantDocuments from './pages/MerchantDocuments';
+import PatientFAQ from './pages/PatientFAQ';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -208,6 +209,7 @@ const AuthenticatedApp = () => {
       {/* ── MERCHANT ONBOARDING INTAKE + DOCUMENT E-SIGNATURE ─────────────── */}
       <Route path="/MerchantOnboardingIntake" element={<LayoutWrapper currentPageName="MerchantOnboardingIntake"><MerchantOnboardingIntake /></LayoutWrapper>} />
       <Route path="/MerchantDocuments" element={<LayoutWrapper currentPageName="MerchantDocuments"><MerchantDocuments /></LayoutWrapper>} />
+      <Route path="/faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientFAQ /></LayoutWrapper>} />
       <Route path="/OrderSuccess" element={<PageNotFound />} />
       <Route path="/ProductDetail" element={<PageNotFound />} />
       <Route path="/ProductsAndServices" element={<PageNotFound />} />

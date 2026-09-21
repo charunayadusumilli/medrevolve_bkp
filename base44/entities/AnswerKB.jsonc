@@ -1,0 +1,55 @@
+{
+  "name": "AnswerKB",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "PEPTIDE THERAPY",
+        "GLP-1",
+        "HORMONES",
+        "NAD+",
+        "WHITE-LABEL",
+        "PLATFORM/AI"
+      ],
+      "description": "Knowledge base category"
+    },
+    "question": {
+      "type": "string",
+      "description": "The question text"
+    },
+    "answer": {
+      "type": "string",
+      "description": "Verbatim answer used as AI grounding"
+    },
+    "audience_route": {
+      "type": "string",
+      "enum": [
+        "patient",
+        "operator",
+        "affiliate"
+      ],
+      "description": "Which audience/funnel this Q&A routes to"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "archived"
+      ],
+      "default": "active",
+      "description": "Whether this KB entry is live"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0",
+      "description": "KB entry version"
+    }
+  },
+  "required": [
+    "category",
+    "question",
+    "answer",
+    "audience_route"
+  ]
+}
