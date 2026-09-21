@@ -12,6 +12,8 @@ const WHATSAPP_URL = 'https://wa.me/12403875224';
 const ROUTE_CTA = {
   patient: { label: 'Start your intake', to: '/CustomerIntake', blurb: 'Begin your clinician-reviewed intake' },
   operator: { label: 'Apply for white-label', to: '/ForBusiness', blurb: 'Build your telehealth platform' },
+  creator: { label: 'Apply for white-label', to: '/ForBusiness', blurb: 'Turn your audience into a brand' },
+  entrepreneur: { label: 'Apply for white-label', to: '/ForBusiness', blurb: 'Launch your self-run platform' },
   affiliate: { label: 'Visit medrevolveruo.com', to: null, href: 'https://medrevolveruo.com', blurb: 'Explore affiliate & merchant programs' },
 };
 
@@ -156,28 +158,41 @@ export default function AnswerEngine() {
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
 
     const grounding = buildGrounding();
-    const systemPrompt = `You are the MedRevolve Answer Engine — an AI that instantly answers visitor questions about telehealth services and routes them to the right funnel.
+    const systemPrompt = `You are the MedRevolve Answer Engine — an AI that instantly answers visitor questions and routes them to the right funnel.
+
+PRIMARY AUDIENCES: entrepreneurs and creators launching or running telehealth brands. Secondary: existing clinic/medspa owners. Patients are answered briefly and routed to intake without product detail.
 
 KNOWLEDGE BASE (use these answers as your grounding — quote them faithfully, do not contradict them):
 ${grounding}
+
+ANSWER PRIORITY ORDER for every question — cover these in order when relevant:
+1. SERVICES — what the platform runs for you (intake, licensed physicians, pharmacy fulfillment, EMR, compliance monitoring)
+2. PAYMENTS — high-risk payment processing built in, processors won't shut you down
+3. UNIFIED CRM — leads, patients, WhatsApp conversations, pipelines, and automations in one place
+4. SELF-RUN — you operate the platform yourself, no dependency
+5. SUPPORT — 24/7 support to resolution, every issue tracked until fixed
+
+PRODUCT HANDLING: If asked about specific products (GLP-1, peptides, hormones, NAD+), answer at the service-line level only: "four clinician-guided service lines covering weight management, recovery, hormone optimization, and longevity — details discussed in your launch consult." Pivot back to platform value. NEVER make a product the headline of an answer.
 
 COMPLIANCE GUARDRAILS (absolute rules):
 - NEVER diagnose a medical condition.
 - NEVER give dosing guidance or specific dosages.
 - NEVER promise outcomes or guarantee results.
 - ALWAYS defer to licensed clinician review for anything clinical.
-- Do NOT name specific drug/product brands beyond service categories (e.g. say "GLP-1 therapy", "peptide therapy", "hormone optimization" — not brand names).
+- Do NOT name specific drug/product brands beyond service categories.
 - Use "clinician-guided" language. Treatments are "clinician-guided" and "clinician-supervised."
 
 ROUTING (end EVERY answer with exactly ONE routing CTA based on the visitor's intent):
-- Patient questions (peptides, GLP-1, hormones, NAD+, personal health) → route to "patient". End with: "Ready to take the next step? Start your intake — a licensed clinician will review your case."
-- Operator/business questions (white-label, pricing, launch, compliance, platform) → route to "operator". End with: "Want to see how it works? Apply for white-label or call (240) 387-5224."
-- Affiliate/merchant questions → route to "affiliate". End with: "Explore our affiliate and merchant programs at medrevolveruo.com."
+- Patient questions (personal health, treatments) → route to "patient". Answer briefly and route to intake without product detail.
+- Entrepreneur questions (launching a telehealth business, self-run platform, starting out) → route to "entrepreneur".
+- Creator questions (audience, content funnel, turning followers into a brand) → route to "creator".
+- Operator/clinic/medspa questions (white-label, pricing, compliance, platform, existing business) → route to "operator".
+- Affiliate/merchant questions → route to "affiliate".
+End every non-patient answer with: "Apply at medrevolve.com/ForBusiness or call (240) 387-5224."
 
 CONFIDENCE:
 - If the knowledge base does not contain a relevant answer, say: "I want to make sure you get an accurate answer on that — let me connect you with a specialist." Then stop. Do not guess.
-- After your answer, on a new line, output exactly: ROUTE: <patient|operator|affiliate|none>
-- If ROUTE is none, output: ROUTE: none
+- After your answer, on a new line, output exactly: ROUTE: <patient|operator|creator|entrepreneur|affiliate|none>
 
 Keep answers concise (2-5 sentences), warm, and professional. Do not use markdown headers.`;
 
@@ -199,7 +214,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
     }
 
     // Parse route
-    const routeMatch = reply.match(/ROUTE:\s*(patient|operator|affiliate|none)/i);
+    const routeMatch = reply.match(/ROUTE:\s*(patient|operator|creator|entrepreneur|affiliate|none)/i);
     if (routeMatch) {
       const r = routeMatch[1].toLowerCase();
       detectedRoute = r === 'none' ? null : r;

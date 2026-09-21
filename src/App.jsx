@@ -45,6 +45,12 @@ import Cart from './pages/Cart';
 import MerchantOnboardingIntake from './pages/MerchantOnboardingIntake';
 import MerchantDocuments from './pages/MerchantDocuments';
 import PatientFAQ from './pages/PatientFAQ';
+import WhiteLabelTelehealthPlatform from './pages/lp/WhiteLabelTelehealthPlatform';
+import UnifiedCRM from './pages/lp/UnifiedCRM';
+import PaymentProcessing from './pages/lp/PaymentProcessing';
+import ForCreatorsLP from './pages/lp/ForCreatorsLP';
+import ForEntrepreneurs from './pages/lp/ForEntrepreneurs';
+import TelehealthServicesForMedSpa from './pages/lp/TelehealthServicesForMedSpa';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -210,6 +216,12 @@ const AuthenticatedApp = () => {
       <Route path="/MerchantOnboardingIntake" element={<LayoutWrapper currentPageName="MerchantOnboardingIntake"><MerchantOnboardingIntake /></LayoutWrapper>} />
       <Route path="/MerchantDocuments" element={<LayoutWrapper currentPageName="MerchantDocuments"><MerchantDocuments /></LayoutWrapper>} />
       <Route path="/faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientFAQ /></LayoutWrapper>} />
+      <Route path="/white-label-telehealth-platform" element={<LayoutWrapper currentPageName="WhiteLabelTelehealthPlatform"><WhiteLabelTelehealthPlatform /></LayoutWrapper>} />
+      <Route path="/unified-crm" element={<LayoutWrapper currentPageName="UnifiedCRM"><UnifiedCRM /></LayoutWrapper>} />
+      <Route path="/payment-processing" element={<LayoutWrapper currentPageName="PaymentProcessing"><PaymentProcessing /></LayoutWrapper>} />
+      <Route path="/for-creators" element={<LayoutWrapper currentPageName="ForCreatorsLP"><ForCreatorsLP /></LayoutWrapper>} />
+      <Route path="/for-entrepreneurs" element={<LayoutWrapper currentPageName="ForEntrepreneurs"><ForEntrepreneurs /></LayoutWrapper>} />
+      <Route path="/telehealth-services-for-medspa" element={<LayoutWrapper currentPageName="TelehealthServicesForMedSpa"><TelehealthServicesForMedSpa /></LayoutWrapper>} />
       <Route path="/OrderSuccess" element={<PageNotFound />} />
       <Route path="/ProductDetail" element={<PageNotFound />} />
       <Route path="/ProductsAndServices" element={<PageNotFound />} />

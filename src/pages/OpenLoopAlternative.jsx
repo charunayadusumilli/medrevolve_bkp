@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, X, ArrowRight } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import FAQSection from '@/components/home/FAQSection';
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -13,14 +14,21 @@ const fade = (delay = 0) => ({
 });
 
 const COMPARISON = [
-  { feature: 'Full white-label (your brand, domain)', medrevolve: true, openloop: false },
-  { feature: 'Pharmacy network included', medrevolve: true, openloop: false },
-  { feature: 'Launch in 7 days', medrevolve: true, openloop: false },
-  { feature: 'Dedicated launch team', medrevolve: true, openloop: false },
-  { feature: 'LegitScript-ready compliance', medrevolve: true, openloop: true },
+  { feature: 'Complete self-run platform (services + payments + CRM)', medrevolve: true, openloop: false },
+  { feature: 'White-label (your brand, domain, pricing)', medrevolve: true, openloop: false },
+  { feature: 'Built-in high-risk payment processing', medrevolve: true, openloop: false },
+  { feature: 'Unified CRM (leads, patients, WhatsApp, pipelines)', medrevolve: true, openloop: false },
+  { feature: 'Pharmacy fulfillment network included', medrevolve: true, openloop: false },
+  { feature: 'Clinician network / virtual care APIs', medrevolve: true, openloop: true },
   { feature: '50-state provider coverage', medrevolve: true, openloop: true },
-  { feature: 'No per-patient fees', medrevolve: true, openloop: false },
-  { feature: 'Integrated patient portal', medrevolve: true, openloop: true },
+  { feature: '24/7 support to resolution', medrevolve: true, openloop: false },
+  { feature: 'Launch in days to weeks', medrevolve: true, openloop: false },
+  { feature: 'Pricing: $4,000 + $250/mo', medrevolve: true, openloop: false },
+];
+
+const OPENLOOP_FAQS = [
+  { question: 'Does OpenLoop include payment processing and CRM?', answer: 'No — OpenLoop provides clinician networks and virtual care APIs. MedRevolve includes the complete self-run platform: services, built-in high-risk payments, and a unified CRM, under your brand at $4,000 + $250/mo.' },
+  { question: 'Can I run the MedRevolve platform myself?', answer: 'Yes — the platform is built to be self-run, with 24/7 support to resolution when anything needs attention. No agency retainer required.' },
 ];
 
 export default function OpenLoopAlternative() {
@@ -39,7 +47,7 @@ export default function OpenLoopAlternative() {
             <span className="text-orange-400">MedRevolve Includes More — For Less</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
-            OpenLoop is a provider staffing solution. MedRevolve is a full-stack telehealth platform — white-label, pharmacy, compliance, technology, and patient management all in one. If you're outgrowing OpenLoop or just getting started, here's why operators choose MedRevolve.
+            OpenLoop provides clinician networks and virtual care APIs. MedRevolve provides the complete self-run platform — services, built-in high-risk payments, and a unified CRM — under your brand at $4,000 + $250/mo. If you need more than staffing, here's why operators choose MedRevolve.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/MerchantOnboarding">
@@ -93,9 +101,9 @@ export default function OpenLoopAlternative() {
           <h2 className="text-2xl font-black text-gray-900 mb-8">Why Operators Switch to MedRevolve</h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {[
-              { emoji: '🏷️', title: 'True White-Label', desc: 'Your domain. Your logo. Your brand. Patients never see MedRevolve.' },
-              { emoji: '💊', title: 'Pharmacy Included', desc: 'We bring licensed 503A pharmacy partners. No separate negotiations.' },
-              { emoji: '🚀', title: 'Launch in 7 Days', desc: 'OpenLoop staffs your providers. MedRevolve gives you the entire operating platform.' },
+              { emoji: '🛠️', title: 'Services + Payments + CRM', desc: 'One self-run platform, not just a staffing layer. Unified CRM included vs. none.' },
+              { emoji: '💳', title: 'Payments Built In', desc: 'High-risk payment processing built for telehealth — no processor shutdown risk.' },
+              { emoji: '🚀', title: 'Self-Run + Supported', desc: 'You operate it yourself; 24/7 support to resolution has your back.' },
             ].map((item, i) => (
               <motion.div key={item.title} {...fade(i * 0.1)} className="bg-white rounded-xl p-6 shadow-sm">
                 <div className="text-3xl mb-3">{item.emoji}</div>
@@ -106,6 +114,13 @@ export default function OpenLoopAlternative() {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ ── */}
+      <FAQSection
+        tag="OpenLoop Alternative FAQ"
+        title={<>OpenLoop vs <span className="font-semibold text-[#4A6741]">MedRevolve</span></>}
+        faqs={OPENLOOP_FAQS}
+      />
 
       {/* ── CTA ── */}
       <section className="py-20 px-6 text-center">

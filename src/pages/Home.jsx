@@ -9,6 +9,7 @@ import PlatformJourney from '@/components/home/PlatformJourney';
 import PlugAndPlayDemo from '@/components/home/PlugAndPlayDemo';
 import B2BFinalCTA from '@/components/home/B2BFinalCTA';
 import ResumeSetupBanner from '@/components/home/ResumeSetupBanner';
+import PositioningStrip from '@/components/home/PositioningStrip';
 
 const WHO_ITS_FOR = [
   { icon: '🏥', title: 'Med Spa & Clinic Owners', desc: 'Add physician-supervised wellness programs to your existing business without building a telehealth team from scratch.' },
@@ -41,6 +42,9 @@ export default function Home() {
 
       {/* ── RESUME BANNER (returning users) ──────────────────────────────── */}
       <ResumeSetupBanner />
+
+      {/* ── POSITIONING STRIP ────────────────────────────────────────────── */}
+      <PositioningStrip />
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <TelehealthGlobeHero />

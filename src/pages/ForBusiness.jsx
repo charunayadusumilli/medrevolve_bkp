@@ -5,6 +5,7 @@ import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import FAQSection from '@/components/home/FAQSection';
+import PositioningStrip from '@/components/home/PositioningStrip';
 import {
   ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
   Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
@@ -167,17 +168,8 @@ export default function ForBusiness() {
         description="MedRevolve builds compliant telehealth businesses for wellness operators. Website, providers, pharmacy integration, merchant accounts, and compliance — end to end."
       />
 
-      {/* ── AI Engine Tagline ── */}
-      <section className="bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] py-3 px-6 text-center">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-white font-bold text-sm md:text-base tracking-tight">
-            The AI engine that powers telehealth
-          </p>
-          <p className="text-white/80 text-xs md:text-sm mt-0.5">
-            Intake, physicians, pharmacy, EMR, compliance, and payments — automated, white-labeled, yours.
-          </p>
-        </div>
-      </section>
+      {/* ── Positioning Strip ── */}
+      <PositioningStrip />
 
       {/* ── Hero ── */}
       <section className="relative bg-[#060606] pt-20 pb-28 px-6 lg:px-8 overflow-hidden">
@@ -209,6 +201,7 @@ export default function ForBusiness() {
                 </Button>
               </Link>
             </div>
+            <p className="text-white/30 text-xs mt-6">Self-run. White-label. Supported 24/7 to resolution.</p>
             <div className="flex flex-wrap justify-center gap-10 mt-14">
               {[
                 { v: '7 Days', l: 'Avg. setup time' },
