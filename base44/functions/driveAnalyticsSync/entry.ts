@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
         total: partners.length,
         active: partners.filter(p => p.status === 'active').length,
         pending: partners.filter(p => p.status === 'pending').length,
-        trial: partners.filter(p => p.subscription_status === 'trial').length,
+        pending: partners.filter(p => p.subscription_status === 'pending').length,
         total_earnings: partners.reduce((sum, p) => sum + (p.total_earnings || 0), 0),
         total_referrals: partners.reduce((sum, p) => sum + (p.total_referrals || 0), 0),
       },

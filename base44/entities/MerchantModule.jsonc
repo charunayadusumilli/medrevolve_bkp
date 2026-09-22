@@ -46,15 +46,9 @@
       "type": "number",
       "description": "Monthly fee for this module"
     },
-    "trial_ends_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Trial expiry date"
-    },
     "status": {
       "type": "string",
       "enum": [
-        "trial",
         "active",
         "past_due",
         "cancelled",

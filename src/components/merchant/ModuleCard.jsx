@@ -5,7 +5,6 @@ import { Check, Lock, AlertCircle, Zap } from 'lucide-react';
 
 const STATUS_CONFIG = {
   active: { label: 'Active', color: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  trial: { label: 'Trial', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
   past_due: { label: 'Past Due', color: 'bg-red-500/20 text-red-400 border-red-500/30' },
   cancelled: { label: 'Cancelled', color: 'bg-gray-500/20 text-gray-400 border-gray-500/30' },
   pending: { label: 'Pending Setup', color: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },

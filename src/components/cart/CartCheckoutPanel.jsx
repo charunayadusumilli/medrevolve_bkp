@@ -109,7 +109,7 @@ export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonth
 
       {/* Totals */}
       {mode === 'payment' && cart.length > 0 && (
-        <div className="border-t border-white/10 pt-4 mb-5 space-y-1.5">
+        <div className="border-t border-white/10 pt-4 mb-4 space-y-1.5">
           <div className="flex justify-between text-sm">
             <span className="text-white/50">Subtotal</span>
             <span className="text-white font-semibold">${subtotal.toFixed(2)}</span>
@@ -127,6 +127,18 @@ export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonth
           )}
         </div>
       )}
+
+      {/* Services & Charge Policy Disclosure */}
+      <div className="bg-white/[0.02] border border-white/10 rounded-lg p-4 mb-5 space-y-2">
+        <p className="text-white/60 text-xs font-bold uppercase tracking-wider mb-2">Services & Charge Policy</p>
+        <div className="space-y-1.5 text-white/40 text-xs leading-relaxed">
+          <p><span className="text-white/60 font-semibold">One-time services</span> — charged in full today via Stripe. No auto-renewal.</p>
+          <p><span className="text-white/60 font-semibold">Monthly modules</span> — billed as one-time here; recurring subscription activates after platform setup is complete.</p>
+          <p><span className="text-white/60 font-semibold">Card authorization ($0)</span> — saves your card on file; no charge until services are activated.</p>
+          <p><span className="text-white/60 font-semibold">Refunds</span> — one-time services are non-refundable once delivered; monthly subscriptions cancel anytime.</p>
+          <p><span className="text-white/60 font-semibold">High-risk processing</span> — built for telehealth; your account won't be shut down by mainstream processors.</p>
+        </div>
+      </div>
 
       {error && (
         <p className="text-red-400 text-xs mb-3 bg-red-400/10 border border-red-400/20 rounded-lg p-2.5">{error}</p>

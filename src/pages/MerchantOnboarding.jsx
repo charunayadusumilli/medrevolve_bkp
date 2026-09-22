@@ -170,7 +170,7 @@ export default function MerchantOnboarding() {
       const partnerCode = form.businessName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 10)
         + Math.random().toString(36).substr(2, 4);
 
-      // Save partner record as trial
+      // Save partner record as pending (paid model — no trial)
       await base44.entities.Partner.create({
         business_name: form.businessName,
         contact_name: contactName,
@@ -178,7 +178,7 @@ export default function MerchantOnboarding() {
         phone: form.phone,
         business_type: form.businessType,
         partner_code: partnerCode,
-        subscription_status: 'trial',
+        subscription_status: 'pending',
         status: 'pending',
         enabled_products: form.productInterests,
         monthly_fee: 0,
@@ -193,7 +193,7 @@ export default function MerchantOnboarding() {
         industry: form.businessType,
         interest_type: 'White Label',
         company_size: form.currentRevenue,
-        message: `Free trial onboarding intake. State: ${form.state}. LLC: ${form.hasLLC}. Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. Goals: ${form.goals || 'Not specified'}.`,
+        message: `Paid onboarding intake ($199 consultation). State: ${form.state}. LLC: ${form.hasLLC}. Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. Goals: ${form.goals || 'Not specified'}.`,
         status: 'new',
       });
 
@@ -202,8 +202,8 @@ export default function MerchantOnboarding() {
         name: contactName,
         email: form.email,
         phone: form.phone,
-        subject: `Free Trial Signup — ${form.businessName}`,
-        message: `New free trial request from ${form.businessName} (${form.businessType}). Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. State: ${form.state}. LLC: ${form.hasLLC}. Goals: ${form.goals || 'None specified'}.`,
+        subject: `Paid Onboarding Signup — ${form.businessName}`,
+        message: `New paid onboarding request from ${form.businessName} (${form.businessType}). Interests: ${form.productInterests.join(', ')}. Revenue: ${form.currentRevenue}. State: ${form.state}. LLC: ${form.hasLLC}. Goals: ${form.goals || 'None specified'}.`,
         source: 'website_form',
         status: 'new',
       });
@@ -343,7 +343,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">👋 Hi! Tell us about yourself</h2>
-                      <p className="text-white/50 text-sm">We'll use this to reach out and activate your 14-day trial platform.</p>
+                      <p className="text-white/50 text-sm">We'll use this to reach out and schedule your $199 strategy consultation.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
@@ -373,7 +373,7 @@ export default function MerchantOnboarding() {
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
                           placeholder="(555) 123-4567"
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
-                        <p className="text-white/30 text-xs mt-1">We'll call or text to activate your trial and walk through your platform setup</p>
+                        <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your consultation and walk through your platform setup</p>
                       </div>
                     </div>
                   </>
@@ -384,7 +384,7 @@ export default function MerchantOnboarding() {
                   <>
                     <div>
                       <h2 className="text-xl font-bold mb-1">🏢 Tell us about your business</h2>
-                      <p className="text-white/50 text-sm">This helps us tailor your 14-day trial platform and onboarding agenda.</p>
+                      <p className="text-white/50 text-sm">This helps us tailor your platform preview and onboarding agenda.</p>
                     </div>
                     <div className="grid gap-4">
                       <div>

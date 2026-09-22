@@ -83,6 +83,13 @@ export default function MerchantDocuments() {
       setSignConsent(false);
       toast({ title: 'Document signed!', description: `${DOC_LIST.find(d => d.key === docKey).title} has been electronically signed.` });
 
+      // If all 3 docs are signed, notify admin + merchant and mark completed
+      if (signedCount === 3) {
+        try {
+          await base44.functions.invoke('generateMerchantDocuments', { applicationId: appId, action: 'notify_signed' });
+        } catch (e) { console.error('Failed to send signed notification:', e); }
+      }
+
       // Auto-advance to next unsigned doc
       const next = DOC_LIST.find(d => d.key !== docKey && !updated[SIGN_FIELDS[d.key].signed]);
       if (next) setActiveDoc(next.key);

@@ -43,7 +43,7 @@ export default function PartnerSignup() {
         phone: formData.phone,
         business_type: formData.businessType,
         partner_code: partnerCode,
-        subscription_status: 'trial',
+        subscription_status: 'pending',
         status: 'active',
         enabled_products: [],
         pricing_markup_percentage: 30
@@ -273,7 +273,7 @@ export default function PartnerSignup() {
                     </>
                   ) : (
                     <>
-                      Start 7-Day Free Trial
+                      Create Partner Account
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </>
                   )}

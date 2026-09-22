@@ -40,12 +40,12 @@
     "subscription_status": {
       "type": "string",
       "enum": [
-        "trial",
+        "pending",
         "active",
         "cancelled",
         "past_due"
       ],
-      "default": "trial",
+      "default": "pending",
       "description": "Subscription status"
     },
     "branding_logo_url": {
@@ -86,7 +86,7 @@
     },
     "monthly_fee": {
       "type": "number",
-      "default": 299,
+      "default": 250,
       "description": "Monthly subscription fee"
     },
     "status": {

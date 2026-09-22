@@ -98,6 +98,71 @@ Deno.serve(async (req) => {
       });
     }
 
+    // ─── NOTIFY SIGNED: all 3 docs signed — notify admin + merchant, mark completed ──
+    if (action === 'notify_signed') {
+      const adminEmail = Deno.env.get('ADMIN_EMAIL');
+      const merchantEmail = app.merchant_email || app.signing_officer_email;
+
+      // Admin notification
+      if (adminEmail) {
+        const adminHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: #0A0A0A; padding: 24px; border-radius: 8px 8px 0 0;">
+              <h1 style="color: #fff; font-size: 20px; margin: 0;">All Documents Signed — ${app.legal_business_name}</h1>
+            </div>
+            <div style="background: #f9f9f9; padding: 24px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 8px 8px;">
+              <p style="font-size: 14px; color: #333;">All three onboarding documents have been electronically signed:</p>
+              <ul style="font-size: 14px; color: #333; line-height: 1.8;">
+                <li>MPA signed by ${app.mpa_signature_name}</li>
+                <li>Service Agreement signed by ${app.service_agreement_signature_name}</li>
+                <li>BAA signed by ${app.baa_signature_name}</li>
+              </ul>
+              <p style="font-size: 14px; color: #333;"><strong>Business:</strong> ${app.legal_business_name}<br/><strong>Email:</strong> ${merchantEmail}<br/><strong>Application ID:</strong> ${applicationId}</p>
+              <p style="font-size: 14px; color: #333;">Onboarding is now complete. Contact the merchant to finalize setup.</p>
+            </div>
+          </div>`;
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          to: adminEmail,
+          subject: `All Documents Signed — ${app.legal_business_name}`,
+          html: adminHtml,
+          text: `All onboarding documents signed for ${app.legal_business_name} (${merchantEmail}). Application ID: ${applicationId}. Onboarding complete — contact merchant to finalize setup.`,
+        });
+      }
+
+      // Merchant confirmation
+      const merchantHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: #0A0A0A; padding: 24px; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #fff; font-size: 20px; margin: 0;">MedRevolve — Onboarding Complete!</h1>
+          </div>
+          <div style="background: #f9f9f9; padding: 24px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 8px 8px;">
+            <p style="font-size: 14px; color: #333;">Hello ${app.signing_officer_name || app.legal_business_name},</p>
+            <p style="font-size: 14px; color: #333; line-height: 1.6;">
+              All three onboarding documents have been electronically signed. Your MedRevolve merchant onboarding is now complete!
+            </p>
+            <p style="font-size: 14px; color: #333; line-height: 1.6;">
+              A MedRevolve specialist will contact you within 24 hours to finalize your platform setup.
+              If you have any questions, call us at <strong>240-387-5224</strong>.
+            </p>
+            <p style="font-size: 12px; color: #888; line-height: 1.5;">
+              MedRevolve Corporation · 240-387-5224 · medrevolve.com
+            </p>
+          </div>
+        </div>`;
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: merchantEmail,
+        subject: 'MedRevolve — Onboarding Complete!',
+        html: merchantHtml,
+        text: `Hello ${app.signing_officer_name || app.legal_business_name},\n\nAll three onboarding documents have been electronically signed. Your MedRevolve merchant onboarding is now complete!\n\nA MedRevolve specialist will contact you within 24 hours to finalize your platform setup. Call 240-387-5224 with any questions.\n\nMedRevolve Corporation`,
+      });
+
+      await base44.asServiceRole.entities.MerchantApplication.update(applicationId, {
+        application_status: 'completed',
+      });
+
+      return Response.json({ success: true, message: 'Signed notification sent, application marked completed' });
+    }
+
     return Response.json({ success: true, message: 'Documents generated', applicationId });
   } catch (error) {
     console.error('generateMerchantDocuments error:', error);

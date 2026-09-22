@@ -292,7 +292,7 @@ function MerchantDashboardInner() {
               <Badge className={partner.subscription_status === 'active'
                 ? 'bg-green-500/20 text-green-400 border-green-500/30'
                 : 'bg-amber-500/20 text-amber-400 border-amber-500/30'}>
-                {partner.subscription_status || 'Trial'}
+                {partner.subscription_status || 'Pending'}
               </Badge>
               <Button size="sm" className="bg-[#4A6741] hover:bg-[#3D5636] text-white">
                 Upgrade Plan

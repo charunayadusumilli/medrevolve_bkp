@@ -52,7 +52,7 @@ export default function MerchantSidebar({ partner, activeModules = [], currentPa
             <div className="min-w-0">
               <p className="text-white text-xs font-semibold truncate">{partner.business_name}</p>
               <Badge className={`text-xs border-0 px-1 py-0 ${partner.subscription_status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
-                {partner.subscription_status || 'trial'}
+                {partner.subscription_status || 'pending'}
               </Badge>
             </div>
           </div>
