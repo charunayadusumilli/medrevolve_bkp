@@ -1,0 +1,37 @@
+{
+  "name": "CTM Lead Auto-Workflow",
+  "description": "Automatically processes new CTM leads - sends confirmations, notifies admin, syncs to HubSpot",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ContactRequest"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "ctm_lead_auto_workflow",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "ctmLeadWorkflow",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "ctmLeadWorkflow"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Daily Action Digest \u2014 8 AM ET",
+  "description": "Sends a morning email digest of all pending action items (leads, providers, pharmacies, businesses, creators) \u2014 Mon-Fri 8 AM ET",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 13 * * 1-5",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "daily_action_digest_8_am_et",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "triggerActionPlan",
+            "args": {
+              "mode": "daily_digest"
+            }
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "triggerActionPlan"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Weekly Blog Post Delivery \u2014 Every Monday 9:15am ET",
+  "description": "Generates the next queued SEO blog post via AI, logs it to Google Sheets Blog Pipeline tab, and emails the full post to the admin. Rotates through 8 queued posts targeting high-value keywords.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "15 17 * * 1",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "weekly_blog_post_delivery_every_monday_9_15am_et",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "weeklyBlogDelivery",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "weeklyBlogDelivery"
+  }
+}
