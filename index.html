@@ -93,14 +93,25 @@
           "description": "Full-stack B2B telehealth infrastructure: white-label website, provider network (all 50 states), 503A pharmacy integration, compliance framework, and payment processing. Built for clinics, med spas, and licensed pharmacies.",
           "offers": {
             "@type": "Offer",
-            "name": "B2B Platform Setup",
-            "price": "2999",
+            "name": "Full Platform Bundle",
+            "price": "4000",
             "priceCurrency": "USD",
-            "priceSpecification": {
-              "@type": "RecurringCharge",
-              "billingIncrement": 1,
-              "billingPeriod": "month"
-            }
+            "priceSpecification": [
+              {
+                "@type": "PriceSpecification",
+                "price": "4000",
+                "priceCurrency": "USD",
+                "description": "One-time setup fee"
+              },
+              {
+                "@type": "RecurringCharge",
+                "price": "250",
+                "priceCurrency": "USD",
+                "billingIncrement": 1,
+                "billingPeriod": "month",
+                "description": "Monthly operations fee"
+              }
+            ]
           }
         },
         {

@@ -108,7 +108,7 @@ const META_MAP = {
   },
   '/telehealth-franchise': {
     title: 'Launch a Telehealth Business Without Buying a Franchise | MedRevolve',
-    description: 'Skip the franchise fees. MedRevolve gives you a complete white-label telehealth business — licensed physicians, pharmacy, compliance, and brand — from $2,999/month.',
+    description: 'Skip the franchise fees. MedRevolve gives you a complete self-run telehealth platform — services, payments, and unified CRM — from $4,000 setup + $250/month. 24/7 support to resolution.',
     keywords: 'telehealth franchise, telehealth business franchise, health clinic franchise alternative',
     canonical: 'https://medrevolve.com/telehealth-franchise',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',

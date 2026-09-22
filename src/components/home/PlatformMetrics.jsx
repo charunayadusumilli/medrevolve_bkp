@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const METRICS = [
   { value: '7 Days', label: 'Average platform setup time', sub: 'From intake call to live site' },
-  { value: '$5K', label: 'One-time setup fee', sub: 'Then $2,500/mo operations' },
+  { value: '$4K', label: 'One-time setup fee', sub: 'Then $250/mo operations' },
   { value: '50 States', label: 'Provider coverage', sub: 'Licensed in all 50' },
   { value: '503A', label: 'Pharmacy network', sub: 'Licensed compounding partners' },
 ];
