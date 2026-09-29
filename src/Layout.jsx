@@ -15,12 +15,21 @@ import {
   DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-const NAV_LINKS = [
+const B2B_NAV = [
   { label: 'Services',        path: '/Services' },
   { label: 'How It Works',   path: '/HowItWorks' },
   { label: 'For Business',   path: '/ForBusiness' },
   { label: 'University',     path: '/University' },
   { label: 'Contact',        path: '/Contact' },
+];
+
+const DTC_NAV = [
+  { label: 'Weight Loss',    path: '/CustomerIntake' },
+  { label: "Men's Health",   path: '/CustomerIntake' },
+  { label: "Women's Health", path: '/CustomerIntake' },
+  { label: 'Peptides',       path: '/CustomerIntake' },
+  { label: 'How It Works',   path: '/HowItWorks' },
+  { label: 'FAQ',            path: '/faq' },
 ];
 
 export default function Layout({ children }) {
@@ -63,6 +72,12 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   const closeMenu = () => { setMobileOpen(false); window.scrollTo({ top: 0 }); };
+
+  const isDTC = domain === 'DTC';
+  const NAV_LINKS = isDTC ? DTC_NAV : B2B_NAV;
+  const ctaLabel = isDTC ? 'Start Free Assessment' : 'Book a Demo';
+  const ctaLink = isDTC ? '/CustomerIntake' : '/MerchantOnboarding';
+  const ctaColor = isDTC ? '#0B8B7A' : '#A66B3C';
 
   // All non-medrevolve.com domains — show nothing, no branding, no links
   if (domain === 'DOWN') {
@@ -202,10 +217,10 @@ export default function Layout({ children }) {
                 </Button>
               )}
 
-              <Link to="/MerchantOnboarding" className="hidden sm:block">
+              <Link to={ctaLink} className="hidden sm:block">
                 <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
-                  style={{ backgroundColor: '#A66B3C' }}>
-                  Book a Demo
+                  style={{ backgroundColor: ctaColor }}>
+                  {ctaLabel}
                 </Button>
               </Link>
 
@@ -253,8 +268,8 @@ export default function Layout({ children }) {
                         <>
                           <Button variant="outline" className="w-full rounded-sm"
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
-                          <Link to="/MerchantOnboarding" onClick={closeMenu}>
-                            <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: '#A66B3C' }}>Book a Demo</Button>
+                          <Link to={ctaLink} onClick={closeMenu}>
+                            <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: ctaColor }}>{ctaLabel}</Button>
                           </Link>
                         </>
                       )}
@@ -285,21 +300,36 @@ export default function Layout({ children }) {
                 <span className="font-bold text-white">MedRevolve</span>
               </div>
               <p className="text-sm text-white/40 leading-relaxed">
-                Full-service B2B telehealth infrastructure. Website setup, provider integration, pharmacy network, compliance, and payments — all under your brand.
+                {isDTC
+                  ? 'Physician-supervised telehealth for weight loss, hormones, peptides, and longevity. LegiScript-certified, FDA-compliant, delivered to your door.'
+                  : 'Full-service B2B telehealth infrastructure. Website setup, provider integration, pharmacy network, compliance, and payments — all under your brand.'}
               </p>
             </div>
 
             {/* Platform links */}
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">Platform</p>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">{isDTC ? 'Treatments' : 'Platform'}</p>
               <ul className="space-y-2.5">
-                <li><Link to="/Services" className="text-sm text-white/40 hover:text-white transition-colors">Services</Link></li>
-                <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
-                <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
-                <li><Link to="/University" className="text-sm text-white/40 hover:text-white transition-colors">MedRevolve University</Link></li>
-                <li><Link to="/MerchantOnboarding" className="text-sm text-white/40 hover:text-white transition-colors">Book a Demo</Link></li>
+                {isDTC ? (
+                  <>
+                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Weight Loss</Link></li>
+                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Men's Health</Link></li>
+                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Women's Health</Link></li>
+                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Peptides</Link></li>
+                    <li><Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
+                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Start Free Assessment</Link></li>
+                  </>
+                ) : (
+                  <>
+                    <li><Link to="/Services" className="text-sm text-white/40 hover:text-white transition-colors">Services</Link></li>
+                    <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
+                    <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
+                    <li><Link to="/University" className="text-sm text-white/40 hover:text-white transition-colors">MedRevolve University</Link></li>
+                    <li><Link to="/MerchantOnboarding" className="text-sm text-white/40 hover:text-white transition-colors">Book a Demo</Link></li>
+                    <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
+                  </>
+                )}
                 <li><a href="tel:+12403875224" className="text-sm text-white/40 hover:text-white transition-colors">(240) 387-5224</a></li>
-                <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
 

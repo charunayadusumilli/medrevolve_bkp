@@ -19,6 +19,8 @@ import GodModeAds from './pages/GodModeAds';
 import AdsManager from './pages/AdsManager';
 import ExternalRedirect from './lib/ExternalRedirect';
 import { base44 } from '@/api/base44Client';
+import { detectDomain } from '@/lib/domainConfig';
+import DTCHome from './pages/dtc/DTCHome';
 import SystemArchitecture from './pages/SystemArchitecture';
 import ComplianceAuditReport from './pages/ComplianceAuditReport';
 import ProjectManagement from './pages/ProjectManagement';
@@ -103,6 +105,9 @@ const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   <Layout currentPageName={currentPageName}>{children}</Layout>
   : <>{children}</>;
 
+// Domain-aware home: DTC consumer platform on medrevolve.com, B2B SaaS on medrevolveb2b.com
+const DomainHome = () => detectDomain() === 'DTC' ? <DTCHome /> : <MainPage />;
+
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
@@ -128,7 +133,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route path="/" element={
         <LayoutWrapper currentPageName={mainPageKey}>
-          <MainPage />
+          <DomainHome />
         </LayoutWrapper>
       } />
       {Object.entries(Pages).map(([path, Page]) => (

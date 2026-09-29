@@ -2,8 +2,8 @@
  * MedRevolve Domain Configuration
  * ─────────────────────────────────────────────────────────────────────────────
  * ACTIVE DOMAINS:
- *   medrevolve.com      → B2C  — unified telehealth platform
- *   medrevolveb2b.com   → B2C  — same site, same content
+ *   medrevolve.com      → DTC  — consumer telehealth platform (peptides, GLP-1, hormones)
+ *   medrevolveb2b.com   → B2B  — B2B SaaS platform (white-label telehealth infrastructure)
  *
  * INACTIVE (DOWN):
  *   medrevolvewater.com → DOWN — blank page, no content
@@ -13,15 +13,14 @@
 
 export function detectDomain() {
   const h = window.location.hostname.toLowerCase();
-  // Active B2C domains — medrevolve.com and medrevolveb2b.com render the full site
-  if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'B2C';
-  if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com') return 'B2C';
+  // medrevolve.com → DTC consumer telehealth platform (peptides, GLP-1, hormones)
+  if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'DTC';
+  // medrevolveb2b.com → B2B SaaS platform (white-label telehealth infrastructure)
+  if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com') return 'B2B';
   if (h === 'admin.medrevolve.com')                          return 'ADMIN';
-  // Everything else — medrevolveb2b.com, medrevolvewater.com, medrevolveruo.com,
-  // any other hostname — shows nothing.
-  // Exception: Base44 preview/dev environment (localhost / base44 domains) stays active.
+  // Dev / preview environment — defaults to DTC so the consumer platform is visible in builder
   const isDevEnv = h === 'localhost' || h.includes('base44') || h.includes('127.0.0.1');
-  if (isDevEnv) return 'B2C';
+  if (isDevEnv) return 'DTC';
   return 'DOWN';
 }
 
@@ -32,7 +31,7 @@ export const BRAND = {
 
 // Kept for backward compatibility with admin components
 export const PAGE_DOMAIN_MAP = {};
-export const FUNCTION_DOMAIN_MAP = { B2C: [], ADMIN: [] };
-export const NAV_CONFIG = { B2C: [], DEV: [] };
+export const FUNCTION_DOMAIN_MAP = { DTC: [], B2B: [], ADMIN: [] };
+export const NAV_CONFIG = { DTC: [], B2B: [], DEV: [] };
 
 export default { detectDomain, BRAND, PAGE_DOMAIN_MAP, FUNCTION_DOMAIN_MAP, NAV_CONFIG };

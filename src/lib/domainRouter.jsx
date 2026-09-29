@@ -13,9 +13,10 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { detectDomain, NAV_CONFIG } from '@/lib/domainConfig';
 
-// Both active domains land on the same homepage
+// Both active domains land on the homepage
 const DOMAIN_HOME = {
-  B2C:   '/',
+  DTC:   '/',
+  B2B:   '/',
   ADMIN: '/AdminDashboard',
   DEV:   '/',
 };
@@ -37,7 +38,7 @@ export function useDomainRouter() {
     }
   }, [domain, location.pathname]);
 
-  return { domain, nav: NAV_CONFIG[domain] || NAV_CONFIG.B2C, homeUrl: DOMAIN_HOME[domain] || '/' };
+  return { domain, nav: NAV_CONFIG[domain] || NAV_CONFIG.DTC || [], homeUrl: DOMAIN_HOME[domain] || '/' };
 }
 
 export default { useDomainRouter, DOMAIN_HOME };
