@@ -7,8 +7,12 @@ import ProductCard from '@/components/dtc/ProductCard';
 import { addToCart, cartCount } from '@/lib/cartStore';
 import {
   ArrowLeft, ArrowRight, ShoppingCart, ShieldCheck, FlaskConical, Pill, Package,
-  CheckCircle2, ExternalLink, Lightbulb, BookOpen, AlertTriangle
+  CheckCircle2, ExternalLink, Lightbulb, BookOpen, AlertTriangle, Atom
 } from 'lucide-react';
+import MoleculeViewer3D from '@/components/dtc/MoleculeViewer3D';
+import CellularBindingAnimation from '@/components/dtc/CellularBindingAnimation';
+import ChromosomeGraphic from '@/components/dtc/ChromosomeGraphic';
+import UGCSection from '@/components/dtc/UGCSection';
 
 const TYPE_STYLES = {
   prescription: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: Pill, label: 'Prescription Required', desc: 'A licensed provider must review your health history and approve this medication before it\'s prescribed.' },
@@ -159,6 +163,22 @@ export default function ProductDetail() {
         </div>
       </section>
 
+      {/* Molecular Structure — 3D viewer */}
+      <section className="py-12 px-5 lg:px-12 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-2 mb-6">
+            <Atom className="w-6 h-6 text-[#0B8B7A]" />
+            <h2 className="text-2xl font-black text-[#0A0A0A]">Molecular Structure</h2>
+            <span className="text-sm text-gray-400 font-medium">— see it in 3D</span>
+          </div>
+          <MoleculeViewer3D productId={product.id} accentColor="#0B8B7A" />
+          <p className="text-xs text-gray-400 text-center mt-4 max-w-xl mx-auto">
+            Interactive 3D model. Drag to rotate. Atom colors: carbon (gray), nitrogen (blue), oxygen (red).
+            Structure is a simplified representation for educational purposes.
+          </p>
+        </div>
+      </section>
+
       {/* Research section */}
       <section className="bg-gray-50 py-12 px-5 lg:px-12">
         <div className="max-w-5xl mx-auto">
@@ -166,6 +186,16 @@ export default function ProductDetail() {
             <BookOpen className="w-6 h-6 text-[#0B8B7A]" />
             <h2 className="text-2xl font-black text-[#0A0A0A]">The Research</h2>
             <span className="text-sm text-gray-400 font-medium">— here's what the studies actually say</span>
+          </div>
+
+          {/* Cellular binding animation */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Atom className="w-5 h-5 text-[#0B8B7A]" />
+              <h3 className="text-lg font-black text-[#0A0A0A]">How It Binds</h3>
+              <span className="text-sm text-gray-400 font-medium">— cellular mechanism in action</span>
+            </div>
+            <CellularBindingAnimation accentColor="#0B8B7A" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-4 mb-8">
@@ -182,6 +212,17 @@ export default function ProductDetail() {
               <p className="text-sm text-gray-700 leading-relaxed">{product.research.results}</p>
             </div>
           </div>
+
+          {/* Chromosome / telomere graphic (longevity products only) */}
+          {(product.id === 'epitalon' || product.id === 'nad_plus') && (
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Atom className="w-5 h-5 text-[#0B8B7A]" />
+                <h3 className="text-lg font-black text-[#0A0A0A]">Chromosome & Telomere Health</h3>
+              </div>
+              <ChromosomeGraphic accentColor="#0B8B7A" />
+            </div>
+          )}
 
           {/* Full description */}
           <div className="bg-white rounded-xl p-6 border border-gray-100 mb-8">
@@ -229,6 +270,9 @@ export default function ProductDetail() {
           </div>
         </div>
       </section>
+
+      {/* UGC / Community section */}
+      <UGCSection productName={product.name} productId={product.id} />
 
       {/* Compliance disclaimer */}
       <section className="bg-amber-50 border-y border-amber-100 py-8 px-5 lg:px-12">

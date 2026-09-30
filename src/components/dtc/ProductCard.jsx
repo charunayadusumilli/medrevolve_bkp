@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { addToCart } from '@/lib/cartStore';
 import { ArrowRight, FlaskConical, Pill, ShieldCheck, Package } from 'lucide-react';
+import MiniMoleculeBadge from '@/components/dtc/MiniMoleculeBadge';
 
 const TYPE_STYLES = {
   prescription: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: Pill, label: 'Rx Required' },
@@ -51,6 +52,9 @@ export default function ProductCard({ product, index = 0 }) {
                 {product.badge}
               </span>
             )}
+            <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-md">
+              <MiniMoleculeBadge color="#0B8B7A" size={36} />
+            </div>
             <span className={`absolute top-3 right-3 ${typeStyle.bg} ${typeStyle.text} border ${typeStyle.border} text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1`}>
               <TypeIcon className="w-3 h-3" />
               {typeStyle.label}
