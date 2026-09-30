@@ -10,6 +10,7 @@ import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown, File
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AnswerEngine from '@/components/chat/AnswerEngine';
+import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuSeparator, DropdownMenuTrigger
@@ -24,12 +25,11 @@ const B2B_NAV = [
 ];
 
 const DTC_NAV = [
+  { label: 'Weight Loss',    path: '/start?goal=weight_loss' },
+  { label: 'Men',            path: '/start?goal=mens_health' },
+  { label: 'Women',          path: '/start?goal=womens_health' },
+  { label: 'Longevity',      path: '/start?goal=longevity' },
   { label: 'Shop All',       path: '/shop' },
-  { label: 'Weight Loss',    path: '/shop?cat=weight_loss' },
-  { label: 'Peptides',       path: '/shop?cat=peptides' },
-  { label: 'Longevity',      path: '/shop?cat=longevity' },
-  { label: "Men's Health",   path: '/shop?cat=mens_health' },
-  { label: "Women's Health", path: '/shop?cat=womens_health' },
   { label: 'FAQ',            path: '/faq' },
 ];
 
@@ -76,9 +76,9 @@ export default function Layout({ children }) {
 
   const isDTC = domain === 'DTC';
   const NAV_LINKS = isDTC ? DTC_NAV : B2B_NAV;
-  const ctaLabel = isDTC ? 'Shop Now' : 'Book a Demo';
-  const ctaLink = isDTC ? '/shop' : '/MerchantOnboarding';
-  const ctaColor = isDTC ? '#0B8B7A' : '#A66B3C';
+  const ctaLabel = isDTC ? 'Get started' : 'Book a Demo';
+  const ctaLink = isDTC ? '/start' : '/MerchantOnboarding';
+  const ctaColor = isDTC ? '#1B2421' : '#A66B3C';
 
   // All non-medrevolve.com domains — show nothing, no branding, no links
   if (domain === 'DOWN') {
@@ -93,7 +93,7 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-[#0E1512] transition-colors">
       <AnalyticsTracker />
       <AnswerEngine />
 
@@ -110,7 +110,7 @@ export default function Layout({ children }) {
       {/* Header */}
       <motion.header
         className={`sticky top-[37px] left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100' : 'bg-white border-b border-gray-100'
+          scrolled ? 'bg-white/95 dark:bg-[#0E1512]/95 backdrop-blur-lg shadow-sm border-b border-gray-100 dark:border-white/10' : 'bg-white dark:bg-[#0E1512] border-b border-gray-100 dark:border-white/10'
         }`}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
@@ -124,7 +124,7 @@ export default function Layout({ children }) {
               <div className="w-8 h-8 bg-[#0A0A0A] flex items-center justify-center rounded-sm">
                 <span className="text-white font-black text-[11px] tracking-tight">MR</span>
               </div>
-              <span className="text-base font-bold text-[#0A0A0A] tracking-tight">MedRevolve</span>
+              <span className="text-base font-bold text-[#0A0A0A] dark:text-white tracking-tight">MedRevolve</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -133,8 +133,8 @@ export default function Layout({ children }) {
                 <Link key={item.path} to={item.path}
                   className={`text-sm font-medium transition-colors ${
                     location.pathname === item.path
-                      ? 'text-[#0A0A0A]'
-                      : 'text-gray-500 hover:text-[#0A0A0A]'
+                      ? 'text-[#0A0A0A] dark:text-white'
+                      : 'text-gray-500 hover:text-[#0A0A0A] dark:text-white/60 dark:hover:text-white'
                   }`}>
                   {item.label}
                 </Link>
@@ -171,6 +171,7 @@ export default function Layout({ children }) {
 
             {/* Right actions */}
             <div className="flex items-center gap-3">
+              {isDTC && <ThemeToggle />}
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

@@ -12,6 +12,8 @@ export const DTC_CATEGORIES = [
   { id: 'mens_health',    label: "Men's Health",      icon: '💪' },
   { id: 'womens_health',  label: "Women's Health",   icon: '🌸' },
   { id: 'mental_health',  label: 'Mental Health',    icon: '🧠' },
+  { id: 'hair_loss',      label: 'Hair Loss',        icon: '💇' },
+  { id: 'sexual_health', label: 'Sexual Health',    icon: '❤️' },
   { id: 'supplies',       label: 'Supplies & Lifestyle', icon: '📦' },
 ];
 
@@ -308,6 +310,65 @@ export const DTC_PRODUCTS = [
     popular: false,
   },
 
+  // ── HAIR LOSS ───────────────────────────────────────────────────────────────
+  {
+    id: 'finasteride',
+    name: 'Finasteride',
+    category: 'hair_loss',
+    categoryLabel: 'Hair Loss',
+    type: 'prescription',
+    typeLabel: 'Prescription Required',
+    price: 29,
+    billing: 'monthly',
+    badge: 'Most Prescribed',
+    icon: '💇',
+    tagline: 'The daily pill that slows hair loss at the source',
+    humor: "It doesn't grow hair like magic. It just tells the enzyme causing hair loss to chill. Consistency wins.",
+    description: "Finasteride is a daily oral prescription that inhibits 5-alpha-reductase, the enzyme that converts testosterone into DHT — the hormone responsible for male pattern hair loss. By lowering scalp DHT, it slows thinning and, for many men, supports regrowth over 3–6 months of consistent use.",
+    research: {
+      mechanism: 'Inhibits type II 5α-reductase, reducing scalp DHT by ~60% to slow follicle miniaturization.',
+      keyStudy: 'In a 5-year clinical trial, finasteride stabilized or improved hair growth in ~90% of men vs. progressive loss in the placebo group.',
+      results: 'Visible slowing of hair loss in ~3 months; regrowth peaks at ~12 months with continued use.',
+      citations: [
+        { title: 'Finasteride Long-Term Efficacy — PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/15209297/' },
+        { title: 'DHT & Male Pattern Baldness — PMC', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3299165/' },
+      ],
+    },
+    lifestyle: ['Hair progress tracking', 'Provider check-ins', 'Free delivery'],
+    image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/84c199d32_generated_image.png',
+    includes: ['Monthly medication', 'Unlimited provider messages', 'Progress monitoring', 'Free delivery'],
+    popular: true,
+  },
+  // ── SEXUAL HEALTH ──────────────────────────────────────────────────────────
+  {
+    id: 'tadalafil',
+    name: 'Tadalafil',
+    category: 'sexual_health',
+    categoryLabel: 'Sexual Health',
+    type: 'prescription',
+    typeLabel: 'Prescription Required',
+    price: 32,
+    billing: 'monthly',
+    badge: 'Daily or As-Needed',
+    icon: '❤️',
+    tagline: 'On-demand or daily ED treatment, provider-guided',
+    humor: "It doesn't create desire. It just makes sure the plumbing cooperates when you do.",
+    description: "Tadalafil (the active ingredient in Cialis) is a PDE5 inhibitor that increases blood flow for erectile function. Available as a daily low-dose or an as-needed dose, it supports natural response with effects that can last up to 36 hours.",
+    research: {
+      mechanism: 'Inhibits PDE5, increasing cGMP and relaxing smooth muscle to improve blood flow.',
+      keyStudy: 'Across trials, ~80% of men reported improved erections with tadalafil vs. ~35% on placebo.',
+      results: 'Improved erectile function within 30 minutes (as-needed) or with daily use.',
+      citations: [
+        { title: 'Tadalafil Efficacy Meta-Analysis — PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/16807721/' },
+        { title: 'PDE5 Inhibitors Review — PMC', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2748823/' },
+      ],
+    },
+    lifestyle: ['Provider messaging', 'Discreet packaging', 'Free delivery'],
+    image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/62629f865_generated_image.png',
+    includes: ['Monthly medication', 'Unlimited provider messages', 'Discreet shipping', 'Free delivery'],
+    popular: true,
+  },
+
   // ── SUPPLIES & LIFESTYLE ────────────────────────────────────────────────────
   {
     id: 'bac_water_5ml',
@@ -398,6 +459,18 @@ export function getProductsByCategory(categoryId) {
   if (categoryId === 'all') return DTC_PRODUCTS;
   return DTC_PRODUCTS.filter(p => p.category === categoryId);
 }
+
+// Studio product photography (replaces placeholder stock images)
+const PRODUCT_IMG = 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/';
+const IMAGE_BY_ID = {
+  semaglutide: '29fef81bd', tirzepatide: '29fef81bd', retatrutide: '29fef81bd', trt: '29fef81bd',
+  bpc157: '2ab18b125', epitalon: '2ab18b125', nad_plus: '2ab18b125',
+  enclomiphene: '06dbd3fbb', bhrt: '06dbd3fbb', wellness_bundle: '06dbd3fbb',
+  bac_water_5ml: 'f94953106', bac_water_30ml: 'f94953106', injection_kit: 'f94953106',
+};
+DTC_PRODUCTS.forEach((p) => {
+  if (IMAGE_BY_ID[p.id]) p.image = `${PRODUCT_IMG}${IMAGE_BY_ID[p.id]}_generated_image.png`;
+});
 
 // Helper: get popular products
 export function getPopularProducts() {

@@ -24,6 +24,7 @@ import DTCHome from './pages/dtc/DTCHome';
 import Shop from './pages/dtc/Shop';
 import ProductDetail from './pages/dtc/ProductDetail';
 import DTCCart from './pages/dtc/DTCCart';
+import GetStarted from './pages/dtc/GetStarted';
 import SystemArchitecture from './pages/SystemArchitecture';
 import ComplianceAuditReport from './pages/ComplianceAuditReport';
 import ProjectManagement from './pages/ProjectManagement';
@@ -143,6 +144,7 @@ const AuthenticatedApp = () => {
       <Route path="/shop" element={<LayoutWrapper currentPageName="Shop"><Shop /></LayoutWrapper>} />
       <Route path="/product/:id" element={<LayoutWrapper currentPageName="ProductDetail"><ProductDetail /></LayoutWrapper>} />
       <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
+      <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><GetStarted /></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
         <Route
           key={path}

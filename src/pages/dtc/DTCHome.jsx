@@ -1,24 +1,20 @@
 import React from 'react';
-import LandingHero from '@/components/dtc/landing/LandingHero';
-import JourneyCards from '@/components/dtc/landing/JourneyCards';
-import ScienceFlow from '@/components/dtc/landing/ScienceFlow';
-import FeaturedGrid from '@/components/dtc/landing/FeaturedGrid';
-import DTCTrustStrip from '@/components/dtc/DTCTrustStrip';
-import UGCSection from '@/components/dtc/UGCSection';
-import DTCFAQ from '@/components/dtc/DTCFAQ';
-import DTCFinalCTA from '@/components/dtc/DTCFinalCTA';
+import HeroV2 from '@/components/dtc/v2/HeroV2';
+import GoalTiles from '@/components/dtc/v2/GoalTiles';
+import StepsStrip from '@/components/dtc/v2/StepsStrip';
+import UGCReel from '@/components/dtc/v2/UGCReel';
+import ProductSpotlight from '@/components/dtc/v2/ProductSpotlight';
+import ClosingCTA from '@/components/dtc/v2/ClosingCTA';
 
 export default function DTCHome() {
   return (
-    <div className="bg-white">
-      <LandingHero />
-      <DTCTrustStrip />
-      <JourneyCards />
-      <ScienceFlow />
-      <FeaturedGrid />
-      <UGCSection />
-      <DTCFAQ />
-      <DTCFinalCTA />
+    <div className="font-body">
+      <HeroV2 />
+      <GoalTiles />
+      <StepsStrip />
+      <UGCReel />
+      <ProductSpotlight />
+      <ClosingCTA />
     </div>
   );
 }

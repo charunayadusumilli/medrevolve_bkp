@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -37,9 +38,29 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --mr-cream: 39 41% 93%;
+    --mr-ink: 160 14% 12%;
+    --mr-forest: 163 33% 27%;
+    --mr-sage: 120 15% 88%;
+    --mr-sand: 37 40% 88%;
+    --mr-blush: 17 51% 90%;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --dtc-page: 39 41% 93%;
+    --dtc-surface: 0 0% 100%;
+    --dtc-text: 160 14% 12%;
   }
 
   .dark {
+    --mr-cream: 39 41% 93%;
+    --mr-ink: 160 14% 12%;
+    --mr-forest: 163 33% 27%;
+    --mr-sage: 120 15% 88%;
+    --mr-sand: 37 40% 88%;
+    --mr-blush: 17 51% 90%;
+    --dtc-page: 160 14% 9%;
+    --dtc-surface: 160 14% 14%;
+    --dtc-text: 39 41% 93%;
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;

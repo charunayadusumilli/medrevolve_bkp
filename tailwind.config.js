@@ -4,12 +4,29 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+  		fontFamily: {
+  			display: ['"Instrument Serif"', 'Georgia', 'serif'],
+  			body: ['Inter', 'system-ui', 'sans-serif'],
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			mr: {
+  				cream: 'hsl(var(--mr-cream))',
+  				ink: 'hsl(var(--mr-ink))',
+  				forest: 'hsl(var(--mr-forest))',
+  				sage: 'hsl(var(--mr-sage))',
+  				sand: 'hsl(var(--mr-sand))',
+  				blush: 'hsl(var(--mr-blush))',
+  			},
+  			dtc: {
+  				page: 'hsl(var(--dtc-page))',
+  				surface: 'hsl(var(--dtc-surface))',
+  				text: 'hsl(var(--dtc-text))',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

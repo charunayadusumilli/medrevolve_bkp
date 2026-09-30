@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { getProduct } from '@/data/dtcProducts';
 import { getCart, updateQty, removeFromCart, clearCart } from '@/lib/cartStore';
 import CartCheckoutPanel from '@/components/cart/CartCheckoutPanel';
+import EssentialsSuggestions from '@/components/dtc/v2/EssentialsSuggestions';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingCart, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export default function DTCCart() {
@@ -157,6 +158,7 @@ export default function DTCCart() {
               <Link to="/shop" className="block w-full py-3 border border-dashed border-gray-200 rounded-2xl text-gray-400 hover:text-[#0B8B7A] hover:border-[#0B8B7A]/30 text-sm font-medium transition-all text-center">
                 + Add more products
               </Link>
+              <EssentialsSuggestions cart={cart} />
             </div>
 
             {/* Checkout panel */}
