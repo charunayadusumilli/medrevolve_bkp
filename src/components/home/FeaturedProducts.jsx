@@ -172,7 +172,7 @@ export default function FeaturedProducts() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-12 text-center">
-        <Link to={createPageUrl('Products')}>
+        <Link to="/shop">
           <Button 
             variant="outline"
             size="lg"

@@ -13,6 +13,7 @@ import MoleculeViewer3D from '@/components/dtc/MoleculeViewer3D';
 import CellularBindingAnimation from '@/components/dtc/CellularBindingAnimation';
 import ChromosomeGraphic from '@/components/dtc/ChromosomeGraphic';
 import UGCSection from '@/components/dtc/UGCSection';
+import ProductVisualCarousel from '@/components/dtc/ProductVisualCarousel';
 
 const TYPE_STYLES = {
   prescription: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: Pill, label: 'Prescription Required', desc: 'A licensed provider must review your health history and approve this medication before it\'s prescribed.' },
@@ -77,9 +78,9 @@ export default function ProductDetail() {
           {/* Image */}
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}
             className="relative rounded-2xl overflow-hidden shadow-lg">
-            <img src={product.image} alt={product.name} className="w-full h-[400px] lg:h-[500px] object-cover" />
+            <ProductVisualCarousel product={product} />
             {product.badge && (
-              <span className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm text-[#0A0A0A] text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
+              <span className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm text-[#0A0A0A] text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm z-20">
                 {product.badge}
               </span>
             )}

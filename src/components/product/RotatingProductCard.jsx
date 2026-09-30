@@ -39,7 +39,7 @@ export default function RotatingProductCard({ product }) {
   const current = variants[currentVariant];
 
   return (
-    <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
+    <Link to="/shop">
       <motion.div
         className="w-64 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-[#D1D5DB]/30 cursor-pointer"
         whileHover={{ y: -6 }}
