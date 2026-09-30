@@ -45,8 +45,8 @@ export default function DTCProductCategories() {
               <p className="text-xs text-gray-600 leading-relaxed mb-4">{cat.desc}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-[#0B8B7A]">{cat.price}</span>
-                <Link to="/CustomerIntake" className="inline-flex items-center gap-1 text-xs font-bold text-gray-700 group-hover:text-[#0B8B7A] transition-colors">
-                  Start <ArrowRight className="w-3 h-3" />
+                <Link to="/shop" className="inline-flex items-center gap-1 text-xs font-bold text-gray-700 group-hover:text-[#0B8B7A] transition-colors">
+                  Shop <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
             </motion.div>

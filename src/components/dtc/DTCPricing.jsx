@@ -85,7 +85,7 @@ export default function DTCPricing() {
                   </li>
                 ))}
               </ul>
-              <Link to="/CustomerIntake" className="block">
+              <Link to="/shop" className="block">
                 <Button className={`w-full rounded-lg font-bold h-auto py-3 ${plan.highlight ? 'bg-[#0B8B7A] hover:bg-[#0A7A6A] text-white' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                   {plan.cta} <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>

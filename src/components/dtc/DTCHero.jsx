@@ -54,9 +54,9 @@ export default function DTCHero() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <Link to="/CustomerIntake">
+                <Link to="/shop">
                   <Button size="lg" className="bg-[#0B8B7A] hover:bg-[#0A7A6A] text-white rounded-lg px-8 font-bold h-auto py-3.5">
-                    Start Free Assessment <ArrowRight className="ml-2 w-4 h-4" />
+                    Shop Products <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
                 <a href="tel:+12403875224">

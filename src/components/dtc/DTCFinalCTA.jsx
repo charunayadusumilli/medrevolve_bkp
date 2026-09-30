@@ -20,13 +20,13 @@ export default function DTCFinalCTA() {
           </h2>
 
           <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto mb-8">
-            Take the first step. Complete your free assessment and a US-licensed provider will create your personalized plan.
+            Take the first step. Browse our research-backed compounds and a US-licensed provider will create your personalized plan.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/CustomerIntake">
+            <Link to="/shop">
               <Button size="lg" className="bg-white text-[#0B8B7A] hover:bg-white/90 rounded-lg px-8 font-black h-auto py-3.5">
-                Start Free Assessment <ArrowRight className="ml-2 w-4 h-4" />
+                Shop Products <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
             <a href="tel:+12403875224">

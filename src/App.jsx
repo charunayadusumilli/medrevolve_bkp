@@ -21,6 +21,9 @@ import ExternalRedirect from './lib/ExternalRedirect';
 import { base44 } from '@/api/base44Client';
 import { detectDomain } from '@/lib/domainConfig';
 import DTCHome from './pages/dtc/DTCHome';
+import Shop from './pages/dtc/Shop';
+import ProductDetail from './pages/dtc/ProductDetail';
+import DTCCart from './pages/dtc/DTCCart';
 import SystemArchitecture from './pages/SystemArchitecture';
 import ComplianceAuditReport from './pages/ComplianceAuditReport';
 import ProjectManagement from './pages/ProjectManagement';
@@ -136,6 +139,10 @@ const AuthenticatedApp = () => {
           <DomainHome />
         </LayoutWrapper>
       } />
+      {/* ── DTC SHOP (medrevolve.com consumer catalog) ────────────────────── */}
+      <Route path="/shop" element={<LayoutWrapper currentPageName="Shop"><Shop /></LayoutWrapper>} />
+      <Route path="/product/:id" element={<LayoutWrapper currentPageName="ProductDetail"><ProductDetail /></LayoutWrapper>} />
+      <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
         <Route
           key={path}

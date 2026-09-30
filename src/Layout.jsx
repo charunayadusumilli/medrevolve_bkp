@@ -24,11 +24,12 @@ const B2B_NAV = [
 ];
 
 const DTC_NAV = [
-  { label: 'Weight Loss',    path: '/CustomerIntake' },
-  { label: "Men's Health",   path: '/CustomerIntake' },
-  { label: "Women's Health", path: '/CustomerIntake' },
-  { label: 'Peptides',       path: '/CustomerIntake' },
-  { label: 'How It Works',   path: '/HowItWorks' },
+  { label: 'Shop All',       path: '/shop' },
+  { label: 'Weight Loss',    path: '/shop?cat=weight_loss' },
+  { label: 'Peptides',       path: '/shop?cat=peptides' },
+  { label: 'Longevity',      path: '/shop?cat=longevity' },
+  { label: "Men's Health",   path: '/shop?cat=mens_health' },
+  { label: "Women's Health", path: '/shop?cat=womens_health' },
   { label: 'FAQ',            path: '/faq' },
 ];
 
@@ -75,8 +76,8 @@ export default function Layout({ children }) {
 
   const isDTC = domain === 'DTC';
   const NAV_LINKS = isDTC ? DTC_NAV : B2B_NAV;
-  const ctaLabel = isDTC ? 'Start Free Assessment' : 'Book a Demo';
-  const ctaLink = isDTC ? '/CustomerIntake' : '/MerchantOnboarding';
+  const ctaLabel = isDTC ? 'Shop Now' : 'Book a Demo';
+  const ctaLink = isDTC ? '/shop' : '/MerchantOnboarding';
   const ctaColor = isDTC ? '#0B8B7A' : '#A66B3C';
 
   // All non-medrevolve.com domains — show nothing, no branding, no links
@@ -312,12 +313,12 @@ export default function Layout({ children }) {
               <ul className="space-y-2.5">
                 {isDTC ? (
                   <>
-                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Weight Loss</Link></li>
-                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Men's Health</Link></li>
-                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Women's Health</Link></li>
-                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Peptides</Link></li>
+                    <li><Link to="/shop" className="text-sm text-white/40 hover:text-white transition-colors">Shop All</Link></li>
+                    <li><Link to="/shop?cat=weight_loss" className="text-sm text-white/40 hover:text-white transition-colors">Weight Loss</Link></li>
+                    <li><Link to="/shop?cat=mens_health" className="text-sm text-white/40 hover:text-white transition-colors">Men's Health</Link></li>
+                    <li><Link to="/shop?cat=womens_health" className="text-sm text-white/40 hover:text-white transition-colors">Women's Health</Link></li>
+                    <li><Link to="/shop?cat=peptides" className="text-sm text-white/40 hover:text-white transition-colors">Peptides</Link></li>
                     <li><Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
-                    <li><Link to="/CustomerIntake" className="text-sm text-white/40 hover:text-white transition-colors">Start Free Assessment</Link></li>
                   </>
                 ) : (
                   <>
