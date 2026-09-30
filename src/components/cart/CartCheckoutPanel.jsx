@@ -4,10 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
 import { clearCart } from '@/lib/cartStore';
-import { CreditCard, Lock, Loader2, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Lock, Loader2, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonthly }) {
-  const [mode, setMode] = useState('payment'); // 'payment' | 'setup'
+  const mode = 'payment'; // card-verify ($0 auth) is a backend-side flow, not a user choice
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -143,13 +143,9 @@ export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonth
     return (
       <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 text-center">
         <CheckCircle2 className="w-14 h-14 text-[#0B8B7A] mx-auto mb-4" />
-        <h3 className="font-black text-[#0A0A0A] text-lg mb-2">
-          {success.mode === 'setup' ? 'Card Authorized!' : 'Payment Successful!'}
-        </h3>
+        <h3 className="font-black text-[#0A0A0A] text-lg mb-2">Payment Successful!</h3>
         <p className="text-gray-600 text-sm mb-4">
-          {success.mode === 'setup'
-            ? 'Your card has been verified and saved for future charges. No amount was charged.'
-            : `Your payment of $${success.amount?.toFixed(2)} has been processed.`}
+          Your payment of ${success.amount?.toFixed(2)} has been processed.
         </p>
         {success.maskedCard && (
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-4 text-left space-y-1.5">
@@ -194,29 +190,6 @@ export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonth
           <p className="text-yellow-800 text-xs">{configError}</p>
         </div>
       )}
-
-      {/* Mode toggle */}
-      <div className="space-y-2 mb-5">
-        <button
-          onClick={() => setMode('payment')}
-          className={`w-full text-left p-3 rounded-xl border transition-all ${mode === 'payment' ? 'bg-[#0B8B7A]/10 border-[#0B8B7A]' : 'bg-gray-50 border-gray-200'}`}>
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-[#0A0A0A] text-sm">Charge Now</span>
-            <span className="text-[#0B8B7A] text-xs font-bold">${total.toFixed(2)}</span>
-          </div>
-          <p className="text-gray-500 text-xs mt-0.5">Pay the full amount today</p>
-        </button>
-
-        <button
-          onClick={() => setMode('setup')}
-          className={`w-full text-left p-3 rounded-xl border transition-all ${mode === 'setup' ? 'bg-[#0B8B7A]/10 border-[#0B8B7A]' : 'bg-gray-50 border-gray-200'}`}>
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-[#0A0A0A] text-sm">Authorize Card Only</span>
-            <span className="text-[#0B8B7A] text-xs font-bold">$0.00</span>
-          </div>
-          <p className="text-gray-500 text-xs mt-0.5">Verify your card — no charge today</p>
-        </button>
-      </div>
 
       {/* Contact info */}
       <div className="space-y-3 mb-5">
@@ -290,8 +263,6 @@ export default function CartCheckoutPanel({ cart, subtotal, tax, total, hasMonth
         className="w-full bg-[#0B8B7A] hover:bg-[#0A7A6A] text-white rounded-lg font-bold h-12">
         {loading ? (
           <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing payment…</>
-        ) : mode === 'setup' ? (
-          <><CreditCard className="w-4 h-4 mr-2" /> Authorize Card — $0</>
         ) : (
           <><Lock className="w-4 h-4 mr-2" /> Pay ${total.toFixed(2)}</>
         )}
