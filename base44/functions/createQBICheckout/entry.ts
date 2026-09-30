@@ -83,7 +83,15 @@ Deno.serve(async (req) => {
     }
 
     // ── Call QBI Gateway API ──
-    const apiUrl = 'https://api.qbigateway.com/api/v2/transactions/charge';
+    // Setup mode uses the $0 card verification endpoint (no auth/void needed)
+    if (mode === 'setup') {
+      delete payload.amount;
+      delete payload.capture;
+      delete payload.line_items;
+    }
+    const apiUrl = mode === 'setup'
+      ? 'https://api.qbigateway.com/api/v2/transactions/verification'
+      : 'https://api.qbigateway.com/api/v2/transactions/charge';
 
     console.log(`QBI charge: mode=${mode}, amount=${chargeAmount}, capture=${capture}`);
 
@@ -109,7 +117,7 @@ Deno.serve(async (req) => {
     // ── Handle API errors ──
     if (!apiRes.ok) {
       console.error('QBI charge failed:', apiRes.status, responseText);
-      const errorMsg = chargeResult?.error?.message ||
+      const errorMsg = chargeResult?.error_message || chargeResult?.error?.message ||
                        chargeResult?.message ||
                        chargeResult?.error ||
                        `Gateway returned status ${apiRes.status}`;
@@ -120,50 +128,31 @@ Deno.serve(async (req) => {
     }
 
     // ── Check if the transaction was approved ──
-    const isApproved = chargeResult?.status === 'approved' || chargeResult?.status === 'Authorized';
-    const refNum = chargeResult?.refnum || chargeResult?.reference_number || chargeResult?.id;
+    // QBI v2 returns HTTP 200 for declines too — status: Approved | Partially Approved | Declined | Error
+    const statusCode = chargeResult?.status_code;
+    const isApproved = statusCode === 'A' || statusCode === 'P' ||
+      chargeResult?.status === 'Approved' || chargeResult?.status === 'Partially Approved';
+    const refNum = chargeResult?.reference_number;
 
     if (!isApproved) {
-      console.error('QBI transaction not approved:', chargeResult);
+      console.error('QBI transaction not approved:', chargeResult?.status, chargeResult?.error_code, chargeResult?.error_message);
       return Response.json({
-        error: chargeResult?.error || chargeResult?.message || 'Payment was declined. Please try a different card.',
+        error: chargeResult?.error_message || 'Payment was declined. Please try a different card.',
         declined: true,
-        raw: chargeResult,
       }, { status: 402 });
     }
 
-    console.log(`QBI charge approved: ref=${refNum}, status=${chargeResult?.status}`);
+    console.log(`QBI ${mode} approved: ref=${refNum}, status=${chargeResult?.status}`);
 
-    // ── Setup mode: void the $0.01 auth immediately ──
-    if (mode === 'setup' && refNum) {
-      try {
-        const voidUrl = `https://api.qbigateway.com/api/v2/transactions/${refNum}/void`;
-        await fetch(voidUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${basicAuth}`,
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({}),
-        });
-        console.log(`QBI void issued for setup auth ${refNum}`);
-      } catch (voidErr) {
-        console.error('QBI void failed (non-fatal):', voidErr.message);
-      }
-    }
-
-    // ── Return success ──
     return Response.json({
       success: true,
       mode,
       referenceNumber: refNum,
       status: chargeResult?.status,
       authCode: chargeResult?.auth_code,
-      maskedCard: chargeResult?.masked_card,
+      maskedCard: chargeResult?.last_4 ? `**** ${chargeResult.last_4}` : undefined,
       cardType: chargeResult?.card_type,
-      amount: chargeAmount,
-      raw: chargeResult,
+      amount: mode === 'setup' ? 0 : (chargeResult?.auth_amount ?? chargeAmount),
     });
 
   } catch (error) {

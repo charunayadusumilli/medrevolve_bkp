@@ -1,22 +1,22 @@
 import React from 'react';
-import DTCHero from '@/components/dtc/DTCHero';
-import DTCProductCategories from '@/components/dtc/DTCProductCategories';
-import DTCHowItWorks from '@/components/dtc/DTCHowItWorks';
+import LandingHero from '@/components/dtc/landing/LandingHero';
+import JourneyCards from '@/components/dtc/landing/JourneyCards';
+import ScienceFlow from '@/components/dtc/landing/ScienceFlow';
+import FeaturedGrid from '@/components/dtc/landing/FeaturedGrid';
 import DTCTrustStrip from '@/components/dtc/DTCTrustStrip';
-import DTCPricing from '@/components/dtc/DTCPricing';
-import DTCTestimonials from '@/components/dtc/DTCTestimonials';
+import UGCSection from '@/components/dtc/UGCSection';
 import DTCFAQ from '@/components/dtc/DTCFAQ';
 import DTCFinalCTA from '@/components/dtc/DTCFinalCTA';
 
 export default function DTCHome() {
   return (
     <div className="bg-white">
-      <DTCHero />
+      <LandingHero />
       <DTCTrustStrip />
-      <DTCProductCategories />
-      <DTCHowItWorks />
-      <DTCPricing />
-      <DTCTestimonials />
+      <JourneyCards />
+      <ScienceFlow />
+      <FeaturedGrid />
+      <UGCSection />
       <DTCFAQ />
       <DTCFinalCTA />
     </div>
