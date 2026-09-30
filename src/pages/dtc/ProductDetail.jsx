@@ -40,7 +40,7 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-4xl font-black text-gray-200 mb-2">404</p>
-          <p className="text-gray-500 mb-6">Product not found.</p>
+          <p className="text-gray-600 mb-6">Product not found.</p>
           <Link to="/shop"><Button className="bg-[#0B8B7A] hover:bg-[#0A7A6A] text-white rounded-lg">Back to Shop</Button></Link>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function ProductDetail() {
     <div className="bg-white min-h-screen pt-24">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-5 lg:px-12 py-4">
-        <Link to="/shop" className="inline-flex items-center text-sm text-gray-400 hover:text-[#0B8B7A] transition-colors">
+        <Link to="/shop" className="inline-flex items-center text-sm text-gray-600 hover:text-[#0B8B7A] transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1.5" /> Back to Shop
         </Link>
       </div>
@@ -90,13 +90,13 @@ export default function ProductDetail() {
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">{product.icon}</span>
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400">{product.categoryLabel}</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-gray-600">{product.categoryLabel}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl font-black text-[#0A0A0A] mb-2" style={{ letterSpacing: '-0.03em' }}>
               {product.name}
             </h1>
-            <p className="text-base text-gray-500 mb-4">{product.tagline}</p>
+            <p className="text-base text-gray-600 mb-4">{product.tagline}</p>
 
             {/* Type badge */}
             <div className={`${typeStyle.bg} ${typeStyle.border} border rounded-xl p-4 mb-5`}>
@@ -115,12 +115,12 @@ export default function ProductDetail() {
             {/* Price */}
             <div className="flex items-baseline gap-2 mb-5">
               <span className="text-4xl font-black text-[#0A0A0A]">${product.price}</span>
-              <span className="text-sm text-gray-400 font-medium">/ {product.billing === 'monthly' ? 'month' : 'one-time'}</span>
+              <span className="text-sm text-gray-600 font-medium">/ {product.billing === 'monthly' ? 'month' : 'one-time'}</span>
             </div>
 
             {/* What's included */}
             <div className="mb-5">
-              <p className="text-xs font-black uppercase tracking-wider text-gray-400 mb-3">What's Included</p>
+              <p className="text-xs font-black uppercase tracking-wider text-gray-600 mb-3">What's Included</p>
               <div className="grid grid-cols-2 gap-2">
                 {product.includes.map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -170,10 +170,10 @@ export default function ProductDetail() {
           <div className="flex items-center gap-2 mb-6">
             <Atom className="w-6 h-6 text-[#0B8B7A]" />
             <h2 className="text-2xl font-black text-[#0A0A0A]">Molecular Structure</h2>
-            <span className="text-sm text-gray-400 font-medium">— see it in 3D</span>
+            <span className="text-sm text-gray-600 font-medium">— see it in 3D</span>
           </div>
           <MoleculeViewer3D productId={product.id} accentColor="#0B8B7A" />
-          <p className="text-xs text-gray-400 text-center mt-4 max-w-xl mx-auto">
+          <p className="text-xs text-gray-600 text-center mt-4 max-w-xl mx-auto">
             Interactive 3D model. Drag to rotate. Atom colors: carbon (gray), nitrogen (blue), oxygen (red).
             Structure is a simplified representation for educational purposes.
           </p>
@@ -186,7 +186,7 @@ export default function ProductDetail() {
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="w-6 h-6 text-[#0B8B7A]" />
             <h2 className="text-2xl font-black text-[#0A0A0A]">The Research</h2>
-            <span className="text-sm text-gray-400 font-medium">— here's what the studies actually say</span>
+            <span className="text-sm text-gray-600 font-medium">— here's what the studies actually say</span>
           </div>
 
           {/* Cellular binding animation */}
@@ -194,7 +194,7 @@ export default function ProductDetail() {
             <div className="flex items-center gap-2 mb-4">
               <Atom className="w-5 h-5 text-[#0B8B7A]" />
               <h3 className="text-lg font-black text-[#0A0A0A]">How It Binds</h3>
-              <span className="text-sm text-gray-400 font-medium">— cellular mechanism in action</span>
+              <span className="text-sm text-gray-600 font-medium">— cellular mechanism in action</span>
             </div>
             <CellularBindingAnimation accentColor="#0B8B7A" />
           </div>
@@ -247,7 +247,7 @@ export default function ProductDetail() {
                     </span>
                     <span className="text-sm text-gray-700 font-medium">{cite.title}</span>
                   </div>
-                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#0B8B7A] flex-shrink-0" />
+                  <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-[#0B8B7A] flex-shrink-0" />
                 </a>
               ))}
             </div>
@@ -258,7 +258,7 @@ export default function ProductDetail() {
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb className="w-5 h-5 text-[#0B8B7A]" />
               <h3 className="text-lg font-black text-[#0A0A0A]">Lifestyle Add-Ons</h3>
-              <span className="text-sm text-gray-400 font-medium">— pair it with these for the full protocol</span>
+              <span className="text-sm text-gray-600 font-medium">— pair it with these for the full protocol</span>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {product.lifestyle.map((item, i) => (

@@ -38,7 +38,7 @@ export default function DTCCart() {
     <div className="bg-white min-h-screen pt-24 pb-20 px-5 lg:px-12">
       <div className="max-w-6xl mx-auto">
         {/* Back link */}
-        <Link to="/shop" className="inline-flex items-center text-sm text-gray-400 hover:text-[#0B8B7A] mb-6 transition-colors">
+        <Link to="/shop" className="inline-flex items-center text-sm text-gray-600 hover:text-[#0B8B7A] mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1.5" /> Continue Shopping
         </Link>
 
@@ -69,14 +69,14 @@ export default function DTCCart() {
             <h1 className="text-3xl font-black text-[#0A0A0A] flex items-center gap-3">
               <ShoppingCart className="w-7 h-7 text-[#0B8B7A]" /> Your Cart
             </h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-600 text-sm mt-1">
               {cart.length === 0
                 ? 'Your cart is empty — browse our catalog to get started.'
                 : `${cart.reduce((n, i) => n + i.quantity, 0)} item(s) ready for checkout.`}
             </p>
           </div>
           {cart.length > 0 && (
-            <Button variant="ghost" onClick={() => clearCart()} className="text-gray-400 hover:text-red-500 text-sm">
+            <Button variant="ghost" onClick={() => clearCart()} className="text-gray-600 hover:text-red-500 text-sm">
               Clear all
             </Button>
           )}
@@ -86,7 +86,7 @@ export default function DTCCart() {
           <div className="bg-gray-50 border border-gray-100 rounded-2xl p-16 text-center">
             <ShoppingCart className="w-16 h-16 text-gray-200 mx-auto mb-4" />
             <h3 className="font-black text-[#0A0A0A] text-xl mb-2">Your cart is empty</h3>
-            <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
+            <p className="text-gray-600 text-sm mb-6 max-w-md mx-auto">
               Browse our research-backed compounds — GLP-1 weight loss, peptides, hormones, longevity, and more.
               Every product links to peer-reviewed studies.
             </p>
@@ -120,7 +120,7 @@ export default function DTCCart() {
                         <Link to={`/product/${item.id}`}>
                           <h3 className="font-black text-[#0A0A0A] text-sm hover:text-[#0B8B7A] transition-colors">{item.name}</h3>
                         </Link>
-                        <p className="text-gray-400 text-xs">
+                        <p className="text-gray-600 text-xs">
                           ${item.price} {item.type === 'monthly' ? '/mo' : 'one-time'}
                           {product && <span className="ml-2">· {product.categoryLabel}</span>}
                         </p>
@@ -146,7 +146,7 @@ export default function DTCCart() {
                         <p className="text-[#0A0A0A] font-black text-sm">${(item.price * item.quantity).toFixed(2)}</p>
                       </div>
                       {/* Remove */}
-                      <button onClick={() => removeFromCart(item.id)} className="text-gray-300 hover:text-red-500 transition-colors">
+                      <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </motion.div>
@@ -155,7 +155,7 @@ export default function DTCCart() {
               </AnimatePresence>
 
               {/* Add more */}
-              <Link to="/shop" className="block w-full py-3 border border-dashed border-gray-200 rounded-2xl text-gray-400 hover:text-[#0B8B7A] hover:border-[#0B8B7A]/30 text-sm font-medium transition-all text-center">
+              <Link to="/shop" className="block w-full py-3 border border-dashed border-gray-200 rounded-2xl text-gray-600 hover:text-[#0B8B7A] hover:border-[#0B8B7A]/30 text-sm font-medium transition-all text-center">
                 + Add more products
               </Link>
               <EssentialsSuggestions cart={cart} />
@@ -176,7 +176,7 @@ export default function DTCCart() {
 
         {/* Trust strip */}
         {cart.length > 0 && (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-600">
             <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-[#0B8B7A]" /> LegiScript Certified</div>
             <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-[#0B8B7A]" /> FDA-Compliant Pharmacy</div>
             <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-[#0B8B7A]" /> US-Licensed Providers</div>

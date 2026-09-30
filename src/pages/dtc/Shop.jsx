@@ -58,7 +58,7 @@ export default function Shop() {
             <h1 className="text-3xl md:text-5xl font-black text-[#0A0A0A] mb-3" style={{ letterSpacing: '-0.03em' }}>
               Every compound, backed by <span className="text-[#0B8B7A]">real research.</span>
             </h1>
-            <p className="text-gray-500 max-w-2xl text-sm md:text-base mb-6">
+            <p className="text-gray-600 max-w-2xl text-sm md:text-base mb-6">
               Browse our full catalog of physician-supervised prescriptions, research-grade peptides, and lifestyle supplies.
               Each product links to peer-reviewed studies — no hype, just the evidence.
             </p>
@@ -91,7 +91,7 @@ export default function Shop() {
           <div className="flex flex-col lg:flex-row gap-4 items-center">
             {/* Search */}
             <div className="relative w-full lg:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
               <input
                 type="text"
                 placeholder="Search compounds..."
@@ -138,7 +138,7 @@ export default function Shop() {
             <div className="flex items-center gap-2 mb-6">
               <span className="text-2xl">⭐</span>
               <h2 className="text-xl font-black text-[#0A0A0A]">Most Popular</h2>
-              <span className="text-xs text-gray-400 font-medium">— what our patients actually order</span>
+              <span className="text-xs text-gray-600 font-medium">— what our patients actually order</span>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {popular.map((p, i) => (
@@ -155,13 +155,13 @@ export default function Shop() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-black text-[#0A0A0A]">
               {activeCategory === 'all' ? 'All Products' : DTC_CATEGORIES.find(c => c.id === activeCategory)?.label}
-              <span className="text-sm font-medium text-gray-400 ml-2">({filtered.length})</span>
+              <span className="text-sm font-medium text-gray-600 ml-2">({filtered.length})</span>
             </h2>
           </div>
 
           {filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-400 text-sm mb-4">No products found for "{search}"</p>
+              <p className="text-gray-600 text-sm mb-4">No products found for "{search}"</p>
               <Button variant="outline" onClick={() => { setSearch(''); setActiveCategory('all'); }} className="rounded-lg">
                 Clear filters
               </Button>
@@ -180,10 +180,10 @@ export default function Shop() {
       <section className="bg-gray-50 border-t border-gray-100 py-10 px-5 lg:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Info className="w-5 h-5 text-gray-400" />
-            <h3 className="text-sm font-black uppercase tracking-wider text-gray-500">A note on how we present research</h3>
+            <Info className="w-5 h-5 text-gray-600" />
+            <h3 className="text-sm font-black uppercase tracking-wider text-gray-600">A note on how we present research</h3>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs text-gray-600 leading-relaxed max-w-2xl mx-auto">
             Every product page links to peer-reviewed studies so you can read the evidence yourself.
             We describe what the research shows — and what it doesn't. Prescription products require a consultation with a US-licensed provider.
             RUO products are labeled "Research Use Only — not for human consumption" and are sold for laboratory research purposes.

@@ -65,10 +65,10 @@ export default function ProductCard({ product, index = 0 }) {
           <div className="p-5 flex flex-col flex-1">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">{product.icon}</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{product.categoryLabel}</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600">{product.categoryLabel}</span>
             </div>
             <h3 className="text-lg font-black text-[#0A0A0A] mb-1.5 leading-tight">{product.name}</h3>
-            <p className="text-xs text-gray-500 leading-relaxed mb-3 line-clamp-2">{product.tagline}</p>
+            <p className="text-xs text-gray-600 leading-relaxed mb-3 line-clamp-2">{product.tagline}</p>
 
             {/* Research snippet */}
             <div className="bg-gray-50 rounded-lg p-3 mb-4 flex-1">
@@ -83,7 +83,7 @@ export default function ProductCard({ product, index = 0 }) {
             <div className="flex items-center justify-between gap-3 mt-auto">
               <div>
                 <span className="text-2xl font-black text-[#0A0A0A]">${product.price}</span>
-                <span className="text-xs text-gray-400 font-medium">/{product.billing === 'monthly' ? 'mo' : 'one-time'}</span>
+                <span className="text-xs text-gray-600 font-medium">/{product.billing === 'monthly' ? 'mo' : 'one-time'}</span>
               </div>
               {product.waitlist ? (
                 <Button size="sm" className="bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg text-xs h-9 px-4">
