@@ -17,7 +17,7 @@ export default function PlatformCTABand() {
         <p className="mt-7 text-white/80 text-sm">
           Interested in a partnership?{' '}
           <Link to="/Partnerships" className="font-bold underline underline-offset-4 hover:text-white">
-            See /Partnerships.
+            See our Partnerships page.
           </Link>
         </p>
       </div>
