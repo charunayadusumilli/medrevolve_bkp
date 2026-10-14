@@ -466,6 +466,18 @@ export default function ForBusiness() {
         bg="bg-[#F5F0E8]"
       />
 
+      {/* ── Partnerships cross-link ── */}
+      <section className="py-10 px-6 lg:px-8 bg-[#F7F4ED] border-t border-[#E8E0D5]">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-[#3A453E] text-sm">
+            Looking to partner or integrate?{' '}
+            <Link to="/Partnerships" className="text-[#A66B3C] font-semibold underline underline-offset-4 hover:text-[#945E33]">
+              See our Partnerships page.
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* ── Final CTA ── */}
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] via-[#3D5636] to-[#2D3A2D]">
         <div className="max-w-4xl mx-auto text-center">

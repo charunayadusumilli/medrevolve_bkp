@@ -20,6 +20,7 @@ const B2B_NAV = [
   { label: 'Services',        path: '/Services' },
   { label: 'How It Works',   path: '/HowItWorks' },
   { label: 'For Business',   path: '/ForBusiness' },
+  { label: 'Partnerships',   path: '/Partnerships' },
   { label: 'University',     path: '/University' },
   { label: 'Contact',        path: '/Contact' },
 ];

@@ -57,6 +57,7 @@ import PaymentProcessing from './pages/lp/PaymentProcessing';
 import ForCreatorsLP from './pages/lp/ForCreatorsLP';
 import ForEntrepreneurs from './pages/lp/ForEntrepreneurs';
 import TelehealthServicesForMedSpa from './pages/lp/TelehealthServicesForMedSpa';
+import Partnerships from './pages/Partnerships';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -236,6 +237,7 @@ const AuthenticatedApp = () => {
       <Route path="/for-creators" element={<LayoutWrapper currentPageName="ForCreatorsLP"><ForCreatorsLP /></LayoutWrapper>} />
       <Route path="/for-entrepreneurs" element={<LayoutWrapper currentPageName="ForEntrepreneurs"><ForEntrepreneurs /></LayoutWrapper>} />
       <Route path="/telehealth-services-for-medspa" element={<LayoutWrapper currentPageName="TelehealthServicesForMedSpa"><TelehealthServicesForMedSpa /></LayoutWrapper>} />
+      <Route path="/Partnerships" element={<LayoutWrapper currentPageName="Partnerships"><Partnerships /></LayoutWrapper>} />
       <Route path="/OrderSuccess" element={<PageNotFound />} />
       <Route path="/ProductDetail" element={<PageNotFound />} />
       <Route path="/ProductsAndServices" element={<PageNotFound />} />
