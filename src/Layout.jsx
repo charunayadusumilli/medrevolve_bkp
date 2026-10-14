@@ -17,21 +17,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const B2B_NAV = [
-  { label: 'Services',        path: '/Services' },
-  { label: 'How It Works',   path: '/HowItWorks' },
+  { label: 'Home',           path: '/' },
   { label: 'For Business',   path: '/ForBusiness' },
   { label: 'Partnerships',   path: '/Partnerships' },
-  { label: 'University',     path: '/University' },
+  { label: 'Blog',           path: '/Blog' },
+  { label: 'FAQ',            path: '/faq' },
   { label: 'Contact',        path: '/Contact' },
 ];
 
+// Patient app navigation — only shown on app.medrevolve.com
 const DTC_NAV = [
   { label: 'Weight Loss',    path: '/start?goal=weight_loss' },
   { label: 'Men',            path: '/start?goal=mens_health' },
   { label: 'Women',          path: '/start?goal=womens_health' },
   { label: 'Longevity',      path: '/start?goal=longevity' },
   { label: 'Shop All',       path: '/shop' },
-  { label: 'FAQ',            path: '/faq' },
+  { label: 'FAQ',            path: '/patient-faq' },
 ];
 
 export default function Layout({ children }) {
@@ -75,11 +76,11 @@ export default function Layout({ children }) {
 
   const closeMenu = () => { setMobileOpen(false); window.scrollTo({ top: 0 }); };
 
-  const isDTC = domain === 'DTC';
-  const NAV_LINKS = isDTC ? DTC_NAV : B2B_NAV;
-  const ctaLabel = isDTC ? 'Get started' : 'Book a Demo';
-  const ctaLink = isDTC ? '/start' : '/MerchantOnboarding';
-  const ctaColor = isDTC ? '#1B2421' : '#A66B3C';
+  const isApp = domain === 'APP';
+  const NAV_LINKS = isApp ? DTC_NAV : B2B_NAV;
+  const ctaLabel = isApp ? 'Get started' : 'Book a Demo';
+  const ctaLink = isApp ? '/start' : '/MerchantOnboarding';
+  const ctaColor = isApp ? '#1B2421' : '#A66B3C';
 
   // All non-medrevolve.com domains — show nothing, no branding, no links
   if (domain === 'DOWN') {
@@ -172,7 +173,7 @@ export default function Layout({ children }) {
 
             {/* Right actions */}
             <div className="flex items-center gap-3">
-              {isDTC && <ThemeToggle />}
+              {isApp && <ThemeToggle />}
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -303,7 +304,7 @@ export default function Layout({ children }) {
                 <span className="font-bold text-white">MedRevolve</span>
               </div>
               <p className="text-sm text-white/40 leading-relaxed">
-                {isDTC
+                {isApp
                   ? 'Physician-supervised telehealth for weight loss, hormones, peptides, and longevity. LegiScript-certified, FDA-compliant, delivered to your door.'
                   : 'Full-service B2B telehealth infrastructure. Website setup, provider integration, pharmacy network, compliance, and payments — all under your brand.'}
               </p>
@@ -311,24 +312,24 @@ export default function Layout({ children }) {
 
             {/* Platform links */}
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">{isDTC ? 'Treatments' : 'Platform'}</p>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-white/20 mb-4">{isApp ? 'Treatments' : 'Platform'}</p>
               <ul className="space-y-2.5">
-                {isDTC ? (
+                {isApp ? (
                   <>
                     <li><Link to="/shop" className="text-sm text-white/40 hover:text-white transition-colors">Shop All</Link></li>
                     <li><Link to="/shop?cat=weight_loss" className="text-sm text-white/40 hover:text-white transition-colors">Weight Loss</Link></li>
                     <li><Link to="/shop?cat=mens_health" className="text-sm text-white/40 hover:text-white transition-colors">Men's Health</Link></li>
                     <li><Link to="/shop?cat=womens_health" className="text-sm text-white/40 hover:text-white transition-colors">Women's Health</Link></li>
                     <li><Link to="/shop?cat=peptides" className="text-sm text-white/40 hover:text-white transition-colors">Peptides</Link></li>
-                    <li><Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
+                    <li><Link to="/patient-faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
                   </>
                 ) : (
                   <>
-                    <li><Link to="/Services" className="text-sm text-white/40 hover:text-white transition-colors">Services</Link></li>
-                    <li><Link to="/HowItWorks" className="text-sm text-white/40 hover:text-white transition-colors">How It Works</Link></li>
                     <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
-                    <li><Link to="/University" className="text-sm text-white/40 hover:text-white transition-colors">MedRevolve University</Link></li>
-                    <li><Link to="/MerchantOnboarding" className="text-sm text-white/40 hover:text-white transition-colors">Book a Demo</Link></li>
+                    <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">Services &amp; Pricing</Link></li>
+                    <li><Link to="/Partnerships" className="text-sm text-white/40 hover:text-white transition-colors">Partnerships</Link></li>
+                    <li><Link to="/Blog" className="text-sm text-white/40 hover:text-white transition-colors">Blog</Link></li>
+                    <li><Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
                     <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
                   </>
                 )}

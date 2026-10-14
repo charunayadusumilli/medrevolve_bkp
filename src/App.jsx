@@ -58,6 +58,9 @@ import ForCreatorsLP from './pages/lp/ForCreatorsLP';
 import ForEntrepreneurs from './pages/lp/ForEntrepreneurs';
 import TelehealthServicesForMedSpa from './pages/lp/TelehealthServicesForMedSpa';
 import Partnerships from './pages/Partnerships';
+import Blog from './pages/Blog';
+import OperatorFAQ from './pages/OperatorFAQ';
+import PatientRoute from './components/PatientRoute';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -110,8 +113,8 @@ const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   <Layout currentPageName={currentPageName}>{children}</Layout>
   : <>{children}</>;
 
-// Domain-aware home: DTC consumer platform on medrevolve.com, B2B SaaS on medrevolveb2b.com
-const DomainHome = () => detectDomain() === 'DTC' ? <DTCHome /> : <MainPage />;
+// Domain-aware home: patient app on app.medrevolve.com, B2B platform site everywhere else
+const DomainHome = () => detectDomain() === 'APP' ? <DTCHome /> : <MainPage />;
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -142,10 +145,10 @@ const AuthenticatedApp = () => {
         </LayoutWrapper>
       } />
       {/* ── DTC SHOP (medrevolve.com consumer catalog) ────────────────────── */}
-      <Route path="/shop" element={<LayoutWrapper currentPageName="Shop"><Shop /></LayoutWrapper>} />
-      <Route path="/product/:id" element={<LayoutWrapper currentPageName="ProductDetail"><ProductDetail /></LayoutWrapper>} />
-      <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
-      <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><GetStarted /></LayoutWrapper>} />
+      <Route path="/shop" element={<LayoutWrapper currentPageName="Shop"><PatientRoute><Shop /></PatientRoute></LayoutWrapper>} />
+      <Route path="/product/:id" element={<LayoutWrapper currentPageName="ProductDetail"><PatientRoute><ProductDetail /></PatientRoute></LayoutWrapper>} />
+      <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><PatientRoute><DTCCart /></PatientRoute></LayoutWrapper>} />
+      <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><PatientRoute><GetStarted /></PatientRoute></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
         <Route
           key={path}
@@ -230,7 +233,9 @@ const AuthenticatedApp = () => {
       {/* ── MERCHANT ONBOARDING INTAKE + DOCUMENT E-SIGNATURE ─────────────── */}
       <Route path="/MerchantOnboardingIntake" element={<LayoutWrapper currentPageName="MerchantOnboardingIntake"><MerchantOnboardingIntake /></LayoutWrapper>} />
       <Route path="/MerchantDocuments" element={<LayoutWrapper currentPageName="MerchantDocuments"><MerchantDocuments /></LayoutWrapper>} />
-      <Route path="/faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientFAQ /></LayoutWrapper>} />
+      <Route path="/faq" element={<LayoutWrapper currentPageName="OperatorFAQ"><OperatorFAQ /></LayoutWrapper>} />
+      <Route path="/patient-faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientRoute><PatientFAQ /></PatientRoute></LayoutWrapper>} />
+      <Route path="/Blog" element={<LayoutWrapper currentPageName="Blog"><Blog /></LayoutWrapper>} />
       <Route path="/white-label-telehealth-platform" element={<LayoutWrapper currentPageName="WhiteLabelTelehealthPlatform"><WhiteLabelTelehealthPlatform /></LayoutWrapper>} />
       <Route path="/unified-crm" element={<LayoutWrapper currentPageName="UnifiedCRM"><UnifiedCRM /></LayoutWrapper>} />
       <Route path="/payment-processing" element={<LayoutWrapper currentPageName="PaymentProcessing"><PaymentProcessing /></LayoutWrapper>} />

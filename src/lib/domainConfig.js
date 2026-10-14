@@ -2,8 +2,10 @@
  * MedRevolve Domain Configuration
  * ─────────────────────────────────────────────────────────────────────────────
  * ACTIVE DOMAINS:
- *   medrevolve.com      → DTC  — consumer telehealth platform (peptides, GLP-1, hormones)
- *   medrevolveb2b.com   → B2B  — B2B SaaS platform (white-label telehealth infrastructure)
+ *   medrevolve.com      → B2B  — public white-label telehealth infrastructure site
+ *   medrevolveb2b.com   → B2B  — white-label telehealth infrastructure
+ *   app.medrevolve.com  → APP  — patient app (intake, shop, cart, portal)
+ *   admin.medrevolve.com→ ADMIN
  *
  * INACTIVE (DOWN):
  *   medrevolvewater.com → DOWN — blank page, no content
@@ -13,14 +15,15 @@
 
 export function detectDomain() {
   const h = window.location.hostname.toLowerCase();
-  // medrevolve.com → DTC consumer telehealth platform (peptides, GLP-1, hormones)
-  if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'DTC';
-  // medrevolveb2b.com → B2B SaaS platform (white-label telehealth infrastructure)
+  // app.medrevolve.com → patient app (intake, shop, cart, patient portal)
+  if (h === 'app.medrevolve.com') return 'APP';
+  if (h === 'admin.medrevolve.com') return 'ADMIN';
+  // Public sites — white-label telehealth infrastructure (B2B)
+  if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'B2B';
   if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com') return 'B2B';
-  if (h === 'admin.medrevolve.com')                          return 'ADMIN';
-  // Dev / preview environment — defaults to DTC so the consumer platform is visible in builder
+  // Dev / preview environment — the B2B platform site is the primary public site
   const isDevEnv = h === 'localhost' || h.includes('base44') || h.includes('127.0.0.1');
-  if (isDevEnv) return 'DTC';
+  if (isDevEnv) return 'B2B';
   return 'DOWN';
 }
 
