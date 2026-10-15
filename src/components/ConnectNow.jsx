@@ -15,6 +15,12 @@ import { Video, MessageCircle, CalendarClock, X, CheckCircle2, Loader2 } from 'l
  */
 export default function ConnectNow({ floating = false }) {
   const [open, setOpen] = useState(!floating);
+  // Other components (the AI chat) can open this widget: window.dispatchEvent(new Event('connectnow:open'))
+  useEffect(() => {
+    const h = () => setOpen(true);
+    window.addEventListener('connectnow:open', h);
+    return () => window.removeEventListener('connectnow:open', h);
+  }, []);
   const [status, setStatus] = useState(null);
   const [mode, setMode] = useState(null); // 'meet' | 'chat'
   const [form, setForm] = useState({ name: '', email: '', company: '', topic: '' });
