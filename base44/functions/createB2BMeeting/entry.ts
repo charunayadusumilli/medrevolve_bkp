@@ -146,7 +146,7 @@ Deno.serve(async (req) => {
     // Email to attendee
     await sendGmail(
       attendee_email,
-      `You're invited: MedRevolve Intro Call — Today at 6:00 PM ET`,
+      `You're invited: MedRevolve Intro Call — ${timeStr} ET`,
       `
 <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
   <div style="background:#0A0A0A;padding:24px 32px;border-radius:8px 8px 0 0;">
@@ -161,8 +161,8 @@ Deno.serve(async (req) => {
     
     <div style="background:#f8f9fa;border-radius:8px;padding:20px;margin:24px 0;">
       <p style="margin:0 0 8px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;">Meeting Details</p>
-      <p style="margin:0 0 6px;font-size:16px;font-weight:700;color:#1a1a1a;">Today, Sunday May 24 at 6:00 PM ET</p>
-      <p style="margin:0 0 6px;color:#444;font-size:14px;">30 minutes · Google Meet</p>
+      <p style="margin:0 0 6px;font-size:16px;font-weight:700;color:#1a1a1a;">${timeStr} ET</p>
+      <p style="margin:0 0 6px;color:#444;font-size:14px;">${duration_minutes} minutes · Google Meet</p>
     </div>
 
     <div style="text-align:center;margin:24px 0;">
@@ -178,13 +178,13 @@ Deno.serve(async (req) => {
     <p style="color:#444;font-size:14px;"><strong>What we'll cover:</strong></p>
     <ul style="color:#555;font-size:14px;line-height:1.8;">
       <li>MedRevolve platform overview — telehealth &amp; white-label</li>
-      <li>Pricing &amp; onboarding ($5K setup · $2,500/mo)</li>
+      <li>Pricing &amp; onboarding</li>
       <li>Your specific needs for ${company_name}</li>
       <li>Next steps &amp; launch plan</li>
     </ul>
     <p style="color:#888;font-size:13px;margin-top:24px;">📝 This call will be recorded and transcribed for your records.</p>
     <p style="color:#444;font-size:14px;margin-top:24px;">Questions? Reply here or call <a href="tel:+17044263311" style="color:#4A6741;">(704) 426-3311</a></p>
-    <p style="color:#666;font-size:14px;margin-top:24px;">See you at 6 PM!<br/><strong>The MedRevolve B2B Team</strong></p>
+    <p style="color:#666;font-size:14px;margin-top:24px;">See you then!<br/><strong>Raj, MedRevolve</strong></p>
   </div>
 </div>
       `.trim()
@@ -195,19 +195,18 @@ Deno.serve(async (req) => {
     // Confirmation email to organizer
     await sendGmail(
       organizer_email,
-      `✅ Meeting Created — ${attendee_name} (${company_name}) @ 6PM Today`,
+      `Meeting booked: ${attendee_name} (${company_name}) — ${timeStr} ET`,
       `
 <div style="font-family:sans-serif;max-width:600px;">
   <h2 style="color:#1a1a1a;">✅ Meeting Confirmed</h2>
   <table style="border-collapse:collapse;width:100%;font-size:14px;">
     <tr style="background:#f0f7f0"><td style="padding:10px;color:#444;width:160px;"><b>With</b></td><td style="padding:10px;font-weight:bold;">${attendee_name} — ${company_name}</td></tr>
     <tr><td style="padding:10px;color:#444;"><b>Email</b></td><td style="padding:10px;"><a href="mailto:${attendee_email}">${attendee_email}</a></td></tr>
-    <tr style="background:#f0f7f0"><td style="padding:10px;color:#444;"><b>Phone</b></td><td style="padding:10px;">(949) 413-5952</td></tr>
-    <tr><td style="padding:10px;color:#444;"><b>Time</b></td><td style="padding:10px;">Today, Sunday May 24 at 6:00 PM ET</td></tr>
-    <tr style="background:#f0f7f0"><td style="padding:10px;color:#444;"><b>Duration</b></td><td style="padding:10px;">30 minutes</td></tr>
+    <tr><td style="padding:10px;color:#444;"><b>Time</b></td><td style="padding:10px;">${timeStr} ET</td></tr>
+    <tr style="background:#f0f7f0"><td style="padding:10px;color:#444;"><b>Duration</b></td><td style="padding:10px;">${duration_minutes} minutes</td></tr>
     <tr><td style="padding:10px;color:#444;"><b>Google Meet</b></td><td style="padding:10px;"><a href="${meetLink}" style="color:#4A6741;">${meetLink}</a></td></tr>
     <tr style="background:#f0f7f0"><td style="padding:10px;color:#444;"><b>Calendar Event</b></td><td style="padding:10px;"><a href="${calLink}" style="color:#4A6741;">View in Google Calendar</a></td></tr>
-    <tr><td style="padding:10px;color:#444;"><b>Lead Note</b></td><td style="padding:10px;">Startup interested in telehealth platform &amp; white label</td></tr>
+    <tr><td style="padding:10px;color:#444;"><b>Note</b></td><td style="padding:10px;">${description ? String(description).slice(0, 300) : 'B2B intro call'}</td></tr>
   </table>
   <div style="margin-top:20px;padding:16px;background:#f0f7f0;border-left:4px solid #4A6741;border-radius:4px;">
     <p style="margin:0;font-size:13px;color:#2d5a2d;">📝 Remember to start recording when the call begins. Transcript will be auto-processed and saved to your Project Management dashboard.</p>
