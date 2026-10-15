@@ -7,7 +7,7 @@ import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 
 const PHONE = PHONE_DISPLAY;
-const PHONE_TEL = 'tel:+12403875224';
+// PHONE_TEL comes from contactConfig
 const WHATSAPP_URL = 'https://wa.me/12403875224';
 
 const ROUTE_CTA = {
