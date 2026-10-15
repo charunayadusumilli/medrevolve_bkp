@@ -1,0 +1,86 @@
+{
+  "name": "MailItem",
+  "properties": {
+    "folder": {
+      "description": "Mailbox folder this message was filed in",
+      "enum": [
+        "Partners/Pharmacy",
+        "Partners/Telehealth",
+        "Partners/Providers",
+        "Partners/Attorneys",
+        "Partners/Vendors",
+        "People",
+        "Leads/B2B",
+        "Inbox",
+        "Accounts & Billing",
+        "System Alerts",
+        "Junk"
+      ],
+      "type": "string"
+    },
+    "from_email": {
+      "type": "string"
+    },
+    "from_name": {
+      "type": "string"
+    },
+    "gmail_id": {
+      "description": "Gmail message ID",
+      "type": "string"
+    },
+    "gmail_url": {
+      "type": "string"
+    },
+    "is_unread": {
+      "default": false,
+      "type": "boolean"
+    },
+    "partner_name": {
+      "description": "Matched partner from PartnershipOutreach, if any",
+      "type": "string"
+    },
+    "received_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "snippet": {
+      "description": "Decoded preview text",
+      "type": "string"
+    },
+    "subject": {
+      "description": "Decoded, clean subject",
+      "type": "string"
+    },
+    "thread_id": {
+      "description": "Gmail thread ID",
+      "type": "string"
+    }
+  },
+  "required": [
+    "gmail_id",
+    "folder"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

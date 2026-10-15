@@ -1,0 +1,49 @@
+{
+  "name": "MailboxState",
+  "properties": {
+    "done": {
+      "default": false,
+      "type": "boolean"
+    },
+    "key": {
+      "type": "string"
+    },
+    "last_report": {
+      "description": "JSON summary of the last run",
+      "type": "string"
+    },
+    "page_token": {
+      "type": "string"
+    },
+    "processed": {
+      "default": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "key"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
