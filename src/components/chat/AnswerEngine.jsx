@@ -337,6 +337,11 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
                         <RouteCTACard route={msg.route} />
                       </div>
                     )}
+                    {msg.role === 'assistant' && msg.handoff && (
+                      <div className="mt-2.5">
+                        <HumanHandoffCard />
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
