@@ -7,12 +7,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, Users, MessageCircle, GitBranch, BarChart3 } from 'lucide-react';
 
 const FAQS = [
-  { question: 'Does the CRM include WhatsApp?', answer: 'Yes — WhatsApp conversations are a first-class channel alongside site chat, forms, and phone.' },
+  { question: 'Does the CRM include WhatsApp?', answer: 'WhatsApp Business can be connected through the Twilio integration. Site chat, forms, phone and email are live today.' },
   { question: 'Can I run it myself without a team?', answer: 'Yes — pipelines and automations are built for solo operators, with 24/7 support to resolution.' },
 ];
 
 const UNIFIED = [
-  { icon: Users, title: 'Every lead in one pipeline', desc: 'Site chat, phone, WhatsApp, and forms — every captured lead lands in one pipeline.' },
+  { icon: Users, title: 'Every lead in one pipeline', desc: 'Site chat, phone, email and forms — every captured lead lands in one pipeline.' },
   { icon: BarChart3, title: 'One patient profile', desc: 'Patient records, intake status, conversations, and payment history are a single profile.' },
   { icon: GitBranch, title: 'Automated follow-up', desc: 'Automations move leads through follow-up without manual chasing.' },
   { icon: MessageCircle, title: 'WhatsApp first-class', desc: 'WhatsApp conversations live alongside every other channel in the same CRM.' },
