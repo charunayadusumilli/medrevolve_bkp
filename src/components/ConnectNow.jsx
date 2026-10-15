@@ -6,8 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Video, MessageCircle, CalendarClock, X, CheckCircle2, Loader2 } from 'lucide-react';
 
 /**
- * ConnectNow — "Talk to Raj" widget.
- * Shows live availability, offers an instant Google Meet when Raj is free,
+ * ConnectNow — "Talk to an onboarding specialist" widget.
+ * Shows live availability, offers an instant Google Meet when the specialist is free,
  * a message that alerts him once, and the free Calendly intro call any time.
  *
  * <ConnectNow />          inline card (Contact page, ForBusiness)
@@ -51,11 +51,11 @@ export default function ConnectNow({ floating = false }) {
       <div className="flex items-center justify-between px-5 py-4 bg-[#0B0F0E] text-white">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-9 h-9 rounded-full bg-[#4A6741] flex items-center justify-center font-bold">R</div>
+            <div className="w-9 h-9 rounded-full bg-[#4A6741] flex items-center justify-center font-bold text-xs">MR</div>
             <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#0B0F0E] ${status ? (available ? 'bg-green-400' : 'bg-gray-400') : 'bg-yellow-400'}`} />
           </div>
           <div>
-            <div className="text-sm font-semibold">Talk to Raj</div>
+            <div className="text-sm font-semibold">MR Personal Onboarding Specialist</div>
             <div className="text-xs text-white/60">{status ? status.reason : 'Checking availability...'}</div>
           </div>
         </div>
@@ -80,14 +80,14 @@ export default function ConnectNow({ floating = false }) {
               <Video className="w-5 h-5 text-[#4A6741]" />
               <div>
                 <div className="font-semibold text-sm">Google Meet right now</div>
-                <div className="text-xs text-gray-500">{available ? '20 minutes, starts immediately' : status?.next_free_label ? `Raj is free again at ${status.next_free_label}` : (status?.hours ? `Live hours: ${status.hours}` : 'Not available right now')}</div>
+                <div className="text-xs text-gray-500">{available ? '20 minutes, starts immediately' : status?.next_free_label ? `Free again at ${status.next_free_label}` : (status?.hours ? `Live hours: ${status.hours}` : 'Not available right now')}</div>
               </div>
             </button>
             <button onClick={() => setMode('chat')} className="w-full flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left hover:bg-gray-50 transition">
               <MessageCircle className="w-5 h-5 text-[#4A6741]" />
               <div>
-                <div className="font-semibold text-sm">Send Raj a message</div>
-                <div className="text-xs text-gray-500">He replies personally, usually within the hour</div>
+                <div className="font-semibold text-sm">Send a message</div>
+                <div className="text-xs text-gray-500">Your specialist replies personally, usually within the hour</div>
               </div>
             </button>
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="w-full flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left hover:bg-gray-50 transition">
@@ -100,7 +100,7 @@ export default function ConnectNow({ floating = false }) {
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-3">
-            <div className="text-sm font-semibold mb-1">{mode === 'meet' ? 'Start a Google Meet with Raj' : 'Message Raj'}</div>
+            <div className="text-sm font-semibold mb-1">{mode === 'meet' ? 'Start a Google Meet with your onboarding specialist' : 'Message your onboarding specialist'}</div>
             <Input required placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
             <Input required type="email" placeholder="Work email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
             <Input placeholder="Company (optional)" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
@@ -124,7 +124,7 @@ export default function ConnectNow({ floating = false }) {
     <div className="fixed bottom-6 left-6 z-[55]">
       {open ? card : (
         <button onClick={() => setOpen(true)} className="flex items-center gap-2 bg-[#4A6741] hover:bg-[#3d5636] text-white px-4 py-3 rounded-full shadow-xl font-semibold text-sm">
-          <Video className="w-4 h-4" /> Talk to Raj
+          <Video className="w-4 h-4" /> Talk to a specialist
         </button>
       )}
     </div>
