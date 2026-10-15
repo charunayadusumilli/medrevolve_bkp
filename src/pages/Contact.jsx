@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
+import ConnectNow from '@/components/ConnectNow';
 import { 
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
   HelpCircle, ArrowRight, Users, Building2,
@@ -159,6 +160,11 @@ export default function Contact() {
               Whether you're exploring the platform, ready to launch, or have a partnership inquiry — reach the right team directly.
             </p>
           </motion.div>
+
+          {/* Live: talk to Raj now */}
+          <div className="flex justify-center mb-16">
+            <ConnectNow />
+          </div>
 
           {/* Contact Methods */}
           <div className="grid md:grid-cols-3 gap-6 mb-16">
