@@ -10,6 +10,7 @@ import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown, File
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AnswerEngine from '@/components/chat/AnswerEngine';
+import ConnectNow from '@/components/ConnectNow';
 import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
@@ -98,6 +99,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-white dark:bg-[#0E1512] transition-colors">
       <AnalyticsTracker />
       <AnswerEngine />
+      <ConnectNow floating />
 
       {/* Top announcement bar */}
       <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
