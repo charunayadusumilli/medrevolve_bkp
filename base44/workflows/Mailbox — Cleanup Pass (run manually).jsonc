@@ -1,0 +1,44 @@
+{
+  "name": "Mailbox \u2014 Cleanup Pass (run manually)",
+  "description": "Organizes the next batch of existing mail in rned@medrevolve.com. Run it until it reports done. Set args.mode to audit for a dry run, apply to organize, finalize to remove the old emoji labels.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 1 *",
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {
+              "max": 600,
+              "mode": "audit"
+            },
+            "function_name": "mailboxOrganizer"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "mailbox_cleanup_pass",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
