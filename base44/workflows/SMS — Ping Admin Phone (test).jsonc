@@ -1,0 +1,41 @@
+{
+  "name": "SMS \u2014 Ping Admin Phone (test)",
+  "description": "Sends one test text to ADMIN_PHONE and records Twilio's delivery status in MailboxState.sms_ping.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 1 *",
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {},
+            "function_name": "smsPing"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "sms_ping",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
