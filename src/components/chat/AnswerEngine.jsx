@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL, WHATSAPP_URL, BOOKING_URL, SPECIALIST_TITLE } from '@/lib/contactConfig';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,29 @@ import { Link } from 'react-router-dom';
 
 const PHONE = PHONE_DISPLAY;
 // PHONE_TEL comes from contactConfig
-const WHATSAPP_URL = 'https://wa.me/12403875224';
+// WHATSAPP_URL comes from contactConfig (empty until a WhatsApp Business number exists)
+const HUMAN_INTENT = /whats\s?app|\bwa\b|talk to (a |an |some)?(human|person|agent|someone|specialist|rep)|real person|live (agent|chat|person)|speak (to|with)|call me|text me|sms|phone call|connect (me|us)|get in touch|reach (you|someone)/i;
+
+function HumanHandoffCard() {
+  const openSpecialist = () => window.dispatchEvent(new Event('connectnow:open'));
+  return (
+    <div className="rounded-xl border border-[#4A6741]/30 bg-[#4A6741]/5 p-3 space-y-2">
+      <p className="text-[12px] font-semibold text-[#2D3A2D]">Connect with your {SPECIALIST_TITLE}</p>
+      <button onClick={openSpecialist} className="w-full text-left rounded-lg bg-[#4A6741] text-white px-3 py-2 text-[12px] font-semibold hover:bg-[#3d5636]">
+        Google Meet now, or send a message
+      </button>
+      {WHATSAPP_URL && (
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="block w-full rounded-lg bg-[#25D366] text-white px-3 py-2 text-[12px] font-semibold text-center hover:opacity-90">
+          Chat on WhatsApp
+        </a>
+      )}
+      <div className="flex gap-2">
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-[12px] font-medium text-center text-gray-700 hover:bg-gray-50">Book a call</a>
+        <a href={PHONE_TEL} className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-[12px] font-medium text-center text-gray-700 hover:bg-gray-50">Call {PHONE_DISPLAY}</a>
+      </div>
+    </div>
+  );
+}
 
 const ROUTE_CTA = {
   patient: { label: 'Start your intake', to: '/CustomerIntake', blurb: 'Begin your clinician-reviewed intake' },
@@ -152,6 +174,17 @@ export default function AnswerEngine() {
 
   const sendMessage = useCallback(async (text) => {
     const trimmed = (text || input).trim();
+    // A request for a person, WhatsApp, a call or a text gets a real handoff, not an AI answer
+    if (trimmed && HUMAN_INTENT.test(trimmed)) {
+      setMessages(prev => [...prev,
+        { role: 'user', content: trimmed },
+        { role: 'assistant', content: WHATSAPP_URL
+            ? `Happy to connect you. Pick whichever is easiest: a Google Meet right now, a message, WhatsApp, or a booked call.`
+            : `Happy to connect you. We are not on WhatsApp yet, but you can start a Google Meet right now, send a message that goes straight to your ${SPECIALIST_TITLE}, or book a call.`,
+          handoff: true }]);
+      setInput('');
+      return;
+    }
     if (!trimmed || loading) return;
     setInput('');
     setLoading(true);
@@ -211,7 +244,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
       }
     } catch (err) {
       console.error('AnswerEngine LLM error', err);
-      reply = "I'm having trouble right now — please call {PHONE_DISPLAY} and a specialist will help immediately.\n\nROUTE: none";
+      reply = `I'm having trouble right now. Please call ${PHONE_DISPLAY} and a specialist will help immediately.\n\nROUTE: none`;
     }
 
     // Parse route
