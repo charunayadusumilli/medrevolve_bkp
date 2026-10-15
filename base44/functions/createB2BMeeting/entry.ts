@@ -184,7 +184,7 @@ Deno.serve(async (req) => {
     </ul>
     <p style="color:#888;font-size:13px;margin-top:24px;">📝 This call will be recorded and transcribed for your records.</p>
     <p style="color:#444;font-size:14px;margin-top:24px;">Questions? Reply here or call <a href="tel:+17044263311" style="color:#4A6741;">(704) 426-3311</a></p>
-    <p style="color:#666;font-size:14px;margin-top:24px;">See you then!<br/><strong>Raj, MedRevolve</strong></p>
+    <p style="color:#666;font-size:14px;margin-top:24px;">See you then!<br/><strong>MR Personal Onboarding Specialist, MedRevolve</strong></p>
   </div>
 </div>
       `.trim()
