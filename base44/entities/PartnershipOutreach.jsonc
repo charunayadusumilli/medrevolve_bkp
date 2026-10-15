@@ -1,33 +1,139 @@
 {
   "name": "PartnershipOutreach",
-  "type": "object",
   "properties": {
+    "api_documentation": {
+      "description": "URL to their API docs",
+      "type": "string"
+    },
+    "contact_email": {
+      "description": "Primary contact email",
+      "type": "string"
+    },
+    "contact_page": {
+      "description": "URL of their contact or partner page",
+      "type": "string"
+    },
+    "core_services": {
+      "description": "Key services they offer",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "estimated_effort": {
+      "description": "Integration implementation effort",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "type": "string"
+    },
+    "folder": {
+      "description": "Top-level partner folder",
+      "enum": [
+        "Providers",
+        "Pharmacy",
+        "Telehealth",
+        "Attorneys",
+        "Vendors"
+      ],
+      "type": "string"
+    },
+    "integration_points": {
+      "description": "Potential integration touchpoints",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "last_follow_up": {
+      "description": "Last follow-up date",
+      "format": "date-time",
+      "type": "string"
+    },
+    "last_scraped": {
+      "description": "When the site was last scraped",
+      "format": "date-time",
+      "type": "string"
+    },
+    "legitscript_status": {
+      "default": "unknown",
+      "description": "LegitScript status as noted or detected",
+      "enum": [
+        "certified",
+        "not_listed",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "notes": {
+      "description": "Partnership notes",
+      "type": "string"
+    },
+    "outreach_email": {
+      "description": "Generated outreach email content",
+      "type": "string"
+    },
+    "outreach_sent_date": {
+      "description": "When outreach was sent",
+      "format": "date-time",
+      "type": "string"
+    },
     "partner_name": {
-      "type": "string",
-      "description": "Partner company name"
+      "description": "Partner company name",
+      "type": "string"
     },
     "partner_type": {
-      "type": "string",
+      "description": "Type of partner",
       "enum": [
         "pharmacy",
         "telehealth_platform",
         "marketing_agency",
         "payment_processor",
         "compliance_service",
-        "white_label_provider"
+        "white_label_provider",
+        "provider_clinic",
+        "attorney",
+        "supplement_nutra",
+        "other"
       ],
-      "description": "Type of partner"
+      "type": "string"
     },
-    "website": {
-      "type": "string",
-      "description": "Partner website URL"
+    "phone": {
+      "description": "Primary contact phone",
+      "type": "string"
     },
-    "contact_email": {
-      "type": "string",
-      "description": "Primary contact email"
+    "priority": {
+      "default": "medium",
+      "description": "Partnership priority",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "response_received": {
+      "default": false,
+      "description": "Whether they responded",
+      "type": "boolean"
+    },
+    "social_links": {
+      "description": "LinkedIn, Facebook, Instagram etc.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "source_list": {
+      "description": "Where the lead came from",
+      "type": "string"
     },
     "status": {
-      "type": "string",
+      "default": "researching",
+      "description": "Partnership stage",
       "enum": [
         "researching",
         "outreach_sent",
@@ -37,74 +143,28 @@
         "active",
         "declined"
       ],
-      "default": "researching",
-      "description": "Partnership stage"
+      "type": "string"
     },
-    "core_services": {
-      "type": "array",
+    "subfolder": {
+      "description": "Sub-category within the folder",
+      "type": "string"
+    },
+    "tech_stack": {
+      "description": "Platforms detected on their site",
       "items": {
         "type": "string"
       },
-      "description": "Key services they offer"
+      "type": "array"
     },
-    "integration_points": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Potential integration touchpoints"
-    },
-    "api_documentation": {
-      "type": "string",
-      "description": "URL to their API docs"
-    },
-    "outreach_email": {
-      "type": "string",
-      "description": "Generated outreach email content"
-    },
-    "outreach_sent_date": {
-      "type": "string",
-      "format": "date-time",
-      "description": "When outreach was sent"
-    },
-    "last_follow_up": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Last follow-up date"
-    },
-    "response_received": {
-      "type": "boolean",
-      "default": false,
-      "description": "Whether they responded"
-    },
-    "notes": {
-      "type": "string",
-      "description": "Partnership notes"
-    },
-    "estimated_effort": {
-      "type": "string",
-      "enum": [
-        "low",
-        "medium",
-        "high"
-      ],
-      "description": "Integration implementation effort"
-    },
-    "priority": {
-      "type": "string",
-      "enum": [
-        "low",
-        "medium",
-        "high",
-        "critical"
-      ],
-      "default": "medium",
-      "description": "Partnership priority"
+    "website": {
+      "description": "Partner website URL",
+      "type": "string"
     }
   },
   "required": [
     "partner_name",
     "partner_type",
     "website"
-  ]
+  ],
+  "type": "object"
 }
