@@ -38,14 +38,12 @@ function extractText(payload) {
 }
 
 function parseVoice(subject, text) {
-  // Subjects look like: "New voicemail from (704) 555-0100", "Missed call from ...", "New text message from ..."
   const kind = /voicemail/i.test(subject) ? 'voicemail' : /text message|sms/i.test(subject) ? 'sms' : /missed call/i.test(subject) ? 'missed_call' : 'call';
   const numMatch = (subject + ' ' + text).match(/\(?\b(\d{3})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})\b/);
   const phone = numMatch ? `(${numMatch[1]}) ${numMatch[2]}-${numMatch[3]}` : '';
   const nameMatch = subject.match(/from\s+(.+?)(?:\s*\(|$)/i);
   let name = nameMatch ? nameMatch[1].trim() : '';
   if (/^\+?\d[\d\s().-]+$/.test(name)) name = '';
-  // Transcript: Google Voice puts it after "Transcript:" or as the main body before the footer
   let transcript = '';
   const t = text.match(/transcript[:\s]+([\s\S]+?)(?:\n\s*\n|To listen|Listen to|Play message|You received this|$)/i);
   if (t) transcript = t[1].trim();
