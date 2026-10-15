@@ -45,8 +45,8 @@ const CORE = [
   [/careconnectinc/i, 'Partners/Telehealth', 'CareConnect'],
 ];
 const PEOPLE = /cardgroupintl|ciambotti|karthik|pehuen|noel@medrevolve\.com/i;
-const JUNK_SENDERS = /tiktok\.com|reiaccel|influenceradvantage|softwareadvice|lowtato|skool\.com|oathresearch|fireflies|buffer\.com|buffermail|safewebservices|ionos\.com|trupeer|digitalstylehouse|rho\.co/i;
-const ACCOUNT_SENDERS = /stripe|google|godaddy|ionos|namecheap|base44|hubspot|twilio|zoho|intuit|quickbooks|paypal|apple|microsoft|calendly|sendgrid|shopify|squarespace|wix|linkedin|amazon|aws|github|slack|zoom|docusign|adobe|cloudflare|vercel|openai|anthropic/i;
+const JUNK_SENDERS = /tiktok\.com|reiaccel|influenceradvantage|softwareadvice|lowtato|skool\.com|oathresearch|fireflies|buffer\.com|buffermail|safewebservices|ionos\.com|trupeer|digitalstylehouse/i;
+const ACCOUNT_SENDERS = /stripe|rho\.co|mercury|brex|chase|bankofamerica|wellsfargo|google|godaddy|ionos|namecheap|base44|hubspot|twilio|zoho|intuit|quickbooks|paypal|apple|microsoft|calendly|sendgrid|shopify|squarespace|wix|linkedin|amazon|aws|github|slack|zoom|docusign|adobe|cloudflare|vercel|openai|anthropic/i;
 const ACCOUNT_SUBJECTS = /receipt|invoice|payment|paid|verif|security|password|sign.?in|log.?in|account|billing|domain|renew|code|subscription|trial|charge|refund|payout|statement|order|confirm/i;
 const KEYWORDS = [
   [/pharmac|compounding|\b503[ab]\b|fulfil?lment/i, 'Partners/Pharmacy'],
