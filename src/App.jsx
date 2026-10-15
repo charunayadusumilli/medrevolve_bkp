@@ -14,6 +14,7 @@ import ComplianceDashboard from './pages/ComplianceDashboard';
 import PartnershipHub from './pages/PartnershipHub';
 import PaymentsDashboard from './pages/PaymentsDashboard';
 import InboxDashboard from './pages/InboxDashboard';
+import MailboxBoard from './pages/MailboxBoard';
 import GrowthDashboard from './pages/GrowthDashboard';
 import GodModeAds from './pages/GodModeAds';
 import AdsManager from './pages/AdsManager';
@@ -166,6 +167,7 @@ const AuthenticatedApp = () => {
       <Route path="/PartnershipHub" element={<LayoutWrapper currentPageName="PartnershipHub"><PartnershipHub /></LayoutWrapper>} />
       <Route path="/PaymentsDashboard" element={<LayoutWrapper currentPageName="PaymentsDashboard"><AuthGate><PaymentsDashboard /></AuthGate></LayoutWrapper>} />
       <Route path="/InboxDashboard" element={<LayoutWrapper currentPageName="InboxDashboard"><AuthGate><InboxDashboard /></AuthGate></LayoutWrapper>} />
+      <Route path="/MailboxBoard" element={<LayoutWrapper currentPageName="MailboxBoard"><AuthGate><MailboxBoard /></AuthGate></LayoutWrapper>} />
       <Route path="/GrowthDashboard" element={<LayoutWrapper currentPageName="GrowthDashboard"><AuthGate><GrowthDashboard /></AuthGate></LayoutWrapper>} />
       <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><AuthGate><GodModeAds /></AuthGate></LayoutWrapper>} />
       <Route path="/AdsManager" element={<LayoutWrapper currentPageName="AdsManager"><AuthGate><AdsManager /></AuthGate></LayoutWrapper>} />
