@@ -1,0 +1,47 @@
+{
+  "name": "Connect Now \u2014 Chat Test (one-time)",
+  "description": "Sends one test chat through connectNow as a visitor. Expect exactly one alert to rned@ and one confirmation to the visitor.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 1 *",
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {
+              "action": "chat",
+              "company": "Connect Now test",
+              "email": "rajnedunuri@gmail.com",
+              "message": "Testing the Talk to Raj widget from medrevolve.com. If you see this once in rned@ and once in Gmail, both sides work.",
+              "name": "Raj Test"
+            },
+            "function_name": "connectNow"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "connect_now_chat_test",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
