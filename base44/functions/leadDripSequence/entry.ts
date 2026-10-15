@@ -214,7 +214,7 @@ const buildEmail = (from, to, subject, bodyHtml) => {
   const lines = [
     `From: R. Ned - MedRevolve <${from}>`,
     `To: ${to}`,
-    `Subject: ${mimeSubject(encodedSubject)}`,
+    `Subject: ${encodedSubject}`,
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
     'Content-Transfer-Encoding: base64',

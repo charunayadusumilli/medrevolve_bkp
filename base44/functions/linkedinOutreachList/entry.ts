@@ -137,7 +137,7 @@ Generate all 10 now. Make 2 different angle versions per persona.`;
     const emailLines = [
       `From: MedRevolve Growth Bot <${ADMIN_EMAIL}>`,
       `To: ${ADMIN_EMAIL}`,
-      `Subject: ${mimeSubject(encodedSubject)}`,
+      `Subject: ${encodedSubject}`,
       'MIME-Version: 1.0',
       'Content-Type: text/html; charset=UTF-8',
       'Content-Transfer-Encoding: base64',
