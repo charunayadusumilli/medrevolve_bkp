@@ -234,7 +234,12 @@ Deno.serve(async (req) => {
     }
 
     if (mode === 'audit') {
-      return Response.json({ success: true, mode, scanned: msgs.length, mailbox: MAILBOX, report });
+      const out = { success: true, mode, scanned: msgs.length, mailbox: MAILBOX, at: new Date().toISOString(), report };
+      const st = await base44.asServiceRole.entities.MailboxState.filter({ key: 'audit' });
+      if (st[0]) await base44.asServiceRole.entities.MailboxState.update(st[0].id, { last_report: JSON.stringify(out) });
+      else await base44.asServiceRole.entities.MailboxState.create({ key: 'audit', last_report: JSON.stringify(out) });
+      console.log('AUDIT', JSON.stringify(out));
+      return Response.json(out);
     }
 
     // Apply label changes
@@ -282,8 +287,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    return Response.json({ success: true, mode, scanned: msgs.length, labeled: changed, saved_to_board: saved,
-      more_to_do: !!nextToken, folders: Object.fromEntries(Object.entries(report).map(([k, v]) => [k, v.count])) });
+    const out = { success: true, mode, at: new Date().toISOString(), scanned: msgs.length, labeled: changed, saved_to_board: saved,
+      more_to_do: !!nextToken, folders: Object.fromEntries(Object.entries(report).map(([k, v]) => [k, v.count])) };
+    const st = await base44.asServiceRole.entities.MailboxState.filter({ key: `last_${mode}` });
+    if (st[0]) await base44.asServiceRole.entities.MailboxState.update(st[0].id, { last_report: JSON.stringify(out) });
+    else await base44.asServiceRole.entities.MailboxState.create({ key: `last_${mode}`, last_report: JSON.stringify(out) });
+    console.log('RESULT', JSON.stringify(out));
+    return Response.json(out);
   } catch (error) {
     console.error('mailboxOrganizer error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
