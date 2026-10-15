@@ -1,0 +1,35 @@
+{
+  "name": "Phone \u2014 Google Voice Voicemail to Lead",
+  "description": "When a Google Voice voicemail, missed call or text lands in rned@medrevolve.com, creates one lead and one alert with the transcript and a call-back link. Replaces the paid IONOS receptionist.",
+  "trigger": {
+    "condition": "${ (.trigger.data.has_new_messages == true) }",
+    "config": {
+      "trigger_type": "connector",
+      "events": [
+        "mailbox"
+      ],
+      "integration_type": "gmail",
+      "resource_id": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {},
+            "function_name": "voiceInbound"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "voice_inbound",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
