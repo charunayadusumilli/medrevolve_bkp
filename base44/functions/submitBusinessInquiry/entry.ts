@@ -98,6 +98,12 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    // Double-submit guard: same email within 2 minutes returns the existing record, sends nothing
+    const dup = await base44.asServiceRole.entities.BusinessInquiry.filter({ email: String(data.email).toLowerCase() }, '-created_date', 1);
+    if (dup[0] && Date.now() - new Date(dup[0].created_date).getTime() < 120000) {
+      return Response.json({ success: true, deduped: true, inquiry_id: dup[0].id });
+    }
+
     const inquiry = await base44.asServiceRole.entities.BusinessInquiry.create({
       company_name: data.company_name, contact_name: data.contact_name, email: data.email,
       phone: data.phone || '', industry: data.industry || 'Other', interest_type: data.interest_type,
