@@ -38,8 +38,16 @@ const CORE = [
   [/tellescope/i, 'Partners/Vendors', 'Tellescope'],
   [/legitscript/i, 'Partners/Vendors', 'LegitScript'],
   [/byrdadatto/i, 'Partners/Attorneys', 'Byrd Adatto'],
+  [/easypaydirect/i, 'Partners/Vendors', 'Easy Pay Direct'],
+  [/promedpreferred/i, 'Partners/Providers', 'ProMed Preferred'],
+  [/doctorsforproviders/i, 'Partners/Providers', 'Doctors for Providers'],
+  [/prorxsales/i, 'Partners/Pharmacy', 'ProRx Sales'],
+  [/careconnectinc/i, 'Partners/Telehealth', 'CareConnect'],
+  [/trupeer/i, 'Partners/Vendors', 'Trupeer'],
+  [/digitalstylehouse/i, 'Partners/Vendors', 'Digital Style House'],
 ];
-const PEOPLE = /cardgroupintl|ciambotti|karthik|pehuen/i;
+const PEOPLE = /cardgroupintl|ciambotti|karthik|pehuen|noel@medrevolve\.com/i;
+const JUNK_SENDERS = /tiktok\.com|reiaccel|influenceradvantage|softwareadvice|lowtato|skool\.com|oathresearch|fireflies|buffer\.com|safewebservices|ionos\.com/i;
 const ACCOUNT_SENDERS = /stripe|google|godaddy|ionos|namecheap|base44|hubspot|twilio|zoho|intuit|quickbooks|paypal|apple|microsoft|calendly|sendgrid|shopify|squarespace|wix|linkedin|amazon|aws|github|slack|zoom|docusign|adobe|cloudflare|vercel|openai|anthropic/i;
 const ACCOUNT_SUBJECTS = /receipt|invoice|payment|paid|verif|security|password|sign.?in|log.?in|account|billing|domain|renew|code|subscription|trial|charge|refund|payout|statement|order|confirm/i;
 const KEYWORDS = [
@@ -81,9 +89,10 @@ function classify(m, partnerDomains) {
   const text = `${subject} ${m.snippet}`;
 
   if (/mailer-daemon|postmaster@/i.test(from)) return { folder: 'System Alerts' };
-  // App-generated alerts: mail from MedRevolve's own addresses to itself
-  if (/@medrevolve\.com/i.test(sender.email) && (/@medrevolve\.com/i.test(to) || !to)) return { folder: 'System Alerts' };
   if (PEOPLE.test(from)) return { folder: 'People' };
+  // App-generated alerts: mail the app sends from rned@ to itself
+  if (/^rned@medrevolve\.com$/i.test(sender.email)) return { folder: 'System Alerts' };
+  if (JUNK_SENDERS.test(senderDomain) || JUNK_SENDERS.test(sender.email)) return { folder: 'Junk' };
   for (const [rx, folder, name] of CORE) if (rx.test(from)) return { folder, partner: name };
   const match = partnerDomains.get(senderDomain) ||
     partnerDomains.get(senderDomain.split('.').slice(-2).join('.'));
@@ -93,6 +102,7 @@ function classify(m, partnerDomains) {
   if (/base44/i.test(from)) return { folder: ACCOUNT_SUBJECTS.test(subject) ? 'Accounts & Billing' : 'System Alerts' };
   if (ACCOUNT_SENDERS.test(senderDomain) && (bulk || noreply || ACCOUNT_SUBJECTS.test(subject))) return { folder: 'Accounts & Billing' };
   const promo = (labelIds || []).some(l => ['CATEGORY_PROMOTIONS', 'CATEGORY_SOCIAL', 'CATEGORY_FORUMS'].includes(l));
+  if (/calendar-notification@google\.com|calendar@|docusign|dropboxsign|hellosign|pandadoc/i.test(sender.email)) return { folder: 'Inbox' };
   if (bulk || promo) return { folder: 'Junk' };
   if (noreply) return { folder: ACCOUNT_SUBJECTS.test(subject) ? 'Accounts & Billing' : 'Junk' };
   for (const [rx, folder] of KEYWORDS) if (rx.test(text)) return { folder };
