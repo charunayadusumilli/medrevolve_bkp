@@ -1,0 +1,44 @@
+{
+  "name": "Mailbox \u2014 Quick Audit (newest 40)",
+  "description": "Dry-run classification of the newest 40 messages; writes a report to MailboxState.audit. Safe to run any time.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 1 1 *",
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {
+              "max": 40,
+              "mode": "audit"
+            },
+            "function_name": "mailboxOrganizer"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "mailbox_quick_audit",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
