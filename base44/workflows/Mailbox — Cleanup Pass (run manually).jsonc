@@ -26,8 +26,8 @@
           "then": "end",
           "with": {
             "args": {
-              "max": 600,
-              "mode": "audit"
+              "max": 400,
+              "mode": "apply"
             },
             "function_name": "mailboxOrganizer"
           }
@@ -38,7 +38,7 @@
       "dsl": "1.0.0",
       "name": "mailbox_cleanup_pass",
       "namespace": "base44",
-      "version": "1.0"
+      "version": "1.1"
     }
   }
 }
