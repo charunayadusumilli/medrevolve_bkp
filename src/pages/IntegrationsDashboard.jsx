@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { 
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   CheckCircle2, AlertCircle, Settings, CheckCircle,
   ExternalLink, Copy, Zap
 } from 'lucide-react';
@@ -435,7 +436,7 @@ export default function IntegrationsDashboard() {
       data: {
         full_name: 'Test Lead',
         email: 'test@example.com',
-        phone: '+15551234567',
+        phone: PHONE_E164,
         company_name: 'Test Company',
         heard_about_us: 'Integration Test'
       }
@@ -533,7 +534,7 @@ export default function IntegrationsDashboard() {
                                 <Input
                                   value={testPhone}
                                   onChange={(e) => setTestPhone(e.target.value)}
-                                  placeholder="+15551234567"
+                                  placeholder=PHONE_E164
                                   className="mt-1"
                                 />
                               </div>

@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { trackDigestEvent } from '@/lib/digestTracker';
 import { ArrowLeft, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function BusinessInquiry() {
   const navigate = useNavigate();
@@ -257,7 +258,7 @@ export default function BusinessInquiry() {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  placeholder="(555) 123-4567"
+                  placeholder=PHONE_DISPLAY
                   className="mt-2 rounded-xl"
                 />
               </div>

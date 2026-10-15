@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Phone } from 'lucide-react';
 import { LANDING_IMAGES, JOURNEYS } from './landingData';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function LandingHero() {
   return (
@@ -29,7 +30,7 @@ export default function LandingHero() {
             <Link to="/shop" className="inline-flex items-center gap-2 rounded-full bg-[#3FD1BC] hover:bg-[#5BE0CD] text-[#061312] font-semibold px-7 py-3.5 transition-colors">
               Explore treatments <ArrowRight className="w-4 h-4" />
             </Link>
-            <a href="tel:+12403875224" className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white hover:bg-white/10 font-semibold px-7 py-3.5 transition-colors">
+            <a href={PHONE_TEL} className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white hover:bg-white/10 font-semibold px-7 py-3.5 transition-colors">
               <Phone className="w-4 h-4" /> Talk to care team
             </a>
           </div>

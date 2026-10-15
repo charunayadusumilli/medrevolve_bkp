@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { base44 } from '@/api/base44Client';
 import { Check, Sparkles, TrendingUp, Shield, Zap, ArrowRight, Loader2 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const benefits = [
   { icon: Shield, text: 'No medical license needed' },
@@ -216,7 +217,7 @@ export default function PartnerSignup() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      placeholder="(555) 123-4567"
+                      placeholder=PHONE_DISPLAY
                       className="mt-1"
                     />
                   </div>

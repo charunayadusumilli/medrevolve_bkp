@@ -4,6 +4,7 @@ import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CheckCircle, Layers, CreditCard, Users, Headset } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const FAQS = [
   { question: 'Who is this platform for?', answer: 'Entrepreneurs and creators launching telehealth brands, and existing clinic/medspa owners adding services — anyone who wants a self-run platform with a full backend.' },
@@ -36,7 +37,7 @@ export default function WhiteLabelTelehealthPlatform() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/ForBusiness"><Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">Apply for White-Label <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
-            <a href="tel:+12403875224"><Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base"><Phone className="mr-2 w-4 h-4" /> (240) 387-5224</Button></a>
+            <a href={PHONE_TEL}><Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base"><Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}</Button></a>
           </div>
           <p className="text-white/30 text-xs mt-6">Self-run. White-label. Supported 24/7 to resolution.</p>
         </div>
@@ -86,10 +87,10 @@ export default function WhiteLabelTelehealthPlatform() {
 
       <section className="py-20 px-6 lg:px-8 bg-gradient-to-br from-[#4A6741] via-[#3D5636] to-[#2D3A2D]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-light text-white mb-4">Apply at medrevolve.com/ForBusiness or call (240) 387-5224</h2>
+          <h2 className="text-3xl font-light text-white mb-4">Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <Link to="/ForBusiness"><Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base">Apply Now <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
-            <a href="tel:+12403875224"><Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base"><Phone className="mr-2 w-4 h-4" /> (240) 387-5224</Button></a>
+            <a href={PHONE_TEL}><Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base"><Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}</Button></a>
           </div>
         </div>
       </section>

@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function PhoneIntake() {
   const [formData, setFormData] = useState({
@@ -47,8 +48,8 @@ export default function PhoneIntake() {
     submitMutation.mutate(formData);
   };
 
-  const trackingNumber = '(704) 426-3311';
-  const formattedNumber = '7044263311';
+  const trackingNumber = PHONE_DISPLAY;
+  const formattedNumber = PHONE_E164.replace('+1','');
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] py-12 px-6">
@@ -93,7 +94,7 @@ export default function PhoneIntake() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="text-center py-6 bg-gradient-to-br from-[#4A6741]/5 to-[#6B8F5E]/5 rounded-xl border border-[#4A6741]/10">
-                  <a href={`tel:+1${formattedNumber}`} className="block">
+                  <a href={PHONE_TEL} className="block">
                     <div className="text-3xl font-bold text-[#4A6741] mb-2">{trackingNumber}</div>
                     <div className="text-sm text-[#5A6B5A]/70">Click to call from mobile</div>
                   </a>
@@ -172,7 +173,7 @@ export default function PhoneIntake() {
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        placeholder="(555) 123-4567"
+                        placeholder=PHONE_DISPLAY
                       />
                     </div>
                   </div>

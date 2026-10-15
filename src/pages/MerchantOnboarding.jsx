@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { base44 } from '@/api/base44Client';
 import { trackDigestEvent } from '@/lib/digestTracker';
 import {
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Check, ArrowRight, ArrowLeft, Loader2, Zap, Lock, AlertCircle,
   Phone, Mail, Building, Globe2, User, Heart, Activity, Clock,
   ShoppingBag, Stethoscope, ShieldCheck, CheckCircle2, CreditCard,
@@ -280,9 +281,9 @@ export default function MerchantOnboarding() {
             </div>
           </div>
 
-          <a href="tel:+12403875224">
+          <a href={PHONE_TEL}>
             <Button className="w-full bg-[#4A6741] hover:bg-[#4A6741]/90 text-white font-bold rounded-sm h-12 text-base">
-              <Phone className="w-4 h-4 mr-2" /> Call Us Now: 240-387-5224
+              <Phone className="w-4 h-4 mr-2" /> Call Us Now: {PHONE_DISPLAY}
             </Button>
           </a>
           <p className="text-white/25 text-xs mt-4">Mon–Fri 9am–6pm EST · We'll reach out within 24 hours</p>
@@ -371,7 +372,7 @@ export default function MerchantOnboarding() {
                           <Phone className="w-3 h-3" /> Phone *
                         </Label>
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
-                          placeholder="(555) 123-4567"
+                          placeholder=PHONE_DISPLAY
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
                         <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your consultation and walk through your platform setup</p>
                       </div>

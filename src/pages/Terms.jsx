@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function Terms() {
   return (
@@ -143,7 +144,7 @@ export default function Terms() {
               <p className="text-[#5A6B5A]">
                 Legal/Compliance: <a href="mailto:compliance@medrevolve.com" className="text-[#4A6741] underline">compliance@medrevolve.com</a><br />
                 General Support: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a><br />
-                Phone: (704) 426-3311<br />
+                Phone: {PHONE_DISPLAY}<br />
                 Address: Charlotte, North Carolina, United States
               </p>
             </section>

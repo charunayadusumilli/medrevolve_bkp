@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Phone, PhoneIncoming, PhoneOutgoing, Clock, Calendar, Play, ExternalLink, Filter, RefreshCw } from 'lucide-react';
 import { format } from 'date-fns';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function TelephonyDashboard() {
   const [filter, setFilter] = useState('all');
@@ -68,7 +69,7 @@ export default function TelephonyDashboard() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-[#2D3A2D] mb-2">Telephony Dashboard</h1>
-            <p className="text-[#5A6B5A]/70">Google Voice intake line (704) 426-3311 · CTM · SMS lead capture</p>
+            <p className="text-[#5A6B5A]/70">Google Voice intake line {PHONE_DISPLAY} · CTM · SMS lead capture</p>
           </div>
           <Button onClick={() => { setRefreshKey(k => k + 1); refetch(); }} variant="outline" className="gap-2">
             <RefreshCw className="w-4 h-4" /> Refresh
@@ -78,7 +79,7 @@ export default function TelephonyDashboard() {
         {/* Stats */}
         <div className="mb-4 p-3 bg-[#4A6741]/10 border border-[#4A6741]/20 rounded-lg flex items-center gap-2 text-sm text-[#2D3A2D]">
           <Phone className="w-4 h-4 text-[#4A6741]" />
-          <span>Google Voice Intake Line: <strong>(704) 426-3311</strong> — All callback form submissions are tracked below.</span>
+          <span>Google Voice Intake Line: <strong>{PHONE_DISPLAY}</strong> — All callback form submissions are tracked below.</span>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">

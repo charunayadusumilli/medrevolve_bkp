@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Zap, AlertTriangle, CheckCircle2, ExternalLink, Phone, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function SocialMediaManagement() {
   const [isPosting, setIsPosting] = useState(false);
@@ -63,7 +64,7 @@ export default function SocialMediaManagement() {
           <div>
             <h1 className="text-3xl font-bold text-[#0A0A0A] mb-1">Social Media</h1>
             <p className="text-[#0A0A0A]/60 text-sm flex items-center gap-4">
-              <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> 240-387-5224</span>
+              <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> {PHONE_DISPLAY}</span>
               <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> medrevolve.com</span>
             </p>
           </div>
@@ -148,7 +149,7 @@ export default function SocialMediaManagement() {
             <CardContent className="space-y-2 text-sm text-muted-foreground">
               <p>✅ Connector authorized — auto-posts every 30 min</p>
               <p>✅ AI-generated images with direct-response captions</p>
-              <p>✅ Phone number 240-387-5224 in every post</p>
+              <p>✅ Phone number {PHONE_DISPLAY} in every post</p>
               <p className="font-semibold text-green-700">{igPublished} posts live on Instagram</p>
             </CardContent>
           </Card>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Globe, CreditCard, Stethoscope, Pill, ShieldCheck,
   Megaphone, Building2, BarChart3, ArrowRight, CheckCircle
 } from 'lucide-react';
@@ -279,9 +280,9 @@ export default function Services() {
                 Book a Demo <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </Link>
-            <a href="tel:+12403875224">
+            <a href={PHONE_TEL}>
               <Button variant="ghost" className="text-white border border-white/15 rounded-sm px-8 font-bold hover:bg-white/5">
-                Call 240-387-5224
+                Call {PHONE_DISPLAY}
               </Button>
             </a>
           </div>

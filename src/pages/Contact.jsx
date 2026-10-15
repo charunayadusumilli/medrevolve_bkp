@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
 import ConnectNow from '@/components/ConnectNow';
 import { 
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
   HelpCircle, ArrowRight, Users, Building2,
   CreditCard, Shield, Stethoscope, Pill, HeartPulse
@@ -25,7 +26,7 @@ const contactMethods = [
     icon: Phone,
     title: 'Call Us',
     description: 'Mon-Fri from 8am to 6pm ET',
-    value: '240-387-5224',
+    value: PHONE_DISPLAY,
     action: 'tel:+12403875224'
   },
   {
@@ -380,7 +381,7 @@ export default function Contact() {
                 <p className="text-[#5A6B5A]">
                   Charlotte, North Carolina<br />
                   United States<br />
-                  <span className="text-xs">240-387-5224</span>
+                  <span className="text-xs">{PHONE_DISPLAY}</span>
                 </p>
               </div>
             </motion.div>

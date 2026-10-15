@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const WHAT_YOU_GET = [
   '1-on-1 strategy consultation with a MedRevolve specialist',
@@ -43,7 +44,7 @@ export default function B2BFinalCTA() {
                   Book My Consultation <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <a href="tel:+12403875224">
+              <a href={PHONE_TEL}>
                 <Button size="lg" variant="ghost"
                   className="text-white border border-white/15 hover:bg-white/8 rounded-sm px-8 text-base h-auto py-4">
                   <Phone className="w-4 h-4 mr-2" /> Call Now

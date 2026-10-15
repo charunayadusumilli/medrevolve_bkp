@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Video, AlertTriangle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function TelehealthConsent() {
   return (
@@ -101,7 +102,7 @@ export default function TelehealthConsent() {
             <section>
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">10. Contact</h2>
               <p className="text-[#5A6B5A]">
-                Questions about this consent: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a> | (704) 426-3311
+                Questions about this consent: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a> | {PHONE_DISPLAY}
               </p>
             </section>
 

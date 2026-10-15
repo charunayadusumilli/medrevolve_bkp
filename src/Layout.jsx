@@ -13,6 +13,7 @@ import AnswerEngine from '@/components/chat/AnswerEngine';
 import ConnectNow from '@/components/ConnectNow';
 import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
@@ -103,11 +104,11 @@ export default function Layout({ children }) {
 
       {/* Top announcement bar */}
       <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
-        <a href="tel:+12403875224"
+        <a href={PHONE_TEL}
           className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
           <Phone className="w-3.5 h-3.5 text-green-400" />
           <span className="text-white/60">Speak with a specialist:</span>
-          <span className="font-bold tracking-wide">240-387-5224</span>
+          <span className="font-bold tracking-wide">{PHONE_DISPLAY}</span>
         </a>
       </div>
 
@@ -264,9 +265,9 @@ export default function Layout({ children }) {
                       )}
                     </nav>
                     <div className="p-5 border-t border-gray-100 space-y-3">
-                      <a href="tel:+12403875224"
+                      <a href={PHONE_TEL}
                         className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white font-semibold rounded-sm py-3 text-sm">
-                        <Phone className="w-4 h-4" /> 240-387-5224
+                        <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
                       </a>
                       {user ? (
                         <Button variant="outline" className="w-full rounded-sm border-red-200 text-red-500"
@@ -336,7 +337,7 @@ export default function Layout({ children }) {
                     <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
                   </>
                 )}
-                <li><a href="tel:+12403875224" className="text-sm text-white/40 hover:text-white transition-colors">(240) 387-5224</a></li>
+                <li><a href={PHONE_TEL} className="text-sm text-white/40 hover:text-white transition-colors">{PHONE_DISPLAY}</a></li>
               </ul>
             </div>
 

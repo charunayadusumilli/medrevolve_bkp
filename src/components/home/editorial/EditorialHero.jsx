@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import EditorialImage from './EditorialImage';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function EditorialHero() {
   return (
@@ -23,8 +24,8 @@ export default function EditorialHero() {
                 Start
               </button>
             </a>
-            <a href="tel:+12403875224" className="text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors">
-              Call 240-387-5224
+            <a href={PHONE_TEL} className="text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors">
+              Call {PHONE_DISPLAY}
             </a>
           </div>
         </motion.div>

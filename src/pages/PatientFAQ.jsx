@@ -4,6 +4,7 @@ import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Phone, ArrowRight } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const PATIENT_FAQS = [
   { question: 'What is peptide therapy?', answer: 'Peptides are short chains of amino acids that signal your body to repair tissue, reduce inflammation, and support recovery. Clinician-guided peptide therapy uses these signals as part of a broader wellness protocol — not a replacement for healthy habits or a quick fix.' },
@@ -20,7 +21,7 @@ const PATIENT_FAQS = [
   { question: 'What is NAD+ therapy?', answer: 'NAD+ is a coenzyme involved in cellular energy and repair. Clinician-guided NAD+ therapy supports cellular health and healthy aging as part of a longevity protocol — pharmacy-sourced, clinician-supervised.' },
   { question: 'Are these treatments a replacement for my doctor?', answer: 'No. MedRevolve programs are clinician-guided and complement your existing healthcare. Always inform your primary physician of any protocols you begin.' },
   { question: 'Do you accept insurance?', answer: 'MedRevolve programs are cash-pay and transparent. Pricing is presented at checkout before you pay, with no hidden fees.' },
-  { question: 'How do I start?', answer: 'Complete the online intake. A licensed clinician reviews your case and, if you qualify, your protocol is prepared by a licensed compounding pharmacy. Call (240) 387-5224 with any questions.' },
+  { question: 'How do I start?', answer: 'Complete the online intake. A licensed clinician reviews your case and, if you qualify, your protocol is prepared by a licensed compounding pharmacy. Call {PHONE_DISPLAY} with any questions.' },
 ];
 
 export default function PatientFAQ() {
@@ -47,9 +48,9 @@ export default function PatientFAQ() {
                 Start Your Intake <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <a href="tel:+12403875224">
+            <a href={PHONE_TEL}>
               <Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">
-                <Phone className="mr-2 w-4 h-4" /> (240) 387-5224
+                <Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}
               </Button>
             </a>
           </div>
@@ -74,9 +75,9 @@ export default function PatientFAQ() {
                 Start Your Intake <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <a href="tel:+12403875224">
+            <a href={PHONE_TEL}>
               <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">
-                <Phone className="mr-2 w-4 h-4" /> Call (240) 387-5224
+                <Phone className="mr-2 w-4 h-4" /> Call {PHONE_DISPLAY}
               </Button>
             </a>
           </div>

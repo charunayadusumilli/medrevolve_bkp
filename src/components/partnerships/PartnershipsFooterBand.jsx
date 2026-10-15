@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function PartnershipsFooterBand() {
   return (
@@ -8,9 +9,9 @@ export default function PartnershipsFooterBand() {
         <p className="text-white font-bold text-lg leading-snug">
           Operators: medrevolve.com/ForBusiness.<br className="sm:hidden" /> Partners: you're already here.
         </p>
-        <a href="tel:+12403875224"
+        <a href={PHONE_TEL}
           className="inline-flex items-center gap-2 bg-white text-[#A66B3C] hover:bg-white/90 transition-colors px-7 py-3.5 text-sm font-bold rounded-none whitespace-nowrap">
-          <Phone className="w-4 h-4" /> (240) 387-5224
+          <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
         </a>
       </div>
     </section>

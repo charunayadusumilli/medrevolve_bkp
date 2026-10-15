@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Sparkles, X, Send, Phone, ArrowRight, MessageCircle, AlertCircle, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
-const PHONE = '(240) 387-5224';
+const PHONE = PHONE_DISPLAY;
 const PHONE_TEL = 'tel:+12403875224';
 const WHATSAPP_URL = 'https://wa.me/12403875224';
 
@@ -188,7 +189,7 @@ ROUTING (end EVERY answer with exactly ONE routing CTA based on the visitor's in
 - Creator questions (audience, content funnel, turning followers into a brand) → route to "creator".
 - Operator/clinic/medspa questions (white-label, pricing, compliance, platform, existing business) → route to "operator".
 - Affiliate/merchant questions → route to "affiliate".
-End every non-patient answer with: "Apply at medrevolve.com/ForBusiness or call (240) 387-5224."
+End every non-patient answer with: "Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}."
 
 CONFIDENCE:
 - If the knowledge base does not contain a relevant answer, say: "I want to make sure you get an accurate answer on that — let me connect you with a specialist." Then stop. Do not guess.
@@ -210,7 +211,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
       }
     } catch (err) {
       console.error('AnswerEngine LLM error', err);
-      reply = "I'm having trouble right now — please call (240) 387-5224 and a specialist will help immediately.\n\nROUTE: none";
+      reply = "I'm having trouble right now — please call {PHONE_DISPLAY} and a specialist will help immediately.\n\nROUTE: none";
     }
 
     // Parse route

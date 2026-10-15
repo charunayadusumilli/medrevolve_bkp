@@ -12,6 +12,7 @@ import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
 import FloatingAvatar from './FloatingAvatar';
 import Avatar3D from './Avatar3D';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 function usePageContext() {
   const location = useLocation();
@@ -447,7 +448,7 @@ export default function AIAssistant() {
               </div>
               <p className="text-[10px] text-white/50 leading-tight flex items-center gap-1">
                 <span className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse" />
-                AI Receptionist · (704) 426-3311
+                AI Receptionist · {PHONE_DISPLAY}
               </p>
               </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function HIPAANotice() {
   return (
@@ -118,7 +119,7 @@ export default function HIPAANotice() {
               <p className="text-[#5A6B5A]">
                 <strong>MedRevolve Privacy Officer:</strong><br />
                 Email: <a href="mailto:privacy@medrevolve.com" className="text-[#4A6741] underline">privacy@medrevolve.com</a><br />
-                Phone: (704) 426-3311<br />
+                Phone: {PHONE_DISPLAY}<br />
                 Address: Charlotte, North Carolina, United States
               </p>
               <p className="text-[#5A6B5A] mt-3">

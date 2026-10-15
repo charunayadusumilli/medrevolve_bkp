@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Loader2, CheckCircle2, Mail, Phone, MessageCircle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const INTERESTS = ['Implementation', 'Infrastructure', 'Channel', 'Strategic', 'Not sure yet'];
 
@@ -48,11 +49,11 @@ export default function PartnershipInquiryForm() {
               </span>
               rned@medrevolve.com
             </a>
-            <a href="tel:+12403875224" className="flex items-center gap-3 text-sm text-[#1F2D27] hover:text-[#A66B3C] transition-colors">
+            <a href={PHONE_TEL} className="flex items-center gap-3 text-sm text-[#1F2D27] hover:text-[#A66B3C] transition-colors">
               <span className="w-10 h-10 bg-white border border-[#E4DED2] flex items-center justify-center flex-shrink-0">
                 <Phone className="w-4 h-4 text-[#A66B3C]" />
               </span>
-              (240) 387-5224
+              {PHONE_DISPLAY}
             </a>
             <a href="https://wa.me/12403875224" target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-3 text-sm text-[#1F2D27] hover:text-[#A66B3C] transition-colors">

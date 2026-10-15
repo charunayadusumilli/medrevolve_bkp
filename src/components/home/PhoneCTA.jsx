@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { detectDomain } from '@/lib/domainConfig';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function PhoneCTA() {
   const domain = detectDomain();
@@ -46,9 +47,9 @@ export default function PhoneCTA() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <a href="tel:+12403875224" className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
+            <a href={PHONE_TEL} className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              Or call now: 240-387-5224
+              Or call now: {PHONE_DISPLAY}
             </a>
           </div>
 

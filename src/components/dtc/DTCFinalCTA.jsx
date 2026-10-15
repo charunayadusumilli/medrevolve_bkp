@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, ShieldCheck } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function DTCFinalCTA() {
   return (
@@ -29,9 +30,9 @@ export default function DTCFinalCTA() {
                 Shop Products <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
-            <a href="tel:+12403875224">
+            <a href={PHONE_TEL}>
               <Button size="lg" variant="ghost" className="text-white border border-white/30 hover:bg-white/10 rounded-lg px-6 font-bold h-auto py-3.5">
-                <Phone className="mr-2 w-4 h-4" /> 240-387-5224
+                <Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}
               </Button>
             </a>
           </div>

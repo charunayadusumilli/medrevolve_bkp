@@ -1,4 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════════
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 // MedRevolve AI Chat — B2B AI Solutions Focus
 //
 // Complete redesign: From GLP treatment bot to AI-powered business solutions advisor
@@ -261,7 +262,7 @@ export const FAQ_BY_AUDIENCE = {
 const AI_SOLUTIONS_KNOWLEDGE = `
 ═══════════════════════════════════════════════════════════════════════════════
 MEDREVOLVE — COMPLETE PLATFORM KNOWLEDGE BASE
-Website: medrevolve.com | Phone: 240-387-5224 | Email: info@medrevolve.com
+Website: medrevolve.com | Phone: {PHONE_DISPLAY} | Email: info@medrevolve.com
 ═══════════════════════════════════════════════════════════════════════════════
 
 ▶ WHAT IS MEDREVOLVE?
@@ -345,7 +346,7 @@ WHOLESALE: No monthly fee — buy products at wholesale pricing
 PARTNERSHIP: Free to join — earn referral commissions
 
 ▶ CONTACT & SALES:
-Phone: 240-387-5224 (AI receptionist answers 24/7, human team available Mon–Fri 9am–6pm ET)
+Phone: {PHONE_DISPLAY} (AI receptionist answers 24/7, human team available Mon–Fri 9am–6pm ET)
 Email: info@medrevolve.com | support@medrevolve.com
 B2B Inquiries: rned@medrevolve.com
 Book a demo: /MerchantOnboarding
@@ -390,7 +391,7 @@ export function buildSystemPrompt(pageName, pageProduct, voiceMode = false, visi
 
 CURRENT PAGE: ${pageName}${pageProduct ? ` (viewing: ${pageProduct})` : ''}
 PERSONA: ${ctx.persona}
-PHONE: 240-387-5224
+PHONE: {PHONE_DISPLAY}
 
 ═══════════════════════════════════════
 ADAPT TO WHO YOU'RE TALKING TO
@@ -449,7 +450,7 @@ LAUNCH TIMELINE: 7–14 days for white-label merchants
 
 COMPLIANCE: HIPAA, FDA, FTC compliant. Licensed providers in all 50 states.
 
-PHONE: 240-387-5224 — AI receptionist 24/7, human team Mon–Fri 9am–6pm ET
+PHONE: {PHONE_DISPLAY} — AI receptionist 24/7, human team Mon–Fri 9am–6pm ET
 
 ═══════════════════════════════════════
 RESPONSE RULES
@@ -475,7 +476,7 @@ ${voiceMode ? `
 ═══════════════════════════════════════
 VOICE MODE — LIVE PHONE CALL (240-387-5224)
 ═══════════════════════════════════════
-You are Melinda, MedRevolve's AI voice receptionist on 240-387-5224. This is a real phone call — the caller is LISTENING, not reading.
+You are Melinda, MedRevolve's AI voice receptionist on {PHONE_DISPLAY}. This is a real phone call — the caller is LISTENING, not reading.
 
 CALL GOAL: Identify the caller, answer every question fully, capture all their thoughts, explain their segment setup in detail, and CLOSE the deal on this call (or lock in the next concrete step). You are a consultative closer, not an order-taker.
 

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function MarketingDashboard() {
   const queryClient = useQueryClient();
@@ -139,7 +140,7 @@ export default function MarketingDashboard() {
                   <Phone className="w-4 h-4 text-[#4A6741]" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-[#0A0A0A]">240-387-5224</div>
+                  <div className="text-3xl font-bold text-[#0A0A0A]">{PHONE_DISPLAY}</div>
                   <p className="text-xs text-[#6B8F5E] mt-1">Active 24/7</p>
                 </CardContent>
               </Card>

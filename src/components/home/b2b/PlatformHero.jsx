@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function PlatformHero() {
   return (
@@ -29,8 +30,8 @@ export default function PlatformHero() {
               Talk to Us
             </a>
           </div>
-          <a href="tel:+12403875224" className="mt-6 inline-flex items-center gap-2 text-white/45 text-sm hover:text-white/70 transition-colors">
-            <Phone className="w-3.5 h-3.5 text-[#A66B3C]" /> Or call (240) 387-5224
+          <a href={PHONE_TEL} className="mt-6 inline-flex items-center gap-2 text-white/45 text-sm hover:text-white/70 transition-colors">
+            <Phone className="w-3.5 h-3.5 text-[#A66B3C]" /> Or call {PHONE_DISPLAY}
           </a>
         </motion.div>
       </div>

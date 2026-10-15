@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import FAQSection from '@/components/home/FAQSection';
 import PositioningStrip from '@/components/home/PositioningStrip';
 import {
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
   Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
   CreditCard, Lock, Truck, FlaskConical, Video, FileText,
@@ -23,7 +24,7 @@ const OPERATOR_FAQS = [
   { question: 'How does pharmacy fulfillment work?', answer: '503A/503B licensed compounding pharmacies, COAs on every batch, no grey-market sourcing; prescriptions flow to pharmacy after clinician approval.' },
   { question: 'What about payment processing?', answer: 'Telehealth is high-risk for mainstream processors. MedRevolve includes payment processing built for high-risk telehealth categories.' },
   { question: 'Who is this NOT for?', answer: 'Operators who want to prescribe without clinicians, cut corners on pharmacy sourcing, or ignore compliance. MedRevolve is built for legitimate brands that want to last.' },
-  { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or call (240) 387-5224. A specialist will walk you through the platform and your launch plan.' },
+  { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}. A specialist will walk you through the platform and your launch plan.' },
   { question: 'Why is MedRevolve described as an AI-powered platform?', answer: 'Every layer runs on automation: AI intake triage, AI receptionist, an on-site AI answer engine, automated compliance monitoring, and webhook-driven alerts — the LLM-grade infrastructure layer for telehealth.' },
   { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one — at $4,000 + $250/mo vs Cuvo\'s $997/mo + $9,800 setup.' },
   { question: 'Which states are covered?', answer: 'MedRevolve\'s physician network is licensed across all 50 states, so your patients can be seen and prescribed for wherever they live.' },

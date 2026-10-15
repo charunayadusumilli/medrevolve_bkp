@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Building2, User, FlaskConical, Droplets, ChevronDown, ChevronUp,
   Phone, ExternalLink, CheckCircle, DollarSign, Clock, Users,
   AlertTriangle, ArrowRight, Zap
@@ -284,9 +285,9 @@ export default function ProductsAndServices() {
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               <span className="text-green-300 text-xs font-medium">Licensed healthcare payment processing</span>
             </div>
-            <a href="tel:+12403875224" className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5 text-white/70 text-xs hover:text-white transition-colors">
+            <a href={PHONE_TEL} className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5 text-white/70 text-xs hover:text-white transition-colors">
               <Phone className="w-3.5 h-3.5 text-cyan-400" />
-              240-387-5224
+              {PHONE_DISPLAY}
             </a>
             <div className="flex items-center gap-2 bg-blue-500/20 border border-blue-500/30 rounded-full px-3 py-1.5">
               <Zap className="w-3.5 h-3.5 text-blue-400" />
@@ -363,7 +364,7 @@ export default function ProductsAndServices() {
                             medrevolve.com{row.link} <ExternalLink className="w-3 h-3" />
                           </a>
                         ) : (
-                          <span className="text-white/40 text-xs">Call 240-387-5224</span>
+                          <span className="text-white/40 text-xs">Call {PHONE_DISPLAY}</span>
                         )}
                       </td>
                     </tr>

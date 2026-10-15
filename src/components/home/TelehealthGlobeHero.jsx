@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowDown, CheckCircle2, Shield, Lock, Star, Zap, Globe } from 'lucide-react';
 import FloatingGlobe3D, { GLOBE_SERVICES } from '@/components/home/FloatingGlobe3D';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const US_TRUST_STRIP = [
   { icon: Shield, text: 'HIPAA Title II' },
@@ -162,10 +163,10 @@ export default function TelehealthGlobeHero() {
               Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </Link>
-          <a href="tel:+12403875224">
+          <a href={PHONE_TEL}>
             <Button size="lg" variant="ghost"
               className="w-full sm:w-auto text-white/40 border border-white/8 hover:bg-white/5 hover:text-white rounded-sm px-6 text-sm h-auto py-3.5">
-              Call 240-387-5224
+              Call {PHONE_DISPLAY}
             </Button>
           </a>
         </div>

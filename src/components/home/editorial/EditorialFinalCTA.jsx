@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const WHAT_YOU_GET = [
   '1-on-1 strategy consultation with a MedRevolve specialist',
@@ -38,7 +39,7 @@ export default function EditorialFinalCTA() {
                     See if you qualify
                   </button>
                 </a>
-                <a href="tel:+12403875224" className="inline-flex items-center justify-center text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors py-3.5">
+                <a href={PHONE_TEL} className="inline-flex items-center justify-center text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors py-3.5">
                   <Phone className="w-4 h-4 mr-1.5" /> Call
                 </a>
               </div>
