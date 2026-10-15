@@ -101,6 +101,12 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Name, email, and message are required' }, { status: 400 });
     }
 
+    // Double-submit guard: same email + message within 2 minutes returns the existing record
+    const dup = await base44.asServiceRole.entities.ContactRequest.filter({ email: String(data.email).toLowerCase() }, '-created_date', 1);
+    if (dup[0] && dup[0].message === data.message && Date.now() - new Date(dup[0].created_date).getTime() < 120000) {
+      return Response.json({ success: true, deduped: true, id: dup[0].id });
+    }
+
     const contactRequest = await base44.asServiceRole.entities.ContactRequest.create({
       name: data.name, email: data.email,
       phone: data.phone || '',
