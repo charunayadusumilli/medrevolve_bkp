@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
     const body = req.method === 'GET' ? {} : await req.json().catch(() => ({}));
     const action = body.action || 'status';
 
-    if (action === 'status') return Response.json(await getStatus(base44));
+    if (action === 'status') { const s = await getStatus(base44); console.log('STATUS', JSON.stringify(s)); return Response.json(s); }
 
     const name = String(body.name || '').trim(), email = String(body.email || '').trim().toLowerCase();
     const company = String(body.company || '').trim(), topic = String(body.topic || body.message || '').trim();
