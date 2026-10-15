@@ -1,7 +1,7 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const OPERATOR_FAQS = [
   { question: 'What is MedRevolve?', answer: 'MedRevolve Corporation is a white-label telehealth infrastructure company. We build and operate the complete back end behind your brand: AI intake, a licensed clinician network, payment processing, pharmacy fulfillment, a unified CRM, and real-time compliance monitoring.' },

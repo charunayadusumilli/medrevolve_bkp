@@ -1,9 +1,9 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Phone } from 'lucide-react';
 import { LANDING_IMAGES, JOURNEYS } from './landingData';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function LandingHero() {
   return (

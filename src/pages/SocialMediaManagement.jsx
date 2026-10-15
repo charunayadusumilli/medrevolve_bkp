@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -7,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { Instagram, Facebook, BarChart3, Calendar, Users, TrendingUp, Activity, Zap, AlertTriangle, CheckCircle2, ExternalLink, Phone, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function SocialMediaManagement() {
   const [isPosting, setIsPosting] = useState(false);

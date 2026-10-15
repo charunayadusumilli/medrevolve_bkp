@@ -1,9 +1,9 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Building2, User, FlaskConical, Droplets, ChevronDown, ChevronUp,
   Phone, ExternalLink, CheckCircle, DollarSign, Clock, Users,
   AlertTriangle, ArrowRight, Zap

@@ -1,10 +1,10 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, Layers, CreditCard, Users, Headset, X, CheckCircle } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const FAQS = [
   { question: 'Can a medspa offer telehealth under its own brand?', answer: 'Yes — white-label means your brand, your clients, your pricing; MedRevolve is the backend.' },

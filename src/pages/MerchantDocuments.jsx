@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +10,6 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { DOC_LIST, generateMPA, generateServiceAgreement, generateBAA } from '@/content/merchant/merchantDocTemplates';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   FileText, CheckCircle2, Loader2, ArrowLeft, Download, PenLine, ShieldCheck,
   AlertCircle, Phone, Clock
 } from 'lucide-react';

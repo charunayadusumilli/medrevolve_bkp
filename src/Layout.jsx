@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { detectDomain } from '@/lib/domainConfig';
@@ -13,7 +14,6 @@ import AnswerEngine from '@/components/chat/AnswerEngine';
 import ConnectNow from '@/components/ConnectNow';
 import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';

@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -9,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { base44 } from '@/api/base44Client';
 import { Check, Sparkles, TrendingUp, Shield, Zap, ArrowRight, Loader2 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const benefits = [
   { icon: Shield, text: 'No medical license needed' },

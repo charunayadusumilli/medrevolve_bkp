@@ -1,10 +1,10 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowDown, CheckCircle2, Shield, Lock, Star, Zap, Globe } from 'lucide-react';
 import FloatingGlobe3D, { GLOBE_SERVICES } from '@/components/home/FloatingGlobe3D';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const US_TRUST_STRIP = [
   { icon: Shield, text: 'HIPAA Title II' },

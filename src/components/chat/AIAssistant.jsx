@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -12,7 +13,6 @@ import MessageBubble from './MessageBubble';
 import VoiceCallPanel from './VoiceCallPanel';
 import FloatingAvatar from './FloatingAvatar';
 import Avatar3D from './Avatar3D';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 function usePageContext() {
   const location = useLocation();

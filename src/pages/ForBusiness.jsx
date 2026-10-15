@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import FAQSection from '@/components/home/FAQSection';
 import PositioningStrip from '@/components/home/PositioningStrip';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
   Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
   CreditCard, Lock, Truck, FlaskConical, Video, FileText,

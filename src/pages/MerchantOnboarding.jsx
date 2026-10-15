@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { base44 } from '@/api/base44Client';
 import { trackDigestEvent } from '@/lib/digestTracker';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Check, ArrowRight, ArrowLeft, Loader2, Zap, Lock, AlertCircle,
   Phone, Mail, Building, Globe2, User, Heart, Activity, Clock,
   ShoppingBag, Stethoscope, ShieldCheck, CheckCircle2, CreditCard,

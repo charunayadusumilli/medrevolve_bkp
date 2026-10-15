@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -12,7 +13,6 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 export default function MarketingDashboard() {
   const queryClient = useQueryClient();

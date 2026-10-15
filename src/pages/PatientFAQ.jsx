@@ -1,10 +1,10 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Phone, ArrowRight } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const PATIENT_FAQS = [
   { question: 'What is peptide therapy?', answer: 'Peptides are short chains of amino acids that signal your body to repair tissue, reduce inflammation, and support recovery. Clinician-guided peptide therapy uses these signals as part of a broader wellness protocol — not a replacement for healthy habits or a quick fix.' },

@@ -1,10 +1,10 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CheckCircle, Layers, CreditCard, Users, Headset } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const FAQS = [
   { question: 'Who is this platform for?', answer: 'Entrepreneurs and creators launching telehealth brands, and existing clinic/medspa owners adding services — anyone who wants a self-run platform with a full backend.' },

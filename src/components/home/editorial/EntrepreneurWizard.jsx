@@ -1,8 +1,8 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { CheckCircle2, Loader2, ArrowRight, ArrowLeft } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const BUSINESS_TYPES = [
   ['Med Spa / Clinic', 'Med Spa'],

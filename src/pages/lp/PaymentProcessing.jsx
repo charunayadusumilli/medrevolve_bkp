@@ -1,10 +1,10 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Phone, CreditCard, ShieldCheck, BarChart3, Zap } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const FAQS = [
   { question: 'Why do mainstream processors shut down telehealth accounts?', answer: 'Telehealth is classified high-risk by mainstream processors; MedRevolve uses processing built for the category so your revenue doesn\'t depend on a provider that will exit.' },

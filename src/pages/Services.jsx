@@ -1,9 +1,9 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Globe, CreditCard, Stethoscope, Pill, ShieldCheck,
   Megaphone, Building2, BarChart3, ArrowRight, CheckCircle
 } from 'lucide-react';

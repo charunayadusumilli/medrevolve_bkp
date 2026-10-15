@@ -1,3 +1,4 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
 import ConnectNow from '@/components/ConnectNow';
 import { 
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
   Mail, Phone, MapPin, Clock, Send, MessageCircle, 
   HelpCircle, ArrowRight, Users, Building2,
   CreditCard, Shield, Stethoscope, Pill, HeartPulse

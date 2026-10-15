@@ -1,8 +1,8 @@
+import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Loader2, CheckCircle2, Mail, Phone, MessageCircle } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 
 const INTERESTS = ['Implementation', 'Infrastructure', 'Channel', 'Strategic', 'Not sure yet'];
 

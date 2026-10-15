@@ -1,5 +1,5 @@
-// ═══════════════════════════════════════════════════════════════════════════════
 import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+// ═══════════════════════════════════════════════════════════════════════════════
 // MedRevolve AI Chat — B2B AI Solutions Focus
 //
 // Complete redesign: From GLP treatment bot to AI-powered business solutions advisor
