@@ -160,7 +160,8 @@ export default function Layout({ children }) {
                     <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Partnerships</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Payments</Link></DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-gray-100" />
-                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📥 Inbox</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/MailboxBoard" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50">Mailbox Board</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Lead Tracker</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to="/GrowthDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📈 Growth & Analytics</Link></DropdownMenuItem>
                     <DropdownMenuItem asChild><Link to="/AdsManager" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-bold text-yellow-700 hover:bg-yellow-50">⚡ Ads Manager</Link></DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-gray-100" />
