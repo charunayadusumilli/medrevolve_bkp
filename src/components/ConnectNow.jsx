@@ -121,7 +121,7 @@ export default function ConnectNow({ floating = false }) {
 
   if (!floating) return card;
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed bottom-6 left-6 z-[55]">
       {open ? card : (
         <button onClick={() => setOpen(true)} className="flex items-center gap-2 bg-[#4A6741] hover:bg-[#3d5636] text-white px-4 py-3 rounded-full shadow-xl font-semibold text-sm">
           <Video className="w-4 h-4" /> Talk to Raj
