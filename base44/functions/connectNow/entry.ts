@@ -1,5 +1,5 @@
 /**
- * connectNow — real-time "talk to Raj" for the public site.
+ * connectNow — real-time "talk to an MR Personal Onboarding Specialist" for the public site.
  *
  * GET / POST { action: "status" }
  *   -> { available, reason, next_free_at, booking_url, hours }
@@ -76,10 +76,10 @@ async function getStatus(base44) {
   const soon = new Date(now.getTime() + 15 * 60e3);
   const blocking = busy.find(b => b.start < soon && b.end > now);
   const available = inHours && !blocking;
-  let reason = 'Raj is free right now';
+  let reason = 'Available right now';
   let next_free_at = null;
   if (!inHours) reason = `Outside live hours (Mon-Fri ${HOURS.start} AM to ${HOURS.end - 12} PM ET)`;
-  else if (blocking) { reason = 'Raj is in a meeting'; next_free_at = blocking.end.toISOString(); }
+  else if (blocking) { reason = 'In a meeting'; next_free_at = blocking.end.toISOString(); }
   return { available, reason, next_free_at, next_free_label: next_free_at ? fmtET(next_free_at) : null, booking_url: BOOKING_URL, hours: `Mon-Fri 9 AM to 5 PM ET`, now: now.toISOString() };
 }
 
@@ -99,12 +99,12 @@ Deno.serve(async (req) => {
     // Rate limit: one request per email per 10 minutes
     const recent = await base44.asServiceRole.entities.ContactRequest.filter({ email }, '-created_date', 1);
     if (recent[0] && Date.now() - new Date(recent[0].created_date).getTime() < 10 * 60e3) {
-      return Response.json({ ok: true, deduped: true, message: 'We already have your request. Raj will be with you shortly.', booking_url: BOOKING_URL });
+      return Response.json({ ok: true, deduped: true, message: 'We already have your request. Your onboarding specialist will be with you shortly.', booking_url: BOOKING_URL });
     }
 
     if (action === 'meet') {
       const status = await getStatus(base44);
-      if (!status.available) return Response.json({ ok: false, available: false, ...status, message: 'Raj is not available right now. Book a time instead.' });
+      if (!status.available) return Response.json({ ok: false, available: false, ...status, message: 'Your onboarding specialist is not available right now. Book a time instead.' });
 
       const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlecalendar');
       const start = new Date(Date.now() + 60e3), end = new Date(start.getTime() + 20 * 60e3);
@@ -132,14 +132,14 @@ Deno.serve(async (req) => {
         meeting_booked: true, meeting_link: meet, notes: `connect_now:meet | company:${company}`,
       });
 
-      await sendMail(base44, { to: email, subject: 'Your Google Meet with Raj is ready', fromName: 'MedRevolve', replyTo: RAJ, html: `
+      await sendMail(base44, { to: email, subject: 'Your Google Meet with your MR Onboarding Specialist is ready', fromName: 'MedRevolve', replyTo: RAJ, html: `
 <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#1a1a1a">
-  <h2 style="margin:0 0 8px">Hi ${esc(first)}, Raj is joining now.</h2>
+  <h2 style="margin:0 0 8px">Hi ${esc(first)}, your MR Personal Onboarding Specialist is joining now.</h2>
   <p style="color:#444">Your 20-minute Google Meet is open. Click below to join.</p>
   <p style="margin:24px 0"><a href="${meet}" style="background:#4A6741;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700">Join Google Meet</a></p>
   <p style="color:#888;font-size:13px">${meet}</p>
   <p style="color:#444;font-size:14px">If we get cut off, book a follow-up here: <a href="${BOOKING_URL}">${BOOKING_URL}</a></p>
-  <p style="color:#666;font-size:13px;margin-top:24px">MedRevolve &middot; ${RAJ}</p>
+  <p style="color:#666;font-size:13px;margin-top:24px">MR Personal Onboarding Specialist &middot; MedRevolve &middot; ${RAJ}</p>
 </div>` });
 
       await sendMail(base44, { to: RAJ, subject: `Join now: ${name}${company ? ` (${company})` : ''} is waiting on Meet`, fromName: 'MedRevolve Connect Now', replyTo: email, html: `
@@ -154,7 +154,7 @@ Deno.serve(async (req) => {
 </div>` });
       await sendSMS(`MedRevolve: ${name}${company ? ` (${company})` : ''} is waiting on Meet now. ${meet}`);
 
-      return Response.json({ ok: true, mode: 'meet', meet_link: meet, message: `Raj has been alerted. Join the Meet and he will be right with you.` });
+      return Response.json({ ok: true, mode: 'meet', meet_link: meet, message: `Your onboarding specialist has been alerted. Join the Meet and they will be right with you.` });
     }
 
     if (action === 'chat') {
@@ -172,14 +172,14 @@ Deno.serve(async (req) => {
   <p style="font-size:14px"><a href="mailto:${esc(email)}">${esc(email)}</a></p>
 </div>` });
       await sendSMS(`MedRevolve chat from ${name}: ${topic.slice(0, 140)} (${email})`);
-      await sendMail(base44, { to: email, subject: 'Got your message, Raj will reply shortly', fromName: 'MedRevolve', replyTo: RAJ, html: `
+      await sendMail(base44, { to: email, subject: 'Got your message, your MR Onboarding Specialist will reply shortly', fromName: 'MedRevolve', replyTo: RAJ, html: `
 <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#1a1a1a">
   <h2 style="margin:0 0 8px">Thanks, ${esc(first)}.</h2>
-  <p style="color:#444">Raj has your message and replies personally, usually within the hour during business hours (Mon-Fri 9 AM to 5 PM ET).</p>
+  <p style="color:#444">Your MR Personal Onboarding Specialist has your message and replies personally, usually within the hour during business hours (Mon-Fri 9 AM to 5 PM ET).</p>
   <p style="color:#444">Want to lock in a time instead? <a href="${BOOKING_URL}" style="color:#4A6741;font-weight:600">Book a free 20-minute intro call</a>.</p>
   <p style="color:#888;font-size:13px;margin-top:24px">Your message:<br/><em>${esc(topic)}</em></p>
 </div>` });
-      return Response.json({ ok: true, mode: 'chat', raj_available: status.available, booking_url: BOOKING_URL, message: status.available ? 'Sent. Raj is online and will reply shortly.' : `Sent. Raj replies during business hours; you can also book a time.` });
+      return Response.json({ ok: true, mode: 'chat', raj_available: status.available, booking_url: BOOKING_URL, message: status.available ? 'Sent. Your onboarding specialist is online and will reply shortly.' : `Sent. Your onboarding specialist replies during business hours; you can also book a time.` });
     }
 
     return Response.json({ error: 'Unknown action' }, { status: 400 });
