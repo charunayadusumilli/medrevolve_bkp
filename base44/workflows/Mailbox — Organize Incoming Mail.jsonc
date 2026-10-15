@@ -1,0 +1,35 @@
+{
+  "name": "Mailbox \u2014 Organize Incoming Mail",
+  "description": "Files every incoming email into the plain folder structure (Partners, People, Leads, Accounts & Billing, System Alerts, Junk) and saves clean headers for the Inbox Board.",
+  "trigger": {
+    "condition": "${ (.trigger.data.has_new_messages == true) }",
+    "config": {
+      "trigger_type": "connector",
+      "events": [
+        "mailbox"
+      ],
+      "integration_type": "gmail",
+      "resource_id": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {},
+            "function_name": "mailboxOrganizer"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "mailbox_organize_incoming",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}
