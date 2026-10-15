@@ -1,13 +1,13 @@
 {
-  "name": "Mailbox \u2014 Cleanup Pass (run manually)",
-  "description": "Organizes the next batch of existing mail in rned@medrevolve.com. Run it until it reports done. Set args.mode to audit for a dry run, apply to organize, finalize to remove the old emoji labels.",
+  "name": "Mailbox \u2014 Cleanup Pass (auto until done)",
+  "description": "Organizes existing mail in rned@medrevolve.com, 400 messages every 10 minutes, until the whole mailbox is done. Then it is a no-op; pause or archive it once MailboxState.cleanup.done is true.",
   "trigger": {
     "condition": null,
     "config": {
       "trigger_type": "scheduled",
       "events": [],
       "schedule_mode": "recurring",
-      "cron_expression": "0 9 1 1 *",
+      "cron_expression": "*/10 * * * *",
       "one_time_date": null,
       "timezone": "America/New_York",
       "interval_value": null,
