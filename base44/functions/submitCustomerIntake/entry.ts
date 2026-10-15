@@ -248,7 +248,6 @@ Deno.serve(async (req) => {
     await Promise.all([
       sendEmail(base44, { to: data.email, subject: `✅ Welcome to MedRevolve, ${firstName}! Here's what happens next`, html: patientHtml }),
       sendEmail(base44, { to: adminEmail, subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
-      sendEmail(base44, { to: adminEmail2, subject: `🆕 New Customer Intake — ${data.full_name} [${data.primary_interest}]`, html: adminHtml }),
       base44.asServiceRole.functions.invoke('driveUploadIntakeForm', {
         form_type: 'customer',
         data,
