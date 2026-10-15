@@ -1,5 +1,15 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
+// Clean, RFC 2047-safe subject: strips emoji and encodes non-ASCII so mail clients never show mojibake.
+const mimeSubject = (s) => {
+  const clean = String(s ?? '')
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '')
+    .replace(/\s*\[(action required|urgent|assign provider)\]/gi, '')
+    .replace(/\s+/g, ' ').trim();
+  return /^[\x20-\x7E]*$/.test(clean) ? clean : `=?UTF-8?B?${btoa(unescape(encodeURIComponent(clean)))}?=`;
+};
+
+
 // Shared Gmail send helper
 async function sendViaGmail(base44, { to, subject, html }) {
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
@@ -7,7 +17,7 @@ async function sendViaGmail(base44, { to, subject, html }) {
   const emailLines = [
     `From: MedRevolve <${fromAddress}>`,
     `To: ${to}`,
-    `Subject: ${subject}`,
+    `Subject: ${mimeSubject(subject)}`,
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
     '',
