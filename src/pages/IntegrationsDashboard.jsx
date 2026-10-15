@@ -534,7 +534,7 @@ export default function IntegrationsDashboard() {
                                 <Input
                                   value={testPhone}
                                   onChange={(e) => setTestPhone(e.target.value)}
-                                  placeholder=PHONE_E164
+                                  placeholder={PHONE_E164}
                                   className="mt-1"
                                 />
                               </div>

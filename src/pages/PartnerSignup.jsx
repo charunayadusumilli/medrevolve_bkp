@@ -217,7 +217,7 @@ export default function PartnerSignup() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      placeholder=PHONE_DISPLAY
+                      placeholder={PHONE_DISPLAY}
                       className="mt-1"
                     />
                   </div>

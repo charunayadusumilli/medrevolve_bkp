@@ -146,7 +146,7 @@ export default function CreatorApplication() {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                placeholder=PHONE_DISPLAY
+                placeholder={PHONE_DISPLAY}
                 className="mt-2 rounded-xl"
               />
             </div>

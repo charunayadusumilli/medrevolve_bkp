@@ -372,7 +372,7 @@ export default function MerchantOnboarding() {
                           <Phone className="w-3 h-3" /> Phone *
                         </Label>
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
-                          placeholder=PHONE_DISPLAY
+                          placeholder={PHONE_DISPLAY}
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
                         <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your consultation and walk through your platform setup</p>
                       </div>
