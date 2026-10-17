@@ -108,7 +108,8 @@ const CL_KEY = 'mr-launch-checklist-v1';
 const FAQS = [
   ['Do I need my own doctors?', "No. Licensed providers in our network review intake, consult and prescribe within each state's rules. You can also bring your own providers."],
   ['Whose brand do patients see?', 'Yours: your name, logo, colors, domain and programs. MedRevolve runs behind the storefront.'],
-  ['What does the $4,000 include?', 'The 14 items in the Telehealth Plan above. Medication, provider visit fees, payment processing, LegitScript fees, labs, domain and ad spend are separate, and ongoing terms are set out in your proposal.'],
+  ['What does it cost?', 'Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive. Medication, provider visit fees, payment processing, LegitScript fees, labs, domain and ad spend are third-party costs, and we walk you through each one.'],
+  ['What does setup include?', 'The 14 items in the Telehealth Plan above, from your custom platform and secure video visits to a dedicated project manager and post-launch help.'],
   ['Is it really about 7 days?', 'About 7 days from a signed agreement, with your brand assets and underwriting documents ready. The checklist above lists what to have on hand.'],
   ['Is MedRevolve LegitScript certified?', 'LegitScript certifies each merchant business itself. We prepare your site, policies, pharmacy and provider disclosures for your application and guide you through review.'],
   ['Can I offer compounded medications?', 'Only where a prescriber documents a patient-specific clinical need, through a licensed 503A pharmacy. Compounded products are never presented as FDA-approved, and our audits check your pages for that wording.'],
@@ -230,7 +231,7 @@ export default function LaunchHome() {
             </div>
             <div className="stats">
               <div className="stat"><b>~7 days</b><span>signed agreement to live storefront</span></div>
-              <div className="stat"><b>$4,000</b><span>launch, with 14 items listed below</span></div>
+              <div className="stat"><b>14 items</b><span>in every launch, listed below</span></div>
               <div className="stat"><b>50 states</b><span>provider network coverage</span></div>
             </div>
           </div>
@@ -424,10 +425,10 @@ export default function LaunchHome() {
           </div>
           <div className="price">
             <div className="pcard">
-              <span className="eyebrow" style={{ color: 'var(--sage)' }}>Launch</span>
-              <div className="amount">$4,000</div>
-              <p className="muted">One branded telehealth platform, live in about 7 days, with all 14 items in the plan.</p>
-              <Book>Book a demo <span className="arrow">→</span></Book>
+              <span className="eyebrow" style={{ color: 'var(--sage)' }}>Setup &amp; costs</span>
+              <div className="amount">Your quote</div>
+              <p className="muted">One branded telehealth platform, live in about 7 days, with all 14 items in the plan. Setup and ongoing costs are quoted on a short call, based on your programs, states and services. Our pricing is built to be competitive.</p>
+              <Book>Get my setup quote <span className="arrow">→</span></Book>
               <a className="btn btn-ghost" href="#builder">Build your launch plan</a>
             </div>
             <div className="plan">
@@ -437,8 +438,8 @@ export default function LaunchHome() {
                 </ol></div>
               )); })()}
               <div className="sep">
-                <div><b>Separate or third-party</b><ul>{['Medication and pharmacy fulfilment', 'Provider visit fees', 'Payment processing fees', 'LegitScript certification fees, paid to LegitScript', 'Labs, domain and ad spend'].map((t) => <li key={t}>{t}</li>)}</ul></div>
-                <div><b>After launch</b><ul>{['Ongoing platform and support terms are set out in your proposal', 'Post-launch help comes from your named support contact', 'Compliance updates arrive in your dashboard inbox'].map((t) => <li key={t}>{t}</li>)}</ul></div>
+                <div><b>Third-party costs we walk you through</b><ul>{['Medication and pharmacy fulfilment', 'Provider visit fees', 'Payment processing fees', 'LegitScript certification fees, paid to LegitScript', 'Labs, domain and ad spend'].map((t) => <li key={t}>{t}</li>)}</ul></div>
+                <div><b>After launch</b><ul>{['Ongoing platform and support terms are set out in your quote', 'Post-launch help comes from your named support contact', 'Compliance updates arrive in your dashboard inbox'].map((t) => <li key={t}>{t}</li>)}</ul></div>
               </div>
             </div>
           </div>
