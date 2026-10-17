@@ -261,6 +261,12 @@ export const LAUNCH_CSS = `
 .mrx .final-card .row:last-child{border:0;padding:0}
 .mrx .final-card .row b{text-align:right}
 @media (max-width:860px){.mrx .final .wrap{grid-template-columns:1fr}}
+.mrx .gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mrx .gtile{display:flex;flex-direction:column;gap:8px;text-decoration:none}
+.mrx .gtile img{display:block;width:100%;height:auto;aspect-ratio:1/1;max-width:100%;border-radius:12px;border:1px solid var(--line);transition:transform .25s ease}
+.mrx .gtile:hover img{transform:translateY(-3px)}
+.mrx .gtile span{font-size:.86rem;color:var(--muted)}
+@media (max-width:900px){.mrx .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mrx .discband{padding-block:28px 40px}
 .mrx .disc{font-size:.8rem;max-width:90ch;color:var(--muted)}
 `;
