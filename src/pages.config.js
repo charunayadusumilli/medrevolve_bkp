@@ -20,6 +20,7 @@ import MerchantDemo from './pages/MerchantDemo';
 import BusinessInquiry from './pages/BusinessInquiry';
 import ForCreators from './pages/ForCreators';
 import CreatorApplication from './pages/CreatorApplication';
+import SocialKit from './pages/SocialKit';
 
 // ── LEGAL PAGES ───────────────────────────────────────────────────────────────
 import Privacy from './pages/Privacy';
@@ -49,6 +50,7 @@ export const PAGES = {
     "BusinessInquiry": BusinessInquiry,
     "ForCreators": ForCreators,
     "CreatorApplication": CreatorApplication,
+    "SocialKit": SocialKit,
 
     // Legal
     "Privacy": Privacy,
