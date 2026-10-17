@@ -1,3 +1,8 @@
+// MedRevolve social graphics generator. Re-run after editing the cards below:
+//   mkdir -p /tmp/render && cd /tmp/render && npm i sharp opentype.js@1.3.4 @fontsource/fraunces @fontsource/jetbrains-mono @fontsource/geist-sans
+//   cp <app>/scripts/social/gen.mjs . && node gen.mjs <app>/public/social
+// Text is converted to vector outlines, so the images render identically everywhere.
+// opentype.js must stay on 1.3.4: version 2.0.0 corrupts some glyph outlines.
 import opentype from 'opentype.js';
 import sharp from 'sharp';
 import fs from 'fs';
@@ -10,13 +15,14 @@ const G6 = load('geist-sans/files/geist-sans-latin-600-normal.woff');
 const M  = load('jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff');
 const C = { bg:'#0D1411', bg2:'#111A16', surface:'#16211C', line:'#2A3C33', fg:'#ECF2ED', muted:'#9BB0A4', sage:'#8ED6A9', ink:'#0D1411', brass:'#E0A668', alert:'#F08A7A', moss:'#4A6741' };
 const W = 1080, H = 1080;
-const width = (f, s, size, ls = 0) => f.getAdvanceWidth(s, size) + ls * Math.max(0, s.length - 1);
+const adv = (f, ch, size) => f.charToGlyph(ch).advanceWidth * size / f.unitsPerEm;
+const width = (f, s, size, ls = 0) => ls ? [...s].reduce((a, ch) => a + adv(f, ch, size), 0) + ls * ([...s].length - 1) : f.getAdvanceWidth(s, size);
 function t(s, x, y, { f = G, size = 32, fill = C.fg, anchor = 'start', ls = 0 } = {}) {
   const w = width(f, s, size, ls);
   let cx = anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x;
   if (!ls) return `<path d="${f.getPath(s, cx, y, size).toPathData(2)}" fill="${fill}"/>`;
   let out = '';
-  for (const ch of s) { out += f.getPath(ch, cx, y, size).toPathData(2); cx += f.getAdvanceWidth(ch, size) + ls; }
+  for (const ch of s) { out += f.charToGlyph(ch).getPath(cx, y, size).toPathData(2); cx += adv(f, ch, size) + ls; }
   return `<path d="${out}" fill="${fill}"/>`;
 }
 function wrap(s, f, size, maxW) {
@@ -62,16 +68,14 @@ ${t('Live in about 7 days.', 90, 456, { f: FI, size: 80, fill: C.sage })}
   <rect x="58" y="248" width="200" height="40" rx="20" fill="${C.moss}"/>${t('Start your visit', 158, 275, { f: G6, size: 19, fill: '#fff', anchor: 'middle' })}
   ${t('YOUR BRAND, NOT OURS', 842, 278, { f: M, size: 15, fill: '#5E7A58', anchor: 'end', ls: 2 })}
 </g>
-${t('~7 days to live', 90, 912, { f: G6, size: 28 })}${t('·', 318, 912, { f: G6, size: 28, fill: C.muted })}
-${t('$4,000 launch', 345, 912, { f: G6, size: 28 })}${t('·', 552, 912, { f: G6, size: 28, fill: C.muted })}
-${t('50-state provider network', 579, 912, { f: G6, size: 28 })}
+${(() => { let x = 90; return ['~7 days to live', '$4,000 launch', '50-state provider network'].map((s, i) => { const out = (i ? t('·', x + 14, 912, { f: G6, size: 28, fill: C.muted }) : '') + t(s, x + (i ? 40 : 0), 912, { f: G6, size: 28 }); x += (i ? 40 : 0) + width(G6, s, 28); return out; }).join(''); })()}
 `);
 
 // 2 seven-day timeline
 const DAYS = [['Brand & discovery', 'Name, logo, colors, domain, programs, states'], ['Storefront build', 'Your site on your domain, intake to checkout'], ['Providers plugged in', 'Visit types, intake, e-prescribing tested'], ['Pharmacy plugged in', '503A fulfilment, shipping and tracking tested'], ['Payments live', 'Merchant account, refunds, refills, payouts'], ['Compliance check', 'HIPAA, LegitScript readiness, claims review'], ['Go live & announce', 'CRM on, posts out, named support contact']];
 cards['02-seven-day-launch'] = frame(`
 ${eyebrow('The walkthrough')}
-${t('Launch in about', 90, 236, { f: F, size: 66 })}${t('7 days.', 560, 236, { f: FI, size: 66, fill: C.sage })}
+${t('Launch in about', 90, 236, { f: F, size: 66 })}${t('7 days.', 90 + width(F, 'Launch in about ', 66), 236, { f: FI, size: 66, fill: C.sage })}
 <line x1="128" y1="322" x2="128" y2="874" stroke="${C.line}" stroke-width="3"/>
 <line x1="128" y1="322" x2="128" y2="874" stroke="${C.sage}" stroke-width="3" stroke-dasharray="6 10"/>
 ${DAYS.map(([a, b], i) => { const y = 322 + i * 92; const last = i === 6;
@@ -158,7 +162,7 @@ cards['08-launch-checklist'] = frame(`
 ${eyebrow('Free checklist')}
 ${t('Have these ready', 90, 236, { f: F, size: 66 })}
 ${t('before Day 1.', 90, 312, { f: FI, size: 66, fill: C.sage })}
-${CL.map((s, i) => { const y = 400 + i * 58; return `<rect x="90" y="${y - 28}" width="32" height="32" rx="8" fill="${C.sage}" fill-opacity=".18" stroke="${C.sage}" stroke-width="2"/>
+${CL.map((s, i) => { const y = 392 + i * 52; return `<rect x="90" y="${y - 28}" width="32" height="32" rx="8" fill="${C.sage}" fill-opacity=".18" stroke="${C.sage}" stroke-width="2"/>
   <path d="M98,${y - 12} l7,7 l12,-14" stroke="${C.sage}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   ${t(s, 146, y, { f: G, size: 29 })}`; }).join('')}
 <rect x="90" y="878" width="400" height="58" rx="29" fill="${C.sage}"/>${t('Get the full checklist', 290, 916, { f: G6, size: 25, fill: C.ink, anchor: 'middle' })}
