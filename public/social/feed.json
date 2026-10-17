@@ -1,0 +1,103 @@
+{
+  "site": "https://medrevolve.com",
+  "updated": "2026-10-17T00:29:23.165Z",
+  "booking_url": "https://calendly.com/rned-medrevolve/medrevolve-intro-call",
+  "graphics": [
+    {
+      "id": "01-launch-in-7-days",
+      "post_type": "Launch / offer",
+      "title": "Your brand. Live in about 7 days.",
+      "caption": "Your name on the storefront. Licensed providers, a licensed pharmacy and a healthcare-ready checkout behind it. Clinics, med spas and pharmacies can launch their own telehealth brand in about 7 days. Book a 20-minute demo at medrevolve.com.",
+      "alt": "Headline \"Your brand. Your telehealth business. Live in about 7 days.\" above a white-label storefront preview for a sample brand, Lumen Aesthetics.",
+      "link": "https://calendly.com/rned-medrevolve/medrevolve-intro-call",
+      "link_label": "Book a demo",
+      "image_png": "https://medrevolve.com/social/01-launch-in-7-days.png",
+      "image_svg": "https://medrevolve.com/social/01-launch-in-7-days.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "02-seven-day-launch",
+      "post_type": "Educational",
+      "title": "The 7-day launch, day by day",
+      "caption": "Day 1 brand. Day 2 storefront. Day 3 providers. Day 4 pharmacy. Day 5 payments. Day 6 compliance check. Day 7 go live. Every day shows what you do and what we do. See the full plan at medrevolve.com.",
+      "alt": "Vertical timeline of the seven launch days, from brand and discovery to go live and announce.",
+      "link": "https://medrevolve.com/#walkthrough",
+      "link_label": "See the 7-day plan",
+      "image_png": "https://medrevolve.com/social/02-seven-day-launch.png",
+      "image_svg": "https://medrevolve.com/social/02-seven-day-launch.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "03-patient-journey",
+      "post_type": "Trust / proof",
+      "title": "One journey explains the whole business",
+      "caption": "Visitor, intake, provider review, prescription only when clinically appropriate, pharmacy, follow-up and refill. You sell under your brand; we connect the regulated pieces. How it works at medrevolve.com.",
+      "alt": "Flow diagram: visitor, intake, provider review, prescription only if appropriate, pharmacy, follow-up and refill.",
+      "link": "https://medrevolve.com/#care",
+      "link_label": "Providers & pharmacy",
+      "image_png": "https://medrevolve.com/social/03-patient-journey.png",
+      "image_svg": "https://medrevolve.com/social/03-patient-journey.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "04-five-questions",
+      "post_type": "Educational",
+      "title": "Five questions every owner asks",
+      "caption": "Can I launch fast? Will it look like mine? Who treats my patients? How do orders and money work? Am I compliant? Five questions, answered in one page at medrevolve.com.",
+      "alt": "Five questions owners ask before launching telehealth, each with a one-line answer.",
+      "link": "https://medrevolve.com/",
+      "link_label": "Get the answers",
+      "image_png": "https://medrevolve.com/social/04-five-questions.png",
+      "image_svg": "https://medrevolve.com/social/04-five-questions.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "05-payments",
+      "post_type": "Educational",
+      "title": "A merchant account that won't freeze",
+      "caption": "Telehealth is high-risk to many processors, and accounts get frozen. Ours come from vendors with a long healthcare track record, with refills, refunds, chargebacks and a backup processor planned in. Every fee is listed before you sign. More at medrevolve.com.",
+      "alt": "Payment flow from checkout to authorization, settlement and payout, with subscriptions, refunds and a backup processor.",
+      "link": "https://medrevolve.com/#payments",
+      "link_label": "How payments work",
+      "image_png": "https://medrevolve.com/social/05-payments.png",
+      "image_svg": "https://medrevolve.com/social/05-payments.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "06-compliance-service",
+      "post_type": "Educational",
+      "title": "Compliance is a service",
+      "caption": "Rules on telehealth, pharmacy, privacy and advertising change often. We run regular audits, track the changes, tell you what to do and fix the templates. Compliance is a service, not a launch checkbox. medrevolve.com",
+      "alt": "Five-step compliance cycle: audit runs, change monitoring, announcements, remediation and record.",
+      "link": "https://medrevolve.com/#compliance",
+      "link_label": "Compliance details",
+      "image_png": "https://medrevolve.com/social/06-compliance-service.png",
+      "image_svg": "https://medrevolve.com/social/06-compliance-service.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "07-telehealth-plan",
+      "post_type": "Launch / offer",
+      "title": "$4,000, 14 items listed in full",
+      "caption": "No vague promises. The $4,000 launch includes 14 items, from your custom platform and secure video visits to a dedicated project manager and post-launch help. What is separate is listed too. medrevolve.com",
+      "alt": "The $4,000 Telehealth Plan with all 14 included items listed.",
+      "link": "https://medrevolve.com/#pricing",
+      "link_label": "See what $4,000 includes",
+      "image_png": "https://medrevolve.com/social/07-telehealth-plan.png",
+      "image_svg": "https://medrevolve.com/social/07-telehealth-plan.svg",
+      "size": "1080x1080"
+    },
+    {
+      "id": "08-launch-checklist",
+      "post_type": "Lead-gen",
+      "title": "Have these ready before Day 1",
+      "caption": "Thinking about launching your own telehealth brand? Have these ready before Day 1. Get the full white-label launch checklist free at medrevolve.com.",
+      "alt": "Checklist of items to prepare before launch day, with a button to get the full checklist.",
+      "link": "https://medrevolve.com/#checklist",
+      "link_label": "Get the checklist",
+      "image_png": "https://medrevolve.com/social/08-launch-checklist.png",
+      "image_svg": "https://medrevolve.com/social/08-launch-checklist.svg",
+      "size": "1080x1080"
+    }
+  ]
+}
