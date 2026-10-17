@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { BOOKING_URL } from '@/lib/contactConfig';
 import { LAUNCH_CSS } from './launchStyles';
+import { SOCIAL_GRAPHICS } from './socialGraphics';
 
 // MedRevolve launch homepage, built from the Platform Walkthrough (Oct 2026).
 // Every style is scoped under .mrx. Compliance rules baked in: no "LegitScript certified" claim,
@@ -490,7 +491,26 @@ export default function LaunchHome() {
         </div>
       </section>
 
-      <section id="learn">
+      <section id="pictures">
+        <div className="wrap">
+          <div className="sec-head">
+            <span className="eyebrow">In pictures</span>
+            <h2>The whole platform, <em className="i">one graphic at a time.</em></h2>
+            <p className="lead">Share-ready graphics with captions. Every one links back to the part of this page it explains.</p>
+          </div>
+          <div className="gallery">
+            {SOCIAL_GRAPHICS.map((g) => (
+              <a key={g.id} className="gtile" href={`/SocialKit#${g.id}`}>
+                <img src={`/social/${g.id}.png`} alt={g.alt} width="1080" height="1080" loading="lazy" />
+                <span>{g.title}</span>
+              </a>
+            ))}
+          </div>
+          <p style={{ marginTop: 18 }}><a className="btn btn-ghost" href="/SocialKit">Open the graphics library <span className="arrow">→</span></a></p>
+        </div>
+      </section>
+
+      <section id="learn" className="alt">
         <div className="wrap">
           <div className="sec-head"><span className="eyebrow">Learn</span><h2>Straight answers <em className="i">before you buy.</em></h2></div>
           <div className="arts">
