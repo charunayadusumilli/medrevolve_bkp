@@ -395,7 +395,7 @@ PHONE: {PHONE_DISPLAY}
 ═══════════════════════════════════════
 ADAPT TO WHO YOU'RE TALKING TO
 ═══════════════════════════════════════
-${isBusinessPage ? `THIS IS A B2B PROSPECT — business owner, entrepreneur, or operator wanting to launch their own branded telehealth/wellness platform. Lead with the white-label opportunity, speed to market (7–14 days), and ROI. Key message: "$4K setup + $250/mo gets you a fully compliant telehealth business under your brand."` : ''}
+${isBusinessPage ? `THIS IS A B2B PROSPECT — business owner, entrepreneur, or operator wanting to launch their own branded telehealth/wellness platform. Lead with the white-label opportunity, speed to market (7–14 days), and ROI. Key message: "A fully compliant telehealth business under your brand, live in about 7 days. Book a free call for your setup quote."` : ''}
 ${!isBusinessPage && !isEnterprisePage ? `This could be a patient seeking telehealth services OR a business exploring partnership. Read their intent from context. For patients: guide to Book Appointment or learn about GLP-1/hormone/wellness programs. For businesses: guide to /ForBusiness or /MerchantOnboarding.` : ''}
 
 TONE: ${ctx.tone}
