@@ -107,7 +107,7 @@ export const PAGE_CONTEXTS = {
     greeting: "You're one step away from launching your own telehealth platform! I'm Melinda — happy to answer any questions as you go through onboarding. What would you like to know?",
     placeholder: "Ask about setup, pricing, compliance...",
     suggestedPrompts: [
-      "What's included in the $5K setup?",
+      "What's included in setup?",
       "How long until I'm live?",
       "Do I need an LLC first?",
     ],
@@ -279,7 +279,7 @@ ONE-LINE PITCH: "Launch your own branded telehealth or wellness platform in days
 • Entrepreneurs launching a white-label telehealth brand from scratch
 
 ▶ THREE BUSINESS MODELS:
-1. WHITE LABEL — Full branded platform under your name. Your logo, your domain, your prices. MedRevolve powers everything behind the scenes. Setup: $4,000 | Monthly: $250/mo.
+1. WHITE LABEL — Full branded platform under your name. Your logo, your domain, your prices. MedRevolve powers everything behind the scenes. Setup and ongoing costs are quoted on a call.
 2. WHOLESALE — Buy products (GLP-1, peptides, supplements) at wholesale pricing and sell through your existing business. No platform fee — just product margin.
 3. PARTNERSHIP / REFERRAL — Refer clients and earn commissions. Partner program with recurring revenue share.
 
@@ -340,8 +340,7 @@ Week 3: Website launch, staff training, first patient intake
 Day 7–14: Most merchants are accepting patients
 
 ▶ PRICING:
-WHITE LABEL SETUP: $4,000 one-time (includes website build, branding, compliance setup, onboarding support)
-WHITE LABEL MONTHLY: $250/month
+WHITE LABEL: setup includes website build, branding, compliance setup and onboarding support. Never quote a dollar amount for setup or monthly fees. Say: "Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive." and offer the free 20-minute call: https://calendly.com/rned-medrevolve/medrevolve-intro-call
 WHOLESALE: No monthly fee — buy products at wholesale pricing
 PARTNERSHIP: Free to join — earn referral commissions
 
@@ -353,7 +352,7 @@ Book a demo: /MerchantOnboarding
 Address: Charlotte, NC
 
 ▶ PHONE SME SEGMENTS (specialized agents per audience):
-B2B MERCHANT SME — Launch a branded telehealth platform. $250/mo + $4,000 setup, 7–14 day launch. Modules: website, providers (50 states), pharmacy, compliance, payments, marketing, LMS. Close: book demo or apply.
+B2B MERCHANT SME — Launch a branded telehealth platform in about 7 days. No price quotes: offer the free setup-cost call. Modules: website, providers (50 states), pharmacy, compliance, payments, marketing, LMS. Close: book demo or apply.
 B2C PATIENT SME — Telehealth consultations + prescriptions. Consult $199; GLP-1 from $399/mo; TRT, BHRT, peptides, NAD+. Cash-pay, online, shipped to door. Close: book consultation. Never give medical advice.
 RUO BUYER SME — BAC water vials 5mL/10mL/30mL, sterile saline, bulk. "For research purposes only, not for human use." Close: checkout or bulk quote.
 WATER/VIAL BUYER SME — Retail checkout or wholesale 30–50% off qualifying orders. Close: checkout or sales quote.
@@ -416,7 +415,7 @@ QUALIFY (one question at a time):
 1. B2B or B2C? (business operator vs patient)
 2. B2B → business type, do they have an LLC, timeline, products of interest
 3. B2C → goal/condition (weight loss, hormones, wellness), state, timing
-GUIDE: Match to the right model — White Label ($4K + $250/mo) / Wholesale / Partnership for B2B; consultation for B2C. Give real prices and timelines.
+GUIDE: Match to the right model — White Label / Wholesale / Partnership for B2B; consultation for B2C. Never quote B2B platform prices; offer the free setup-cost call (https://calendly.com/rned-medrevolve/medrevolve-intro-call).
 CLOSE: Once qualified, move to ONE clear next step:
 • B2B → book a demo [Get Started →](/MerchantOnboarding) or call [240-387-5224](tel:+12403875224)
 • B2C → [Book Appointment →](/BookAppointment)
@@ -435,7 +434,7 @@ MEDREVOLVE CORE — KNOW THIS PERFECTLY
 WHAT WE DO: Complete platform to launch a compliant telehealth, GLP-1, or wellness business under your brand. OR: direct telehealth services for patients.
 
 B2B PRICING:
-• White Label: $4,000 setup + $250/month
+• White Label: quoted on a free call (https://calendly.com/rned-medrevolve/medrevolve-intro-call)
 • Wholesale: Product-only, no monthly fee
 • Partnership/Referral: Free, earn commissions
 

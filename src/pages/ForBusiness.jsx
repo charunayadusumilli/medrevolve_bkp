@@ -16,7 +16,7 @@ import {
 
 const OPERATOR_FAQS = [
   { question: 'What is MedRevolve?', answer: 'A white-label telehealth platform: intake, licensed physicians across all 50 states, 503A/503B pharmacy fulfillment, EMR, real-time FDA/PCAC compliance monitoring, and payment processing — all under your own brand. You focus on growth and patient care; MedRevolve runs the backend.' },
-  { question: 'What does it cost?', answer: 'LLC Formation $1,500 one-time; Payment Integration $1,000 + $100/mo; Pharmacy Integration $1,000 + $100/mo; Product Integration $750 one-time; Marketing Integration $750 + $150/mo; Full Platform Bundle $4,000 setup + $250/mo. Building the same stack yourself costs $30K-$50K and 6-12 months.' },
+  { question: 'What does it cost?', answer: 'Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive. Book a free 20-minute call to get yours.' },
   { question: 'How fast can I launch?', answer: 'Days to weeks, not months — physicians, pharmacy, EMR, compliance, and payments are already built and licensed.' },
   { question: 'Do I keep my own brand?', answer: 'Yes — your domain, your logo, your pricing, your patient relationships. MedRevolve is the invisible backend.' },
   { question: 'Which services can I offer?', answer: 'Four service lines on one platform: GLP-1/weight management, peptide therapy, hormone optimization, and NAD+/longevity. Same patient, four revenue streams.' },
@@ -26,7 +26,7 @@ const OPERATOR_FAQS = [
   { question: 'Who is this NOT for?', answer: 'Operators who want to prescribe without clinicians, cut corners on pharmacy sourcing, or ignore compliance. MedRevolve is built for legitimate brands that want to last.' },
   { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}. A specialist will walk you through the platform and your launch plan.' },
   { question: 'Why is MedRevolve described as an AI-powered platform?', answer: 'Every layer runs on automation: AI intake triage, AI receptionist, an on-site AI answer engine, automated compliance monitoring, and webhook-driven alerts — the LLM-grade infrastructure layer for telehealth.' },
-  { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one — at $4,000 + $250/mo vs Cuvo\'s $997/mo + $9,800 setup.' },
+  { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one, with competitive setup costs quoted on a call.' },
   { question: 'Which states are covered?', answer: 'MedRevolve\'s physician network is licensed across all 50 states, so your patients can be seen and prescribed for wherever they live.' },
   { question: 'Can I use my existing website?', answer: 'Yes. You can run the platform on your own domain with your branding, or embed the storefront into your existing clinic or spa site as an iframe or native integration.' },
   { question: 'What integrations are included?', answer: 'Secure high-risk payments, HubSpot and Zoho CRM, Twilio SMS/voice, Google Calendar scheduling, Qualiphy eConsent, Google Drive document storage, and Zapier for 5,000+ app connections — all pre-built, no dev work required.' },

@@ -108,14 +108,14 @@ const META_MAP = {
   },
   '/telehealth-franchise': {
     title: 'Launch a Telehealth Business Without Buying a Franchise | MedRevolve',
-    description: 'Skip the franchise fees. MedRevolve gives you a complete self-run telehealth platform — services, payments, and unified CRM — from $4,000 setup + $250/month. 24/7 support to resolution.',
+    description: 'Skip the franchise fees. MedRevolve gives you a complete self-run telehealth platform — services, payments, and unified CRM. Book a free call for your setup quote.',
     keywords: 'telehealth franchise, telehealth business franchise, health clinic franchise alternative',
     canonical: 'https://medrevolve.com/telehealth-franchise',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',
   },
   '/iv-therapy-clinic-platform': {
     title: 'Add Telehealth to Your IV Therapy Clinic in 7 Days | MedRevolve',
-    description: 'IV therapy clinics are adding $20K/month with white-label telehealth programs. GLP-1, hormone therapy, and wellness — all physician-supervised and pharmacy-fulfilled.',
+    description: 'Add white-label telehealth programs to your IV therapy clinic: weight care, hormone and wellness programs, provider-supervised and pharmacy-fulfilled.',
     keywords: 'iv therapy clinic telehealth, add telehealth to iv clinic, iv clinic platform',
     canonical: 'https://medrevolve.com/iv-therapy-clinic-platform',
     og_image: 'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/365373e0a_generated_image.png',

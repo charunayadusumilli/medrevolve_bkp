@@ -23,11 +23,11 @@ const COMPARISON = [
   { feature: '50-state provider coverage', medrevolve: true, openloop: true },
   { feature: '24/7 support to resolution', medrevolve: true, openloop: false },
   { feature: 'Launch in days to weeks', medrevolve: true, openloop: false },
-  { feature: 'Pricing: $4,000 + $250/mo', medrevolve: true, openloop: false },
+  { feature: 'Setup costs quoted upfront on a call', medrevolve: true, openloop: false },
 ];
 
 const OPENLOOP_FAQS = [
-  { question: 'Does OpenLoop include payment processing and CRM?', answer: 'No — OpenLoop provides clinician networks and virtual care APIs. MedRevolve includes the complete self-run platform: services, built-in high-risk payments, and a unified CRM, under your brand at $4,000 + $250/mo.' },
+  { question: 'Does OpenLoop include payment processing and CRM?', answer: 'No — OpenLoop provides clinician networks and virtual care APIs. MedRevolve includes the complete self-run platform: services, built-in high-risk payments, and a unified CRM, under your brand, with setup costs quoted on a call.' },
   { question: 'Can I run the MedRevolve platform myself?', answer: 'Yes — the platform is built to be self-run, with 24/7 support to resolution when anything needs attention. No agency retainer required.' },
 ];
 
@@ -47,7 +47,7 @@ export default function OpenLoopAlternative() {
             <span className="text-orange-400">MedRevolve Includes More — For Less</span>
           </motion.h1>
           <motion.p {...fade(0.2)} className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
-            OpenLoop provides clinician networks and virtual care APIs. MedRevolve provides the complete self-run platform — services, built-in high-risk payments, and a unified CRM — under your brand at $4,000 + $250/mo. If you need more than staffing, here's why operators choose MedRevolve.
+            OpenLoop provides clinician networks and virtual care APIs. MedRevolve provides the complete self-run platform — services, built-in high-risk payments, and a unified CRM — under your brand. If you need more than staffing, here's why operators choose MedRevolve.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/MerchantOnboarding">

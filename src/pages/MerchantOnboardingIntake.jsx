@@ -17,13 +17,13 @@ const ENTITY_TYPES = ['LLC', 'C-Corporation', 'S-Corporation', 'Partnership', 'S
 const INDUSTRIES = ['Telehealth Platform', 'Med Spa', 'Wellness Clinic', 'Pharmacy', 'Fitness/Health', 'Healthcare Provider', 'E-commerce', 'Other'];
 const CARD_BRANDS = ['Visa', 'Mastercard', 'American Express', 'Discover', 'EBT'];
 const SERVICES = [
-  { key: 'platform', label: 'B2B Platform ($2,999/mo)' },
-  { key: 'full_bundle', label: 'Full Platform Bundle ($250/mo)' },
-  { key: 'marketing', label: 'Marketing Integration ($150/mo)' },
-  { key: 'product', label: 'Product Integration ($750 one-time)' },
-  { key: 'pharmacy', label: 'Pharmacy Integration ($100/mo)' },
-  { key: 'payment', label: 'Payment Integration ($100/mo)' },
-  { key: 'llc_formation', label: 'LLC Formation ($1,500 one-time)' },
+  { key: 'platform', label: 'B2B Platform' },
+  { key: 'full_bundle', label: 'Full Platform Bundle' },
+  { key: 'marketing', label: 'Marketing Integration' },
+  { key: 'product', label: 'Product Integration' },
+  { key: 'pharmacy', label: 'Pharmacy Integration' },
+  { key: 'payment', label: 'Payment Integration' },
+  { key: 'llc_formation', label: 'LLC Formation' },
   { key: 'telehealth', label: 'Telehealth Module' },
   { key: 'compliance', label: 'Compliance Module' },
   { key: 'inventory', label: 'Inventory Management' },
