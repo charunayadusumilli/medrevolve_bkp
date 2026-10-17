@@ -1,23 +1,18 @@
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
-import PlatformHero from '@/components/home/b2b/PlatformHero';
-import WhatWeRun from '@/components/home/b2b/WhatWeRun';
-import BuiltFor from '@/components/home/b2b/BuiltFor';
-import WhyOperators from '@/components/home/b2b/WhyOperators';
-import PlatformCTABand from '@/components/home/b2b/PlatformCTABand';
+import LaunchHome from '@/components/home/launch/LaunchHome';
 
+// Previous homepage sections (PlatformHero, WhatWeRun, BuiltFor, WhyOperators, PlatformCTABand)
+// still live in src/components/home/b2b and can be restored from the checkpoint
+// "Before homepage redesign (7-day launch site)".
 export default function Home() {
   return (
-    <div className="bg-[#F7F4ED]">
+    <>
       <SEOHead
-        title="The White-Label Telehealth Platform | MedRevolve"
-        description="MedRevolve builds and operates complete white-label telehealth infrastructure: AI-powered intake, a licensed 50-state clinician network, payment processing built for healthcare, pharmacy fulfillment, a unified CRM, and real-time compliance monitoring — live in 7 days."
+        title="Launch Your Own Telehealth Brand in About 7 Days | MedRevolve"
+        description="White-label telehealth for clinics, med spas and pharmacies: your branded site, licensed providers, 503A pharmacy, healthcare-ready payments and ongoing compliance, live in about 7 days. $4,000 launch with all 14 items listed."
       />
-      <PlatformHero />
-      <WhatWeRun />
-      <BuiltFor />
-      <WhyOperators />
-      <PlatformCTABand />
-    </div>
+      <LaunchHome />
+    </>
   );
 }
