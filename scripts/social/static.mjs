@@ -36,7 +36,7 @@ const cards = feed.graphics.map((g) => `
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MedRevolve Graphics Library</title>
-<meta name="description" content="Share-ready MedRevolve graphics with captions and links: the 7-day launch, patient journey, payments, compliance and the $4,000 Telehealth Plan.">
+<meta name="description" content="Share-ready MedRevolve graphics with captions and links: the 7-day launch, patient journey, payments, compliance and the Telehealth Plan.">
 <meta property="og:image" content="${SITE}/social/01-launch-in-7-days.png">
 <link rel="canonical" href="${SITE}/social/index.html">
 <style>
