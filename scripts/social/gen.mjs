@@ -68,7 +68,7 @@ ${t('Live in about 7 days.', 90, 456, { f: FI, size: 80, fill: C.sage })}
   <rect x="58" y="248" width="200" height="40" rx="20" fill="${C.moss}"/>${t('Start your visit', 158, 275, { f: G6, size: 19, fill: '#fff', anchor: 'middle' })}
   ${t('YOUR BRAND, NOT OURS', 842, 278, { f: M, size: 15, fill: '#5E7A58', anchor: 'end', ls: 2 })}
 </g>
-${(() => { let x = 90; return ['~7 days to live', '$4,000 launch', '50-state provider network'].map((s, i) => { const out = (i ? t('·', x + 14, 912, { f: G6, size: 28, fill: C.muted }) : '') + t(s, x + (i ? 40 : 0), 912, { f: G6, size: 28 }); x += (i ? 40 : 0) + width(G6, s, 28); return out; }).join(''); })()}
+${(() => { let x = 90; return ['~7 days to live', '50-state provider network', '14 items included'].map((s, i) => { const out = (i ? t('·', x + 14, 912, { f: G6, size: 28, fill: C.muted }) : '') + t(s, x + (i ? 40 : 0), 912, { f: G6, size: 28 }); x += (i ? 40 : 0) + width(G6, s, 28); return out; }).join(''); })()}
 `);
 
 // 2 seven-day timeline
@@ -149,11 +149,12 @@ ${CY.map(([a, b], i) => { const y = 404 + i * 112; return `<circle cx="124" cy="
 const PL = ['Custom telehealth platform', 'Plugins & integrations', 'Admin & patient dashboard', 'Doctor profiles & booking', 'Secure video & audio visits', 'Patient dashboard & history', 'Secure patient messaging', 'Payment gateway', 'Security, compliance-ready', 'LegitScript readiness guidance', 'Dedicated project manager', 'Testing & QA', 'Post-launch tech help', 'Growth & scale support'];
 cards['07-telehealth-plan'] = frame(`
 ${eyebrow('Telehealth Plan')}
-${t('$4,000', 90, 290, { f: F, size: 150 })}
-${t('14 items,', 640, 220, { f: F, size: 50 })}${t('listed in full.', 640, 280, { f: FI, size: 50, fill: C.sage })}
+${t('Everything included,', 90, 236, { f: F, size: 66 })}
+${t('listed in full.', 90, 312, { f: FI, size: 66, fill: C.sage })}
 ${PL.map((s, i) => { const col = i < 7 ? 0 : 1; const r = i % 7; const x = 90 + col * 460; const y = 400 + r * 72;
   return `${t(String(i + 1).padStart(2, '0'), x, y, { f: M, size: 22, fill: C.brass })}${t(s, x + 52, y, { f: G, size: 27 })}`; }).join('')}
-${t('Medication, visit fees, processing and LegitScript fees are separate.', 90, 912, { f: G, size: 24, fill: C.muted })}
+<rect x="90" y="878" width="440" height="58" rx="29" fill="${C.sage}"/>${t('Get your setup quote', 310, 916, { f: G6, size: 25, fill: C.ink, anchor: 'middle' })}
+${t('Free 20-minute call', 560, 916, { f: G, size: 24, fill: C.muted })}
 `, { glow: [120, 120] });
 
 // 8 checklist
