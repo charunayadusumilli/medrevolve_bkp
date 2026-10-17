@@ -72,7 +72,7 @@ export default function ForCreatorsLP() {
       <section className="py-20 px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-light text-[#2D3A2D] mb-4">The economics</h2>
-          <p className="text-[#5A6B5A] text-lg leading-relaxed">Full Platform Bundle <span className="font-semibold text-[#2D3A2D]">$4,000 setup + $250/mo</span>. Your brand, your pricing, your margin.</p>
+          <p className="text-[#5A6B5A] text-lg leading-relaxed">Setup costs are quoted on a <a className="font-semibold text-[#2D3A2D] underline" href="https://calendly.com/rned-medrevolve/medrevolve-intro-call" target="_blank" rel="noopener noreferrer">free 20-minute call</a>, and our pricing is built to be competitive. Your brand, your pricing, your margin.</p>
         </div>
       </section>
 
