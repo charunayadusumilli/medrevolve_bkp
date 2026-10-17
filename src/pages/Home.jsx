@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <SEOHead
         title="Launch Your Own Telehealth Brand in About 7 Days | MedRevolve"
-        description="White-label telehealth for clinics, med spas and pharmacies: your branded site, licensed providers, 503A pharmacy, healthcare-ready payments and ongoing compliance, live in about 7 days. $4,000 launch with all 14 items listed."
+        description="White-label telehealth for clinics, med spas and pharmacies: your branded site, licensed providers, 503A pharmacy, healthcare-ready payments and ongoing compliance, live in about 7 days. Book a free call for your setup quote."
         ogImage="https://medrevolve.com/social/01-launch-in-7-days.png"
       />
       <LaunchHome />
