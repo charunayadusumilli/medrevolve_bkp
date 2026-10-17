@@ -49,7 +49,7 @@ export default function SocialKit() {
   return (
     <div className="mrx">
       <style>{LAUNCH_CSS + KIT_CSS}</style>
-      <SEOHead title="MedRevolve Graphics Library" description="Share-ready MedRevolve graphics with captions: the 7-day launch, patient journey, payments, compliance and the $4,000 Telehealth Plan." ogImage={`${SITE}/social/01-launch-in-7-days.png`} />
+      <SEOHead title="MedRevolve Graphics Library" description="Share-ready MedRevolve graphics with captions: the 7-day launch, patient journey, payments, compliance and the Telehealth Plan." ogImage={`${SITE}/social/01-launch-in-7-days.png`} />
       <section>
         <div className="wrap">
           <div className="sec-head">
