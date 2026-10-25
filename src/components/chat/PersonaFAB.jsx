@@ -34,7 +34,7 @@ export default function PersonaFAB({ ctx, onClick }) {
               }}
             >
               <RevBotLogo size={15} color="white" />
-              <span>Rev Bot</span>
+              <span>Nova</span>
             </div>
           </motion.div>
         )}
@@ -45,7 +45,7 @@ export default function PersonaFAB({ ctx, onClick }) {
         onClick={onClick}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93 }}
-        aria-label="Open Rev Bot AI assistant"
+        aria-label="Open Nova, the MedRevolve AI assistant"
         className="relative flex items-center justify-center shadow-2xl flex-shrink-0"
         style={{
           width: 62,

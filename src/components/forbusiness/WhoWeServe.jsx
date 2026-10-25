@@ -15,7 +15,7 @@ const SEGMENTS = [
   {
     icon: Sparkles,
     title: 'Med spas',
-    line: 'Sell programs that convert, with clinical + pharmacy handled.',
+    line: 'Sell programs that convert, with clinical and pharmacy handled.',
     to: '/for-med-spas',
   },
   {
