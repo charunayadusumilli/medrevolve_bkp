@@ -5,10 +5,10 @@ import React from 'react';
 
 const STEPS = [
   ['Patient finds your brand', 'Your logo, your domain, your pricing.'],
-  ['Nova AI intake, 24/7', 'Qualifies and books patients around the clock.'],
+  ['Nova AI intake, 24/7', 'Qualifies and books around the clock.'],
   ['Licensed provider review', 'All 50 states.'],
-  ['Pharmacy ships', 'Direct to the patient\u2019s door.'],
-  ['Recurring revenue', 'Subscriptions bill to your own merchant account.'],
+  ['Pharmacy ships to patient', 'Straight to their door.'],
+  ['Recurring revenue, your account', 'Subscriptions bill to you.'],
 ];
 
 export default function HowItWorksFlow() {

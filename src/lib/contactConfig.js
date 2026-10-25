@@ -27,7 +27,7 @@ export const SPECIALIST_TITLE = 'MR Personal Onboarding Specialist';
 
 // AI intake assistant brand
 export const AI_NAME = 'Nova';
-export const AI_BRAND = 'Nova by MedRevolve';
+export const AI_BRAND = 'Ask Nova';
 export const AI_GREETING = "Hi! I'm Nova — your 24/7 AI intake assistant. How can we help you today?";
 
 // WhatsApp Business number in E.164 digits only, e.g. '15302006352'. Leave empty until a

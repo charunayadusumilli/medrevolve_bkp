@@ -9,25 +9,25 @@ const SEGMENTS = [
   {
     icon: Stethoscope,
     title: 'Clinics',
-    line: 'Add a virtual revenue line without adding staff.',
+    line: 'Add a new revenue line without new hires',
     href: '#storefront',
   },
   {
     icon: Sparkles,
     title: 'Med spas',
-    line: 'Sell programs that convert, with clinical and pharmacy handled.',
+    line: 'Sell programs under your own brand, we run the back office',
     to: '/for-med-spas',
   },
   {
     icon: Pill,
     title: 'Pharmacies',
-    line: 'Get patient flow from operators who need your fulfillment.',
+    line: 'Grow volume through white-label storefronts',
     href: '#pharmacy',
   },
   {
     icon: Rocket,
-    title: 'Founders & creators',
-    line: 'Launch your own telehealth brand without building the back office.',
+    title: 'Founders',
+    line: 'Launch a telehealth brand in about 7 days, no build team needed',
     to: '/ForCreators',
   },
 ];
