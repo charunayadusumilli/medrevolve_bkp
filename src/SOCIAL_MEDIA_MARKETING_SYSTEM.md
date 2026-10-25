@@ -20,7 +20,7 @@
 
 - **Auto-Posting Schedule:** Every 30 minutes
 - **Content includes:**
-  - Phone number: **240-387-5224**
+  - Phone number: **medrevolve.com/ForBusiness**
   - Website: **medrevolve.com**
   - Relevant hashtags (20-25 per post)
   - Call-to-action on every post
@@ -66,7 +66,7 @@ All generated content focuses on:
 🚀 Hook (0-3s): "I launched my own telehealth business in 7 days..."
 💰 Problem (3-10s): Traditional healthcare = $100k+ startup
 ✅ Solution (10-20s): MedRevolve white-label platform
-📞 CTA (20-30s): "Call 240-387-5224 | medrevolve.com"
+📞 CTA (20-30s): "Call medrevolve.com/ForBusiness | medrevolve.com"
 ```
 
 ### **Static Ad Example:**
@@ -75,7 +75,7 @@ Headline: "Start Your Own Telehealth Business in 7 Days"
 ✅ HIPAA Compliant
 ✅ Licensed Providers
 ✅ $2,999/mo All-Inclusive
-📞 240-387-5224 | medrevolve.com
+📞 medrevolve.com/ForBusiness | medrevolve.com
 ```
 
 ### **Instagram Post Example:**
@@ -86,7 +86,7 @@ Headline: "Start Your Own Telehealth Business in 7 Days"
 ✅ Turnkey technology  
 ✅ 24/7 provider network
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🔗 Link in bio: medrevolve.com
 
 #telehealth #healthtech #entrepreneur #medspa #wellness #GLP1
@@ -234,7 +234,7 @@ Current hashtags focus on:
 
 ## 🎉 You're Ready to Launch!
 
-Your automated social media marketing system is **fully operational**. Content is being generated and posted to Facebook and Instagram automatically, all including your phone number (240-387-5224) and website (medrevolve.com).
+Your automated social media marketing system is **fully operational**. Content is being generated and posted to Facebook and Instagram automatically, all including your phone number (medrevolve.com/ForBusiness) and website (medrevolve.com).
 
 **Start seeing results within 24-48 hours!** 🚀
 

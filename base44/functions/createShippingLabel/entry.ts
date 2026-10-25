@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
       },
       ship_from: {
         name: 'MedRevolve Pharmacy',
-        phone: '240-387-5224',
+        phone: '',
         address_line1: '123 Business Park Dr',
         city: 'Gaithersburg',
         state_or_province: 'MD',

@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -177,7 +177,7 @@ export default function MerchantDocuments() {
             <CheckCircle2 className="w-6 h-6 text-[#A8C99B] flex-shrink-0" />
             <div>
               <p className="font-bold text-white">All documents signed! Your onboarding is complete.</p>
-              <p className="text-white/50 text-sm">A MedRevolve specialist will contact you within 24 hours to finalize your setup. Call {PHONE_DISPLAY} with any questions.</p>
+              <p className="text-white/50 text-sm">A MedRevolve specialist will contact you within 24 hours to finalize your setup. Book a call if you have any questions.</p>
             </div>
           </motion.div>
         )}
@@ -280,8 +280,8 @@ export default function MerchantDocuments() {
             {/* Help */}
             <div className="mt-4 bg-white/[0.02] border border-white/10 rounded-xl p-4">
               <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-2">Need Help?</p>
-              <a href={PHONE_TEL} className="flex items-center gap-2 text-white/60 text-sm hover:text-white">
-                <Phone className="w-4 h-4 text-[#A8C99B]" /> {PHONE_DISPLAY}
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white/60 text-sm hover:text-white">
+                Book a call with your specialist
               </a>
               <p className="text-white/30 text-xs mt-2 flex items-center gap-1.5"><Clock className="w-3 h-3" /> Mon–Fri 9am–6pm ET</p>
             </div>

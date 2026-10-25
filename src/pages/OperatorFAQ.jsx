@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
@@ -11,7 +10,7 @@ const OPERATOR_FAQS = [
   { question: 'What is included in the platform?', answer: 'AI intake and triage, a US-licensed clinician network contracted across all 50 states, high-risk payment processing with automated retries and subscriptions, 50-state licensed pharmacy fulfillment, a unified CRM with automation, and real-time compliance monitoring with audit-ready documentation.' },
   { question: 'What happens when a regulation changes?', answer: 'MedRevolve tracks FDA and federal regulatory activity in real time and alerts operators before changes take effect, with continuity plans and audit-ready logging per patient.' },
   { question: 'What does it cost?', answer: 'Service bundles and pricing are listed on the For Business page. For a scoped quote, talk to us directly.' },
-  { question: 'How do we get started?', answer: 'Start on the For Business page or call {PHONE_DISPLAY}. You need one executive sponsor, one 30-day pilot scope, and a decision point at day 30.' },
+  { question: 'How do we get started?', answer: 'Start on the For Business page or book a demo. You need one executive sponsor, one 30-day pilot scope, and a decision point at day 30.' },
 ];
 
 export default function OperatorFAQ() {

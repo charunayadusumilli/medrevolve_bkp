@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+// Phone line retired — Nova offers a booked call instead of a number.
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -320,7 +320,7 @@ export default function AIAssistant() {
           startListeningOnce();
         }
       }, 350);
-      // Brief pause before speaking — feels like Melinda is listening and taking a breath
+      // Brief pause before speaking — feels like Nova is listening and taking a breath
       await new Promise(r => setTimeout(r, 250));
       await speak(replyText);
       // If the user barged in, a new turn is driving — don't double-listen
@@ -354,7 +354,7 @@ export default function AIAssistant() {
     let firstName = '';
     try { const u = await base44.auth.me(); firstName = (u?.full_name || u?.display_name || '').split(' ')[0]; } catch {}
     const nameGreeting = firstName ? `, ${firstName}` : '';
-    const greeting = `Hey${nameGreeting}! I'm Melinda, your personal wellness guide at MedRevolve. I'm here to help with anything — treatments, consultations, or just figuring out the best next step for your health journey. What's on your mind?`;
+    const greeting = `Hey${nameGreeting}! I'm Nova, your personal intake assistant at MedRevolve. I'm here to help with anything — treatments, consultations, or just figuring out the best next step for your health journey. What's on your mind?`;
     setVoiceTranscript([{ role: 'assistant', content: greeting }]);
     const myTurn = voiceTurnRef.current;
     setTimeout(() => {
@@ -443,12 +443,12 @@ export default function AIAssistant() {
               </div>
               <div>
               <div className="flex items-center gap-2">
-                <p className="font-bold text-white text-sm leading-tight">Melinda</p>
+                <p className="font-bold text-white text-sm leading-tight">Nova</p>
                 <span className="px-1.5 py-0.5 bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] rounded-full text-[8px] font-bold text-white uppercase tracking-wider">MedRevolve</span>
               </div>
               <p className="text-[10px] text-white/50 leading-tight flex items-center gap-1">
                 <span className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse" />
-                AI Receptionist · {PHONE_DISPLAY}
+                AI intake assistant · 24/7
               </p>
               </div>
               </div>

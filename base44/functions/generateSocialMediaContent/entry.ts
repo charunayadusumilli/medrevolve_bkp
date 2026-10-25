@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
         - Hook (0-3s): "I launched my own telehealth business in 7 days..."
         - Problem (3-10s): Traditional healthcare business is expensive ($100k+ startup)
         - Solution (10-20s): MedRevolve white-label platform - compliance, providers, tech all included
-        - CTA (20-30s): "Call 240-387-5224 or visit medrevolve.com to start YOUR business"
+        - CTA (20-30s): "Book a demo at medrevolve.com/ForBusiness or visit medrevolve.com to start YOUR business"
         - Include visual directions for each scene
         - Natural, conversational tone like a real customer testimonial
         - Add text overlay suggestions`
@@ -30,7 +30,7 @@ Deno.serve(async (req) => {
         prompt: `Create a high-converting static Instagram ad for MedRevolve targeting entrepreneurs. Include:
         - Headline: "Start Your Own Telehealth Business in 7 Days"
         - Bullet points: ✅ HIPAA Compliant ✅ Licensed Providers ✅ $2,999/mo All-Inclusive
-        - Strong CTA: "Call 240-387-5224 | medrevolve.com"
+        - Strong CTA: "Book a demo at medrevolve.com/ForBusiness | medrevolve.com"
         - Visual description for designer (professional, medical, trustworthy)
         - Keep text under 20% of image for Facebook ad rules
         - Include color scheme suggestions (blues, greens, whites)`
@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
         - Hook emoji: 🚀 "Want to own a telehealth business without the headache?"
         - 3 key benefits: Compliance handled, Turnkey technology, 24/7 provider network
         - Social proof: "100+ partners launched successfully"
-        - CTA: "📞 240-387-5224 | 🔗 Link in bio: medrevolve.com"
+        - CTA: "🔗 medrevolve.com/ForBusiness | 🔗 Link in bio: medrevolve.com"
         - 20-25 trending hashtags: #telehealth #healthtech #entrepreneur #medspa #wellness #GLP1 #weightloss #businessowner #passiveincome #healthcare #digitalhealth #startup #medspaowner #aesthetics #antiaging #longevity #menshealth #womenshealth #fitness #nutrition`
       },
       {
@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
         - Features: Custom branded app/website, Licensed providers, HIPAA compliance, Payment processing, Marketing support
         - Pricing: Starting at $2,999/month (all-inclusive)
         - Urgency: "Limited spots available for Q2 2026"
-        - CTA: "📞 Call 240-387-5224 for a FREE demo" or "🌐 Visit medrevolve.com/for-business"
+        - CTA: "📞 Book a demo at medrevolve.com/ForBusiness for a FREE demo" or "🌐 Visit medrevolve.com/for-business"
         - Professional yet conversational tone
         - 5-7 hashtags: #Telehealth #HealthcareBusiness #Entrepreneur #MedSpa #Wellness #DigitalHealth #BusinessOpportunity`
       },
@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
         - Scene 2 (5-15s): Show overwhelming paperwork, licensing forms, tech setup
         - Scene 3 (15-30s): Solution reveal - MedRevolve platform dashboard, happy providers
         - Scene 4 (30-45s): Benefits montage - Custom app, Compliance badge, Provider network, Payment processing
-        - Scene 5 (45-60s): Strong CTA - "Start YOUR telehealth empire today! Call 240-387-5224 or visit medrevolve.com"
+        - Scene 5 (45-60s): Strong CTA - "Start YOUR telehealth empire today! Book a demo at medrevolve.com/ForBusiness or visit medrevolve.com"
         - Include background music suggestions (upbeat, inspiring)
         - Add text overlay timing
         - Voice-over script for each scene`
@@ -84,7 +84,7 @@ Deno.serve(async (req) => {
           * 8-11s: "Providers? ✅ Licensed network"
           * 11-14s: "Tech? ✅ Custom platform"
           * 14-17s: "Cost? ✅ $2,999/mo all-in"
-          * 17-20s: "Ready? Call 240-387-5224 | medrevolve.com"
+          * 17-20s: "Ready? Book a demo at medrevolve.com/ForBusiness | medrevolve.com"
         - Include transition suggestions
         - Add on-screen text timing
         - Hashtag suggestions for reels`
@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
         - Slide 2: "✅ Custom Branded App & Website" + Features list
         - Slide 3: "✅ HIPAA Compliance & Legal" + Badge icons
         - Slide 4: "✅ Licensed Provider Network" + Doctor icons
-        - Slide 5: "✅ $2,999/mo All-Inclusive" + CTA "Call 240-387-5224 | medrevolve.com"
+        - Slide 5: "✅ $2,999/mo All-Inclusive" + CTA "Book a demo at medrevolve.com/ForBusiness | medrevolve.com"
         - For each slide: Headline (max 40 chars), Subtext (max 90 chars), Visual description
         - Consistent color scheme (medical blues/greens)
         - Professional, trustworthy aesthetic`
@@ -151,7 +151,7 @@ Deno.serve(async (req) => {
           scheduled_at: new Date(Date.now() + 86400000).toISOString(), // Schedule for tomorrow
           content_type: post.content_type,
           hashtags: hashtags,
-          notes: `Auto-generated ${post.content_type} for ${post.platform} - includes phone 240-387-5224 and medrevolve.com links`
+          notes: `Auto-generated ${post.content_type} for ${post.platform} - includes phone medrevolve.com/ForBusiness and medrevolve.com links`
         };
       })
     );
@@ -159,7 +159,7 @@ Deno.serve(async (req) => {
     return Response.json({
       success: true,
       posts: posts,
-      message: `Generated ${posts.length} high-converting marketing assets including UGC scripts, static ads, reels, and posts for Instagram and Facebook. All content includes phone number (240-387-5224) and website links (medrevolve.com). Ready to publish!`,
+      message: `Generated ${posts.length} high-converting marketing assets including UGC scripts, static ads, reels, and posts for Instagram and Facebook. All content includes phone number (medrevolve.com/ForBusiness) and website links (medrevolve.com). Ready to publish!`,
       content_breakdown: {
         ugc_video_scripts: generatedContent.filter(c => c.content_type === 'ugc_video_script').length,
         static_ads: generatedContent.filter(c => c.content_type === 'static_ad').length,

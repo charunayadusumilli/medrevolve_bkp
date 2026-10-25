@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -285,9 +285,8 @@ export default function ProductsAndServices() {
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               <span className="text-green-300 text-xs font-medium">Licensed healthcare payment processing</span>
             </div>
-            <a href={PHONE_TEL} className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5 text-white/70 text-xs hover:text-white transition-colors">
-              <Phone className="w-3.5 h-3.5 text-cyan-400" />
-              {PHONE_DISPLAY}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5 text-white/70 text-xs hover:text-white transition-colors">
+              Book a Demo
             </a>
             <div className="flex items-center gap-2 bg-blue-500/20 border border-blue-500/30 rounded-full px-3 py-1.5">
               <Zap className="w-3.5 h-3.5 text-blue-400" />
@@ -364,7 +363,7 @@ export default function ProductsAndServices() {
                             medrevolve.com{row.link} <ExternalLink className="w-3 h-3" />
                           </a>
                         ) : (
-                          <span className="text-white/40 text-xs">Call {PHONE_DISPLAY}</span>
+                          <span className="text-white/40 text-xs">Book a demo</span>
                         )}
                       </td>
                     </tr>

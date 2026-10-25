@@ -166,7 +166,7 @@ Deno.serve(async (req) => {
   </td></tr>
   <tr><td style="background:#1f2d1f;border-radius:0 0 16px 16px;padding:20px 40px;text-align:center;">
     <p style="color:#fff;font-size:13px;font-weight:700;margin:0 0 4px;">Raj Nedunuri — President & CEO</p>
-    <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;">📞 240-387-5224 | ✉️ rned@medrevolve.com</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;">✉️ rned@medrevolve.com</p>
   </td></tr>
 </table>
 </td></tr></table>

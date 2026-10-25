@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -281,12 +281,12 @@ export default function MerchantOnboarding() {
             </div>
           </div>
 
-          <a href={PHONE_TEL}>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <Button className="w-full bg-[#4A6741] hover:bg-[#4A6741]/90 text-white font-bold rounded-sm h-12 text-base">
-              <Phone className="w-4 h-4 mr-2" /> Call Us Now: {PHONE_DISPLAY}
+              Book a Demo
             </Button>
           </a>
-          <p className="text-white/25 text-xs mt-4">Mon–Fri 9am–6pm EST · We'll reach out within 24 hours</p>
+          <p className="text-white/25 text-xs mt-4">A specialist will reach out within 24 hours</p>
         </motion.div>
       </div>
     );
@@ -372,7 +372,7 @@ export default function MerchantOnboarding() {
                           <Phone className="w-3 h-3" /> Phone *
                         </Label>
                         <Input value={form.phone} onChange={e => set('phone', e.target.value)}
-                          placeholder={PHONE_DISPLAY}
+                          placeholder="Phone number"
                           className="mt-1.5 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#4A6741]/50" />
                         <p className="text-white/30 text-xs mt-1">We'll call or text to schedule your consultation and walk through your platform setup</p>
                       </div>

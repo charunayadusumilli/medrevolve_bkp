@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -30,9 +30,9 @@ export default function DTCFinalCTA() {
                 Shop Products <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
-            <a href={PHONE_TEL}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="ghost" className="text-white border border-white/30 hover:bg-white/10 rounded-lg px-6 font-bold h-auto py-3.5">
-                <Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}
+                Book a Call
               </Button>
             </a>
           </div>

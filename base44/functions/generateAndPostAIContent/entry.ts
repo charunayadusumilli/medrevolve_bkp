@@ -69,7 +69,7 @@ async function relayToZapier(zapierUrl, caption, imageUrl, targetAudience) {
         message: caption,
         image_url: imageUrl,
         link: 'https://medrevolve.com',
-        phone: '240-387-5224',
+        phone: '',
         target_audience: targetAudience,
         source: 'generateAndPostAIContent'
       })
@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
 RULES — follow every single one:
 1. Start with a BOLD hook that stops the scroll (emoji + problem/result statement)
 2. 2-3 punchy sentences — benefits, results, or business opportunity
-3. ALWAYS end with: "📞 Call or text: 240-387-5224" and "🌐 medrevolve.com"
+3. ALWAYS end with: "Book a demo: medrevolve.com/ForBusiness" and "🌐 medrevolve.com"
 4. 5-7 hashtags relevant to the content
 5. NO vague wellness fluff — be SPECIFIC (GLP-1, semaglutide, tirzepatide, TRT, peptides, BHRT, white-label, $2,999/mo)
 6. Write like a real person, not a corporation

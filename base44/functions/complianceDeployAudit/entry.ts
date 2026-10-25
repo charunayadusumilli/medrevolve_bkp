@@ -156,7 +156,7 @@ const AUDIT_CHANGES = [
     page: 'All pages — Header phone number',
     risk: 'HIGH',
     type: 'Cross-Domain Phone Number',
-    original: 'Consumer patient support number 240-387-5224 displayed in RUO domain header',
+    original: 'Consumer patient support number displayed in RUO domain header',
     updated: 'Phone number fully removed from top bar, desktop nav, floating button, and mobile menu. Email contact research@medrevolveruo.com shown instead.',
     reason: 'Shared phone number between consumer telehealth brand and RUO domain creates direct link that payment processors and FDA investigators use to prove cross-promotion. Removed entirely.',
   },

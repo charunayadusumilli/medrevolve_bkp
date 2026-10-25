@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -217,7 +216,7 @@ export default function PartnerSignup() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      placeholder={PHONE_DISPLAY}
+                      placeholder="Phone"
                       className="mt-1"
                     />
                   </div>

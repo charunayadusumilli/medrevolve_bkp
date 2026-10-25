@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import FAQSection from '@/components/home/FAQSection';
 import PositioningStrip from '@/components/home/PositioningStrip';
+import WhoWeServe from '@/components/forbusiness/WhoWeServe';
 import {
   ArrowRight, CheckCircle, Shield, Zap, Globe, Package,
   Stethoscope, Pill, ChevronRight, Building2, Users, BarChart3,
@@ -24,7 +24,7 @@ const OPERATOR_FAQS = [
   { question: 'How does pharmacy fulfillment work?', answer: '503A/503B licensed compounding pharmacies, COAs on every batch, no grey-market sourcing; prescriptions flow to pharmacy after clinician approval.' },
   { question: 'What about payment processing?', answer: 'Telehealth is high-risk for mainstream processors. MedRevolve includes payment processing built for high-risk telehealth categories.' },
   { question: 'Who is this NOT for?', answer: 'Operators who want to prescribe without clinicians, cut corners on pharmacy sourcing, or ignore compliance. MedRevolve is built for legitimate brands that want to last.' },
-  { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}. A specialist will walk you through the platform and your launch plan.' },
+  { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or book a demo. A specialist will walk you through the platform and your launch plan.' },
   { question: 'Why is MedRevolve described as an AI-powered platform?', answer: 'Every layer runs on automation: AI intake triage, AI receptionist, an on-site AI answer engine, automated compliance monitoring, and webhook-driven alerts — the LLM-grade infrastructure layer for telehealth.' },
   { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one, with competitive setup costs quoted on a call.' },
   { question: 'Which states are covered?', answer: 'MedRevolve\'s physician network is licensed across all 50 states, so your patients can be seen and prescribed for wherever they live.' },
@@ -232,6 +232,9 @@ export default function ForBusiness() {
         </div>
       </section>
 
+      {/* ── Who We Serve ── */}
+      <WhoWeServe />
+
       {/* ── Section 1: Products & Classification ── */}
       <section className="py-24 px-6 lg:px-8 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto">
@@ -316,7 +319,7 @@ export default function ForBusiness() {
       </section>
 
       {/* ── Section 2: Storefront Guidelines ── */}
-      <section className="py-24 px-6 lg:px-8 bg-[#F5F0E8]">
+      <section id="storefront" className="py-24 px-6 lg:px-8 bg-[#F5F0E8]">
         <div className="max-w-7xl mx-auto">
           <SectionHeader
             tag="Storefront & Online Guidelines"
@@ -400,7 +403,7 @@ export default function ForBusiness() {
       </section>
 
       {/* ── Section 4: Pharmacy B2B ── */}
-      <section className="py-24 px-6 lg:px-8 bg-[#0A1628]">
+      <section id="pharmacy" className="py-24 px-6 lg:px-8 bg-[#0A1628]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs font-bold uppercase tracking-widest text-[#A8C99B] mb-3">Pharmacy & Logistics</p>

@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { detectDomain } from '@/lib/domainConfig';
@@ -7,7 +7,7 @@ import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Phone, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck } from 'lucide-react';
+import { Menu, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck, CalendarCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AnswerEngine from '@/components/chat/AnswerEngine';
@@ -102,14 +102,14 @@ export default function Layout({ children }) {
       <AnswerEngine />
       <ConnectNow floating />
 
-      {/* Top announcement bar */}
+      {/* Top bar — demo booking (phone line retired) */}
       <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
-        <a href={PHONE_TEL}
+        <Link to={ctaLink}
           className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
-          <Phone className="w-3.5 h-3.5 text-green-400" />
-          <span className="text-white/60">Speak with a specialist:</span>
-          <span className="font-bold tracking-wide">{PHONE_DISPLAY}</span>
-        </a>
+          <CalendarCheck className="w-3.5 h-3.5 text-green-400" />
+          <span className="font-bold tracking-wide">{ctaLabel}</span>
+          <span className="hidden sm:inline text-white/50 font-medium">— 20 minutes, Google Meet</span>
+        </Link>
       </div>
 
       {/* Header */}
@@ -265,10 +265,10 @@ export default function Layout({ children }) {
                       )}
                     </nav>
                     <div className="p-5 border-t border-gray-100 space-y-3">
-                      <a href={PHONE_TEL}
+                      <Link to={ctaLink} onClick={closeMenu}
                         className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white font-semibold rounded-sm py-3 text-sm">
-                        <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
-                      </a>
+                        <CalendarCheck className="w-4 h-4" /> {ctaLabel}
+                      </Link>
                       {user ? (
                         <Button variant="outline" className="w-full rounded-sm border-red-200 text-red-500"
                           onClick={() => { base44.auth.logout('/'); closeMenu(); }}>Sign Out</Button>
@@ -337,7 +337,7 @@ export default function Layout({ children }) {
                     <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
                   </>
                 )}
-                <li><a href={PHONE_TEL} className="text-sm text-white/40 hover:text-white transition-colors">{PHONE_DISPLAY}</a></li>
+                <li><Link to={ctaLink} className="text-sm text-white/40 hover:text-white transition-colors">{ctaLabel}</Link></li>
               </ul>
             </div>
 

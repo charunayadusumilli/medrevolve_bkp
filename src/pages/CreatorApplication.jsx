@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -146,7 +145,7 @@ export default function CreatorApplication() {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                placeholder={PHONE_DISPLAY}
+                placeholder="Phone"
                 className="mt-2 rounded-xl"
               />
             </div>

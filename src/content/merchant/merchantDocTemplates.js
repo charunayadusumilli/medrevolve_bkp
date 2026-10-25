@@ -3,7 +3,7 @@
 // These are legal document templates — populated with merchant data and rendered for e-signature.
 
 const MEDREVOLVE_LEGAL_NAME = 'MedRevolve Corporation';
-const MEDREVOLVE_ADDRESS = '240-387-5224 | medrevolve.com';
+const MEDREVOLVE_ADDRESS = 'medrevolve.com';
 const MEDREVOLVE_SIGNER = 'Phani Nedunuri, CEO';
 
 function fmtDate(d) {

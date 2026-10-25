@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield } from 'lucide-react';
@@ -119,7 +119,7 @@ export default function HIPAANotice() {
               <p className="text-[#5A6B5A]">
                 <strong>MedRevolve Privacy Officer:</strong><br />
                 Email: <a href="mailto:privacy@medrevolve.com" className="text-[#4A6741] underline">privacy@medrevolve.com</a><br />
-                Phone: {PHONE_DISPLAY}<br />
+                Book a call: {BOOKING_URL}<br />
                 Address: Charlotte, North Carolina, United States
               </p>
               <p className="text-[#5A6B5A] mt-3">

@@ -17,13 +17,13 @@ Deno.serve(async (req) => {
       - Solution: MedRevolve done-for-you platform
       - Features: Custom branded app, Licensed providers, HIPAA compliance
       - Pricing: $2,999/month all-inclusive
-      - CTA: "Call 240-387-5224 or visit medrevolve.com/for-business"
+      - CTA: "Book a demo at medrevolve.com/ForBusiness or visit medrevolve.com/for-business"
       - Professional tone, 5-7 hashtags`,
       
       `Create an engaging Facebook post about GLP-1 telehealth:
       - Hook: "The weight loss revolution is here!"
       - Benefits: Telehealth convenience, licensed providers, affordable
-      - Include: medrevolve.com and phone 240-387-5224
+      - Include: medrevolve.com and the booking link medrevolve.com/ForBusiness
       - Emojis: 💊⚕️📱
       - 10-15 hashtags including #GLP1 #WeightLoss #Telehealth`,
       

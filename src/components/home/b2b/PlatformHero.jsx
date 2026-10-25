@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -30,8 +30,8 @@ export default function PlatformHero() {
               Talk to Us
             </a>
           </div>
-          <a href={PHONE_TEL} className="mt-6 inline-flex items-center gap-2 text-white/45 text-sm hover:text-white/70 transition-colors">
-            <Phone className="w-3.5 h-3.5 text-[#A66B3C]" /> Or call {PHONE_DISPLAY}
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-white/45 text-sm hover:text-white/70 transition-colors">
+            Book a Demo
           </a>
         </motion.div>
       </div>

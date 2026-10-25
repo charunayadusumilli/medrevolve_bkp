@@ -97,7 +97,7 @@ const ALL_LINKS = {
   pharmacy_intake: 'https://medrevolve.com/PharmacyIntake',
   how_it_works: 'https://medrevolve.com/HowItWorks',
   telehealth: 'https://medrevolve.com/TelehealthPlatform',
-  phone: 'tel:+12403875224',
+  phone: 'https://calendly.com/rned-medrevolve/medrevolve-intro-call',
   email_support: 'mailto:support@medrevolve.com',
   email_info: 'mailto:info@medrevolve.com',
 };
@@ -194,7 +194,7 @@ function buildEmailHtml(campaign, sheetUrl) {
     <hr class="divider" />
     <p style="text-align:center;">
       <a href="${campaign.booking_link}" class="cta-primary">Get Started →</a>
-      <a href="tel:+12403875224" class="cta-secondary">Call 240-387-5224</a>
+      <a href="https://calendly.com/rned-medrevolve/medrevolve-intro-call" class="cta-secondary">Book a demo</a>
     </p>
     <hr class="divider" />
     <div class="links-box">
@@ -212,7 +212,7 @@ function buildEmailHtml(campaign, sheetUrl) {
     </p>` : ''}
   </div>
   <div class="footer">
-    <p>MedRevolve · 240-387-5224 · <a href="mailto:info@medrevolve.com">info@medrevolve.com</a></p>
+    <p>MedRevolve · <a href="mailto:info@medrevolve.com">info@medrevolve.com</a></p>
     <p><a href="https://medrevolve.com">medrevolve.com</a> · <a href="https://medrevolve.com/Privacy">Privacy</a> · <a href="https://medrevolve.com/Terms">Terms</a></p>
   </div>
 </div>
@@ -371,7 +371,7 @@ Deno.serve(async (req) => {
 
       try {
         const htmlBody = buildEmailHtml(campaign, sheetUrl);
-        const plainText = `${campaign.segment}\r\n\r\nCampaign Link: ${campaign.link}\r\nBook / Apply: ${campaign.booking_link}\r\nGoogle Sheets: ${sheetUrl}\r\nPhone: 240-387-5224\r\nWebsite: https://medrevolve.com`;
+        const plainText = `${campaign.segment}\r\n\r\nCampaign Link: ${campaign.link}\r\nBook / Apply: ${campaign.booking_link}\r\nGoogle Sheets: ${sheetUrl}\r\nPhone: none — book a demo\r\nWebsite: https://medrevolve.com`;
         const encoded = encodeEmailRaw(to, campaign.subject, htmlBody, plainText);
 
         const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {

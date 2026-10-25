@@ -1,14 +1,13 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL, WHATSAPP_URL, BOOKING_URL, SPECIALIST_TITLE } from '@/lib/contactConfig';
+import { WHATSAPP_URL, BOOKING_URL, SPECIALIST_TITLE, AI_GREETING, AI_BRAND } from '@/lib/contactConfig';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { Sparkles, X, Send, Phone, ArrowRight, MessageCircle, AlertCircle, ChevronDown } from 'lucide-react';
+import { Sparkles, X, Send, ArrowRight, MessageCircle, AlertCircle, ChevronDown, CalendarCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 
-const PHONE = PHONE_DISPLAY;
-// PHONE_TEL comes from contactConfig
 // WHATSAPP_URL comes from contactConfig (empty until a WhatsApp Business number exists)
+// Phone line retired — Nova books a demo instead of showing a number
 const HUMAN_INTENT = /whats\s?app|\bwa\b|talk to (a |an |some)?(human|person|agent|someone|specialist|rep)|real person|live (agent|chat|person)|speak (to|with)|call me|text me|sms|phone call|connect (me|us)|get in touch|reach (you|someone)/i;
 
 function HumanHandoffCard() {
@@ -24,10 +23,7 @@ function HumanHandoffCard() {
           Chat on WhatsApp
         </a>
       )}
-      <div className="flex gap-2">
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-[12px] font-medium text-center text-gray-700 hover:bg-gray-50">Book a call</a>
-        <a href={PHONE_TEL} className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-[12px] font-medium text-center text-gray-700 hover:bg-gray-50">Call {PHONE_DISPLAY}</a>
-      </div>
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-[12px] font-medium text-center text-gray-700 hover:bg-gray-50">Book a call</a>
     </div>
   );
 }
@@ -111,11 +107,13 @@ function EscalationCard({ onCapture }) {
         </div>
       )}
       <div className="flex gap-1.5 pt-1">
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1 bg-[#25D366] hover:opacity-90 text-white text-[10px] font-semibold rounded-lg py-1.5 transition-opacity">
-          <MessageCircle className="w-3 h-3" /> WhatsApp
-        </a>
-        <a href={PHONE_TEL} className="flex-1 flex items-center justify-center gap-1 bg-[#0A0A0A] hover:opacity-90 text-white text-[10px] font-semibold rounded-lg py-1.5 transition-opacity">
-          <Phone className="w-3 h-3" /> {PHONE}
+        {WHATSAPP_URL && (
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1 bg-[#25D366] hover:opacity-90 text-white text-[10px] font-semibold rounded-lg py-1.5 transition-opacity">
+            <MessageCircle className="w-3 h-3" /> WhatsApp
+          </a>
+        )}
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1 bg-[#0A0A0A] hover:opacity-90 text-white text-[10px] font-semibold rounded-lg py-1.5 transition-opacity">
+          Book a call
         </a>
       </div>
     </div>
@@ -153,7 +151,7 @@ export default function AnswerEngine() {
 
   useEffect(() => {
     if (messages.length === 0 && kb.length > 0) {
-      setMessages([{ role: 'assistant', content: "Hi! I'm the MedRevolve Answer Engine. Ask me anything about peptide therapy, GLP-1, hormones, NAD+, white-label telehealth, pricing, or compliance — I'll answer instantly and point you to the right next step." }]);
+      setMessages([{ role: 'assistant', content: AI_GREETING }]);
     }
   }, [kb.length]);
 
@@ -192,7 +190,7 @@ export default function AnswerEngine() {
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
 
     const grounding = buildGrounding();
-    const systemPrompt = `You are the MedRevolve Answer Engine — an AI that instantly answers visitor questions and routes them to the right funnel.
+    const systemPrompt = `You are Nova by MedRevolve — the AI intake assistant that instantly answers visitor questions and routes them to the right funnel.
 
 PRIMARY AUDIENCES: entrepreneurs and creators launching or running telehealth brands. Secondary: existing clinic/medspa owners. Patients are answered briefly and routed to intake without product detail.
 
@@ -222,7 +220,7 @@ ROUTING (end EVERY answer with exactly ONE routing CTA based on the visitor's in
 - Creator questions (audience, content funnel, turning followers into a brand) → route to "creator".
 - Operator/clinic/medspa questions (white-label, pricing, compliance, platform, existing business) → route to "operator".
 - Affiliate/merchant questions → route to "affiliate".
-End every non-patient answer with: "Apply at medrevolve.com/ForBusiness or call {PHONE_DISPLAY}."
+End every non-patient answer with: "Apply at medrevolve.com/ForBusiness or book a demo."
 
 CONFIDENCE:
 - If the knowledge base does not contain a relevant answer, say: "I want to make sure you get an accurate answer on that — let me connect you with a specialist." Then stop. Do not guess.
@@ -244,7 +242,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
       }
     } catch (err) {
       console.error('AnswerEngine LLM error', err);
-      reply = `I'm having trouble right now. Please call ${PHONE_DISPLAY} and a specialist will help immediately.\n\nROUTE: none`;
+      reply = `I'm having trouble right now. Book a call and a specialist will help immediately.\n\nROUTE: none`;
     }
 
     // Parse route
@@ -280,7 +278,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
               </div>
               <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#0A0A0A] animate-pulse" />
             </div>
-            <span className="font-bold text-sm tracking-tight">Ask MedRevolve AI</span>
+            <span className="font-bold text-sm tracking-tight">{AI_BRAND}</span>
             <span className="hidden sm:inline text-[10px] text-white/40 font-medium ml-1 group-hover:text-white/60 transition-colors">→</span>
           </motion.button>
         )}
@@ -309,7 +307,7 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="font-bold text-white text-sm leading-tight">Answer Engine</p>
+                    <p className="font-bold text-white text-sm leading-tight">Nova</p>
                     <span className="px-1.5 py-0.5 bg-gradient-to-r from-[#4A6741] to-[#6B8F5E] rounded-full text-[8px] font-bold text-white uppercase tracking-wider">AI</span>
                   </div>
                   <p className="text-[10px] text-white/50 leading-tight flex items-center gap-1">
@@ -401,8 +399,8 @@ Keep answers concise (2-5 sentences), warm, and professional. Do not use markdow
               </div>
               <div className="flex items-center justify-between mt-2 px-1">
                 <p className="text-[9px] text-gray-400">Clinician-guided · No medical advice</p>
-                <a href={PHONE_TEL} className="text-[9px] text-[#4A6741] font-medium flex items-center gap-1 hover:underline">
-                  <Phone className="w-3 h-3" /> {PHONE}
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-[9px] text-[#4A6741] font-medium flex items-center gap-1 hover:underline">
+                  <CalendarCheck className="w-3 h-3" /> Book a demo
                 </a>
               </div>
             </div>

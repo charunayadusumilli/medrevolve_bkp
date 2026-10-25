@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -39,8 +39,8 @@ export default function EditorialFinalCTA() {
                     See if you qualify
                   </button>
                 </a>
-                <a href={PHONE_TEL} className="inline-flex items-center justify-center text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors py-3.5">
-                  <Phone className="w-4 h-4 mr-1.5" /> Call
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors py-3.5">
+                  Book a Demo
                 </a>
               </div>
             </div>

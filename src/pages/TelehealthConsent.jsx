@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Video, AlertTriangle } from 'lucide-react';
@@ -102,7 +102,7 @@ export default function TelehealthConsent() {
             <section>
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">10. Contact</h2>
               <p className="text-[#5A6B5A]">
-                Questions about this consent: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a> | {PHONE_DISPLAY}
+                Questions about this consent: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a> | Book a call: {BOOKING_URL}
               </p>
             </section>
 

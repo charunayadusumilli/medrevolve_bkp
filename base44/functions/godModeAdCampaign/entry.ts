@@ -140,7 +140,7 @@ ${service.name === 'UGC Patient Success Story'
   : `Wellness businesses across the country are adding 5-6 figures in recurring revenue by white-labeling the MedRevolve telehealth platform.`
 }
 
-📞 Call or text: 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 👉 ${service.cta}: ${url}
 
 ${service.hashtags.join('  ')}`;
@@ -157,7 +157,7 @@ Here's what MedRevolve offers:
 ✅ 100% HIPAA compliant
 ✅ No insurance needed
 
-📞 Call or text: 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 👉 ${service.cta} → ${url}
 
 ${service.hashtags.join('  ')}`;

@@ -7,7 +7,7 @@
 🚀 Launch Your Telehealth Business in 7 Days
 ✅ HIPAA Compliant | ✅ Licensed Providers
 💼 100+ Partners Launched
-📞 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 👇 Start Free Demo
 medrevolve.com/for-business
 ```
@@ -18,7 +18,7 @@ medrevolve.com/for-business
 💊 GLP-1 • TRT • RUO • Supplements
 🔒 Compliance + Tech + Providers Included
 💰 From $2,999/mo
-📲 Call: 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 medrevolve.com
 ```
 
@@ -28,7 +28,7 @@ medrevolve.com
 🏥 White-Label Telehealth Solutions
 📱 Custom App | 💳 Payment Processing
 🎯 Launch in 7-14 Days
-📞 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 medrevolve.com/partners
 ```
 
@@ -38,7 +38,7 @@ medrevolve.com/partners
 🏆 HIPAA Compliant | Nationwide Providers
 💼 Med Spas • Gyms • Wellness Clinics
 🚀 Start Your Empire
-📞 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 medrevolve.com
 ```
 
@@ -57,7 +57,7 @@ medrevolve.com
 ✅ Marketing Support
 
 💰 All-Inclusive: $2,999/month
-📞 Call 240-387-5224 for FREE Demo
+🔗 Book a free demo: medrevolve.com/ForBusiness
 🌐 medrevolve.com/for-business
 
 #Telehealth #Entrepreneur #HealthcareBusiness
@@ -75,7 +75,7 @@ MedRevolve = Done-For-You Telehealth Platform
 💳 Payment Ready
 📱 Custom App
 
-📞 240-387-5224 | medrevolve.com
+🔗 Book a demo: medrevolve.com/ForBusiness | medrevolve.com
 
 Start your business in 7-14 days!
 ```
@@ -93,7 +93,7 @@ MedRevolve provides everything to launch YOUR branded healthcare business:
 ✅ Compliance Handled
 
 💰 $2,999/mo All-Inclusive
-📞 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 🌐 medrevolve.com/for-business
 ```
 
@@ -143,7 +143,7 @@ Launch in 7-14 days
 ✅ GLP-1, TRT, BHRT, RUO compounds available
 
 📞 READY TO START?
-Call 240-387-5224 for a free demo
+Call medrevolve.com/ForBusiness for a free demo
 Visit medrevolve.com/for-business
 
 #Telehealth #HealthcareBusiness #Entrepreneurship #MedSpa #Wellness #GLP1 #DigitalHealth #HealthTech #BusinessOpportunity #PassiveIncome
@@ -151,7 +151,7 @@ Visit medrevolve.com/for-business
 
 ### Short LinkedIn Tagline (120 characters):
 ```
-🚀 Turnkey Telehealth Platform | Launch Your Healthcare Business in 7 Days | HIPAA Compliant | 100+ Partners | 📞 240-387-5224
+🚀 Turnkey Telehealth Platform | Launch Your Healthcare Business in 7 Days | HIPAA Compliant | 100+ Partners | 🔗 Book a demo: medrevolve.com/ForBusiness
 ```
 
 ---
@@ -162,7 +162,7 @@ Visit medrevolve.com/for-business
 ```
 🚀 Launch Telehealth Biz in 7 Days
 💊 GLP-1 • TRT • RUO
-📞 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 medrevolve.com 👇
 ```
 
@@ -179,7 +179,7 @@ medrevolve.com
 ```
 💼 Passive Income: Telehealth
 🎯 100+ Partners Launched
-📲 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 Free Demo 👇
 medrevolve.com
 ```
@@ -190,17 +190,17 @@ medrevolve.com
 
 ### Option 1:
 ```
-🚀 Turnkey telehealth platform for entrepreneurs. Launch your branded healthcare business in 7 days. HIPAA compliant. 100+ partners. 📞 240-387-5224 | medrevolve.com
+🚀 Turnkey telehealth platform for entrepreneurs. Launch your branded healthcare business in 7 days. HIPAA compliant. 100+ partners. 🔗 Book a demo: medrevolve.com/ForBusiness | medrevolve.com
 ```
 
 ### Option 2:
 ```
-🏥 White-label telehealth solutions. GLP-1, TRT, RUO, supplements. Compliance + tech + providers included. 💰 $2,999/mo. 📲 240-387-5224 | medrevolve.com/for-business
+🏥 White-label telehealth solutions. GLP-1, TRT, RUO, supplements. Compliance + tech + providers included. 💰 $2,999/mo. 🔗 Book a demo: medrevolve.com/ForBusiness | medrevolve.com/for-business
 ```
 
 ### Option 3:
 ```
-💼 Helping med spas, gyms & wellness clinics add telehealth revenue streams. Custom app, licensed providers, HIPAA compliant. 🚀 Start: 240-387-5224 | medrevolve.com
+💼 Helping med spas, gyms & wellness clinics add telehealth revenue streams. Custom app, licensed providers, HIPAA compliant. 🚀 Start: medrevolve.com/ForBusiness | medrevolve.com
 ```
 
 ---
@@ -245,7 +245,7 @@ We handle:
 Offer GLP-1 weight loss, TRT, BHRT, RUO research compounds, telehealth consultations, and wellness products - all under YOUR brand.
 
 📞 READY TO START?
-Call 240-387-5224 for a FREE demo
+Call medrevolve.com/ForBusiness for a FREE demo
 Visit medrevolve.com/for-business
 
 🔔 Subscribe for weekly business tips, success stories, and telehealth industry insights!
@@ -258,7 +258,7 @@ Visit medrevolve.com/for-business
 ## 📌 **Pinterest Bio**
 
 ```
-🚀 Telehealth Business Opportunities | MedRevolve helps entrepreneurs launch profitable healthcare businesses in 7 days. GLP-1 • TRT • RUO • Wellness. 📞 240-387-5224 | medrevolve.com
+🚀 Telehealth Business Opportunities | MedRevolve helps entrepreneurs launch profitable healthcare businesses in 7 days. GLP-1 • TRT • RUO • Wellness. 🔗 Book a demo: medrevolve.com/ForBusiness | medrevolve.com
 ```
 
 ---
@@ -279,7 +279,7 @@ Visit medrevolve.com/for-business
 
 ## 🔑 **Key Elements in All Bios:**
 
-✅ **Phone Number:** 240-387-5224 (consistent across all)
+✅ **Phone Number:** medrevolve.com/ForBusiness (consistent across all)
 ✅ **Website:** medrevolve.com (or medrevolve.com/for-business for B2B)
 ✅ **Core Benefit:** "Launch in 7 days" or "Turnkey platform"
 ✅ **Social Proof:** "100+ partners" where space allows

@@ -32,7 +32,7 @@ export default function FloatingAvatar({ onClick }) {
           className="absolute bottom-[70px] right-0 whitespace-nowrap pointer-events-none"
         >
           <div className="bg-black/90 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-xl">
-            Chat with Melinda
+            Chat with Nova
           </div>
         </motion.div>
       )}

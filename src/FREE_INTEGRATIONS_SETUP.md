@@ -121,7 +121,7 @@ SHIPENGINE_CARRIER_ID=usps
 ### Test Twilio SMS:
 ```javascript
 await base44.functions.invoke('sendSMS', {
-  to: '+12403875224',
+  to: '',
   message: 'Test SMS from MedRevolve!'
 });
 ```
@@ -142,7 +142,7 @@ await base44.functions.invoke('verifyIdentityIDme', {
   firstName: 'John',
   lastName: 'Doe',
   email: 'john@example.com',
-  phone: '+12403875224'
+  phone: ''
 });
 ```
 

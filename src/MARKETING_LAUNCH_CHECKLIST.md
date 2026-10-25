@@ -34,7 +34,7 @@
 
 **What Happens:**
 - Every morning at 8am: AI generates 3 platform-specific posts
-- Posts include phone number CTA: **240-387-5224**
+- Posts include phone number CTA: **medrevolve.com/ForBusiness**
 - Automatically posted to Instagram & Facebook 3x daily
 - All posts saved to database for tracking
 
@@ -64,7 +64,7 @@
 ---
 
 ### 4. Phone Number Integration
-**Primary CTA:** 240-387-5224
+**Primary CTA:** medrevolve.com/ForBusiness
 
 **Visible On:**
 - ✅ Top sticky bar (all pages) - pulsing animation
@@ -94,7 +94,7 @@
    - Test with sample calls
 
 2. **Test Phone System**
-   - Call 240-387-5224
+   - Call medrevolve.com/ForBusiness
    - Verify AI answers correctly
    - Test different scenarios (B2B, B2C, RUO)
    - Check call recording quality
@@ -143,7 +143,7 @@
 ## 📊 Expected Results
 
 ### Month 1 Goals
-- **Phone Calls:** 50+ to 240-387-5224
+- **Phone Calls:** 50+ to medrevolve.com/ForBusiness
 - **Qualified Leads:** 20+ (B2B + B2C)
 - **Social Posts:** 90+ (3x daily across platforms)
 - **New Customers:** 3-5 B2B partners
@@ -165,7 +165,7 @@
 ## 🎯 Content Strategy
 
 ### Every Post Includes:
-✅ Phone number: **240-387-5224**  
+✅ Phone number: **medrevolve.com/ForBusiness**  
 ✅ Clear CTA ("Call now", "Book demo", "Start today")  
 ✅ Platform-appropriate hashtags  
 ✅ Visual element (image/video)  
@@ -251,7 +251,7 @@
 
 ---
 
-**Questions?** Call your own number: **240-387-5224** 😄
+**Questions?** Call your own number: **medrevolve.com/ForBusiness** 😄
 
 **Or email:** support@medrevolve.com
 

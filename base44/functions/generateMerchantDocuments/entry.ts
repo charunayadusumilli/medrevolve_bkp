@@ -69,13 +69,13 @@ Deno.serve(async (req) => {
             </div>
             <p style="font-size: 12px; color: #888; line-height: 1.5;">
               This link is unique to your application. If you did not request onboarding with MedRevolve, please disregard this email.<br/><br/>
-              MedRevolve Corporation · 240-387-5224 · medrevolve.com
+              MedRevolve Corporation · medrevolve.com
             </p>
           </div>
         </div>
       `;
 
-      const text = `MedRevolve Onboarding Documents Ready\n\nHello ${app.signing_officer_name || app.legal_business_name},\n\nYour merchant onboarding documents are ready for review and electronic signature:\n1. Merchant Processing Application (MPA)\n2. B2B Platform Service Agreement\n3. HIPAA Business Associate Agreement (BAA)\n\nReview and sign here: ${reviewUrl}\n\nMedRevolve Corporation · 240-387-5224`;
+      const text = `MedRevolve Onboarding Documents Ready\n\nHello ${app.signing_officer_name || app.legal_business_name},\n\nYour merchant onboarding documents are ready for review and electronic signature:\n1. Merchant Processing Application (MPA)\n2. B2B Platform Service Agreement\n3. HIPAA Business Associate Agreement (BAA)\n\nReview and sign here: ${reviewUrl}\n\nMedRevolve Corporation`;
 
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: app.merchant_email || app.signing_officer_email,
@@ -142,10 +142,10 @@ Deno.serve(async (req) => {
             </p>
             <p style="font-size: 14px; color: #333; line-height: 1.6;">
               A MedRevolve specialist will contact you within 24 hours to finalize your platform setup.
-              If you have any questions, call us at <strong>240-387-5224</strong>.
+              If you have any questions, <strong>book a call with your onboarding specialist</strong>.
             </p>
             <p style="font-size: 12px; color: #888; line-height: 1.5;">
-              MedRevolve Corporation · 240-387-5224 · medrevolve.com
+              MedRevolve Corporation · medrevolve.com
             </p>
           </div>
         </div>`;
@@ -153,7 +153,7 @@ Deno.serve(async (req) => {
         to: merchantEmail,
         subject: 'MedRevolve — Onboarding Complete!',
         html: merchantHtml,
-        text: `Hello ${app.signing_officer_name || app.legal_business_name},\n\nAll three onboarding documents have been electronically signed. Your MedRevolve merchant onboarding is now complete!\n\nA MedRevolve specialist will contact you within 24 hours to finalize your platform setup. Call 240-387-5224 with any questions.\n\nMedRevolve Corporation`,
+        text: `Hello ${app.signing_officer_name || app.legal_business_name},\n\nAll three onboarding documents have been electronically signed. Your MedRevolve merchant onboarding is now complete!\n\nA MedRevolve specialist will contact you within 24 hours to finalize your platform setup. Book a call with any questions.\n\nMedRevolve Corporation`,
       });
 
       await base44.asServiceRole.entities.MerchantApplication.update(applicationId, {

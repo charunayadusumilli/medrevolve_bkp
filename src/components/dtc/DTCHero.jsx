@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -60,9 +60,9 @@ export default function DTCHero() {
                     Shop Products <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
-                <a href={PHONE_TEL}>
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                   <Button size="lg" variant="outline" className="rounded-lg px-6 font-bold h-auto py-3.5 border-gray-300">
-                    Talk to Us: {PHONE_DISPLAY}
+                    Book a Call
                   </Button>
                 </a>
               </div>

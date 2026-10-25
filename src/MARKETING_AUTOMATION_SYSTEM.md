@@ -1,13 +1,13 @@
 # MedRevolve Marketing Automation System
 
 ## Overview
-This document outlines the complete marketing automation setup for generating leads across all social media platforms with the primary CTA: **240-387-5224**
+This document outlines the complete marketing automation setup for generating leads across all social media platforms with the primary CTA: **medrevolve.com/ForBusiness**
 
 ## System Components
 
 ### 1. IONOS AI Voice Receptionist
 **Status:** ✅ Active  
-**Phone:** 240-387-5224  
+**Phone:** medrevolve.com/ForBusiness  
 **Knowledge Base:** See `content/ionos/IONOS_KNOWLEDGE_BASE.md`
 
 **What IONOS Does:**
@@ -126,7 +126,7 @@ This document outlines the complete marketing automation setup for generating le
 - 10% Behind-the-Scenes (team, company culture)
 
 #### Always Include:
-- ✅ Phone number: 240-387-5224
+- ✅ Phone number: medrevolve.com/ForBusiness
 - ✅ Clear CTA ("Call now", "Book demo", "Start today")
 - ✅ Relevant hashtags
 - ✅ Visual element (image/video/graphic)
@@ -259,7 +259,7 @@ Create 3 automations:
 1. **B2B - "Start Telehealth Business"**
    - Keywords: "white label telehealth", "start med spa", "GLP-1 business opportunity"
    - Landing page: /ForBusiness
-   - CTA: Call 240-387-5224 for demo
+   - CTA: Call medrevolve.com/ForBusiness for demo
 
 2. **B2C - "Weight Loss Telehealth"**
    - Keywords: "weight loss doctor online", "GLP-1 prescription", "semaglutide telehealth"
@@ -296,7 +296,7 @@ Create 3 automations:
 ## Metrics & KPIs
 
 ### Daily Tracking
-- [ ] Number of calls to 240-387-5224
+- [ ] Number of calls to medrevolve.com/ForBusiness
 - [ ] Lead source breakdown (social, organic, paid, referral)
 - [ ] Social media engagement (likes, comments, shares)
 - [ ] Website traffic (Google Analytics)
@@ -387,4 +387,4 @@ Create 3 automations:
 **Owner:** Marketing Team  
 **Next Review:** Weekly
 
-**Questions?** Call 240-387-5224 or email support@medrevolve.com
+**Questions?** Call medrevolve.com/ForBusiness or email support@medrevolve.com

@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -24,10 +24,10 @@ const contactMethods = [
   },
   {
     icon: Phone,
-    title: 'Call Us',
-    description: 'Mon-Fri from 8am to 6pm ET',
-    value: PHONE_DISPLAY,
-    action: 'tel:+12403875224'
+    title: 'Book a Demo',
+    description: '20 minutes, Google Meet',
+    value: 'Pick a time',
+    action: BOOKING_URL
   },
   {
     icon: MessageCircle,
@@ -380,8 +380,7 @@ export default function Contact() {
                 </div>
                 <p className="text-[#5A6B5A]">
                   Charlotte, North Carolina<br />
-                  United States<br />
-                  <span className="text-xs">{PHONE_DISPLAY}</span>
+                  United States
                 </p>
               </div>
             </motion.div>

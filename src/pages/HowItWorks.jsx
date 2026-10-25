@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -308,9 +308,9 @@ export default function HowItWorks() {
                 Book Discovery Call <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </Link>
-            <a href={PHONE_TEL}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" className="text-white border border-white/15 rounded-sm px-8 font-bold hover:bg-white/5">
-                Call {PHONE_DISPLAY}
+                Book a Demo
               </Button>
             </a>
           </div>

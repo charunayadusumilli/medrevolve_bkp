@@ -188,7 +188,7 @@ const buildEmail = (from, to, subject, bodyHtml) => {
     <p style="color:rgba(255,255,255,0.6);font-size:12px;margin:0 0 6px;font-family:Arial,sans-serif;">
       <strong style="color:rgba(255,255,255,0.9);">r ned</strong> · MedRevolve Corporation<br/>
       <a href="mailto:${ADMIN_EMAIL}" style="color:rgba(255,255,255,0.5);text-decoration:none;">${ADMIN_EMAIL}</a> &nbsp;·&nbsp;
-      <a href="tel:+12403875224" style="color:rgba(255,255,255,0.5);text-decoration:none;">(240) 387-5224</a> &nbsp;·&nbsp;
+      <a href="https://calendly.com/rned-medrevolve/medrevolve-intro-call" style="color:rgba(255,255,255,0.5);text-decoration:none;">Book a demo</a> &nbsp;·&nbsp;
       <a href="https://medrevolve.com" style="color:rgba(255,255,255,0.5);text-decoration:none;">medrevolve.com</a>
     </p>
     <p style="color:rgba(255,255,255,0.3);font-size:10px;margin:10px 0 0;line-height:1.6;font-family:Arial,sans-serif;">

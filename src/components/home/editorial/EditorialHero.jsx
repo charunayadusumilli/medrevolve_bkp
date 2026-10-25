@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import EditorialImage from './EditorialImage';
@@ -24,8 +24,8 @@ export default function EditorialHero() {
                 Start
               </button>
             </a>
-            <a href={PHONE_TEL} className="text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors">
-              Call {PHONE_DISPLAY}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[#1A1A1A] hover:text-stone-500 transition-colors">
+              Book a Demo
             </a>
           </div>
         </motion.div>

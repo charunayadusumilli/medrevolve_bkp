@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -136,12 +136,12 @@ export default function MarketingDashboard() {
             >
               <Card className="bg-white border-[#4A6741]/20 shadow-lg">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-[#6B8F5E]">Phone Calls</CardTitle>
+                  <CardTitle className="text-sm font-medium text-[#6B8F5E]">Demo bookings</CardTitle>
                   <Phone className="w-4 h-4 text-[#4A6741]" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-[#0A0A0A]">{PHONE_DISPLAY}</div>
-                  <p className="text-xs text-[#6B8F5E] mt-1">Active 24/7</p>
+                  <div className="text-3xl font-bold text-[#0A0A0A]">Booked</div>
+                  <p className="text-xs text-[#6B8F5E] mt-1">Via Calendly</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -232,7 +232,9 @@ export default function MarketingDashboard() {
                               {new Date(lead.created_date).toLocaleDateString()}
                             </p>
                             <a 
-                              href={`tel:+12403875224`}
+                              href={BOOKING_URL}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-[#4A6741] hover:text-[#6B8F5E] text-sm font-medium mt-1"
                             >
                               <Phone className="w-3 h-3" />
@@ -482,10 +484,10 @@ export default function MarketingDashboard() {
                     <Button 
                       variant="outline" 
                       className="border-[#4A6741] text-[#4A6741] hover:bg-[#4A6741]/10"
-                      onClick={() => window.open('tel:+12403875224')}
+                      onClick={() => window.open(BOOKING_URL)}
                     >
                       <Phone className="w-4 h-4 mr-2" />
-                      Test Phone System
+                      Book a Call
                     </Button>
                     <Button 
                       variant="outline" 

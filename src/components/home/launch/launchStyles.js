@@ -35,10 +35,11 @@ export const LAUNCH_CSS = `
 .mrx .hero-cta{display:flex;flex-wrap:wrap;gap:12px}
 .mrx .for{display:flex;flex-wrap:wrap;gap:8px}
 .mrx .for span{font-family:var(--f-mono);font-size:.74rem;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted)}
-.mrx .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;border-top:1px solid var(--line);padding-top:22px}
+.mrx .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;border-top:1px solid var(--line);padding-top:22px}
 .mrx .stat b{display:block;font-family:var(--f-display);font-weight:400;font-size:2.1rem;line-height:1}
 .mrx .stat span{font-size:.84rem;color:var(--muted)}
 @media (max-width:920px){.mrx .hero .wrap{grid-template-columns:1fr}}
+@media (max-width:760px){.mrx .stats{grid-template-columns:1fr 1fr}}
 
 .mrx .studio{display:flex;flex-direction:column;gap:14px;min-width:0}
 .mrx .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
@@ -268,5 +269,26 @@ export const LAUNCH_CSS = `
 .mrx .gtile span{font-size:.86rem;color:var(--muted)}
 @media (max-width:900px){.mrx .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mrx .discband{padding-block:28px 40px}
+
+/* ── How it works: cream band, horizontal 5-step flow with arrows ── */
+.mrx .how{background:#F7F4ED;border-block:1px solid #E3DCD0}
+.mrx .how h2{color:#1F2D27}
+.mrx .how .eyebrow{color:#A66B3C}
+.mrx .how em.i{color:#A66B3C}
+.mrx .how .lead{color:#3A453E}
+.mrx .howflow{display:flex;align-items:stretch;list-style:none;padding:0;overflow-x:auto;padding-bottom:6px}
+.mrx .howstep{flex:1 1 190px;min-width:190px;position:relative;margin-right:38px;background:#fff;border:1px solid #E3DCD0;border-radius:14px;padding:24px 20px;display:flex;flex-direction:column;gap:12px}
+.mrx .howstep:last-child{margin-right:0}
+.mrx .howstep::after{content:"→";position:absolute;right:-30px;top:50%;transform:translateY(-50%);color:#A66B3C;font-family:var(--f-mono);font-size:1.2rem;line-height:1}
+.mrx .howstep:last-child::after{display:none}
+.mrx .hownum{width:34px;height:34px;border-radius:10px;background:#1F2D27;color:#F7F4ED;display:grid;place-items:center;font-family:var(--f-mono);font-size:.86rem}
+.mrx .howstep b{font-family:var(--f-display);font-weight:400;font-size:1.14rem;line-height:1.15;color:#1F2D27}
+.mrx .howstep p{font-size:.87rem;line-height:1.45;color:#3A453E}
+@media (max-width:900px){
+  .mrx .howflow{flex-direction:column;overflow:visible}
+  .mrx .howstep{margin-right:0;margin-bottom:30px;min-width:0}
+  .mrx .howstep:last-child{margin-bottom:0}
+  .mrx .howstep::after{right:auto;left:50%;top:auto;bottom:-28px;transform:translateX(-50%) rotate(90deg)}
+}
 .mrx .disc{font-size:.8rem;max-width:90ch;color:var(--muted)}
 `;

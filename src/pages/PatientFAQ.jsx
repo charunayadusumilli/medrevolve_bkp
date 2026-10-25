@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import SEOHead from '@/components/SEOHead';
 import FAQSection from '@/components/home/FAQSection';
@@ -21,7 +21,7 @@ const PATIENT_FAQS = [
   { question: 'What is NAD+ therapy?', answer: 'NAD+ is a coenzyme involved in cellular energy and repair. Clinician-guided NAD+ therapy supports cellular health and healthy aging as part of a longevity protocol — pharmacy-sourced, clinician-supervised.' },
   { question: 'Are these treatments a replacement for my doctor?', answer: 'No. MedRevolve programs are clinician-guided and complement your existing healthcare. Always inform your primary physician of any protocols you begin.' },
   { question: 'Do you accept insurance?', answer: 'MedRevolve programs are cash-pay and transparent. Pricing is presented at checkout before you pay, with no hidden fees.' },
-  { question: 'How do I start?', answer: 'Complete the online intake. A licensed clinician reviews your case and, if you qualify, your protocol is prepared by a licensed compounding pharmacy. Call {PHONE_DISPLAY} with any questions.' },
+  { question: 'How do I start?', answer: 'Complete the online intake. A licensed clinician reviews your case and, if you qualify, your protocol is prepared by a licensed compounding pharmacy. Book a call with our team if you have any questions.' },
 ];
 
 export default function PatientFAQ() {
@@ -48,9 +48,9 @@ export default function PatientFAQ() {
                 Start Your Intake <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <a href={PHONE_TEL}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">
-                <Phone className="mr-2 w-4 h-4" /> {PHONE_DISPLAY}
+                Book a Call
               </Button>
             </a>
           </div>
@@ -75,9 +75,9 @@ export default function PatientFAQ() {
                 Start Your Intake <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <a href={PHONE_TEL}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">
-                <Phone className="mr-2 w-4 h-4" /> Call {PHONE_DISPLAY}
+                Book a Call
               </Button>
             </a>
           </div>

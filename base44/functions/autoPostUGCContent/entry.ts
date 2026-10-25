@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 // ════════════════════════════════════════════════════════════════════════════
 // MEDREVOLVE — GOD MODE CONTENT LIBRARY
 // 5 Content Categories × 6 Posts Each = 30 Total
-// EVERY post has: phone 240-387-5224 + medrevolve.com + hard CTA
+// EVERY post has: booking link + medrevolve.com + hard CTA
 // Lead capture on every interaction via phone/link
 // ════════════════════════════════════════════════════════════════════════════
 
@@ -25,7 +25,7 @@ MedRevolve gives you a TURNKEY merchant platform:
 
 Launch in 30 days or less.
 
-📞 CALL NOW: 240-387-5224
+🔗 BOOK A DEMO: medrevolve.com/ForBusiness
 🌐 medrevolve.com/for-business
 
 #MedSpa #TelehealthBusiness #MerchantAccount #GLP1Business #MedRevolve #HealthcareBusiness #WhiteLabel`,
@@ -45,7 +45,7 @@ Here's exactly how MedRevolve merchants do it:
 
 No medical license needed. No compliance headaches. No overhead.
 
-📞 Call or text: 240-387-5224
+🔗 Book a demo: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 DM us "MERCHANT" to get started 👇
@@ -68,7 +68,7 @@ Same overhead. Same staff. Completely different income.
 
 Want the details?
 
-📞 240-387-5224 — call NOW
+📞 medrevolve.com/ForBusiness — call NOW
 🌐 medrevolve.com/for-business
 
 #GymOwner #MedSpaRevenue #GLP1 #MedRevolve #BusinessGrowth #TelehealthBusiness #WellnessRevenue`,
@@ -89,7 +89,7 @@ What you get with your merchant account:
 
 This is NOT a side hustle. This is a BUSINESS.
 
-📞 Book your demo: 240-387-5224
+🔗 Book your demo: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #TelehealthPlatform #MerchantAccount #MedRevolve #GLP1 #HealthcareBusiness #MedicalEntrepreneur`,
@@ -106,7 +106,7 @@ This is NOT a side hustle. This is a BUSINESS.
 
 The only thing stopping you… is this post.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com/for-business
 
 Reply "INFO" or call us NOW 👇
@@ -133,7 +133,7 @@ What's included:
 ✅ Provider network
 ✅ 24/7 tech support
 
-📞 Run the numbers with us: 240-387-5224
+📞 Run the numbers with us: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #ROI #TelehealthROI #GLP1Business #MedRevolve #BusinessInvestment #MedSpaProfit`,
@@ -166,7 +166,7 @@ MedRevolve merchants are FULLY covered:
 
 Sleep better. Run your business.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #HIPAA #HIPAACompliance #TelehealthCompliance #MedRevolve #HealthcareCompliance #PHI`,
@@ -188,7 +188,7 @@ Every patient record → encrypted and protected.
 
 One year later. Zero violations. $40K/month.
 
-📞 Don't learn the hard way: 240-387-5224
+📞 Don't learn the hard way: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #ComplianceStory #TelehealthCompliance #HIPAA #MedRevolve #GLP1Compliance #MedicalBusiness`,
@@ -214,7 +214,7 @@ This takes months to build alone.
 
 MedRevolve has it ALL pre-built.
 
-📞 Skip the build: 240-387-5224
+📞 Skip the build: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #GLP1Compliance #ComplianceChecklist #Telehealth #MedRevolve #HealthcareCompliance`,
@@ -240,7 +240,7 @@ So you don't have to.
 
 Focus on patients. We'll handle the law.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #TelehealthLaw #GLP1Regulations #HealthcareCompliance #MedRevolve #StateLaw #CompoundPharmacy`,
@@ -265,7 +265,7 @@ All pre-drafted. All legally reviewed.
 
 This is $50,000+ in legal work — included in your platform.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #LegalDocs #HIPAADocumentation #TelehealthLegal #MedRevolve #ComplianceDocs #HealthcareLaw`,
@@ -290,7 +290,7 @@ MedRevolve keeps you protected:
 
 Run a real business. Stay protected.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #CompoundCompliance #FDACompliance #MedRevolve #TelehealthCompliance #GLP1Legal #503B`,
@@ -303,7 +303,7 @@ Run a real business. Stay protected.
   // ── CATEGORY 3: UGC PATIENT (B2C lead capture) ───────────────────────────
   ugc_patient: [
     {
-      caption: `📞 I texted 240-387-5224 on a Tuesday.
+      caption: `📞 I texted medrevolve.com/ForBusiness on a Tuesday.
 
 By Thursday I had my GLP-1 prescription.
 
@@ -313,7 +313,7 @@ Just a 15-minute video call, a few health questions, and done.
 
 If you've been putting off your weight loss journey because it's "too complicated" — it's not anymore.
 
-📞 Text or call: 240-387-5224
+📞 Text or call: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #GLP1Journey #Semaglutide #WeightLossJourney #Telehealth #MedRevolve #GLP1WeightLoss #OnlineDoctorVisit`,
@@ -324,7 +324,7 @@ If you've been putting off your weight loss journey because it's "too complicate
     {
       caption: `💉 67 days. 22 pounds. One phone call.
 
-I called MedRevolve (240-387-5224) after seeing them on social media.
+I called MedRevolve (medrevolve.com/ForBusiness) after seeing them on social media.
 
 Week 1: Consultation done in 20 min
 Week 2: Semaglutide arrived at my door
@@ -334,7 +334,7 @@ I've tried EVERYTHING. Keto. Intermittent fasting. The gym. Nothing stuck.
 
 GLP-1 changed the equation completely.
 
-📞 Your call is FREE: 240-387-5224
+📞 Your call is FREE: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #WeightLossResults #Semaglutide #GLP1Results #MedRevolve #Telehealth #WeightLossWin`,
@@ -359,7 +359,7 @@ CONS:
 
 10/10. Recommend to everyone.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #HonestReview #MedRevolveReview #GLP1 #TelehealthReview #Semaglutide #WeightLoss`,
@@ -384,7 +384,7 @@ MedRevolve TRT program:
 
 Real men. Real results. Real doctors.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #TRT #Testosterone #MensHealth #LowT #TestosteroneTherapy #MedRevolve #MensWellness #HormoneTherapy`,
@@ -408,7 +408,7 @@ MedRevolve BHRT program:
 
 You deserve a provider who listens.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #BHRT #Perimenopause #HormoneBalance #WomensHealth #MenopauseSupport #MedRevolve #WomensWellness`,
@@ -429,7 +429,7 @@ Most doctors won't prescribe these because they don't know them.
 MedRevolve providers DO.
 
 Get a peptide consultation today:
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #Peptides #BPC157 #Sermorelin #Biohacking #HealthOptimization #MedRevolve #Longevity #PeptideTherapy`,
@@ -458,7 +458,7 @@ What's included:
 
 $2,999/mo. Cancel anytime.
 
-📞 RESERVE YOUR SPOT: 240-387-5224
+📞 RESERVE YOUR SPOT: medrevolve.com/ForBusiness
 🌐 medrevolve.com/for-business
 
 Spots fill by the 15th every month. Don't wait.
@@ -484,7 +484,7 @@ What you get:
 
 Start your weight loss journey TODAY.
 
-📞 Book now: 240-387-5224
+📞 Book now: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #GLP1 #GLP1WeightLoss #Semaglutide #Telehealth #MedRevolve #WeightLossProgram #OnlineDoctorVisit`,
@@ -509,7 +509,7 @@ If you're a:
 
 No new licenses. No new overhead. New revenue stream.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #HealthEntrepreneur #GymOwner #MedSpa #NursePractitioner #GLP1Revenue #MedRevolve #TelehealthAdd`,
@@ -530,7 +530,7 @@ This is the MedRevolve merchant timeline.
 
 Not 6 months. Not 12 months. 30 days.
 
-📞 Start the clock: 240-387-5224
+📞 Start the clock: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #30DayLaunch #TelehealthLaunch #MedRevolve #GLP1Business #QuickLaunch #MerchantAccount`,
@@ -557,7 +557,7 @@ MedRevolve:
 
 The math isn't complicated.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #ROI #TelehealthCost #MedRevolve #WhiteLabel #BusinessMath #GLP1Business #StartupCost`,
@@ -580,7 +580,7 @@ MedRevolve merchants get:
 
 Everything needed to dominate your market.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 #TelehealthMarketing #GLP1Marketing #MedRevolve #DigitalMarketing #HealthcareMarketing #PatientAcquisition`,
@@ -604,7 +604,7 @@ If you're considering a MedRevolve merchant account — this week we're offering
 
 We only do 5 of these per week.
 
-📞 Book yours: 240-387-5224
+📞 Book yours: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 Must call this week to qualify.
@@ -625,7 +625,7 @@ It's our bet that once you see the results, you'll never leave.
 
 Most merchants hit 10 patients in week 1.
 
-📞 240-387-5224
+📞 medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 Terms apply. Call for details.
@@ -648,7 +648,7 @@ Includes:
 
 This offer won't last.
 
-📞 Call to claim: 240-387-5224
+📞 Call to claim: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 Offer valid for new patients only.
@@ -669,7 +669,7 @@ No cap. No limits. Refer 10 merchants = $5,000.
 
 Our top referral partners earn $3,000–$10,000/month doing nothing but talking.
 
-📞 Get your referral code: 240-387-5224
+📞 Get your referral code: medrevolve.com/ForBusiness
 🌐 medrevolve.com/partner
 
 #ReferralProgram #AffiliatePay #MedRevolve #EarnMoney #HealthcareAffiliate #TelehealthAffiliate #PassiveIncome`,
@@ -691,7 +691,7 @@ Everything you need to start losing weight this week.
 
 Limited to 50 patients.
 
-📞 240-387-5224 — call NOW before it's gone
+📞 medrevolve.com/ForBusiness — call NOW before it's gone
 🌐 medrevolve.com
 
 #GLP1StarterPack #Semaglutide #WeightLossDeal #MedRevolve #FlashDeal #GLP1 #TelehealthDeal`,
@@ -715,7 +715,7 @@ Includes EVERYTHING:
 → Patient acquisition funnel
 → Dedicated success manager
 
-📞 Lock in Q2 pricing: 240-387-5224
+📞 Lock in Q2 pricing: medrevolve.com/ForBusiness
 🌐 medrevolve.com
 
 Offer expires end of quarter.
@@ -811,7 +811,7 @@ Deno.serve(async (req) => {
         post_id: publishData.id,
         status: 'published',
         published_at: new Date().toISOString(),
-        notes: `Auto-posted | type:${content.content_type} | audience:${content.audience} | CTA:240-387-5224`
+        notes: `Auto-posted | type:${content.content_type} | audience:${content.audience} | CTA:medrevolve.com/ForBusiness`
       });
 
       console.log('[SUCCESS] Instagram posted:', publishData.id, '| type:', content.content_type, '| audience:', content.audience);
@@ -833,7 +833,7 @@ Deno.serve(async (req) => {
             message: content.caption,
             image_url: imageUrl,
             link: 'https://medrevolve.com',
-            phone: '240-387-5224',
+            phone: 'medrevolve.com/ForBusiness',
             content_type: content.content_type,
             audience: content.audience,
             source: 'autoPostUGCContent'

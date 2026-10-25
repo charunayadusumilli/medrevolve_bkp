@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ export default function Privacy() {
             <section>
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">1. Who We Are</h2>
               <p className="text-[#5A6B5A] leading-relaxed">
-                MedRevolve LLC ("MedRevolve," "we," "us") operates medrevolve.com — a B2B telehealth platform and consumer telehealth marketplace. Registered address: Charlotte, North Carolina, United States. Contact: <a href="mailto:privacy@medrevolve.com" className="text-[#4A6741] underline">privacy@medrevolve.com</a> | {PHONE_DISPLAY}.
+                MedRevolve LLC ("MedRevolve," "we," "us") operates medrevolve.com — a B2B telehealth platform and consumer telehealth marketplace. Registered address: Charlotte, North Carolina, United States. Contact: <a href="mailto:privacy@medrevolve.com" className="text-[#4A6741] underline">privacy@medrevolve.com</a>.
               </p>
             </section>
 
@@ -155,7 +155,7 @@ export default function Privacy() {
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">11. Contact Us</h2>
               <p className="text-[#5A6B5A]">
                 Privacy Officer: <a href="mailto:privacy@medrevolve.com" className="text-[#4A6741] underline">privacy@medrevolve.com</a><br />
-                Phone: {PHONE_DISPLAY}<br />
+                Book a call: {BOOKING_URL}<br />
                 Address: Charlotte, North Carolina, United States
               </p>
             </section>

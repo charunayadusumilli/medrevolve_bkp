@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -64,7 +63,6 @@ export default function SocialMediaManagement() {
           <div>
             <h1 className="text-3xl font-bold text-[#0A0A0A] mb-1">Social Media</h1>
             <p className="text-[#0A0A0A]/60 text-sm flex items-center gap-4">
-              <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> {PHONE_DISPLAY}</span>
               <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> medrevolve.com</span>
             </p>
           </div>
@@ -149,7 +147,7 @@ export default function SocialMediaManagement() {
             <CardContent className="space-y-2 text-sm text-muted-foreground">
               <p>✅ Connector authorized — auto-posts every 30 min</p>
               <p>✅ AI-generated images with direct-response captions</p>
-              <p>✅ Phone number {PHONE_DISPLAY} in every post</p>
+              <p>✅ Booking link in every post</p>
               <p className="font-semibold text-green-700">{igPublished} posts live on Instagram</p>
             </CardContent>
           </Card>

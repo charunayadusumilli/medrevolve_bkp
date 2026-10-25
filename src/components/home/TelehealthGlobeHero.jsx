@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -163,10 +163,10 @@ export default function TelehealthGlobeHero() {
               Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </Link>
-          <a href={PHONE_TEL}>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <Button size="lg" variant="ghost"
               className="w-full sm:w-auto text-white/40 border border-white/8 hover:bg-white/5 hover:text-white rounded-sm px-6 text-sm h-auto py-3.5">
-              Call {PHONE_DISPLAY}
+              Book a Demo
             </Button>
           </a>
         </div>

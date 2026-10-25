@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { BOOKING_URL } from '@/lib/contactConfig';
 import { LAUNCH_CSS } from './launchStyles';
 import { SOCIAL_GRAPHICS } from './socialGraphics';
+import HowItWorksFlow from './HowItWorksFlow';
 
 // MedRevolve launch homepage, built from the Platform Walkthrough (Oct 2026).
 // Every style is scoped under .mrx. Compliance rules baked in: no "LegitScript certified" claim,
@@ -231,8 +232,9 @@ export default function LaunchHome() {
             </div>
             <div className="stats">
               <div className="stat"><b>~7 days</b><span>signed agreement to live storefront</span></div>
-              <div className="stat"><b>14 items</b><span>in every launch, listed below</span></div>
+              <div className="stat"><b>14 items</b><span>included in every launch</span></div>
               <div className="stat"><b>50 states</b><span>provider network coverage</span></div>
+              <div className="stat"><b>24/7</b><span>AI intake and support</span></div>
             </div>
           </div>
 
@@ -446,6 +448,8 @@ export default function LaunchHome() {
         </div>
       </section>
 
+      <HowItWorksFlow />
+
       <section id="builder" className="alt">
         <div className="wrap">
           <div className="sec-head">
@@ -528,7 +532,7 @@ export default function LaunchHome() {
       <section className="final">
         <div className="wrap">
           <div className="final-copy">
-            <span className="eyebrow">Next step</span>
+            <span className="eyebrow">One platform. A healthier business.</span>
             <h2>Book a free 20-minute call with your <em className="i">onboarding specialist.</em></h2>
             <p className="lead">Walk through the platform, your programs and your states. The Google Meet link arrives as soon as you book.</p>
             <div className="hero-cta"><Book>Pick a time <span className="arrow">→</span></Book><a className="btn btn-ghost" href="#checklist">Start the checklist</a></div>

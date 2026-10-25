@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
@@ -141,7 +140,7 @@ export default function EntrepreneurWizard() {
                     <div>
                       <label className="text-[11px] font-bold uppercase tracking-wider text-stone-400">Phone (optional)</label>
                       <input value={data.phone} onChange={e => set('phone', e.target.value)}
-                        className="w-full mt-1.5 px-4 py-3 rounded-xl border border-stone-200 bg-white text-sm focus:border-stone-400 outline-none" placeholder={PHONE_DISPLAY} />
+                        className="w-full mt-1.5 px-4 py-3 rounded-xl border border-stone-200 bg-white text-sm focus:border-stone-400 outline-none" placeholder="Phone" />
                     </div>
                     <div>
                       <label className="text-[11px] font-bold uppercase tracking-wider text-stone-400">Business name (optional)</label>

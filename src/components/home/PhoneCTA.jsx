@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, ArrowRight } from 'lucide-react';
@@ -47,9 +47,8 @@ export default function PhoneCTA() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
-            <a href={PHONE_TEL} className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              Or call now: {PHONE_DISPLAY}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white text-sm font-medium transition-colors flex items-center gap-2">
+              Book a Demo
             </a>
           </div>
 

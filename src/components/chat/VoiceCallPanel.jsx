@@ -249,7 +249,7 @@ export default function VoiceCallPanel({
             />
             <span className="text-white text-xs font-bold tracking-wide">LIVE</span>
           </div>
-          <span className="text-white/60 text-sm">MedRevolve AI Session</span>
+          <span className="text-white/60 text-sm">Nova by MedRevolve</span>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -526,7 +526,7 @@ export default function VoiceCallPanel({
 
       {/* ── Bottom disclaimer ── */}
       <p className="relative z-10 text-center text-white/15 text-[10px] pb-3">
-        MedRevolve AI • Not medical advice • AI voice session
+        Nova by MedRevolve • Not medical advice • AI voice session
       </p>
     </motion.div>
   );

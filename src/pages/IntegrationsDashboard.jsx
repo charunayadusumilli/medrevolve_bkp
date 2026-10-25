@@ -1,4 +1,3 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -436,7 +435,7 @@ export default function IntegrationsDashboard() {
       data: {
         full_name: 'Test Lead',
         email: 'test@example.com',
-        phone: PHONE_E164,
+        phone: '',
         company_name: 'Test Company',
         heard_about_us: 'Integration Test'
       }
@@ -534,7 +533,7 @@ export default function IntegrationsDashboard() {
                                 <Input
                                   value={testPhone}
                                   onChange={(e) => setTestPhone(e.target.value)}
-                                  placeholder={PHONE_E164}
+                                  placeholder="Business phone"
                                   className="mt-1"
                                 />
                               </div>

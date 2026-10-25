@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -144,7 +144,7 @@ export default function Terms() {
               <p className="text-[#5A6B5A]">
                 Legal/Compliance: <a href="mailto:compliance@medrevolve.com" className="text-[#4A6741] underline">compliance@medrevolve.com</a><br />
                 General Support: <a href="mailto:support@medrevolve.com" className="text-[#4A6741] underline">support@medrevolve.com</a><br />
-                Phone: {PHONE_DISPLAY}<br />
+                Book a call: {BOOKING_URL}<br />
                 Address: Charlotte, North Carolina, United States
               </p>
             </section>

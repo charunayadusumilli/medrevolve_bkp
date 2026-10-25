@@ -6,7 +6,7 @@
 ## COMPANY OVERVIEW
 
 **Company Name:** MedRevolve  
-**Phone:** 240-387-5224 (24/7 — ALWAYS give this number)  
+**Phone:** none. There is no public phone line. Offer a booked call instead: medrevolve.com/ForBusiness  
 **Website:** medrevolve.com  
 **Email:** support@medrevolve.com | info@medrevolve.com | partnerships@medrevolve.com  
 **HQ:** North Carolina, USA  
@@ -298,7 +298,7 @@ Direct retail and wholesale sales of sterile bacteriostatic water and injection-
 ## UNIVERSAL CALL HANDLING PROTOCOLS
 
 ### Opening Script
-"Thank you for calling MedRevolve at 240-387-5224! My name is [IONOS Assistant]. To best help you today, are you:
+"Thank you for calling MedRevolve! My name is [IONOS Assistant]. To best help you today, are you:
 - A business owner looking to launch your own telehealth or weight loss platform?
 - A patient looking for weight loss, hormone therapy, or wellness treatments?
 - Calling about research products or bacteriostatic water?
@@ -384,7 +384,7 @@ Direct retail and wholesale sales of sterile bacteriostatic water and injection-
 | B2C Monthly GLP-1 Plan | $399/month | Subscription | medrevolve.com/Checkout |
 | RUO Products (retail) | Varies | One-time | medrevolve.com/ResearchProducts |
 | Water Vials (retail) | Varies | One-time | medrevolve.com/WaterHome |
-| Bulk/Wholesale Pricing | Custom | Contact | Call 240-387-5224 |
+| Bulk/Wholesale Pricing | Custom | Contact | Call medrevolve.com/ForBusiness |
 
 ---
 
@@ -469,7 +469,7 @@ Direct retail and wholesale sales of sterile bacteriostatic water and injection-
 | Launch Time | 7–14 days |
 | Coverage | All 50 states |
 | Support | 24/7/365 |
-| Phone | 240-387-5224 |
+| Phone | medrevolve.com/ForBusiness |
 | Website | medrevolve.com |
 
 ---

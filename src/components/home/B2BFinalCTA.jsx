@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -44,10 +44,10 @@ export default function B2BFinalCTA() {
                   Book My Consultation <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <a href={PHONE_TEL}>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="ghost"
                   className="text-white border border-white/15 hover:bg-white/8 rounded-sm px-8 text-base h-auto py-4">
-                  <Phone className="w-4 h-4 mr-2" /> Call Now
+                  Book a Demo
                 </Button>
               </a>
             </div>

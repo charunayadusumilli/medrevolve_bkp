@@ -1,16 +1,18 @@
-import { PHONE_DISPLAY, PHONE_E164, PHONE_TEL } from '@/lib/contactConfig';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 
 export default function PhoneIntakeCTA({ className = '' }) {
-  const trackingNumber = PHONE_DISPLAY;
+  const trackingNumber = 'Book a Demo';
   
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <a 
-        href={`tel:+12403875224`}
+        href={BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         className="hidden sm:flex items-center gap-2 text-[#4A6741] hover:text-[#3D5636] transition-colors"
       >
         <Phone className="w-4 h-4" />
