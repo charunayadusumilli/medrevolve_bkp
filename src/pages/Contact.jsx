@@ -106,7 +106,7 @@ const departmentEmails = [
 
 const quickLinks = [
   { icon: HelpCircle, title: 'FAQs', description: 'Common questions about the platform and launch process', href: '/University' },
-  { icon: Building2, title: 'Book a Demo', description: 'See the platform live — 30-minute walkthrough', href: '/MerchantOnboarding' }
+  { icon: Building2, title: 'Book a Demo', description: 'See the platform live — 20-minute walkthrough, Google Meet', href: BOOKING_URL }
 ];
 
 export default function Contact() {
@@ -332,10 +332,15 @@ export default function Contact() {
               {/* Quick Links */}
               {quickLinks.map((link, index) => {
                 const Icon = link.icon;
+                const isExternal = link.href.startsWith('http');
+                const CardLink = isExternal ? 'a' : Link;
+                const linkProps = isExternal
+                  ? { href: link.href, target: '_blank', rel: 'noopener noreferrer' }
+                  : { to: link.href };
                 return (
-                  <Link
+                  <CardLink
                     key={link.title}
-                    to={link.href}
+                    {...linkProps}
                     className="bg-white rounded-2xl p-6 flex items-center gap-4 hover:shadow-lg transition-shadow group"
                   >
                     <div className="w-12 h-12 rounded-xl bg-[#4A6741]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#4A6741] transition-colors">
@@ -346,7 +351,7 @@ export default function Contact() {
                       <p className="text-sm text-[#5A6B5A]">{link.description}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-gray-300 ml-auto group-hover:text-[#4A6741] transition-colors" />
-                  </Link>
+                  </CardLink>
                 );
               })}
 

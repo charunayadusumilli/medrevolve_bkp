@@ -75,7 +75,7 @@ export default function ConnectNow({ floating = false }) {
             <p className="font-semibold mb-1">{result.message}</p>
             {result.meet_link && <a href={result.meet_link} target="_blank" rel="noreferrer" className="inline-block mt-3 bg-[#4A6741] text-white px-5 py-2.5 rounded-lg font-semibold">Open Google Meet</a>}
             {result.mode === 'chat' && !result.raj_available && (
-              <a href={bookingUrl} target="_blank" rel="noreferrer" className="block mt-3 text-sm text-[#4A6741] font-semibold">Or book a free 20-min call</a>
+              <a href={bookingUrl} target="_blank" rel="noreferrer" className="block mt-3 text-sm text-[#4A6741] font-semibold">Or book a free 20-minute call</a>
             )}
             <p className="text-xs text-gray-500 mt-4">A confirmation was sent to {form.email}.</p>
           </div>
@@ -100,7 +100,7 @@ export default function ConnectNow({ floating = false }) {
               <CalendarClock className="w-5 h-5 text-[#4A6741]" />
               <div>
                 <div className="font-semibold text-sm">Book a free intro call</div>
-                <div className="text-xs text-gray-500">Pick a time, 15 to 30 minutes, Google Meet</div>
+                <div className="text-xs text-gray-500">Pick a time, 20 minutes, Google Meet</div>
               </div>
             </a>
           </div>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { BOOKING_URL } from '@/lib/contactConfig';
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -118,12 +119,12 @@ export default function TelehealthFranchise() {
       <section className="py-20 px-6 bg-[#0A0A0A] text-white text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black mb-4">Own the Business. Keep All the Revenue.</h2>
-          <p className="text-white/50 mb-8">Skip the franchise. Book a free 30-minute call and launch your telehealth company under your own brand in 7 days.</p>
-          <Link to="/MerchantOnboarding">
+          <p className="text-white/50 mb-8">Skip the franchise. Book a free 20-minute call and launch your telehealth company under your own brand in 7 days.</p>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <Button className="bg-teal-500 hover:bg-teal-400 text-white font-bold px-10 py-3 rounded-sm text-base">
-              Book Free Call <ArrowRight className="w-4 h-4 ml-2" />
+              Book a 20-minute demo <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-          </Link>
+          </a>
         </div>
       </section>
     </div>

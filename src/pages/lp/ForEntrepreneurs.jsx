@@ -80,7 +80,7 @@ export default function ForEntrepreneurs() {
       <section className="py-20 px-6 lg:px-8 bg-[#F5F0E8]">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-light text-[#2D3A2D] mb-4">Setup and costs</h2>
-          <p className="text-[#5A6B5A] text-lg leading-relaxed">Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive. <a className="font-semibold text-[#2D3A2D] underline" href="https://calendly.com/rned-medrevolve/medrevolve-intro-call" target="_blank" rel="noopener noreferrer">Book a free call</a>.</p>
+          <p className="text-[#5A6B5A] text-lg leading-relaxed">The platform launch fee is $4,000 one-time, covering the build, providers, pharmacy, payments and compliance setup. Ongoing platform and support terms are set out in your proposal. <a className="font-semibold text-[#2D3A2D] underline" href="https://calendly.com/rned-medrevolve/medrevolve-intro-call" target="_blank" rel="noopener noreferrer">Book a free call</a>.</p>
         </div>
       </section>
 

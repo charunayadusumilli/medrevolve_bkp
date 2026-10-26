@@ -13,7 +13,7 @@ const fade = (delay = 0) => ({
 });
 
 const STEPS = [
-  { n: '01', title: 'Platform Onboarding', desc: 'Complete a 30-minute setup call. We configure your white-label portal, patient intake, pharmacy connections, and billing in 48 hours.' },
+  { n: '01', title: 'Platform Onboarding', desc: 'Complete a 20-minute setup call. We configure your white-label portal, patient intake, pharmacy connections, and billing in 48 hours.' },
   { n: '02', title: 'Physician Network Live', desc: 'Your patients consult with licensed physicians from our 50-state network. No providers to hire, credential, or manage.' },
   { n: '03', title: 'Pharmacy Fulfillment', desc: 'Licensed 503A pharmacies ship medications directly to your patients. Automatic refills, tracking, and compliance built in.' },
   { n: '04', title: 'Scale Your Clinic', desc: 'No per-patient overhead. Add unlimited patients under your brand. Your margin grows as your clinic grows.' },
@@ -125,7 +125,7 @@ export default function WeightLossClinicPlatform() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">Your Weight Loss Clinic Starts Here</h2>
-          <p className="text-gray-500 mb-8">Book a free 30-minute call and we'll walk you through launching your branded medical weight loss clinic — in as little as 7 days.</p>
+          <p className="text-gray-500 mb-8">Book a free 20-minute call and we'll walk you through launching your branded medical weight loss clinic — in as little as 7 days.</p>
           <Link to="/MerchantOnboarding">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Strategy Call <ArrowRight className="w-4 h-4 ml-2" />

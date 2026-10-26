@@ -16,7 +16,7 @@ const STEPS = [
     color: '#4A6741',
     light: '#EEF5EB',
     title: 'We Learn Your Business & Build Your Plan',
-    desc: 'A 30-minute call with a MedRevolve specialist. We map your niche, target state(s), business model, and timeline — then hand you a custom build plan.',
+    desc: 'A 20-minute call with a MedRevolve specialist. We map your niche, target state(s), business model, and timeline — then hand you a custom build plan.',
     deliverables: [
       'Custom platform build plan document',
       'Niche & market positioning recommendation',

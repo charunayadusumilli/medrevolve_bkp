@@ -83,7 +83,7 @@ const HOW_STEPS = [
 // ─── BOOK A CALL DATA ─────────────────────────────────────────────────────────
 const CALL_TYPES = [
   { id: 'patient', icon: Stethoscope, title: 'Patient Consultation', sub: 'Book a telehealth visit with a licensed provider', color: '#4A6741', bg: '#D4E5D7', href: 'BookAppointment', bullets: ['Same-day availability', 'Video or phone visit', 'Prescription if appropriate', 'HIPAA-compliant platform'] },
-  { id: 'business', icon: Building2, title: 'Business Discovery Call', sub: 'Learn how to launch your own telehealth platform', color: '#2D6A9F', bg: '#D0E8F5', href: 'Contact', bullets: ['White-label platform walkthrough', 'Compliance & licensing overview', 'Pricing & module selection', '30-minute strategy call'] },
+  { id: 'business', icon: Building2, title: 'Business Discovery Call', sub: 'Learn how to launch your own telehealth platform', color: '#2D6A9F', bg: '#D0E8F5', href: 'Contact', bullets: ['White-label platform walkthrough', 'Compliance & licensing overview', 'Pricing & module selection', '20-minute strategy call'] },
   { id: 'partner', icon: Users, title: 'Partner Onboarding', sub: 'Providers, pharmacies, or creator partners', color: '#7B5EA7', bg: '#EDE8F5', href: 'Contact', bullets: ['Provider network overview', 'Pharmacy integration process', 'Creator program details', 'Revenue share structure'] },
 ];
 

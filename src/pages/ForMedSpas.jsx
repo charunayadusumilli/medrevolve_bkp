@@ -107,7 +107,7 @@ export default function ForMedSpas() {
           <h2 className="text-3xl font-black text-center mb-12">How Med Spas Launch With MedRevolve</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Onboarding Call', desc: 'A 30-minute call to understand your spa\'s existing services, client base, and revenue goals. We design your program around your brand.' },
+              { step: '01', title: 'Onboarding Call', desc: 'A 20-minute call to understand your spa\'s existing services, client base, and revenue goals. We design your program around your brand.' },
               { step: '02', title: 'Platform Setup', desc: 'We configure your white-label portal, connect your domain, set up patient intake, and verify pharmacy partnerships. Done in 48 hours.' },
               { step: '03', title: 'Launch & Scale', desc: 'Your med spa\'s GLP-1 program goes live. Patients enroll, consult with licensed physicians, and receive pharmacy-direct shipments.' },
             ].map((item, i) => (
@@ -125,7 +125,7 @@ export default function ForMedSpas() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">Ready to Add Recurring Revenue to Your Med Spa?</h2>
-          <p className="text-gray-500 mb-8">Book a free 30-minute strategy call. We'll show you exactly how your med spa launches a branded weight loss telehealth program — with zero overhead.</p>
+          <p className="text-gray-500 mb-8">Book a free 20-minute strategy call. We'll show you exactly how your med spa launches a branded weight loss telehealth program — with zero overhead.</p>
           <Link to="/MerchantOnboarding">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Strategy Call <ArrowRight className="w-4 h-4 ml-2" />

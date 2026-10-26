@@ -11,6 +11,7 @@ import { Menu, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck, 
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AnswerEngine from '@/components/chat/AnswerEngine';
+import BookDemoLink from '@/components/BookDemoLink';
 import ConnectNow from '@/components/ConnectNow';
 import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
@@ -81,7 +82,6 @@ export default function Layout({ children }) {
   const isApp = domain === 'APP';
   const NAV_LINKS = isApp ? DTC_NAV : B2B_NAV;
   const ctaLabel = isApp ? 'Get started' : 'Book a Demo';
-  const ctaLink = isApp ? '/start' : '/MerchantOnboarding';
   const ctaColor = isApp ? '#1B2421' : '#A66B3C';
 
   // All non-medrevolve.com domains — show nothing, no branding, no links
@@ -104,12 +104,12 @@ export default function Layout({ children }) {
 
       {/* Top bar — demo booking (phone line retired) */}
       <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
-        <Link to={ctaLink}
+        <BookDemoLink
           className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
           <CalendarCheck className="w-3.5 h-3.5 text-green-400" />
           <span className="font-bold tracking-wide">{ctaLabel}</span>
-          <span className="hidden sm:inline text-white/50 font-medium">— 20 minutes, Google Meet</span>
-        </Link>
+          <span className="hidden sm:inline text-white/50 font-medium">— 20-minute call, Google Meet</span>
+        </BookDemoLink>
       </div>
 
       {/* Header */}
@@ -225,12 +225,12 @@ export default function Layout({ children }) {
                 </Button>
               )}
 
-              <Link to={ctaLink} className="hidden sm:block">
+              <BookDemoLink className="hidden sm:block">
                 <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
                   style={{ backgroundColor: ctaColor }}>
                   {ctaLabel}
                 </Button>
-              </Link>
+              </BookDemoLink>
 
               {/* Mobile menu */}
               <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -265,10 +265,10 @@ export default function Layout({ children }) {
                       )}
                     </nav>
                     <div className="p-5 border-t border-gray-100 space-y-3">
-                      <Link to={ctaLink} onClick={closeMenu}
+                      <BookDemoLink onClick={closeMenu}
                         className="flex items-center justify-center gap-2 w-full bg-gray-900 text-white font-semibold rounded-sm py-3 text-sm">
                         <CalendarCheck className="w-4 h-4" /> {ctaLabel}
-                      </Link>
+                      </BookDemoLink>
                       {user ? (
                         <Button variant="outline" className="w-full rounded-sm border-red-200 text-red-500"
                           onClick={() => { base44.auth.logout('/'); closeMenu(); }}>Sign Out</Button>
@@ -276,9 +276,9 @@ export default function Layout({ children }) {
                         <>
                           <Button variant="outline" className="w-full rounded-sm"
                             onClick={() => { base44.auth.redirectToLogin(window.location.href); closeMenu(); }}>Sign In</Button>
-                          <Link to={ctaLink} onClick={closeMenu}>
+                          <BookDemoLink onClick={closeMenu}>
                             <Button className="w-full text-white rounded-sm font-semibold" style={{ backgroundColor: ctaColor }}>{ctaLabel}</Button>
-                          </Link>
+                          </BookDemoLink>
                         </>
                       )}
                     </div>
@@ -337,7 +337,7 @@ export default function Layout({ children }) {
                     <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
                   </>
                 )}
-                <li><Link to={ctaLink} className="text-sm text-white/40 hover:text-white transition-colors">{ctaLabel}</Link></li>
+                <li><BookDemoLink className="text-sm text-white/40 hover:text-white transition-colors">{ctaLabel}</BookDemoLink></li>
               </ul>
             </div>
 

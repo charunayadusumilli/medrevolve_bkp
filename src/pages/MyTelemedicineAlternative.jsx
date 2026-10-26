@@ -109,7 +109,7 @@ export default function MyTelemedicineAlternative() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">See the Platform That Includes Everything</h2>
-          <p className="text-gray-500 mb-8">Book a free 30-minute strategy call. No sales pressure — just a clear walkthrough of what MedRevolve includes and how your launch timeline looks.</p>
+          <p className="text-gray-500 mb-8">Book a free 20-minute strategy call. No sales pressure — just a clear walkthrough of what MedRevolve includes and how your launch timeline looks.</p>
           <Link to="/MerchantOnboarding">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Call <ArrowRight className="w-4 h-4 ml-2" />

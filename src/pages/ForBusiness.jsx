@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SEOHead from '@/components/SEOHead';
+import { BOOKING_URL } from '@/lib/contactConfig';
+import PricingBundles from '@/components/forbusiness/PricingBundles';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
@@ -16,7 +18,7 @@ import {
 
 const OPERATOR_FAQS = [
   { question: 'What is MedRevolve?', answer: 'A white-label telehealth platform: intake, licensed physicians across all 50 states, 503A/503B pharmacy fulfillment, EMR, real-time FDA/PCAC compliance monitoring, and payment processing — all under your own brand. You focus on growth and patient care; MedRevolve runs the backend.' },
-  { question: 'What does it cost?', answer: 'Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive. Book a free 20-minute call to get yours.' },
+  { question: 'What does it cost?', answer: 'The platform launch fee is $4,000 one-time, covering the build, providers, pharmacy, payments and compliance setup. Ongoing platform and support terms are set out in your proposal. Our pricing is built to be competitive. Book a free 20-minute call to get yours.' },
   { question: 'How fast can I launch?', answer: 'Days to weeks, not months — physicians, pharmacy, EMR, compliance, and payments are already built and licensed.' },
   { question: 'Do I keep my own brand?', answer: 'Yes — your domain, your logo, your pricing, your patient relationships. MedRevolve is the invisible backend.' },
   { question: 'Which services can I offer?', answer: 'Four service lines on one platform: GLP-1/weight management, peptide therapy, hormone optimization, and NAD+/longevity. Same patient, four revenue streams.' },
@@ -26,7 +28,7 @@ const OPERATOR_FAQS = [
   { question: 'Who is this NOT for?', answer: 'Operators who want to prescribe without clinicians, cut corners on pharmacy sourcing, or ignore compliance. MedRevolve is built for legitimate brands that want to last.' },
   { question: 'How do I start?', answer: 'Apply at medrevolve.com/ForBusiness or book a demo. A specialist will walk you through the platform and your launch plan.' },
   { question: 'Why is MedRevolve described as an AI-powered platform?', answer: 'Every layer runs on automation: AI intake triage, AI receptionist, an on-site AI answer engine, automated compliance monitoring, and webhook-driven alerts — the LLM-grade infrastructure layer for telehealth.' },
-  { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one, with competitive setup costs quoted on a call.' },
+  { question: 'What makes MedRevolve different from competitors?', answer: 'Four service lines vs one or two; real-time compliance monitoring as a native layer; all-50-state physician network; payments built for high-risk telehealth; white-label from day one, with a $4,000 platform launch fee and ongoing terms set out in your proposal.' },
   { question: 'Which states are covered?', answer: 'MedRevolve\'s physician network is licensed across all 50 states, so your patients can be seen and prescribed for wherever they live.' },
   { question: 'Can I use my existing website?', answer: 'Yes. You can run the platform on your own domain with your branding, or embed the storefront into your existing clinic or spa site as an iframe or native integration.' },
   { question: 'What integrations are included?', answer: 'Secure high-risk payments, HubSpot and Zoho CRM, Twilio SMS/voice, Google Calendar scheduling, Qualiphy eConsent, Google Drive document storage, and Zapier for 5,000+ app connections — all pre-built, no dev work required.' },
@@ -191,11 +193,11 @@ export default function ForBusiness() {
               MedRevolve is the white-label telehealth platform powering the next generation of med spas, IV clinics, TRT practices, and weight-loss programs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to={createPageUrl('MerchantOnboarding')}>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">
-                  Launch Your Platform <ArrowRight className="ml-2 w-5 h-5" />
+                  Book a 20-minute demo <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-              </Link>
+              </a>
               <Link to={createPageUrl('Contact')}>
                 <Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">
                   Talk to Sales
@@ -234,6 +236,9 @@ export default function ForBusiness() {
 
       {/* ── Who We Serve ── */}
       <WhoWeServe />
+
+      {/* ── Pricing: $4,000 launch fee, one price truth ── */}
+      <PricingBundles />
 
       {/* ── Section 1: Products & Classification ── */}
       <section className="py-24 px-6 lg:px-8 bg-[#FDFBF7]">
@@ -292,11 +297,11 @@ export default function ForBusiness() {
                 </ul>
               </div>
 
-              <Link to={createPageUrl(track.link)}>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <Button className="rounded-none text-white px-8 font-bold" style={{ background: track.color }}>
-                  {track.cta} <ArrowRight className="ml-2 w-4 h-4" />
+                  Book a 20-minute demo <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-              </Link>
+              </a>
             </div>
 
             <div className="bg-white rounded-2xl border border-[#E8E0D5] p-6 shadow-sm">
@@ -493,11 +498,11 @@ export default function ForBusiness() {
             We handle everything — website, providers, pharmacy connections, merchant account, compliance, and ongoing operations — so you can focus on growing your brand.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to={createPageUrl('MerchantOnboarding')}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base shadow-xl">
-                Launch My Platform <ArrowRight className="ml-2 w-5 h-5" />
+                Book a 20-minute demo <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-            </Link>
+            </a>
             <Link to={createPageUrl('Contact')}>
               <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">
                 Talk to Sales

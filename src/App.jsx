@@ -61,6 +61,7 @@ import TelehealthServicesForMedSpa from './pages/lp/TelehealthServicesForMedSpa'
 import Partnerships from './pages/Partnerships';
 import Blog from './pages/Blog';
 import OperatorFAQ from './pages/OperatorFAQ';
+import ForBusiness from './pages/ForBusiness';
 import PatientRoute from './components/PatientRoute';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
@@ -235,6 +236,8 @@ const AuthenticatedApp = () => {
       {/* ── MERCHANT ONBOARDING INTAKE + DOCUMENT E-SIGNATURE ─────────────── */}
       <Route path="/MerchantOnboardingIntake" element={<LayoutWrapper currentPageName="MerchantOnboardingIntake"><MerchantOnboardingIntake /></LayoutWrapper>} />
       <Route path="/MerchantDocuments" element={<LayoutWrapper currentPageName="MerchantDocuments"><MerchantDocuments /></LayoutWrapper>} />
+      {/* ── B2B FOR BUSINESS — explicit route, never left to the stale pagesConfig loop ── */}
+      <Route path="/ForBusiness" element={<LayoutWrapper currentPageName="ForBusiness"><ForBusiness /></LayoutWrapper>} />
       <Route path="/faq" element={<LayoutWrapper currentPageName="OperatorFAQ"><OperatorFAQ /></LayoutWrapper>} />
       <Route path="/patient-faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientRoute><PatientFAQ /></PatientRoute></LayoutWrapper>} />
       <Route path="/Blog" element={<LayoutWrapper currentPageName="Blog"><Blog /></LayoutWrapper>} />

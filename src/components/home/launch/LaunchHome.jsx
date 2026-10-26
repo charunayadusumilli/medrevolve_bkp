@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BOOKING_URL } from '@/lib/contactConfig';
+import { BOOKING_URL, WHATSAPP_URL } from '@/lib/contactConfig';
 import { LAUNCH_CSS } from './launchStyles';
 import { SOCIAL_GRAPHICS } from './socialGraphics';
 import HowItWorksFlow from './HowItWorksFlow';
@@ -109,7 +109,7 @@ const CL_KEY = 'mr-launch-checklist-v1';
 const FAQS = [
   ['Do I need my own doctors?', "No. Licensed providers in our network review intake, consult and prescribe within each state's rules. You can also bring your own providers."],
   ['Whose brand do patients see?', 'Yours: your name, logo, colors, domain and programs. MedRevolve runs behind the storefront.'],
-  ['What does it cost?', 'Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive. Medication, provider visit fees, payment processing, LegitScript fees, labs, domain and ad spend are third-party costs, and we walk you through each one.'],
+  ['What does it cost?', 'The platform launch fee is $4,000 one-time, covering the build, providers, pharmacy, payments and compliance setup. Ongoing platform and support terms are set out in your proposal. Our pricing is built to be competitive. Medication, provider visit fees, payment processing, LegitScript fees, labs, domain and ad spend are third-party costs, and we walk you through each one.'],
   ['What does setup include?', 'The 14 items in the Telehealth Plan above, from your custom platform and secure video visits to a dedicated project manager and post-launch help.'],
   ['Is it really about 7 days?', 'About 7 days from a signed agreement, with your brand assets and underwriting documents ready. The checklist above lists what to have on hand.'],
   ['Is MedRevolve LegitScript certified?', 'LegitScript certifies each merchant business itself. We prepare your site, policies, pharmacy and provider disclosures for your application and guide you through review.'],
@@ -227,7 +227,7 @@ export default function LaunchHome() {
             <p className="lead">For clinic, med spa and pharmacy owners who want a new revenue line under their own name. We plug in the site, providers, pharmacy, payments and compliance, so you sell from day one.</p>
             <div className="for"><span>Clinics</span><span>Med spas</span><span>Pharmacies</span><span>Founders</span></div>
             <div className="hero-cta">
-              <Book>Book a 20-min demo <span className="arrow">→</span></Book>
+              <Book>Book a 20-minute demo <span className="arrow">→</span></Book>
               <a className="btn btn-ghost" href="#checklist">Get the launch checklist</a>
             </div>
             <div className="stats">
@@ -429,7 +429,7 @@ export default function LaunchHome() {
             <div className="pcard">
               <span className="eyebrow" style={{ color: 'var(--sage)' }}>Setup &amp; costs</span>
               <div className="amount">Your quote</div>
-              <p className="muted">One branded telehealth platform, live in about 7 days, with all 14 items in the plan. Setup and ongoing costs are quoted on a short call, based on your programs, states and services. Our pricing is built to be competitive.</p>
+              <p className="muted">One branded telehealth platform, live in about 7 days, with all 14 items in the plan. The platform launch fee is $4,000 one-time, and ongoing platform and support terms are set out in your proposal. Our pricing is built to be competitive.</p>
               <Book>Get my setup quote <span className="arrow">→</span></Book>
               <a className="btn btn-ghost" href="#builder">Build your launch plan</a>
             </div>
@@ -535,11 +535,11 @@ export default function LaunchHome() {
             <span className="eyebrow">One platform. A healthier business.</span>
             <h2>Book a free 20-minute call with your <em className="i">onboarding specialist.</em></h2>
             <p className="lead">Walk through the platform, your programs and your states. The Google Meet link arrives as soon as you book.</p>
-            <div className="hero-cta"><Book>Pick a time <span className="arrow">→</span></Book><a className="btn btn-ghost" href="#checklist">Start the checklist</a></div>
+            <div className="hero-cta"><Book>Pick a time <span className="arrow">→</span></Book><a className="btn btn-ghost" href="#checklist">Start the checklist</a><a className="btn btn-ghost" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a></div>
           </div>
           <div className="final-card">
             <div className="row"><span className="muted">Call</span><b>MedRevolve intro call</b></div>
-            <div className="row"><span className="muted">Length</span><b>15, 20 or 30 minutes</b></div>
+            <div className="row"><span className="muted">Length</span><b>20 minutes</b></div>
             <div className="row"><span className="muted">Where</span><b>Google Meet</b></div>
             <div className="row"><span className="muted">For</span><b>Brands, clinics, med spas, pharmacies, providers</b></div>
           </div>

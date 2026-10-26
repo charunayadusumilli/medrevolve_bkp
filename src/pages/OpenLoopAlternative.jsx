@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, X, ArrowRight } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { BOOKING_URL } from '@/lib/contactConfig';
 import FAQSection from '@/components/home/FAQSection';
 
 const fade = (delay = 0) => ({
@@ -23,7 +24,7 @@ const COMPARISON = [
   { feature: '50-state provider coverage', medrevolve: true, openloop: true },
   { feature: '24/7 support to resolution', medrevolve: true, openloop: false },
   { feature: 'Launch in days to weeks', medrevolve: true, openloop: false },
-  { feature: 'Setup costs quoted upfront on a call', medrevolve: true, openloop: false },
+  { feature: '$4,000 launch fee stated upfront', medrevolve: true, openloop: false },
 ];
 
 const OPENLOOP_FAQS = [
@@ -50,11 +51,11 @@ export default function OpenLoopAlternative() {
             OpenLoop provides clinician networks and virtual care APIs. MedRevolve provides the complete self-run platform — services, built-in high-risk payments, and a unified CRM — under your brand. If you need more than staffing, here's why operators choose MedRevolve.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/MerchantOnboarding">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <Button className="bg-orange-500 hover:bg-orange-400 text-white font-bold px-8 py-3 rounded-sm text-base">
-                See If You Qualify <ArrowRight className="w-4 h-4 ml-2" />
+                Book a 20-minute demo <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
-            </Link>
+            </a>
             <Link to="/MerchantDemo">
               <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 font-bold px-8 py-3 rounded-sm text-base">
                 See Live Demo
@@ -126,7 +127,7 @@ export default function OpenLoopAlternative() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">Ready to See the Full Platform?</h2>
-          <p className="text-gray-500 mb-8">Book a free 30-minute call. We'll show you exactly what MedRevolve delivers and how it compares to every alternative on the market.</p>
+          <p className="text-gray-500 mb-8">Book a free 20-minute call. We'll show you exactly what MedRevolve delivers and how it compares to every alternative on the market.</p>
           <Link to="/MerchantOnboarding">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Call <ArrowRight className="w-4 h-4 ml-2" />

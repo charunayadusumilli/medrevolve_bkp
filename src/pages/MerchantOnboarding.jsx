@@ -299,7 +299,7 @@ export default function MerchantOnboarding() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-4 py-1.5 mb-4 text-[#6B8F5E] text-xs font-bold uppercase tracking-wide">
-            <Sparkles className="w-3 h-3" /> B2B Strategy Consultation — $199
+            <Sparkles className="w-3 h-3" /> B2B Strategy Consultation (Paid) — $199
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Launch Your Telehealth Business</h1>
           <p className="text-white/50 text-sm max-w-lg mx-auto">
@@ -564,7 +564,7 @@ export default function MerchantOnboarding() {
                     <div className="bg-white/8 border border-[#4A6741]/40 rounded-xl p-5 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-white font-bold text-lg">B2B Strategy Consultation — $199</p>
+                          <p className="text-white font-bold text-lg">B2B Strategy Consultation (Paid) — $199</p>
                           <p className="text-white/50 text-sm">1-on-1 specialist walkthrough · Personalized launch roadmap</p>
                         </div>
                         <div className="bg-[#4A6741]/20 border border-[#4A6741]/40 rounded-full px-3 py-1 text-[#6B8F5E] text-xs font-black uppercase tracking-wide flex-shrink-0 ml-2">

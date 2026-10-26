@@ -8,7 +8,7 @@ import { ArrowRight, Phone, Layers, CreditCard, Users, Headset, X, CheckCircle }
 
 const FAQS = [
   { question: 'Can a medspa offer telehealth under its own brand?', answer: 'Yes — white-label means your brand, your clients, your pricing; MedRevolve is the backend.' },
-  { question: 'What does it cost?', answer: 'Setup and ongoing costs are quoted on a short call, based on your programs, states and the services you choose. Our pricing is built to be competitive.' },
+  { question: 'What does it cost?', answer: 'The platform launch fee is $4,000 one-time, covering the build, providers, pharmacy, payments and compliance setup. Ongoing platform and support terms are set out in your proposal.' },
 ];
 
 const HARD_PARTS = [
