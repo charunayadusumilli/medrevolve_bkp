@@ -7,11 +7,12 @@ import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck, CalendarCheck } from 'lucide-react';
+import { Menu, User, LogOut, Settings, LayoutDashboard, ChevronDown, FileCheck, CalendarCheck, MessageCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AnswerEngine from '@/components/chat/AnswerEngine';
 import BookDemoLink from '@/components/BookDemoLink';
+import WhatsAppLink from '@/components/WhatsAppLink';
 import ConnectNow from '@/components/ConnectNow';
 import ThemeToggle from '@/components/dtc/ThemeToggle';
 import {
@@ -103,13 +104,20 @@ export default function Layout({ children }) {
       <ConnectNow floating />
 
       {/* Top bar — demo booking (phone line retired) */}
-      <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 text-center sticky top-0 z-[60]">
-        <BookDemoLink
-          className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
-          <CalendarCheck className="w-3.5 h-3.5 text-green-400" />
-          <span className="font-bold tracking-wide">{ctaLabel}</span>
-          <span className="hidden sm:inline text-white/50 font-medium">— 20-minute call, Google Meet</span>
-        </BookDemoLink>
+      <div className="bg-[#0A0A0A] border-b border-white/5 text-white py-2 px-4 sticky top-0 z-[60]">
+        <div className="flex items-center justify-center gap-x-5 gap-y-1 flex-wrap text-center">
+          <BookDemoLink
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
+            <CalendarCheck className="w-3.5 h-3.5 text-green-400" />
+            <span className="font-bold tracking-wide">{ctaLabel}</span>
+            <span className="hidden sm:inline text-white/50 font-medium">— 20-minute call, Google Meet</span>
+          </BookDemoLink>
+          <WhatsAppLink
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/60 hover:text-white transition-colors">
+            <MessageCircle className="w-3.5 h-3.5 text-green-400" />
+            <span>Message us on WhatsApp</span>
+          </WhatsAppLink>
+        </div>
       </div>
 
       {/* Header */}
@@ -338,6 +346,7 @@ export default function Layout({ children }) {
                   </>
                 )}
                 <li><BookDemoLink className="text-sm text-white/40 hover:text-white transition-colors">{ctaLabel}</BookDemoLink></li>
+                <li><WhatsAppLink className="text-sm text-white/40 hover:text-white transition-colors">Message us on WhatsApp</WhatsAppLink></li>
               </ul>
             </div>
 

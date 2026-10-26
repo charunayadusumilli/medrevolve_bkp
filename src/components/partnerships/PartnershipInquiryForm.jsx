@@ -2,7 +2,8 @@ import { BOOKING_URL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
-import { Loader2, CheckCircle2, Mail, CalendarCheck } from 'lucide-react';
+import { Loader2, CheckCircle2, Mail, CalendarCheck, MessageCircle } from 'lucide-react';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 const INTERESTS = ['Implementation', 'Infrastructure', 'Channel', 'Strategic', 'Not sure yet'];
 
@@ -55,6 +56,12 @@ export default function PartnershipInquiryForm() {
               </span>
               Book a Demo
             </a>
+            <WhatsAppLink className="flex items-center gap-3 text-sm text-[#1F2D27] hover:text-[#A66B3C] transition-colors">
+              <span className="w-10 h-10 bg-white border border-[#E4DED2] flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="w-4 h-4 text-[#A66B3C]" />
+              </span>
+              Message us on WhatsApp
+            </WhatsAppLink>
           </div>
         </div>
 

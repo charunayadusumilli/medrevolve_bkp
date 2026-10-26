@@ -1,4 +1,4 @@
-import { BOOKING_URL } from '@/lib/contactConfig';
+import { BOOKING_URL, WHATSAPP_URL } from '@/lib/contactConfig';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -35,7 +35,15 @@ const contactMethods = [
     description: 'Available 24/7',
     value: 'Start a conversation',
     action: '#'
-  }
+  },
+  ...(WHATSAPP_URL ? [{
+    icon: MessageCircle,
+    title: 'WhatsApp',
+    description: 'Message us directly',
+    value: 'Start a chat',
+    action: WHATSAPP_URL,
+    external: true
+  }] : [])
 ];
 
 const departmentEmails = [
@@ -168,13 +176,15 @@ export default function Contact() {
           </div>
 
           {/* Contact Methods */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {contactMethods.map((method, index) => {
               const Icon = method.icon;
               return (
                 <motion.a
                   key={method.title}
                   href={method.action}
+                  target={method.external ? '_blank' : undefined}
+                  rel={method.external ? 'noopener noreferrer' : undefined}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
