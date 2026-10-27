@@ -82,6 +82,7 @@ import PharmacyIntake from './pages/PharmacyIntake';
 import CustomerIntake from './pages/CustomerIntake';
 // ── PERSONALIZED DEMO ─────────────────────────────────────────────────────────
 import PersonalizedDemo from './pages/PersonalizedDemo';
+import OAuthConsent from './pages/OAuthConsent';
 // ── SEO LANDING PAGES ─────────────────────────────────────────────────────────
 import ForMedSpas from './pages/ForMedSpas';
 import TRTClinicPlatform from './pages/TRTClinicPlatform';
@@ -203,6 +204,9 @@ const AuthenticatedApp = () => {
       <Route path="/ProviderIntake" element={<LayoutWrapper currentPageName="ProviderIntake"><ProviderIntake /></LayoutWrapper>} />
       <Route path="/ProviderOnboarding" element={<LayoutWrapper currentPageName="ProviderOnboarding"><ProviderOnboarding /></LayoutWrapper>} />
       <Route path="/PharmacyIntake" element={<LayoutWrapper currentPageName="PharmacyIntake"><PharmacyIntake /></LayoutWrapper>} />
+
+      {/* ── MCP OAUTH CONSENT — must stay outside every auth guard & layout ── */}
+      <Route path="/oauth/consent" element={<OAuthConsent />} />
 
       {/* ── PERSONALIZED DEMO (no layout — standalone branded page) ────────── */}
       <Route path="/PersonalizedDemo" element={<PersonalizedDemo />} />
