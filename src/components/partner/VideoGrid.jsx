@@ -2,7 +2,7 @@ import React from 'react';
 import { Play } from 'lucide-react';
 
 const POSTER =
-  'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/de750191a_generated_image.png';
+  'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/8252818f6_generated_image.png';
 
 const VIDEOS = [
   { title: 'Platform tour in 4 minutes', length: '4:12' },

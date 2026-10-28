@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HERO_STILL_LIFE =
-  'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/1914d2eb2_generated_image.png';
+  'https://media.base44.com/images/public/698bb392815cbad420c2ec1a/e9a1c45e1_generated_image.png';
 
 export default function ConsumerHero() {
   return (

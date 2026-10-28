@@ -62,12 +62,17 @@ import Partnerships from './pages/Partnerships';
 import Blog from './pages/Blog';
 import OperatorFAQ from './pages/OperatorFAQ';
 import ForBusiness from './pages/ForBusiness';
-// ── CONSUMER STOREFRONT (Ro / Hims-class, medrevolve.com) ─────────────────────
-import StoreLayout from './components/storefront/StoreLayout';
-import StoreHome from './pages/storefront/StoreHome';
+// ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
+import { SiteProvider } from './lib/siteContext';
+import {
+  SiteHome, SiteCart, SiteCheckout, SiteCheckoutSuccess, SiteContact, ConsumerShell, RuoShell,
+} from './components/site/VariantRoutes';
+import RuoCatalog from './pages/ruo/RuoCatalog';
+import RuoProduct from './pages/ruo/RuoProduct';
+import RuoInfo from './pages/ruo/RuoInfo';
+// ── CONSUMER STOREFRONT (medrevolve.com shop, product, intake) ────────────────
 import StoreShop from './pages/storefront/StoreShop';
 import StoreProduct from './pages/storefront/StoreProduct';
-import StoreCart from './pages/storefront/StoreCart';
 import IntakeStart from './pages/storefront/IntakeStart';
 import ToolsPage from './pages/storefront/ToolsPage';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
@@ -149,14 +154,31 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      <Route path="/" element={<StoreLayout><StoreHome /></StoreLayout>} />
-      {/* ── DTC SHOP (medrevolve.com consumer catalog) ────────────────────── */}
-      <Route path="/shop" element={<StoreLayout><StoreShop /></StoreLayout>} />
-      <Route path="/shop/:category" element={<StoreLayout><StoreShop /></StoreLayout>} />
-      <Route path="/product/:slug" element={<StoreLayout><StoreProduct /></StoreLayout>} />
-      <Route path="/cart" element={<StoreLayout><StoreCart /></StoreLayout>} />
-      <Route path="/intake/:category" element={<StoreLayout><IntakeStart /></StoreLayout>} />
-      <Route path="/tools/:slug" element={<StoreLayout><ToolsPage /></StoreLayout>} />
+      {/* ── HOME — hostname decides consumer / partner HQ / RUO ───────────── */}
+      <Route path="/" element={<SiteHome />} />
+
+      {/* ── CONSUMER CATALOG (medrevolve.com) ─────────────────────────────── */}
+      <Route path="/shop" element={<ConsumerShell><StoreShop /></ConsumerShell>} />
+      <Route path="/shop/:category" element={<ConsumerShell><StoreShop /></ConsumerShell>} />
+      <Route path="/product/:slug" element={<ConsumerShell><StoreProduct /></ConsumerShell>} />
+      <Route path="/intake/:category" element={<ConsumerShell><IntakeStart /></ConsumerShell>} />
+      <Route path="/tools/:slug" element={<ConsumerShell><ToolsPage /></ConsumerShell>} />
+
+      {/* ── CART + CHECKOUT — rail-scoped by hostname ─────────────────────── */}
+      <Route path="/cart" element={<SiteCart />} />
+      <Route path="/checkout" element={<SiteCheckout />} />
+      <Route path="/checkout/success" element={<SiteCheckoutSuccess />} />
+
+      {/* ── RUO RESEARCH STORE (medrevolveruo.com) ────────────────────────── */}
+      <Route path="/catalog" element={<RuoShell><RuoCatalog /></RuoShell>} />
+      <Route path="/catalog/:category" element={<RuoShell><RuoCatalog /></RuoShell>} />
+      <Route path="/ruo/:slug" element={<RuoShell><RuoProduct /></RuoShell>} />
+      <Route path="/lab-results" element={<RuoShell><RuoInfo kind="lab-results" /></RuoShell>} />
+      <Route path="/bulk-orders" element={<RuoShell><RuoInfo kind="bulk-orders" /></RuoShell>} />
+      <Route path="/how-to-order" element={<RuoShell><RuoInfo kind="how-to-order" /></RuoShell>} />
+      <Route path="/track-order" element={<RuoShell><RuoInfo kind="track-order" /></RuoShell>} />
+      <Route path="/compliance" element={<RuoShell><RuoInfo kind="compliance" /></RuoShell>} />
+      <Route path="/contact" element={<SiteContact />} />
       <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
       <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><GetStarted /></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
@@ -278,8 +300,10 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
-          <NavigationTracker />
-          <AuthenticatedApp />
+          <SiteProvider>
+            <NavigationTracker />
+            <AuthenticatedApp />
+          </SiteProvider>
         </Router>
         <Toaster />
       </QueryClientProvider>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Truck } from 'lucide-react';
 import useStoreCart from '@/hooks/useStoreCart';
 import { cartTotals, restrictedLines, setShipState } from '@/lib/storefront/cart';
@@ -11,7 +11,7 @@ import EmptyBasket from '@/components/storefront/EmptyBasket';
 
 export default function StoreCart() {
   const cart = useStoreCart();
-  const [notice, setNotice] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     applyStoreSeo({
@@ -26,7 +26,7 @@ export default function StoreCart() {
   const blocked = restricted.length > 0;
 
   const handleCheckout = () => {
-    setNotice('Checkout opens in the next release. Your basket is saved for 30 days.');
+    if (!blocked) navigate('/checkout');
   };
 
   return (
@@ -90,11 +90,6 @@ export default function StoreCart() {
               onCheckout={handleCheckout}
               subscriptions={cart.lines.filter((line) => line.purchase_type === 'subscription')}
             />
-            {notice && (
-              <p className="mt-3 rounded-xl border border-sf-line bg-sf-surface p-3 text-[12px] text-sf-ink">
-                {notice}
-              </p>
-            )}
             <Link to="/shop" className="mt-4 block text-center text-[12px] font-semibold text-sf-accent hover:underline">
               Continue shopping
             </Link>
