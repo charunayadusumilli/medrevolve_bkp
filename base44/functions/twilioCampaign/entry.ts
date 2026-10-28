@@ -23,10 +23,16 @@ Deno.serve(async (req) => {
 
     const payload = await req.json().catch(() => ({}));
     const action = payload.action;
-    const sid = Deno.env.get('TWILIO_ACCOUNT_SID');
-    const token = Deno.env.get('TWILIO_AUTH_TOKEN');
+    const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+    const keySid = Deno.env.get('TWILIO_API_KEY_SID');
+    const keySecret = Deno.env.get('TWILIO_API_KEY_SECRET');
+    const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
     const from = Deno.env.get('TWILIO_PHONE_NUMBER');
-    const configured = Boolean(sid && token && from);
+    // Prefer scoped API key credentials; fall back to the account auth token.
+    const credential = keySid && keySecret
+      ? { user: keySid, pass: keySecret }
+      : (authToken ? { user: accountSid, pass: authToken } : null);
+    const configured = Boolean(accountSid && credential && from);
 
     if (action === 'status') return Response.json({ configured });
 
@@ -63,12 +69,12 @@ Deno.serve(async (req) => {
       }, { status: 400 });
     }
 
-    const auth = 'Basic ' + btoa(`${sid}:${token}`);
+    const auth = 'Basic ' + btoa(`${credential.user}:${credential.pass}`);
     const callbackUrl = `${new URL(req.url).origin}/functions/twilioDeliveryWebhook`;
 
     const sendSms = async (to) => {
       const form = new URLSearchParams({ To: to, From: from, Body: body, StatusCallback: callbackUrl });
-      const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+      const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
         method: 'POST',
         headers: { Authorization: auth, 'Content-Type': 'application/x-www-form-urlencoded' },
         body: form,
@@ -91,7 +97,7 @@ Deno.serve(async (req) => {
         StatusCallbackEvent: 'completed',
       });
       form.append('StatusCallbackEvent', 'answered');
-      const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Calls.json`, {
+      const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Calls.json`, {
         method: 'POST',
         headers: { Authorization: auth, 'Content-Type': 'application/x-www-form-urlencoded' },
         body: form,
