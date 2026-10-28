@@ -1,0 +1,45 @@
+{
+  "name": "CartItem",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Browser session / cart identifier"
+    },
+    "product_sku": {
+      "type": "string",
+      "description": "SKU of the StorefrontProduct in the basket"
+    },
+    "quantity": {
+      "type": "integer",
+      "default": 1,
+      "description": "Units in the basket line"
+    },
+    "purchase_type": {
+      "type": "string",
+      "enum": [
+        "one_time",
+        "subscription"
+      ],
+      "default": "one_time",
+      "description": "One-time purchase or recurring refill"
+    },
+    "cadence_days": {
+      "type": "integer",
+      "description": "Refill cadence for subscription lines"
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "Resolved unit price at add time"
+    },
+    "line_total": {
+      "type": "number",
+      "description": "unit_price x quantity"
+    }
+  },
+  "required": [
+    "session_id",
+    "product_sku",
+    "quantity"
+  ]
+}

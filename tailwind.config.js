@@ -27,6 +27,16 @@ module.exports = {
   				surface: 'hsl(var(--dtc-surface))',
   				text: 'hsl(var(--dtc-text))',
   			},
+  			sf: {
+  				paper: 'hsl(var(--sf-paper))',
+  				surface: 'hsl(var(--sf-surface))',
+  				ink: 'hsl(var(--sf-ink))',
+  				muted: 'hsl(var(--sf-muted))',
+  				line: 'hsl(var(--sf-line))',
+  				accent: 'hsl(var(--sf-accent))',
+  				'accent-soft': 'hsl(var(--sf-accent-soft))',
+  				sun: 'hsl(var(--sf-sun))',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

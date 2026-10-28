@@ -1,0 +1,146 @@
+{
+  "name": "StorefrontProduct",
+  "type": "object",
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Unique internal SKU"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug used at /product/:slug"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Consumer-facing product name"
+    },
+    "generic_name": {
+      "type": "string",
+      "description": "Generic / active ingredient name"
+    },
+    "brand_name": {
+      "type": "string",
+      "description": "Manufacturer or brand name when applicable"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "weight-loss",
+        "sexual-health",
+        "hair",
+        "skin",
+        "mental-health",
+        "testosterone",
+        "labs",
+        "daily-wellness"
+      ],
+      "description": "Storefront category"
+    },
+    "rail": {
+      "type": "string",
+      "enum": [
+        "prescription",
+        "commerce"
+      ],
+      "description": "prescription = intake required, no basket. commerce = direct purchase."
+    },
+    "fda_status": {
+      "type": "string",
+      "enum": [
+        "fda_approved",
+        "compounded_503a",
+        "supplement"
+      ],
+      "description": "Regulatory status shown as a chip next to price"
+    },
+    "price": {
+      "type": "number",
+      "description": "Cash-pay list price (one-time)"
+    },
+    "compare_at_price": {
+      "type": "number",
+      "description": "Anchor / compare-at price"
+    },
+    "subscription_price": {
+      "type": "number",
+      "description": "Price per shipment on a subscription"
+    },
+    "subscription_cadences": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Allowed refill cadences in days (30, 60, 90)"
+    },
+    "dose_options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "price_delta": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Selectable strengths with price deltas"
+    },
+    "quantity_limit": {
+      "type": "integer",
+      "default": 6,
+      "description": "Maximum units per order for this SKU"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the SKU can currently be bought"
+    },
+    "state_restrictions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Two-letter state codes where this SKU cannot ship"
+    },
+    "safety_info": {
+      "type": "string",
+      "description": "Safety information. Required for every prescription product."
+    },
+    "coa_url": {
+      "type": "string",
+      "description": "Certificate of analysis link when available"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Primary product image"
+    },
+    "badge": {
+      "type": "string",
+      "enum": [
+        "bestseller",
+        "new",
+        "value"
+      ],
+      "description": "Merchandising badge"
+    },
+    "description": {
+      "type": "string",
+      "description": "Consumer description"
+    },
+    "clinical_notes": {
+      "type": "string",
+      "description": "Clinical notes shown on the product page"
+    }
+  },
+  "required": [
+    "sku",
+    "slug",
+    "display_name",
+    "category",
+    "rail",
+    "fda_status",
+    "price"
+  ]
+}

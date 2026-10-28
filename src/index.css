@@ -49,6 +49,14 @@
     --dtc-page: 39 41% 93%;
     --dtc-surface: 0 0% 100%;
     --dtc-text: 160 14% 12%;
+    --sf-paper: 40 38% 97%;
+    --sf-surface: 0 0% 100%;
+    --sf-ink: 155 16% 12%;
+    --sf-muted: 150 7% 42%;
+    --sf-line: 40 18% 88%;
+    --sf-accent: 168 72% 24%;
+    --sf-accent-soft: 168 42% 93%;
+    --sf-sun: 30 88% 56%;
   }
 
   .dark {
@@ -61,6 +69,14 @@
     --dtc-page: 160 14% 9%;
     --dtc-surface: 160 14% 14%;
     --dtc-text: 39 41% 93%;
+    --sf-paper: 40 38% 97%;
+    --sf-surface: 0 0% 100%;
+    --sf-ink: 155 16% 12%;
+    --sf-muted: 150 7% 42%;
+    --sf-line: 40 18% 88%;
+    --sf-accent: 168 72% 24%;
+    --sf-accent-soft: 168 42% 93%;
+    --sf-sun: 30 88% 56%;
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;

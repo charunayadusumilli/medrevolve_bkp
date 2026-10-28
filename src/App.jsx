@@ -63,6 +63,14 @@ import Blog from './pages/Blog';
 import OperatorFAQ from './pages/OperatorFAQ';
 import ForBusiness from './pages/ForBusiness';
 import PatientRoute from './components/PatientRoute';
+// ── CONSUMER STOREFRONT (Ro / Hims-class, medrevolve.com) ─────────────────────
+import StoreLayout from './components/storefront/StoreLayout';
+import StoreHome from './pages/storefront/StoreHome';
+import StoreShop from './pages/storefront/StoreShop';
+import StoreProduct from './pages/storefront/StoreProduct';
+import StoreCart from './pages/storefront/StoreCart';
+import IntakeStart from './pages/storefront/IntakeStart';
+import ToolsPage from './pages/storefront/ToolsPage';
 // ── PROVIDER / PATIENT FLOWS (auth-gated) ─────────────────────────────────────
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
@@ -142,14 +150,14 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      <Route path="/" element={
-        <LayoutWrapper currentPageName={mainPageKey}>
-          <DomainHome />
-        </LayoutWrapper>
-      } />
+      <Route path="/" element={<StoreLayout><StoreHome /></StoreLayout>} />
       {/* ── DTC SHOP (medrevolve.com consumer catalog) ────────────────────── */}
-      <Route path="/shop" element={<LayoutWrapper currentPageName="Shop"><PatientRoute><Shop /></PatientRoute></LayoutWrapper>} />
-      <Route path="/product/:id" element={<LayoutWrapper currentPageName="ProductDetail"><PatientRoute><ProductDetail /></PatientRoute></LayoutWrapper>} />
+      <Route path="/shop" element={<StoreLayout><StoreShop /></StoreLayout>} />
+      <Route path="/shop/:category" element={<StoreLayout><StoreShop /></StoreLayout>} />
+      <Route path="/product/:slug" element={<StoreLayout><StoreProduct /></StoreLayout>} />
+      <Route path="/cart" element={<StoreLayout><StoreCart /></StoreLayout>} />
+      <Route path="/intake/:category" element={<StoreLayout><IntakeStart /></StoreLayout>} />
+      <Route path="/tools/:slug" element={<StoreLayout><ToolsPage /></StoreLayout>} />
       <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><PatientRoute><DTCCart /></PatientRoute></LayoutWrapper>} />
       <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><PatientRoute><GetStarted /></PatientRoute></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
