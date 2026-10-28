@@ -53,6 +53,7 @@ Deno.serve(async (req) => {
         configured: true,
         account_name: info.friendly_name || null,
         account_status: info.status || null,
+        account_type: info.type || null,
         from,
         reason: probe.ok ? null : (info.message || `Twilio rejected the credentials (HTTP ${probe.status}).`),
       });
@@ -106,6 +107,7 @@ Deno.serve(async (req) => {
     };
 
     const placeCall = async (to) => {
+      if (!from) return { to, channel: 'voice', ok: false, error: 'Voice calls need a sending phone number.' };
       const script = campaign.voice_script || `This is MedRevolve. ${campaign.message_body || ''}`;
       const twiml = `<Response><Say voice="Polly.Joanna">${escapeXml(script)}</Say>` +
         `<Sms to="${escapeXml(to)}" from="${escapeXml(from)}">${escapeXml(`Here is your link: ${linkUrl}`)}</Sms>` +

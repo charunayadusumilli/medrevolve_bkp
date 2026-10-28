@@ -50,12 +50,21 @@ export default function CampaignStudio() {
         </div>
 
         {connection?.connected ? (
-          <div className="flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-            <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <p>
-              Connected to Twilio{connection.account_name ? ` — ${connection.account_name}` : ''} · account status {connection.account_status || 'unknown'} · sending from {connection.from}. US marketing texts still require the number to be registered for A2P 10DLC, or carriers will filter them.
-            </p>
-          </div>
+          connection.account_type === "Trial" ? (
+            <div className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <p>
+                Credentials accepted for {connection.account_name || 'your Twilio account'}, but the account is still in trial: Twilio blocks custom marketing texts until you add a payment method, buy or attach a sending number, and register A2P 10DLC (or verify a toll-free number).
+              </p>
+            </div>
+          ) : (
+            <div className="flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <p>
+                Connected to Twilio{connection.account_name ? ` — ${connection.account_name}` : ''} · account status {connection.account_status || 'unknown'} · sending from {connection.from || 'messaging service'}.
+              </p>
+            </div>
+          )
         ) : (
           <div className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
             <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
