@@ -1,0 +1,48 @@
+{
+  "name": "CampaignSend",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string",
+      "description": "MarketingCampaign id"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Recipient in E.164"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "sms",
+        "voice"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "sent",
+        "delivered",
+        "undelivered",
+        "failed",
+        "answered"
+      ],
+      "default": "queued"
+    },
+    "provider_sid": {
+      "type": "string",
+      "description": "Twilio message or call SID"
+    },
+    "error": {
+      "type": "string"
+    },
+    "link_code": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "phone",
+    "channel"
+  ]
+}

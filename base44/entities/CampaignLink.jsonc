@@ -1,0 +1,33 @@
+{
+  "name": "CampaignLink",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Short code resolved at /go/:code"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "MarketingCampaign id"
+    },
+    "destination_url": {
+      "type": "string",
+      "description": "Where the visitor lands"
+    },
+    "label": {
+      "type": "string"
+    },
+    "clicks": {
+      "type": "integer",
+      "default": 0
+    },
+    "last_click_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "code",
+    "destination_url"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "MarketingCampaign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Internal campaign name"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "sms",
+        "voice",
+        "sms_voice"
+      ],
+      "default": "sms",
+      "description": "sms = text only, voice = ringless-style call that also texts the link, sms_voice = call then text"
+    },
+    "segment": {
+      "type": "string",
+      "description": "MarketingContact segment targeted"
+    },
+    "product_scope": {
+      "type": "string",
+      "enum": [
+        "consumer",
+        "ruo"
+      ],
+      "default": "consumer",
+      "description": "Which storefront the link resolves to"
+    },
+    "product_sku": {
+      "type": "string",
+      "description": "StorefrontProduct or RUOProduct SKU"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product name for reporting"
+    },
+    "destination_url": {
+      "type": "string",
+      "description": "Full storefront or checkout URL behind the tracked link"
+    },
+    "link_code": {
+      "type": "string",
+      "description": "Short code used at /go/:code"
+    },
+    "link_url": {
+      "type": "string",
+      "description": "Tracked link inserted into the message"
+    },
+    "message_body": {
+      "type": "string",
+      "description": "SMS copy. Use {link} where the tracked link belongs."
+    },
+    "voice_script": {
+      "type": "string",
+      "description": "Script spoken on the automated call"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready",
+        "sending",
+        "sent",
+        "paused",
+        "failed"
+      ],
+      "default": "draft"
+    },
+    "targeted_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "sent_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "failed_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "click_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "opt_out_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "last_run_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "channel",
+    "segment"
+  ]
+}
