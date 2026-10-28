@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useRuoCart from '@/hooks/useRuoCart';
 import { ruoTotals } from '@/lib/ruo/cart';
 import { ruoMoney } from '@/lib/ruo/catalog';
@@ -10,6 +10,7 @@ const EMPTY = { name: '', email: '', phone: '', address: '', city: '', state: ''
 
 export default function RuoCheckout() {
   const cart = useRuoCart();
+  const navigate = useNavigate();
   const [value, setValue] = useState(EMPTY);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -26,12 +27,16 @@ export default function RuoCheckout() {
     );
   }
 
-  const submit = async (e) => {
+  const submit = async (e, token) => {
     e.preventDefault();
     setError('');
     setSubmitting(true);
     try {
-      await startCheckout({
+      const result = await startCheckout({
+        nonce: token.nonce,
+        expiryMonth: token.expiryMonth,
+        expiryYear: token.expiryYear,
+        avsZip: token.avsZip,
         channel: 'ruo',
         lines: cart.lines.map((l) => ({ sku: l.sku, quantity: l.quantity })),
         customer: { name: value.name, email: value.email, phone: value.phone },
@@ -40,9 +45,10 @@ export default function RuoCheckout() {
         shipState: value.state,
         shipZip: value.zip,
       });
+      navigate(`/checkout/success?order=${result.order_id}`);
     } catch (err) {
       setSubmitting(false);
-      setError(err?.message || 'Checkout could not be started.');
+      setError(err?.message || 'Payment could not be completed.');
     }
   };
 
