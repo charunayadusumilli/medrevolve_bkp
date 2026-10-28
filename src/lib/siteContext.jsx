@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useMemo } from 'react';
+import { WHATSAPP_URL } from '@/lib/contactConfig';
 
-const WHATSAPP_NUMBER = '17187304362';
+// WhatsApp runs through the patient_support agent channel — the same connect link on all
+// three sites, so no per-site number is published here.
+const WHATSAPP_NUMBER = '';
 
-function waLink(text) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+function waLink() {
+  return WHATSAPP_URL;
 }
 
 export const SITES = {
