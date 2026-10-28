@@ -35,7 +35,10 @@ export default function BoughtTogether({ product }) {
               <Link to={`/product/${item.slug}`} className="block truncate text-[13px] font-semibold hover:underline">
                 {item.display_name}
               </Link>
-              <p className="text-[12px] text-sf-muted">{money(item.price)}</p>
+              <p className="text-[12px] text-sf-muted">
+                {money(item.subscription_price ?? item.price)}
+                {item.subscription_price != null ? '/mo' : ' one-time'}
+              </p>
             </div>
             <QuickAdd product={item} label="Add" />
           </div>

@@ -84,7 +84,12 @@ export default function StoreCart() {
           </div>
 
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <CartSummary totals={totals} blocked={blocked} onCheckout={handleCheckout} />
+            <CartSummary
+              totals={totals}
+              blocked={blocked}
+              onCheckout={handleCheckout}
+              subscriptions={cart.lines.filter((line) => line.purchase_type === 'subscription')}
+            />
             {notice && (
               <p className="mt-3 rounded-xl border border-sf-line bg-sf-surface p-3 text-[12px] text-sf-ink">
                 {notice}

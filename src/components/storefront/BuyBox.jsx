@@ -11,7 +11,9 @@ export default function BuyBox({ product, onGuardedAdd }) {
   const limit = product.quantity_limit || 6;
   const cadences = product.subscription_cadences?.length ? product.subscription_cadences : [30, 60, 90];
   const [dose, setDose] = useState(product.dose_options?.[0]?.label);
-  const [purchaseType, setPurchaseType] = useState('one_time');
+  const [purchaseType, setPurchaseType] = useState(
+    product.subscription_price != null ? 'subscription' : 'one_time'
+  );
   const [cadence, setCadence] = useState(cadences[0]);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
@@ -82,7 +84,12 @@ export default function BuyBox({ product, onGuardedAdd }) {
   return (
     <div className="rounded-2xl border border-sf-line bg-sf-surface p-5">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <p className="text-[34px] font-display leading-none">{money(unitPrice)}</p>
+        <p className="text-[34px] font-display leading-none">
+          {money(unitPrice)}
+          <span className="font-body text-base text-sf-muted">
+            {purchaseType === 'subscription' ? '/mo' : ' one-time'}
+          </span>
+        </p>
         {product.compare_at_price > product.price && (
           <p className="text-sm text-sf-muted line-through">{money(product.compare_at_price)}</p>
         )}
@@ -124,7 +131,9 @@ export default function BuyBox({ product, onGuardedAdd }) {
           }`}
         >
           <span className="block text-[12px] font-semibold">One-time</span>
-          <span className="block text-[11px] text-sf-muted">{money(resolveUnitPrice(product, 'one_time', dose))}</span>
+          <span className="block text-[11px] text-sf-muted">
+            {money(resolveUnitPrice(product, 'one_time', dose))} one-time
+          </span>
         </button>
         <button
           type="button"
@@ -136,7 +145,7 @@ export default function BuyBox({ product, onGuardedAdd }) {
         >
           <span className="block text-[12px] font-semibold">Subscribe</span>
           <span className="block text-[11px] text-sf-muted">
-            {product.subscription_price != null ? money(subscribedPrice) : 'Not offered'}
+            {product.subscription_price != null ? `${money(subscribedPrice)}/mo` : 'Not offered'}
           </span>
         </button>
       </div>

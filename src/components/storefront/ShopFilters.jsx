@@ -9,6 +9,13 @@ const PRICE_BANDS = [
   { label: 'Under $100', value: 100 },
 ];
 
+const SORT_OPTIONS = [
+  { value: 'featured', label: 'Featured' },
+  { value: 'price-asc', label: 'Price: low to high' },
+  { value: 'price-desc', label: 'Price: high to low' },
+  { value: 'name', label: 'Name A–Z' },
+];
+
 export default function ShopFilters({
   search,
   onSearch,
@@ -18,8 +25,14 @@ export default function ShopFilters({
   onMaxPrice,
   subOnly,
   onSubOnly,
+  inStock,
+  onInStock,
+  sort,
+  onSort,
+  lockCategory = false,
 }) {
-  const active = search || categoryFilter !== 'all' || maxPrice !== 0 || subOnly;
+  const active =
+    search || categoryFilter !== 'all' || maxPrice !== 0 || subOnly || inStock;
 
   return (
     <div className="rounded-2xl border border-sf-line bg-sf-surface p-4">
@@ -34,14 +47,26 @@ export default function ShopFilters({
           />
         </label>
 
+        {!lockCategory && (
+          <select
+            value={categoryFilter}
+            onChange={(e) => onCategory(e.target.value)}
+            className="rounded-full border border-sf-line bg-sf-paper px-4 py-2.5 text-[13px] font-medium outline-none focus:border-sf-ink"
+          >
+            <option value="all">All categories</option>
+            {STOREFRONT_CATEGORIES.map((c) => (
+              <option key={c.slug} value={c.slug}>{c.label}</option>
+            ))}
+          </select>
+        )}
+
         <select
-          value={categoryFilter}
-          onChange={(e) => onCategory(e.target.value)}
+          value={sort}
+          onChange={(e) => onSort(e.target.value)}
           className="rounded-full border border-sf-line bg-sf-paper px-4 py-2.5 text-[13px] font-medium outline-none focus:border-sf-ink"
         >
-          <option value="all">All categories</option>
-          {STOREFRONT_CATEGORIES.map((c) => (
-            <option key={c.slug} value={c.slug}>{c.label}</option>
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
           ))}
         </select>
       </div>
@@ -64,6 +89,18 @@ export default function ShopFilters({
 
         <button
           type="button"
+          onClick={() => onInStock(!inStock)}
+          className={`rounded-full border px-3 py-1.5 text-[12px] font-medium transition-colors ${
+            inStock
+              ? 'border-sf-ink bg-sf-ink text-white'
+              : 'border-sf-line text-sf-muted hover:border-sf-ink hover:text-sf-ink'
+          }`}
+        >
+          In stock only
+        </button>
+
+        <button
+          type="button"
           onClick={() => onSubOnly(!subOnly)}
           className={`rounded-full border px-3 py-1.5 text-[12px] font-medium transition-colors ${
             subOnly
@@ -82,6 +119,7 @@ export default function ShopFilters({
               onCategory('all');
               onMaxPrice(0);
               onSubOnly(false);
+              onInStock(false);
             }}
             className="ml-auto inline-flex items-center gap-1 text-[12px] font-semibold text-sf-muted hover:text-sf-ink"
           >

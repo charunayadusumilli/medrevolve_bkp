@@ -29,7 +29,7 @@ export default function CartLine({ line, stateLabel }) {
             </Link>
             {line.dose_label && <p className="text-[12px] text-sf-muted">{line.dose_label}</p>}
             <p className="mt-1 text-[12px] text-sf-muted">
-              {money(line.unit_price)} each
+              {subscription ? `${money(line.unit_price)}/mo` : `${money(line.unit_price)} one-time`}
               {subscription && line.subscription_price != null && (
                 <span className="ml-1.5 line-through">{money(line.list_price + (line.dose_delta || 0))}</span>
               )}
@@ -113,6 +113,9 @@ export default function CartLine({ line, stateLabel }) {
 
           <span className="ml-auto text-[14px] font-semibold">
             {money(line.unit_price * line.quantity)}
+            <span className="ml-1 text-[11px] font-medium text-sf-muted">
+              {subscription ? '/mo' : 'one-time'}
+            </span>
           </span>
         </div>
 

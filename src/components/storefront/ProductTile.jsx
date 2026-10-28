@@ -49,7 +49,11 @@ export default function ProductTile({ product }) {
 
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <span className="text-[17px] font-semibold">
-            {rx ? `Starting at ${money(product.subscription_price ?? product.price)}/mo` : money(product.price)}
+            {rx
+              ? `Starting at ${money(product.subscription_price ?? product.price)}/mo`
+              : product.subscription_price != null
+                ? `${money(product.subscription_price)}/mo`
+                : `${money(product.price)} one-time`}
           </span>
           {product.compare_at_price > product.price && (
             <span className="text-[12px] text-sf-muted line-through">{money(product.compare_at_price)}</span>
@@ -58,8 +62,8 @@ export default function ProductTile({ product }) {
         <p className="mt-1 text-[11px] text-sf-muted">
           {rx
             ? 'after provider approval'
-            : product.subscription_price
-              ? `or ${money(product.subscription_price)} with subscription`
+            : product.subscription_price != null
+              ? `or ${money(product.price)} one-time`
               : 'one-time purchase'}
         </p>
 

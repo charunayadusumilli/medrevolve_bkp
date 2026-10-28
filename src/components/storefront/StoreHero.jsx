@@ -14,11 +14,9 @@ export default function StoreHero() {
           </span>
 
           <h1 className="mt-6 font-display text-[42px] leading-[1.02] tracking-tight sm:text-[58px] lg:text-[64px]">
-            Real care for
+            Care that fits
             <br />
-            what you actually
-            <br />
-            <span className="text-sf-accent">want to treat.</span>
+            <span className="text-sf-accent">your life.</span>
           </h1>
 
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-sf-muted">
@@ -28,17 +26,17 @@ export default function StoreHero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
-              to="/shop"
+              to="/start"
               className="inline-flex items-center gap-2 rounded-full bg-sf-ink px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
-              Shop treatments
+              Start your visit
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to="/intake/weight-loss"
+              to="/shop"
               className="inline-flex items-center gap-2 rounded-full border border-sf-ink px-6 py-3.5 text-sm font-semibold text-sf-ink transition-colors hover:bg-sf-ink hover:text-white"
             >
-              Start a weight-loss intake
+              Shop all products
             </Link>
           </div>
 

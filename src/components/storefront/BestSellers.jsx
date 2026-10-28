@@ -1,27 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
 import ProductTile from './ProductTile';
 
-export default function BestSellers() {
-  const [products, setProducts] = useState(null);
+export default function BestSellers({ products }) {
   const railRef = useRef(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    base44.entities.StorefrontProduct
-      .filter({ rail: 'commerce' }, { limit: 24 })
-      .then((page) => {
-        if (cancelled) return;
-        const items = page.items || [];
-        const ranked = [...items].sort((a, b) => {
-          const rank = (p) => (p.badge === 'bestseller' ? 0 : p.badge === 'value' ? 1 : 2);
-          return rank(a) - rank(b) || a.price - b.price;
-        });
-        setProducts(ranked.slice(0, 8));
-      });
-    return () => { cancelled = true; };
-  }, []);
+  const list = (products || []).filter((p) => p.badge === 'bestseller');
 
   const scrollBy = (direction) => {
     const node = railRef.current;
@@ -63,12 +46,14 @@ export default function BestSellers() {
               <div key={i} className="h-80 animate-pulse rounded-2xl bg-sf-paper" />
             ))}
           </div>
+        ) : list.length === 0 ? (
+          <p className="mt-8 text-[13px] text-sf-muted">Best sellers are being restocked.</p>
         ) : (
           <div
             ref={railRef}
             className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {products.map((product) => (
+            {list.map((product) => (
               <div key={product.id} className="w-[74%] flex-none snap-start sm:w-[46%] lg:w-[23.5%]">
                 <ProductTile product={product} />
               </div>

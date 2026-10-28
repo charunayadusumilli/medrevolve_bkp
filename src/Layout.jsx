@@ -203,9 +203,9 @@ export default function Layout({ children }) {
                     </div>
                     <DropdownMenuSeparator className="bg-gray-100" />
                     <DropdownMenuItem asChild>
-                      <a href="https://app.medrevolve.com/portal" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                      <Link to="/PatientPortal" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
                         <LayoutDashboard className="w-4 h-4" /> My Portal
-                      </a>
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/MerchantOnboardingIntake" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
@@ -267,7 +267,7 @@ export default function Layout({ children }) {
                       ))}
                       {user && (
                         <div className="pt-4 border-t border-gray-100 mt-2 space-y-1">
-                          <a href="https://app.medrevolve.com/portal" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</a>
+                          <Link to="/PatientPortal" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</Link>
                           {user.role === 'admin' && <Link to="/AdminDashboard" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>Admin</Link>}
                         </div>
                       )}

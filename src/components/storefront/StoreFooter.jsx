@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BadgeCheck } from 'lucide-react';
-import { STOREFRONT_CATEGORIES } from '@/lib/storefront/catalog';
+import { STOREFRONT_CATEGORIES, US_STATES } from '@/lib/storefront/catalog';
 import { LEGITSCRIPT_URL } from './AnnouncementBar';
 
 export default function StoreFooter() {
@@ -68,7 +68,26 @@ export default function StoreFooter() {
           </div>
         </div>
 
-        <div className="mt-12 space-y-3 border-t border-sf-line pt-8">
+        <div className="mt-12 rounded-2xl border border-sf-line bg-sf-paper p-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sf-muted">State availability</p>
+          <p className="mt-2 text-[11px] leading-relaxed text-sf-muted">
+            We serve patients in all 50 states and Washington, DC. NAD+, glutathione and cold-chain shipping
+            kits cannot ship to Alaska or Hawaii. Confirm your state in the basket before checkout.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-1">
+            {US_STATES.map((s) => (
+              <span
+                key={s.code}
+                title={s.name}
+                className="rounded border border-sf-line bg-sf-surface px-1.5 py-0.5 text-[10px] font-semibold text-sf-muted"
+              >
+                {s.code}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 space-y-3 border-t border-sf-line pt-8">
           <p className="text-[11px] leading-relaxed text-sf-muted">
             Prescription products require an online consultation with a licensed provider who will determine
             if a prescription is appropriate. Prescription products are dispensed by licensed US pharmacies.

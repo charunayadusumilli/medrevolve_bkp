@@ -22,7 +22,8 @@ export default function QuickAdd({ product, label = 'Add to basket', className =
 
     addLine(product, {
       quantity: 1,
-      purchaseType: 'one_time',
+      purchaseType: product.subscription_price != null ? 'subscription' : 'one_time',
+      cadenceDays: product.subscription_cadences?.[0] ?? 30,
       doseLabel: product.dose_options?.[0]?.label,
     });
     setAdded(true);

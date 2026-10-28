@@ -38,7 +38,7 @@ Getting started is simple:
 3. Complete a brief orientation with our medical director
 4. Start seeing patients within 7-10 business days
 
-👉 Apply here: https://app.medrevolve.com/ProviderIntake
+👉 Apply here: https://medrevolve.com/ProviderIntake
 
 Questions? Reply to this email or reach us at providers@medrevolve.com
 

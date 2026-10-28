@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { STOREFRONT_CATEGORIES, categoryImage } from '@/lib/storefront/catalog';
@@ -7,6 +7,8 @@ import ProductTile from '@/components/storefront/ProductTile';
 import ShopFilters from '@/components/storefront/ShopFilters';
 
 const rank = (p) => (p.badge === 'bestseller' ? 0 : p.badge === 'new' ? 1 : p.badge === 'value' ? 2 : 3);
+// Headline price a shopper sees first — subscription where one exists.
+const headline = (p) => p.subscription_price ?? p.price;
 
 export default function StoreShop() {
   const { category } = useParams();
@@ -18,6 +20,8 @@ export default function StoreShop() {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [maxPrice, setMaxPrice] = useState(0);
   const [subOnly, setSubOnly] = useState(false);
+  const [inStock, setInStock] = useState(false);
+  const [sort, setSort] = useState('featured');
 
   useEffect(() => {
     if (isCategory) {
@@ -29,9 +33,9 @@ export default function StoreShop() {
       });
     } else {
       applyStoreSeo({
-        title: 'Shop all — labs, supplements & wellness | MedRevolve',
+        title: 'Shop all treatments, labs & wellness | MedRevolve',
         description:
-          'Shop MedRevolve labs, supplements and daily wellness with cash-pay pricing, free shipping over $50 and subscription savings up to 25%.',
+          'Shop every MedRevolve category — weight loss, sexual health, hair, skin, testosterone, mental health, labs and daily wellness — with cash-pay pricing and free shipping over $50.',
         path: '/shop',
       });
     }
@@ -42,40 +46,47 @@ export default function StoreShop() {
     setProducts(null);
 
     const run = async () => {
-      const query = isCategory ? { category } : { rail: 'commerce' };
-      if (!isCategory) {
-        if (categoryFilter !== 'all') query.category = categoryFilter;
-        if (maxPrice) query.price = { $lte: maxPrice };
-        if (subOnly) query.subscription_price = { $exists: true };
-        if (search.trim()) {
-          const rx = { $regex: search.trim(), $options: 'i' };
-          query.$or = [
-            { display_name: rx },
-            { generic_name: rx },
-            { brand_name: rx },
-          ];
-        }
+      const query = {};
+      const activeCategory = isCategory ? category : categoryFilter !== 'all' ? categoryFilter : null;
+      if (activeCategory) query.category = activeCategory;
+      if (maxPrice) query.price = { $lte: maxPrice };
+      if (inStock) query.in_stock = true;
+      if (subOnly) query.subscription_price = { $exists: true };
+      if (search.trim()) {
+        const rx = { $regex: search.trim(), $options: 'i' };
+        query.$or = [
+          { display_name: rx },
+          { generic_name: rx },
+          { brand_name: rx },
+        ];
       }
 
       const page = await base44.entities.StorefrontProduct.filter(query, { limit: 100 });
       if (cancelled) return;
-      const items = [...(page.items || [])].sort(
-        (a, b) => rank(a) - rank(b) || String(a.display_name).localeCompare(String(b.display_name))
-      );
-      setProducts(items);
+      setProducts(page.items || []);
     };
 
-    const timer = setTimeout(run, isCategory ? 0 : 220);
+    const timer = setTimeout(run, isCategory ? 0 : 200);
     return () => {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [isCategory, category, categoryFilter, maxPrice, subOnly, search]);
+  }, [isCategory, category, categoryFilter, maxPrice, subOnly, inStock, search]);
+
+  const sorted = useMemo(() => {
+    if (!products) return null;
+    const list = [...products];
+    if (sort === 'price-asc') list.sort((a, b) => headline(a) - headline(b));
+    else if (sort === 'price-desc') list.sort((a, b) => headline(b) - headline(a));
+    else if (sort === 'name') list.sort((a, b) => String(a.display_name).localeCompare(String(b.display_name)));
+    else list.sort((a, b) => rank(a) - rank(b) || String(a.display_name).localeCompare(String(b.display_name)));
+    return list;
+  }, [products, sort]);
 
   const heading = isCategory ? meta?.label || 'Treatments' : 'Shop all';
   const blurb = isCategory
     ? meta?.tagline || 'Prescription and direct-purchase options in this category.'
-    : 'Labs, supplements and daily essentials. Prescription treatments are available through an intake.';
+    : 'Every category in one place — direct-purchase products ship today, prescription treatments start with a short provider visit.';
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8">
@@ -112,50 +123,53 @@ export default function StoreShop() {
         )}
       </header>
 
-      {!isCategory && (
-        <div className="mt-8">
-          <ShopFilters
-            search={search}
-            onSearch={setSearch}
-            categoryFilter={categoryFilter}
-            onCategory={setCategoryFilter}
-            maxPrice={maxPrice}
-            onMaxPrice={setMaxPrice}
-            subOnly={subOnly}
-            onSubOnly={setSubOnly}
-          />
-        </div>
-      )}
+      <div className="mt-8">
+        <ShopFilters
+          search={search}
+          onSearch={setSearch}
+          categoryFilter={categoryFilter}
+          onCategory={setCategoryFilter}
+          maxPrice={maxPrice}
+          onMaxPrice={setMaxPrice}
+          subOnly={subOnly}
+          onSubOnly={setSubOnly}
+          inStock={inStock}
+          onInStock={setInStock}
+          sort={sort}
+          onSort={setSort}
+          lockCategory={isCategory}
+        />
+      </div>
 
       <div className="mt-8">
-        {products === null ? (
+        {sorted === null ? (
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
               <div key={i} className="h-80 animate-pulse rounded-2xl bg-sf-surface" />
             ))}
           </div>
-        ) : products.length === 0 ? (
+        ) : sorted.length === 0 ? (
           <div className="rounded-2xl border border-sf-line bg-sf-surface p-10 text-center">
             <p className="text-[15px] font-semibold">No products match those filters</p>
             <p className="mt-1.5 text-[13px] text-sf-muted">
-              Try clearing the filters, or start an intake to talk to a provider about prescription options.
+              Try clearing the filters, or start a visit to talk to a provider about prescription options.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-2">
               <Link to="/shop" className="rounded-full bg-sf-ink px-5 py-2.5 text-[13px] font-semibold text-white">
                 Browse shop
               </Link>
-              <Link to="/intake/weight-loss" className="rounded-full border border-sf-ink px-5 py-2.5 text-[13px] font-semibold text-sf-ink">
-                Start an intake
+              <Link to="/start" className="rounded-full border border-sf-ink px-5 py-2.5 text-[13px] font-semibold text-sf-ink">
+                Start your visit
               </Link>
             </div>
           </div>
         ) : (
           <>
             <p className="mb-4 text-[12px] text-sf-muted">
-              {products.length} product{products.length === 1 ? '' : 's'}
+              {sorted.length} product{sorted.length === 1 ? '' : 's'}
             </p>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {products.map((product) => (
+              {sorted.map((product) => (
                 <ProductTile key={product.id} product={product} />
               ))}
             </div>

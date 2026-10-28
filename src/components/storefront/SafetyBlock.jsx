@@ -5,11 +5,12 @@ import { isPrescription } from '@/lib/storefront/catalog';
 export default function SafetyBlock({ product }) {
   const prescription = isPrescription(product);
   const defaultOpen =
-    prescription && typeof window !== 'undefined' && window.innerWidth < 768;
+    typeof window !== 'undefined' &&
+    (window.location.hash === '#safety' || (prescription && window.innerWidth < 768));
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <section className="rounded-2xl border border-sf-line bg-sf-surface">
+    <section id="safety" className="scroll-mt-24 rounded-2xl border border-sf-line bg-sf-surface">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

@@ -18,7 +18,6 @@ import MailboxBoard from './pages/MailboxBoard';
 import GrowthDashboard from './pages/GrowthDashboard';
 import GodModeAds from './pages/GodModeAds';
 import AdsManager from './pages/AdsManager';
-import ExternalRedirect from './lib/ExternalRedirect';
 import { base44 } from '@/api/base44Client';
 import { detectDomain } from '@/lib/domainConfig';
 import DTCHome from './pages/dtc/DTCHome';
@@ -34,6 +33,7 @@ import SocialMediaDashboard from './pages/SocialMediaDashboard';
 import SocialMediaManagement from './pages/SocialMediaManagement';
 import TelephonyDashboard from './pages/TelephonyDashboard';
 import PhoneIntake from './pages/PhoneIntake';
+import PatientPortal from './pages/PatientPortal';
 import MerchantInventoryPage from './pages/MerchantInventoryPage';
 import MerchantDomainPage from './pages/MerchantDomainPage';
 import ProviderDashboard from './pages/ProviderDashboard';
@@ -62,7 +62,6 @@ import Partnerships from './pages/Partnerships';
 import Blog from './pages/Blog';
 import OperatorFAQ from './pages/OperatorFAQ';
 import ForBusiness from './pages/ForBusiness';
-import PatientRoute from './components/PatientRoute';
 // ── CONSUMER STOREFRONT (Ro / Hims-class, medrevolve.com) ─────────────────────
 import StoreLayout from './components/storefront/StoreLayout';
 import StoreHome from './pages/storefront/StoreHome';
@@ -158,8 +157,8 @@ const AuthenticatedApp = () => {
       <Route path="/cart" element={<StoreLayout><StoreCart /></StoreLayout>} />
       <Route path="/intake/:category" element={<StoreLayout><IntakeStart /></StoreLayout>} />
       <Route path="/tools/:slug" element={<StoreLayout><ToolsPage /></StoreLayout>} />
-      <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><PatientRoute><DTCCart /></PatientRoute></LayoutWrapper>} />
-      <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><PatientRoute><GetStarted /></PatientRoute></LayoutWrapper>} />
+      <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
+      <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><GetStarted /></LayoutWrapper>} />
       {Object.entries(Pages).map(([path, Page]) => (
         <Route
           key={path}
@@ -228,18 +227,17 @@ const AuthenticatedApp = () => {
       <Route path="/telehealth-franchise" element={<LayoutWrapper currentPageName="TelehealthFranchise"><TelehealthFranchise /></LayoutWrapper>} />
       <Route path="/iv-therapy-clinic-platform" element={<LayoutWrapper currentPageName="IVTherapyClinicPlatform"><IVTherapyClinicPlatform /></LayoutWrapper>} />
 
-      {/* ── PATIENT-FACING → external subdomain redirects (301-equivalent) ── */}
-      <Route path="/PatientPortal" element={<ExternalRedirect to="https://app.medrevolve.com/portal" />} />
-      <Route path="/PatientOnboarding" element={<ExternalRedirect to="https://app.medrevolve.com/onboarding" />} />
-      <Route path="/CustomerIntake" element={<ExternalRedirect to="https://app.medrevolve.com/intake" />} />
-      <Route path="/BookAppointment" element={<ExternalRedirect to="https://app.medrevolve.com/book" />} />
-      <Route path="/MyAppointments" element={<ExternalRedirect to="https://app.medrevolve.com/my-appointments" />} />
-      <Route path="/VisitTypeSelector" element={<ExternalRedirect to="https://app.medrevolve.com/visit-type" />} />
-      <Route path="/WaitingRoom" element={<ExternalRedirect to="https://app.medrevolve.com/waiting-room" />} />
-      <Route path="/VideoCall" element={<ExternalRedirect to="https://app.medrevolve.com/video-call" />} />
-      <Route path="/Questionnaire" element={<ExternalRedirect to="https://app.medrevolve.com/questionnaire" />} />
-      <Route path="/TelehealthConsent" element={<ExternalRedirect to="https://app.medrevolve.com/consent" />} />
-      <Route path="/PhoneIntake" element={<ExternalRedirect to="https://app.medrevolve.com/phone-intake" />} />
+      {/* ── PATIENT-FACING ROUTES — rendered in-app, never redirected off-site ── */}
+      <Route path="/PatientPortal" element={<LayoutWrapper currentPageName="PatientPortal"><PatientPortal /></LayoutWrapper>} />
+      <Route path="/PatientOnboarding" element={<LayoutWrapper currentPageName="PatientOnboarding"><PatientOnboarding /></LayoutWrapper>} />
+      <Route path="/CustomerIntake" element={<LayoutWrapper currentPageName="CustomerIntake"><CustomerIntake /></LayoutWrapper>} />
+      <Route path="/BookAppointment" element={<LayoutWrapper currentPageName="BookAppointment"><BookAppointment /></LayoutWrapper>} />
+      <Route path="/MyAppointments" element={<LayoutWrapper currentPageName="MyAppointments"><MyAppointments /></LayoutWrapper>} />
+      <Route path="/VisitTypeSelector" element={<LayoutWrapper currentPageName="VisitTypeSelector"><VisitTypeSelector /></LayoutWrapper>} />
+      <Route path="/WaitingRoom" element={<LayoutWrapper currentPageName="WaitingRoom"><WaitingRoom /></LayoutWrapper>} />
+      <Route path="/VideoCall" element={<LayoutWrapper currentPageName="VideoCall"><VideoCall /></LayoutWrapper>} />
+      <Route path="/Questionnaire" element={<LayoutWrapper currentPageName="Questionnaire"><Questionnaire /></LayoutWrapper>} />
+      <Route path="/PhoneIntake" element={<LayoutWrapper currentPageName="PhoneIntake"><PhoneIntake /></LayoutWrapper>} />
 
       {/* ── CART + FLEXIBLE CHECKOUT ──────────────────────────────────────── */}
       <Route path="/Cart" element={<LayoutWrapper currentPageName="Cart"><Cart /></LayoutWrapper>} />
@@ -251,7 +249,7 @@ const AuthenticatedApp = () => {
       {/* ── B2B FOR BUSINESS — explicit route, never left to the stale pagesConfig loop ── */}
       <Route path="/ForBusiness" element={<LayoutWrapper currentPageName="ForBusiness"><ForBusiness /></LayoutWrapper>} />
       <Route path="/faq" element={<LayoutWrapper currentPageName="OperatorFAQ"><OperatorFAQ /></LayoutWrapper>} />
-      <Route path="/patient-faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientRoute><PatientFAQ /></PatientRoute></LayoutWrapper>} />
+      <Route path="/patient-faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientFAQ /></LayoutWrapper>} />
       <Route path="/Blog" element={<LayoutWrapper currentPageName="Blog"><Blog /></LayoutWrapper>} />
       <Route path="/white-label-telehealth-platform" element={<LayoutWrapper currentPageName="WhiteLabelTelehealthPlatform"><WhiteLabelTelehealthPlatform /></LayoutWrapper>} />
       <Route path="/unified-crm" element={<LayoutWrapper currentPageName="UnifiedCRM"><UnifiedCRM /></LayoutWrapper>} />

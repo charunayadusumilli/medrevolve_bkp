@@ -2,7 +2,7 @@ import React from 'react';
 import { money } from '@/lib/storefront/catalog';
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/storefront/cart';
 
-export default function CartSummary({ totals, blocked, onCheckout }) {
+export default function CartSummary({ totals, blocked, onCheckout, subscriptions = [] }) {
   const away = Math.max(0, FREE_SHIPPING_THRESHOLD - totals.netSubtotal);
 
   return (
@@ -18,6 +18,15 @@ export default function CartSummary({ totals, blocked, onCheckout }) {
           <div className="flex justify-between text-sf-accent">
             <dt>Subscription savings</dt>
             <dd>−{money(totals.savings)}</dd>
+          </div>
+        )}
+        {subscriptions.length > 0 && (
+          <div className="flex justify-between text-sf-muted">
+            <dt>Subscriptions</dt>
+            <dd className="text-right text-sf-ink">
+              {subscriptions.length} item{subscriptions.length === 1 ? '' : 's'} · every{' '}
+              {subscriptions[0].cadence_days || 30} days
+            </dd>
           </div>
         )}
         <div className="flex justify-between text-sf-muted">

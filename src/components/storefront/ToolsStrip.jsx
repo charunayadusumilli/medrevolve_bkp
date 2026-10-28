@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Dumbbell, Flame, Activity } from 'lucide-react';
+import { Calculator, Dumbbell, Flame } from 'lucide-react';
 
 const TOOLS = [
   { slug: 'bmi', label: 'BMI calculator', copy: 'Check where your body mass index sits.', icon: Calculator },
   { slug: 'tdee', label: 'TDEE calculator', copy: 'Estimate the calories you burn daily.', icon: Flame },
-  { slug: 'protein', label: 'Protein target', copy: 'Daily protein for your goal and weight.', icon: Dumbbell },
-  { slug: 'testosterone', label: 'Testosterone check', copy: 'Understand what your lab number means.', icon: Activity },
+  { slug: 'protein', label: 'Protein calculator', copy: 'Daily protein for your goal and weight.', icon: Dumbbell },
 ];
 
 export default function ToolsStrip() {
@@ -17,7 +16,7 @@ export default function ToolsStrip() {
         <p className="text-[12px] text-sf-muted">No account needed</p>
       </div>
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-3 sm:grid-cols-3">
         {TOOLS.map(({ slug, label, copy, icon: Icon }) => (
           <Link
             key={slug}
