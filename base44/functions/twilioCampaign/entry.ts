@@ -33,8 +33,30 @@ Deno.serve(async (req) => {
       ? { user: keySid, pass: keySecret }
       : (authToken ? { user: accountSid, pass: authToken } : null);
     const configured = Boolean(accountSid && credential && from);
+    const auth = credential ? 'Basic ' + btoa(`${credential.user}:${credential.pass}`) : null;
 
-    if (action === 'status') return Response.json({ configured });
+    if (action === 'status') {
+      if (!configured) {
+        return Response.json({
+          connected: false,
+          configured: false,
+          reason: 'The account SID, API key or sending number is missing on the Secrets page.',
+        });
+      }
+      const probe = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}.json`, {
+        headers: { Authorization: auth },
+        signal: AbortSignal.timeout(10000),
+      });
+      const info = await probe.json().catch(() => ({}));
+      return Response.json({
+        connected: probe.ok,
+        configured: true,
+        account_name: info.friendly_name || null,
+        account_status: info.status || null,
+        from,
+        reason: probe.ok ? null : (info.message || `Twilio rejected the credentials (HTTP ${probe.status}).`),
+      });
+    }
 
     if (!payload.campaign_id) return Response.json({ error: 'campaign_id is required' }, { status: 400 });
     const campaign = await base44.asServiceRole.entities.MarketingCampaign
@@ -69,7 +91,6 @@ Deno.serve(async (req) => {
       }, { status: 400 });
     }
 
-    const auth = 'Basic ' + btoa(`${credential.user}:${credential.pass}`);
     const callbackUrl = `${new URL(req.url).origin}/functions/twilioDeliveryWebhook`;
 
     const sendSms = async (to) => {

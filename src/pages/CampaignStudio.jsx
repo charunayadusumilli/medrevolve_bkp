@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import CampaignComposer from "@/components/campaigns/CampaignComposer";
 import CampaignTable from "@/components/campaigns/CampaignTable";
-import { Loader2, AlertTriangle } from "lucide-react";
+import { Loader2, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export default function CampaignStudio() {
   const [campaigns, setCampaigns] = useState([]);
   const [products, setProducts] = useState([]);
-  const [configured, setConfigured] = useState(null);
+  const [connection, setConnection] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
@@ -28,7 +28,7 @@ export default function CampaignStudio() {
         url: `https://medrevolveruo.com/ruo/${p.slug}`,
       })),
     ]);
-    setConfigured(status?.data?.configured ?? false);
+    setConnection(status?.data ?? { connected: false, configured: false, reason: 'Could not reach the campaign service.' });
     setLoading(false);
   };
 
@@ -49,10 +49,19 @@ export default function CampaignStudio() {
           </p>
         </div>
 
-        {!configured && (
+        {connection?.connected ? (
+          <div className="flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <p>
+              Connected to Twilio{connection.account_name ? ` — ${connection.account_name}` : ''} · account status {connection.account_status || 'unknown'} · sending from {connection.from}. US marketing texts still require the number to be registered for A2P 10DLC, or carriers will filter them.
+            </p>
+          </div>
+        ) : (
           <div className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
             <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <p>Twilio credentials are not saved yet. Campaigns will build and size their audience, but nothing sends until the account SID, auth token and sending number are added on the Secrets page. US marketing texts also need the number registered for A2P 10DLC first.</p>
+            <p>
+              Not connected to Twilio. {connection?.reason || 'Checking credentials…'} Campaigns still build and size their audience, but nothing sends until the account SID, API key SID, client secret and sending number on the Secrets page are accepted by Twilio.
+            </p>
           </div>
         )}
 
