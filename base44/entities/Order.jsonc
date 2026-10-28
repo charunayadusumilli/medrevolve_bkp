@@ -76,6 +76,14 @@
       "type": "string",
       "description": "Stripe payment intent ID"
     },
+    "payment_provider": {
+      "type": "string",
+      "description": "Processor that captured this order (qbi, stripe, ...)"
+    },
+    "payment_reference": {
+      "type": "string",
+      "description": "Processor reference number for this charge"
+    },
     "status": {
       "type": "string",
       "enum": [
@@ -84,7 +92,9 @@
         "processing",
         "shipped",
         "delivered",
-        "cancelled"
+        "cancelled",
+        "failed",
+        "refunded"
       ],
       "default": "pending",
       "description": "Order status"

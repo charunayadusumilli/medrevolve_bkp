@@ -240,7 +240,8 @@ Deno.serve(async (req) => {
     const reference = result?.reference_number;
     await base44.asServiceRole.entities.Order.update(order.id, {
       status: 'paid',
-      transaction_id: reference ? String(reference) : '',
+      payment_provider: 'qbi',
+      payment_reference: reference ? String(reference) : '',
       notes: `${order.notes}; qbi_ref=${reference || 'n/a'}; card=${result?.last_4 ? `**** ${result.last_4}` : 'n/a'}`,
     });
 
