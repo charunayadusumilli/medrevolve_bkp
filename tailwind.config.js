@@ -36,7 +36,15 @@ module.exports = {
   				accent: 'hsl(var(--sf-accent))',
   				'accent-soft': 'hsl(var(--sf-accent-soft))',
   				sun: 'hsl(var(--sf-sun))',
-  			},
+  				},
+  				site: {
+  				cream: 'hsl(var(--site-cream))',
+  				surface: 'hsl(var(--site-surface))',
+  				moss: 'hsl(var(--site-moss))',
+  				rust: 'hsl(var(--site-rust))',
+  				greige: 'hsl(var(--site-greige))',
+  				line: 'hsl(var(--site-line))',
+  				},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

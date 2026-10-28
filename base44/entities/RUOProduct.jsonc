@@ -1,0 +1,96 @@
+{
+  "name": "RUOProduct",
+  "type": "object",
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Unique RUO SKU"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug used at /ruo/:slug"
+    },
+    "name": {
+      "type": "string",
+      "description": "Catalog name"
+    },
+    "compound": {
+      "type": "string",
+      "description": "Compound or material name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "peptides",
+        "metabolic",
+        "longevity",
+        "supplies"
+      ],
+      "description": "Research catalog category"
+    },
+    "size": {
+      "type": "string",
+      "description": "Vial size, e.g. 5mg"
+    },
+    "case_size": {
+      "type": "integer",
+      "default": 10,
+      "description": "Vials per case"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price per case (USD)"
+    },
+    "compare_at_price": {
+      "type": "number",
+      "description": "Anchor price per case"
+    },
+    "batch_code": {
+      "type": "string",
+      "description": "Current batch identifier"
+    },
+    "purity": {
+      "type": "string",
+      "description": "HPLC purity for the current batch"
+    },
+    "tested_on": {
+      "type": "string",
+      "format": "date",
+      "description": "Batch test date"
+    },
+    "coa_url": {
+      "type": "string",
+      "description": "Certificate of analysis link"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Catalog image"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the SKU can be ordered"
+    },
+    "quantity_limit": {
+      "type": "integer",
+      "default": 12,
+      "description": "Maximum cases per order"
+    },
+    "storage": {
+      "type": "string",
+      "description": "Storage and handling note"
+    },
+    "description": {
+      "type": "string",
+      "description": "Research description (no human use language)"
+    }
+  },
+  "required": [
+    "sku",
+    "slug",
+    "name",
+    "compound",
+    "category",
+    "price"
+  ]
+}

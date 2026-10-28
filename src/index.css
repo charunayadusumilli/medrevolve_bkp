@@ -57,6 +57,12 @@
     --sf-accent: 168 72% 24%;
     --sf-accent-soft: 168 42% 93%;
     --sf-sun: 30 88% 56%;
+    --site-cream: 40 38% 95%;
+    --site-surface: 0 0% 100%;
+    --site-moss: 154 18% 15%;
+    --site-rust: 27 47% 44%;
+    --site-greige: 27 5% 40%;
+    --site-line: 40 20% 88%;
   }
 
   .dark {
