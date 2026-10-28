@@ -18,6 +18,8 @@ import MailboxBoard from './pages/MailboxBoard';
 import GrowthDashboard from './pages/GrowthDashboard';
 import GodModeAds from './pages/GodModeAds';
 import AdsManager from './pages/AdsManager';
+import CampaignStudio from './pages/CampaignStudio';
+import GoLink from './pages/GoLink';
 import { base44 } from '@/api/base44Client';
 import { detectDomain } from '@/lib/domainConfig';
 import DTCHome from './pages/dtc/DTCHome';
@@ -202,6 +204,9 @@ const AuthenticatedApp = () => {
       <Route path="/GrowthDashboard" element={<LayoutWrapper currentPageName="GrowthDashboard"><AuthGate><GrowthDashboard /></AuthGate></LayoutWrapper>} />
       <Route path="/GodModeAds" element={<LayoutWrapper currentPageName="GodModeAds"><AuthGate><GodModeAds /></AuthGate></LayoutWrapper>} />
       <Route path="/AdsManager" element={<LayoutWrapper currentPageName="AdsManager"><AuthGate><AdsManager /></AuthGate></LayoutWrapper>} />
+      <Route path="/CampaignStudio" element={<LayoutWrapper currentPageName="CampaignStudio"><AuthGate><CampaignStudio /></AuthGate></LayoutWrapper>} />
+      {/* ── TRACKED CAMPAIGN LINK — public, records the click then redirects ── */}
+      <Route path="/go/:code" element={<GoLink />} />
       <Route path="/SystemArchitecture" element={<LayoutWrapper currentPageName="SystemArchitecture"><SystemArchitecture /></LayoutWrapper>} />
       <Route path="/ComplianceAuditReport" element={<LayoutWrapper currentPageName="ComplianceAuditReport"><ComplianceAuditReport /></LayoutWrapper>} />
       <Route path="/ProjectManagement" element={<LayoutWrapper currentPageName="ProjectManagement"><ProjectManagement /></LayoutWrapper>} />
