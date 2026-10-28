@@ -1,3 +1,5 @@
+import { base44 } from '@/api/base44Client';
+
 /**
  * MedRevolve public contact details — ONE place to change the phone number.
  *
@@ -30,8 +32,16 @@ export const AI_NAME = 'Nova';
 export const AI_BRAND = 'Ask Nova';
 export const AI_GREETING = "Hi! I'm Nova — your 24/7 AI intake assistant. How can we help you today?";
 
-// WhatsApp Business number in E.164 digits only, e.g. '15302006352'. Leave empty until a
-// number is registered on WhatsApp Business; the site then hides WhatsApp buttons instead of
-// sending people to a number that does not answer.
-export const WHATSAPP_NUMBER = '12403875224';
-export const WHATSAPP_URL = WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('interested in launching telehealth')}` : '';
+// WhatsApp runs through the patient_support agent's WhatsApp channel, so no raw number is
+// published here. The connect link handles the WhatsApp hand-off; if the channel is not
+// enabled yet it resolves to empty and the site hides every WhatsApp CTA.
+const AGENT_WHATSAPP_URL = (() => {
+  try {
+    return base44.agents.getWhatsAppConnectURL('patient_support') || '';
+  } catch {
+    return '';
+  }
+})();
+
+export const WHATSAPP_NUMBER = '';
+export const WHATSAPP_URL = AGENT_WHATSAPP_URL;
