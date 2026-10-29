@@ -9,7 +9,7 @@
     "email": {
       "type": "string",
       "format": "email",
-      "description": "Contact email"
+      "description": "Contact email (empty for phone-only callers)"
     },
     "phone": {
       "type": "string",
@@ -32,6 +32,7 @@
         "ctm_text",
         "ctm_form",
         "twilio_sms",
+        "amazon_connect",
         "direct"
       ],
       "default": "website_form",
@@ -71,6 +72,16 @@
       "default": false,
       "description": "Whether CRM campaign has been triggered"
     },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "hot",
+        "warm",
+        "cold"
+      ],
+      "default": "warm",
+      "description": "Lead priority level"
+    },
     "status": {
       "type": "string",
       "enum": [
@@ -89,7 +100,6 @@
   },
   "required": [
     "name",
-    "email",
     "message"
   ]
 }
