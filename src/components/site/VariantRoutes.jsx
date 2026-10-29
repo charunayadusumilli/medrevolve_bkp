@@ -2,49 +2,50 @@ import React from 'react';
 import { useSite } from '@/lib/siteContext';
 import ConsumerLayout from '@/components/consumer/ConsumerLayout';
 import PartnerLayout from '@/components/partner/PartnerLayout';
-import RuoLayout from '@/components/ruo/RuoLayout';
+import StoreShell from '@/components/ruo/store/StoreShell';
 import ConsumerHome from '@/pages/consumer/ConsumerHome';
 import ConsumerCheckout from '@/pages/consumer/ConsumerCheckout';
 import PartnerHome from '@/pages/partner/PartnerHome';
-import RuoHome from '@/pages/ruo/RuoHome';
-import RuoCart from '@/pages/ruo/RuoCart';
-import RuoCheckout from '@/pages/ruo/RuoCheckout';
+import RuoCatalogPage from '@/pages/ruo/store/RuoCatalogPage';
+import RuoCaseCartPage from '@/pages/ruo/store/RuoCaseCartPage';
+import RuoCheckoutPage from '@/pages/ruo/store/RuoCheckoutPage';
+import RuoContactPage from '@/pages/ruo/store/RuoContactPage';
 import StoreCart from '@/pages/storefront/StoreCart';
 import CheckoutSuccess from '@/pages/checkout/CheckoutSuccess';
-import RuoContact from '@/pages/ruo/RuoContact';
 import Contact from '@/pages/Contact';
 import Layout from '@/Layout';
 
 /** Hostname decides which of the three sites a route renders. */
 export function SiteHome() {
   const { site } = useSite();
-  if (site === 'RUO') return <RuoLayout><RuoHome /></RuoLayout>;
+  if (site === 'RUO') return <StoreShell><RuoCatalogPage /></StoreShell>;
   if (site === 'PARTNER') return <PartnerLayout><PartnerHome /></PartnerLayout>;
   return <ConsumerLayout><ConsumerHome /></ConsumerLayout>;
 }
 
 export function SiteCart() {
   const { site } = useSite();
-  if (site === 'RUO') return <RuoLayout><RuoCart /></RuoLayout>;
+  if (site === 'RUO') return <StoreShell><RuoCaseCartPage /></StoreShell>;
   return <ConsumerLayout><StoreCart /></ConsumerLayout>;
 }
 
 export function SiteCheckout() {
   const { site } = useSite();
-  if (site === 'RUO') return <RuoLayout><RuoCheckout /></RuoLayout>;
+  if (site === 'RUO') return <StoreShell><RuoCheckoutPage /></StoreShell>;
   return <ConsumerLayout><ConsumerCheckout /></ConsumerLayout>;
 }
 
 export function SiteCheckoutSuccess() {
   const { site } = useSite();
-  if (site === 'RUO') return <RuoLayout><CheckoutSuccess /></RuoLayout>;
+  // The RUO checkout confirms on its own page, so this route only serves legacy links.
+  if (site === 'RUO') return <StoreShell><RuoCatalogPage /></StoreShell>;
   if (site === 'PARTNER') return <PartnerLayout><CheckoutSuccess /></PartnerLayout>;
   return <ConsumerLayout><CheckoutSuccess /></ConsumerLayout>;
 }
 
 export function SiteContact() {
   const { site } = useSite();
-  if (site === 'RUO') return <RuoLayout><RuoContact /></RuoLayout>;
+  if (site === 'RUO') return <StoreShell><RuoContactPage /></StoreShell>;
   return <Layout currentPageName="Contact"><Contact /></Layout>;
 }
 
@@ -53,5 +54,5 @@ export function ConsumerShell({ children }) {
 }
 
 export function RuoShell({ children }) {
-  return <RuoLayout>{children}</RuoLayout>;
+  return <StoreShell>{children}</StoreShell>;
 }
