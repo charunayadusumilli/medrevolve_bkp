@@ -4,19 +4,15 @@
   "properties": {
     "sku": {
       "type": "string",
-      "description": "Unique RUO SKU"
+      "description": "Internal catalog SKU"
     },
     "slug": {
       "type": "string",
-      "description": "URL slug used at /ruo/:slug"
+      "description": "URL slug"
     },
-    "name": {
+    "display_name": {
       "type": "string",
-      "description": "Catalog name"
-    },
-    "compound": {
-      "type": "string",
-      "description": "Compound or material name"
+      "description": "Catalog name shown on the storefront"
     },
     "category": {
       "type": "string",
@@ -26,71 +22,100 @@
         "longevity",
         "supplies"
       ],
-      "description": "Research catalog category"
+      "description": "Catalog category used by the storefront filter"
     },
-    "size": {
+    "cas_number": {
       "type": "string",
-      "description": "Vial size, e.g. 5mg"
+      "description": "CAS registry number (or 'Mixture' for blends)"
     },
-    "case_size": {
+    "mg": {
+      "type": "number",
+      "description": "Fill mass per vial in mg"
+    },
+    "form": {
+      "type": "string",
+      "description": "Physical form, e.g. lyophilized powder"
+    },
+    "purity_pct": {
+      "type": "number",
+      "description": "HPLC purity for the released lot. Leave empty until the lab report is on file."
+    },
+    "lot_number": {
+      "type": "string",
+      "description": "Current lot, e.g. MRV-BPC-2601"
+    },
+    "lab_name": {
+      "type": "string",
+      "description": "Independent testing laboratory"
+    },
+    "lab_accreditation": {
+      "type": "string",
+      "description": "Laboratory accreditation, e.g. ISO/IEC 17025:2017"
+    },
+    "report_url": {
+      "type": "string",
+      "description": "Link to the report hosted by the testing laboratory"
+    },
+    "verification_api_url": {
+      "type": "string",
+      "description": "Lot verification endpoint for this product"
+    },
+    "retail_price": {
+      "type": "number",
+      "description": "Unit price for 1-2 units (USD)"
+    },
+    "tier_3_5_price": {
+      "type": "number",
+      "description": "Unit price when 3-5 units of this line are ordered (USD)"
+    },
+    "tier_6_plus_price": {
+      "type": "number",
+      "description": "Unit price when 6 or more units of this line are ordered (USD)"
+    },
+    "cases_available": {
       "type": "integer",
-      "default": 10,
-      "description": "Vials per case"
+      "default": 0,
+      "description": "Units currently available to ship"
     },
-    "price": {
-      "type": "number",
-      "description": "Price per case (USD)"
+    "lead_time_days": {
+      "type": "integer",
+      "description": "Business days from order to dispatch"
     },
-    "compare_at_price": {
-      "type": "number",
-      "description": "Anchor price per case"
-    },
-    "batch_code": {
+    "coa_status": {
       "type": "string",
-      "description": "Current batch identifier"
+      "enum": [
+        "released",
+        "pending"
+      ],
+      "default": "pending",
+      "description": "released = lab report on file; pending = awaiting the lab's release"
     },
-    "purity": {
+    "storage_note": {
       "type": "string",
-      "description": "HPLC purity for the current batch"
+      "description": "Storage and handling instruction"
     },
-    "tested_on": {
+    "safety_sheet_url": {
       "type": "string",
-      "format": "date",
-      "description": "Batch test date"
+      "description": "Safety data sheet link"
     },
-    "coa_url": {
-      "type": "string",
-      "description": "Certificate of analysis link"
-    },
-    "image_url": {
-      "type": "string",
-      "description": "Catalog image"
+    "bulk_only": {
+      "type": "boolean",
+      "default": false,
+      "description": "Sold in case quantities only"
     },
     "in_stock": {
       "type": "boolean",
       "default": true,
-      "description": "Whether the SKU can be ordered"
-    },
-    "quantity_limit": {
-      "type": "integer",
-      "default": 12,
-      "description": "Maximum cases per order"
-    },
-    "storage": {
-      "type": "string",
-      "description": "Storage and handling note"
-    },
-    "description": {
-      "type": "string",
-      "description": "Research description (no human use language)"
+      "description": "Derived availability flag for the storefront"
     }
   },
   "required": [
     "sku",
     "slug",
-    "name",
-    "compound",
+    "display_name",
     "category",
-    "price"
+    "lot_number",
+    "coa_status",
+    "retail_price"
   ]
 }

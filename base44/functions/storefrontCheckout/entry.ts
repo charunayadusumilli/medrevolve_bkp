@@ -9,11 +9,6 @@ const TAX_RATE = 0.0825;
 
 const RUO_FLAT_SHIPPING = 18;
 const RUO_FREE_CASES = 4;
-const RUO_TIERS = [
-  { cases: 4, discount: 0.15 },
-  { cases: 3, discount: 0.1 },
-  { cases: 2, discount: 0.05 },
-];
 
 const round = (value) => Math.round(Number(value || 0) * 100) / 100;
 
@@ -70,26 +65,34 @@ async function buildRuoLines(base44, lines) {
   for (const line of lines) {
     const product = bySku.get(line.sku);
     if (!product) return { error: `Unknown compound ${line.sku}` };
-    if (product.in_stock === false) return { error: `${product.name} is backordered` };
-    const quantity = Math.max(1, Math.min(Number(line.quantity) || 1, product.quantity_limit || 12));
+    const available = Number(product.cases_available ?? 0);
+    if (available <= 0) return { error: `${product.display_name} is backordered` };
+
+    const quantity = Math.max(1, Math.min(Number(line.quantity) || 1, available));
+    // Volume ladder is per line, applied automatically — never a coupon.
+    const tiered = quantity >= 6
+      ? product.tier_6_plus_price
+      : quantity >= 3
+        ? product.tier_3_5_price
+        : product.retail_price;
+    const unit = Number(tiered) > 0 ? Number(tiered) : Number(product.retail_price) || 0;
+    if (!(unit > 0)) return { error: `Pricing is not published for ${product.display_name}` };
+
     resolved.push({
       sku: product.sku,
-      name: `${product.name} — case of ${product.case_size}`,
-      unit: round(product.price),
+      name: `${product.display_name} ${product.mg ? `${product.mg}mg` : ''} - lot ${product.lot_number}`.trim(),
+      unit: round(unit),
       quantity,
     });
   }
 
   const cases = resolved.reduce((n, l) => n + l.quantity, 0);
-  const discountRate = RUO_TIERS.find((t) => cases >= t.cases)?.discount || 0;
-  const gross = resolved.reduce((sum, l) => sum + l.unit * l.quantity, 0);
-  const discount = round(gross * discountRate);
-  const subtotal = round(gross - discount);
+  const subtotal = round(resolved.reduce((sum, l) => sum + l.unit * l.quantity, 0));
   const shipping = cases >= RUO_FREE_CASES ? 0 : RUO_FLAT_SHIPPING;
 
   return {
     lines: resolved,
-    totals: { subtotal, shipping, tax: 0, total: round(subtotal + shipping), discount, cases, discountRate },
+    totals: { subtotal, shipping, tax: 0, total: round(subtotal + shipping), discount: 0, cases, discountRate: 0 },
   };
 }
 

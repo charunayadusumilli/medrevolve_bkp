@@ -45,6 +45,15 @@ module.exports = {
   				greige: 'hsl(var(--site-greige))',
   				line: 'hsl(var(--site-line))',
   				},
+  				ruo: {
+  				bg: 'hsl(var(--ruo-bg))',
+  				surface: 'hsl(var(--ruo-surface))',
+  				ink: 'hsl(var(--ruo-ink))',
+  				muted: 'hsl(var(--ruo-muted))',
+  				line: 'hsl(var(--ruo-line))',
+  				accent: 'hsl(var(--ruo-accent))',
+  				warn: 'hsl(var(--ruo-warn))',
+  				},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

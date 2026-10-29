@@ -67,11 +67,17 @@ import ForBusiness from './pages/ForBusiness';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
 import { SiteProvider } from './lib/siteContext';
 import {
-  SiteHome, SiteCart, SiteCheckout, SiteCheckoutSuccess, SiteContact, ConsumerShell, RuoShell,
+  SiteHome, SiteCart, SiteCheckout, SiteCheckoutSuccess, SiteContact, ConsumerShell,
 } from './components/site/VariantRoutes';
-import RuoCatalog from './pages/ruo/RuoCatalog';
-import RuoProduct from './pages/ruo/RuoProduct';
-import RuoInfo from './pages/ruo/RuoInfo';
+import StoreShell from './components/ruo/store/StoreShell';
+import RuoCatalogPage from './pages/ruo/store/RuoCatalogPage';
+import RuoVerifyPage from './pages/ruo/store/RuoVerifyPage';
+import RuoCoasPage from './pages/ruo/store/RuoCoasPage';
+import RuoWholesalePage from './pages/ruo/store/RuoWholesalePage';
+import RuoDocumentationPage from './pages/ruo/store/RuoDocumentationPage';
+import RuoContactPage from './pages/ruo/store/RuoContactPage';
+import RuoCaseCartPage from './pages/ruo/store/RuoCaseCartPage';
+import RuoCheckoutPage from './pages/ruo/store/RuoCheckoutPage';
 // ── CONSUMER STOREFRONT (medrevolve.com shop, product, intake) ────────────────
 import StoreShop from './pages/storefront/StoreShop';
 import StoreProduct from './pages/storefront/StoreProduct';
@@ -171,15 +177,24 @@ const AuthenticatedApp = () => {
       <Route path="/checkout" element={<SiteCheckout />} />
       <Route path="/checkout/success" element={<SiteCheckoutSuccess />} />
 
-      {/* ── RUO RESEARCH STORE (medrevolveruo.com) ────────────────────────── */}
-      <Route path="/catalog" element={<RuoShell><RuoCatalog /></RuoShell>} />
-      <Route path="/catalog/:category" element={<RuoShell><RuoCatalog /></RuoShell>} />
-      <Route path="/ruo/:slug" element={<RuoShell><RuoProduct /></RuoShell>} />
-      <Route path="/lab-results" element={<RuoShell><RuoInfo kind="lab-results" /></RuoShell>} />
-      <Route path="/bulk-orders" element={<RuoShell><RuoInfo kind="bulk-orders" /></RuoShell>} />
-      <Route path="/how-to-order" element={<RuoShell><RuoInfo kind="how-to-order" /></RuoShell>} />
-      <Route path="/track-order" element={<RuoShell><RuoInfo kind="track-order" /></RuoShell>} />
-      <Route path="/compliance" element={<RuoShell><RuoInfo kind="compliance" /></RuoShell>} />
+      {/* ── RUO RESEARCH STORE (medrevolveruo.com) — 21+ gate, institutional ── */}
+      <Route path="/ruo/catalog" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
+      <Route path="/ruo/verify" element={<StoreShell><RuoVerifyPage /></StoreShell>} />
+      <Route path="/ruo/coas" element={<StoreShell><RuoCoasPage /></StoreShell>} />
+      <Route path="/ruo/wholesale" element={<StoreShell><RuoWholesalePage /></StoreShell>} />
+      <Route path="/ruo/documentation" element={<StoreShell><RuoDocumentationPage /></StoreShell>} />
+      <Route path="/ruo/contact" element={<StoreShell><RuoContactPage /></StoreShell>} />
+      <Route path="/ruo/cart" element={<StoreShell><RuoCaseCartPage /></StoreShell>} />
+      <Route path="/ruo/checkout" element={<StoreShell><RuoCheckoutPage /></StoreShell>} />
+      {/* legacy RUO entry points → the same storefront */}
+      <Route path="/catalog" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
+      <Route path="/catalog/:category" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
+      <Route path="/ruo/:slug" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
+      <Route path="/lab-results" element={<StoreShell><RuoCoasPage /></StoreShell>} />
+      <Route path="/bulk-orders" element={<StoreShell><RuoWholesalePage /></StoreShell>} />
+      <Route path="/how-to-order" element={<StoreShell><RuoDocumentationPage /></StoreShell>} />
+      <Route path="/track-order" element={<StoreShell><RuoDocumentationPage /></StoreShell>} />
+      <Route path="/compliance" element={<StoreShell><RuoDocumentationPage /></StoreShell>} />
       <Route path="/contact" element={<SiteContact />} />
       <Route path="/dtc-cart" element={<LayoutWrapper currentPageName="DTCCart"><DTCCart /></LayoutWrapper>} />
       <Route path="/start" element={<LayoutWrapper currentPageName="GetStarted"><GetStarted /></LayoutWrapper>} />

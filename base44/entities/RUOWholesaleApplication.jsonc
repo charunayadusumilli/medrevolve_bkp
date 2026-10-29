@@ -1,0 +1,54 @@
+{
+  "name": "RUOWholesaleApplication",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string",
+      "description": "Legal business name"
+    },
+    "ein": {
+      "type": "string",
+      "description": "Employer Identification Number"
+    },
+    "state": {
+      "type": "string",
+      "description": "State of registration"
+    },
+    "monthly_volume": {
+      "type": "string",
+      "description": "Expected monthly purchase volume"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewing",
+        "approved",
+        "declined"
+      ],
+      "default": "new",
+      "description": "Internal review status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal review notes"
+    }
+  },
+  "required": [
+    "business_name",
+    "ein",
+    "state",
+    "monthly_volume",
+    "email"
+  ]
+}
