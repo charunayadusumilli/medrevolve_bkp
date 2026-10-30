@@ -1,0 +1,2 @@
+export const CHECKOUT_CONSENT =
+  'I am 18 or older, a US resident, and I understand compounded medications are not FDA-approved and are prepared by a state-licensed pharmacy under a patient-specific prescription. Prescription products require a provider consultation and a prescription is not guaranteed. All prices are cash-pay and exclude taxes.';

@@ -48,7 +48,7 @@ export default function ConsumerProductCard({ product }) {
         <p className="mt-2 text-[14px] font-semibold text-site-moss">
           {money(headline)}
           <span className="ml-1 text-[12px] font-medium text-site-greige">
-            {product.subscription_price != null ? '/mo' : ' one-time'}
+            {product.subscription_price != null ? '/mo' : ' one-time purchase'}
           </span>
         </p>
         {save > 0 && (

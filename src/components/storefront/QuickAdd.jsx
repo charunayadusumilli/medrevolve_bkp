@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Check, ShoppingBasket } from 'lucide-react';
 import { addLine } from '@/lib/storefront/cart';
 import { useToast } from '@/components/ui/use-toast';
@@ -9,15 +9,21 @@ export const INTAKE_BANNER =
 
 export default function QuickAdd({ product, label = 'Add to basket', className = '' }) {
   const [added, setAdded] = useState(false);
-  const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Rail guard — prescription products are intake-only and never render an add-to-basket control.
+  if (product.rail === 'prescription') {
+    return (
+      <Link
+        to={`/intake/${product.category}?product=${product.slug}`}
+        className={`inline-flex items-center justify-center gap-1.5 rounded-full border border-sf-ink px-4 py-2 text-[12px] font-semibold text-sf-ink transition-colors hover:bg-sf-ink hover:text-white ${className}`}
+      >
+        Start intake
+      </Link>
+    );
+  }
+
   const handleAdd = () => {
-    // Rail guard — prescription products can never enter the basket.
-    if (product.rail === 'prescription') {
-      navigate(`/intake/${product.category}`, { state: { banner: INTAKE_BANNER } });
-      return;
-    }
     if (product.in_stock === false) return;
 
     addLine(product, {

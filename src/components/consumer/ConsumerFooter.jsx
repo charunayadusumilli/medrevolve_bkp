@@ -42,6 +42,8 @@ export default function ConsumerFooter() {
               <li><Link to="/Privacy" className="hover:text-site-rust">Privacy</Link></li>
               <li><Link to="/Terms" className="hover:text-site-rust">Terms</Link></li>
               <li><Link to="/TelehealthConsent" className="hover:text-site-rust">Telehealth consent</Link></li>
+              <li><Link to="/RefundPolicy" className="hover:text-site-rust">Refund policy</Link></li>
+              <li><Link to="/MedicalDisclaimer" className="hover:text-site-rust">Medical disclaimer</Link></li>
             </ul>
           </div>
 

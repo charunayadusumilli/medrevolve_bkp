@@ -29,6 +29,13 @@ export default function MedicalDisclaimer() {
             </section>
 
             <section>
+              <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">Not a Pharmacy, Not a Provider</h2>
+              <p className="text-[#5A6B5A] leading-relaxed">
+                MedRevolve is not a pharmacy and does not practice medicine. Medications are dispensed by independently licensed US pharmacies, and clinical care is delivered by independently licensed providers. Compounded medications are not FDA-approved and are prepared by a state-licensed 503A pharmacy under a patient-specific prescription.
+              </p>
+            </section>
+
+            <section>
               <h2 className="text-2xl font-light text-[#2D3A2D] mb-3">Not Medical Advice</h2>
               <p className="text-[#5A6B5A] leading-relaxed">
                 The content on MedRevolve.com — including text, graphics, images, blog posts, case studies, testimonials, educational materials, and any other materials — is provided for <strong>general informational and educational purposes only</strong>. It does not constitute medical advice, diagnosis, treatment recommendation, or a substitute for professional medical consultation from a qualified, licensed healthcare provider who has examined you and has knowledge of your medical history.

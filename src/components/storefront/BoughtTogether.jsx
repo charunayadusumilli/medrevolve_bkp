@@ -37,7 +37,7 @@ export default function BoughtTogether({ product }) {
               </Link>
               <p className="text-[12px] text-sf-muted">
                 {money(item.subscription_price ?? item.price)}
-                {item.subscription_price != null ? '/mo' : ' one-time'}
+                {item.subscription_price != null ? '/mo' : ' one-time purchase'}
               </p>
             </div>
             <QuickAdd product={item} label="Add" />

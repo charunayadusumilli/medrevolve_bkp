@@ -17,7 +17,7 @@ export default function AnnouncementBar() {
           LegitScript certified
         </a>
         <span className="hidden h-3 w-px bg-white/25 sm:block" />
-        <span className="text-white/70">FDA-approved options available</span>
+        <span className="text-white/70">Licensed-provider care, cash-pay pricing</span>
         <span className="hidden h-3 w-px bg-white/25 sm:block" />
         <span className="text-white/70">Free shipping over $50</span>
       </div>

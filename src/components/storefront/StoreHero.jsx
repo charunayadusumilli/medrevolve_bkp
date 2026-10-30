@@ -41,7 +41,7 @@ export default function StoreHero() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[12px] text-sf-muted">
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-sf-accent" /> FDA-approved options</span>
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-sf-accent" /> Licensed-provider options</span>
             <span className="inline-flex items-center gap-1.5"><Truck className="h-4 w-4 text-sf-accent" /> Free shipping over $50</span>
             <span className="inline-flex items-center gap-1.5"><BadgeCheck className="h-4 w-4 text-sf-accent" /> HIPAA-secure intake</span>
           </div>

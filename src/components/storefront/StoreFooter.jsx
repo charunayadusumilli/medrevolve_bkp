@@ -62,6 +62,7 @@ export default function StoreFooter() {
               <li><Link to="/Terms" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">Terms of Service</Link></li>
               <li><Link to="/HIPAANotice" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">HIPAA Notice</Link></li>
               <li><Link to="/TelehealthConsent" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">Telehealth Consent</Link></li>
+              <li><Link to="/RefundPolicy" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">Refund Policy</Link></li>
               <li><Link to="/MedicalDisclaimer" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">Medical Disclaimer</Link></li>
               <li><Link to="/CookiePolicy" className="text-[13px] text-sf-ink/80 hover:text-sf-ink">Cookie Policy</Link></li>
             </ul>

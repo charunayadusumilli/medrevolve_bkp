@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { US_STATES } from '@/lib/storefront/catalog';
-import QbiCardForm from '@/components/checkout/QbiCardForm';
+import { CHECKOUT_CONSENT } from '@/lib/storefront/consent';
 
-export default function CheckoutForm({ value, onChange, onSubmit, submitting, error, submitLabel, children }) {
-  const cardForm = useRef(null);
-  const [cardReady, setCardReady] = useState(false);
-  const [cardError, setCardError] = useState('');
+export default function CheckoutForm({ value, onChange, submitLabel = 'Checkout coming soon', disabled = false }) {
+  const [accepted, setAccepted] = useState(false);
 
   const field = (key) => ({
     value: value[key] || '',
@@ -15,23 +13,8 @@ export default function CheckoutForm({ value, onChange, onSubmit, submitting, er
   const inputClass =
     'h-11 w-full rounded-lg border border-site-line bg-site-surface px-3 text-[13px] outline-none focus:border-site-moss';
 
-  const submit = async (e) => {
-    e.preventDefault();
-    if (!cardForm.current) {
-      setCardError('The card form is still loading. Give it a moment and try again.');
-      return;
-    }
-    const token = await cardForm.current.getNonceToken();
-    if (!token?.nonce) {
-      setCardError('Check the card details and try again.');
-      return;
-    }
-    setCardError('');
-    onSubmit(e, token);
-  };
-
   return (
-    <form onSubmit={submit} className="rounded-xl border border-site-line bg-site-surface p-5">
+    <form onSubmit={(e) => e.preventDefault()} className="rounded-xl border border-site-line bg-site-surface p-5">
       <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-site-greige">Contact</p>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <input {...field('name')} required placeholder="Full name" className={inputClass} />
@@ -52,25 +35,26 @@ export default function CheckoutForm({ value, onChange, onSubmit, submitting, er
         <input {...field('zip')} required placeholder="ZIP" className={inputClass} />
       </div>
 
-      {children}
-
-      <div className="mt-6">
-        <QbiCardForm formRef={cardForm} onReady={() => setCardReady(true)} onConfigError={setCardError} />
-      </div>
-
-      {(error || cardError) && (
-        <p className="mt-4 rounded-lg bg-site-rust/10 p-3 text-[12px] text-site-rust">{error || cardError}</p>
-      )}
+      <label className="mt-6 flex items-start gap-3 rounded-lg border border-site-line bg-site-cream/40 p-3">
+        <input
+          type="checkbox"
+          required
+          checked={accepted}
+          onChange={(e) => setAccepted(e.target.checked)}
+          className="mt-0.5 h-4 w-4 flex-none accent-site-rust"
+        />
+        <span className="text-[11px] leading-relaxed text-site-greige">{CHECKOUT_CONSENT}</span>
+      </label>
 
       <button
         type="submit"
-        disabled={submitting || !cardReady}
-        className="mt-5 w-full rounded-lg bg-site-rust px-5 py-3.5 text-[13px] font-semibold text-site-cream transition-opacity duration-200 hover:opacity-90 disabled:opacity-50"
+        disabled={disabled || !accepted}
+        className="mt-5 w-full rounded-lg bg-site-rust px-5 py-3.5 text-[13px] font-semibold text-site-cream transition-opacity duration-200 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {submitting ? 'Processing payment…' : submitLabel}
+        {submitLabel}
       </button>
       <p className="mt-3 text-[11px] leading-relaxed text-site-greige">
-        Payments are processed by QBI Gateway. Your card details never touch our servers.
+        Secure checkout is being finalized. Card processing is not yet enabled on this page.
       </p>
     </form>
   );

@@ -358,6 +358,7 @@ export default function Layout({ children }) {
                 <li><Link to="/Terms" className="text-sm text-white/40 hover:text-white transition-colors">Terms of Service</Link></li>
                 <li><Link to="/HIPAANotice" className="text-sm text-white/40 hover:text-white transition-colors">HIPAA Notice</Link></li>
                 <li><Link to="/TelehealthConsent" className="text-sm text-white/40 hover:text-white transition-colors">Telehealth Consent</Link></li>
+                <li><Link to="/RefundPolicy" className="text-sm text-white/40 hover:text-white transition-colors">Refund Policy</Link></li>
                 <li><Link to="/MedicalDisclaimer" className="text-sm text-white/40 hover:text-white transition-colors">Medical Disclaimer</Link></li>
                 <li><Link to="/CookiePolicy" className="text-sm text-white/40 hover:text-white transition-colors">Cookie Policy</Link></li>
               </ul>

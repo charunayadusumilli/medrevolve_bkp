@@ -28,6 +28,7 @@ import Terms from './pages/Terms';
 import HIPAANotice from './pages/HIPAANotice';
 import TelehealthConsent from './pages/TelehealthConsent';
 import MedicalDisclaimer from './pages/MedicalDisclaimer';
+import RefundPolicy from './pages/RefundPolicy';
 import CookiePolicy from './pages/CookiePolicy';
 
 // ── AUTH-GATED PORTALS (require login — handled by the pages themselves) ──────
@@ -58,6 +59,7 @@ export const PAGES = {
     "HIPAANotice": HIPAANotice,
     "TelehealthConsent": TelehealthConsent,
     "MedicalDisclaimer": MedicalDisclaimer,
+    "RefundPolicy": RefundPolicy,
     "CookiePolicy": CookiePolicy,
 
     // Auth-gated portals

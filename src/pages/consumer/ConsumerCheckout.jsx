@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useStoreCart from '@/hooks/useStoreCart';
-import { cartTotals, restrictedLines } from '@/lib/storefront/cart';
+import { cartTotals } from '@/lib/storefront/cart';
 import { money } from '@/lib/storefront/catalog';
-import { startCheckout } from '@/lib/checkout';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 
 const EMPTY = { name: '', email: '', phone: '', address: '', city: '', state: '', zip: '' };
 
 export default function ConsumerCheckout() {
   const cart = useStoreCart();
-  const navigate = useNavigate();
   const [value, setValue] = useState(EMPTY);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
 
   const totals = cartTotals(cart);
-  const restricted = restrictedLines(cart, value.state || cart.shipState);
 
   if (cart.lines.length === 0) {
     return (
@@ -29,41 +24,6 @@ export default function ConsumerCheckout() {
     );
   }
 
-  const submit = async (e, token) => {
-    e.preventDefault();
-    setError('');
-    if (restricted.length > 0) {
-      setError(`Some items can't ship to ${value.state}. Remove them from the basket first.`);
-      return;
-    }
-    setSubmitting(true);
-    try {
-      const result = await startCheckout({
-        nonce: token.nonce,
-        expiryMonth: token.expiryMonth,
-        expiryYear: token.expiryYear,
-        avsZip: token.avsZip,
-        channel: 'consumer',
-        lines: cart.lines.map((l) => ({
-          sku: l.sku,
-          quantity: l.quantity,
-          purchase_type: l.purchase_type,
-          dose_label: l.dose_label,
-          cadence_days: l.cadence_days,
-        })),
-        customer: { name: value.name, email: value.email, phone: value.phone },
-        shipAddress: value.address,
-        shipCity: value.city,
-        shipState: value.state,
-        shipZip: value.zip,
-      });
-      navigate(`/checkout/success?order=${result.order_id}`);
-    } catch (err) {
-      setSubmitting(false);
-      setError(err?.message || 'Payment could not be completed.');
-    }
-  };
-
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8">
       <Link to="/cart" className="text-[12px] font-semibold text-site-greige underline underline-offset-4">Back to basket</Link>
@@ -73,10 +33,8 @@ export default function ConsumerCheckout() {
         <CheckoutForm
           value={value}
           onChange={setValue}
-          onSubmit={submit}
-          submitting={submitting}
-          error={error}
-          submitLabel={`Pay ${money(totals.total)}`}
+          submitLabel="Checkout coming soon"
+          disabled
         />
 
         <aside className="h-fit rounded-xl border border-site-line bg-site-surface p-5">
@@ -87,7 +45,7 @@ export default function ConsumerCheckout() {
                 <span>
                   {line.name}
                   <span className="block text-[11px] text-site-greige">
-                    Qty {line.quantity} · {line.purchase_type === 'subscription' ? `refill every ${line.cadence_days} days` : 'one-time'}
+                    Qty {line.quantity} · {line.purchase_type === 'subscription' ? `refill every ${line.cadence_days} days` : 'One-time purchase'}
                   </span>
                 </span>
                 <span className="font-semibold">{money(line.unit_price * line.quantity)}</span>

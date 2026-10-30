@@ -69,7 +69,9 @@ export function addLine(product, options = {}) {
   const limit = product.quantity_limit || 6;
   const dose = (product.dose_options || []).find((d) => d.label === doseLabel);
   const doseDelta = dose?.price_delta || 0;
-  const id = lineId(product.sku, purchaseType, cadenceDays, doseLabel);
+  // Only a product with subscription pricing may create a subscription line.
+  const type = purchaseType === 'subscription' && product.subscription_price == null ? 'one_time' : purchaseType;
+  const id = lineId(product.sku, type, cadenceDays, doseLabel);
   const existing = cart.lines.find((l) => l.id === id);
 
   if (existing) {
@@ -84,13 +86,13 @@ export function addLine(product, options = {}) {
       generic_name: product.generic_name || '',
       image_url: product.image_url || '',
       category: product.category,
-      purchase_type: purchaseType,
-      cadence_days: purchaseType === 'subscription' ? cadenceDays : null,
+      purchase_type: type,
+      cadence_days: type === 'subscription' ? cadenceDays : null,
       dose_label: doseLabel || '',
       dose_delta: doseDelta,
       list_price: product.price,
       subscription_price: product.subscription_price ?? null,
-      unit_price: resolveUnitPrice(product, purchaseType, doseLabel),
+      unit_price: resolveUnitPrice(product, type, doseLabel),
       quantity: Math.min(limit, Math.max(1, quantity)),
       quantity_limit: limit,
       in_stock: product.in_stock !== false,
@@ -116,6 +118,7 @@ export function setLinePurchaseType(id, purchaseType, cadenceDays) {
   const cart = readCart();
   const line = cart.lines.find((l) => l.id === id);
   if (!line) return cart;
+  if (purchaseType === 'subscription' && line.subscription_price == null) return cart;
   line.purchase_type = purchaseType;
   line.cadence_days = purchaseType === 'subscription' ? cadenceDays || 30 : null;
   const base =
