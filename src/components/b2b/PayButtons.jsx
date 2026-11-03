@@ -1,11 +1,12 @@
 import React from 'react';
 import { STRIPE_DISCLOSURE } from '@/lib/partner/offerings';
+import { withTracking } from '@/lib/tracking';
 
 /**
  * Hosted Stripe checkout buttons. External links, new tab, no card data here.
- * One payment renders a single button; services with a monthly component render two.
+ * Stored utm_* / ref attribution is appended so checkout stays attributable.
  */
-export default function PayButtons({ payments = [] }) {
+export default function PayButtons({ payments = [], serviceSlug, compact = false }) {
   if (!payments.length) return null;
 
   return (
@@ -14,9 +15,10 @@ export default function PayButtons({ payments = [] }) {
         {payments.map((payment) => (
           <a
             key={payment.url}
-            href={payment.url}
+            href={withTracking(payment.url)}
             target="_blank"
             rel="noopener noreferrer"
+            data-service={serviceSlug}
             className={`inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-[12px] font-semibold transition-colors duration-200 ${
               payment.primary
                 ? 'bg-site-rust text-site-cream hover:opacity-90'
@@ -27,7 +29,9 @@ export default function PayButtons({ payments = [] }) {
           </a>
         ))}
       </div>
-      <p className="mt-2 max-w-[34ch] text-[10px] leading-relaxed text-site-greige">{STRIPE_DISCLOSURE}</p>
+      {!compact && (
+        <p className="mt-2 max-w-[34ch] text-[10px] leading-relaxed text-site-greige">{STRIPE_DISCLOSURE}</p>
+      )}
     </div>
   );
 }

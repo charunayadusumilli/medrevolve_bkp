@@ -8,11 +8,10 @@ import { useSite } from '@/lib/siteContext';
 import { B2B_CONTACT } from '@/lib/partner/offerings';
 
 const NAV = [
-  { label: 'Platform', to: '/' },
-  { label: 'Modules & pricing', to: '/services' },
-  { label: 'RUO supply', to: '/ruo' },
+  { label: 'Home', to: '/' },
+  { label: 'Services', to: '/services' },
+  { label: 'RUO', to: '/ruo' },
   { label: 'Partners', to: '/partners' },
-  { label: 'Audit', to: '/audit' },
   { label: 'Blog', to: '/Blog' },
   { label: 'Contact', to: '/Contact' },
 ];
@@ -62,9 +61,12 @@ export default function PartnerLayout({ children }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <BookDemoLink className="hidden rounded-lg bg-site-rust px-4 py-2.5 text-[13px] font-semibold text-site-cream transition-opacity duration-200 hover:opacity-90 sm:inline-flex">
-              Book a demo
-            </BookDemoLink>
+            <Link
+              to="/services"
+              className="hidden rounded-lg bg-site-rust px-4 py-2.5 text-[13px] font-semibold text-site-cream transition-opacity duration-200 hover:opacity-90 sm:inline-flex"
+            >
+              See pricing
+            </Link>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -82,9 +84,13 @@ export default function PartnerLayout({ children }) {
               {NAV.map((item) => (
                 <Link key={item.label} to={item.to} className="text-[14px]">{item.label}</Link>
               ))}
-              <BookDemoLink className="rounded-lg bg-site-rust px-4 py-2.5 text-center text-[13px] font-semibold text-site-cream">
-                Book a demo
-              </BookDemoLink>
+              <Link
+                to="/services"
+                onClick={() => setOpen(false)}
+                className="rounded-lg bg-site-rust px-4 py-2.5 text-center text-[13px] font-semibold text-site-cream"
+              >
+                See pricing
+              </Link>
             </div>
           </div>
         )}

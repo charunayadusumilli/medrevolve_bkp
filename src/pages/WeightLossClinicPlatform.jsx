@@ -52,12 +52,12 @@ export default function WeightLossClinicPlatform() {
             2,400 entrepreneurs search "how to start a medical weight loss clinic" every month. MedRevolve is the only platform that gives you the complete infrastructure — physicians, pharmacy, compliance, technology — all in one.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/MerchantOnboarding">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=weight-loss-clinic-platform">
               <Button className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-3 rounded-sm text-base">
                 Start Free Setup Call <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-            <Link to="/ForBusiness">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=weight-loss-clinic-platform">
               <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 font-bold px-8 py-3 rounded-sm text-base">
                 View Full Platform
               </Button>
@@ -126,7 +126,7 @@ export default function WeightLossClinicPlatform() {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">Your Weight Loss Clinic Starts Here</h2>
           <p className="text-gray-500 mb-8">Book a free 20-minute call and we'll walk you through launching your branded medical weight loss clinic — in as little as 7 days.</p>
-          <Link to="/MerchantOnboarding">
+          <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=weight-loss-clinic-platform">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Strategy Call <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

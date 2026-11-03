@@ -10,14 +10,10 @@
 
 // ── PUBLIC B2B PAGES ─────────────────────────────────────────────────────────
 import Home from './pages/Home';
-import Services from './pages/Services.jsx';
-import HowItWorks from './pages/HowItWorks.jsx';
-import ForBusiness from './pages/ForBusiness';
 import University from './pages/University';
 import Contact from './pages/Contact';
 import MerchantOnboarding from './pages/MerchantOnboarding';
 import MerchantDemo from './pages/MerchantDemo';
-import BusinessInquiry from './pages/BusinessInquiry';
 import ForCreators from './pages/ForCreators';
 import CreatorApplication from './pages/CreatorApplication';
 import SocialKit from './pages/SocialKit';
@@ -41,14 +37,10 @@ import __Layout from './Layout.jsx';
 export const PAGES = {
     // Public B2B Marketing
     "Home": Home,
-    "Services": Services,
-    "HowItWorks": HowItWorks,
-    "ForBusiness": ForBusiness,
     "University": University,
     "Contact": Contact,
     "MerchantOnboarding": MerchantOnboarding,
     "MerchantDemo": MerchantDemo,
-    "BusinessInquiry": BusinessInquiry,
     "ForCreators": ForCreators,
     "CreatorApplication": CreatorApplication,
     "SocialKit": SocialKit,

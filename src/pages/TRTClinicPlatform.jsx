@@ -45,12 +45,12 @@ export default function TRTClinicPlatform() {
             MedRevolve gives entrepreneurs and clinic owners a complete testosterone replacement therapy telehealth platform — white-labeled, fully compliant, with licensed physicians in all 50 states and pharmacy fulfillment built in.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/MerchantOnboarding">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=trt-clinic-platform">
               <Button className="bg-blue-500 hover:bg-blue-400 text-white font-bold px-8 py-3 rounded-sm text-base">
                 Start Free Setup Call <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-            <Link to="/MerchantDemo">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=trt-clinic-platform">
               <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 font-bold px-8 py-3 rounded-sm text-base">
                 See Platform Demo
               </Button>
@@ -106,7 +106,7 @@ export default function TRTClinicPlatform() {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black mb-4">Launch Your TRT Clinic Platform Today</h2>
           <p className="text-white/50 mb-8">Book a free strategy call. We'll walk you through exactly how to launch a compliant, branded TRT telehealth company — without hiring a single employee.</p>
-          <Link to="/MerchantOnboarding">
+          <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=trt-clinic-platform">
             <Button className="bg-blue-500 hover:bg-blue-400 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Call <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

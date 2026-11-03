@@ -165,6 +165,7 @@ export const PLATFORM_SERVICES = [
       'Entity formation filing',
       'Platform setup under your brand',
       'Account, access and domain configuration',
+      'Entity documents ready to hand to a processor',
     ],
     payments: [{ label: 'Buy now - $1,500', url: PAY.llc }],
   },
@@ -179,6 +180,7 @@ export const PLATFORM_SERVICES = [
       'Merchant account configuration',
       'Payment rails and routing',
       'Test transactions and go-live support',
+      'Refund and dispute workflow setup',
     ],
     payments: [
       { label: 'Setup - $1,000', url: PAY.paymentSetup },
@@ -196,6 +198,7 @@ export const PLATFORM_SERVICES = [
       'Pharmacy connectivity',
       'Catalog and pricing sync',
       'Order routing and status callbacks',
+      'Lot and inventory visibility',
     ],
     payments: [
       { label: 'Setup - $1,000', url: PAY.pharmacySetup },
@@ -213,6 +216,7 @@ export const PLATFORM_SERVICES = [
       'Catalog structure build',
       'Product data import',
       'Pricing tiers and availability rules',
+      'Category and collection setup',
     ],
     payments: [{ label: 'Buy now - $750', url: PAY.productIntegration }],
   },
@@ -227,6 +231,7 @@ export const PLATFORM_SERVICES = [
       'Channel connections and sending setup',
       'Tracking and attribution',
       'Lifecycle flows for leads and repeat buyers',
+      'Consent capture for SMS and email',
     ],
     payments: [
       { label: 'Setup - $750', url: PAY.marketingIntegrationSetup },
@@ -244,6 +249,7 @@ export const PLATFORM_SERVICES = [
       'Every platform module in one onboarding',
       'Single point of contact',
       'One monthly fee instead of module-by-module',
+      'A single onboarding schedule across modules',
     ],
     payments: [
       { label: 'Setup - $4,000', url: PAY.bundleSetup },

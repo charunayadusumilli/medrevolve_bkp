@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import ReferralSection from '@/components/b2b/ReferralSection';
+import WhatHappensNext from '@/components/b2b/WhatHappensNext';
 import ContactBand from '@/components/b2b/ContactBand';
 import { applyStoreSeo } from '@/lib/storefront/seo';
 
@@ -30,6 +31,10 @@ export default function Partners() {
 
       <div className="mx-auto max-w-7xl px-5 pb-14 sm:px-8 md:pb-20">
         <ReferralSection />
+
+        <div className="mt-6">
+          <WhatHappensNext />
+        </div>
       </div>
 
       <ContactBand />

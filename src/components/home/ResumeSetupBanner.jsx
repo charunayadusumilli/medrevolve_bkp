@@ -47,7 +47,7 @@ export default function ResumeSetupBanner() {
                 <p className="text-white/50 text-xs">Pick up where you left off — your platform setup is in progress.</p>
               </div>
             </div>
-            <Link to="/MerchantDashboard" className="flex-shrink-0">
+            <Link to="/services" className="flex-shrink-0">
               <Button className="bg-[#4A6741] hover:bg-[#3D5636] text-white rounded-sm font-bold px-6">
                 Continue Your Setup <ArrowRight className="ml-2 w-4 h-4" />
               </Button>

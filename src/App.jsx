@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -71,6 +71,9 @@ import B2BServices from './pages/b2b/Services';
 import B2BPartners from './pages/b2b/Partners';
 import B2BAudit from './pages/b2b/Audit';
 import B2BServiceDetail from './pages/b2b/ServiceDetail';
+import MediaKitIndex from './pages/b2b/MediaKitIndex';
+import MediaKitPage from './pages/b2b/MediaKitPage';
+import TrafficTracker from './components/analytics/TrafficTracker';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
 import { SiteProvider } from './lib/siteContext';
 import {
@@ -244,7 +247,7 @@ const AuthenticatedApp = () => {
       <Route path="/ProviderOutreach" element={<LayoutWrapper currentPageName="ProviderOutreach"><ProviderOutreach /></LayoutWrapper>} />
       <Route path="/PartnerPortal" element={<LayoutWrapper currentPageName="PartnerPortal"><PartnerPortal /></LayoutWrapper>} />
       <Route path="/PartnerCompliance" element={<LayoutWrapper currentPageName="PartnerCompliance"><PartnerCompliance /></LayoutWrapper>} />
-      <Route path="/PartnerProgram" element={<LayoutWrapper currentPageName="PartnerProgram"><PartnerProgram /></LayoutWrapper>} />
+      <Route path="/PartnerProgram" element={<Navigate to="/services" replace />} />
       <Route path="/PartnerSignup" element={<LayoutWrapper currentPageName="PartnerSignup"><PartnerSignup /></LayoutWrapper>} />
       <Route path="/EmailAudit" element={<LayoutWrapper currentPageName="EmailAudit"><EmailAudit /></LayoutWrapper>} />
       <Route path="/IntegrationsDashboard" element={<LayoutWrapper currentPageName="IntegrationsDashboard"><IntegrationsDashboard /></LayoutWrapper>} />
@@ -271,9 +274,9 @@ const AuthenticatedApp = () => {
       <Route path="/for-med-spas" element={<LayoutWrapper currentPageName="ForMedSpas"><ForMedSpas /></LayoutWrapper>} />
       <Route path="/trt-clinic-platform" element={<LayoutWrapper currentPageName="TRTClinicPlatform"><TRTClinicPlatform /></LayoutWrapper>} />
       <Route path="/weight-loss-clinic-platform" element={<LayoutWrapper currentPageName="WeightLossClinicPlatform"><WeightLossClinicPlatform /></LayoutWrapper>} />
-      <Route path="/openloop-alternative" element={<LayoutWrapper currentPageName="OpenLoopAlternative"><OpenLoopAlternative /></LayoutWrapper>} />
+      <Route path="/openloop-alternative" element={<Navigate to="/services" replace />} />
       <Route path="/mytelemedicine-alternative" element={<LayoutWrapper currentPageName="MyTelemedicineAlternative"><MyTelemedicineAlternative /></LayoutWrapper>} />
-      <Route path="/telehealth-franchise" element={<LayoutWrapper currentPageName="TelehealthFranchise"><TelehealthFranchise /></LayoutWrapper>} />
+      <Route path="/telehealth-franchise" element={<Navigate to="/services" replace />} />
       <Route path="/iv-therapy-clinic-platform" element={<LayoutWrapper currentPageName="IVTherapyClinicPlatform"><IVTherapyClinicPlatform /></LayoutWrapper>} />
 
       {/* ── PATIENT-FACING ROUTES — rendered in-app, never redirected off-site ── */}
@@ -296,17 +299,17 @@ const AuthenticatedApp = () => {
       <Route path="/MerchantOnboardingIntake" element={<LayoutWrapper currentPageName="MerchantOnboardingIntake"><MerchantOnboardingIntake /></LayoutWrapper>} />
       <Route path="/MerchantDocuments" element={<LayoutWrapper currentPageName="MerchantDocuments"><MerchantDocuments /></LayoutWrapper>} />
       {/* ── B2B FOR BUSINESS — explicit route, never left to the stale pagesConfig loop ── */}
-      <Route path="/ForBusiness" element={<LayoutWrapper currentPageName="ForBusiness"><ForBusiness /></LayoutWrapper>} />
+      <Route path="/ForBusiness" element={<Navigate to="/services" replace />} />
       <Route path="/faq" element={<LayoutWrapper currentPageName="OperatorFAQ"><OperatorFAQ /></LayoutWrapper>} />
       <Route path="/patient-faq" element={<LayoutWrapper currentPageName="PatientFAQ"><PatientFAQ /></LayoutWrapper>} />
       <Route path="/Blog" element={<LayoutWrapper currentPageName="Blog"><Blog /></LayoutWrapper>} />
-      <Route path="/white-label-telehealth-platform" element={<LayoutWrapper currentPageName="WhiteLabelTelehealthPlatform"><WhiteLabelTelehealthPlatform /></LayoutWrapper>} />
-      <Route path="/unified-crm" element={<LayoutWrapper currentPageName="UnifiedCRM"><UnifiedCRM /></LayoutWrapper>} />
-      <Route path="/payment-processing" element={<LayoutWrapper currentPageName="PaymentProcessing"><PaymentProcessing /></LayoutWrapper>} />
+      <Route path="/white-label-telehealth-platform" element={<Navigate to="/services" replace />} />
+      <Route path="/unified-crm" element={<Navigate to="/services" replace />} />
+      <Route path="/payment-processing" element={<Navigate to="/services" replace />} />
       <Route path="/for-creators" element={<LayoutWrapper currentPageName="ForCreatorsLP"><ForCreatorsLP /></LayoutWrapper>} />
       <Route path="/for-entrepreneurs" element={<LayoutWrapper currentPageName="ForEntrepreneurs"><ForEntrepreneurs /></LayoutWrapper>} />
       <Route path="/telehealth-services-for-medspa" element={<LayoutWrapper currentPageName="TelehealthServicesForMedSpa"><TelehealthServicesForMedSpa /></LayoutWrapper>} />
-      <Route path="/Partnerships" element={<LayoutWrapper currentPageName="Partnerships"><Partnerships /></LayoutWrapper>} />
+      <Route path="/Partnerships" element={<Navigate to="/services" replace />} />
       <Route path="/OrderSuccess" element={<PageNotFound />} />
       <Route path="/ProductDetail" element={<PageNotFound />} />
       <Route path="/ProductsAndServices" element={<PageNotFound />} />
@@ -318,6 +321,13 @@ const AuthenticatedApp = () => {
       <Route path="/ruo" element={<PartnerLayout><RuoOverview /></PartnerLayout>} />
       <Route path="/services" element={<PartnerLayout><B2BServices /></PartnerLayout>} />
       <Route path="/services/:slug" element={<PartnerLayout><B2BServiceDetail /></PartnerLayout>} />
+      <Route path="/media-kit" element={<PartnerLayout><MediaKitIndex /></PartnerLayout>} />
+      <Route path="/media-kit/:slug" element={<PartnerLayout><MediaKitPage /></PartnerLayout>} />
+
+      {/* ── CONSOLIDATED SERVICE-INTENT ROUTES → /services ─────────────────── */}
+      <Route path="/Services" element={<Navigate to="/services" replace />} />
+      <Route path="/HowItWorks" element={<Navigate to="/services" replace />} />
+      <Route path="/BusinessInquiry" element={<Navigate to="/services" replace />} />
       <Route path="/partners" element={<PartnerLayout><B2BPartners /></PartnerLayout>} />
       <Route path="/audit" element={<PartnerLayout><B2BAudit /></PartnerLayout>} />
 
@@ -336,6 +346,7 @@ function App() {
         <Router>
           <SiteProvider>
             <NavigationTracker />
+            <TrafficTracker />
             <AuthenticatedApp />
           </SiteProvider>
         </Router>

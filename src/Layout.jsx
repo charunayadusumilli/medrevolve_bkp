@@ -22,10 +22,10 @@ import {
 
 const B2B_NAV = [
   { label: 'Home',           path: '/' },
-  { label: 'For Business',   path: '/ForBusiness' },
-  { label: 'Partnerships',   path: '/Partnerships' },
+  { label: 'Services',       path: '/services' },
+  { label: 'RUO',            path: '/ruo' },
+  { label: 'Partners',       path: '/partners' },
   { label: 'Blog',           path: '/Blog' },
-  { label: 'FAQ',            path: '/faq' },
   { label: 'Contact',        path: '/Contact' },
 ];
 
@@ -153,34 +153,6 @@ export default function Layout({ children }) {
                 </Link>
               ))}
 
-              {/* Admin dropdown — only visible to logged-in admins */}
-              {user?.role === 'admin' && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-1 text-sm font-medium text-green-700 hover:text-green-800 transition-colors">
-                      Admin <ChevronDown className="w-3 h-3" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white border border-gray-200 rounded-xl shadow-xl p-2 min-w-[220px]" align="end">
-                    <DropdownMenuItem asChild><Link to={createPageUrl('AdminDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Overview</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-100" />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantOnboarding')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">🚀 Merchant Onboarding</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('MerchantDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📊 Merchant Dashboard</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-100" />
-                    <DropdownMenuItem asChild><Link to={createPageUrl('ComplianceDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Compliance</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PartnershipHub')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Partnerships</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to={createPageUrl('PaymentsDashboard')} className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Payments</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-100" />
-                    <DropdownMenuItem asChild><Link to="/MailboxBoard" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50">Mailbox Board</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/InboxDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Lead Tracker</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/GrowthDashboard" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">📈 Growth & Analytics</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/AdsManager" className="cursor-pointer rounded-lg px-3 py-2 text-sm font-bold text-yellow-700 hover:bg-yellow-50">⚡ Ads Manager</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-100" />
-                    <DropdownMenuItem asChild><Link to="/SystemArchitecture" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">⚙️ System Architecture</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link to="/ComplianceAuditReport" className="cursor-pointer rounded-lg px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-50">📋 Compliance Audit</Link></DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
             </nav>
 
             {/* Right actions */}
@@ -233,12 +205,12 @@ export default function Layout({ children }) {
                 </Button>
               )}
 
-              <BookDemoLink className="hidden sm:block">
+              <Link to="/services" className="hidden sm:block">
                 <Button className="hover:opacity-90 text-white rounded-sm px-5 text-sm font-semibold"
                   style={{ backgroundColor: ctaColor }}>
-                  {ctaLabel}
+                  See pricing
                 </Button>
-              </BookDemoLink>
+              </Link>
 
               {/* Mobile menu */}
               <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -268,7 +240,6 @@ export default function Layout({ children }) {
                       {user && (
                         <div className="pt-4 border-t border-gray-100 mt-2 space-y-1">
                           <Link to="/PatientPortal" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>My Portal</Link>
-                          {user.role === 'admin' && <Link to="/AdminDashboard" className="block py-3 px-3 rounded-lg text-sm text-gray-600 hover:bg-gray-50" onClick={closeMenu}>Admin</Link>}
                         </div>
                       )}
                     </nav>
@@ -337,9 +308,9 @@ export default function Layout({ children }) {
                   </>
                 ) : (
                   <>
-                    <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">For Business</Link></li>
-                    <li><Link to="/ForBusiness" className="text-sm text-white/40 hover:text-white transition-colors">Services &amp; Pricing</Link></li>
-                    <li><Link to="/Partnerships" className="text-sm text-white/40 hover:text-white transition-colors">Partnerships</Link></li>
+                    <li><Link to="/services" className="text-sm text-white/40 hover:text-white transition-colors">Services &amp; Pricing</Link></li>
+                    <li><Link to="/ruo" className="text-sm text-white/40 hover:text-white transition-colors">RUO Supply</Link></li>
+                    <li><Link to="/partners" className="text-sm text-white/40 hover:text-white transition-colors">Partners</Link></li>
                     <li><Link to="/Blog" className="text-sm text-white/40 hover:text-white transition-colors">Blog</Link></li>
                     <li><Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link></li>
                     <li><Link to="/Contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>

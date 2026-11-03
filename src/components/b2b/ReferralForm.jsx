@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { SERVICE_OPTIONS } from '@/lib/partner/offerings';
+import { trackEvent } from '@/lib/tracking';
 
 const EMPTY = {
   name: '',
@@ -42,6 +43,18 @@ export default function ReferralForm() {
         referred_by: form.referred_by.trim() || undefined,
         status: 'new',
       });
+
+      trackEvent('referral', { service_interest: form.service_interest });
+      base44.functions
+        .invoke('notifyPartnerReferral', {
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim() || undefined,
+          business_name: form.business_name.trim() || undefined,
+          service_interest: form.service_interest,
+        })
+        .catch(() => {});
+
       setSaved(true);
     } catch (err) {
       setError(err?.message || 'That did not save. Try again, or email us directly.');

@@ -36,7 +36,7 @@ export default function ForCreatorsLP() {
             You've built an audience. The highest-value thing you can offer them next is a brand of your own.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/ForBusiness"><Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">Apply for White-Label <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=for-creators"><Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">Apply for White-Label <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"><Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">Book a Demo</Button></a>
           </div>
           <p className="text-white/30 text-xs mt-6">Tell us about your audience.</p>
@@ -82,7 +82,7 @@ export default function ForCreatorsLP() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-light text-white mb-4">Apply at medrevolve.com/ForBusiness or book a demo — tell us about your audience.</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Link to="/ForBusiness"><Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base">Apply Now <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=for-creators"><Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base">Apply Now <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"><Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">Book a Demo</Button></a>
           </div>
         </div>

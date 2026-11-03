@@ -1,0 +1,65 @@
+{
+  "name": "TrafficEvent",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Browser session identifier"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "cta_click",
+        "checkout_start",
+        "form_submit",
+        "referral"
+      ],
+      "description": "What happened"
+    },
+    "page_path": {
+      "type": "string",
+      "description": "Path the event fired on, including query string"
+    },
+    "service_interest": {
+      "type": "string",
+      "description": "Service slug the visitor was looking at or clicking toward"
+    },
+    "utm_source": {
+      "type": "string"
+    },
+    "utm_medium": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "ref_code": {
+      "type": "string",
+      "description": "Partner or affiliate referral code"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "Document referrer at the time of the event"
+    },
+    "device": {
+      "type": "string",
+      "enum": [
+        "mobile",
+        "desktop"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the event was recorded"
+    }
+  },
+  "required": [
+    "session_id",
+    "event_type"
+  ]
+}

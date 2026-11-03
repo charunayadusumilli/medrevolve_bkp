@@ -54,12 +54,12 @@ export default function IVTherapyClinicPlatform() {
             IV therapy clinics are the fastest growing category for telehealth add-ons. MedRevolve gives your clinic a full physician-supervised telehealth wing — weight management, hormone optimization, and longevity protocols — all under your existing brand.
           </motion.p>
           <motion.div {...fade(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/MerchantOnboarding">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=iv-therapy-clinic-platform">
               <Button className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded-sm text-base">
                 Start Free Setup Call <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-            <Link to="/MerchantDemo">
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=iv-therapy-clinic-platform">
               <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 font-bold px-8 py-3 rounded-sm text-base">
                 See Platform Demo
               </Button>
@@ -107,7 +107,7 @@ export default function IVTherapyClinicPlatform() {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-4">Add Recurring Revenue to Your IV Clinic</h2>
           <p className="text-gray-500 mb-8">Your IV therapy clients are already your best candidates for telehealth programs. MedRevolve turns them into monthly recurring subscribers — under your brand.</p>
-          <Link to="/MerchantOnboarding">
+          <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=iv-therapy-clinic-platform">
             <Button className="bg-[#0A0A0A] hover:bg-gray-800 text-white font-bold px-10 py-3 rounded-sm text-base">
               Book Free Strategy Call <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

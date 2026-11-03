@@ -41,7 +41,6 @@ export default function SmartNavigation({ user }) {
         setUserType('partner');
         setRecommendations([
           { label: 'Partner Portal', icon: Building2, path: 'PartnerPortal', badge: 'Dashboard' },
-          { label: 'Analytics', icon: BarChart3, path: 'AdminDashboard' },
           { label: 'Products', icon: Package, path: 'Products' },
           { label: 'Contracts', icon: FileText, path: 'PartnerContracts' }
         ]);

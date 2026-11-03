@@ -36,7 +36,7 @@ export default function ForEntrepreneurs() {
             Building a telehealth company the traditional way means $30K-$50K and 6-12 months of stitching vendors together before your first customer. MedRevolve replaces the build with a platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/ForBusiness"><Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">Apply for White-Label <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=for-entrepreneurs"><Button size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 font-bold text-base">Apply for White-Label <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"><Button size="lg" variant="ghost" className="text-white border border-white/20 hover:bg-white/10 rounded-none px-10 text-base">Book a Demo</Button></a>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function ForEntrepreneurs() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-light text-white mb-4">medrevolve.com/ForBusiness</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Link to="/ForBusiness"><Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base">Apply Now <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
+            <Link to="/services?utm_source=lp&utm_medium=landing&utm_campaign=for-entrepreneurs"><Button size="lg" className="bg-white text-[#2D3A2D] hover:bg-white/90 rounded-none px-12 font-bold text-base">Apply Now <ArrowRight className="ml-2 w-5 h-5" /></Button></Link>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"><Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-none px-12 text-base">Book a Demo</Button></a>
           </div>
         </div>

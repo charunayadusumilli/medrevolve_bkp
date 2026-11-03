@@ -39,7 +39,7 @@ const services = [
       'Chargeback Defense System',
     ],
     cta: 'View Payment Options',
-    href: 'PaymentsDashboard',
+    href: '/services',
     color: '#7A5A45',
     bg: 'from-[#130F0F] to-[#080808]',
   },

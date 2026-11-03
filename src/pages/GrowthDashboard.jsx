@@ -10,6 +10,7 @@ import {
   UserCheck, Building2, Zap, ExternalLink, Calendar
 } from 'lucide-react';
 import DailyActiveUsersChart from '@/components/analytics/DailyActiveUsersChart';
+import TrafficOverview from '@/components/analytics/TrafficOverview';
 import { motion } from 'framer-motion';
 import RequireAuth from '@/components/auth/RequireAuth';
 
@@ -320,6 +321,8 @@ function GrowthDashboardInner() {
 
             {/* TRAFFIC & SEO TAB */}
             <TabsContent value="traffic" className="space-y-4 mt-4">
+              <TrafficOverview />
+
               <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
                 <CardContent className="pt-5 pb-5">
                   <h3 className="font-semibold text-green-900 mb-2">🔍 SEO Status</h3>

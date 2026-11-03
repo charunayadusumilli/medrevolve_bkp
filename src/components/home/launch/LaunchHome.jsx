@@ -505,13 +505,13 @@ export default function LaunchHome() {
           </div>
           <div className="gallery">
             {SOCIAL_GRAPHICS.map((g) => (
-              <a key={g.id} className="gtile" href={`/SocialKit#${g.id}`}>
+              <a key={g.id} className="gtile" href="/services">
                 <img src={`/social/${g.id}.png`} alt={g.alt} width="1080" height="1080" loading="lazy" />
                 <span>{g.title}</span>
               </a>
             ))}
           </div>
-          <p style={{ marginTop: 18 }}><a className="btn btn-ghost" href="/SocialKit">Open the graphics library <span className="arrow">→</span></a></p>
+          <p style={{ marginTop: 18 }}><a className="btn btn-ghost" href="/services">See every service <span className="arrow">→</span></a></p>
         </div>
       </section>
 
