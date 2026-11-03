@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { RUO_CATALOG_URL, RUO_DISCLAIMER } from '@/lib/partner/offerings';
 
-export default function RuoLeadHero() {
+export default function RuoLeadHero({ servicesHref = '#services' }) {
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState('');
 
@@ -59,7 +59,7 @@ export default function RuoLeadHero() {
             View the RUO catalog <ArrowRight className="h-4 w-4" />
           </a>
           <a
-            href="#services"
+            href={servicesHref}
             className="text-[14px] font-semibold text-site-cream underline decoration-site-cream/30 decoration-1 underline-offset-4 hover:decoration-site-cream"
           >
             Operator services below

@@ -15,7 +15,7 @@ export default function RuoOverview() {
 
   return (
     <>
-      <RuoLeadHero />
+      <RuoLeadHero servicesHref="/services" />
       <RuoSection />
     </>
   );
