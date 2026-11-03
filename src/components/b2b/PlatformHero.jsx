@@ -24,13 +24,14 @@ export default function PlatformHero() {
         </p>
 
         <h1 className="mt-4 max-w-4xl font-display text-[36px] leading-[1.06] tracking-tight sm:text-[56px]">
-          Building an RUO business? Start here.
+          Building an RUO business? We build it with you.
         </h1>
 
         <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-site-cream/70">
-          MedRevolve is the starting point for research-use-only sellers. We build the storefront, set up
-          compliant product pages and checkout, connect supply, providers and processing, and keep scanning
-          your site so it stays compliant. You bring the buyers.
+          Come to us with the research-use-only business you want to launch. We are the starting point: we
+          build the storefront, the research-use-only product pages and compliant checkout, connect supply,
+          providers and processing, run your marketing, and scan your site so it stays compliant. You bring
+          the buyers.
         </p>
 
         <ul className="mt-8 flex flex-wrap gap-2">
