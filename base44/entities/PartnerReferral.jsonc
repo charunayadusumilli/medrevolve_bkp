@@ -2,22 +2,55 @@
   "name": "PartnerReferral",
   "type": "object",
   "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the person submitting the referral or catalog request"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email for the referral"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Business name of the referred operator or research buyer"
+    },
+    "website_url": {
+      "type": "string",
+      "description": "Website URL of the referred business"
+    },
+    "service_interest": {
+      "type": "string",
+      "description": "Service the referral wants: Processing readiness audit, Custom development, Marketing engine, LegitScript buildout, Full platform, RUO bulk supply"
+    },
+    "referred_by": {
+      "type": "string",
+      "description": "Who or what referred this lead"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context captured with the referral"
+    },
     "partner_id": {
       "type": "string",
-      "description": "Partner ID"
+      "description": "Partner ID for commission-tracked referrals"
     },
     "customer_email": {
       "type": "string",
       "format": "email",
-      "description": "Referred customer email"
+      "description": "Referred customer email on commission-tracked referrals"
     },
     "product_id": {
       "type": "string",
-      "description": "Product purchased"
+      "description": "Product purchased on commission-tracked referrals"
     },
     "order_value": {
       "type": "number",
-      "description": "Total order value"
+      "description": "Total order value on commission-tracked referrals"
     },
     "partner_earnings": {
       "type": "number",
@@ -26,13 +59,21 @@
     "status": {
       "type": "string",
       "enum": [
+        "new",
         "pending",
         "qualified",
         "paid",
         "cancelled"
       ],
-      "default": "pending",
-      "description": "Referral status"
+      "enumColors": [
+        "blue",
+        "yellow",
+        "purple",
+        "green",
+        "gray"
+      ],
+      "default": "new",
+      "description": "new = intake awaiting follow-up, pending = commission referral awaiting qualification"
     },
     "qualified_date": {
       "type": "string",
@@ -44,11 +85,5 @@
       "format": "date-time",
       "description": "When partner was paid"
     }
-  },
-  "required": [
-    "partner_id",
-    "customer_email",
-    "product_id",
-    "order_value"
-  ]
+  }
 }

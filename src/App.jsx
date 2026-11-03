@@ -64,6 +64,12 @@ import Partnerships from './pages/Partnerships';
 import Blog from './pages/Blog';
 import OperatorFAQ from './pages/OperatorFAQ';
 import ForBusiness from './pages/ForBusiness';
+// ── B2B DOMAIN PAGES (medrevolveb2b.com) ─────────────────────────────────────
+import PartnerLayout from './components/partner/PartnerLayout';
+import RuoOverview from './pages/b2b/RuoOverview';
+import B2BServices from './pages/b2b/Services';
+import B2BPartners from './pages/b2b/Partners';
+import B2BAudit from './pages/b2b/Audit';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
 import { SiteProvider } from './lib/siteContext';
 import {
@@ -306,6 +312,12 @@ const AuthenticatedApp = () => {
       <Route path="/Programs" element={<PageNotFound />} />
       <Route path="/WaterHome" element={<PageNotFound />} />
       <Route path="/ResearchProducts" element={<PageNotFound />} />
+
+      {/* ── B2B DOMAIN (medrevolveb2b.com) — RUO, services, referral, audit ── */}
+      <Route path="/ruo" element={<PartnerLayout><RuoOverview /></PartnerLayout>} />
+      <Route path="/services" element={<PartnerLayout><B2BServices /></PartnerLayout>} />
+      <Route path="/partners" element={<PartnerLayout><B2BPartners /></PartnerLayout>} />
+      <Route path="/audit" element={<PartnerLayout><B2BAudit /></PartnerLayout>} />
 
       {/* ── CATCH-ALL — removed/consumer pages → 404 ──────────────────────── */}
       <Route path="*" element={<PageNotFound />} />

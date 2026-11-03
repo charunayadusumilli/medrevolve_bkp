@@ -5,15 +5,22 @@ import SocialRow from '@/components/site/SocialRow';
 import WhatsAppFloat from '@/components/site/WhatsAppFloat';
 import BookDemoLink from '@/components/BookDemoLink';
 import { useSite } from '@/lib/siteContext';
+import { B2B_CONTACT } from '@/lib/partner/offerings';
 
 const NAV = [
-  { label: 'Platform', to: '/#platform' },
-  { label: 'Packages', to: '/#packages' },
-  { label: 'Case Study', to: '/#case-study' },
-  { label: 'Partners', to: '/Partnerships' },
-  { label: 'Videos', to: '/#videos' },
+  { label: 'RUO supply', to: '/ruo' },
+  { label: 'Services', to: '/services' },
+  { label: 'Referral', to: '/partners' },
+  { label: 'Audit', to: '/audit' },
   { label: 'Blog', to: '/Blog' },
   { label: 'Contact', to: '/Contact' },
+];
+
+const FOOTER_LEGAL = [
+  { label: 'Terms', to: '/Terms' },
+  { label: 'Privacy', to: '/Privacy' },
+  { label: 'Refund Policy', to: '/RefundPolicy' },
+  { label: 'Medical Disclaimer', to: '/MedicalDisclaimer' },
 ];
 
 export default function PartnerLayout({ children }) {
@@ -43,13 +50,13 @@ export default function PartnerLayout({ children }) {
 
           <nav className="hidden items-center gap-6 lg:flex">
             {NAV.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.to}
+                to={item.to}
                 className="text-[13px] text-site-greige transition-colors duration-200 hover:text-site-moss"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -72,7 +79,7 @@ export default function PartnerLayout({ children }) {
           <div className="border-t border-site-line bg-site-surface px-5 py-4 lg:hidden">
             <div className="grid gap-3">
               {NAV.map((item) => (
-                <a key={item.label} href={item.to} className="text-[14px]">{item.label}</a>
+                <Link key={item.label} to={item.to} className="text-[14px]">{item.label}</Link>
               ))}
               <BookDemoLink className="rounded-lg bg-site-rust px-4 py-2.5 text-center text-[13px] font-semibold text-site-cream">
                 Book a demo
@@ -105,9 +112,24 @@ export default function PartnerLayout({ children }) {
               <a href="https://medrevolve.com" className="text-center text-[12px] text-site-greige underline underline-offset-4">
                 Patient site: medrevolve.com
               </a>
+              <a href={`tel:${B2B_CONTACT.phoneTel}`} className="text-center font-mono text-[14px] font-semibold text-site-moss">
+                {B2B_CONTACT.phoneDisplay}
+              </a>
+              <a href={`mailto:${B2B_CONTACT.email}`} className="text-center text-[12px] text-site-greige underline underline-offset-4">
+                {B2B_CONTACT.email}
+              </a>
             </div>
           </div>
-          <p className="mt-10 border-t border-site-line pt-5 text-[11px] text-site-greige">
+          <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-site-line pt-5">
+            {FOOTER_LEGAL.map((item) => (
+              <li key={item.label}>
+                <Link to={item.to} className="text-[12px] text-site-greige underline decoration-transparent underline-offset-4 hover:decoration-site-greige">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-[11px] text-site-greige">
             © {new Date().getFullYear()} MedRevolve Corporation. Clinical services are delivered by
             independently licensed providers; pharmacy fulfillment by NABP-verified partners.
           </p>
