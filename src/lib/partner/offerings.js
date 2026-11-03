@@ -68,95 +68,199 @@ export const COA_CONTENTS = [
 
 export const PARTNER_SERVICES = [
   {
+    slug: 'readiness-audit',
     name: 'Website and Processing Readiness Audit',
     price: '$500 one-time',
+    ballpark: 'Around $500, one time',
+    summary:
+      'A written review of your storefront and checkout, done before you apply for card processing.',
     detail:
       'PCI configuration review, required policy and disclosure pages, checkout and cart review, and a written remediation report.',
+    included: [
+      'Checkout, cart and payment configuration review',
+      'Required policy, disclosure and contact pages',
+      'Refund, subscription and cancellation terms',
+      'Written remediation report with prioritised fixes',
+    ],
     caveat:
       'This is a readiness audit. It does not guarantee approval by any processor or acquirer.',
     payments: [{ label: 'Buy now - $500', url: PAY.audit, primary: true }],
   },
   {
+    slug: 'custom-development',
     name: 'Custom Development',
     price: '$95 / hour',
+    ballpark: 'About $380 per 4-hour block, roughly $95 an hour',
+    summary: 'Hands-on build work on your storefront, integrations and internal tools.',
     detail: '4-hour minimum. Sold as a 4-hour block at $380, invoiced monthly.',
+    included: [
+      'Storefront and checkout changes',
+      'Integration and API work',
+      'Internal tools and automations',
+      'Fixed 4-hour blocks, no retainer required',
+    ],
     payments: [{ label: 'Buy now - $380', url: PAY.devBlock }],
   },
   {
+    slug: 'development-retainer',
     name: 'Development Retainer',
     price: '$3,420 / month',
+    ballpark: 'Around $3,420 per month for 40 hours',
+    summary: 'A standing development team for operators shipping continuously.',
     detail: '40 hours per month, 10% off hourly. Priority queue and a monthly work report.',
+    included: [
+      '40 development hours every month',
+      '10% off the hourly rate',
+      'Priority queue ahead of project work',
+      'Monthly work report',
+    ],
     payments: [{ label: 'Buy now - $3,420/month', url: PAY.retainer }],
   },
   {
+    slug: 'marketing-engine',
     name: 'Marketing Engine',
     price: '$1,500 setup + $2,500 / month',
+    ballpark: '$1,500 setup, then about $2,500 a month',
+    summary: 'We run acquisition for you: channels built, lifecycle flows shipped, results reported.',
     detail:
       'Setup includes channel build and lifecycle email flows. Then weekly market scan and monthly reporting.',
+    included: [
+      'Channel build for SMS, email and voice',
+      'Lifecycle and drip email flows',
+      'Weekly market and competitor scan',
+      'Monthly performance reporting',
+    ],
     payments: [
       { label: 'Start marketing engine', url: PAY.marketingSetup },
       { label: 'Monthly marketing', url: PAY.marketingMonthly },
     ],
   },
   {
+    slug: 'legitscript-buildout',
     name: 'LegitScript Buildout',
     price: 'From $2,500',
+    ballpark: 'From $2,500, quoted per client',
+    summary: 'LegitScript and merchant-account buildout for regulated telehealth categories.',
     detail:
       '$2,500 deposit, quoted per client. Separate merchant account, pharmacy tie-ins, compliance registration.',
+    included: [
+      'Separate merchant account configuration',
+      'Pharmacy tie-ins for verification',
+      'Compliance registration and documentation',
+      'Application support through review',
+    ],
     payments: [{ label: 'Start LegitScript buildout', url: PAY.legitScript }],
   },
 ];
 
 export const PLATFORM_SERVICES = [
   {
+    slug: 'llc-formation',
     name: 'LLC Formation and Setup',
     price: '$1,500 one-time',
+    ballpark: 'Around $1,500, one time',
+    summary: 'Form the entity, then stand the platform up under your own brand.',
     detail: 'Entity formation and platform setup.',
+    included: [
+      'Entity formation filing',
+      'Platform setup under your brand',
+      'Account, access and domain configuration',
+    ],
     payments: [{ label: 'Buy now - $1,500', url: PAY.llc }],
   },
   {
+    slug: 'payment-integration',
     name: 'Payment Integration',
     price: '$1,000 setup + $100 / month',
+    ballpark: 'About $1,000 setup, then $100 a month',
+    summary: 'Card processing configured, tested and live on your own checkout.',
     detail: 'Merchant configuration and payment rails.',
+    included: [
+      'Merchant account configuration',
+      'Payment rails and routing',
+      'Test transactions and go-live support',
+    ],
     payments: [
       { label: 'Setup - $1,000', url: PAY.paymentSetup },
       { label: 'Then $100/month', url: PAY.paymentMonthly },
     ],
   },
   {
+    slug: 'pharmacy-integration',
     name: 'Pharmacy Integration',
     price: '$1,000 setup + $100 / month',
+    ballpark: 'About $1,000 setup, then $100 a month',
+    summary: 'Connected pharmacy supply so orders route themselves and catalogs stay in sync.',
     detail: 'Pharmacy connectivity, catalog sync and order routing.',
+    included: [
+      'Pharmacy connectivity',
+      'Catalog and pricing sync',
+      'Order routing and status callbacks',
+    ],
     payments: [
       { label: 'Setup - $1,000', url: PAY.pharmacySetup },
       { label: 'Then $100/month', url: PAY.pharmacyMonthly },
     ],
   },
   {
+    slug: 'product-integration',
     name: 'Product Integration',
     price: '$750 one-time',
+    ballpark: 'Around $750, one time',
+    summary: 'Your catalog built and imported, ready to sell on day one.',
     detail: 'Catalog build and product data import.',
+    included: [
+      'Catalog structure build',
+      'Product data import',
+      'Pricing tiers and availability rules',
+    ],
     payments: [{ label: 'Buy now - $750', url: PAY.productIntegration }],
   },
   {
+    slug: 'marketing-integration',
     name: 'Marketing Integration',
     price: '$750 setup + $150 / month',
+    ballpark: 'About $750 setup, then $150 a month',
+    summary: 'Channels, tracking and lifecycle flows wired into your existing stack.',
     detail: 'Channels, tracking and lifecycle flows.',
+    included: [
+      'Channel connections and sending setup',
+      'Tracking and attribution',
+      'Lifecycle flows for leads and repeat buyers',
+    ],
     payments: [
       { label: 'Setup - $750', url: PAY.marketingIntegrationSetup },
       { label: 'Then $150/month', url: PAY.marketingIntegrationMonthly },
     ],
   },
   {
+    slug: 'full-platform-bundle',
     name: 'Full Platform Bundle',
     price: '$4,000 setup + $250 / month',
+    ballpark: 'About $4,000 setup, then $250 a month',
+    summary: 'Every module above in one engagement, on one monthly fee.',
     detail: 'Every module above, one engagement.',
+    included: [
+      'Every platform module in one onboarding',
+      'Single point of contact',
+      'One monthly fee instead of module-by-module',
+    ],
     payments: [
       { label: 'Setup - $4,000', url: PAY.bundleSetup },
       { label: 'Then $250/month', url: PAY.bundleMonthly },
     ],
   },
 ];
+
+/** Every service, in landing-page order, with its own page at /services/:slug. */
+export const SERVICE_CATALOG = [
+  ...PARTNER_SERVICES.map((service) => ({ ...service, group: 'Partner-referred services' })),
+  ...PLATFORM_SERVICES.map((service) => ({ ...service, group: 'Platform services' })),
+];
+
+export function getService(slug) {
+  return SERVICE_CATALOG.find((service) => service.slug === slug) || null;
+}
 
 export const PRICE_NOTE =
   'All prices in USD, cash-pay, excluding applicable taxes. Development and retainer work is billed against a card on file or invoiced per job.';

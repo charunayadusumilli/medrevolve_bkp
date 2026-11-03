@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { applyStoreSeo } from '@/lib/storefront/seo';
 import PlatformHero from '@/components/b2b/PlatformHero';
-import ServicesSection from '@/components/b2b/ServicesSection';
+import ServicesLanding from '@/components/b2b/ServicesLanding';
 import ComplianceMonitoring from '@/components/b2b/ComplianceMonitoring';
 import RuoSection from '@/components/b2b/RuoSection';
 import ProofPoints from '@/components/b2b/ProofPoints';
@@ -20,7 +20,7 @@ export default function PartnerHome() {
   return (
     <>
       <PlatformHero />
-      <ServicesSection />
+      <ServicesLanding />
       <ComplianceMonitoring />
       <RuoSection />
       <ProofPoints />

@@ -70,6 +70,7 @@ import RuoOverview from './pages/b2b/RuoOverview';
 import B2BServices from './pages/b2b/Services';
 import B2BPartners from './pages/b2b/Partners';
 import B2BAudit from './pages/b2b/Audit';
+import B2BServiceDetail from './pages/b2b/ServiceDetail';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
 import { SiteProvider } from './lib/siteContext';
 import {
@@ -316,6 +317,7 @@ const AuthenticatedApp = () => {
       {/* ── B2B DOMAIN (medrevolveb2b.com) — RUO, services, referral, audit ── */}
       <Route path="/ruo" element={<PartnerLayout><RuoOverview /></PartnerLayout>} />
       <Route path="/services" element={<PartnerLayout><B2BServices /></PartnerLayout>} />
+      <Route path="/services/:slug" element={<PartnerLayout><B2BServiceDetail /></PartnerLayout>} />
       <Route path="/partners" element={<PartnerLayout><B2BPartners /></PartnerLayout>} />
       <Route path="/audit" element={<PartnerLayout><B2BAudit /></PartnerLayout>} />
 
