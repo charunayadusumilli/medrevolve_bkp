@@ -9,13 +9,14 @@ export default function ServicesSection() {
     <section id="services" className="border-t border-site-line bg-site-cream">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-20">
         <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-site-rust">
-          For operators
+          Platform modules
         </p>
         <h2 className="mt-3 max-w-2xl font-display text-[30px] leading-tight tracking-tight sm:text-[40px]">
-          What we build for operators
+          Every module, priced on this page.
         </h2>
         <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-site-greige">
-          Fixed prices, listed in full. No sales-gated pricing tiers and no add-ons that only appear on a call.
+          Start with the audit, add the modules you need, or take the full stack. Fixed prices, listed in
+          full, with no add-ons that only appear on a call.
         </p>
 
         <div className="mt-8">

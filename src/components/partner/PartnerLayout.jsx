@@ -8,9 +8,10 @@ import { useSite } from '@/lib/siteContext';
 import { B2B_CONTACT } from '@/lib/partner/offerings';
 
 const NAV = [
+  { label: 'Platform', to: '/' },
+  { label: 'Modules & pricing', to: '/services' },
   { label: 'RUO supply', to: '/ruo' },
-  { label: 'Services', to: '/services' },
-  { label: 'Referral', to: '/partners' },
+  { label: 'Partners', to: '/partners' },
   { label: 'Audit', to: '/audit' },
   { label: 'Blog', to: '/Blog' },
   { label: 'Contact', to: '/Contact' },

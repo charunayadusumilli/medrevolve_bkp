@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react';
 import { applyStoreSeo } from '@/lib/storefront/seo';
-import RuoLeadHero from '@/components/b2b/RuoLeadHero';
-import RuoSection from '@/components/b2b/RuoSection';
+import PlatformHero from '@/components/b2b/PlatformHero';
 import ServicesSection from '@/components/b2b/ServicesSection';
+import RuoSection from '@/components/b2b/RuoSection';
 import ProofPoints from '@/components/b2b/ProofPoints';
 import ContactBand from '@/components/b2b/ContactBand';
 
 export default function PartnerHome() {
   useEffect(() => {
     applyStoreSeo({
-      title: 'MedRevolve — RUO bulk supply and telehealth operator services',
+      title: 'MedRevolve — the platform RUO B2B sellers launch on',
       description:
-        'Research-use-only compounds with a certificate of analysis on every lot, plus the pricing for building and running a telehealth operation.',
+        'Onboard your research-use-only operation onto MedRevolve: storefront, payments, compliance, provider and pharmacy networks, inventory and marketing, under your own brand. Every module priced on the page.',
       path: '/',
     });
   }, []);
 
   return (
     <>
-      <RuoLeadHero />
-      <RuoSection />
+      <PlatformHero />
       <ServicesSection />
+      <RuoSection />
       <ProofPoints />
       <ContactBand />
     </>
