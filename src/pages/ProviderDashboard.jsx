@@ -244,8 +244,8 @@ export default function ProviderDashboard() {
             <a href="mailto:providers@medrevolve.com" className="flex items-center gap-2 hover:underline">
               📧 providers@medrevolve.com
             </a>
-            <a href="tel:+15302006352" className="flex items-center gap-2 hover:underline">
-              📞 +1 (530) 200-6352
+            <a href="tel:+19808996800" className="flex items-center gap-2 hover:underline">
+              📞 +1 (980) 899-6800
             </a>
           </div>
         </div>

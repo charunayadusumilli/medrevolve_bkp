@@ -40,9 +40,9 @@ export const SITES = {
  * Hostname → site variant.
  * medrevolveruo.com / www → RUO STORE
  * app.medrevolve.com → CONSUMER (patient app + shop)
- * medrevolve.com / medrevolveb2b.com / every other host, including the
- * published app URL, preview and localhost → PARTNER (the B2B site is the
- * primary public site, so this is what the builder preview shows).
+ * medrevolveb2b.com / www / b2b.* → PARTNER (B2B services site)
+ * medrevolve.com / www / preview / localhost → CONSUMER (telehealth storefront,
+ * which is what the builder preview shows; use ?site=partner for the B2B site).
  * An explicit `?site=consumer|ruo|partner` query override lets the team preview
  * the other sites from any URL.
  */
@@ -53,7 +53,8 @@ export function detectSite(hostname = window.location.hostname, search = window.
   const h = String(hostname || '').toLowerCase();
   if (h === 'medrevolveruo.com' || h === 'www.medrevolveruo.com' || h.startsWith('ruo.')) return 'RUO';
   if (h === 'app.medrevolve.com' || h.startsWith('app.')) return 'CONSUMER';
-  return 'PARTNER';
+  if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com' || h.startsWith('b2b.')) return 'PARTNER';
+  return 'CONSUMER';
 }
 
 const SiteContext = createContext({ site: 'CONSUMER', ...SITES.CONSUMER });

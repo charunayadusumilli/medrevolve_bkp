@@ -262,7 +262,7 @@ Deno.serve(async (req) => {
     }
 
     // SMS to admin with lead details
-    const adminPhone = '5302006352';
+    const adminPhone = '19808996800';
     const phoneDisplay = data.phone || 'N/A';
     await sendSMS(adminPhone, `NEW LEAD - ${data.full_name} | ${data.primary_interest} | ${data.email} | ${phoneDisplay} | ${data.consultation_preference || 'flexible'} | via ${data.heard_about_us || 'N/A'}`);
 

@@ -14,6 +14,7 @@ import { applyStoreSeo, productJsonLd } from '@/lib/storefront/seo';
 import BuyBox from '@/components/storefront/BuyBox';
 import ProductTimeline from '@/components/storefront/ProductTimeline';
 import SafetyBlock from '@/components/storefront/SafetyBlock';
+import CertificateBlock from '@/components/storefront/CertificateBlock';
 import BoughtTogether from '@/components/storefront/BoughtTogether';
 import ProductTile from '@/components/storefront/ProductTile';
 import { INTAKE_BANNER } from '@/components/storefront/QuickAdd';
@@ -188,6 +189,8 @@ export default function StoreProduct() {
             <span className="inline-flex items-center gap-1.5"><Truck className="h-3.5 w-3.5 text-sf-accent" /> Free shipping over $50</span>
             <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-sf-accent" /> HIPAA-secure</span>
           </div>
+
+          <CertificateBlock product={product} />
         </div>
       </div>
 

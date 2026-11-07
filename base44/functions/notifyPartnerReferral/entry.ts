@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
       '',
       'Nothing hourly starts before that fixed-price audit is complete.',
       '',
-      'If anything changes in the meantime, reply to this email or call 530-200-6352.',
+      'If anything changes in the meantime, reply to this email or call (980) 899-6800.',
       '',
       'MedRevolve',
       'https://medrevolveb2b.com/services',

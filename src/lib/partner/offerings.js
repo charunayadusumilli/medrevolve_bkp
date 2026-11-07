@@ -300,7 +300,7 @@ export const PROOF_POINTS = [
 ];
 
 export const B2B_CONTACT = {
-  phoneDisplay: '530-200-6352',
-  phoneTel: '+15302006352',
+  phoneDisplay: '(980) 899-6800',
+  phoneTel: '+19808996800',
   email: 'rned@medrevolve.com',
 };

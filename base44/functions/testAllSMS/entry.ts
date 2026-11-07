@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Admin only' }, { status: 403 });
     }
 
-    const adminPhone = '5302006352';
+    const adminPhone = '19808996800';
     const results = [];
 
     const msgs = [

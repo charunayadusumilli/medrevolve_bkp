@@ -11,7 +11,8 @@ const NAV = [
   { label: 'Hormone Health', to: '/shop/testosterone' },
   { label: 'Skin', to: '/shop/skin' },
   { label: 'Labs', to: '/shop/labs' },
-  { label: 'How It Works', to: '/HowItWorks' },
+  { label: 'Is it safe?', to: '/#safety' },
+  { label: 'Research', to: '/#research' },
 ];
 
 export default function ConsumerHeader() {

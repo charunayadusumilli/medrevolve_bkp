@@ -15,15 +15,15 @@
 
 export function detectDomain() {
   const h = window.location.hostname.toLowerCase();
-  // app.medrevolve.com → patient app (intake, shop, cart, patient portal)
-  if (h === 'app.medrevolve.com') return 'APP';
+  // medrevolve.com + app.medrevolve.com → telehealth storefront (consumer)
+  if (h === 'medrevolve.com' || h === 'www.medrevolve.com' || h === 'app.medrevolve.com') return 'APP';
   if (h === 'admin.medrevolve.com') return 'ADMIN';
   // Public sites — white-label telehealth infrastructure (B2B)
   if (h === 'medrevolve.com' || h === 'www.medrevolve.com') return 'B2B';
   if (h === 'medrevolveb2b.com' || h === 'www.medrevolveb2b.com') return 'B2B';
   // Dev / preview environment — the B2B platform site is the primary public site
   const isDevEnv = h === 'localhost' || h.includes('base44') || h.includes('127.0.0.1');
-  if (isDevEnv) return 'B2B';
+  if (isDevEnv) return 'APP';
   return 'DOWN';
 }
 

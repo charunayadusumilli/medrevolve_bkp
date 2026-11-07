@@ -16,11 +16,13 @@ import { base44 } from '@/api/base44Client';
  *   240-387-5224   — IONOS AI receptionist line (paid). RETIRED Oct 23, 2026.
  *   (704) 426-3311 — old tracking number on legal pages. Retired.
  */
-export const PHONE_DISPLAY = '';
-export const PHONE_E164 = '';
-export const PHONE_TEL = '';
-export const PHONE_RETIRED = true;
-export const PHONE_HOURS = 'Mon-Fri 9 AM to 5 PM ET';
+export const PHONE_DISPLAY = '(980) 899-6800';
+export const PHONE_E164 = '+19808996800';
+export const PHONE_TEL = 'tel:+19808996800';
+export const PHONE_SMS = 'sms:+19808996800';
+export const PHONE_RETIRED = false;
+export const PHONE_ACTION_LABEL = 'Text (980) 899-6800';
+export const PHONE_HOURS = 'Text anytime — Mon-Fri 9 AM to 5 PM ET replies';
 
 export const EMAIL_SUPPORT = 'support@medrevolve.com';
 export const EMAIL_PARTNERSHIPS = 'partnerships@medrevolve.com';

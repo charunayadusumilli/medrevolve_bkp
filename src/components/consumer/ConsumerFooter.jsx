@@ -4,6 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import NewsletterForm from '@/components/site/NewsletterForm';
 import SocialRow from '@/components/site/SocialRow';
 import { useSite } from '@/lib/siteContext';
+import { PHONE_DISPLAY, PHONE_SMS } from '@/lib/contactConfig';
 
 export default function ConsumerFooter() {
   const site = useSite();
@@ -37,7 +38,7 @@ export default function ConsumerFooter() {
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-site-greige">Company</p>
             <ul className="mt-3 space-y-2 text-[13px] text-site-moss">
-              <li><Link to="/HowItWorks" className="hover:text-site-rust">How it works</Link></li>
+              <li><Link to="/#safety" className="hover:text-site-rust">How it works</Link></li>
               <li><Link to="/patient-faq" className="hover:text-site-rust">FAQ</Link></li>
               <li><Link to="/Privacy" className="hover:text-site-rust">Privacy</Link></li>
               <li><Link to="/Terms" className="hover:text-site-rust">Terms</Link></li>
@@ -66,6 +67,13 @@ export default function ConsumerFooter() {
             pharmacies. Compounded medications are not FDA-approved and are prepared by a 503A pharmacy
             under a patient-specific prescription. Prescription products require a provider consultation;
             a prescription is not guaranteed. Prices shown are cash-pay and exclude taxes.
+          </p>
+          <p className="mt-3 text-[12px] text-site-moss">
+            Text us:{' '}
+            <a href={PHONE_SMS} className="font-semibold underline decoration-site-line underline-offset-4 hover:decoration-site-rust">
+              {PHONE_DISPLAY}
+            </a>{' '}
+            <span className="text-site-greige">· Mon-Fri 9 AM to 5 PM ET</span>
           </p>
           <p className="mt-3 text-[11px] text-site-greige">
             © {new Date().getFullYear()} MedRevolve Corporation. US residents only.

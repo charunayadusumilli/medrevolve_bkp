@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
 
     // Notify admin via SMS
     await base44.asServiceRole.functions.invoke('sendSMS', {
-      to: '5302006352',
+      to: '19808996800',
       message: `📞 CTM ${source.toUpperCase()}: ${callerName} | ${callerPhone} | ${subject.substring(0, 60)}`
     }).catch(e => console.error('SMS notify failed:', e.message));
 

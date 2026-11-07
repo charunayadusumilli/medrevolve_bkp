@@ -11,7 +11,7 @@ const mimeSubject = (s) => {
 
 
 const ADMIN_EMAIL = 'rned@medrevolve.com';
-const ADMIN_PHONE = '5302006352';
+const ADMIN_PHONE = '19808996800';
 
 async function sendSMS(to, body) {
   const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');

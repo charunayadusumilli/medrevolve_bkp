@@ -6,7 +6,7 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const sid = Deno.env.get('TWILIO_ACCOUNT_SID'), tok = Deno.env.get('TWILIO_AUTH_TOKEN'), from = Deno.env.get('TWILIO_PHONE_NUMBER');
-    const to = body.to || Deno.env.get('ADMIN_PHONE') || '+15302006352';
+    const to = body.to || Deno.env.get('ADMIN_PHONE') || '+119808996800';
     const auth = 'Basic ' + btoa(`${sid}:${tok}`);
     const acct = await (await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}.json`, { headers: { Authorization: auth } })).json();
     const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {

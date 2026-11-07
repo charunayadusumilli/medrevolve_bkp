@@ -112,6 +112,27 @@
       "type": "string",
       "description": "Certificate of analysis link when available"
     },
+    "lot_number": {
+      "type": "string",
+      "description": "Current filling lot, e.g. MRV-SEM-2601"
+    },
+    "lab_name": {
+      "type": "string",
+      "description": "Independent laboratory that released the lot"
+    },
+    "lab_accreditation": {
+      "type": "string",
+      "description": "Laboratory accreditation, e.g. ISO/IEC 17025:2017"
+    },
+    "purity_pct": {
+      "type": "number",
+      "description": "HPLC purity for the released lot. Leave empty until the report is on file."
+    },
+    "tested_on": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the lot was released by the lab"
+    },
     "image_url": {
       "type": "string",
       "description": "Primary product image"

@@ -66,7 +66,7 @@ Deno.serve(async (req) => {
     // 3. Notify admin team via SMS
     try {
       await base44.asServiceRole.functions.invoke('sendSMS', {
-        to: '5302006352',
+        to: '19808996800',
         message: `🔔 NEW ${data.source.toUpperCase().replace('CTM_', '')}: ${data.name} | ${data.phone} | ${data.subject.substring(0, 50)}`
       });
       console.log('✅ Admin notified');
