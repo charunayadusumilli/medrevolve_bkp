@@ -53,7 +53,9 @@ export default function PartnerLayout({ children }) {
               <Link
                 key={item.label}
                 to={item.to}
-                className="text-[13px] text-site-greige transition-colors duration-200 hover:text-site-moss"
+                className={`text-[13px] transition-colors duration-200 hover:text-site-moss ${
+                  location.pathname === item.to ? 'font-semibold text-site-moss' : 'text-site-greige'
+                }`}
               >
                 {item.label}
               </Link>

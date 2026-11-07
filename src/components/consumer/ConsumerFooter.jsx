@@ -40,6 +40,8 @@ export default function ConsumerFooter() {
             <ul className="mt-3 space-y-2 text-[13px] text-site-moss">
               <li><Link to="/#safety" className="hover:text-site-rust">How it works</Link></li>
               <li><Link to="/patient-faq" className="hover:text-site-rust">FAQ</Link></li>
+              <li><Link to="/Contact" className="hover:text-site-rust">Contact</Link></li>
+              <li><Link to="/PatientPortal" className="hover:text-site-rust">Your portal</Link></li>
               <li><Link to="/Privacy" className="hover:text-site-rust">Privacy</Link></li>
               <li><Link to="/Terms" className="hover:text-site-rust">Terms</Link></li>
               <li><Link to="/TelehealthConsent" className="hover:text-site-rust">Telehealth consent</Link></li>

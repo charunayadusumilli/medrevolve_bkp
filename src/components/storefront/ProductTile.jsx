@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, FlaskConical } from 'lucide-react';
 import { money, statusChip, isPrescription, isCompounded } from '@/lib/storefront/catalog';
 import QuickAdd from './QuickAdd';
 
@@ -15,7 +15,7 @@ export default function ProductTile({ product }) {
   const chip = statusChip(product);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-sf-line bg-sf-surface">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-sf-line bg-sf-surface transition-all duration-300 hover:-translate-y-0.5 hover:border-sf-ink/25 hover:shadow-[0_18px_40px_-24px_rgba(20,32,28,0.35)]">
       <Link to={`/product/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-sf-paper">
         {product.image_url ? (
           <img
@@ -46,6 +46,13 @@ export default function ProductTile({ product }) {
         {product.generic_name && (
           <p className="mt-0.5 text-[12px] text-sf-muted">{product.generic_name}</p>
         )}
+
+        <p className="mt-2 flex items-center gap-1.5 text-[11px] font-medium text-sf-accent">
+          <FlaskConical className="h-3 w-3" />
+          {product.lot_number
+            ? `Lot ${product.lot_number}${product.purity_pct ? ` · ${product.purity_pct}% HPLC` : ''}`
+            : 'Certificate of analysis with every lot'}
+        </p>
 
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <span className="text-[17px] font-semibold">
