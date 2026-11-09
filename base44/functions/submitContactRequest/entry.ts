@@ -11,7 +11,7 @@ const mimeSubject = (s) => {
 
 
 const ADMIN_EMAIL = 'rned@medrevolve.com';
-const ADMIN_PHONE = '19808996800';
+const ADMIN_PHONE = Deno.env.get('ADMIN_PHONE') || '19808996800'; // TODO: drop fallback (it is the public customer line)
 
 async function sendSMS(to, body) {
   const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
