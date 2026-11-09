@@ -1,6 +1,9 @@
 Deno.serve(async (req) => {
   try {
-    const webhookUrl = Deno.env.get('ZAPIER_WEBHOOK_URL') || 'https://hooks.zapier.com/hooks/catch/27716918/4oehsvr/';
+    const webhookUrl = Deno.env.get('ZAPIER_WEBHOOK_URL');
+    if (!webhookUrl) {
+      return Response.json({ success: false, error: 'ZAPIER_WEBHOOK_URL is not set' }, { status: 500 });
+    }
     
     const payload = {
       form_type: "TestPing",
