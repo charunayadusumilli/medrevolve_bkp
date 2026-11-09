@@ -262,7 +262,7 @@ Deno.serve(async (req) => {
     }
 
     // SMS to admin with lead details
-    const adminPhone = '19808996800';
+    const adminPhone = Deno.env.get('ADMIN_PHONE') || '19808996800'; // TODO: drop fallback (public customer line)
     const phoneDisplay = data.phone || 'N/A';
     await sendSMS(adminPhone, `NEW LEAD - ${data.full_name} | ${data.primary_interest} | ${data.email} | ${phoneDisplay} | ${data.consultation_preference || 'flexible'} | via ${data.heard_about_us || 'N/A'}`);
 

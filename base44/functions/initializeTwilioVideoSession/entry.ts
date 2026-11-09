@@ -37,14 +37,16 @@ Deno.serve(async (req) => {
 
     // Generate Twilio access token
     const twilioAccountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
-    const twilioApiKey = Deno.env.get('TWILIO_API_KEY') || Deno.env.get('TWILIO_AUTH_TOKEN');
-    const twilioApiSecret = Deno.env.get('TWILIO_API_SECRET');
+    // Secret names match what is set on the app: TWILIO_API_KEY_SID / TWILIO_API_KEY_SECRET (legacy names accepted).
+    const twilioApiKey = Deno.env.get('TWILIO_API_KEY_SID') || Deno.env.get('TWILIO_API_KEY');
+    const twilioApiSecret = Deno.env.get('TWILIO_API_KEY_SECRET') || Deno.env.get('TWILIO_API_SECRET');
+    const twilioAuthToken = Deno.env.get('TWILIO_AUTH_TOKEN');
 
-    if (!twilioAccountSid || !twilioApiKey) {
+    if (!twilioAccountSid || !twilioAuthToken || !twilioApiKey || !twilioApiSecret) {
       return Response.json({ error: 'Twilio credentials not configured' }, { status: 500 });
     }
 
-    const client = twilio(twilioAccountSid, twilioApiKey);
+    const client = twilio(twilioAccountSid, twilioAuthToken);
     
     // Create room name from appointment ID
     const roomName = `consultation-${appointmentId}`;
@@ -68,7 +70,7 @@ Deno.serve(async (req) => {
     const token = new AccessToken(
       twilioAccountSid,
       twilioApiKey,
-      twilioApiSecret || Deno.env.get('TWILIO_AUTH_TOKEN')
+      twilioApiSecret
     );
 
     token.addGrant(new AccessToken.VideoGrant({ room: roomName }));
