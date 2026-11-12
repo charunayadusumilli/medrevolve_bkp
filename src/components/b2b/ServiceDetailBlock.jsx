@@ -52,9 +52,9 @@ export default function ServiceDetailBlock({ service }) {
         {service.slug === 'marketing-engine' && (
           <Link
             to="/marketing"
-            className="mt-3 inline-block text-[12px] font-semibold text-site-rust underline decoration-site-line underline-offset-4 hover:decoration-site-rust"
+            className="mt-3 inline-flex items-center rounded-lg bg-site-rust px-4 py-2.5 text-[12px] font-semibold text-site-cream transition-opacity hover:opacity-90"
           >
-            See what&apos;s included
+            See everything included in marketing services
           </Link>
         )}
       </div>

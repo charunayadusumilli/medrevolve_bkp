@@ -1,0 +1,64 @@
+{
+  "name": "ServiceCatalog",
+  "type": "object",
+  "properties": {
+    "slug": {
+      "type": "string",
+      "description": "Service slug, matches the /services/:slug page"
+    },
+    "name": {
+      "type": "string",
+      "description": "Service name shown in lists"
+    },
+    "price_label": {
+      "type": "string",
+      "description": "Price exactly as it should read, e.g. $380 per 4-hour block"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Partner Services",
+        "Platform Services"
+      ],
+      "description": "Service group"
+    },
+    "service_path": {
+      "type": "string",
+      "description": "Link to the service detail page, e.g. /services/readiness-audit"
+    },
+    "display_order": {
+      "type": "integer",
+      "default": 0,
+      "description": "Order within the category"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show this service in public lists"
+    }
+  },
+  "required": [
+    "slug",
+    "name",
+    "price_label",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -9,7 +9,8 @@ import MarketingPricing from '@/components/b2b/marketing/MarketingPricing';
 import MarketingFaq from '@/components/b2b/marketing/MarketingFaq';
 import MarketingCta from '@/components/b2b/marketing/MarketingCta';
 
-export default function Marketing() {
+/** Public marketing services page at /marketing (medrevolveb2b.com). */
+export default function TelehealthMarketingServices() {
   return (
     <>
       <MarketingSeo />

@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import { ALA_CARTE, MARKETING_CHECKOUT_URL, PRICING_NOTE } from '@/lib/partner/marketingPage';
 
 const INCLUDED = ['Channel build', 'Lifecycle flows', 'Weekly market scan', 'Monthly reporting'];
 
+const toRow = (record) => ({
+  slug: record.slug,
+  name: record.name,
+  price: record.price_label,
+  to: record.service_path || `/services/${record.slug}`,
+});
+
 export default function MarketingPricing() {
+  // Prices come from the ServiceCatalog entity (Partner Services); the static
+  // catalog in marketingPage.js is the fallback if the entity has no rows yet.
+  const [rows, setRows] = useState(ALA_CARTE);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const page = await base44.entities.ServiceCatalog.filter(
+          { category: 'Partner Services', active: true },
+          { sort: 'display_order', limit: 20 }
+        );
+        const items = (page.items || []).filter((r) => r.slug).map(toRow);
+        if (active && items.length) setRows(items);
+      } catch {
+        // Keep the built-in catalog rows.
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section className="border-t border-site-line bg-site-surface">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-20">
@@ -49,7 +80,7 @@ export default function MarketingPricing() {
               Add only what you need
             </p>
             <ul className="mt-3 border border-site-line bg-site-cream">
-              {ALA_CARTE.map((item) => (
+              {rows.map((item) => (
                 <li key={item.slug} className="border-b border-site-line last:border-b-0">
                   <Link
                     to={item.to}

@@ -71,7 +71,7 @@ import B2BServices from './pages/b2b/Services';
 import B2BPartners from './pages/b2b/Partners';
 import B2BAudit from './pages/b2b/Audit';
 import B2BServiceDetail from './pages/b2b/ServiceDetail';
-import B2BMarketing from './pages/b2b/Marketing';
+import TelehealthMarketingServices from './pages/TelehealthMarketingServices';
 import MediaKitIndex from './pages/b2b/MediaKitIndex';
 import MediaKitPage from './pages/b2b/MediaKitPage';
 import TrafficTracker from './components/analytics/TrafficTracker';
@@ -323,7 +323,7 @@ const AuthenticatedApp = () => {
       <Route path="/ruo" element={<PartnerLayout><RuoOverview /></PartnerLayout>} />
       <Route path="/services" element={<PartnerLayout><B2BServices /></PartnerLayout>} />
       <Route path="/services/:slug" element={<PartnerLayout><B2BServiceDetail /></PartnerLayout>} />
-      <Route path="/marketing" element={<PartnerLayout><B2BMarketing /></PartnerLayout>} />
+      <Route path="/marketing" element={<PartnerLayout><TelehealthMarketingServices /></PartnerLayout>} />
       <Route path="/media-kit" element={<PartnerLayout><MediaKitIndex /></PartnerLayout>} />
       <Route path="/media-kit/:slug" element={<PartnerLayout><MediaKitPage /></PartnerLayout>} />
 
