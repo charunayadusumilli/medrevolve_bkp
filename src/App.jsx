@@ -74,6 +74,7 @@ import B2BServiceDetail from './pages/b2b/ServiceDetail';
 import MediaKitIndex from './pages/b2b/MediaKitIndex';
 import MediaKitPage from './pages/b2b/MediaKitPage';
 import TrafficTracker from './components/analytics/TrafficTracker';
+import GoogleTagB2B from './components/analytics/GoogleTagB2B';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
 import { SiteProvider } from './lib/siteContext';
 import {
@@ -347,6 +348,7 @@ function App() {
           <SiteProvider>
             <NavigationTracker />
             <TrafficTracker />
+            <GoogleTagB2B />
             <AuthenticatedApp />
           </SiteProvider>
         </Router>
