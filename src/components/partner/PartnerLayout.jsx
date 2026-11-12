@@ -10,6 +10,7 @@ import { B2B_CONTACT } from '@/lib/partner/offerings';
 const NAV = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/services' },
+  { label: 'Marketing services', to: '/marketing' },
   { label: 'RUO', to: '/ruo' },
   { label: 'Partners', to: '/partners' },
   { label: 'Blog', to: '/Blog' },

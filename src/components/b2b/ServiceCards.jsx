@@ -31,6 +31,14 @@ export default function ServiceCards({ services }) {
             >
               Service page <ArrowRight className="h-3.5 w-3.5" />
             </Link>
+            {service.slug === 'marketing-engine' && (
+              <Link
+                to="/marketing"
+                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-site-rust underline decoration-site-line underline-offset-4 hover:decoration-site-rust"
+              >
+                See what&apos;s included <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
             <PayButtons payments={service.payments.slice(0, 1)} />
           </div>
         </article>

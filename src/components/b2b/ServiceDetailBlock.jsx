@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PayButtons from './PayButtons';
 import { getServiceDetail } from '@/lib/partner/serviceDetailContent';
 
@@ -48,6 +49,14 @@ export default function ServiceDetailBlock({ service }) {
 
       <div className="mt-6 border-t border-site-line pt-5">
         <PayButtons payments={service.payments} serviceSlug={service.slug} />
+        {service.slug === 'marketing-engine' && (
+          <Link
+            to="/marketing"
+            className="mt-3 inline-block text-[12px] font-semibold text-site-rust underline decoration-site-line underline-offset-4 hover:decoration-site-rust"
+          >
+            See what&apos;s included
+          </Link>
+        )}
       </div>
     </article>
   );
