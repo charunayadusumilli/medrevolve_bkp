@@ -1,7 +1,7 @@
 import { base44 } from '@/api/base44Client';
 
 export const RUO_STATEMENT =
-  'MedRevolve Research supplies reference materials for in-vitro laboratory research only. We are not a 503A or 503B compounding pharmacy and do not compound, dispense, or prescribe for human or veterinary use. No therapeutic claims are made for any material offered here.';
+  'MedRevolve Research supplies reference materials for in-vitro laboratory research only. Products are for laboratory research only, not for human or animal use, not for diagnostic or therapeutic use. We are not a 503A or 503B compounding pharmacy and do not compound, dispense, or prescribe. No therapeutic claims are made for any material offered here.';
 
 export const GATE_STATEMENT =
   'Research Use Only. 21 or older. Not for human or veterinary use.';

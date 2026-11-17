@@ -1,43 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
 import useCaseCart from '@/hooks/useCaseCart';
-import { bySku } from '@/lib/ruo/storefront';
-import { lineSavings, lineTotal, money, nextTierNudge, unitPrice } from '@/lib/ruo/pricing';
 import { removeUnits, setUnits, totalUnits } from '@/lib/ruo/storeCart';
-
-const FLAT_SHIPPING = 18;
-const FREE_SHIPPING_AT = 4;
+import {
+  FLAT_SHIPPING,
+  FREE_SHIPPING_UNITS,
+  lineSavings,
+  lineTotal,
+  loadProductsByKeys,
+  money,
+  nextTierNudge,
+  unitPrice,
+} from '@/lib/ruo/shop';
 
 export default function RuoCaseCartPage() {
   const cart = useCaseCart();
   const [products, setProducts] = useState(null);
 
-  const skuKey = cart.lines.map((l) => l.sku).sort().join(',');
+  const key = cart.lines.map((line) => line.sku).sort().join(',');
 
   useEffect(() => {
-    if (!skuKey) {
+    let cancelled = false;
+    if (!key) {
       setProducts(new Map());
-      return;
+      return undefined;
     }
-    base44.entities.RUOProduct
-      .filter({ sku: { $in: skuKey.split(',') } }, { limit: 100 })
-      .then((page) => setProducts(bySku(page?.items)))
-      .catch(() => setProducts(new Map()));
-  }, [skuKey]);
+    loadProductsByKeys(key.split(','))
+      .then((map) => { if (!cancelled) setProducts(map); })
+      .catch(() => { if (!cancelled) setProducts(new Map()); });
+    return () => { cancelled = true; };
+  }, [key]);
 
   const units = totalUnits(cart);
   const lines = cart.lines
     .map((line) => ({ line, product: products?.get(line.sku) }))
     .filter((row) => row.product);
-  const subtotal = lines.reduce((sum, r) => sum + lineTotal(r.product, r.line.quantity), 0);
-  const shipping = lines.length === 0 || units >= FREE_SHIPPING_AT ? 0 : FLAT_SHIPPING;
+  const subtotal = lines.reduce((sum, row) => sum + lineTotal(row.product, row.line.quantity), 0);
+  const shipping = lines.length === 0 || units >= FREE_SHIPPING_UNITS ? 0 : FLAT_SHIPPING;
   const total = subtotal + shipping;
 
-  if (cart.lines.length === 0) {
+  if (cart.lines.length === 0 || (products !== null && lines.length === 0)) {
     return (
-      <div className="py-20 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ruo-muted">Case cart</p>
+      <div className="border border-ruo-line bg-ruo-surface px-6 py-20 text-center">
+        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ruo-muted">Cart</p>
         <h1 className="mt-3 text-[26px] font-semibold tracking-tight">No units in the cart</h1>
         <Link
           to="/ruo/catalog"
@@ -51,13 +56,18 @@ export default function RuoCaseCartPage() {
 
   return (
     <div>
-      <div className="flex items-end justify-between border-b border-ruo-ink pb-4">
+      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-ruo-ink pb-4">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ruo-muted">Case cart</p>
-          <h1 className="mt-2 text-[26px] font-semibold tracking-tight">{units} unit{units === 1 ? '' : 's'}</h1>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ruo-muted">Cart</p>
+          <h1 className="mt-2 text-[26px] font-semibold tracking-tight">
+            {units} unit{units === 1 ? '' : 's'}
+          </h1>
         </div>
-        <Link to="/ruo/catalog" className="font-mono text-[10px] uppercase tracking-[0.12em] underline underline-offset-4">
-          Continue catalog
+        <Link
+          to="/ruo/catalog"
+          className="font-mono text-[10px] uppercase tracking-[0.12em] underline underline-offset-4"
+        >
+          Continue browsing
         </Link>
       </div>
 
@@ -78,13 +88,20 @@ export default function RuoCaseCartPage() {
                 <div key={line.sku} className="border-b border-ruo-line py-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <p className="text-[14px] font-semibold">{product.display_name}</p>
+                      <Link
+                        to={`/ruo/p/${product.slug}`}
+                        className="text-[14px] font-semibold underline-offset-4 hover:underline"
+                      >
+                        {product.name}
+                      </Link>
                       <p className="mt-1 font-mono text-[10px] text-ruo-muted">
-                        Lot {product.lot_number} · {product.mg ? `${product.mg} mg` : '—'} ·{' '}
-                        {product.purity_pct != null ? `${product.purity_pct}%` : 'purity pending'}
+                        {product.strength_label || '—'} · Lot {product.coa_lot || '—'} ·{' '}
+                        {product.purity || 'purity pending'}
                       </p>
                     </div>
-                    <p className="font-mono text-[13px] tabular-nums">{money(lineTotal(product, line.quantity))}</p>
+                    <p className="font-mono text-[13px] tabular-nums">
+                      {money(lineTotal(product, line.quantity))}
+                    </p>
                   </div>
 
                   <div className="mt-4 flex flex-wrap items-center gap-4">
@@ -99,7 +116,7 @@ export default function RuoCaseCartPage() {
                       </button>
                       <input
                         value={line.quantity}
-                        onChange={(e) => setUnits(line.sku, e.target.value)}
+                        onChange={(event) => setUnits(line.sku, event.target.value)}
                         className="w-11 bg-transparent text-center font-mono text-[12px] tabular-nums outline-none"
                         inputMode="numeric"
                         aria-label="Units"
@@ -127,15 +144,15 @@ export default function RuoCaseCartPage() {
                     </button>
                   </div>
 
-                  {savings > 0 && (
+                  {savings > 0 ? (
                     <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.08em] text-ruo-accent">
-                      You save {money(savings)} at this volume
+                      Volume price applied — you save {money(savings)}
                     </p>
-                  )}
+                  ) : null}
+
                   {nudge && (
                     <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.08em] text-ruo-muted">
-                      Add {nudge.add} more to reach {nudge.label} pricing (
-                      {money(product[nudge.field])} / unit)
+                      Add {nudge.add} more for {nudge.label} at {money(nudge.price)} per unit
                     </p>
                   )}
                 </div>
@@ -152,7 +169,9 @@ export default function RuoCaseCartPage() {
               </div>
               <div className="flex justify-between">
                 <dt className="text-ruo-muted">Shipping</dt>
-                <dd className="font-mono tabular-nums">{shipping === 0 ? 'Included' : money(shipping)}</dd>
+                <dd className="font-mono tabular-nums">
+                  {shipping === 0 ? 'Included' : money(shipping)}
+                </dd>
               </div>
               <div className="flex justify-between border-t border-ruo-ink pt-3 text-[14px] font-semibold">
                 <dt>Total</dt>
@@ -164,12 +183,13 @@ export default function RuoCaseCartPage() {
               to="/ruo/checkout"
               className="mt-5 block bg-ruo-ink px-5 py-3 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-ruo-bg"
             >
-              Proceed to billing
+              Proceed to checkout
             </Link>
 
             <p className="mt-4 text-[10px] leading-relaxed text-ruo-muted">
-              Volume pricing applies automatically per line and is recalculated here as quantities change.
-              ACH and wire are available on orders of $2,000 and above.
+              You will confirm you are 21 or older and buying for laboratory research before the order is
+              placed; that confirmation is recorded with the order. Volume pricing applies per line and is
+              recalculated as quantities change.
             </p>
           </aside>
         </div>

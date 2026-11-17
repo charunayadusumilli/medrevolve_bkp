@@ -1,121 +1,172 @@
-import React, { useEffect, useState } from 'react';
-import CatalogRow from '@/components/ruo/store/CatalogRow';
-import { loadCatalog, RUO_STATEMENT } from '@/lib/ruo/storefront';
-import { addUnits } from '@/lib/ruo/storeCart';
-
-const CATEGORIES = [
-  { value: 'all', label: 'All categories' },
-  { value: 'peptides', label: 'Peptides' },
-  { value: 'metabolic', label: 'Metabolic' },
-  { value: 'longevity', label: 'Longevity' },
-  { value: 'supplies', label: 'Supplies' },
-];
-
-const COA_OPTIONS = [
-  { value: 'all', label: 'All COA statuses' },
-  { value: 'released', label: 'COA on file' },
-  { value: 'pending', label: 'COA pending' },
-];
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ProductCard from '@/components/ruo/store/ProductCard';
+import { RESEARCH_AREAS, SORT_OPTIONS, loadProducts } from '@/lib/ruo/shop';
+import { RUO_STATEMENT } from '@/lib/ruo/storefront';
 
 const selectClass =
-  'h-9 border border-ruo-line bg-ruo-surface px-2 font-mono text-[10px] uppercase tracking-[0.1em] outline-none';
+  'h-10 border border-ruo-line bg-ruo-surface px-3 font-mono text-[10px] uppercase tracking-[0.1em] outline-none focus:border-ruo-accent';
+
+function sortProducts(products, sort) {
+  const list = [...products];
+  if (sort === 'price-asc') return list.sort((a, b) => a.retail_price - b.retail_price);
+  if (sort === 'price-desc') return list.sort((a, b) => b.retail_price - a.retail_price);
+  if (sort === 'newest') {
+    return list.sort((a, b) => String(b.created_date || '').localeCompare(String(a.created_date || '')));
+  }
+  return list.sort((a, b) => (Number(a.display_order) || 0) - (Number(b.display_order) || 0));
+}
 
 export default function RuoCatalogPage() {
   const [products, setProducts] = useState(null);
-  const [category, setCategory] = useState('all');
-  const [coa, setCoa] = useState('all');
-  const [flash, setFlash] = useState('');
+  const [area, setArea] = useState('All');
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('featured');
 
   useEffect(() => {
-    loadCatalog()
-      .then(setProducts)
-      .catch(() => setProducts([]));
+    let cancelled = false;
+    loadProducts()
+      .then((items) => { if (!cancelled) setProducts(items); })
+      .catch(() => { if (!cancelled) setProducts([]); });
+    return () => { cancelled = true; };
   }, []);
 
-  const add = (sku, qty) => {
-    addUnits(sku, qty);
-    setFlash(`${qty} unit${qty === 1 ? '' : 's'} added to the case cart.`);
-  };
+  const areas = useMemo(() => {
+    const present = new Set((products || []).map((p) => p.research_area).filter(Boolean));
+    return ['All', ...RESEARCH_AREAS.filter((name) => present.has(name))];
+  }, [products]);
 
-  const rows = (products || []).filter(
-    (p) => (category === 'all' || p.category === category) && (coa === 'all' || p.coa_status === coa),
-  );
+  const visible = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    const filtered = (products || []).filter((product) => {
+      if (area !== 'All' && product.research_area !== area) return false;
+      if (!term) return true;
+      return [product.name, product.slug, product.research_area, product.strength_label]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(term));
+    });
+    return sortProducts(filtered, sort);
+  }, [products, area, search, sort]);
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ruo-ink pb-5">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ruo-muted">
-            Research catalog
-          </p>
-          <h1 className="mt-2 text-[28px] font-semibold tracking-tight sm:text-[34px]">
-            Reference materials
-          </h1>
+      <section className="border border-ruo-ink bg-ruo-ink px-6 py-10 text-ruo-bg sm:px-10 sm:py-14">
+        <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-ruo-bg/60">
+          MedRevolve Research · Catalog
+        </p>
+        <h1 className="mt-4 max-w-3xl text-[30px] font-semibold leading-[1.08] tracking-tight sm:text-[44px]">
+          Reference materials, lot-matched to their COA.
+        </h1>
+        <p className="mt-4 max-w-2xl text-[12px] leading-relaxed text-ruo-bg/70 sm:text-[13px]">
+          Every record lists the strength, the released purity, the lot number and the laboratory report
+          for that lot. Volume pricing applies automatically in the cart, per line. Sold to qualified
+          researchers 21 or older.
+        </p>
+      </section>
+
+      <div className="mt-6 flex flex-col gap-4 border-b border-ruo-line pb-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {areas.map((name) => (
+            <button
+              key={name}
+              type="button"
+              onClick={() => setArea(name)}
+              className={`border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.08em] transition-colors ${
+                area === name
+                  ? 'border-ruo-ink bg-ruo-ink text-ruo-bg'
+                  : 'border-ruo-line text-ruo-muted hover:border-ruo-ink hover:text-ruo-ink'
+              }`}
+            >
+              {name}
+            </button>
+          ))}
         </div>
-        <p className="max-w-sm text-[11px] leading-relaxed text-ruo-muted">{RUO_STATEMENT}</p>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search catalog"
+            aria-label="Search catalog"
+            className="h-10 w-full border border-ruo-line bg-ruo-surface px-3 text-[12px] outline-none focus:border-ruo-accent sm:w-52"
+          />
+          <select
+            value={sort}
+            onChange={(event) => setSort(event.target.value)}
+            aria-label="Sort catalog"
+            className={selectClass}
+          >
+            {SORT_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 border-b border-ruo-line py-4">
-        <select value={category} onChange={(e) => setCategory(e.target.value)} className={selectClass}>
-          {CATEGORIES.map((c) => (
-            <option key={c.value} value={c.value}>{c.label}</option>
-          ))}
-        </select>
-        <select value={coa} onChange={(e) => setCoa(e.target.value)} className={selectClass}>
-          {COA_OPTIONS.map((c) => (
-            <option key={c.value} value={c.value}>{c.label}</option>
-          ))}
-        </select>
+      <div className="flex items-center justify-between py-4">
         <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-ruo-muted">
-          {products === null ? 'Loading' : `${rows.length} of ${products.length} items`}
+          {products === null ? 'Loading catalog' : `${visible.length} record${visible.length === 1 ? '' : 's'}`}
         </p>
-        {flash && (
-          <p className="ml-auto font-mono text-[10px] uppercase tracking-[0.1em] text-ruo-accent">
-            {flash}
-          </p>
-        )}
+        <p className="max-w-xs text-right text-[10px] leading-relaxed text-ruo-muted">
+          {RUO_STATEMENT}
+        </p>
       </div>
 
       {products === null && (
-        <p className="py-16 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-ruo-muted">
-          Loading catalog…
-        </p>
-      )}
-
-      {products !== null && rows.length === 0 && (
-        <p className="py-16 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-ruo-muted">
-          No items match this filter.
-        </p>
-      )}
-
-      {rows.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-ruo-ink">
-                {['Product', 'Fill', 'Purity', 'Lot', 'COA', 'Unit', '3–5', '6+', 'Qty'].map((h) => (
-                  <th
-                    key={h}
-                    className="whitespace-nowrap py-2 pr-5 font-mono text-[9px] font-normal uppercase tracking-[0.14em] text-ruo-muted"
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((product) => (
-                <CatalogRow key={product.id || product.sku} product={product} onAdd={add} />
-              ))}
-            </tbody>
-          </table>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {[0, 1, 2, 3].map((key) => (
+            <div key={key} className="h-80 animate-pulse border border-ruo-line bg-ruo-surface" />
+          ))}
         </div>
       )}
 
-      <p className="mt-8 max-w-3xl text-[11px] leading-relaxed text-ruo-muted">
-        Volume pricing is applied automatically per line: 1–2 units at the unit price, 3–5 units at the
-        middle column, 6 or more at the right column. Purity is published only after the testing
-        laboratory releases the lot.
+      {products !== null && products.length === 0 && (
+        <div className="border border-ruo-line bg-ruo-surface px-6 py-16 text-center">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ruo-warn">
+            Catalog publishing
+          </p>
+          <h2 className="mt-4 text-[22px] font-semibold tracking-tight sm:text-[26px]">
+            Records are being added lot by lot.
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-[12px] leading-relaxed text-ruo-muted">
+            Nothing is listed yet. Every material appears here with its strength, released purity, lot
+            number and the laboratory report matched to that lot. Ask us about a specific lot in the
+            meantime.
+          </p>
+          <Link
+            to="/ruo/contact"
+            className="mt-6 inline-block border border-ruo-ink px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em]"
+          >
+            Ask about a lot
+          </Link>
+        </div>
+      )}
+
+      {products !== null && products.length > 0 && visible.length === 0 && (
+        <div className="border border-ruo-line bg-ruo-surface px-6 py-14 text-center">
+          <p className="text-[13px] font-semibold">No records match that filter.</p>
+          <button
+            type="button"
+            onClick={() => { setArea('All'); setSearch(''); }}
+            className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] underline underline-offset-4"
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
+
+      {visible.length > 0 && (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {visible.map((product) => (
+            <ProductCard key={product.id || product.slug} product={product} />
+          ))}
+        </div>
+      )}
+
+      <p className="mt-10 max-w-3xl border-t border-ruo-line pt-5 text-[11px] leading-relaxed text-ruo-muted">
+        Volume pricing is calculated per line and applied automatically in the cart: 1–2 units at the unit
+        price, 3–5 units at the middle tier, 6 or more at the lowest tier. Purity is published only after
+        the testing laboratory releases the lot.
       </p>
     </div>
   );

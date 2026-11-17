@@ -4,8 +4,7 @@ import { base44 } from '@/api/base44Client';
 import QbiCardForm from '@/components/checkout/QbiCardForm';
 import { startCheckout } from '@/lib/checkout';
 import useCaseCart from '@/hooks/useCaseCart';
-import { bySku } from '@/lib/ruo/storefront';
-import { lineTotal, money } from '@/lib/ruo/pricing';
+import { lineTotal, loadProductsByKeys, money } from '@/lib/ruo/shop';
 import { clearCaseCart, totalUnits } from '@/lib/ruo/storeCart';
 import { US_STATES } from '@/lib/storefront/catalog';
 
@@ -36,9 +35,8 @@ export default function RuoCheckoutPage() {
       setProducts(new Map());
       return;
     }
-    base44.entities.RUOProduct
-      .filter({ sku: { $in: skuKey.split(',') } }, { limit: 100 })
-      .then((page) => setProducts(bySku(page?.items)))
+    loadProductsByKeys(skuKey.split(','))
+      .then(setProducts)
       .catch(() => setProducts(new Map()));
   }, [skuKey]);
 
@@ -61,9 +59,15 @@ export default function RuoCheckoutPage() {
     shipCity: form.city,
     shipState: form.state,
     shipZip: form.zip,
+    ageConfirmed: consent === true,
+    ageConfirmedAt: new Date().toISOString(),
   });
 
   const payByCard = async () => {
+    if (!consent) {
+      setError('Confirm you are 21 or older and buying for laboratory research to place the order.');
+      return;
+    }
     if (!cardForm.current) {
       setError('The card form is still loading. Give it a moment and try again.');
       return;
@@ -92,6 +96,10 @@ export default function RuoCheckoutPage() {
   };
 
   const payByTransfer = async () => {
+    if (!consent) {
+      setError('Confirm you are 21 or older and buying for laboratory research to place the order.');
+      return;
+    }
     setSubmitting(true);
     try {
       const res = await base44.functions.invoke('ruoAchOrder', payload());
@@ -134,7 +142,7 @@ export default function RuoCheckoutPage() {
     );
   }
 
-  if (cart.lines.length === 0) {
+  if (cart.lines.length === 0 || (products !== null && lines.length === 0)) {
     return (
       <div className="py-20 text-center">
         <h1 className="text-[24px] font-semibold tracking-tight">Nothing to bill</h1>
@@ -254,9 +262,9 @@ export default function RuoCheckoutPage() {
               {lines.map(({ line, product }) => (
                 <li key={line.sku} className="flex justify-between gap-3 text-[12px]">
                   <span>
-                    {product.display_name}
+                    {product.name}
                     <span className="block font-mono text-[10px] text-ruo-muted">
-                      {line.quantity} × lot {product.lot_number}
+                      {line.quantity} × lot {product.coa_lot || '—'}
                     </span>
                   </span>
                   <span className="font-mono tabular-nums">{money(lineTotal(product, line.quantity))}</span>

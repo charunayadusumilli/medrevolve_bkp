@@ -77,12 +77,13 @@ import MediaKitPage from './pages/b2b/MediaKitPage';
 import TrafficTracker from './components/analytics/TrafficTracker';
 import GoogleTagB2B from './components/analytics/GoogleTagB2B';
 // ── THREE-DOMAIN ROUTING (consumer / partner HQ / RUO) ───────────────────────
-import { SiteProvider } from './lib/siteContext';
+import { SiteProvider, detectSite } from './lib/siteContext';
 import {
   SiteHome, SiteCart, SiteCheckout, SiteCheckoutSuccess, SiteContact, ConsumerShell,
 } from './components/site/VariantRoutes';
 import StoreShell from './components/ruo/store/StoreShell';
 import RuoCatalogPage from './pages/ruo/store/RuoCatalogPage';
+import RuoProductPage from './pages/ruo/store/RuoProductPage';
 import RuoVerifyPage from './pages/ruo/store/RuoVerifyPage';
 import RuoCoasPage from './pages/ruo/store/RuoCoasPage';
 import RuoWholesalePage from './pages/ruo/store/RuoWholesalePage';
@@ -151,6 +152,10 @@ const LayoutWrapper = ({ children, currentPageName }) => Layout ?
 // Domain-aware home: patient app on app.medrevolve.com, B2B platform site everywhere else
 const DomainHome = () => detectDomain() === 'APP' ? <DTCHome /> : <MainPage />;
 
+// Hostname check for the research store: medrevolveruo.com (and ?site=ruo) owns the root and
+// /product/:slug. Every other hostname keeps its existing homepage and consumer product route.
+const isRuoHost = () => (typeof window === 'undefined' ? false : detectSite() === 'RUO');
+
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
@@ -174,13 +179,21 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      {/* ── HOME — hostname decides consumer / partner HQ / RUO ───────────── */}
-      <Route path="/" element={<SiteHome />} />
+      {/* ── HOME — RUO hostname opens the research catalog, others keep their site ── */}
+      <Route
+        path="/"
+        element={isRuoHost() ? <StoreShell><RuoCatalogPage /></StoreShell> : <SiteHome />}
+      />
 
       {/* ── CONSUMER CATALOG (medrevolve.com) ─────────────────────────────── */}
       <Route path="/shop" element={<ConsumerShell><StoreShop /></ConsumerShell>} />
       <Route path="/shop/:category" element={<ConsumerShell><StoreShop /></ConsumerShell>} />
-      <Route path="/product/:slug" element={<ConsumerShell><StoreProduct /></ConsumerShell>} />
+      <Route
+        path="/product/:slug"
+        element={isRuoHost()
+          ? <StoreShell><RuoProductPage /></StoreShell>
+          : <ConsumerShell><StoreProduct /></ConsumerShell>}
+      />
       <Route path="/intake/:category" element={<ConsumerShell><IntakeStart /></ConsumerShell>} />
       <Route path="/tools/:slug" element={<ConsumerShell><ToolsPage /></ConsumerShell>} />
 
@@ -191,6 +204,7 @@ const AuthenticatedApp = () => {
 
       {/* ── RUO RESEARCH STORE (medrevolveruo.com) — 21+ gate, institutional ── */}
       <Route path="/ruo/catalog" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
+      <Route path="/ruo/p/:slug" element={<StoreShell><RuoProductPage /></StoreShell>} />
       <Route path="/ruo/verify" element={<StoreShell><RuoVerifyPage /></StoreShell>} />
       <Route path="/ruo/coas" element={<StoreShell><RuoCoasPage /></StoreShell>} />
       <Route path="/ruo/wholesale" element={<StoreShell><RuoWholesalePage /></StoreShell>} />

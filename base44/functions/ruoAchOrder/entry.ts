@@ -11,12 +11,16 @@ const ACH_THRESHOLD = 2000;
 const round = (value) => Math.round(Number(value || 0) * 100) / 100;
 
 function unitFor(product, quantity) {
+  const retail = Number(product.retail_price) || 0;
   const tiered = quantity >= 6
-    ? product.tier_6_plus_price
+    ? Number(product.tier_6_price)
     : quantity >= 3
-      ? product.tier_3_5_price
-      : product.retail_price;
-  return Number(tiered) > 0 ? Number(tiered) : Number(product.retail_price) || 0;
+      ? Number(product.tier_3_price)
+      : retail;
+  if (tiered > 0) return tiered;
+  if (quantity >= 6) return Math.round(retail * 90) / 100;
+  if (quantity >= 3) return Math.round(retail * 95) / 100;
+  return retail;
 }
 
 Deno.serve(async (req) => {
@@ -37,27 +41,33 @@ Deno.serve(async (req) => {
     if (!customer.name || !body.shipAddress || !body.shipCity || !body.shipState || !body.shipZip) {
       return Response.json({ error: 'A complete shipping address is required' }, { status: 400 });
     }
+    if (body.ageConfirmed !== true) {
+      return Response.json(
+        { error: 'Confirm you are 21 or older and buying for laboratory research.' },
+        { status: 400 },
+      );
+    }
 
     const skus = [...new Set(cartLines.map((l) => String(l.sku || '')).filter(Boolean))];
     if (skus.length === 0) return Response.json({ error: 'No items in cart' }, { status: 400 });
 
-    const { items } = await base44.asServiceRole.entities.RUOProduct.filter({ sku: { $in: skus } }, { limit: 100 });
-    const bySku = new Map(items.map((p) => [p.sku, p]));
+    const { items } = await base44.asServiceRole.entities.RuoProduct.filter({ slug: { $in: skus } }, { limit: 100 });
+    const bySlug = new Map(items.map((p) => [p.slug, p]));
 
     const resolved = [];
     for (const line of cartLines) {
-      const product = bySku.get(line.sku);
-      if (!product) return Response.json({ error: `Unknown compound ${line.sku}` }, { status: 400 });
-      const available = Number(product.cases_available ?? 0);
-      if (available <= 0) return Response.json({ error: `${product.display_name} is unavailable` }, { status: 400 });
+      const product = bySlug.get(line.sku);
+      if (!product) return Response.json({ error: `Unknown catalog record ${line.sku}` }, { status: 400 });
+      if (product.active === false) return Response.json({ error: `${product.name} is no longer listed` }, { status: 400 });
+      if (product.in_stock === false) return Response.json({ error: `${product.name} is unavailable` }, { status: 400 });
 
-      const quantity = Math.max(1, Math.min(Number(line.quantity) || 1, available));
+      const quantity = Math.max(1, Math.min(Number(line.quantity) || 1, 99));
       const unit = unitFor(product, quantity);
-      if (!(unit > 0)) return Response.json({ error: `Pricing is not published for ${product.display_name}` }, { status: 400 });
+      if (!(unit > 0)) return Response.json({ error: `Pricing is not published for ${product.name}` }, { status: 400 });
 
       resolved.push({
-        sku: product.sku,
-        name: `${product.display_name} ${product.mg ? `${product.mg}mg` : ''} - lot ${product.lot_number}`.trim(),
+        sku: product.slug,
+        name: `${product.name} ${product.strength_label || ''} - lot ${product.coa_lot || 'pending'}`.trim(),
         unit: round(unit),
         quantity,
       });
@@ -95,7 +105,7 @@ Deno.serve(async (req) => {
       total,
       status: 'pending',
       payment_provider: 'ach_wire',
-      notes: `channel=ruo; provider=ach_wire; shipping=${shipping}; cases=${cases}; research_use_confirmed=true`,
+      notes: `channel=ruo; provider=ach_wire; shipping=${shipping}; cases=${cases}; research_use_confirmed=true; age21=confirmed; age_confirmed_at=${body.ageConfirmedAt || new Date().toISOString()}`,
     });
 
     return Response.json({

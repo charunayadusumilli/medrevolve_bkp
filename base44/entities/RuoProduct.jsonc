@@ -1,0 +1,153 @@
+{
+  "name": "RuoProduct",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Catalog name shown on the storefront"
+    },
+    "slug": {
+      "type": "string",
+      "description": "Unique URL slug, used at /ruo/p/<slug>"
+    },
+    "strength_label": {
+      "type": "string",
+      "description": "Fill strength as printed on the label, e.g. 10mg"
+    },
+    "mg": {
+      "type": "number",
+      "description": "Fill mass per vial in mg"
+    },
+    "research_area": {
+      "type": "string",
+      "enum": [
+        "Metabolic",
+        "Tissue & Recovery",
+        "Growth Hormone",
+        "Cognitive & Sleep",
+        "Longevity & Cellular",
+        "Skin & Cosmetic",
+        "Hormone & Signaling",
+        "Supplies"
+      ],
+      "description": "Research area used by the catalog filter"
+    },
+    "retail_price": {
+      "type": "number",
+      "description": "Unit price for 1-2 units (USD)"
+    },
+    "tier_3_price": {
+      "type": "number",
+      "description": "Unit price at 3+ units (USD). Falls back to 5% off retail when empty."
+    },
+    "tier_6_price": {
+      "type": "number",
+      "description": "Unit price at 6+ units (USD). Falls back to 10% off retail when empty."
+    },
+    "box_cost": {
+      "type": "number",
+      "description": "Internal: case cost. Never shown publicly.",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "cost_vial": {
+      "type": "number",
+      "description": "Internal: cost per vial. Never shown publicly.",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "margin_pct": {
+      "type": "number",
+      "description": "Internal: margin percentage. Never shown publicly.",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "purity": {
+      "type": "string",
+      "description": "Purity as released by the testing laboratory, e.g. 99.4%"
+    },
+    "lab_name": {
+      "type": "string",
+      "default": "Vanguard Laboratory",
+      "description": "Independent testing laboratory"
+    },
+    "coa_lot": {
+      "type": "string",
+      "description": "Lot number the COA is matched to"
+    },
+    "coa_url": {
+      "type": "string",
+      "description": "Link to the lot-matched COA record"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the lot can currently be ordered"
+    },
+    "stock_note": {
+      "type": "string",
+      "description": "Availability or lead-time note shown on the product page"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "One or two line summary for cards and the product header"
+    },
+    "long_description": {
+      "type": "string",
+      "description": "Full research record description. Plain text, blank lines separate paragraphs."
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Featured ordering for the catalog grid"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show this record on the public storefront"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "research_area",
+    "retail_price"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
