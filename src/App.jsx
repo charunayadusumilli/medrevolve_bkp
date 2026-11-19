@@ -91,6 +91,7 @@ import RuoDocumentationPage from './pages/ruo/store/RuoDocumentationPage';
 import RuoContactPage from './pages/ruo/store/RuoContactPage';
 import RuoCaseCartPage from './pages/ruo/store/RuoCaseCartPage';
 import RuoCheckoutPage from './pages/ruo/store/RuoCheckoutPage';
+import UgcRegistry from './pages/admin/UgcRegistry';
 // ── CONSUMER STOREFRONT (medrevolve.com shop, product, intake) ────────────────
 import StoreShop from './pages/storefront/StoreShop';
 import StoreProduct from './pages/storefront/StoreProduct';
@@ -212,6 +213,7 @@ const AuthenticatedApp = () => {
       <Route path="/ruo/contact" element={<StoreShell><RuoContactPage /></StoreShell>} />
       <Route path="/ruo/cart" element={<StoreShell><RuoCaseCartPage /></StoreShell>} />
       <Route path="/ruo/checkout" element={<StoreShell><RuoCheckoutPage /></StoreShell>} />
+      <Route path="/admin/ugc" element={<LayoutWrapper currentPageName="UgcRegistry"><AuthGate><UgcRegistry /></AuthGate></LayoutWrapper>} />
       {/* legacy RUO entry points → the same storefront */}
       <Route path="/catalog" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
       <Route path="/catalog/:category" element={<StoreShell><RuoCatalogPage /></StoreShell>} />
@@ -334,7 +336,12 @@ const AuthenticatedApp = () => {
       <Route path="/ResearchProducts" element={<PageNotFound />} />
 
       {/* ── B2B DOMAIN (medrevolveb2b.com) — RUO, services, referral, audit ── */}
-      <Route path="/ruo" element={<PartnerLayout><RuoOverview /></PartnerLayout>} />
+      <Route
+        path="/ruo"
+        element={isRuoHost()
+          ? <StoreShell><RuoCatalogPage /></StoreShell>
+          : <PartnerLayout><RuoOverview /></PartnerLayout>}
+      />
       <Route path="/services" element={<PartnerLayout><B2BServices /></PartnerLayout>} />
       <Route path="/services/:slug" element={<PartnerLayout><B2BServiceDetail /></PartnerLayout>} />
       <Route path="/marketing" element={<PartnerLayout><TelehealthMarketingServices /></PartnerLayout>} />

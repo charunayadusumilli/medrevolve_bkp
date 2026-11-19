@@ -43,6 +43,12 @@ export function addUnits(sku, quantity = 1) {
   return write(cart);
 }
 
+/** Buy now — the case cart is replaced by this single line, then checkout opens. */
+export function buyNowLine(sku, quantity = 1) {
+  const qty = Math.max(1, Math.round(Number(quantity) || 1));
+  return write({ lines: [{ sku, quantity: qty }] });
+}
+
 export function setUnits(sku, quantity) {
   const cart = readCaseCart();
   const line = cart.lines.find((l) => l.sku === sku);

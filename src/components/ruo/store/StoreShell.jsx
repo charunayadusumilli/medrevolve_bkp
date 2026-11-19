@@ -4,7 +4,9 @@ import { WHATSAPP_URL } from '@/lib/contactConfig';
 import { totalUnits } from '@/lib/ruo/storeCart';
 import { RUO_STATEMENT } from '@/lib/ruo/storefront';
 import useCaseCart from '@/hooks/useCaseCart';
+import { injectJsonLd, organizationSchema, setCanonical } from '@/lib/ruo/seo';
 import AgeGate, { hasAcceptedGate } from './AgeGate';
+import StickyCart from './StickyCart';
 
 const NAV = [
   { label: 'Catalog', to: '/ruo/catalog' },
@@ -25,6 +27,8 @@ export default function StoreShell({ children }) {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setOpen(false);
+    setCanonical(location.pathname);
+    injectJsonLd('ruo-organization', organizationSchema);
   }, [location.pathname]);
 
   if (!accepted) return <AgeGate onAccept={() => setAccepted(true)} />;
@@ -90,7 +94,9 @@ export default function StoreShell({ children }) {
         )}
       </header>
 
-      <main className="mx-auto max-w-[1180px] px-5 py-10 sm:px-8">{children}</main>
+      <main className="mx-auto max-w-[1180px] px-5 py-10 pb-24 sm:px-8">{children}</main>
+
+      <StickyCart />
 
       <footer className="border-t border-ruo-ink bg-ruo-surface">
         <div className="mx-auto max-w-[1180px] px-5 py-10 sm:px-8">
@@ -122,8 +128,17 @@ export default function StoreShell({ children }) {
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ruo-muted">Documents</p>
               <Link to="/ruo/coas" className="mt-2 block underline underline-offset-4">COA library</Link>
               <Link to="/ruo/verify" className="mt-2 block underline underline-offset-4">Verify a lot</Link>
+              <Link to="/ruo/documentation" className="mt-2 block underline underline-offset-4">Payment policy</Link>
+              <Link to="/ruo/documentation" className="mt-2 block underline underline-offset-4">Shipping policy</Link>
             </div>
           </div>
+
+          <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-ruo-line pt-5 font-mono text-[9px] uppercase tracking-[0.12em] text-ruo-muted">
+            <li>Not a 503A or 503B pharmacy</li>
+            <li>Not for human or veterinary use</li>
+            <li>No medical advice</li>
+            <li>21+ only</li>
+          </ul>
 
           <p className="mt-8 border-t border-ruo-line pt-5 font-mono text-[10px] text-ruo-muted">
             © {new Date().getFullYear()} MedRevolve Research · Not a 503A or 503B pharmacy

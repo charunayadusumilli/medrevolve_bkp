@@ -1,8 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '@/components/ruo/store/ProductCard';
-import { RESEARCH_AREAS, SORT_OPTIONS, loadProducts } from '@/lib/ruo/shop';
+import TrustBar from '@/components/ruo/store/TrustBar';
+import UgcRail from '@/components/ruo/store/UgcRail';
+import { SORT_OPTIONS, loadProducts } from '@/lib/ruo/shop';
 import { RUO_STATEMENT } from '@/lib/ruo/storefront';
+import { applyRouteSeo } from '@/lib/ruo/seo';
 
 const selectClass =
   'h-10 border border-ruo-line bg-ruo-surface px-3 font-mono text-[10px] uppercase tracking-[0.1em] outline-none focus:border-ruo-accent';
@@ -14,7 +17,11 @@ function sortProducts(products, sort) {
   if (sort === 'newest') {
     return list.sort((a, b) => String(b.created_date || '').localeCompare(String(a.created_date || '')));
   }
-  return list.sort((a, b) => (Number(a.display_order) || 0) - (Number(b.display_order) || 0));
+  return list.sort((a, b) => {
+    const area = String(a.research_area || '').localeCompare(String(b.research_area || ''));
+    if (area !== 0) return area;
+    return (Number(a.display_order) || 0) - (Number(b.display_order) || 0);
+  });
 }
 
 export default function RuoCatalogPage() {
@@ -31,9 +38,18 @@ export default function RuoCatalogPage() {
     return () => { cancelled = true; };
   }, []);
 
+  useEffect(() => {
+    applyRouteSeo({
+      title: 'Research catalog — third-party tested, lot-matched COA | MedRevolve Research',
+      description:
+        'Reference materials for in-vitro laboratory research. Every record lists strength, released HPLC purity, lot number and the laboratory report for that lot. Research use only, 21+, not for human or veterinary use.',
+      path: window.location.pathname,
+    });
+  }, []);
+
   const areas = useMemo(() => {
-    const present = new Set((products || []).map((p) => p.research_area).filter(Boolean));
-    return ['All', ...RESEARCH_AREAS.filter((name) => present.has(name))];
+    const present = [...new Set((products || []).map((p) => p.research_area).filter(Boolean))];
+    return ['All', ...present.sort((a, b) => a.localeCompare(b))];
   }, [products]);
 
   const visible = useMemo(() => {
@@ -64,7 +80,13 @@ export default function RuoCatalogPage() {
         </p>
       </section>
 
-      <div className="mt-6 flex flex-col gap-4 border-b border-ruo-line pb-5 lg:flex-row lg:items-center lg:justify-between">
+      <TrustBar />
+
+      <div className="mt-10">
+        <UgcRail surface="home" title="Research feed" />
+      </div>
+
+      <div className="mt-8 flex flex-col gap-4 border-b border-ruo-line pb-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap gap-2">
           {areas.map((name) => (
             <button
@@ -105,15 +127,19 @@ export default function RuoCatalogPage() {
 
       <div className="flex items-center justify-between py-4">
         <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-ruo-muted">
-          {products === null ? 'Loading catalog' : `${visible.length} record${visible.length === 1 ? '' : 's'}`}
+          {products === null
+            ? 'Loading catalog'
+            : `${visible.length} of ${products.length} record${products.length === 1 ? '' : 's'}`}
         </p>
         <p className="max-w-xs text-right text-[10px] leading-relaxed text-ruo-muted">
           {RUO_STATEMENT}
         </p>
       </div>
 
+      <UgcRail surface="catalog" variant="strip" />
+
       {products === null && (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-5 pt-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {[0, 1, 2, 3].map((key) => (
             <div key={key} className="h-80 animate-pulse border border-ruo-line bg-ruo-surface" />
           ))}
@@ -156,7 +182,7 @@ export default function RuoCatalogPage() {
       )}
 
       {visible.length > 0 && (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-5 pt-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visible.map((product) => (
             <ProductCard key={product.id || product.slug} product={product} />
           ))}

@@ -1,0 +1,88 @@
+{
+  "name": "UgcSlot",
+  "type": "object",
+  "properties": {
+    "slot_id": {
+      "type": "string",
+      "description": "Stable slot id creatives are swapped into, e.g. home-01"
+    },
+    "surface": {
+      "type": "string",
+      "enum": [
+        "home",
+        "catalog",
+        "product"
+      ],
+      "description": "Where the slot renders"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "video",
+        "creative"
+      ],
+      "default": "video",
+      "description": "video = 9:16 vertical clip, creative = square static card"
+    },
+    "poster_url": {
+      "type": "string",
+      "description": "Poster image shown before playback and as the fallback"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Muted autoplay clip (mp4/webm). Leave empty for a still tile."
+    },
+    "duration_seconds": {
+      "type": "integer",
+      "description": "Clip length, rendered as the duration badge"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Optional caption under the tile. Research context only."
+    },
+    "headline": {
+      "type": "string",
+      "description": "Headline for the square static creative variant"
+    },
+    "cta_label": {
+      "type": "string",
+      "description": "Small CTA label for the static creative variant"
+    },
+    "destination_url": {
+      "type": "string",
+      "description": "Where the tile or CTA points"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Order within the surface"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Render this slot on the public storefront"
+    }
+  },
+  "required": [
+    "slot_id",
+    "surface"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

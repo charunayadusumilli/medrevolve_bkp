@@ -49,11 +49,22 @@ export default function ProductCard({ product }) {
 
         <div className="mt-3 flex flex-wrap gap-1.5">
           <span className="border border-ruo-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ruo-muted">
-            3+ save 5%
+            {product.purity ? `${product.purity} HPLC` : 'Purity pending'}
           </span>
-          <span className="border border-ruo-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ruo-muted">
-            6+ save 10%
-          </span>
+          {product.coa_lot && (
+            <span className="border border-ruo-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ruo-muted">
+              Lot {product.coa_lot}
+            </span>
+          )}
+          {product.coa_url ? (
+            <span className="border border-ruo-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ruo-ink">
+              COA on file
+            </span>
+          ) : (
+            <span className="border border-ruo-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-ruo-warn">
+              COA pending
+            </span>
+          )}
         </div>
 
         <Link

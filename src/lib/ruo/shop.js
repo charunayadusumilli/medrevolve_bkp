@@ -15,7 +15,7 @@ export const FLAT_SHIPPING = 18;
 export const FREE_SHIPPING_UNITS = 4;
 
 export const SORT_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
+  { value: 'featured', label: 'Research area' },
   { value: 'price-asc', label: 'Price: low to high' },
   { value: 'price-desc', label: 'Price: high to low' },
   { value: 'newest', label: 'Newest' },
@@ -35,10 +35,26 @@ export function cartKey(product) {
   return product?.slug || '';
 }
 
-/** Public catalog: active records only, featured order first. */
+/** Public catalog: active records only, grouped by research area then editorial order. */
 export async function loadProducts() {
-  const page = await base44.entities.RuoProduct.filter({ active: true }, { sort: 'display_order', limit: 500 });
-  return page?.items ?? [];
+  const page = await base44.entities.RuoProduct.filter(
+    { active: true },
+    { sort: 'research_area', limit: 500 },
+  );
+  return [...(page?.items ?? [])].sort((a, b) => {
+    const area = String(a.research_area || '').localeCompare(String(b.research_area || ''));
+    if (area !== 0) return area;
+    return (Number(a.display_order) || 0) - (Number(b.display_order) || 0);
+  });
+}
+
+/** Same compound at other strengths — drives the strength pill row. */
+export function strengthSiblings(product, all) {
+  if (!product?.name) return [];
+  const base = String(product.name).trim().toLowerCase();
+  return (all || [])
+    .filter((item) => String(item.name || '').trim().toLowerCase() === base)
+    .sort((a, b) => (Number(a.mg) || 0) - (Number(b.mg) || 0));
 }
 
 export async function loadProductBySlug(slug) {

@@ -52,6 +52,7 @@ module.exports = {
   				muted: 'hsl(var(--ruo-muted))',
   				line: 'hsl(var(--ruo-line))',
   				accent: 'hsl(var(--ruo-accent))',
+  				moss: 'hsl(var(--ruo-moss))',
   				warn: 'hsl(var(--ruo-warn))',
   				},
   			background: 'hsl(var(--background))',
